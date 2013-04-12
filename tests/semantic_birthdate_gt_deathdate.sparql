@@ -1,11 +1,8 @@
 # tests whether birthdate is larger than deathdate
-# 
-
 
 select * { 
      ?s dbpedia-owl:birthDate ?birth . 
      ?s  dbpedia-owl:deathDate ?death .  
      FILTER ( ?birth > ?death )
 }
-limit 10
 

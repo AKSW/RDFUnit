@@ -1,8 +1,13 @@
 #!/bin/sh
-ENDPOINT=$1
-TESTFILE=$2
+. "$1"
 LIMIT=$3
-DEFAULTGRAPH=$4
-QUERY=`cat $TESTFILE`
+QUERY=`cat $2`" LIMIT $LIMIT "
+
+#QUERY=$(<config.txt)
+echo "QUERY:
+***************
+$QUERY
+***************
+"
 
 curl  --data-urlencode query="$QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH"  "$ENDPOINT" 
