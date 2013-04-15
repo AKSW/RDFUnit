@@ -1,0 +1,12 @@
+# finds all the yago classes having long numbers (i.e. more than 4 digits) in
+# its URI
+#
+# Since this query uses a double regex and DISTINCT it is very slow (as one
+# expected). But I couldn't figure out a better way to retrieve all these
+# classes.
+
+SELECT DISTINCT ?yagoClass
+WHERE {
+    ?s rdf:type ?yagoClass.
+    FILTER ( regex(?yagoClass, "[0-9][0-9][0-9][0-9][0-9]") && regex(?yagoClass, "^http://dbpedia.org/class/yago/") )
+}
