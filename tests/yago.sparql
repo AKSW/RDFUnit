@@ -1,12 +1,16 @@
-# finds all the yago classes having long numbers (i.e. more than 4 digits) in
-# its URI
+# This query finds all the yago classes having two successive capital letters
+# following a lower case letter. Not all of these class names are really
+# broken since e.g.
+# <http://dbpedia.org/class/yago/4th-centuryBCPoets> or 
+# <http://dbpedia.org/class/yago/6th-centuryBCRulers> were apparently really
+# ment to have two successive capital letters.
 #
 # Since this query uses a double regex and DISTINCT it is very slow (as one
-# expected). But I couldn't figure out a better way to retrieve all these
+# would expect). But I couldn't figure out a better way to retrieve all these
 # classes.
 
 SELECT DISTINCT ?yagoClass
 WHERE {
     ?s rdf:type ?yagoClass.
-    FILTER ( regex(?yagoClass, "[0-9][0-9][0-9][0-9][0-9]") && regex(?yagoClass, "^http://dbpedia.org/class/yago/") )
+    FILTER ( regex(?yagoClass, "[a-z][A-Z][A-Z]") && regex(?yagoClass, "^http://dbpedia.org/class/yago/") )
 }
