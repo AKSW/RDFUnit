@@ -1,0 +1,21 @@
+# This query returns all capital cities not being of the type
+# <http://dbpedia.org/ontology/City> .
+#
+# See http://www.mail-archive.com/dbpedia-discussion@lists.sourceforge.net/msg02209.html
+# for more details.
+
+SELECT ?city
+WHERE {
+  { ?city rdf:type <http://dbpedia.org/class/yago/GeoclassCapitalOfAPoliticalEntity> }
+  UNION
+  { ?city <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category%3ACapitals_in_Africa> }
+  UNION
+  { ?city <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category%3ACapitals_in_North_America> }
+  UNION
+  { ?city <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category%3ACapitals_in_South_America> }
+  UNION
+  { ?city <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category%3ACapitals_in_Asia> }
+  UNION
+  { ?city <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category%3ACapitals_in_Europe> }.
+  FILTER NOT EXISTS {?city rdf:type <http://dbpedia.org/ontology/City> }
+}
