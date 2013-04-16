@@ -1,0 +1,6 @@
+# Places with no coordinates
+
+select * where {
+    ?s rdf:type dbpedia-owl:Place
+    FILTER NOT EXISTS {?s rdf:type <http://www.opengis.net/gml/_Feature>}
+}
