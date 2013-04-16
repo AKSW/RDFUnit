@@ -1,0 +1,6 @@
+# checks for predicate URIs longer than 255 characters
+
+select ?s where {
+    ?s ?p ?o .
+    FILTER (fn:string-length(str(?p)) > 255)
+}
