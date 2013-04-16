@@ -1,0 +1,36 @@
+# This query should find triples that use an URI as object that is actually a
+# redirect URI meaning that the corresponding data are stuck to the resource
+# that is redirected to.
+# E.g. http://dbpedia.org/resource/John_Augustus_Roebling will redirect to
+# http://dbpedia.org/resource/John_A._Roebling
+# So all you will find when querying
+# 
+#   SELECT *
+#   WHERE {
+#       <http://dbpedia.org/resource/John_Augustus_Roebling> ?p ?o.
+#   }
+#
+# will be
+#
+#   { "head":    { "link": [], "vars": ["p", "o"] },
+#     "results": { "distinct": false, "ordered": true, "bindings": [
+#         { "p": { "type": "uri", "value": "http://www.w3.org/2000/01/rdf-schema#label" },
+#           "o": { "type": "literal", "xml:lang": "en", "value": "John Augustus Roebling" }},
+#         { "p": { "type": "uri", "value": "http://dbpedia.org/ontology/wikiPageRedirects" },
+#           "o": { "type": "uri", "value": "http://dbpedia.org/resource/John_A._Roebling" }},
+#         { "p": { "type": "uri", "value": "http://www.w3.org/ns/prov#wasDerivedFrom" },
+#           "o": { "type": "uri", "value": "http://en.wikipedia.org/wiki/John_Augustus_Roebling?oldid=22291673" }},
+#         { "p": { "type": "uri", "value": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf" },
+#           "o": { "type": "uri", "value": "http://en.wikipedia.org/wiki/John_Augustus_Roebling" }} ] } }
+#
+# but firing the same query with http://dbpedia.org/resource/John_A._Roebling
+# will result in about 120 triples.
+#
+# See http://www.mail-archive.com/dbpedia-discussion@lists.sourceforge.net/msg02369.html
+# for more details.
+
+SELECT ?subject ?predicate ?redirectUriUsedAsObject ?redirectingTo
+WHERE {
+    ?subject ?predicate ?redirectUriUsedAsObject.
+    ?redirectUriUsedAsObject dbpedia-owl:wikiPageRedirects ?redirectingTo.
+}
