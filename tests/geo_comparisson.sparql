@@ -1,0 +1,21 @@
+# This query finds all incomplete conversion of geo coordinates, where
+# the Degree/Minutes/Seconds are converted to Decimal Degrees.
+# The DMS system should contain a sign for N/E/S/W which is translated to + or - 
+# within the DD system. Most notations do not have the N/E/S/W.
+# 
+# 40934 counts in nl.dbpedia.org/sparql
+# 12560 counts in dbpedia.org/sparql (prefix prop-nl: <http://dbpedia.org/property/>)
+
+prefix prop-nl: <http://nl.dbpedia.org/property/>
+select *  {
+  ?s prop-nl:latDeg ?d1. 
+  ?s prop-nl:latMin ?m1.
+  ?s prop-nl:latSec ?sec1.
+  ?s prop-nl:lonDeg ?d2. 
+  ?s prop-nl:lonMin ?m2.
+  ?s prop-nl:lonSec ?sec2.
+  ?s geo:lat ?lat.
+  ?s geo:long ?long.
+FILTER(xsd:float(?d1+(?m1/60)+(?sec1/3600)) != ?lat)
+FILTER(xsd:float(?d2+(?m2/60)+(?sec2/3600)) != ?long)
+} limit 10

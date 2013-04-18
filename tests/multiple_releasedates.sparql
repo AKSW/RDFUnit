@@ -1,0 +1,11 @@
+# This query finds all multiple values for release date, where attributes 
+# of release dates are missing, or better not yet extracted.
+# 
+# The query don't work, but something like this should provide all instances with multiple values that miss attributes:
+
+prefix dbpedia-prop: <http://dbpedia.org/property/>
+select ?s ?released (count(?released) AS ?c) {
+  ?s dbpedia-prop:released ?released.
+  FILTER (?c > 1)
+}
+limit 10
