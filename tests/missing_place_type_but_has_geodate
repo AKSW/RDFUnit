@@ -1,0 +1,6 @@
+# Has coordinates but not mapped to a Place type
+
+select count(*) where {
+    ?s rdf:type <http://www.opengis.net/gml/_Feature>
+    FILTER NOT EXISTS {?s rdf:type dbpedia-owl:Place}
+}
