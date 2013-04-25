@@ -1,0 +1,11 @@
+# This query finds all multiple values for release date, where attributes 
+# of release dates are missing, or better not yet extracted.
+# 
+# All instances with multiple values for release date that miss attributes:
+
+prefix dbo: <http://dbpedia.org/ontology/>
+select ?s count(?c) {
+  ?s dbo:latestReleaseDate ?c.
+}
+GROUP BY ?s
+HAVING count(?c) > 1
