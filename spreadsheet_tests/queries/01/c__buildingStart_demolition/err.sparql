@@ -1,0 +1,7 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(*) {
+    ?s dbo:demolitionDate valueA.
+    ?s dbo:buildingStartDate valueB.
+    FILTER (?valueA < ?valueB)
+}
