@@ -1,0 +1,4 @@
+SELECT COUNT(*) {
+    ?s rdf:type ?t.
+    FILTER(regex(str(?t), "^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$")).
+}

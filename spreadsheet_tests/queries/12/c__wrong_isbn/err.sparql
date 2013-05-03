@@ -1,0 +1,6 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(?s) {
+    ?s dbo:isbn ?value .
+    FILTER (! regex(str(?value), "^([iIsSbBnN 0-9-])*$"))
+}
