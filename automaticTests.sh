@@ -14,9 +14,9 @@ do
 
 		#echo "$RATE & $PNAME & $PREV & $ERROR \\" 
 		RATE=`echo "scale=4\n($ERROR/$PREV) * 100" | bc `
-		echo "$RATE & $PNAME & $PREV & $ERROR \\" >> $OUTPUT
+		echo "$RATE & $PNAME & $PREV & $ERROR \\\\" >> $OUTPUT
 
 done
-sed -i 's/^ &/0&/;s/00 / /;s/^\./0\./' $OUTPUT
+
+sed -i 's/^ &/0&/;s/00 / /;s/^\./0\./;s/\\/\\\\/' $OUTPUT
 sort -n -r -o $OUTPUT $OUTPUT
- 
