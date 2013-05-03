@@ -1,0 +1,9 @@
+PREFIX dbp: <http://dbpedia.property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX georss: <http://www.georss.org/georss/>
+
+SELECT COUNT(*) {
+    ?s a <http://www.opengis.net/gml/_Feature>.
+    ?s geo:long ?value.
+    FILTER(!(?value >= -180 && ?value <= 180)).
+}
