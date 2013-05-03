@@ -1,0 +1,7 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.property/>
+
+SELECT COUNT(*) {
+    ?s a dbo:Person .
+    FILTER NOT EXISTS {?s foaf:depiction ?v }
+}
