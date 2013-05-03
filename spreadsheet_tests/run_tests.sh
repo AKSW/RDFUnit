@@ -31,7 +31,7 @@ $CURRENT_PREV_QUERY
     echo 
     
     if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
-    curl  --data-urlencode query="$CURRENT_PREV_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH"  "$ENDPOINT" > $output_file
+    curl  --data-urlencode query="$CURRENT_PREV_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH" -d format=csv "$ENDPOINT" > $output_file
 }
 
 
@@ -48,7 +48,7 @@ $CURRENT_ERR_QUERY
     echo 
     
     if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
-    curl  --data-urlencode query="$CURRENT_ERR_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH"  "$ENDPOINT" > $output_file
+    curl  --data-urlencode query="$CURRENT_ERR_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH" -d format=csv "$ENDPOINT" > $output_file
 }
 
 
