@@ -1,0 +1,7 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+# number of dates that are assigned as latestReleaseDate
+SELECT COUNT(?c){
+    ?s dbo:latestReleaseDate ?c.
+}

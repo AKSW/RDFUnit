@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT COUNT(*)
+WHERE {
+    ?s rdf:type <http://www.opengis.net/gml/_Feature> .
+    FILTER NOT EXISTS {?s rdf:type dbo:Place}.
+}

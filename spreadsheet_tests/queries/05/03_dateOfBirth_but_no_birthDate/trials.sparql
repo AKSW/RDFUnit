@@ -1,0 +1,12 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT COUNT(?s) {
+    ?s dbo:birthDate ?o .
+    FILTER NOT EXISTS {?s dbp:dateOfBirth ?bd}.
+}
+#SELECT COUNT(?s) {
+#    ?s dbp:dateOfBirth ?o .
+#    #FILTER NOT EXISTS {?s dbo:birthDate ?bd}.
+#}

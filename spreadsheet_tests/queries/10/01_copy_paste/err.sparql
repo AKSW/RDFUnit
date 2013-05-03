@@ -1,0 +1,9 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX georss: <http://www.georss.org/georss/>
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+
+SELECT COUNT(*) {
+    ?s dcterms:subject <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves>.
+}

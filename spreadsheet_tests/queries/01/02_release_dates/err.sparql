@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(*)
+WHERE {
+    ?s dbo:latestReleaseDate ?valueA.
+    ?s dbo:releaseDate ?valueB.
+    FILTER (?valueA < ?valueB)
+}

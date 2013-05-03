@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT COUNT(DISTINCT(?city)) {
+    ?city dcterms:subject <http://dbpedia.org/resource/Category:Capitals_in_Africa>.
+    FILTER NOT EXISTS {?city rdf:type <http://dbpedia.org/ontology/City> }.
+}

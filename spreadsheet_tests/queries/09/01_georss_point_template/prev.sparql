@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX georss: <http://www.georss.org/georss/>
+
+SELECT COUNT(DISTINCT(?s)) {
+    ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Geographic_location> .
+}

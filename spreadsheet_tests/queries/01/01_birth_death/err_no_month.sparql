@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(*)
+WHERE {
+    ?s dbo:birthDate ?valueA.
+    ?s dbo:deathDate ?valueB.
+    FILTER (?valueA > ?valueB && datatype(?valueA) != xsd:gMonthDay )
+}
