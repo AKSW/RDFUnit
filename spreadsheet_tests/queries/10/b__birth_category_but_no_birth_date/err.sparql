@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.property/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT COUNT(?s) {
+    ?s dcterms:subject <http://dbpedia.org/resource/Category:1907_births> .
+    FILTER NOT EXISTS {?s dbo:birthDate ?b}
+}
