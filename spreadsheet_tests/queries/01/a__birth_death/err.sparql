@@ -4,5 +4,5 @@ SELECT COUNT(*)
 WHERE {
     ?s dbo:birthDate ?valueA.
     ?s dbo:deathDate ?valueB.
-    FILTER (?valueA > ?valueB)
+    FILTER (?valueA >= ?valueB)
 }
