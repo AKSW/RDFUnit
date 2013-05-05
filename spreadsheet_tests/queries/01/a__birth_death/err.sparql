@@ -1,4 +1,3 @@
-PREFIX dbo: <http://dbpedia.org/ontology/>
 
 SELECT COUNT(*)
 WHERE {

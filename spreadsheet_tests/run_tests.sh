@@ -16,7 +16,7 @@ PREV_QUERY_FILE="prev.sparql"
 PREV_RESULT_FILE="prev.result"
 ERR_QUERY_FILE="err.sparql"
 ERR_RESULT_FILE="err.result"
-
+PREFIX_FILE="prefixes.sparql"
 
 run_prev_query() {
     local output_dir=$OUTPUT_PATH/$(basename $DEFAULTGRAPH)/$1
@@ -66,16 +66,16 @@ run_queries() {
                     then
                         # must be global, since it contains line breaks and
                         # so cannot be passed as a function parameter
-                        CURRENT_PREV_QUERY="$(cat $instance_dir/$PREV_QUERY_FILE)"
+                        CURRENT_PREV_QUERY="$(cat $PREFIX_FILE $instance_dir/$PREV_QUERY_FILE)"
                         run_prev_query $path
                     fi
                     if [ -s $instance_dir/$ERR_QUERY_FILE ]
                     then
                         # must be global, since it contains line breaks and
                         # so cannot be passed as a function parameter
-                        CURRENT_ERR_QUERY="$(cat $instance_dir/$ERR_QUERY_FILE)"
+                        CURRENT_ERR_QUERY="$(cat $PREFIX_FILE $instance_dir/$ERR_QUERY_FILE)"
                         run_err_query $path
-                        local err_query=$(cat $instance_dir/$ERR_QUERY_FILE)
+                        # local err_query=$(cat $PREFIX_FILE $instance_dir/$ERR_QUERY_FILE)
                     fi
                 fi
             done
