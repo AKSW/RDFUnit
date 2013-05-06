@@ -26,12 +26,14 @@ run_prev_query() {
 ***************
 $CURRENT_PREV_QUERY
 ***************
+
+result will be written to $output_file
+
 "
-    echo "result will be written to $output_file"
-    echo 
-    
+
     if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
-    curl  --data-urlencode query="$CURRENT_PREV_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH" -d format=csv "$ENDPOINT" > $output_file
+    curl  --data-urlencode query="$CURRENT_PREV_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH" -d format=csv "$ENDPOINT" | tail -n 1 > $output_file
+    sleep 1
 }
 
 
@@ -43,12 +45,14 @@ run_err_query() {
 ***************
 $CURRENT_ERR_QUERY
 ***************
-"
-    echo "result will be written to $output_file"
-    echo 
-    
+
+result will be written to $output_file
+
+"  
+
     if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
-    curl  --data-urlencode query="$CURRENT_ERR_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH" -d format=csv "$ENDPOINT" > $output_file
+    curl  --data-urlencode query="$CURRENT_ERR_QUERY"  --data-urlencode default-graph-uri="$DEFAULTGRAPH" -d format=csv "$ENDPOINT" | tail -n 1  > $output_file
+    sleep 1
 }
 
 
@@ -83,6 +87,46 @@ run_queries() {
     done
 }
 
+aggregate_results() {
+	results_file=$OUTPUT_PATH/results.tsv
+	echo "template\tinstance\tendpoint\terror\tprevelance" > $results_file
+	for endpoint_dir in $OUTPUT_PATH/*
+	do
+		if [ -d $endpoint_dir ]
+		then
+			endpoint=$(basename $endpoint_dir)
+			for template_dir in $endpoint_dir/*
+			do
+				if [ -d $template_dir ]
+				then
+					template=$(basename $template_dir)
+					for instance_dir in $template_dir/*
+					do
+						if [ -d $instance_dir ]
+						then
+							instance=$(basename $instance_dir)
+							
+							local_prev_res=0
+							if [ -s $instance_dir/$PREV_RESULT_FILE ]
+							then
+								local_prev_res=$(cat $instance_dir/$PREV_RESULT_FILE)
+							fi
+							
+							local_err_res=0
+							if [ -s $instance_dir/$ERR_RESULT_FILE ]
+							then
+								local_err_res=$(cat $instance_dir/$ERR_RESULT_FILE)
+							fi
+							
+							echo "$template\t$instance\t$endpoint\t$local_err_res\t$local_prev_res" >> $results_file
+						fi
+					done
+				fi
+			done
+		fi
+	done
+}
+
 
 query_endpoints() {
     for settings_file in $SETTINGS_DIR/*
@@ -103,7 +147,7 @@ SPARQL_DIRS=$2
 OUTPUT_PATH=$3
 
 query_endpoints
-
+aggregate_results
 exit 0
 
 
