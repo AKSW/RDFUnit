@@ -3,9 +3,13 @@ package transform;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -16,18 +20,12 @@ import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;  
@@ -49,6 +47,10 @@ public class DisjointExtract {
     onto.read(in, null);
     
     StringBuilder triples = new StringBuilder();
+  	Set<String> subjects = new HashSet();
+  	Set<String> objects = new HashSet();
+  	Set<String> tripleSet = new HashSet();
+
     ExtendedIterator classes = onto.listClasses();
     while (classes.hasNext()) {
     	
@@ -60,18 +62,18 @@ public class DisjointExtract {
       String text = xpath(xmlFile,"mediawiki/page/revision/text");
       // only some are worth processing
       if (text.contains("disjoint")) {
+
       	String [] lines = text.split("\n");
       	for (String line : lines) {
       		if (line.contains("owl:disjointWith")){
-          	List<String> subjects = new ArrayList();
-          	List<String> objects = new ArrayList();
 
       			String disjoint = line.substring(line.lastIndexOf("=")+1,line.length()).trim();
       			String object = "http://dbpedia.org/ontology/" + disjoint;
-      			subjects.add(aClass.getURI());
-      			objects.add(object);
+      			subjects.add(aClass.getURI().toString());
+      			objects.add(object.toString());
       			// get all sub-classes for found disjoint subjects
-      			if (aClass.hasSubClass()){      			
+      			if (aClass.hasSubClass()){      
+      						
 	      			ExtendedIterator subclasses = aClass.listSubClasses();
 	      			while (subclasses.hasNext()) {
 	      				OntClass sClass = (OntClass) subclasses.next();
@@ -86,18 +88,33 @@ public class DisjointExtract {
 	      				OntClass sClass = (OntClass) sub2classes.next();
 	      				objects.add(sClass.getURI());
 	      			}
-      			}
-      			//now write all triples
-      			for (String subj:subjects) {
-      				for (String obj:objects) {
-      					triples.append("<"+subj+">"+" <http://www.w3.org/2002/07/owl#disjointWith> "+"<"+obj+ "> .\n");
+      			} 
+      		}
+      		// finally write all triples
+          if (!subjects.isEmpty()&& !objects.isEmpty()) {
+      			Iterator itSubj = subjects.iterator();
+      			while (itSubj.hasNext()) {
+      				String strSubj = (String) itSubj.next(); 
+      				Iterator itObj = objects.iterator();
+      				while (itObj.hasNext()) {
+        				String strObj = (String) itObj.next(); 
+      	  			tripleSet.add("<"+strSubj +">"+" <http://www.w3.org/2002/07/owl#disjointWith> "+"<"+strObj+ "> .");
       				}
       			}
-  	    		FileUtils.writeStringToFile(file, triples.toString(), true);
-      		}
+      			// cleanup sets for next class 
+      			objects.clear();
+      			subjects.clear();
+          }
       	}
       }
-    }    
+    }
+    // finally write triples to file
+		Iterator itTriple = tripleSet.iterator();
+		while (itTriple.hasNext()) {
+			String strTriple = (String) itTriple.next(); 
+			triples.append(strTriple +"\n");
+		}
+		FileUtils.writeStringToFile(file, triples.toString(), true);
   }
 	
   // get value from xml file
