@@ -1,5 +1,5 @@
 SELECT COUNT(*) {
     ?a foaf:homepage ?v1 .
     ?b foaf:homepage ?v2 .
-    FILTER ((str(?v1) == str(?v2)) && (?a != ?b)).
+    FILTER ((str(?v1) = str(?v2)) && (?a != ?b)).
 }
