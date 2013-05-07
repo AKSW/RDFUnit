@@ -89,7 +89,7 @@ run_queries() {
 
 aggregate_results() {
 	results_file=$OUTPUT_PATH/results.tsv
-	echo "template\tinstance\tendpoint\terror\tprevelance" > $results_file
+	echo "#template\tinstance\tendpoint\terror\tprevelance" > $results_file
 	for endpoint_dir in $OUTPUT_PATH/*
 	do
 		if [ -d $endpoint_dir ]
