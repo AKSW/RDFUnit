@@ -1,8 +1,10 @@
 #!/bin/sh
-. "$1"
-OUTPUT=autotests/functional."$NAME".tex
+. "../$1"
+OUTPUT=functional/"$NAME".csv
+LANG=$(echo "$NAME" | sed 's/dbpedia.org//g')
 
-echo "" > $OUTPUT
+echo -n "" > $OUTPUT
+echo -n "" > /tmp/gen
 #curl http://mappings.dbpedia.org/server/ontology/dbpedia.owl
 for i in `cat dbpedia.owl  | rapper -I - - file | grep FunctionalProperty | cut -f1 -d '>' | sed 's/<//' | sort -u `
 do
@@ -14,9 +16,11 @@ do
 
 		#echo "$RATE & $PNAME & $PREV & $ERROR \\" 
 		RATE=`echo "scale=4\n($ERROR/$PREV) * 100" | bc `
-		echo "$RATE & $PNAME & $PREV & $ERROR \\\\" >> $OUTPUT
+		echo "$RATE $PNAME $PREV $ERROR" >> $OUTPUT
 
 done
+sort -n  -r -o $OUTPUT $OUTPUT
+sed -i 's/^ /0 /;s/00 / /;s/^\./0\./' $OUTPUT
 
-sed -i 's/^ &/0&/;s/00 / /;s/^\./0\./;s/\\/\\\\/' $OUTPUT
-sort -n -r -o $OUTPUT $OUTPUT
+
+
