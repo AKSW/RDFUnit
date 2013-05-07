@@ -88,7 +88,7 @@ run_queries() {
 }
 
 aggregate_results() {
-	results_file=$OUTPUT_PATH/results.tsv
+	results_file=$SPARQL_DIRS/results.tsv
 	echo "#template\tinstance\tendpoint\terror\tprevelance" > $results_file
 	for endpoint_dir in $OUTPUT_PATH/*
 	do
