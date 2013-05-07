@@ -1,3 +1,0 @@
-NAME=pt.dbpedia.org
-ENDPOINT=http://pt.dbpedia.org/sparql
-DEFAULTGRAPH=http://pt.dbpedia.org
