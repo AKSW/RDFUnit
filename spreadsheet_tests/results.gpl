@@ -1,0 +1,11 @@
+set terminal png medium size 800,600
+set datafile separator "\t"
+
+set style fill  solid 1.00 border -1
+
+set style histogram clustered gap 1 title  offset character 0, 0, 0
+set style data histograms
+set xtics rotate by -45  offset character -0.9, 0, 0
+
+plot filename u 2:xticlabel(1) title 'Error', '' u 3 title 'Prevalence'
+
