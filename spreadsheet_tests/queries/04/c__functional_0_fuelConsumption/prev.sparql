@@ -1,2 +1,0 @@
-SELECT COUNT(?s) 
- { ?s <http://dbpedia.org/ontology/fuelConsumption> ?c. }

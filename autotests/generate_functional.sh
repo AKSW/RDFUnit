@@ -3,6 +3,8 @@
 rm -rf "04/c_"*
 x=0
 
+cat dbpedia.owl  | rapper -I - - file | grep FunctionalProperty | cut -f1 -d '>' | sed 's/<//' | sort -u | xargs | sed 's/ />, </g;s/^/</;s/ //g;s/$/>/'
+
 for i in `cat dbpedia.owl  | rapper -I - - file | grep FunctionalProperty | cut -f1 -d '>' | sed 's/<//' | sort -u `
 do
 

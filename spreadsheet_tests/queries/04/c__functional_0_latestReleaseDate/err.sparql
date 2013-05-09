@@ -1,5 +1,0 @@
-SELECT COUNT(?grpdEntry) 
- { { SELECT COUNT(?s) AS ?grpdEntry 
- { ?s <http://dbpedia.org/ontology/latestReleaseDate> ?c. } 
- GROUP BY ?s HAVING count(?c) > 1 
- } }
