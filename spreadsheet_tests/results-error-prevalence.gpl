@@ -1,4 +1,4 @@
-set terminal png medium font arial
+set terminal png medium font arial 
 set datafile separator "\t"
 set datafile missing '-'
 
@@ -10,5 +10,8 @@ set datafile missing '-'
 set style data histograms
 set xtics border in scale 1,0.5 nomirror rotate by -45  offset character 0, 0, 0 
 
-plot filename u 4:xticlabel(3) title 'Error', '' u 5 title 'Prevalence'
+set format y "%.1t*10^{%T}"
+
+
+plot filename u 2:xticlabel(1) title 'Error', '' u 3 title 'Prevalence'
 
