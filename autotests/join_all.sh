@@ -6,3 +6,4 @@ do
 	join -t '&' -j 1 functional/dbpedia.org.tex functional/$i > functional.tex
 	cp functional.tex functional/dbpedia.org.tex
 done 
+cat functional/dbpedia.org.tex | sed 's/$/\\\\/;s|</sparql>|err|g' > functional.tex
