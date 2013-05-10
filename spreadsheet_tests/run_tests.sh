@@ -161,10 +161,4 @@ aggregate_results
 exit 0
 
 
-   SELECT ?s ?lang count(?lang) as ?count  {
-      ?s rdfs:label ?c .
-      Filter (isLiteral (?c) && lang(?c) = "nl") .
-      BIND (lang(?c) as ?l)
-   } GROUP BY ?s ?l
-    Having count (?l) !=1
 }
