@@ -1,0 +1,6 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT count(distinct(?s)) {
+  ?s dbo:dissolved ?p .
+  FILTER NOT EXISTS {?s rdf:type dbpedia-owl:SoccerClub}
+}

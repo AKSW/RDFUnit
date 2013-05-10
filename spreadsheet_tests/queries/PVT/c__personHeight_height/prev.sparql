@@ -1,0 +1,6 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT count(?s) {
+  ?s a dbo:Person .
+  ?s dbo:height ?value.
+}

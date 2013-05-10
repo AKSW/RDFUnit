@@ -1,0 +1,6 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT count(distinct(?p)) {
+  ?s dbo:dean ?p .
+  FILTER NOT EXISTS {?p rdf:type dbo:Person}
+}
