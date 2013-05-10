@@ -1,0 +1,7 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(*) {
+    ?s dbo:activeYearsEndDate ?v1.
+}
+
+

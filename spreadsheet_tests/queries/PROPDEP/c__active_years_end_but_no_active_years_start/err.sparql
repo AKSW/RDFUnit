@@ -1,0 +1,6 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(*) {
+    ?s dbo:activeYearsEndDate ?v1.
+    FILTER NOT EXISTS {?s dbo:activeYearsStartDate ?v2}
+}
