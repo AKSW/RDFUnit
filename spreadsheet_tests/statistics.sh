@@ -5,7 +5,7 @@ do
 	instance=`echo $LINE | cat | cut -d " " -f 2`
 	
 	outputTsvFile=tmp_$template$instance.tsv
-	cat results.tsv | grep -P "$template\t$instance" | cut -f 3-6> $outputTsvFile
+	cat results.tsv | sort | grep -P "$template\t$instance" | cut -f 3-6> $outputTsvFile
 	
 	outputPngFile=image_errprev_$template$instance.png
 	gnuplot -e "filename='$outputTsvFile'" results-error-prevalence.gpl > $outputPngFile

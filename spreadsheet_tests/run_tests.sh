@@ -146,7 +146,7 @@ SETTINGS_DIR=$1
 SPARQL_DIRS=$2
 OUTPUT_PATH=$3
 
-#query_endpoints
+query_endpoints
 aggregate_results
 exit 0
 
