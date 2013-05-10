@@ -1,0 +1,10 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT COUNT(?grpdEntry) {
+  SELECT COUNT(?s) AS ?grpdEntry{
+    ?s dbpedia-owl:birthDate ?c.
+  }
+  GROUP BY ?s
+  HAVING count(?c) > 1
+}
