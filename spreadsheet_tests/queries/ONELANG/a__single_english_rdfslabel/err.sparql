@@ -1,0 +1,8 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT ?s WHERE {
+  ?s rdfs:label ?c
+  BIND ( lang(?c) AS ?l )
+  FILTER (isLiteral (?c) && lang(?c) = "en")
+} GROUP BY ?s
+HAVING COUNT (?l) > 1

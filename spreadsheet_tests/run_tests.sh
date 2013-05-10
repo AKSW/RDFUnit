@@ -129,10 +129,20 @@ aggregate_results() {
 
 
 query_endpoints() {
+	timing_file=$OUTPUT_PATH/timing.tsv
+	echo "#endpoint\tmiliseconds" > $timing_file
+
     for settings_file in $SETTINGS_DIR/*
     do
         . ./$SETTINGS_DIR/$settings_file
+
+        timeStart=$(date +%s%N | cut -b1-13)
         run_queries
+        timeEnd=$(date +%s%N | cut -b1-13)
+
+        endpoint=$(basename $settings_file)
+        timeTotal=$((timeEnd-timeStart))
+        echo "$endpoint\t$timeTotal" >> $timing_file
     done
 }
 
@@ -151,3 +161,10 @@ aggregate_results
 exit 0
 
 
+   SELECT ?s ?lang count(?lang) as ?count  {
+      ?s rdfs:label ?c .
+      Filter (isLiteral (?c) && lang(?c) = "nl") .
+      BIND (lang(?c) as ?l)
+   } GROUP BY ?s ?l
+    Having count (?l) !=1
+}

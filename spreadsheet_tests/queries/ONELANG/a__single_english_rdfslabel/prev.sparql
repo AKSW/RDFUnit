@@ -1,0 +1,5 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT COUNT(?s){
+    ?s rdfs:label ?string .
+}
