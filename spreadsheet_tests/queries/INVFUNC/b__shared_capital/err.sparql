@@ -1,4 +1,4 @@
-SELECT COUNT(*) {
+SELECT COUNT(distinct *) {
     ?a dbo:capital ?v1 .
     ?b dbo:capital ?v2 .
     FILTER ((str(?v1) = str(?v2)) && (?a != ?b)).
