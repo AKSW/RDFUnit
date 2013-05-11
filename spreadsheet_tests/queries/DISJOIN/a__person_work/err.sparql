@@ -1,4 +1,4 @@
-SELECT ?s WHERE {
+SELECT count(?s) WHERE {
 ?s rdf:type dbo:Person .
 ?s rdf:type dbo:Work .
 }
