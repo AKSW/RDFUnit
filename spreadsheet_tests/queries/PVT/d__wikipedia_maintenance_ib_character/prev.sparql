@@ -1,0 +1,5 @@
+# refactored from: http://en.wikipedia.org/wiki/Category:Articles_using_Infobox_character_with_multiple_unlabeled_fields
+
+select count(?s) where {
+?s dbpprop:wikiPageUsesTemplate	<http://dbpedia.org/resource/Template:Infobox_character> .
+}

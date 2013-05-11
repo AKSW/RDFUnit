@@ -1,0 +1,16 @@
+# refactored from: http://en.wikipedia.org/wiki/Category:Articles_using_Infobox_character_with_multiple_unlabeled_fields
+# very common properties: first, last, name
+# select ?p count(?p) as ?rel where { ?s dbpprop:wikiPageUsesTemplate	<http://dbpedia.org/resource/Template:Infobox_character> .  ?s ?p []  . FILTER (?p LIKE <http://dbpedia.org/property%> )  } order by desc(?rel)
+
+select count(?s) as ?rel where {
+?s dbpprop:wikiPageUsesTemplate	<http://dbpedia.org/resource/Template:Infobox_character> .
+FILTER (NOT EXISTS {?s  dbpprop:first  [] })
+}
+
+
+#select ?FictionalCharacterWithLastMissing count(?o) as ?rel where {
+#?s dbpprop:wikiPageUsesTemplate	<http://dbpedia.org/resource/Template:Infobox_character> .
+#FILTER (NOT EXISTS {?s  dbpprop:first  [] })
+#?s foaf:isPrimaryTopicOf ?FictionalCharacterWithLastMissing .
+#?o ?in ?s .
+#} order by desc(?rel)
