@@ -8,20 +8,17 @@ After such instantiations were collected the resulting queries will have to be e
 All the scripts, source code and queries used in the evaluation and development of the above mentioned formalism are contained in the directory `ISWC_2013_evaluation_track`. Its content is described below.
 
 
-`endpoints`
------------
+### `endpoints/`
 
 The actual data sources to query via the test pattern bindings are defined in the `endpoints` directory. The information needed to run queries on a chosen endpoint are provided via UNIX environment variables set in the corresponding files.
 
 
-`initial_hardcoded_tests`
--------------------------
+### `initial_hardcoded_tests/`
 
-The first step on the way towards this formalism was to gather actual errors or data quality issues. These were collected for the DBpedia (http://dbpedia.org) by evaluating corresponding posts on DBpedia mailing lists like https://lists.sourceforge.net/lists/listinfo/dbpedia-discussion or https://lists.sourceforge.net/lists/listinfo/dbpedia-developers as well as web sites like http://stackoverflow.com or http://answers.semanticweb.com . The findings from these sources were tried to be expressed in SPARQL queries that can be found in the `initial_hardcoded_tests` folder.
+The first step on the way towards this formalism was to gather actual errors or data quality issues. These were collected for the [DBpedia](http://dbpedia.org) by evaluating corresponding posts on DBpedia mailing lists like https://lists.sourceforge.net/lists/listinfo/dbpedia-discussion or https://lists.sourceforge.net/lists/listinfo/dbpedia-developers as well as web sites like http://stackoverflow.com or http://answers.semanticweb.com . The findings from these sources were tried to be expressed in SPARQL queries that can be found in the `initial_hardcoded_tests` folder.
 
 
-`run_test.sh`
--------------
+### `run_test.sh`
 
 To be able to run single queries the shell script `run_test.sh` is provided. To execute it the following parameters have to be given:
 
@@ -65,17 +62,15 @@ select * {
 ```
 
 
-`generate_tests`
-----------------
+### `generate_tests/`
 
 Having written these initial tests, it was found out that in some cases test pattern bindings can be created automatically. So in `generate_tests` one can find the source code and the results of the approaches to generate such queries for disjoint OWL classes (`owl:disjointWith`) and functional properties (`owl:FunctionalProperty`).
 
 
-`spreadsheet_tests`
--------------------
+### `spreadsheet_tests/`
 
 To capture, structure and categorize data quality test patterns and test pattern bindings a spreadsheet was set up. The actual structures created correspond to the directory structure of the `spreadsheet_tests/queries` folder. Inside one can find category folders (the abbreviations are explained in the [paper](http://svn.aksw.org/papers/2013/ISWC_Databugger/public.pdf)) containing several pattern binding example folders. In these pattern binding example folders there are two SPARQL query files: One to get the count of all resources that could be affected (`prev.sparql`) and another to count the actual errors (`err.sparql`).
-To run all these tests the shell script `run_tests.sh` has to be executed. `run_tests.sh` uses the endpoint definitions e.g. from `endpoints` and executes all the SPARQL queries found in a directory structure introduced above. To run the tests one has to provide the path to a folder containing SPARQL endpoint definitions (e.g. `endpoints`, introduced above), the path to the aforementioned query folder structure (e.g. `spreadsheet_tests/queries`), and a path to write the results to. Calling the `run_tests.sh` script without any parameters, the following help message will be shown:
+To run all these tests the shell script `run_tests.sh` has to be executed. `run_tests.sh` uses the endpoint definitions e.g. from `endpoints` and executes all the SPARQL queries found in a directory structure introduced above. To run the tests one has to provide the path to a folder containing SPARQL endpoint definitions (e.g. `endpoints`), the path to the aforementioned query folder structure (e.g. `spreadsheet_tests/queries`), and a path to write the results to. Calling the `run_tests.sh` script without any parameters, the following help message will be shown:
 ```bash
 user@host spreadsheet_tests $ ./run_tests.sh 
 
