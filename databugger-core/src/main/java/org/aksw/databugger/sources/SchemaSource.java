@@ -2,7 +2,7 @@ package org.aksw.databugger.sources;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
 /**
@@ -26,7 +26,7 @@ public class SchemaSource extends Source {
     }
 
     @Override
-    protected QueryExecutionFactoryQuery initQueryFactory() {
+    protected QueryExecutionFactory initQueryFactory() {
         Model model = ModelFactory.createDefaultModel();
         model.read(schema);
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.

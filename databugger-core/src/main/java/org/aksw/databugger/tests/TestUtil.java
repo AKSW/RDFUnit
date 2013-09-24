@@ -4,7 +4,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.databugger.Utils;
 import org.aksw.databugger.patterns.PatternParameter;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created: 9/24/13 10:59 AM
  */
 public class TestUtil {
-    public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactoryQuery queryFactory) {
+    public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
         String sparqlSelect =  Utils.getAllPrefixes() +
@@ -27,8 +27,7 @@ public class TestUtil {
                         " ?pattern dcterms:identifier ?patternID ." +
                         "} ";
 
-        Query q = QueryFactory.create(sparqlSelect);
-        QueryExecution qe = queryFactory.createQueryExecution(q);
+        QueryExecution qe = queryFactory.createQueryExecution(sparqlSelect);
         ResultSet results = qe.execSelect();
 
         while (results.hasNext()) {

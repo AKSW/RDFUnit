@@ -6,7 +6,6 @@ import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
 import org.aksw.jena_sparql_api.cache.extra.CacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
 import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
@@ -33,7 +32,7 @@ public class DatasetSource extends Source {
     }
 
     @Override
-    protected QueryExecutionFactoryQuery initQueryFactory() {
+    protected QueryExecutionFactory initQueryFactory() {
 
         // Create a query execution over DBpedia
         QueryExecutionFactory qef = new QueryExecutionFactoryHttp(sparqlEndpoint, sparqlGraph);

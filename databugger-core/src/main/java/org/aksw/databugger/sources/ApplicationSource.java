@@ -1,6 +1,6 @@
 package org.aksw.databugger.sources;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 /**
  * User: Dimitris Kontokostas
@@ -14,7 +14,7 @@ public class ApplicationSource extends Source {
     }
 
     @Override
-    protected QueryExecutionFactoryQuery initQueryFactory() {
+    protected QueryExecutionFactory initQueryFactory() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -1,10 +1,10 @@
 package org.aksw.databugger.patterns;
 
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.databugger.Utils;
 import org.aksw.jena_sparql_api.core.*;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created: 9/23/13 11:09 AM
  */
 public class PatternUtil {
-    public static List<Pattern> instantiatePatternsFromModel(QueryExecutionFactoryQuery queryFactory) {
+    public static List<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
         String sparqlSelectPatterns = Utils.getAllPrefixes() +
@@ -34,9 +34,7 @@ public class PatternUtil {
                         "%%PATTERN%%  tddo:parameter ?parameter . " +
                         "} ";
 
-
-        Query q = QueryFactory.create(sparqlSelectPatterns);
-        QueryExecution qe = queryFactory.createQueryExecution(q);
+        QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
         ResultSet results = qe.execSelect();
 
         while (results.hasNext()) {

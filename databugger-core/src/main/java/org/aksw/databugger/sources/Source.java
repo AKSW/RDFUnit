@@ -1,7 +1,7 @@
 package org.aksw.databugger.sources;
 
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 /**
  * User: Dimitris Kontokostas
@@ -11,11 +11,11 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
 
 public abstract class Source {
     public final String uri;
-    public QueryExecutionFactoryQuery queryFactory;
+    public QueryExecutionFactory queryFactory;
 
     public Source(String uri) {
         this.uri = uri;
     }
 
-    protected abstract QueryExecutionFactoryQuery initQueryFactory();
+    protected abstract QueryExecutionFactory initQueryFactory();
 }

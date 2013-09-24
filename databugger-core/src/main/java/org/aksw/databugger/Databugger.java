@@ -67,8 +67,7 @@ public class Databugger {
         for (TestAutoGenerator tag: autoGenerators ) {
             List<UnitTest> tests = tag.generate(source);
             for (UnitTest t : tests) {
-                Query q = QueryFactory.create(Utils.getAllPrefixes() + t.sparqlPrevalence);
-                QueryExecution qe = target.queryFactory.createQueryExecution(q);
+                QueryExecution qe = target.queryFactory.createQueryExecution(Utils.getAllPrefixes() + t.sparqlPrevalence);
                 ResultSet results = qe.execSelect();
                 while (results.hasNext()) {
                     QuerySolution qs = results.next();
