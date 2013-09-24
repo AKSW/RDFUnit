@@ -1,7 +1,10 @@
 package org.aksw.databugger.patterns;
 
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.rdf.model.Model;
+import org.aksw.databugger.Utils;
+import org.aksw.jena_sparql_api.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +15,10 @@ import java.util.List;
  * Created: 9/23/13 11:09 AM
  */
 public class PatternUtil {
-    public static List<Pattern> instantiatePatternsFromModel(Model model) {
+    public static List<Pattern> instantiatePatternsFromModel(QueryExecutionFactoryQuery queryFactory) {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
-        String sparqlSelectPatterns =
-                        "PREFIX tddo: <http://databugger.aksw.org/ontology#> " +
-                        "PREFIX dcterms: <http://purl.org/dc/terms/> " +
+        String sparqlSelectPatterns = Utils.getAllPrefixes() +
                         "SELECT ?pattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
                         " ?pattern a tddo:Pattern ; " +
                         "  dcterms:identifier ?id ; " +
@@ -26,9 +27,7 @@ public class PatternUtil {
                         "  tddo:patternPrevalence ?sparqlPrev ; " +
                         "  tddo:selectVariable ?variable . " +
                         "} ORDER BY ?pattern";
-        String sparqlSelectParameters =
-                        "PREFIX tddo: <http://databugger.aksw.org/ontology#> " +
-                        "PREFIX dcterms: <http://purl.org/dc/terms/> " +
+        String sparqlSelectParameters = Utils.getAllPrefixes() +
                         "SELECT ?parameter ?id  WHERE { " +
                         "?parameter a tddo:Parameter . " +
                         "?parameter dcterms:identifier ?id . " +
@@ -37,7 +36,7 @@ public class PatternUtil {
 
 
         Query q = QueryFactory.create(sparqlSelectPatterns);
-        QueryExecution qe = com.hp.hpl.jena.query.QueryExecutionFactory.create(q, model);
+        QueryExecution qe = queryFactory.createQueryExecution(q);
         ResultSet results = qe.execSelect();
 
         while (results.hasNext()) {
@@ -51,8 +50,8 @@ public class PatternUtil {
             String variable = qs.get("variable").toString();
             List<PatternParameter> parameters = new ArrayList<PatternParameter>();
 
-            Query qNested = QueryFactory.create(sparqlSelectParameters.replace("%%PATTERN%%","<" + patternURI + ">"));
-            QueryExecution qeNested = QueryExecutionFactory.create(qNested, model);
+            Query qn = QueryFactory.create(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
+            QueryExecution qeNested = queryFactory.createQueryExecution(qn);
             ResultSet resultsNested = qeNested.execSelect();
 
             while (resultsNested.hasNext()) {

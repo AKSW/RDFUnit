@@ -1,7 +1,7 @@
 package org.aksw.databugger.sources;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+
+import org.aksw.jena_sparql_api.core.QueryExecutionFactoryQuery;
 
 /**
  * User: Dimitris Kontokostas
@@ -11,9 +11,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public abstract class Source {
     public final String uri;
-    public final Model model = ModelFactory.createDefaultModel();
+    public QueryExecutionFactoryQuery queryFactory;
 
     public Source(String uri) {
         this.uri = uri;
     }
+
+    protected abstract QueryExecutionFactoryQuery initQueryFactory();
 }
