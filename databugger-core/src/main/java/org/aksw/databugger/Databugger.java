@@ -36,38 +36,39 @@ public class Databugger {
 
         Model patternModel = ModelFactory.createDefaultModel();
         patternModel.read(new FileInputStream("../data/patterns.ttl"), "", "Turtle");
+        patternModel.read(new FileInputStream("../data/testGenerators.ttl"), "", "Turtle");
 
         for (Pattern pattern : PatternUtil.instantiatePatternsFromModel(patternModel) ) {
             PatternService.addPattern(pattern.id, pattern);
         }
 
-
-        //generateAllPatterns();
+        /* Example form Jena-api */
 
         // Create a query execution over DBpedia
         QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
 
-// Add delay in order to be nice to the remote server (delay in milli seconds)
+        // Add delay in order to be nice to the remote server (delay in milli seconds)
         qef = new QueryExecutionFactoryDelay(qef, 7000);
 
-// Set up a cache
-// Cache entries are valid for 1 day
+        // Set up a cache
+        // Cache entries are valid for 1 day
         long timeToLive = 24l * 60l * 60l * 1000l;
 
-// This creates a 'cache' folder, with a database file named 'sparql.db'
-// Technical note: the cacheBackend's purpose is to only deal with streams,
-// whereas the frontend interfaces with higher level classes - i.e. ResultSet and Model
+        // This creates a 'cache' folder, with a database file named 'sparql.db'
+        // Technical note: the cacheBackend's purpose is to only deal with streams,
+        // whereas the frontend interfaces with higher level classes - i.e. ResultSet and Model
         CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
         CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
         qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 
-// Add pagination
+        // Add pagination
         qef = new QueryExecutionFactoryPaginated(qef, 900);
 
-// Create a QueryExecution object from a query string ...
+        // Create a QueryExecution object from a query string ...
 
         Source source = new SchemaSource("http:dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl");
 
+        /* Autogenerate tests */
         String prefixes = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
         prefixes += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n";
         prefixes += "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n";
@@ -88,7 +89,6 @@ public class Databugger {
 
     }
 
-    // TODO automate & move this functionality out of here
     private static void generateAllPatterns() {
           /*
         String id, desc, pattern, patternPrevalence;

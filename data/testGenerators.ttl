@@ -1,0 +1,10 @@
+@prefix tddd: <http://databugger.aksw.org/patterns#> .
+@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddg: <http://databugger.aksw.org/generators#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+tddg:RDFSRANGE a tddo:TestGenerator ;
+    dcterms:description """Used to generate all rdfs:range constrains"""@en ;
+    tddo:generatorSPARQL """ select distinct ?P1 ('+' as ?OP) ?T1 where { ?P1 rdfs:range ?T1 . ?T1 a owl:Class . } LIMIT 3 """ ;
+    tddo:basedOnPattern tddd:RDFSRANGE .

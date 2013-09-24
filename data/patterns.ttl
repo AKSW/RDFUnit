@@ -1,24 +1,26 @@
 @prefix tddd: <http://databugger.aksw.org/patterns#> .
 @prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddg: <http://databugger.aksw.org/generators#> .
+
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
-tddd:RDFSDOMAIN a tddo:Pattern ;
-    dcterms:identifier "RDFSDOMAIN" ;
+tddd:RDFSRANGE a tddo:Pattern ;
+    dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain. It can be extended by using specific values in V1 or making rdf:type transitive using the '+' operator"""@en ;
     tddo:patternSPARQL """ SELECT ?c { ?s %%P1%% ?c. FILTER NOT EXISTS {?c rdf:type%%OP%% %%T1%%} } """ ;
     tddo:patternPrevalence """ SELECT count(distinct ?c) AS ?count where { ?s %%P1%% ?c .} """ ;
     tddo:selectVariable "c" ;
-    tddo:parameter tddd:RDFSDOMAIN-P1 ;
-    tddo:parameter tddd:RDFSDOMAIN-OP ;
-    tddo:parameter tddd:RDFSDOMAIN-T1 .
+    tddo:parameter tddd:RDFSRANGE-P1 ;
+    tddo:parameter tddd:RDFSRANGE-OP ;
+    tddo:parameter tddd:RDFSRANGE-T1 .
 
 
-tddd:RDFSDOMAIN-P1 a tddo:Parameter ;
+tddd:RDFSRANGE-P1 a tddo:Parameter ;
     dcterms:identifier "P1" .
 
-tddd:RDFSDOMAIN-OP a tddo:Parameter ;
+tddd:RDFSRANGE-OP a tddo:Parameter ;
     dcterms:identifier "OP" .
 
-tddd:RDFSDOMAIN-T1 a tddo:Parameter ;
+tddd:RDFSRANGE-T1 a tddo:Parameter ;
     dcterms:identifier "T1" .

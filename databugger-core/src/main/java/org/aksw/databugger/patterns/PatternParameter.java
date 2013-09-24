@@ -8,16 +8,15 @@ package org.aksw.databugger.patterns;
 public class PatternParameter {
     public final String id;
 /*
-    public final int order;
     public final boolean onlyClass;
     public final boolean onlyProperty;
     public final boolean onlyOperator;
-    public final String allowedValues;
+    // resource? / freeVariable?
+    public final String allowedValues; // i.e. < > + = ...
   */
-    public PatternParameter(String id /*, int order, boolean onlyClass, boolean onlyProperty, boolean onlyOperator, String allowedValues*/) {
+    public PatternParameter(String id /*, boolean onlyClass, boolean onlyProperty, boolean onlyOperator, String allowedValues*/) {
         this.id = id;
         /*
-        this.order = order;
         this.onlyClass = onlyClass;
         this.onlyProperty = onlyProperty;
         this.onlyOperator = onlyOperator;
