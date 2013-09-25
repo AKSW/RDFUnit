@@ -1,6 +1,7 @@
 package org.aksw.databugger.sources;
 
 
+import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 /**
@@ -11,11 +12,20 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 public abstract class Source {
     public final String uri;
-    public QueryExecutionFactory queryFactory;
+    private QueryExecutionFactory queryFactory;
 
     public Source(String uri) {
         this.uri = uri;
     }
 
+    public abstract TestAppliesTo getSourceType();
+
     protected abstract QueryExecutionFactory initQueryFactory();
+
+    public QueryExecutionFactory getExecutionFactory() {
+        // TODO not thread safe but minor
+        if (queryFactory == null)
+            queryFactory = initQueryFactory();
+        return queryFactory;
+    }
 }

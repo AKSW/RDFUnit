@@ -2,6 +2,7 @@ package org.aksw.databugger.sources;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
@@ -22,7 +23,11 @@ public class SchemaSource extends Source {
     public SchemaSource(String uri, String schema) {
         super(uri);
         this.schema = schema;
-        queryFactory = initQueryFactory();
+    }
+
+    @Override
+    public TestAppliesTo getSourceType() {
+        return TestAppliesTo.Schema;
     }
 
     @Override

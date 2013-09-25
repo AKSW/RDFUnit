@@ -1,5 +1,7 @@
 package org.aksw.databugger.sources;
 
+import org.aksw.databugger.enums.TestAppliesTo;
+
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -9,5 +11,10 @@ public class EnrichedSchemaSource extends SchemaSource {
 
     public EnrichedSchemaSource(String uri) {
         super(uri);
+    }
+
+    @Override
+    public TestAppliesTo getSourceType() {
+        return TestAppliesTo.EnrichedSchema;
     }
 }

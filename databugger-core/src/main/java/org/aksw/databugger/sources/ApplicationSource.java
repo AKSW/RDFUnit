@@ -1,5 +1,6 @@
 package org.aksw.databugger.sources;
 
+import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 /**
@@ -11,6 +12,11 @@ public class ApplicationSource extends Source {
 
     public ApplicationSource(String uri) {
         super(uri);
+    }
+
+    @Override
+    public TestAppliesTo getSourceType() {
+        return TestAppliesTo.Application;
     }
 
     @Override

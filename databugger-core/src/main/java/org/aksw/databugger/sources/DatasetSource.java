@@ -1,5 +1,6 @@
 package org.aksw.databugger.sources;
 
+import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
@@ -28,7 +29,11 @@ public class DatasetSource extends Source {
         super(uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = sparqlGraph;
-        queryFactory = initQueryFactory();
+    }
+
+    @Override
+    public TestAppliesTo getSourceType() {
+        return TestAppliesTo.Dataset;
     }
 
     @Override

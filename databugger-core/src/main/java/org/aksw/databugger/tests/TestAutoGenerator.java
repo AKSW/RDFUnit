@@ -31,7 +31,7 @@ public class TestAutoGenerator {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
         Query q = QueryFactory.create(Utils.getAllPrefixes() + query);
-        QueryExecution qe = source.queryFactory.createQueryExecution(q);
+        QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
         ResultSet rs = qe.execSelect();
         Pattern pattern = PatternService.getPattern(patternID);
 
