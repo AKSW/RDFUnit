@@ -1,19 +1,15 @@
 package org.aksw.databugger.tests;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.databugger.Utils;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.sources.Source;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryBackQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.hp.hpl.jena.query.*;
 /**
  * User: Dimitris Kontokostas
  * Takes a pattern and a SPARQL query and based on the data

@@ -1,9 +1,7 @@
 package org.aksw.databugger.patterns;
 
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.databugger.Utils;
-import org.aksw.jena_sparql_api.core.*;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;

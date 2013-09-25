@@ -1,6 +1,8 @@
 package org.aksw.databugger;
 
-import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.PrefixMapping;
@@ -14,17 +16,8 @@ import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
-import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
-import org.aksw.jena_sparql_api.cache.extra.CacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactoryBackQuery;
-import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 
 import java.io.FileInputStream;
 import java.util.List;
