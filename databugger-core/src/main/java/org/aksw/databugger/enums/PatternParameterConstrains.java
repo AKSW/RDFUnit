@@ -30,7 +30,7 @@ public enum PatternParameterConstrains {
     /**
      * The parameter can be anything, even a free variable (?var)
      * */
-    Any;
+    None;
 
     private static String uri = "http://databugger.aksw.org/ontology/";
 
@@ -56,9 +56,8 @@ public enum PatternParameterConstrains {
             return Class;
         } else if (s.equals("Operator")) {
             return Operator;
-        } else if (s.equals("Any"))
-            return Any;
+        }
 
-        return null;
+        return None;
     }
 }

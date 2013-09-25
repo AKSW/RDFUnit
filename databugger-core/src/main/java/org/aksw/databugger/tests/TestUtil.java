@@ -19,12 +19,12 @@ public class TestUtil {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
         String sparqlSelect =  Utils.getAllPrefixes() +
-                        " SELECT ?desc ?query ?patternID WHERE { " +
+                        " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                         " ?generator a tddo:TestGenerator ; " +
                         "  dcterms:description ?desc ; " +
                         "  tddo:generatorSPARQL ?query ; " +
-                        "  tddo:basedOnPattern ?pattern . " +
-                        " ?pattern dcterms:identifier ?patternID ." +
+                        "  tddo:basedOnPattern ?sparqlPattern . " +
+                        " ?sparqlPattern dcterms:identifier ?patternID ." +
                         "} ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelect);
@@ -33,11 +33,12 @@ public class TestUtil {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
 
+            String generator = qs.get("generator").toString();
             String description = qs.get("desc").toString();
             String query = qs.get("query").toString();
             String patternID = qs.get("patternID").toString();
 
-            autoGenerators.add(new TestAutoGenerator(description, query,patternID));
+            autoGenerators.add(new TestAutoGenerator(generator, description, query,patternID));
         }
         qe.close();
 

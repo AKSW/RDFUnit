@@ -2,6 +2,8 @@ package org.aksw.databugger.patterns;
 
 import com.hp.hpl.jena.query.*;
 import org.aksw.databugger.Utils;
+import org.aksw.databugger.tests.TestAnnotation;
+import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -17,14 +19,14 @@ public class PatternUtil {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
         String sparqlSelectPatterns = Utils.getAllPrefixes() +
-                        "SELECT ?pattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
-                        " ?pattern a tddo:Pattern ; " +
+                        "SELECT ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
+                        " ?sparqlPattern a tddo:Pattern ; " +
                         "  dcterms:identifier ?id ; " +
                         "  dcterms:description ?desc ; " +
                         "  tddo:patternSPARQL ?sparql ; " +
-                        "  tddo:patternPrevalence ?sparqlPrev ; " +
+                        "  tddo:patternPrevalenceSPARQL ?sparqlPrev ; " +
                         "  tddo:selectVariable ?variable . " +
-                        "} ORDER BY ?pattern";
+                        "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = Utils.getAllPrefixes() +
                         "SELECT ?parameter ?id  WHERE { " +
                         "?parameter a tddo:Parameter . " +
@@ -38,7 +40,7 @@ public class PatternUtil {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
 
-            String patternURI = qs.get("pattern").toString();
+            String patternURI = qs.get("sparqlPattern").toString();
             String id = qs.get("id").toString();
             String desc = qs.get("desc").toString();
             String sparql = qs.get("sparql").toString();
@@ -66,4 +68,5 @@ public class PatternUtil {
 
         return patterns;
     }
+
 }
