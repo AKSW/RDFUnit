@@ -1,6 +1,7 @@
 package org.aksw.databugger.sources;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -32,7 +33,7 @@ public class SchemaSource extends Source {
 
     @Override
     protected QueryExecutionFactory initQueryFactory() {
-        Model model = ModelFactory.createDefaultModel();
+        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         model.read(schema);
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
     }
