@@ -3,6 +3,8 @@ package org.aksw.databugger.sources;
 
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 
@@ -13,6 +15,8 @@ import java.net.URI;
  */
 
 public abstract class Source {
+    protected static Logger log = LoggerFactory.getLogger(Source.class);
+
     public final String uri;
     private QueryExecutionFactory queryFactory;
 

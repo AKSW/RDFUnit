@@ -25,7 +25,11 @@ public class Pattern {
         this.sparqlPatternPrevalence = sparqlPatternPrevalence;
         this.selectVariable = selectVariable;
         this.parameters = parameters;
-        // TODO Check validadateArguments otherwise throw exception
+    }
+
+    public boolean isValid(){
+        //TODO implement
+        return true;
     }
 
 

@@ -34,7 +34,11 @@ public class SchemaSource extends Source {
     @Override
     protected QueryExecutionFactory initQueryFactory() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
-        model.read(schema);
+        try {
+            model.read(schema);
+        } catch (Exception e) {
+            log.error("Cannot loab ontology from URI: "+schema);
+        }
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

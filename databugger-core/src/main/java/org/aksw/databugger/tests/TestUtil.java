@@ -43,7 +43,12 @@ public class TestUtil {
             String query = qs.get("query").toString();
             String patternID = qs.get("patternID").toString();
 
-            autoGenerators.add(new TestAutoGenerator(generator, description, query,patternID));
+            TestAutoGenerator tag = new TestAutoGenerator(generator, description, query,patternID);
+            if (tag.isValid())
+                autoGenerators.add(tag);
+            else {
+                //TODO logger
+            }
         }
         qe.close();
 

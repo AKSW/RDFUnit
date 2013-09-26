@@ -15,6 +15,8 @@ import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +30,7 @@ import java.util.List;
  * Created: 9/20/13 5:59 PM
  */
 public class Databugger {
+    private static Logger log = LoggerFactory.getLogger(Source.class);
 
     QueryExecutionFactory patternQueryFactory;
 
@@ -43,23 +46,6 @@ public class Databugger {
         for (Pattern pattern : patterns ) {
             PatternService.addPattern(pattern.id, pattern);
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        Databugger databugger = new Databugger();
-
-        List<Source> sources = new ArrayList<Source>();
-        sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
-        sources.add(new SchemaSource("http://xmlns.com/foaf/0.1/","http://xmlns.com/foaf/spec/index.rdf"));
-        sources.add(new SchemaSource("http://www.w3.org/2004/02/skos/core#"));
-        sources.add(new SchemaSource("http://dublincore.org/2012/06/14/dcterms#"));
-        sources.add(new SchemaSource("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"));
-
-        for (Source s: sources) {
-            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s),"../data/tests/auto/" + s.getRelativeFilename());
-        }
-
     }
 
     public QueryExecutionFactory loadPatterns(String patf, String genf, String pref) {
@@ -100,4 +86,20 @@ public class Databugger {
         return  TestUtil.isntantiateTestsFromAG(autoGenerators,source);
     }
 
+    public static void main(String[] args) throws Exception {
+
+        Databugger databugger = new Databugger();
+
+        List<Source> sources = new ArrayList<Source>();
+        sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
+        sources.add(new SchemaSource("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"));
+        sources.addAll(Utils.getSourcesFromLOV());
+
+
+        for (Source s: sources) {
+            log.info("Generating tests for: "+s.uri);
+            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s),"../data/tests/auto/" + s.getRelativeFilename());
+        }
+
+    }
 }

@@ -12,3 +12,10 @@ tddg:RDFSRANGE a tddo:TestGenerator ;
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal") )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGE .
 
+
+tddg:RDFSDOMAIN a tddo:TestGenerator ;
+    dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
+    tddo:generatorSPARQL """ select distinct ?P1 ('?v1' as ?V1) ('+' as ?OP) ?T1 where {
+                             ?P1 rdfs:domain ?T1 .
+                             FILTER ( str(?T1) != "http://www.w3.org/2002/07/owl#Thing") } """ ;
+    tddo:basedOnPattern tddd:RDFSDOMAIN .

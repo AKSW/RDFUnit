@@ -61,8 +61,12 @@ public class PatternUtil {
             }
             qeNested.close();
 
-            patterns.add(new Pattern(id, desc, sparql, sparqlPrev, variable, parameters));
-
+            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, variable, parameters);
+            if (pat.isValid())
+                patterns.add(pat);
+            else {
+                //TODO logger
+            }
         }
         qe.close();
 

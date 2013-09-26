@@ -30,6 +30,14 @@ public class TestAutoGenerator {
         this.patternID = patternID;
     }
 
+    /**
+     * Checks if the the generator is valid (provides correct parameters)
+     * */
+    public boolean isValid() {
+        //TODO implement
+        return true;
+    }
+
     public List<UnitTest> generate(Source source) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
