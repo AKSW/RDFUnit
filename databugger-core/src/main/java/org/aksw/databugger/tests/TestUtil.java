@@ -4,6 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.databugger.Utils;
+import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -43,6 +44,17 @@ public class TestUtil {
         qe.close();
 
         return autoGenerators;
+
+    }
+
+    public static List<UnitTest> isntantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
+        List<UnitTest> tests = new ArrayList<UnitTest>();
+
+        for (TestAutoGenerator tag: autoGenerators ) {
+            tests.addAll( tag.generate(source));
+        }
+
+        return tests;
 
     }
 }

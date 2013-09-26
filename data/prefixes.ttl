@@ -9,5 +9,7 @@
 @prefix tddp: <http://databugger.aksw.org/patterns#> .
 @prefix tddo: <http://databugger.aksw.org/ontology#> .
 @prefix tddg: <http://databugger.aksw.org/generators#> .
+@prefix tddt: <http://databugger.aksw.org/tests#> .
+
 
 
