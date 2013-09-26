@@ -28,7 +28,14 @@ public class Pattern {
     }
 
     public boolean isValid(){
-        //TODO implement
+        if (parameters == null || parameters.size() == 0)
+            return false;
+        //check if defined parameters exist is sparql
+        for (PatternParameter p: parameters) {
+            if ( sparqlPattern.indexOf("%%" + p.id + "%%") == -1 )
+                return false;
+        }
+        // TODO search if we need more parameters
         return true;
     }
 

@@ -5,6 +5,11 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
+
+##########################################
+#### rdfs:range pattern
+##########################################
+
 tddp:RDFSRANGE a tddo:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain. Can use the rdf:type as transitive using the '+' operator"""@en ;
@@ -27,7 +32,9 @@ tddp:RDFSRANGE-OP a tddo:Parameter ;
 tddp:RDFSRANGE-T1 a tddo:Parameter ;
     dcterms:identifier "T1" .
 
-
+##########################################
+#### rdfs:domain pattern
+##########################################
 
 tddp:RDFSDOMAIN a tddo:Pattern ;
     dcterms:identifier "RDFSDOMAIN" ;
@@ -54,4 +61,25 @@ tddp:RDFSDOMAIN-OP a tddo:Parameter ;
 tddp:RDFSDOMAIN-T1 a tddo:Parameter ;
     dcterms:identifier "T1" .
 
+
+##########################################
+#### owl:disjointClass pattern
+##########################################
+
+tddp:OWLDISJC a tddo:Pattern ;
+    dcterms:identifier "OWLDISJC" ;
+    dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
+    tddo:patternSPARQL """ SELECT ?s WHERE {
+                           ?s rdf:type %%T1%% .
+                           ?s rdf:type %%T2%% .} """ ;
+    tddo:patternPrevalenceSPARQL """  """ ;
+    tddo:selectVariable "s" ;
+    tddo:parameter tddp:OWLDISJC-T1 ;
+    tddo:parameter tddp:OWLDISJC-T2 .
+
+tddp:OWLDISJC-T1 a tddo:Parameter ;
+    dcterms:identifier "T1" .
+
+tddp:OWLDISJC-T1 a tddo:Parameter ;
+    dcterms:identifier "T2" .
 

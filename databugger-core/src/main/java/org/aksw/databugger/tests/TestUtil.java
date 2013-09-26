@@ -48,6 +48,8 @@ public class TestUtil {
                 autoGenerators.add(tag);
             else {
                 //TODO logger
+                System.err.print("AutoGenerator not valid: " + tag.URI);
+                System.exit(-1);
             }
         }
         qe.close();

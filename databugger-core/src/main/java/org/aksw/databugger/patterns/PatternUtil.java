@@ -66,6 +66,8 @@ public class PatternUtil {
                 patterns.add(pat);
             else {
                 //TODO logger
+                System.err.print("Pattern not valid: " + pat.id);
+                System.exit(-1);
             }
         }
         qe.close();

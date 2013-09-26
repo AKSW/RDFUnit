@@ -19,3 +19,10 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
                              ?P1 rdfs:domain ?T1 .
                              FILTER ( str(?T1) != "http://www.w3.org/2002/07/owl#Thing") } """ ;
     tddo:basedOnPattern tddd:RDFSDOMAIN .
+
+
+tddg:OWLDISJC a tddo:TestGenerator ;
+    dcterms:description """Generate all owl:dosjointWith constrains defined in a schema"""@en ;
+    tddo:generatorSPARQL """ select distinct ?T1 ?T2 where {
+                             ?T1 owl:disjointWith ?T2 . } """ ;
+    tddo:basedOnPattern tddd:OWLDISJC .
