@@ -3,10 +3,14 @@ package org.aksw.databugger.tests;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.Utils;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,5 +60,19 @@ public class TestUtil {
 
         return tests;
 
+    }
+
+    public static void writeTestsToFile(List<UnitTest> tests, String filename) {
+        Model model = ModelFactory.createDefaultModel();
+        for (UnitTest t: tests)
+            t.saveTestToModel(model);
+        try {
+            File f = new File(filename);
+            f.getParentFile().mkdirs();
+
+            model.write(new FileOutputStream(filename),"TURTLE");
+        } catch (Exception e) {
+            // TODO handle exceptions
+        }
     }
 }

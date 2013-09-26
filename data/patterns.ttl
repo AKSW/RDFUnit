@@ -8,7 +8,9 @@
 tddp:RDFSRANGE a tddo:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain. It can be extended by using specific values in V1 or making rdf:type transitive using the '+' operator"""@en ;
-    tddo:patternSPARQL """ SELECT ?c { ?s %%P1%% ?c. FILTER NOT EXISTS {?c rdf:type%%OP%% %%T1%%} } """ ;
+    tddo:patternSPARQL """ SELECT ?c WHERE {
+                            ?s %%P1%% ?c.
+                            FILTER NOT EXISTS {?c rdf:type%%OP%% %%T1%%} } """ ;
     tddo:patternPrevalenceSPARQL """ SELECT (count(distinct ?c) AS ?total) where { ?s %%P1%% ?c .} """ ;
     tddo:selectVariable "c" ;
     tddo:parameter tddp:RDFSRANGE-P1 ;

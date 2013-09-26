@@ -6,5 +6,9 @@
 
 tddg:RDFSRANGE a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ select distinct ?P1 ('+' as ?OP) ?T1 where { ?P1 rdfs:range ?T1 . ?T1 a owl:Class . } """ ;
+    tddo:generatorSPARQL """ select distinct ?P1 ('+' as ?OP) ?T1 where {
+                             ?P1 rdfs:range ?T1 .
+                             FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") ||
+                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal") )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGE .
+

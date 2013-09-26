@@ -16,6 +16,7 @@ import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -28,16 +29,12 @@ import java.util.List;
  */
 public class Databugger {
 
-
     QueryExecutionFactory patternQueryFactory;
-    Source source;
 
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
-    private List<UnitTest> tests = new ArrayList<UnitTest>();
 
-    Databugger(Source source) {
-        this.source = source;
+    Databugger() {
         this.patternQueryFactory = loadPatterns("../data/patterns.ttl", "../data/testGenerators.ttl", "../data/prefixes.ttl");
         this.patterns = getPatterns();
         this.autoGenerators = getAutoGenerators();
@@ -46,26 +43,22 @@ public class Databugger {
         for (Pattern pattern : patterns ) {
             PatternService.addPattern(pattern.id, pattern);
         }
-
-        tests = generateTestsFromAG(source);
     }
-
 
     public static void main(String[] args) throws Exception {
 
+        Databugger databugger = new Databugger();
 
-        Source source = new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl");
-        Source target = new DatasetSource("http://dbpedia.org", "http://dbpedia.org/sparql","http://dbpedia.org");
+        List<Source> sources = new ArrayList<Source>();
+        sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
+        sources.add(new SchemaSource("http://xmlns.com/foaf/0.1/","http://xmlns.com/foaf/spec/index.rdf"));
+        sources.add(new SchemaSource("http://www.w3.org/2004/02/skos/core#"));
+        sources.add(new SchemaSource("http://dublincore.org/2012/06/14/dcterms#"));
+        sources.add(new SchemaSource("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"));
 
-
-        Source source2 = new SchemaSource("http://dbpedia.org/ontology/asdfggg#gdfgdfg", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl");
-        source2.getRelativeFilename();
-
-
-        Databugger databugger = new Databugger(source);
-        databugger.writeTestsToFile("../data/tests/" + source.getRelativeFilename());
-
-
+        for (Source s: sources) {
+            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s),"../data/tests/auto/" + s.getRelativeFilename());
+        }
 
     }
 
@@ -107,14 +100,4 @@ public class Databugger {
         return  TestUtil.isntantiateTestsFromAG(autoGenerators,source);
     }
 
-    public void writeTestsToFile(String filename) {
-        Model model = ModelFactory.createDefaultModel();
-        for (UnitTest t: tests)
-            t.saveTestToModel(model);
-        try {
-            model.write(new FileOutputStream(filename),"TURTLE");
-        } catch (Exception e) {
-            // TODO handle exceptions
-        }
-    }
 }
