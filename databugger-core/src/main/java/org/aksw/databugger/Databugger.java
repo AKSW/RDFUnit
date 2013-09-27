@@ -30,6 +30,7 @@ import java.util.List;
 public class Databugger {
     private static Logger log = LoggerFactory.getLogger(Source.class);
 
+    private PrefixMapping prefixes = new PrefixMappingImpl();;
     QueryExecutionFactory patternQueryFactory;
 
     private List<Pattern> patterns = new ArrayList<Pattern>();
@@ -50,6 +51,9 @@ public class Databugger {
     }
 
     public QueryExecutionFactory loadPatterns(String patf, String genf, String pref) {
+
+        setPrefixes(pref);
+
         Model patternModel = ModelFactory.createDefaultModel();
         try {
             patternModel.read(new FileInputStream(patf), null, "TURTLE");
@@ -57,22 +61,20 @@ public class Databugger {
         } catch (Exception e) {
             // TODO handle exception
         }
-        patternModel.setNsPrefixes(getNS(pref));
+        patternModel.setNsPrefixes(getPrefixes());
         return new QueryExecutionFactoryModel(patternModel);
     }
 
-    private PrefixMapping getNS(String pref){
+    private void setPrefixes(String pref){
 
         Model prefixModel = ModelFactory.createDefaultModel();
-        PrefixMapping prefixMapping = new PrefixMappingImpl();
         try {
             prefixModel.read(new FileInputStream(pref), null, "TURTLE");
         } catch (Exception e) {
             // TODO handle exception
         }
 
-        prefixMapping.setNsPrefixes(prefixModel.getNsPrefixMap());
-        return prefixMapping;
+        getPrefixes().setNsPrefixes(prefixModel.getNsPrefixMap());
     }
 
     public List<Pattern> getPatterns(){
@@ -101,8 +103,13 @@ public class Databugger {
         for (Source s: sources) {
             s.setBaseCacheFolder("../data/tests/auto/");
             log.info("Generating tests for: "+ s.getUri());
-            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), s.getTestFile());
+            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), databugger.getPrefixes(), s.getTestFile());
         }
 
     }
+
+    public PrefixMapping getPrefixes() {
+        return prefixes;
+    }
+
 }

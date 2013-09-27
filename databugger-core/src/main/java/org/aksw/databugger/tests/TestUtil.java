@@ -5,6 +5,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.shared.PrefixMapping;
 import org.aksw.databugger.Utils;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -72,7 +73,7 @@ public class TestUtil {
 
     }
 
-    public static void writeTestsToFile(List<UnitTest> tests, String filename) {
+    public static void writeTestsToFile(List<UnitTest> tests, PrefixMapping prefixes, String filename) {
         Model model = ModelFactory.createDefaultModel();
         for (UnitTest t: tests)
             t.saveTestToModel(model);
@@ -80,6 +81,7 @@ public class TestUtil {
             File f = new File(filename);
             f.getParentFile().mkdirs();
 
+            model.setNsPrefixes(prefixes);
             model.write(new FileOutputStream(filename),"TURTLE");
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);
