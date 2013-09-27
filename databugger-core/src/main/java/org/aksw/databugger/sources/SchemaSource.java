@@ -7,6 +7,10 @@ import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -35,7 +39,15 @@ public class SchemaSource extends Source {
     protected QueryExecutionFactory initQueryFactory() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         try {
-            model.read(schema);
+            File f = new File(this.getCacheFile());
+            if (f.exists()) {
+                model.read(new FileInputStream(f), null, "TURTLE");
+            }
+            else {
+                model.read(schema);
+                f.getParentFile().mkdirs();
+                model.write(new FileOutputStream(f),"TURTLE");
+            }
         } catch (Exception e) {
             log.error("Cannot loab ontology from URI: "+schema);
         }

@@ -46,6 +46,10 @@ public class DatasetSource extends Source {
         qef = new QueryExecutionFactoryDelay(qef, 7000);
 
         QueryExecutionFactory qefBackup = qef;
+
+        /**
+         * maybe we don't need a cache
+
         try {
             // Set up a cache
             // Cache entries are valid for 1 day
@@ -61,6 +65,7 @@ public class DatasetSource extends Source {
             //Try to create cache, if fails continue...
             qef = qefBackup;
         }
+         */
 
         // Add pagination
         qef = new QueryExecutionFactoryPaginated(qef, 900);

@@ -7,7 +7,6 @@ import com.hp.hpl.jena.shared.impl.PrefixMappingImpl;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
-import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
@@ -19,9 +18,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,8 +99,9 @@ public class Databugger {
 
 
         for (Source s: sources) {
-            log.info("Generating tests for: "+s.uri);
-            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s),"../data/tests/auto/" + s.getRelativeFilename());
+            s.setBaseCacheFolder("../data/tests/auto/");
+            log.info("Generating tests for: "+ s.getUri());
+            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), s.getTestFile());
         }
 
     }

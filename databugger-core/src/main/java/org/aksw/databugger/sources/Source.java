@@ -17,11 +17,16 @@ import java.net.URI;
 public abstract class Source {
     protected static Logger log = LoggerFactory.getLogger(Source.class);
 
-    public final String uri;
+    private final String uri;
     private QueryExecutionFactory queryFactory;
+    private String baseCacheFolder = "";
 
     public Source(String uri) {
         this.uri = uri;
+    }
+
+    public String getUri() {
+        return uri;
     }
 
     public abstract TestAppliesTo getSourceType();
@@ -35,18 +40,32 @@ public abstract class Source {
         return queryFactory;
     }
 
-    public String getRelativeFilename(){
+    public String getTestFile(){
+        return getBaseCacheFolder() + getCacheFolder() + "tests." + getSourceType().name() + ".ttl";
+    }
+    public String getCacheFile(){
+        return getBaseCacheFolder() + getCacheFolder() + "cache." + getSourceType().name() + ".ttl";
+    }
+
+    protected String getCacheFolder(){
         String retVal = null;
         try {
-            URI tmp = new URI(uri);
+            URI tmp = new URI(getUri());
             String host = tmp.getHost();
             String path = tmp.getPath();
-            retVal = host + path + "/" + getSourceType().name() + ".ttl";
+            retVal = host + path + "/";
         } catch (Exception e) {
             // TODO handle exception
         }
 
         return retVal;
+    }
 
+    protected String getBaseCacheFolder() {
+        return baseCacheFolder;
+    }
+
+    public void setBaseCacheFolder(String baseCacheFolder) {
+        this.baseCacheFolder = baseCacheFolder;
     }
 }
