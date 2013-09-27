@@ -80,6 +80,58 @@ tddp:OWLDISJC a tddo:Pattern ;
 tddp:OWLDISJC-T1 a tddo:Parameter ;
     dcterms:identifier "T1" .
 
-tddp:OWLDISJC-T1 a tddo:Parameter ;
+tddp:OWLDISJC-T2 a tddo:Parameter ;
     dcterms:identifier "T2" .
+
+##########################################
+#### owl cardinality constrains pattern
+##########################################
+
+tddp:OWLCARD a tddo:Pattern ;
+      dcterms:identifier "OWLCARD" ;
+      dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
+      tddo:patternSPARQL """ SELECT ?s WHERE {
+                                   ?s %%P1%% ?c.
+                                 } GROUP BY ?s
+                                 HAVING count(?c) %%OP%% %%V1%% """ ;
+      tddo:patternPrevalenceSPARQL """ SELECT  (count(distinct ?s) AS ?total) WHERE { ?s %%P1%% ?c. }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:OWLCARD-P1 ;
+      tddo:parameter tddp:OWLCARD-OP ;
+      tddo:parameter tddp:OWLCARD-V1 .
+
+tddp:OWLCARD-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" .
+
+tddp:OWLCARD-OP a tddo:Parameter ;
+      dcterms:identifier "OP" .
+
+tddp:OWLCARD-V1 a tddo:Parameter ;
+      dcterms:identifier "V1" .
+
+
+##########################################
+#### Type & Property dependency (equivalent to card > 0)
+##########################################
+
+tddp:TYPRODEP a tddo:Pattern ;
+      dcterms:identifier "TYPRODEP" ;
+      dcterms:description """ A property must exist in a class instance"""@en ;
+      tddo:patternSPARQL """ SELECT ?s WHERE {
+                             ?s rdf:type%%OP%% %%T1%% .
+                             FILTER NOT EXISTS {?s %%P1%% ?v } } """ ;
+      tddo:patternPrevalenceSPARQL """ SELECT  (count(distinct ?s) AS ?total) WHERE { ?s rdf:type%%OP%% %%T1%% . } """ ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:TYPRODEP-T1 ;
+      tddo:parameter tddp:TYPRODEP-OP ;
+      tddo:parameter tddp:TYPRODEP-P1 .
+
+tddp:TYPRODEP-T1 a tddo:Parameter ;
+      dcterms:identifier "T1" .
+
+tddp:TYPRODEP-T1 a tddo:Parameter ;
+      dcterms:identifier "OP" .
+
+tddp:TYPRODEP-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" .
 

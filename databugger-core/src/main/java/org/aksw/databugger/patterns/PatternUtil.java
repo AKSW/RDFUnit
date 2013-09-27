@@ -29,9 +29,9 @@ public class PatternUtil {
                         "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = Utils.getAllPrefixes() +
                         "SELECT ?parameter ?id  WHERE { " +
+                        "%%PATTERN%%  tddo:parameter ?parameter . " +
                         "?parameter a tddo:Parameter . " +
                         "?parameter dcterms:identifier ?id . " +
-                        "%%PATTERN%%  tddo:parameter ?parameter . " +
                         "} ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
@@ -66,7 +66,7 @@ public class PatternUtil {
                 patterns.add(pat);
             else {
                 //TODO logger
-                System.err.print("Pattern not valid: " + pat.id);
+                System.err.println("Pattern not valid: " + pat.id);
                 System.exit(-1);
             }
         }

@@ -15,6 +15,7 @@ import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,12 +41,15 @@ public class Databugger {
     Databugger() {
         this.patternQueryFactory = loadPatterns("../data/patterns.ttl", "../data/testGenerators.ttl", "../data/prefixes.ttl");
         this.patterns = getPatterns();
-        this.autoGenerators = getAutoGenerators();
 
         // Update pattern service
         for (Pattern pattern : patterns ) {
             PatternService.addPattern(pattern.id, pattern);
         }
+
+        this.autoGenerators = getAutoGenerators();
+
+
     }
 
     public QueryExecutionFactory loadPatterns(String patf, String genf, String pref) {
@@ -87,6 +91,7 @@ public class Databugger {
     }
 
     public static void main(String[] args) throws Exception {
+        PropertyConfigurator.configure("log4j.properties");
 
         Databugger databugger = new Databugger();
 

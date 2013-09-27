@@ -50,7 +50,7 @@ public class UnitTest {
 
         model.createResource()
                 .addProperty(RDF.type, model.createResource("tddo:Test"))
-                .addProperty(model.createProperty("tddo:pattern"), model.createResource("tddp:" + pattern))
+                .addProperty(model.createProperty("tddo:basedOnPattern"), model.createResource("tddp:" + pattern))
                 .addProperty(model.createProperty("tddo:generated"),model.createResource(generated.getUri()))
                 .addProperty(model.createProperty("tddo:testGenerator"),model.createResource(autoGeneratorURI))
                 .addProperty(model.createProperty("tddo:appliesTo"),model.createResource(appliesTo.getUri()))

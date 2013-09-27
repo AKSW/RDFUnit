@@ -8,6 +8,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.Utils;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +22,8 @@ import java.util.List;
  * Created: 9/24/13 10:59 AM
  */
 public class TestUtil {
+    protected static Logger log = LoggerFactory.getLogger(TestUtil.class);
+
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
@@ -47,8 +51,7 @@ public class TestUtil {
             if (tag.isValid())
                 autoGenerators.add(tag);
             else {
-                //TODO logger
-                System.err.print("AutoGenerator not valid: " + tag.URI);
+                log.error("AutoGenerator not valid: " + tag.URI);
                 System.exit(-1);
             }
         }
@@ -79,7 +82,7 @@ public class TestUtil {
 
             model.write(new FileOutputStream(filename),"TURTLE");
         } catch (Exception e) {
-            // TODO handle exceptions
+            log.error("Cannot write tests to file: " + filename);
         }
     }
 }

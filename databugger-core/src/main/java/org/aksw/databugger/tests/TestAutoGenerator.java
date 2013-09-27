@@ -2,12 +2,15 @@ package org.aksw.databugger.tests;
 
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.sparql.core.Var;
 import org.aksw.databugger.Utils;
 import org.aksw.databugger.enums.TestGeneration;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.sources.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.List;
  * Created: 9/20/13 2:48 PM
  */
 public class TestAutoGenerator {
+    protected static Logger log = LoggerFactory.getLogger(TestAutoGenerator.class);
+
     final public String URI;
     final public String description;
     final public String query;
@@ -34,7 +39,26 @@ public class TestAutoGenerator {
      * Checks if the the generator is valid (provides correct parameters)
      * */
     public boolean isValid() {
-        //TODO implement
+        Pattern pattern = PatternService.getPattern(patternID);
+        Query q = null;
+        if ( pattern == null ) {
+            log.error(URI + " : Pattern " + patternID + " does not exist");
+            return false;
+        }
+        try {
+            q = QueryFactory.create(Utils.getAllPrefixes() + query);
+        } catch (Exception e) {
+            log.error(URI + " Cannot parse query");
+            return false;
+        }
+
+        List<Var> sv = q.getProjectVars();
+        if (sv.size() != pattern.parameters.size()) {
+            log.error(URI + " Select variables are different than Pattern parameters");
+            return false;
+        }
+
+
         return true;
     }
 
