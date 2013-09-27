@@ -5,10 +5,14 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGeneration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -24,12 +28,13 @@ public class UnitTest {
     public final TestAnnotation annotation;
     public final String sparql;
     public final String sparqlPrevalence;
+    public final List<String> references;
 
     public UnitTest(String sparql, String sparqlPrevalence) {
-        this("", TestGeneration.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence);
+        this("", TestGeneration.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
     }
 
-    public UnitTest(String pattern, TestGeneration generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence) {
+    public UnitTest(String pattern, TestGeneration generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
         this.pattern = pattern;
         this.generated = generated;
         this.autoGeneratorURI = autoGeneratorURI;
@@ -38,6 +43,7 @@ public class UnitTest {
         this.annotation = annotation;
         this.sparql = sparql;
         this.sparqlPrevalence = sparqlPrevalence;
+        this.references = references;
     }
 
     public Model getUnitTestModel(){
@@ -48,7 +54,7 @@ public class UnitTest {
 
     public void saveTestToModel(Model model) {
 
-        model.createResource()
+        Resource resource = model.createResource()
                 .addProperty(RDF.type, model.createResource("tddo:Test"))
                 .addProperty(model.createProperty("tddo:basedOnPattern"), model.createResource("tddp:" + pattern))
                 .addProperty(model.createProperty("tddo:generated"),model.createResource(generated.getUri()))
@@ -58,6 +64,10 @@ public class UnitTest {
                 .addProperty(model.createProperty("tddo:sparql"), sparql)
                 .addProperty(model.createProperty("tddo:sparqlPrevalence"),sparqlPrevalence)
                 ;
+
+        for (String r: references) {
+            resource.addProperty(model.createProperty("tddo:references"), r);
+        }
 
     }
 }

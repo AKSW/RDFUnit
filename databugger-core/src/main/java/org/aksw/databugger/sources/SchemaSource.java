@@ -49,7 +49,7 @@ public class SchemaSource extends Source {
                 model.write(new FileOutputStream(f),"TURTLE");
             }
         } catch (Exception e) {
-            log.error("Cannot loab ontology from URI: "+schema);
+            log.error("Cannot load ontology from URI: "+schema);
         }
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
     }

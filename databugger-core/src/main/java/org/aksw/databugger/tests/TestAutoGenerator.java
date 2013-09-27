@@ -74,11 +74,14 @@ public class TestAutoGenerator {
             QuerySolution row = rs.next();
 
             List<String> bindings = new ArrayList<String>();
+            List<String> references = new ArrayList<String>();
             for (PatternParameter p : pattern.parameters) {
                 if (row.contains(p.id)) {
                     RDFNode n = row.get(p.id);
-                    if (n.isResource())
+                    if (n.isResource()) {
                         bindings.add("<" + n.toString() + ">");
+                        references.add(n.toString());
+                    }
                     else
                         bindings.add(n.toString());
                 } else {
@@ -99,7 +102,8 @@ public class TestAutoGenerator {
                         source.getUri(),
                         new TestAnnotation(),
                         sparql,
-                        sparqlPrev));
+                        sparqlPrev,
+                        references));
             } catch (Exception e) {
 
             }
