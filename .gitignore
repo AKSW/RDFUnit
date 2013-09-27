@@ -3,3 +3,6 @@
 *.db
 target/*
 .idea/*
+
+cache.*
+tests.*
