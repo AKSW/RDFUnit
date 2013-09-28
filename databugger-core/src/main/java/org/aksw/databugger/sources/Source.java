@@ -15,7 +15,7 @@ import java.net.URI;
  */
 
 public abstract class Source {
-    protected static Logger log = LoggerFactory.getLogger(Source.class);
+    protected static final Logger log = LoggerFactory.getLogger(Source.class);
 
     private final String uri;
     private QueryExecutionFactory queryFactory;

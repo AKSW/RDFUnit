@@ -210,7 +210,9 @@
 						</systemProperty>
 					</systemProperties>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
-				</configuration>
+                    <stopPort/>
+                    <stopKey/>
+                </configuration>
 				<executions>
 					<!-- start and stop jetty (running our app) when running integration 
 						tests -->

@@ -1,8 +1,5 @@
 package org.aksw.databugger.patterns;
 
-import org.aksw.databugger.tests.TestAnnotation;
-import org.aksw.databugger.tests.UnitTest;
-
 import java.util.List;
 
 /**
@@ -11,12 +8,12 @@ import java.util.List;
  * Created: 9/16/13 1:14 PM
  */
 public class Pattern {
-    public final String id;
-    public final String description;
-    public final String sparqlPattern;
-    public final String sparqlPatternPrevalence;
-    public final String selectVariable;
-    public final List<PatternParameter> parameters;
+    private final String id;
+    private final String description;
+    private final String sparqlPattern;
+    private final String sparqlPatternPrevalence;
+    private final String selectVariable;
+    private final List<PatternParameter> parameters;
 
     public Pattern(String id, String description, String sparqlPattern, String sparqlPatternPrevalence, String selectVariable, List<PatternParameter> parameters) {
         this.id = id;
@@ -28,11 +25,11 @@ public class Pattern {
     }
 
     public boolean isValid(){
-        if (parameters == null || parameters.size() == 0)
+        if (getParameters() == null || getParameters().size() == 0)
             return false;
         //check if defined parameters exist is sparql
-        for (PatternParameter p: parameters) {
-            if ( sparqlPattern.indexOf("%%" + p.id + "%%") == -1 )
+        for (PatternParameter p: getParameters()) {
+            if ( getSparqlPattern().indexOf("%%" + p.id + "%%") == -1 )
                 return false;
         }
         // TODO search if we need more parameters
@@ -42,20 +39,20 @@ public class Pattern {
 
     // TODO assumes ordered bindings / parameters might not do like this in the end
     public String instantiateSparqlPattern(List<String> bindings) throws Exception {
-        if (bindings.size() != parameters.size()) throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings,sparqlPattern);
+        if (bindings.size() != getParameters().size()) throw new Exception("Bindings different in number than parameters");
+        return instantiateBindings(bindings, getSparqlPattern());
     }
 
     public String instantiateSparqlPatternPrevalence(List<String> bindings) throws Exception {
-        if (bindings.size() != parameters.size()) throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings,sparqlPatternPrevalence);
+        if (bindings.size() != getParameters().size()) throw new Exception("Bindings different in number than parameters");
+        return instantiateBindings(bindings, getSparqlPatternPrevalence());
     }
 
 
     private String instantiateBindings(List<String> bindings, String query) {
         String sparql = query;
         for (int i = 0; i < bindings.size(); i++) {
-            sparql = sparql.replace("%%" + parameters.get(i).id + "%%", bindings.get(i));
+            sparql = sparql.replace("%%" + getParameters().get(i).id + "%%", bindings.get(i));
         }
         return sparql;
     }
@@ -66,5 +63,29 @@ public class Pattern {
     private boolean validateArguments() {
         //TODO implement this method
         return true;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getSparqlPattern() {
+        return sparqlPattern;
+    }
+
+    public String getSparqlPatternPrevalence() {
+        return sparqlPatternPrevalence;
+    }
+
+    public String getSelectVariable() {
+        return selectVariable;
+    }
+
+    public List<PatternParameter> getParameters() {
+        return parameters;
     }
 }

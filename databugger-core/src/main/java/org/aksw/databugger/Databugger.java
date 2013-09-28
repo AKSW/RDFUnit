@@ -30,7 +30,7 @@ import java.util.List;
 public class Databugger {
     private static Logger log = LoggerFactory.getLogger(Source.class);
 
-    private PrefixMapping prefixes = new PrefixMappingImpl();;
+    private PrefixMapping prefixes = new PrefixMappingImpl();
     QueryExecutionFactory patternQueryFactory;
 
     private List<Pattern> patterns = new ArrayList<Pattern>();
@@ -42,7 +42,7 @@ public class Databugger {
 
         // Update pattern service
         for (Pattern pattern : patterns ) {
-            PatternService.addPattern(pattern.id, pattern);
+            PatternService.addPattern(pattern.getId(), pattern);
         }
 
         this.autoGenerators = getAutoGenerators();
@@ -105,7 +105,6 @@ public class Databugger {
             log.info("Generating tests for: "+ s.getUri());
             TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), databugger.getPrefixes(), s.getTestFile());
         }
-
     }
 
     public PrefixMapping getPrefixes() {

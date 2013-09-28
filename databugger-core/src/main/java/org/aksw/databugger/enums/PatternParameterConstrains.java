@@ -32,7 +32,7 @@ public enum PatternParameterConstrains {
      * */
     None;
 
-    private static String uri = "http://databugger.aksw.org/ontology/";
+    private static final String uri = "http://databugger.aksw.org/ontology/";
 
 
     public String getUri() {
@@ -47,7 +47,7 @@ public enum PatternParameterConstrains {
 
     public static PatternParameterConstrains resolve(String value) {
 
-        String s = value.replace(uri, "").toString();
+        String s = value.replace(uri, "");
         if (s.equals("Resource")) {
             return Resource;
         } else if (s.equals("Property")) {

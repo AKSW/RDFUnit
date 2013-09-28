@@ -18,8 +18,8 @@ import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
  */
 public class DatasetSource extends Source {
 
-    public final String sparqlEndpoint;
-    public final String sparqlGraph;
+    private final String sparqlEndpoint;
+    private final String sparqlGraph;
 
     public DatasetSource(String uri) {
         this(uri,uri,"");
@@ -45,10 +45,10 @@ public class DatasetSource extends Source {
         // Add delay in order to be nice to the remote server (delay in milli seconds)
         qef = new QueryExecutionFactoryDelay(qef, 7000);
 
-        QueryExecutionFactory qefBackup = qef;
-
         /**
          * maybe we don't need a cache
+
+        QueryExecutionFactory qefBackup = qef;
 
         try {
             // Set up a cache

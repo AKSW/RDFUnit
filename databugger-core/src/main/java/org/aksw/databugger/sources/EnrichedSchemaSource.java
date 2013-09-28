@@ -9,12 +9,27 @@ import org.aksw.databugger.enums.TestAppliesTo;
  */
 public class EnrichedSchemaSource extends SchemaSource {
 
-    public EnrichedSchemaSource(String uri) {
+    private final DatasetSource dataset;
+
+    public EnrichedSchemaSource(String uri, DatasetSource dataset) {
         super(uri);
+        this.dataset =  dataset;
     }
 
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.EnrichedSchema;
     }
+
+    @Override
+    protected String getCacheFolder(){
+        return super.getCacheFolder() + dataset.getCacheFolder();
+    }
+
+    //TODO enrich
+    // call default DLLearner's output
+    public void enrichDataset(){
+
+    }
+
 }

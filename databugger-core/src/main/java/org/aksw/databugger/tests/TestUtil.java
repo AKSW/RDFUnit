@@ -23,7 +23,7 @@ import java.util.List;
  * Created: 9/24/13 10:59 AM
  */
 public class TestUtil {
-    protected static Logger log = LoggerFactory.getLogger(TestUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(TestUtil.class);
 
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
@@ -52,7 +52,7 @@ public class TestUtil {
             if (tag.isValid())
                 autoGenerators.add(tag);
             else {
-                log.error("AutoGenerator not valid: " + tag.URI);
+                log.error("AutoGenerator not valid: " + tag.getURI());
                 System.exit(-1);
             }
         }

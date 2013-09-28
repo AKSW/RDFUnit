@@ -20,7 +20,7 @@ public class PatternService {
     }
 
     public static Pattern getPattern(String id) {
-        return (Pattern) patterns.get(id);
+        return patterns.get(id);
     }
 
     public static Set<String> getPatternList() {

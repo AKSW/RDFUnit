@@ -2,8 +2,6 @@ package org.aksw.databugger.patterns;
 
 import com.hp.hpl.jena.query.*;
 import org.aksw.databugger.Utils;
-import org.aksw.databugger.tests.TestAnnotation;
-import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -66,7 +64,7 @@ public class PatternUtil {
                 patterns.add(pat);
             else {
                 //TODO logger
-                System.err.println("Pattern not valid: " + pat.id);
+                System.err.println("Pattern not valid: " + pat.getId());
                 System.exit(-1);
             }
         }

@@ -146,7 +146,7 @@ public class DatabuggerUI extends UI {
             String cl= row.get("class").toString();
             String scl= row.contains("subclass") ? row.get("subclass").toString() : "http://www.w3.org/2002/07/owl#Thing";
 
-            int clIndex, sclIndex = 0;
+            int clIndex, sclIndex;
 
             Object index = classList.get(scl);
             if (index == null ) {
@@ -221,7 +221,7 @@ public class DatabuggerUI extends UI {
             String pdom= row.contains("domain") ? row.get("domain").toString() : "";
             String prng= row.contains("range") ? row.get("range").toString() : "";
 
-            int clIndex, sclIndex = 0;
+            int clIndex, sclIndex;
 
             Object index = propertyList.get(prt);
             if (index == null ) {
