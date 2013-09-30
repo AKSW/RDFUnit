@@ -29,7 +29,7 @@ public class Pattern {
             return false;
         //check if defined parameters exist is sparql
         for (PatternParameter p: getParameters()) {
-            if ( getSparqlPattern().indexOf("%%" + p.id + "%%") == -1 )
+            if ( getSparqlPattern().indexOf("%%" + p.getId() + "%%") == -1 )
                 return false;
         }
         // TODO search if we need more parameters
@@ -52,7 +52,7 @@ public class Pattern {
     private String instantiateBindings(List<String> bindings, String query) {
         String sparql = query;
         for (int i = 0; i < bindings.size(); i++) {
-            sparql = sparql.replace("%%" + getParameters().get(i).id + "%%", bindings.get(i));
+            sparql = sparql.replace("%%" + getParameters().get(i).getId() + "%%", bindings.get(i));
         }
         return sparql;
     }

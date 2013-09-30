@@ -3,7 +3,7 @@ package org.aksw.databugger.tests;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.core.Var;
-import org.aksw.databugger.Utils;
+import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.enums.TestGeneration;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
@@ -46,7 +46,7 @@ public class TestAutoGenerator {
             return false;
         }
         try {
-            q = QueryFactory.create(Utils.getAllPrefixes() + getQuery());
+            q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getQuery());
         } catch (Exception e) {
             log.error(getURI() + " Cannot parse query");
             return false;
@@ -65,7 +65,7 @@ public class TestAutoGenerator {
     public List<UnitTest> generate(Source source) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
-        Query q = QueryFactory.create(Utils.getAllPrefixes() + getQuery());
+        Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
         ResultSet rs = qe.execSelect();
         Pattern pattern = PatternService.getPattern(getPatternID());
@@ -76,8 +76,8 @@ public class TestAutoGenerator {
             List<String> bindings = new ArrayList<String>();
             List<String> references = new ArrayList<String>();
             for (PatternParameter p : pattern.getParameters()) {
-                if (row.contains(p.id)) {
-                    RDFNode n = row.get(p.id);
+                if (row.contains(p.getId())) {
+                    RDFNode n = row.get(p.getId());
                     if (n.isResource()) {
                         bindings.add("<" + n.toString() + ">");
                         references.add(n.toString());

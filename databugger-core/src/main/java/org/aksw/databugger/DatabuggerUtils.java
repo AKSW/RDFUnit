@@ -19,7 +19,7 @@ import java.util.List;
  * Description
  * Created: 9/24/13 11:25 AM
  */
-public class Utils {
+public class DatabuggerUtils {
     public static String getAllPrefixes() {
         return  " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +

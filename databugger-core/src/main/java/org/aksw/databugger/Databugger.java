@@ -97,7 +97,7 @@ public class Databugger {
         List<Source> sources = new ArrayList<Source>();
         sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
         sources.add(new SchemaSource("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"));
-        //sources.addAll(Utils.getSourcesFromLOV());
+        //sources.addAll(DatabuggerUtils.getSourcesFromLOV());
 
 
         for (Source s: sources) {

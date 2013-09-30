@@ -6,7 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.PrefixMapping;
-import org.aksw.databugger.Utils;
+import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class TestUtil {
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-        String sparqlSelect =  Utils.getAllPrefixes() +
+        String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
                         " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                         " ?generator a tddo:TestGenerator ; " +
                         "  dcterms:description ?desc ; " +
