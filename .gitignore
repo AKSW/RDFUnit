@@ -1,7 +1,10 @@
 *.swp
 *.iml
 *.db
-target/*
+*.classpath
+*.project
+*.settings
+target
 .idea/*
 
 cache.*
