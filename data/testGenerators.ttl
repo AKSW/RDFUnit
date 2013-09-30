@@ -71,7 +71,7 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
                              FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
-tddg:OWLCARD-MAX a tddo:TestGenerator ;
+tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) WHERE {
                              ?P1 owl:maxCardinality ?v . } """ ;
@@ -93,3 +93,67 @@ tddg:OWLFUNCEX a tddo:TestGenerator ;
                              ?P1 rdf:type+ owl:FunctionalProperty .
                              ?P1 rdfs:domain ?T1 .} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
+
+
+################################################################################
+### owl inverse functional property constraints generator
+################################################################################
+
+tddg:OWLINVFUNC a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:InverseFunctionalProperty constraints. If such a property exists we ensure that resources are assigned only once via this property """@en ;
+    # PW TODO: maybe this is too restrictive since it does not work with
+    # resources that are not typed properly
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ?T1 WHERE {
+                                ?P1 a owl:InverseFunctionalProperty .
+                                ?s ?P1 ?o .
+                                ?s a ?T1 .
+                              }""" ;
+    tddo:basedOnPattern tddd:INVFUNC .
+
+
+################################################################################
+#### owl symmetric property constraints generator
+################################################################################
+
+tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+                                ?P1 a owl:SymmetricProperty .
+                              }""" ;
+    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
+
+
+################################################################################
+#### owl asymmetric property constraints generator
+################################################################################
+
+tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:AsymmetricProperty constraints. Given a statement with an asymmetric property we ensure that no inverse statements with the same property exist in the dataset """@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+                                ?P1 a owl:AsymmetricProperty .
+                              } """ ;
+    tddo:basedOnPattern tddd:OWLASYMMETRICPROP .
+
+
+################################################################################
+#### owl transitive property constraints generator
+################################################################################
+
+tddg:OWLTRANSPROP a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+                                ?P1 a owl:TransitiveProperty .
+                              }""" ;
+    tddo:basedOnPattern tddd:OWLTRANSPROP .
+
+
+################################################################################
+#### owl irreflexive property constrains generator
+################################################################################
+
+tddg:OWLIRREFLEXIVE a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:IrreflexiveProperty constraints. Given an irreflexive property we ensure that it is not used reflexively """@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+                                ?P1 a owl:IrreflexiveProperty .
+                              }""" ;
+    tddo:basedOnPattern tddd:OWLIRREFLEXIVE .

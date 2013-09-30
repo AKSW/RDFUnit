@@ -154,3 +154,131 @@ tddp:TYPRODEP-P1 a tddo:Parameter ;
       dcterms:identifier "P1" ;
       tddo:parameterConstraint tddo:Property .
 
+
+################################################################################
+#### unique value constraint of inverse functional properties
+################################################################################
+
+tddp:INVFUNC a tddo:Pattern ;
+      dcterms:identifier "INVFUNC" ;
+      dcterms:description """ Unique value constraint of inverse functional properties """@en ;
+      # PW TODO: maybe this is too restrictive since it does not work with
+      # resources that are not typed properly
+      tddo:patternSPARQL """ SELECT distinct ?v1 WHERE{
+                                ?a %%P1%% ?v1 .
+                                ?b %%P1%% ?v1 .
+                                ?a a %%T1%% .
+                                ?b a %%T1%% .
+                                FILTER (?a != ?b)
+                              }""" ;
+      tddo:patternPrevalenceSPARQL """ SELECT (count(?v1) AS ?total) WHERE{
+                                            ?a %%P1%% ?v1 .
+                                            ?a a %%T1%% . } """ ;
+      tddo:selectVariable "v1" ;
+      tddo:parameter tddp:INVFUNC-P1 ;
+      tddo:parameter tddp:INVFUNC-T1 .
+
+tddp:INVFUNC-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:INVFUNC-T1 a tddo:Parameter ;
+      dcterms:identifier "T1" ;
+      tddo:parameterConstraint tddo:Class .
+
+
+################################################################################
+#### symmetric properties involved in only one axiom (only 'one-way'), e.g.
+#### ex:bernd dbo:spouse ex:alice . is mentioned, but not
+#### ex:alice dbo:spouse ex:bernd .
+################################################################################
+
+tddp:OWLSYMMETRICPROP a tddo:Pattern ;
+      dcterms:identifier "OWLSYMMETRICPROP" ;
+      dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
+      tddo:patternSPARQL """ SELECT ?r2 WHERE {
+                                ?r1  %%P1%% ?r2 .
+                                FILTER NOT EXISTS {?r2 %%P1%% ?r1} .
+                              }""" ;
+      tddo:patternPrevalenceSPARQL """ SELECT (count(?r2) AS ?total) WHERE {
+                                          ?r1 %%P1%% ?r2 .
+                                        }""" ;
+      tddo:selectVariable "r2" ;
+      tddo:parameter tddp:OWLSYMMETRICPROP-P1 .
+
+tddp:OWLSYMMETRICPROP-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+
+################################################################################
+#### a property that is asymmetric is used as symmetric property, as in
+#### ex:bernd dbo:child ex:alice . and
+#### ex:alice dbo:child bernd .
+################################################################################
+
+tddp:OWLASYMMETRICPROP a tddo:Pattern ;
+      dcterms:identifier "OWLASYMMETRICPROP" ;
+      dcterms:description """ Given a property that is asymmetric, this pattern finds cases where it is nonetheless used as symmetric property """@en ;
+      tddo:patternSPARQL """ SELECT ?r1 WHERE {
+                                ?r1 %%P1%% ?r2 .
+                                ?r2 %%P1%% ?r1 .
+                              }""" ;
+      tddo:patternPrevalenceSPARQL """ SELECT (count(?r1) AS ?total) WHERE {
+                                          ?r1 %%P1%% ?r2 .
+                                        }""";
+      tddo:selectVariable "r1" ;
+      tddo:parameter tddp:OWLASYMMETRICPROP-P1 .
+
+tddp:OWLASYMMETRICPROP-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+
+################################################################################
+#### in a dataset a transitive property is used for statements like
+#### ex:alice dbo:family ex:bernd . and
+#### ex:bernd dbo:family ex:charly . 
+#### but the consequent statement
+#### ex:alic dbo:family ex:charly is missing
+################################################################################
+
+tddp:OWLTRANSPROP a tddo:Pattern ;
+      dcterms:identifier "OWLTRANSPROP" ;
+      dcterms:description """ Given a transitive property, this pattern finds missing statements containing the consequent transitive entailments """@en ;
+      tddo:patternSPARQL """ SELECT ?r1 WHERE {
+                                ?r1 %%P1%% ?r2 .
+                                ?r2 %%P1%% ?r3 .
+                                FILTER NOT EXISTS {?r1 %%P1%% ?r3} .
+                              }""" ;
+      tddo:patternPrevalenceSPARQL """ SELECT (count(?r1) AS ?total) WHERE {
+                                          ?r1 %%P1%% ?r2 .
+                                        }""" ;
+      tddo:selectVariable "r1" ;
+      tddo:parameter tddp:OWLTRANSPROP-P1 .
+
+tddp:OWLTRANSPROP-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+
+################################################################################
+#### Given an irreflexive property p there should not be any triples like
+#### ex:sth p ex:sth . 
+################################################################################
+
+tddp:OWLIRREFLEXIVE a tddo:Pattern ;
+      dcterms:identifier "OWLIRREFLEXIVE" ;
+      dcterms:description """ Given an irreflexive property, this pattern find violating statement that nontheless use this property reflexively """@en ;
+      tddo:patternSPARQL """ SELECT ?s WHERE {
+                                ?s %%P1%% ?s .
+                              }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE {
+                                          ?s %%P1%% ?o .
+                                        }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:OWLIRREFLEXIVE-P1 .
+
+tddp:OWLIRREFLEXIVE-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
