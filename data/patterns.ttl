@@ -24,13 +24,17 @@ tddp:RDFSRANGE a tddo:Pattern ;
 
 
 tddp:RDFSRANGE-P1 a tddo:Parameter ;
-    dcterms:identifier "P1" .
+    dcterms:identifier "P1" ;
+    tddo:parameterConstraint tddo:Property .
 
 tddp:RDFSRANGE-OP a tddo:Parameter ;
-    dcterms:identifier "OP" .
+    dcterms:identifier "OP" ;
+    tddo:parameterConstraint tddo:Operator ;
+    tddo:constrainPattern """+|""".
 
 tddp:RDFSRANGE-T1 a tddo:Parameter ;
-    dcterms:identifier "T1" .
+    dcterms:identifier "T1" ;
+    tddo:parameterConstraint tddo:Class .
 
 ##########################################
 #### rdfs:domain pattern
@@ -50,16 +54,20 @@ tddp:RDFSDOMAIN a tddo:Pattern ;
     tddo:parameter tddp:RDFSDOMAIN-T1 .
 
 tddp:RDFSDOMAIN-P1 a tddo:Parameter ;
-    dcterms:identifier "P1" .
+    dcterms:identifier "P1" ;
+    tddo:parameterConstraint tddo:Property .
 
 tddp:RDFSDOMAIN-V1 a tddo:Parameter ;
     dcterms:identifier "V1" .
 
 tddp:RDFSDOMAIN-OP a tddo:Parameter ;
-    dcterms:identifier "OP" .
+    dcterms:identifier "OP" ;
+    tddo:parameterConstraint tddo:Operator ;
+    tddo:constrainPattern """+|\\*|""".
 
 tddp:RDFSDOMAIN-T1 a tddo:Parameter ;
-    dcterms:identifier "T1" .
+    dcterms:identifier "T1" ;
+    tddo:parameterConstraint tddo:Class .
 
 
 ##########################################
@@ -78,10 +86,12 @@ tddp:OWLDISJC a tddo:Pattern ;
     tddo:parameter tddp:OWLDISJC-T2 .
 
 tddp:OWLDISJC-T1 a tddo:Parameter ;
-    dcterms:identifier "T1" .
+    dcterms:identifier "T1" ;
+    tddo:parameterConstraint tddo:Class .
 
 tddp:OWLDISJC-T2 a tddo:Parameter ;
-    dcterms:identifier "T2" .
+    dcterms:identifier "T2" ;
+    tddo:parameterConstraint tddo:Class .
 
 ##########################################
 #### owl cardinality constrains pattern
@@ -89,7 +99,7 @@ tddp:OWLDISJC-T2 a tddo:Parameter ;
 
 tddp:OWLCARD a tddo:Pattern ;
       dcterms:identifier "OWLCARD" ;
-      dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
+      dcterms:description """Emulates the owl:cardinality constrain"""@en ;
       tddo:patternSPARQL """ SELECT ?s WHERE {
                                    ?s %%P1%% ?c.
                                  } GROUP BY ?s
@@ -101,13 +111,18 @@ tddp:OWLCARD a tddo:Pattern ;
       tddo:parameter tddp:OWLCARD-V1 .
 
 tddp:OWLCARD-P1 a tddo:Parameter ;
-      dcterms:identifier "P1" .
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
 
 tddp:OWLCARD-OP a tddo:Parameter ;
-      dcterms:identifier "OP" .
+      dcterms:identifier "OP" ;
+      tddo:parameterConstraint tddo:Operator ;
+      tddo:constrainPattern """<|<=|>|>=|=|!=""" .
 
 tddp:OWLCARD-V1 a tddo:Parameter ;
-      dcterms:identifier "V1" .
+      dcterms:identifier "V1" ;
+      tddo:parameterConstraint tddo:None ;
+      tddo:constrainPattern """[0-9]*""" .
 
 
 ##########################################
@@ -127,11 +142,15 @@ tddp:TYPRODEP a tddo:Pattern ;
       tddo:parameter tddp:TYPRODEP-P1 .
 
 tddp:TYPRODEP-T1 a tddo:Parameter ;
-      dcterms:identifier "T1" .
+      dcterms:identifier "T1" ;
+      tddo:parameterConstraint tddo:Class .
 
 tddp:TYPRODEP-T1 a tddo:Parameter ;
-      dcterms:identifier "OP" .
+      dcterms:identifier "OP"  ;
+      tddo:parameterConstraint tddo:Operator ;
+      tddo:constrainPattern """+|\\*|""".
 
 tddp:TYPRODEP-P1 a tddo:Parameter ;
-      dcterms:identifier "P1" .
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
 
