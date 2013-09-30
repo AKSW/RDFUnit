@@ -145,7 +145,7 @@ tddp:TYPRODEP-T1 a tddo:Parameter ;
       dcterms:identifier "T1" ;
       tddo:parameterConstraint tddo:Class .
 
-tddp:TYPRODEP-T1 a tddo:Parameter ;
+tddp:TYPRODEP-OP a tddo:Parameter ;
       dcterms:identifier "OP"  ;
       tddo:parameterConstraint tddo:Operator ;
       tddo:constrainPattern """+|\\*|""".
