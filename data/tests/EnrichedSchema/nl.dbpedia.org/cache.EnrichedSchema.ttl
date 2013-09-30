@@ -1,0 +1,2582 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/datatype/centimetre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/cubicMetre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/kelvin>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/kilogram>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/kilogramPerCubicMetre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/kilometre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/litre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/millimetre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/minute>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/squareKilometre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/squareMetre>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/datatype/usDollar>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://dbpedia.org/ontology/Activity>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/AdministrativeRegion>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Agent>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Aircraft>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Airline>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Airport>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Album>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/AnatomicalStructure>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/ArchitecturalStructure>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Artist>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Artwork>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Athlete>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Automobile>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Automobile/fuelCapacity>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Automobile/wheelbase>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Award>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Band>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Beer>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Beverage>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/BodyOfWater>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Book>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Bridge>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Building>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Building/floorArea>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Canal>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Castle>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/CelestialBody>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/ChemicalCompound>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/ChemicalSubstance>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/ChemicalSubstance/boilingPoint>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/ChemicalSubstance/density>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/ChemicalSubstance/meltingPoint>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/City>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/CityDistrict>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Cleric>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Colour>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Comics>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Company>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Country>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Currency>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/CyclingRace>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Cyclist>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Disease>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Drug>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/EducationalInstitution>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/EthnicGroup>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Eukaryote>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Event>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Family>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/FictionalCharacter>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Film>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Food>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Game>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/GolfPlayer>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/GovernmentalAdministrativeRegion>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Group>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Hospital>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Hotel>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Infrastructure>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Infrastructure/length>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Island>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Lake>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Lake/shoreLength>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Lake/volume>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Language>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/List>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Locomotive>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MeanOfTransportation>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MeanOfTransportation/height>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/MeanOfTransportation/length>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/MeanOfTransportation/weight>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/MeanOfTransportation/width>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Memorial>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MetroStation>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MilitaryConflict>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MilitaryPerson>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Mill>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Monarch>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Monastery>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Monument>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Mountain>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MultiVolumePublication>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Municipality>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Museum>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MusicalArtist>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/MusicalWork>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/NaturalPlace>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/OfficeHolder>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/OlympicResult>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Olympics>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Organisation>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Painting>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/PeriodicalLiterature>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Person>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Person/height>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Person/weight>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/Place>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/PoliticalParty>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Politician>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/PopulatedPlace>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/PopulatedPlace/area>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/PopulatedPlace/areaTotal>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/ProtectedArea>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Province>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/PublicTransitSystem>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Race>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/RailwayStation>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/RailwayTunnel>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Region>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/ReligiousBuilding>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Restaurant>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/River>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Road>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/RoadTunnel>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/RouteOfTransportation>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Saint>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/School>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Scientist>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Sea>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Settlement>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Ship>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Single>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/SoccerClub>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/SoccerPlayer>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Software>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Species>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/SportCompetitionResult>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/SportsEvent>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/SportsTeam>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Station>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Stream>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Street>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/TelevisionEpisode>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/TelevisionShow>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/TennisPlayer>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/TennisTournament>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/TradeUnion>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Tunnel>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/University>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/WindMotor>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Windmill>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Work>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Work/runtime>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/WorldHeritageSite>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/Wrestler>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/WrittenWork>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://dbpedia.org/ontology/aSide>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/abbreviation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/academicAdvisor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/promotor> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/promotor> .
+
+<http://dbpedia.org/ontology/activeYearsEndDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/activeYearsEndYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/activeYearsStartDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/activeYearsStartYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/address>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/administrativeCollectivity>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/administrativeDistrict>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/affiliation>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/age>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/agencyStationCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/aircraftType>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/album>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/alias>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/alliance>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/alongside>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/anthem>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/architect>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/architecturalStyle>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/area>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/areaCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/areaLand>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/areaTotal>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/areaWater>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/arrondissement>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/arrondissement> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/arrondissement> .
+
+<http://dbpedia.org/ontology/artery>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/artist>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/artiest> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/artiest> .
+
+<http://dbpedia.org/ontology/assembly>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/associationOfLocalGovernment>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/atcPrefix>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/atcSuffix>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/author>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/authority>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/auteur> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/auteur> .
+
+<http://dbpedia.org/ontology/automobilePlatform>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/averageSpeed>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/award>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/awayColourHexCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/bSide>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/bandMember>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/lid> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/lid> .
+
+<http://dbpedia.org/ontology/battle>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/beatifiedBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/beatifiedPlace>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/bedCount>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/bioavailability>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/birthDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/birthName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/birthPlace>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/birthYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/board>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/bodyStyle>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/boilingPoint>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/borough>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/budget>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/builder>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/buildingEndYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/buildingStartYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/buildingType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/buriedPlace>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/canonizedBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/canonizedDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/canonizedPlace>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/canton>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/capacity>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/capital>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/careerPrizeMoney>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/casNumber>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/casSupplemental>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/category>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/causalties>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/censusYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/ceo>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/chain>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/chairman>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/chairperson>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/championInDouble>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/championInMixedDouble>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/championInSingle>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/channel>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/chef>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/chiefEditor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/montage> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/montage> .
+
+<http://dbpedia.org/ontology/child>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/christeningDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/cinematography>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/cinematografie> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/cinematografie> .
+
+<http://dbpedia.org/ontology/circulation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/citizenship>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/city>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/cityType>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/class>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/classis>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/klasse> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/klasse> .
+
+<http://dbpedia.org/ontology/closingDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/closingYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/club>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/clubsRecordGoalscorer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/cmykCoordinateBlack>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/cmykCoordinateCyanic>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/cmykCoordinateMagenta>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/cmykCoordinateYellow>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/coProducer>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/coach>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/code>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/codeLandRegistry>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/codeMemorial>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/codeMunicipalMonument>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/codeNationalMonument>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/collection>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/colour>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/colourHexCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/colourName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/combatant>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/commander>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/commissioningDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/commonName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/company>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/concern> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/concern> .
+
+<http://dbpedia.org/ontology/completionDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/computingPlatform>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/constructionMaterial>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/continent>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/cornishName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/cost>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/country>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/county>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/countySeat>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/zetel> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/zetel> .
+
+<http://dbpedia.org/ontology/coverArtist>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/creationYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/creator>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/creatorOfDish>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/crosses>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/cuisine>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/curator>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/currency>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/munteenheid> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/munteenheid> .
+
+<http://dbpedia.org/ontology/currentlyUsedFor>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/date>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dateUnveiled>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/deathCause>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/deathDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/deathPlace>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/deathYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/debut>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/decommissioningDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/demolitionYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/denomination>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/density>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/department>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/departement> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/departement> .
+
+<http://dbpedia.org/ontology/depth>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/deputy>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/description>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/designCompany>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/designer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/destination>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/developer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/diameter>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/diocese>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/director>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/discipline>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/diseasesdb>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dissolutionDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dissolutionYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dissolved>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/distance>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/distributor>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/district>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/division>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/dorlandsPrefix>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dorlandsSuffix>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/drugbank>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dubber>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/duration>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/dutchMIPCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/editor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/education>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/elevation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/emedicineSubject>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/emedicineTopic>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/endDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/endPoint>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/engine>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/engineType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/engineer>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/episodeNumber>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/era>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/ethnicGroup>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/ethnicity>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/europeanAffiliation>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/europeanParliamentGroup>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/eurofractie> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/eurofractie> .
+
+<http://dbpedia.org/ontology/executiveProducer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/extinctionYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/family>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/fareZone>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/fate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/features>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/federalState>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://dbpedia.org/ontology/state> .
+
+<http://dbpedia.org/ontology/film>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/firstAppearance>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/firstAscentYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/firstPublicationDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/firstWinner>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/flagBearer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/vlaggendrager> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/vlaggendrager> .
+
+<http://dbpedia.org/ontology/floorArea>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/floorCount>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/format>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/formationDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/formationYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/formerBandMember>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/formerName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/formerTeam>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/foundedBy>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/founder>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/foundingDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/foundingPerson>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/foundingYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/frequencyOfPublication>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/fuel>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/fuelCapacity>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/games>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/gender>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/generalManager>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/genre>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/genus>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/goalsInLeague>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/goalsInNationalTeam>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/governingBody>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/governmentType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/governor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/grades>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/grayPage>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/graySubject>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/gridReference>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/ground>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/groupCommemorated>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/guest>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/hairColor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/kleur> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/kleur> .
+
+<http://dbpedia.org/ontology/hasVariant>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/headChef>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/headquarter>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/height>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/highestRegion>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/homeColourHexCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/homeport>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/honours>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/hsvCoordinateHue>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/hsvCoordinateSaturation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/hsvCoordinateValue>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/hubAirport>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/iataAirlineCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/iataLocationIdentifier>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/icaoAirlineCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/icaoLocationIdentifier>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/icd10>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/icd9>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/icdo>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/id>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/ideology>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/illustrator>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/imdbId>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/inchi>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/incumbent>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/industry>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/inflow>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/influenced>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/be\u00EFnvloedde> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/be\u00EFnvloedde> .
+
+<http://dbpedia.org/ontology/influencedBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/ingredient>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/inseeCode>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/institution>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/instrument>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/internationalAffiliation>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/internationaal> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/internationaal> .
+
+<http://dbpedia.org/ontology/introductionDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/isPartOfMilitaryConflict>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/isPartOfRoute>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/isbn>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/island>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/eiland> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/eiland> .
+
+<http://dbpedia.org/ontology/iso31661Code>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/iso6391Code>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/iso6392Code>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/iso6393Code>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/isoCodeRegion>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/iso> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/iso> .
+
+<http://dbpedia.org/ontology/issn>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/iucnCategory>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/iupacName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/jurisdiction>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/keyPerson>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/kingdom>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/rijk> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/rijk> .
+
+<http://dbpedia.org/ontology/knownFor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/language>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/languageFamily>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/languageRegulator>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/largestSettlement>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/largestWin>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/lastAppearance>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/latestPreviewDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/latestPreviewVersion>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/latestReleaseDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/latestReleaseVersion>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/layingDown>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/layout>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/leader>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/leaderName>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/leaderParty>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/legalForm>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/length>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/license>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/listItemOf>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/literaryGenre>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/localAuthority>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/locatedInArea>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty>, <http://www.w3.org/2002/07/owl#TransitiveProperty> .
+
+<http://dbpedia.org/ontology/location>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/locationCity>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/plaatsnaam> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/plaatsnaam> .
+
+<http://dbpedia.org/ontology/logo>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/longName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/mainInterest>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/mainOrgan>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/mainspan>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/maintainedBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/majorShrine>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/manager>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/manufacturer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/map>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/mapDescription>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/marketCapitalisation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/maximumDepth>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/mayor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/mediaType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/medlineplus>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/meetingRoad>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/meltingPoint>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/membership>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/mergedIntoParty>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/meshId>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/meshName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/meshNumber>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/metropolitanBorough>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/militaryBranch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/militaryCommand>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/militaryRank>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/militaryUnit>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/millSpan>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/millType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/type> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/type> .
+
+<http://dbpedia.org/ontology/millsCodeBE>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/millsCodeDutch>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/millsCodeNL>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/millsCodeNLVerdwenen>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/millsCodeNLWindmotoren>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/modelEndYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/modelStartYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/monarch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/mostWins>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/mountainRange>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/gebergte> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/gebergte> .
+
+<http://dbpedia.org/ontology/movement>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/municipality>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/municipalityCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/municipalityType>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/museum>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/museum> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/museum> .
+
+<http://dbpedia.org/ontology/museumType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/musicComposer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/muziek> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/muziek> .
+
+<http://dbpedia.org/ontology/musicType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/musicalArtist>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/artiest> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/artiest> .
+
+<http://dbpedia.org/ontology/musicalKey>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/nationalTeam>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/nationalYears>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/nationality>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/nearestCity>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/neighboringMunicipality>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/nerve>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/netIncome>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/nextEvent>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/nonFictionSubject>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/notableIdea>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/notableWork>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/notes>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/number>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberBuilt>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfBronzeMedalsWon>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfCompetitors>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfEmployees>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfEpisodes>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfGoldMedalsWon>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfHouses>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfIslands>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfLanes>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfLaunches>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfMunicipalities>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfOfficials>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfPages>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfParticipatingAthletes>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfParticipatingNations>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfPeopleAttending>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/numberOfPlayers>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfRooms>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfSeasons>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfSilverMedalsWon>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfSpeakers>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfSports>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfSportsEvents>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/numberOfStations>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfStudents>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfTracks>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfVehicles>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/numberOfVisitors>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/nutsCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/occupation>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/office>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/officialLanguage>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/officialOpenedBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/olympicOathSwornBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/omim>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/openingDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/openingYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/operatedBy>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/beheer> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/beheer> .
+
+<http://dbpedia.org/ontology/operatingSystem>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/operator>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/order>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/orderDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/organSystem>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/origin>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/originalLanguage>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/taal> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/taal> .
+
+<http://dbpedia.org/ontology/originalName>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/originalStartPoint>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/originallyUsedFor>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/outflow>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/owner>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/painter>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/parent>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/parentOrganisation>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/participant>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/partner>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/party>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/passengersPerYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/personFunction>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/philosophicalSchool>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/phylum>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/picture>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/pictureDescription>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/place>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/playerInTeam>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/playingTime>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/plays>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/populationAsOf>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/populationPlace>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/populationTotal>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/portrayer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/postalCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/powerType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/predecessor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/presenter>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/president>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/previousEvent>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/previousInfrastructure>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/previousWork>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/primeMinister>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/producer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/product>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/productionCompany>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/productionEndYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/productionStartYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/profession>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/programmingLanguage>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/protectionStatus>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/province>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/pseudonym>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/pubchem>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/publicationDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/publisher>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/purpose>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/railwayLineUsingTunnel>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/spoorlijn> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/spoorlijn> .
+
+<http://dbpedia.org/ontology/railwayPlatforms>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/rankInFinalMedalCount>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/rankingsSingles>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/rating>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/rebuildingYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/recentWinner>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/recordDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/recordLabel>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/recordedIn>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/rector>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/region>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/regio> .
+
+<http://dbpedia.org/ontology/regionServed>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/regionType>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/regionalLanguage>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/registration>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/related>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/relatedFunctions>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/relatedMeanOfTransportation>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/relatedPlaces>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/lijst> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/lijst> .
+
+<http://dbpedia.org/ontology/relation>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/relative>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/releaseDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/religion>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/religiousOrder>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/reopeningYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/residence>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/restingPlace>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/result>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/revenue>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/rgbCoordinateBlue>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/rgbCoordinateGreen>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/rgbCoordinateRed>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/riverBranch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/riverMouth>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/routeEnd>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/routeEndLocation>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/routeNumber>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/routeStart>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/routeStartLocation>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/runtime>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/runwayDesignation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/runwayLength>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/runwaySurface>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/saint>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/school>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/schoolCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/seasonNumber>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/seatingCapacity>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/secondLeader>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/secretaryGeneral>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/series>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/serviceEndYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/serviceStartYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/servingRailwayLine>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/shipBeam>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/shipDraft>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/shipLaunch>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/shoreLength>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/show>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/serie> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/serie> .
+
+<http://dbpedia.org/ontology/showJudge>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/similar>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/slogan>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/source>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/species>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/splitFromParty>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/spokenIn>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/sportDiscipline>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/sportSpecialty>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/spouse>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/spurType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/staff>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/starRating>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/starring>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/spelers> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/spelers> .
+
+<http://dbpedia.org/ontology/startDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/state>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://dbpedia.org/ontology/federalState> .
+
+<http://dbpedia.org/ontology/status>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/strength>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/structuralSystem>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/sublimationPoint>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/subsequentInfrastructure>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/subsequentWork>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/subtitle>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/successor>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/targetAirport>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://nl.dbpedia.org/property/frequentFlyer> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://nl.dbpedia.org/property/frequentFlyer> .
+
+<http://dbpedia.org/ontology/team>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/temperature>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/tenant>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/tennisSurfaceType>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/territory>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/timeZone>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/titleDate>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/topSpeed>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/torchBearer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/totalPopulation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/trackLength>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/tradeMark>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/trainer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/trainerYears>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/translator>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/transmission>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/twinCity>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/type>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/umbrellaTitle>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/university>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/usingCountry>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/variantOf>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/vehicleCode>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/vehiclesPerDay>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/vein>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/veneratedIn>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/viceLeader>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/vicePresident>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/vicePrimeMinister>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/visitorsTotal>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/voice>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/voiceType>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/volume>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/volumes>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/waterwayThroughTunnel>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/webcast>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/weight>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/wheelbase>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/width>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/wikiPageDisambiguates>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/wikiPageExternalLink>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/wikiPageRedirects>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/wingArea>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/wingspan>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/winsAtAsia>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/winsAtOtherTournaments>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/winsInEurope>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/worldChampionTitleYear>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/worstDefeat>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/writer>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/year>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://dbpedia.org/ontology/yearOfConstruction>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/years>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://dbpedia.org/ontology/youthClub>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/youthWing>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://dbpedia.org/ontology/youthYears>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://nl.dbpedia.org/property/arrondissement>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/artiest>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/auteur>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/beheer>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/be\u00EFnvloedde>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/cinematografie>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/concern>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/departement>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/eiland>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/eurofractie>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/frequentFlyer>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/gebergte>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/internationaal>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/iso>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/klasse>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/kleur>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/lid>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/lijst>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/montage>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/munteenheid>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/museum>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/muziek>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/plaatsnaam>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/promotor>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/regio>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/rijk>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/serie>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/spelers>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/spoorlijn>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/taal>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/type>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/vlaggendrager>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://nl.dbpedia.org/property/zetel>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://purl.org/ontology/bibo/Book>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/AdministrativeArea>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Airport>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/BodyOfWater>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Book>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Canal>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/City>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/CollegeOrUniversity>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Country>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/CreativeWork>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/EducationalOrganization>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Event>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Hospital>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Hotel>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/LakeBodyOfWater>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Language>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Mountain>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Movie>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Museum>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/MusicAlbum>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/MusicGroup>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Organization>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Painting>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Person>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Place>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Product>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/Restaurant>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/RiverBodyOfWater>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/School>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/SeaBodyOfWater>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/SportsEvent>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/SportsTeam>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://schema.org/TVEpisode>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://umbel.org/umbel/rc/DrugProduct>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://umbel.org/umbel/rc/PopulatedPlace>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.opengis.net/gml/_Feature>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.w3.org/2001/XMLSchema#date>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://www.w3.org/2001/XMLSchema#gYear>
+    a <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+
+<http://www.w3.org/2004/02/skos/core#OrderedCollection>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://xmlns.com/foaf/0.1/Person>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<owlapi:ontology:ont1>
+    a <http://www.w3.org/2002/07/owl#Ontology> .
+

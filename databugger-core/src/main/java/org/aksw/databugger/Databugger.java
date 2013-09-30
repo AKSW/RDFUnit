@@ -7,6 +7,8 @@ import com.hp.hpl.jena.shared.impl.PrefixMappingImpl;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
+import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.EnrichedSchemaSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
@@ -94,14 +96,22 @@ public class Databugger {
 
         Databugger databugger = new Databugger();
 
+        Source dataset = new DatasetSource("http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", null);
+        dataset.setBaseCacheFolder("../data/tests/");
+
         List<Source> sources = new ArrayList<Source>();
         sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
-        sources.add(new SchemaSource("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"));
+        sources.add(new SchemaSource("http://xmlns.com/foaf/0.1/"));
+        sources.add(new SchemaSource("http://purl.org/dc/terms/"));
+        sources.add(new SchemaSource("http://purl.org/dc/elements/1.1/"));
+        sources.add(new SchemaSource("http://www.w3.org/2004/02/skos/core#"));
+
+        sources.add(new EnrichedSchemaSource("http://dbpedia.org"));
+
         //sources.addAll(DatabuggerUtils.getSourcesFromLOV());
 
-
         for (Source s: sources) {
-            s.setBaseCacheFolder("../data/tests/auto/");
+            s.setBaseCacheFolder("../data/tests/");
             log.info("Generating tests for: "+ s.getUri());
             TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), databugger.getPrefixes(), s.getTestFile());
         }

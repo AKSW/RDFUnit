@@ -34,7 +34,7 @@ public class DatabuggerUtils {
 
     public static List<Source> getSourcesFromLOV(){
         List<Source> sources = new ArrayList<Source>();
-        Source lov = new DatasetSource("http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov","");
+        Source lov = new DatasetSource("http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov","", null);
 
         // Example from http://lov.okfn.org/endpoint/lov
         QueryExecution qe = lov.getExecutionFactory().createQueryExecution(

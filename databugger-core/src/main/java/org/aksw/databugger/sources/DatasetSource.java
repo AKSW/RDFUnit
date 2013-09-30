@@ -11,6 +11,9 @@ import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -21,14 +24,20 @@ public class DatasetSource extends Source {
     private final String sparqlEndpoint;
     private final String sparqlGraph;
 
+    private final List<SchemaSource> schemata;
+
     public DatasetSource(String uri) {
-        this(uri,uri,"");
+        this(uri, uri, "", null);
     }
 
-    public DatasetSource(String uri, String sparqlEndpoint, String sparqlGraph) {
+    public DatasetSource(String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata) {
         super(uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = sparqlGraph;
+        if (schemata == null)
+            this.schemata = new ArrayList<SchemaSource>();
+        else
+            this.schemata = schemata;
     }
 
     @Override
@@ -44,9 +53,6 @@ public class DatasetSource extends Source {
 
         // Add delay in order to be nice to the remote server (delay in milli seconds)
         qef = new QueryExecutionFactoryDelay(qef, 7000);
-
-        /**
-         * maybe we don't need a cache
 
         QueryExecutionFactory qefBackup = qef;
 
@@ -65,12 +71,15 @@ public class DatasetSource extends Source {
             //Try to create cache, if fails continue...
             qef = qefBackup;
         }
-         */
 
         // Add pagination
         qef = new QueryExecutionFactoryPaginated(qef, 900);
 
         return qef;
 
+    }
+
+    public List<SchemaSource> getSchemata() {
+        return schemata;
     }
 }

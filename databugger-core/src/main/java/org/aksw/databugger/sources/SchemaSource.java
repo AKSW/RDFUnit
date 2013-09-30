@@ -18,7 +18,7 @@ import java.io.FileOutputStream;
  */
 public class SchemaSource extends Source {
 
-    private final String schema;
+    protected final String schema;
 
     public SchemaSource(String uri) {
         this(uri,uri);
