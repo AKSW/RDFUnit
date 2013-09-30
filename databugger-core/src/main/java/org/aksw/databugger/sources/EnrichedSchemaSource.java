@@ -26,9 +26,13 @@ public class EnrichedSchemaSource extends SchemaSource {
         return super.getCacheFolder() + dataset.getCacheFolder();
     }
 
+    public void enrichDataset(){
+        enrichDataset(0.9);
+    }
+
     //TODO enrich
     // call default DLLearner's output
-    public void enrichDataset(){
+    public void enrichDataset(double confidence){
 
     }
 
