@@ -103,7 +103,7 @@ tddp:OWLCARD a tddo:Pattern ;
       tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
                                    ?s %%P1%% ?c.
                                  } GROUP BY ?s
-                                 HAVING count(?c) %%OP%% %%V1%% """ ;
+                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
       tddo:patternPrevalenceSPARQL """ SELECT  (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c. }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:OWLCARD-P1 ;
