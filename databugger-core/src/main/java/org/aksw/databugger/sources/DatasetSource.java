@@ -58,8 +58,8 @@ public class DatasetSource extends Source {
 
         try {
             // Set up a cache
-            // Cache entries are valid for 1 day
-            long timeToLive = 24l * 60l * 60l * 1000l;
+            // Cache entries are valid for 7 days
+            long timeToLive = 7l * 24l * 60l * 60l * 1000l;
 
             // This creates a 'cache' folder, with a database file named 'sparql.db'
             // Technical note: the cacheBackend's purpose is to only deal with streams,

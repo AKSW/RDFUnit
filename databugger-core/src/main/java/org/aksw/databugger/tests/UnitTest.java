@@ -7,11 +7,14 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
+import com.hp.hpl.jena.shared.uuid.UUIDFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGeneration;
-import org.aksw.databugger.patterns.Pattern;
-import org.aksw.databugger.patterns.PatternService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,8 @@ import java.util.List;
  * Created: 9/23/13 6:31 AM
  */
 public class UnitTest {
+    private static Logger log = LoggerFactory.getLogger(UnitTest.class);
+
     private final String pattern;
     private final TestGeneration generated;
     private final String autoGeneratorURI;
@@ -31,6 +36,7 @@ public class UnitTest {
     private final String sparql;
     private final String sparqlPrevalence;
     private final List<String> references;
+    private String testURI = null;
 
     public UnitTest(String sparql, String sparqlPrevalence) {
         this("", TestGeneration.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
@@ -56,7 +62,9 @@ public class UnitTest {
 
     public void saveTestToModel(Model model) {
 
-        Resource resource = model.createResource()
+        testURI = JenaUUID.generate().asString();
+
+        Resource resource = model.createResource(testURI)
                 .addProperty(RDF.type, model.createResource("tddo:Test"))
                 .addProperty(model.createProperty("tddo:basedOnPattern"), model.createResource("tddp:" + getPattern()))
                 .addProperty(model.createProperty("tddo:generated"), model.createResource(getGenerated().getUri()))
@@ -73,16 +81,21 @@ public class UnitTest {
     }
 
     public Query getSparqlQuery() {
-        Query q = QueryFactory.create(sparql);
-        q.setDistinct(true);
+        Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
         return q;
     }
 
     public Query getSparqlQueryAsCount() {
-        Pattern p = PatternService.getPattern(pattern);
         //TODO find a Jena way to do this
-        String newSparql = sparql.replaceFirst(" ?"+p.getSelectVariable() + " ", " (count( distinct ?" + p.getSelectVariable() + ") AS ?total) " );
-        return QueryFactory.create(newSparql);
+        String newSparql = sparql.replaceFirst("SELECT", "SELECT (count( " );
+        newSparql = newSparql.replaceFirst("WHERE", ") AS ?total ) WHERE");
+        //try {
+        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + newSparql);
+       // } catch (Exception e) {
+        //    log.info(newSparql);
+       //     return null;
+       // }
+
     }
 
     public Query getSparqlQueryAnnotated() {
@@ -138,5 +151,9 @@ public class UnitTest {
 
     public List<String> getReferences() {
         return references;
+    }
+
+    public String getTestURI() {
+        return testURI;
     }
 }

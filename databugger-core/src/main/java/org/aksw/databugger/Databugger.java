@@ -20,7 +20,9 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ import java.util.List;
  * Created: 9/20/13 5:59 PM
  */
 public class Databugger {
-    private static Logger log = LoggerFactory.getLogger(Source.class);
+    private static Logger log = LoggerFactory.getLogger(Databugger.class);
 
     private PrefixMapping prefixes = new PrefixMappingImpl();
     QueryExecutionFactory patternQueryFactory;
@@ -88,7 +90,7 @@ public class Databugger {
     }
 
     public List<UnitTest> generateTestsFromAG(Source source){
-        return  TestUtil.isntantiateTestsFromAG(autoGenerators,source);
+        return  TestUtil.instantiateTestsFromAG(autoGenerators, source);
     }
 
     public static void main(String[] args) throws Exception {
@@ -99,21 +101,43 @@ public class Databugger {
         Source dataset = new DatasetSource("http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", null);
         dataset.setBaseCacheFolder("../data/tests/");
 
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<Source> sources = new ArrayList<Source>();
-        sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
+        //sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
         sources.add(new SchemaSource("http://xmlns.com/foaf/0.1/"));
         sources.add(new SchemaSource("http://purl.org/dc/terms/"));
         sources.add(new SchemaSource("http://purl.org/dc/elements/1.1/"));
         sources.add(new SchemaSource("http://www.w3.org/2004/02/skos/core#"));
-
+        //sources.add(new SchemaSource("http://www.georss.org/georss/"));
+        sources.add(new SchemaSource("http://www.w3.org/2003/01/geo/wgs84_pos"));
+        sources.add(new SchemaSource("http://www.w3.org/ns/prov"));
+        /*
         sources.add(new EnrichedSchemaSource("http://dbpedia.org"));
-
+                                                            */
         //sources.addAll(DatabuggerUtils.getSourcesFromLOV());
 
+        List<UnitTest> allTests = new ArrayList<UnitTest>();
         for (Source s: sources) {
             s.setBaseCacheFolder("../data/tests/");
             log.info("Generating tests for: "+ s.getUri());
-            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), databugger.getPrefixes(), s.getTestFile());
+            List<UnitTest> tests = databugger.generateTestsFromAG(s);
+            allTests.addAll(tests);
+            // write to file for backup
+            TestUtil.writeTestsToFile(tests, databugger.getPrefixes(), s.getTestFile());
+        }
+
+        TestExecutor te = new TestExecutor(dataset,allTests, 500);
+        Model model = te.executeTests();
+
+
+        try {
+            File f = new File("results.ttl");
+            f.getParentFile().mkdirs();
+
+            model.setNsPrefixes(databugger.getPrefixes());
+            model.write(new FileOutputStream(f),"TURTLE");
+        } catch (Exception e) {
+            log.error("Cannot write tests to file: ");
         }
     }
 
