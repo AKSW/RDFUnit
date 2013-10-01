@@ -26,12 +26,12 @@ public class DatasetSource extends Source {
 
     private final List<SchemaSource> schemata;
 
-    public DatasetSource(String uri) {
-        this(uri, uri, "", null);
+    public DatasetSource(String prefix, String uri) {
+        this(prefix, uri, uri, "", null);
     }
 
-    public DatasetSource(String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata) {
-        super(uri);
+    public DatasetSource(String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata) {
+        super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = sparqlGraph;
         if (schemata == null)
@@ -64,7 +64,7 @@ public class DatasetSource extends Source {
             // This creates a 'cache' folder, with a database file named 'sparql.db'
             // Technical note: the cacheBackend's purpose is to only deal with streams,
             // whereas the frontend interfaces with higher level classes - i.e. ResultSet and Model
-            CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
+            CacheCoreEx cacheBackend = CacheCoreH2.create(getPrefix(), timeToLive, true);
             CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
             qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
         } catch (Exception e) {

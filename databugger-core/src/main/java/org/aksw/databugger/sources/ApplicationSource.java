@@ -10,8 +10,8 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
  */
 public class ApplicationSource extends Source {
 
-    public ApplicationSource(String uri) {
-        super(uri);
+    public ApplicationSource(String prefix, String uri) {
+        super(prefix, uri);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class DatabuggerUtils {
 
     public static List<Source> getSourcesFromLOV(){
         List<Source> sources = new ArrayList<Source>();
-        Source lov = new DatasetSource("http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov","", null);
+        Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov","", null);
 
         // Example from http://lov.okfn.org/endpoint/lov
         QueryExecution qe = lov.getExecutionFactory().createQueryExecution(
@@ -66,7 +66,7 @@ public class DatabuggerUtils {
 
             String prefix = row.get("vocabPrefix").toString();
             String vocab = row.get("vocabURI").toString();
-            sources.add(new SchemaSource(vocab));
+            sources.add(new SchemaSource(prefix, vocab));
         }
         return sources;
     }

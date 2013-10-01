@@ -8,6 +8,7 @@ import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
 import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.EnrichedSchemaSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
@@ -97,23 +98,22 @@ public class Databugger {
 
         Databugger databugger = new Databugger();
 
-        Source dataset = new DatasetSource("http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", null);
+        Source dataset = new DatasetSource("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", null);
         dataset.setBaseCacheFolder("../data/tests/");
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<Source> sources = new ArrayList<Source>();
-        //sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
-        sources.add(new SchemaSource("http://xmlns.com/foaf/0.1/"));
-        sources.add(new SchemaSource("http://purl.org/dc/terms/"));
-        sources.add(new SchemaSource("http://purl.org/dc/elements/1.1/"));
-        sources.add(new SchemaSource("http://www.w3.org/2004/02/skos/core#"));
+        sources.add(new SchemaSource("dbo", "http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
+        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
+        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
+        sources.add(new SchemaSource("dc", "http://purl.org/dc/elements/1.1/"));
+        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
         //sources.add(new SchemaSource("http://www.georss.org/georss/"));
-        sources.add(new SchemaSource("http://www.w3.org/2003/01/geo/wgs84_pos"));
-        sources.add(new SchemaSource("http://www.w3.org/ns/prov"));
-        /*
-        sources.add(new EnrichedSchemaSource("http://dbpedia.org"));
-                                                            */
-        //sources.addAll(DatabuggerUtils.getSourcesFromLOV());
+        sources.add(new SchemaSource("geo", "http://www.w3.org/2003/01/geo/wgs84_pos"));
+        sources.add(new SchemaSource("prov", "http://www.w3.org/ns/prov"));
+
+        //Enriched Schema (cached in folder)
+        sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
         for (Source s: sources) {
