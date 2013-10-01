@@ -9,6 +9,7 @@ import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.EnrichedSchemaSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 
@@ -31,6 +32,50 @@ public class DatabuggerUtils {
                 " PREFIX tddo: <http://databugger.aksw.org/ontology#> \n" +
                 " PREFIX tddg: <http://databugger.aksw.org/generators#> \n"
                 ;
+    }
+
+    public static DatasetSource getDBpediaENDataset() {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
+        List<SchemaSource> sources = new ArrayList<SchemaSource>();
+        sources.add(new SchemaSource("dbo", "http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
+        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
+        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
+        sources.add(new SchemaSource("dc", "http://purl.org/dc/elements/1.1/"));
+        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
+        //sources.add(new SchemaSource("http://www.georss.org/georss/"));
+        sources.add(new SchemaSource("geo", "http://www.w3.org/2003/01/geo/wgs84_pos"));
+        sources.add(new SchemaSource("prov", "http://www.w3.org/ns/prov"));
+
+        //Enriched Schema (cached in folder)
+        sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
+
+        DatasetSource dataset = new DatasetSource("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
+        dataset.setBaseCacheFolder("../data/tests/");
+
+        return dataset;
+    }
+
+    public static DatasetSource getDBpediaNLDataset() {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
+        List<SchemaSource> sources = new ArrayList<SchemaSource>();
+        sources.add(new SchemaSource("dbo", "http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
+        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
+        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
+        sources.add(new SchemaSource("dc", "http://purl.org/dc/elements/1.1/"));
+        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
+        //sources.add(new SchemaSource("http://www.georss.org/georss/"));
+        sources.add(new SchemaSource("geo", "http://www.w3.org/2003/01/geo/wgs84_pos"));
+        sources.add(new SchemaSource("prov", "http://www.w3.org/ns/prov"));
+
+        //Enriched Schema (cached in folder)
+        sources.add(new EnrichedSchemaSource("dbo", "http://nl.dbpedia.org"));
+
+        DatasetSource dataset = new DatasetSource("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
+        dataset.setBaseCacheFolder("../data/tests/");
+
+        return dataset;
     }
 
     public static List<Source> getSourcesFromLOV(){

@@ -79,6 +79,14 @@ public class DatasetSource extends Source {
 
     }
 
+    @Override
+    public void setBaseCacheFolder(String baseCacheFolder) {
+        super.setBaseCacheFolder(baseCacheFolder);
+        for (Source src: schemata) {
+            src.setBaseCacheFolder(baseCacheFolder);
+        }
+    }
+
     public List<SchemaSource> getSchemata() {
         return schemata;
     }
