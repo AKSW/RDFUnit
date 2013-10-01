@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.UnitTest;
@@ -52,12 +53,12 @@ public class TestExecutor {
             }
 
             model.createResource()
-                    .addProperty(RDF.type, model.createResource("tddo:Result"))
-                    .addProperty(model.createProperty("tddo:count"), ""+total)
-                    .addProperty(model.createProperty("tddo:prevalence"), ""+total)
-                    .addProperty(model.createProperty("tddo:query"), model.createResource(t.getTestURI()));
+                    .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "count"), ""+total)
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "prevalence"), ""+total)
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "query"), model.createResource(t.getTestURI()));
 
-            log.info("Returned " + total + " errors ( " + prevalence + "prevalence) for test: " + t.getTestURI());
+            log.info("Returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
 
             if (delay>0) {
                 try {
