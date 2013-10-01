@@ -80,30 +80,6 @@ public class UnitTest {
 
     }
 
-    public Query getSparqlQuery() {
-        Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
-        return q;
-    }
-
-    public Query getSparqlQueryAsCount() {
-        //TODO find a Jena way to do this
-        String newSparql = sparql.replaceFirst("SELECT", "SELECT (count( " );
-        newSparql = newSparql.replaceFirst("WHERE", ") AS ?total ) WHERE");
-        //try {
-        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + newSparql);
-       // } catch (Exception e) {
-        //    log.info(newSparql);
-       //     return null;
-       // }
-
-    }
-
-    public Query getSparqlQueryAnnotated() {
-
-        // TODO set construct annotations
-        return getSparqlQuery();
-    }
-
     public UnitTest clone() {
         return new UnitTest(
                 pattern,
@@ -145,8 +121,32 @@ public class UnitTest {
         return sparql;
     }
 
+    public Query getSparqlQuery() {
+        return  QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
+    }
+
+    public String getSparqlAsCount() {
+        String newSparql = sparql.replaceFirst("SELECT", "SELECT (count( " );
+        newSparql = newSparql.replaceFirst("WHERE", ") AS ?total ) WHERE");
+        return newSparql;
+    }
+
+    public Query getSparqlAsCountQuery() {
+        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getSparqlAsCount());
+    }
+
+    public Query getSparqlAnnotatedQuery() {
+
+        // TODO set construct annotations
+        return getSparqlQuery();
+    }
+
     public String getSparqlPrevalence() {
         return sparqlPrevalence;
+    }
+
+    public Query getSparqlPrevalenceQuery() {
+        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparqlPrevalence);
     }
 
     public List<String> getReferences() {

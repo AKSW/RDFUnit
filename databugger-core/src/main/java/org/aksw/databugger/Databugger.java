@@ -8,7 +8,6 @@ import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
 import org.aksw.databugger.sources.DatasetSource;
-import org.aksw.databugger.sources.EnrichedSchemaSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
@@ -127,7 +126,7 @@ public class Databugger {
         }
 
         TestExecutor te = new TestExecutor(dataset,allTests, 500);
-        Model model = te.executeTests();
+        Model model = te.executeTestsCounts();
 
 
         try {

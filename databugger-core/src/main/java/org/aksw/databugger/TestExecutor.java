@@ -1,11 +1,11 @@
 package org.aksw.databugger;
 
 import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.UnitTest;
@@ -32,55 +32,32 @@ public class TestExecutor {
         this.delay = delay;
     }
 
-    public Model executeTests() {
+    public Model executeTestsCounts() {
         Model model = ModelFactory.createDefaultModel();
 
         for (UnitTest t : tests ) {
 
+            int total = -1, prevalence = -1;
 
-            int total = 0, prevalence = 0;
-
-            QueryExecution qe = null;
-            ResultSet results = null;
-
-            //query
             try {
-                qe = source.getExecutionFactory().createQueryExecution(t.getSparqlQueryAsCount());
-                results = qe.execSelect();
+                 total = getCountNumber(model, t.getSparqlAsCountQuery(), "total");
             } catch (Exception e) {
-                total = -1;
+                //query failed total remains -1
             }
 
-            if ( results != null && results.hasNext()) {
-                QuerySolution qs = results.next();
-
-                total = qs.get("total").asLiteral().getInt();
-
-            }
-            //prevalence
             try {
-                qe = source.getExecutionFactory().createQueryExecution(t.getSparqlPrevalence());
-                results = qe.execSelect();
+                prevalence = getCountNumber(model, t.getSparqlPrevalenceQuery(), "total");
             } catch (Exception e) {
-                prevalence = -1;
+                //query failed total remains -1
             }
 
-            if ( results != null && results.hasNext()) {
-                QuerySolution qs = results.next();
-
-                prevalence = qs.get("total").asLiteral().getInt();
-
-            }
-
-            Resource resource = model.createResource()
+            model.createResource()
                     .addProperty(RDF.type, model.createResource("tddo:Result"))
                     .addProperty(model.createProperty("tddo:count"), ""+total)
                     .addProperty(model.createProperty("tddo:prevalence"), ""+total)
                     .addProperty(model.createProperty("tddo:query"), model.createResource(t.getTestURI()));
 
             log.info("Returned " + total + " errors ( " + prevalence + "prevalence) for test: " + t.getTestURI());
-
-            if (qe != null) qe.close();
 
             if (delay>0) {
                 try {
@@ -91,6 +68,24 @@ public class TestExecutor {
             }
         }
         return model;
+    }
+
+    private int getCountNumber(Model model, Query query, String var) {
+
+        int result = 0;
+        QueryExecution qe = source.getExecutionFactory().createQueryExecution(query);
+        ResultSet  results = qe.execSelect();
+
+        if ( results != null && results.hasNext()) {
+            QuerySolution qs = results.next();
+
+            result = qs.get(var).asLiteral().getInt();
+
+        }
+        qe.close();
+
+        return result;
+
     }
 
 }
