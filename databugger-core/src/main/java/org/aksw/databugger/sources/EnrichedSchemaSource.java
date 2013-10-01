@@ -45,6 +45,11 @@ public class EnrichedSchemaSource extends SchemaSource {
         return TestAppliesTo.EnrichedSchema;
     }
 
+    @Override
+    public  String getPrefix() {
+        return  "enriched-" + super.getPrefix() ;
+    }
+
     public void enrichDataset(){
         enrichDataset(0.9);
     }
