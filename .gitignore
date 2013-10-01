@@ -4,8 +4,6 @@
 *.classpath
 *.project
 *.settings
+.idea
 target
-.idea/*
-
-cache.*
-tests.*
+tests
