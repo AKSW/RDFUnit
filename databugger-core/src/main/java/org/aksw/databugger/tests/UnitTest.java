@@ -1,13 +1,17 @@
 package org.aksw.databugger.tests;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGeneration;
+import org.aksw.databugger.patterns.Pattern;
+import org.aksw.databugger.patterns.PatternService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +48,7 @@ public class UnitTest {
         this.references = references;
     }
 
-    public Model getUnitTestModel(){
+    public Model getUnitTestModel() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         saveTestToModel(model);
         return model;
@@ -55,18 +59,49 @@ public class UnitTest {
         Resource resource = model.createResource()
                 .addProperty(RDF.type, model.createResource("tddo:Test"))
                 .addProperty(model.createProperty("tddo:basedOnPattern"), model.createResource("tddp:" + getPattern()))
-                .addProperty(model.createProperty("tddo:generated"),model.createResource(getGenerated().getUri()))
-                .addProperty(model.createProperty("tddo:testGenerator"),model.createResource(getAutoGeneratorURI()))
-                .addProperty(model.createProperty("tddo:appliesTo"),model.createResource(getAppliesTo().getUri()))
-                .addProperty(model.createProperty("tddo:source"),model.createResource(getSourceUri()))
+                .addProperty(model.createProperty("tddo:generated"), model.createResource(getGenerated().getUri()))
+                .addProperty(model.createProperty("tddo:testGenerator"), model.createResource(getAutoGeneratorURI()))
+                .addProperty(model.createProperty("tddo:appliesTo"), model.createResource(getAppliesTo().getUri()))
+                .addProperty(model.createProperty("tddo:source"), model.createResource(getSourceUri()))
                 .addProperty(model.createProperty("tddo:sparql"), getSparql())
-                .addProperty(model.createProperty("tddo:sparqlPrevalence"), getSparqlPrevalence())
-                ;
+                .addProperty(model.createProperty("tddo:sparqlPrevalence"), getSparqlPrevalence());
 
-        for (String r: getReferences()) {
+        for (String r : getReferences()) {
             resource.addProperty(model.createProperty("tddo:references"), r);
         }
 
+    }
+
+    public Query getSparqlQuery() {
+        Query q = QueryFactory.create(sparql);
+        q.setDistinct(true);
+        return q;
+    }
+
+    public Query getSparqlQueryAsCount() {
+        Pattern p = PatternService.getPattern(pattern);
+        //TODO find a Jena way to do this
+        String newSparql = sparql.replaceFirst(" ?"+p.getSelectVariable() + " ", " (count( distinct ?" + p.getSelectVariable() + ") AS ?total) " );
+        return QueryFactory.create(newSparql);
+    }
+
+    public Query getSparqlQueryAnnotated() {
+
+        // TODO set construct annotations
+        return getSparqlQuery();
+    }
+
+    public UnitTest clone() {
+        return new UnitTest(
+                pattern,
+                generated,
+                autoGeneratorURI,
+                appliesTo,
+                sourceUri,
+                annotation,
+                sparql,
+                sparqlPrevalence,
+                references);
     }
 
     public String getPattern() {

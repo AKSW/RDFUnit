@@ -49,8 +49,7 @@ public class PatternUtil {
             String variable = qs.get("variable").toString();
             List<PatternParameter> parameters = new ArrayList<PatternParameter>();
 
-            Query qn = QueryFactory.create(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
-            QueryExecution qeNested = queryFactory.createQueryExecution(qn);
+            QueryExecution qeNested = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
             ResultSet resultsNested = qeNested.execSelect();
 
             while (resultsNested.hasNext()) {

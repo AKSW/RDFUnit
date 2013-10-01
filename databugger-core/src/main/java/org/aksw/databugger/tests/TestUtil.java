@@ -9,10 +9,13 @@ import com.hp.hpl.jena.shared.PrefixMapping;
 import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactoryBackQuery;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,12 +65,53 @@ public class TestUtil {
 
     }
 
-    public static List<UnitTest> isntantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
+    public static List<UnitTest> instantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
         for (TestAutoGenerator tag: autoGenerators ) {
             tests.addAll( tag.generate(source));
         }
+
+        return tests;
+
+    }
+
+
+    public static List<UnitTest> instantiateTestsFromFile(String filename) {
+        List<UnitTest> tests = new ArrayList<UnitTest>();
+
+        Model model = ModelFactory.createDefaultModel();
+        try {
+            model.read(new FileInputStream(filename), null, "TURTLE");
+        } catch (Exception e) {
+            log.error("Cannot read tests from file: " +filename);
+            System.exit(-1);
+        }
+        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
+
+        String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
+                " SELECT ?test ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
+                " ?test a tddo:Test ; " +
+                " tddo:appliesTo ?appliesTo ;" +
+                " tddo:basedOnPattern ?basedOnPattern ;" +
+                " tddo:generated ?generated ;" +
+                " tddo:source ?source ;" +
+                " tddo:sparql ?sparql ;" +
+                " tddo:sparqlPrevalence ?sparqlPrevalence ;" +
+                " OPTIONAL {?test tddo:references ?references .}" +
+                " OPTIONAL {?test tddo:testGenerator ?testGenerator .}" +
+                "} ";
+
+        QueryExecution qe = qef.createQueryExecution(sparqlSelect);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.next();
+
+            //TODO implement (references property yields multiple results)
+        }
+        qe.close();
+
 
         return tests;
 
