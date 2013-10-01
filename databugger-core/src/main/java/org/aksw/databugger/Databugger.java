@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -47,6 +48,12 @@ public class Databugger {
         // Update pattern service
         for (Pattern pattern : patterns ) {
             PatternService.addPattern(pattern.getId(), pattern);
+        }
+
+        // Update Prefix Service
+        Map<String, String> prf = prefixes.getNsPrefixMap();
+        for (String id: prf.keySet()) {
+            PrefixService.addPrefix(id, prf.get(id));
         }
 
         this.autoGenerators = getAutoGenerators();
@@ -79,6 +86,10 @@ public class Databugger {
         }
 
         getPrefixes().setNsPrefixes(prefixModel.getNsPrefixMap());
+    }
+
+    public PrefixMapping getPrefixes() {
+        return prefixes;
     }
 
     public List<Pattern> getPatterns(){
@@ -140,8 +151,5 @@ public class Databugger {
         }
     }
 
-    public PrefixMapping getPrefixes() {
-        return prefixes;
-    }
 
 }
