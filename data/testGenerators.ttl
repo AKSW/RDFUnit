@@ -34,21 +34,35 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
 ##########################################
 
 tddg:OWLDISJC a tddo:TestGenerator ;
-    dcterms:description """Generate all owl:dosjointWith constrains defined in a schema"""@en ;
+    dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ?T2 WHERE {
                              ?T1 owl:disjointWith ?T2 . } """ ;
+    tddo:basedOnPattern tddd:OWLDISJC .
+
+
+##########################################
+#### owl:complementOf pattern
+##########################################
+
+tddg:OWLCOMPL a tddo:TestGenerator ;
+    dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ?T2 WHERE {
+                             ?T1 owl:complementOf ?T2 . } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
 ##########################################
 #### owl cardinality constrains generators
 ##########################################
 
+# owl:cardinality number > 0 (count restriction if exists)
 tddg:OWLCARD a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('!=' as ?OP) (str(?v)  as ?V2) WHERE {
-                             ?P1 owl:cardinality ?v . } """ ;
+                             ?P1 owl:cardinality ?v .
+                             FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
+# owl:cardinality number > 0 (exists in db)
 tddg:OWLCARDEX a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
@@ -57,12 +71,17 @@ tddg:OWLCARDEX a tddo:TestGenerator ;
                              FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
+# owl:cardinality number = 0 (must not exist
+# TODO TRIPLE PATTERN
+
+# owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCARD-MIN a tddo:TestGenerator ;
     dcterms:description """Generates owl:minCardinality constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('<=' as ?OP) (str(?v)  as ?V2) WHERE {
                              ?P1 owl:minCardinality ?v . } """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
+# owl:minCardinality number > 0 (exists in db)
 tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
     dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
@@ -71,11 +90,16 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
                              FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
+# owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) WHERE {
-                             ?P1 owl:maxCardinality ?v . } """ ;
+                             ?P1 owl:maxCardinality ?v .
+                             FILTER (?v > 0) . } """ ;
     tddo:basedOnPattern tddd:OWLCARD .
+
+# owl:maxCardinality number = 0 (must not exist
+# TODO TRIPLE PATTERN
 
 ##########################################
 #### owl functional property constrains generators
@@ -111,12 +135,12 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 #### owl symmetric property constraints generator
 ################################################################################
 
-tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
-    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:SymmetricProperty .
-                              }""" ;
-    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
+# tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
+#    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
+#    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+#                                ?P1 a owl:SymmetricProperty .
+#                              }""" ;
+#    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
 
 
 ################################################################################
@@ -135,12 +159,12 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 #### owl transitive property constraints generator
 ################################################################################
 
-tddg:OWLTRANSPROP a tddo:TestGenerator ;
-    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:TransitiveProperty .
-                              }""" ;
-    tddo:basedOnPattern tddd:OWLTRANSPROP .
+# tddg:OWLTRANSPROP a tddo:TestGenerator ;
+#    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
+#    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+#                                ?P1 a owl:TransitiveProperty .
+#                              }""" ;
+#    tddo:basedOnPattern tddd:OWLTRANSPROP .
 
 
 ################################################################################
