@@ -309,10 +309,10 @@ tddp:COMP-OP a tddo:Parameter ;
 tddp:MATCH a tddo:Pattern ;
       dcterms:identifier "MATCH" ;
       dcterms:description """Literal in not in a desired pattern"""@en ;
-      tddo:patternSPARQL """SELECT DISTINCT ?s WHERE {
+      tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
                                 ?s %%P1%% ?value .
-                                FILTER (%%OP%% regex(str(?value), %%REGEX%))
-                            }""" ;
+                                FILTER (%%OP%% regex(str(?value), %%REGEX%%)) .
+                            } """ ;
       tddo:patternPrevalenceSPARQL """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?value . }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:MATCH-P1 ;
