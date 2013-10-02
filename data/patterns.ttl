@@ -316,7 +316,8 @@ tddp:MATCH a tddo:Pattern ;
       tddo:patternPrevalenceSPARQL """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?value . }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:MATCH-P1 ;
-      tddo:parameter tddp:MATCH-OP .
+      tddo:parameter tddp:MATCH-OP ;
+      tddo:parameter tddp:MATCH-REGEX .
 
 tddp:MATCH-P1 a tddo:Parameter ;
       dcterms:identifier "P1" ;
@@ -326,6 +327,10 @@ tddp:MATCH-OP a tddo:Parameter ;
       dcterms:identifier "OP" ;
       tddo:parameterConstraint tddo:Operator ;
       tddo:constrainPattern """!|""" .
+
+tddp:MATCH-REGEX a tddo:Parameter ;
+      dcterms:identifier "REGEX" ;
+      tddo:parameterConstraint tddo:None .
 
 
 ################################################################################
