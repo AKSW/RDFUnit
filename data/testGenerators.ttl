@@ -34,9 +34,20 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
 ##########################################
 
 tddg:OWLDISJC a tddo:TestGenerator ;
-    dcterms:description """Generate all owl:dosjointWith constrains defined in a schema"""@en ;
+    dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ?T2 WHERE {
                              ?T1 owl:disjointWith ?T2 . } """ ;
+    tddo:basedOnPattern tddd:OWLDISJC .
+
+
+##########################################
+#### owl:complementOf pattern
+##########################################
+
+tddg:OWLCOMPL a tddo:TestGenerator ;
+    dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ?T2 WHERE {
+                             ?T1 owl:complementOf ?T2 . } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
 ##########################################
