@@ -8,12 +8,10 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
 import org.aksw.databugger.patterns.PatternService;
-import org.aksw.databugger.sources.DatasetSource;
-import org.aksw.databugger.sources.EnrichedSchemaSource;
-import org.aksw.databugger.sources.SchemaSource;
-import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.sources.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,12 +35,8 @@ public class DatabuggerUtils {
     public static DatasetSource getDatosBneEsDataset() {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
-        List<SchemaSource> sources = new ArrayList<SchemaSource>();
-
-        sources.add(new SchemaSource("frbrer","http://iflastandards.info/ns/fr/frbr/frbrer/"));
-        sources.add(new SchemaSource("isbd", "http://iflastandards.info/ns/isbd/elements/"));
-        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
-        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
+        List<SchemaSource> sources = SchemaService.getSourceList(
+                Arrays.asList("frbrer", "isbd", "dcterms", "skos"));
 
         // TODO add endpoint / graph
         DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://datos.bne.es/sparql", "", sources);
@@ -53,11 +47,8 @@ public class DatabuggerUtils {
     public static DatasetSource getLCSHDataset() {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
-        List<SchemaSource> sources = new ArrayList<SchemaSource>();
-
-        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
-        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
-        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
+        List<SchemaSource> sources = SchemaService.getSourceList(
+                Arrays.asList("foaf", "dcterms", "skos"));
 
         // TODO add endpoint / graph
         DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "-", "-", sources);
@@ -68,15 +59,8 @@ public class DatabuggerUtils {
     public static DatasetSource getDBpediaENDataset() {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        List<SchemaSource> sources = new ArrayList<SchemaSource>();
-        sources.add(new SchemaSource("dbo", "http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
-        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
-        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
-        sources.add(new SchemaSource("dc", "http://purl.org/dc/elements/1.1/"));
-        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
-        //sources.add(new SchemaSource("http://www.georss.org/georss/"));
-        sources.add(new SchemaSource("geo", "http://www.w3.org/2003/01/geo/wgs84_pos"));
-        sources.add(new SchemaSource("prov", "http://www.w3.org/ns/prov"));
+        List<SchemaSource> sources = SchemaService.getSourceList(
+                Arrays.asList("dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
         sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
@@ -90,15 +74,8 @@ public class DatabuggerUtils {
     public static DatasetSource getDBpediaNLDataset() {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        List<SchemaSource> sources = new ArrayList<SchemaSource>();
-        sources.add(new SchemaSource("dbo", "http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
-        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
-        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
-        sources.add(new SchemaSource("dc", "http://purl.org/dc/elements/1.1/"));
-        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
-        //sources.add(new SchemaSource("http://www.georss.org/georss/"));
-        sources.add(new SchemaSource("geo", "http://www.w3.org/2003/01/geo/wgs84_pos"));
-        sources.add(new SchemaSource("prov", "http://www.w3.org/ns/prov"));
+        List<SchemaSource> sources = SchemaService.getSourceList(
+            Arrays.asList("dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
         sources.add(new EnrichedSchemaSource("dbo", "http://nl.dbpedia.org"));
@@ -109,7 +86,24 @@ public class DatabuggerUtils {
         return dataset;
     }
 
-    public static List<Source> getSourcesFromLOV(){
+    public static void fillSchemaService(){
+        // Manual
+        SchemaService.addSchemaDecl("dbo", "http://dbpedia.org/ontology/\thttp://mappings.dbpedia.org/server/ontology/dbpedia.owl");
+        SchemaService.addSchemaDecl("foaf", "http://xmlns.com/foaf/0.1/");
+        SchemaService.addSchemaDecl("dcterms", "http://purl.org/dc/terms/");
+        SchemaService.addSchemaDecl("dc", "http://purl.org/dc/elements/1.1/");
+        SchemaService.addSchemaDecl("skos", "http://www.w3.org/2004/02/skos/core#");
+        SchemaService.addSchemaDecl("georss", "http://www.georss.org/georss/");
+        SchemaService.addSchemaDecl("geo", "http://www.w3.org/2003/01/geo/wgs84_pos");
+        SchemaService.addSchemaDecl("prov", "http://www.w3.org/ns/prov");
+        SchemaService.addSchemaDecl("frbrer", "http://iflastandards.info/ns/fr/frbr/frbrer/");
+        SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
+
+        // Add from LOV
+        //fillSchemasFromLOV()
+    }
+
+    public static void fillSchemasFromLOV(){
         List<Source> sources = new ArrayList<Source>();
         Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov","", null);
 
@@ -142,8 +136,7 @@ public class DatabuggerUtils {
 
             String prefix = row.get("vocabPrefix").toString();
             String vocab = row.get("vocabURI").toString();
-            sources.add(new SchemaSource(prefix, vocab));
+            SchemaService.addSchemaDecl(prefix, vocab);
         }
-        return sources;
     }
 }

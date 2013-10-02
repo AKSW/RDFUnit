@@ -107,6 +107,8 @@ public class Databugger {
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure("log4j.properties");
 
+        DatabuggerUtils.fillSchemaService();
+
         Databugger databugger = new Databugger();
 
         //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
