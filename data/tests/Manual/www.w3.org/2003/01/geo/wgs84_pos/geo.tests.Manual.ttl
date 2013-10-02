@@ -12,7 +12,7 @@
 
 
 tddt:dbo-LITRAN-rangegeolatitude
-      a       <tddo:Test> ;
+      a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern <tddp:LITRAN> ;
       tddo:generated tddo:Manual ;
@@ -21,8 +21,8 @@ tddt:dbo-LITRAN-rangegeolatitude
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 .
                                  FILTER (! (?v1 >= -90 && ?v1 <= 90) ) } """ ;
-      tddo:sparqlPrevalence " SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 . } " ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 . } """ .
 
 
 tddt:dbo-LITRAN-rangegeolatitude
@@ -35,5 +35,5 @@ tddt:dbo-LITRAN-rangegeolatitude
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 .
                                  FILTER (! (?v1 >= -180 && ?v1 <= 180) ) } """ ;
-      tddo:sparqlPrevalence> " SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 . } " ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 . } """ .
