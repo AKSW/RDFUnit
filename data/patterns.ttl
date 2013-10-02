@@ -162,29 +162,18 @@ tddp:TYPRODEP-P1 a tddo:Parameter ;
 tddp:INVFUNC a tddo:Pattern ;
       dcterms:identifier "INVFUNC" ;
       dcterms:description """ Unique value constraint of inverse functional properties """@en ;
-      # PW TODO: maybe this is too restrictive since it does not work with
-      # resources that are not typed properly
-      tddo:patternSPARQL """ SELECT distinct ?v1 WHERE{
+      tddo:patternSPARQL """SELECT distinct ?v1 WHERE {
                                 ?a %%P1%% ?v1 .
                                 ?b %%P1%% ?v1 .
-                                ?a a %%T1%% .
-                                ?b a %%T1%% .
                                 FILTER (?a != ?b)
                               }""" ;
-      tddo:patternPrevalenceSPARQL """ SELECT (count(?v1) AS ?total) WHERE{
-                                            ?a %%P1%% ?v1 .
-                                            ?a a %%T1%% . } """ ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?v1) AS ?total) WHERE { ?a %%P1%% ?v1 . }""" ;
       tddo:selectVariable "v1" ;
-      tddo:parameter tddp:INVFUNC-P1 ;
-      tddo:parameter tddp:INVFUNC-T1 .
+      tddo:parameter tddp:INVFUNC-P1 .
 
 tddp:INVFUNC-P1 a tddo:Parameter ;
       dcterms:identifier "P1" ;
       tddo:parameterConstraint tddo:Property .
-
-tddp:INVFUNC-T1 a tddo:Parameter ;
-      dcterms:identifier "T1" ;
-      tddo:parameterConstraint tddo:Class .
 
 
 ################################################################################
@@ -196,13 +185,13 @@ tddp:INVFUNC-T1 a tddo:Parameter ;
 tddp:OWLSYMMETRICPROP a tddo:Pattern ;
       dcterms:identifier "OWLSYMMETRICPROP" ;
       dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
-      tddo:patternSPARQL """ SELECT ?r2 WHERE {
-                                ?r1  %%P1%% ?r2 .
-                                FILTER NOT EXISTS {?r2 %%P1%% ?r1} .
-                              }""" ;
-      tddo:patternPrevalenceSPARQL """ SELECT (count(?r2) AS ?total) WHERE {
-                                          ?r1 %%P1%% ?r2 .
-                                        }""" ;
+      tddo:patternSPARQL """SELECT ?r2 WHERE {
+                              ?r1  %%P1%% ?r2 .
+                              FILTER NOT EXISTS {?r2 %%P1%% ?r1} .
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?r2) AS ?total) WHERE {
+                                        ?r1 %%P1%% ?r2 .
+                                      }""" ;
       tddo:selectVariable "r2" ;
       tddo:parameter tddp:OWLSYMMETRICPROP-P1 .
 
@@ -220,13 +209,11 @@ tddp:OWLSYMMETRICPROP-P1 a tddo:Parameter ;
 tddp:OWLASYMMETRICPROP a tddo:Pattern ;
       dcterms:identifier "OWLASYMMETRICPROP" ;
       dcterms:description """ Given a property that is asymmetric, this pattern finds cases where it is nonetheless used as symmetric property """@en ;
-      tddo:patternSPARQL """ SELECT ?r1 WHERE {
-                                ?r1 %%P1%% ?r2 .
-                                ?r2 %%P1%% ?r1 .
-                              }""" ;
-      tddo:patternPrevalenceSPARQL """ SELECT (count(?r1) AS ?total) WHERE {
-                                          ?r1 %%P1%% ?r2 .
-                                        }""";
+      tddo:patternSPARQL """SELECT ?r1 WHERE {
+                              ?r1 %%P1%% ?r2 .
+                              ?r2 %%P1%% ?r1 .
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?r1) AS ?total) WHERE {?r1 %%P1%% ?r2 .}""";
       tddo:selectVariable "r1" ;
       tddo:parameter tddp:OWLASYMMETRICPROP-P1 .
 
@@ -246,14 +233,12 @@ tddp:OWLASYMMETRICPROP-P1 a tddo:Parameter ;
 tddp:OWLTRANSPROP a tddo:Pattern ;
       dcterms:identifier "OWLTRANSPROP" ;
       dcterms:description """ Given a transitive property, this pattern finds missing statements containing the consequent transitive entailments """@en ;
-      tddo:patternSPARQL """ SELECT ?r1 WHERE {
-                                ?r1 %%P1%% ?r2 .
-                                ?r2 %%P1%% ?r3 .
-                                FILTER NOT EXISTS {?r1 %%P1%% ?r3} .
-                              }""" ;
-      tddo:patternPrevalenceSPARQL """ SELECT (count(?r1) AS ?total) WHERE {
-                                          ?r1 %%P1%% ?r2 .
-                                        }""" ;
+      tddo:patternSPARQL """SELECT ?r1 WHERE {
+                              ?r1 %%P1%% ?r2 .
+                              ?r2 %%P1%% ?r3 .
+                              FILTER NOT EXISTS {?r1 %%P1%% ?r3} .
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?r1) AS ?total) WHERE {?r1 %%P1%% ?r2 .}""" ;
       tddo:selectVariable "r1" ;
       tddo:parameter tddp:OWLTRANSPROP-P1 .
 
@@ -270,15 +255,258 @@ tddp:OWLTRANSPROP-P1 a tddo:Parameter ;
 tddp:OWLIRREFLEXIVE a tddo:Pattern ;
       dcterms:identifier "OWLIRREFLEXIVE" ;
       dcterms:description """ Given an irreflexive property, this pattern find violating statement that nontheless use this property reflexively """@en ;
-      tddo:patternSPARQL """ SELECT ?s WHERE {
-                                ?s %%P1%% ?s .
-                              }""" ;
-      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE {
-                                          ?s %%P1%% ?o .
-                                        }""" ;
+      tddo:patternSPARQL """SELECT ?s WHERE {?s %%P1%% ?s .}""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE {?s %%P1%% ?o .}""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:OWLIRREFLEXIVE-P1 .
 
 tddp:OWLIRREFLEXIVE-P1 a tddo:Parameter ;
       dcterms:identifier "P1" ;
       tddo:parameterConstraint tddo:Property .
+
+################################################################################
+#### COMP
+#### Comparison between two literal values in a resource
+################################################################################
+
+tddp:COMP a tddo:Pattern ;
+      dcterms:identifier "COMP" ;
+      dcterms:description """Comparison between two literal values in a resource"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE {
+                                ?s %%P1%% ?beforeVal .
+                                ?s %%P2%% ?afterVal .
+                                FILTER ( ?beforeVal %%OP%% ?afterVal )
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(distinct ?s) AS ?total) WHERE {
+                                            ?s %%P1%% ?beforeVal .
+                                            ?s %%P2%% ?afterVal .
+                                        }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:COMP-P1 ;
+      tddo:parameter tddp:COMP-P2 ;
+      tddo:parameter tddp:COMP-OP .
+
+tddp:COMP-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:COMP-P2 a tddo:Parameter ;
+      dcterms:identifier "P2" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:COMP-OP a tddo:Parameter ;
+      dcterms:identifier "OP" ;
+      tddo:parameterConstraint tddo:Operator ;
+      tddo:constrainPattern """<|<=|>|>=|=|!=""" .
+
+
+################################################################################
+#### MATCH
+#### Literal in not in a desired pattern
+################################################################################
+
+tddp:MATCH a tddo:Pattern ;
+      dcterms:identifier "MATCH" ;
+      dcterms:description """Literal in not in a desired pattern"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE {
+                                ?s %%P1%% ?value .
+                                FILTER (%%OP%% regex(str(?value), %%REGEX%))
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE { ?s %%P1%% ?value . }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:MATCH-P1 ;
+      tddo:parameter tddp:MATCH-OP .
+
+tddp:MATCH-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:MATCH-OP a tddo:Parameter ;
+      dcterms:identifier "OP" ;
+      tddo:parameterConstraint tddo:Operator ;
+      tddo:constrainPattern """!|""" .
+
+
+################################################################################
+#### LITRAN
+#### Literal in specific range
+################################################################################
+
+tddp:LITRAN a tddo:Pattern ;
+      dcterms:identifier "LITRAN" ;
+      dcterms:description """Literal in specific range"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE {
+                                ?s a %%T1%% .
+                                ?s %%P1%% ?value.
+                                FILTER( %%NOP%% ( ?value > %%valueMin%% &&
+                                                  ?value < %%valueMax%% )))
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(*) AS ?total) WHERE {
+                                          ?s a %%T1%% .
+                                          ?s %%P1%% ?value .
+                                      }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:LITRAN-T1 ;
+      tddo:parameter tddp:LITRAN-P1 ;
+      tddo:parameter tddp:LITRAN-NOP ;
+      tddo:parameter tddp:LITRAN-valueMin ;
+      tddo:parameter tddp:LITRAN-valueMax .
+
+tddp:LITRAN-T1 a tddo:Parameter ;
+      dcterms:identifier "T1" ;
+      tddo:parameterConstraint tddo:Class .
+
+tddp:LITRAN-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:LITRAN-NOP a tddo:Parameter ;
+      dcterms:identifier "NOP" ;
+      tddo:parameterConstraint tddo:Operator ;
+      tddo:constrainPattern "!|" .
+
+tddp:LITRAN-valueMin a tddo:Parameter ;
+      dcterms:identifier "valueMin" ;
+      tddo:parameterConstraint tddo:None ;
+      tddo:constrainPattern """[0-9]*\\.[0-9]*""" .
+
+tddp:LITRAN-valueMax a tddo:Parameter ;
+      dcterms:identifier "valueMax" ;
+      tddo:parameterConstraint tddo:None ;
+      tddo:constrainPattern """[0-9]*\\.[0-9]*""" .
+
+
+################################################################################
+#### TYPDEP
+#### Resource is of type A and not of type B
+################################################################################
+
+tddp:TYPDEP a tddo:Pattern ;
+      dcterms:identifier "TYPDEP" ;
+      dcterms:description """Resource is of type A and not of type B"""@en ;
+      tddo:patternSPARQL """SELECT distinct ?s WHERE {
+                                ?s rdf:type %%T1%% .
+                                FILTER NOT EXISTS {?s rdf:type %%T2%%}
+                            }""" ;
+      
+      tddo:patternPrevalenceSPARQL """SELECT (count(distinct ?s) AS ?total) WHERE { ?s rdf:type %%T1%% . }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:TYPDEP-T1 ;
+      tddo:parameter tddp:TYPDEP-T2 .
+
+tddp:TYPDEP-T1 a tddo:Parameter ;
+      dcterms:identifier "T1" ;
+      tddo:parameterConstraint tddo:Class .
+
+tddp:TYPDEP-T2 a tddo:Parameter ;
+      dcterms:identifier "T2" ;
+      tddo:parameterConstraint tddo:Class .
+
+
+################################################################################
+#### PROPDEP
+#### resource has propertyA but not propertyB
+################################################################################
+
+tddp:PROPDEP a tddo:Pattern ;
+      dcterms:identifier "PROPDEP" ;
+      dcterms:description """Resource has propertyA but not propertyB"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE {
+                                ?s %%P1%% ?v1
+                                FILTER NOT EXISTS {?s %%P2%% ?v2}
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE { ?s %%P1%% ?v1 . }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:PROPDEP-P1 ;
+      tddo:parameter tddp:PROPDEP-P2 .
+
+tddp:PROPDEP-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+      
+tddp:PROPDEP-P2 a tddo:Parameter ;
+      dcterms:identifier "P2" ;
+      tddo:parameterConstraint tddo:Property .
+
+
+################################################################################
+#### PVT
+#### Resources with a propertyA having valueA should contain a triple with
+#### propertyB
+################################################################################
+
+tddp:PVT a tddo:Pattern ;
+      dcterms:identifier "PVT" ;
+      dcterms:description """Resources with a propertyA having valueA should contain a triple with propertyB"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE {
+                                ?s %%P1%% %%V1%%
+                                FILTER NOT EXISTS {?s %%P2%% ?p}
+                            }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE { ?s %%P1%% %%V1%% }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:PVT-P1 ;
+      tddo:parameter tddp:PVT-V1 ;
+      tddo:parameter tddp:PVT-P2 .
+
+tddp:PVT-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:PVT-V1 a tddo:Parameter ;
+      dcterms:identifier "V1" ;
+      tddo:parameterConstraint tddo:None .
+
+tddp:PVT-P2 a tddo:Parameter ;
+      dcterms:identifier "P2" ;
+      tddo:parameterConstraint tddo:Property .
+
+################################################################################
+#### TRIPLE
+#### Resource has ValueA for PropertyB
+################################################################################
+
+tddp:TRIPLE a tddo:Pattern ;
+      dcterms:identifier "TRIPLE" ;
+      dcterms:description """Resource has ValueA for PropertyB"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE { ?s %%P1%% %%V1%% }""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(?s) AS ?total) WHERE { ?s %%P1%% ?value }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:TRIPLE-P1 ;
+      tddo:parameter tddp:TRIPLE-V1 .
+
+tddp:TRIPLE-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:TRIPLE-V1 a tddo:Parameter ;
+      dcterms:identifier "V1" ;
+      tddo:parameterConstraint tddo:None .
+
+
+################################################################################
+#### ONELANG
+#### Resource has more than one plain literal of a certain language assigned
+#### (e.g. more than one faof:name in english)
+################################################################################
+
+tddp:ONELANG a tddo:Pattern ;
+      dcterms:identifier "ONELANG" ;
+      dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
+      tddo:patternSPARQL """SELECT ?s WHERE {
+                                ?s %%P1%% ?c
+                                BIND ( lang(?c) AS ?l )
+                                FILTER (isLiteral (?c) && lang(?c) = %%V1%%)
+                            } GROUP BY ?s 
+                            HAVING COUNT (?l) > 1""" ;
+      tddo:patternPrevalenceSPARQL """SELECT (count(distinct ?s) AS ?total) WHERE { ?s %%P1%% ?c }""" ;
+      tddo:selectVariable "s" ;
+      tddo:parameter tddp:ONELANG-P1 ;
+      tddo:parameter tddp:ONELANG-V1 .
+
+tddp:ONELANG-P1 a tddo:Parameter ;
+      dcterms:identifier "P1" ;
+      tddo:parameterConstraint tddo:Property .
+
+tddp:ONELANG-V1 a tddo:Parameter ;
+      dcterms:identifier "V1" ;
+      tddo:parameterConstraint tddo:None .

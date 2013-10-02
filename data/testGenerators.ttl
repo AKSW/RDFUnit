@@ -101,12 +101,8 @@ tddg:OWLFUNCEX a tddo:TestGenerator ;
 
 tddg:OWLINVFUNC a tddo:TestGenerator ;
     dcterms:description """ Generates owl:InverseFunctionalProperty constraints. If such a property exists we ensure that resources are assigned only once via this property """@en ;
-    # PW TODO: maybe this is too restrictive since it does not work with
-    # resources that are not typed properly
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ?T1 WHERE {
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
                                 ?P1 a owl:InverseFunctionalProperty .
-                                ?s ?P1 ?o .
-                                ?s a ?T1 .
                               }""" ;
     tddo:basedOnPattern tddd:INVFUNC .
 
