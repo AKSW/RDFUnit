@@ -6,7 +6,9 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.PrefixMapping;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.DatabuggerUtils;
+import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactoryBackQuery;
@@ -17,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,5 +134,30 @@ public class TestUtil {
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);
         }
+    }
+
+    public static String generateTestURI(String sourcePrefix, String patternID, String string2hash) {
+        String testURI = PrefixService.getPrefix("tddt") + sourcePrefix + "-" + patternID + "-" ;
+        String md5Hash = TestUtil.MD5(string2hash);
+        if (md5Hash == null)
+            testURI += JenaUUID.generate().asString();
+        else
+            testURI += md5Hash;
+        return testURI;
+    }
+
+    // Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
+    public static String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
     }
 }
