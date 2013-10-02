@@ -109,7 +109,12 @@ public class Databugger {
 
         Databugger databugger = new Databugger();
 
+        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
         DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
+        //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
+        //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
+
+        dataset.setBaseCacheFolder("../data/tests/");
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
         for (Source s: dataset.getSchemata()) {
@@ -121,12 +126,12 @@ public class Databugger {
             TestUtil.writeTestsToFile(tests, databugger.getPrefixes(), s.getTestFile());
         }
 
-        TestExecutor te = new TestExecutor(dataset,allTests, 500);
+        TestExecutor te = new TestExecutor(dataset,allTests, 0);
         Model model = te.executeTestsCounts();
 
 
         try {
-            File f = new File("results.ttl");
+            File f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(databugger.getPrefixes());

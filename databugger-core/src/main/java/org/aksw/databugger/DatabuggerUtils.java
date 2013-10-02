@@ -34,6 +34,37 @@ public class DatabuggerUtils {
                 ;
     }
 
+    public static DatasetSource getDatosBneEsDataset() {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/44
+        List<SchemaSource> sources = new ArrayList<SchemaSource>();
+
+        sources.add(new SchemaSource("frbrer","http://iflastandards.info/ns/fr/frbr/frbrer/"));
+        sources.add(new SchemaSource("isbd", "http://iflastandards.info/ns/isbd/elements/"));
+        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
+        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
+
+        // TODO add endpoint / graph
+        DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://datos.bne.es/sparql", "", sources);
+
+        return dataset;
+    }
+
+    public static DatasetSource getLCSHDataset() {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/44
+        List<SchemaSource> sources = new ArrayList<SchemaSource>();
+
+        sources.add(new SchemaSource("foaf","http://xmlns.com/foaf/0.1/"));
+        sources.add(new SchemaSource("dcterms", "http://purl.org/dc/terms/"));
+        sources.add(new SchemaSource("skos", "http://www.w3.org/2004/02/skos/core#"));
+
+        // TODO add endpoint / graph
+        DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "-", "-", sources);
+
+        return dataset;
+    }
+
     public static DatasetSource getDBpediaENDataset() {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
@@ -51,7 +82,7 @@ public class DatabuggerUtils {
         sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
 
         DatasetSource dataset = new DatasetSource("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
-        dataset.setBaseCacheFolder("../data/tests/");
+
 
         return dataset;
     }
@@ -73,7 +104,7 @@ public class DatabuggerUtils {
         sources.add(new EnrichedSchemaSource("dbo", "http://nl.dbpedia.org"));
 
         DatasetSource dataset = new DatasetSource("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
-        dataset.setBaseCacheFolder("../data/tests/");
+
 
         return dataset;
     }
