@@ -1,0 +1,39 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tddg:    <http://databugger.aksw.org/generators#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tddo:    <http://databugger.aksw.org/ontology#> .
+@prefix tddp:    <http://databugger.aksw.org/patterns#> .
+@prefix tddt:    <http://databugger.aksw.org/tests#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+
+
+tddt:dbo-LITRAN-rangegeolatitude
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern <tddp:LITRAN> ;
+      tddo:generated tddo:Manual ;
+      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 .
+                                 FILTER (! (?v1 >= -90 && ?v1 <= 90) ) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 . } """ .
+
+
+tddt:dbo-LITRAN-rangegeolatitude
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:LITRAN ;
+      tddo:generated tddo:Manual ;
+      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 .
+                                 FILTER (! (?v1 >= -180 && ?v1 <= 180) ) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 . } """ .

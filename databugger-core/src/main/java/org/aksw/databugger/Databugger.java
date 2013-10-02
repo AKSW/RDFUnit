@@ -20,9 +20,12 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -30,7 +33,7 @@ import java.util.List;
  * Created: 9/20/13 5:59 PM
  */
 public class Databugger {
-    private static Logger log = LoggerFactory.getLogger(Source.class);
+    private static Logger log = LoggerFactory.getLogger(Databugger.class);
 
     private PrefixMapping prefixes = new PrefixMappingImpl();
     QueryExecutionFactory patternQueryFactory;
@@ -45,6 +48,12 @@ public class Databugger {
         // Update pattern service
         for (Pattern pattern : patterns ) {
             PatternService.addPattern(pattern.getId(), pattern);
+        }
+
+        // Update Prefix Service
+        Map<String, String> prf = prefixes.getNsPrefixMap();
+        for (String id: prf.keySet()) {
+            PrefixService.addPrefix(id, prf.get(id));
         }
 
         this.autoGenerators = getAutoGenerators();
@@ -79,6 +88,10 @@ public class Databugger {
         getPrefixes().setNsPrefixes(prefixModel.getNsPrefixMap());
     }
 
+    public PrefixMapping getPrefixes() {
+        return prefixes;
+    }
+
     public List<Pattern> getPatterns(){
         return PatternUtil.instantiatePatternsFromModel(patternQueryFactory);
     }
@@ -88,37 +101,47 @@ public class Databugger {
     }
 
     public List<UnitTest> generateTestsFromAG(Source source){
-        return  TestUtil.isntantiateTestsFromAG(autoGenerators,source);
+        return  TestUtil.instantiateTestsFromAG(autoGenerators, source);
     }
 
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure("log4j.properties");
 
+        DatabuggerUtils.fillSchemaService();
+
         Databugger databugger = new Databugger();
 
-        Source dataset = new DatasetSource("http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", null);
+        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
+        DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
+        //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
+        //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
+
         dataset.setBaseCacheFolder("../data/tests/");
 
-        List<Source> sources = new ArrayList<Source>();
-        sources.add(new SchemaSource("http://dbpedia.org/ontology/", "http://mappings.dbpedia.org/server/ontology/dbpedia.owl"));
-        sources.add(new SchemaSource("http://xmlns.com/foaf/0.1/"));
-        sources.add(new SchemaSource("http://purl.org/dc/terms/"));
-        sources.add(new SchemaSource("http://purl.org/dc/elements/1.1/"));
-        sources.add(new SchemaSource("http://www.w3.org/2004/02/skos/core#"));
+        List<UnitTest> allTests = new ArrayList<UnitTest>();
+        for (Source s: dataset.getSchemata()) {
 
-        sources.add(new EnrichedSchemaSource("http://dbpedia.org"));
-
-        //sources.addAll(DatabuggerUtils.getSourcesFromLOV());
-
-        for (Source s: sources) {
-            s.setBaseCacheFolder("../data/tests/");
             log.info("Generating tests for: "+ s.getUri());
-            TestUtil.writeTestsToFile(databugger.generateTestsFromAG(s), databugger.getPrefixes(), s.getTestFile());
+            List<UnitTest> tests = databugger.generateTestsFromAG(s);
+            allTests.addAll(tests);
+            // write to file for backup
+            TestUtil.writeTestsToFile(tests, databugger.getPrefixes(), s.getTestFile());
+        }
+
+        TestExecutor te = new TestExecutor(dataset,allTests, 0);
+        Model model = te.executeTestsCounts();
+
+
+        try {
+            File f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
+            f.getParentFile().mkdirs();
+
+            model.setNsPrefixes(databugger.getPrefixes());
+            model.write(new FileOutputStream(f),"TURTLE");
+        } catch (Exception e) {
+            log.error("Cannot write tests to file: ");
         }
     }
 
-    public PrefixMapping getPrefixes() {
-        return prefixes;
-    }
 
 }

@@ -18,8 +18,8 @@ import java.io.FileOutputStream;
  */
 public class EnrichedSchemaSource extends SchemaSource {
 
-    public EnrichedSchemaSource(String uri) {
-        super(uri);
+    public EnrichedSchemaSource(String prefix, String uri) {
+        super(prefix, uri);
     }
 
     @Override
@@ -43,6 +43,11 @@ public class EnrichedSchemaSource extends SchemaSource {
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.EnrichedSchema;
+    }
+
+    @Override
+    public  String getPrefix() {
+        return  "enriched-" + super.getPrefix() ;
     }
 
     public void enrichDataset(){

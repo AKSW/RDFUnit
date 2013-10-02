@@ -6,14 +6,21 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.PrefixMapping;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.DatabuggerUtils;
+import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactoryBackQuery;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +69,53 @@ public class TestUtil {
 
     }
 
-    public static List<UnitTest> isntantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
+    public static List<UnitTest> instantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
         for (TestAutoGenerator tag: autoGenerators ) {
             tests.addAll( tag.generate(source));
         }
+
+        return tests;
+
+    }
+
+
+    public static List<UnitTest> instantiateTestsFromFile(String filename) {
+        List<UnitTest> tests = new ArrayList<UnitTest>();
+
+        Model model = ModelFactory.createDefaultModel();
+        try {
+            model.read(new FileInputStream(filename), null, "TURTLE");
+        } catch (Exception e) {
+            log.error("Cannot read tests from file: " +filename);
+            System.exit(-1);
+        }
+        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
+
+        String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
+                " SELECT ?test ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
+                " ?test a tddo:Test ; " +
+                " tddo:appliesTo ?appliesTo ;" +
+                " tddo:basedOnPattern ?basedOnPattern ;" +
+                " tddo:generated ?generated ;" +
+                " tddo:source ?source ;" +
+                " tddo:sparql ?sparql ;" +
+                " tddo:sparqlPrevalence ?sparqlPrevalence ;" +
+                " OPTIONAL {?test tddo:references ?references .}" +
+                " OPTIONAL {?test tddo:testGenerator ?testGenerator .}" +
+                "} ";
+
+        QueryExecution qe = qef.createQueryExecution(sparqlSelect);
+        ResultSet results = qe.execSelect();
+
+        while (results.hasNext()) {
+            QuerySolution qs = results.next();
+
+            //TODO implement (references property yields multiple results)
+        }
+        qe.close();
+
 
         return tests;
 
@@ -86,5 +134,30 @@ public class TestUtil {
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);
         }
+    }
+
+    public static String generateTestURI(String sourcePrefix, String patternID, String string2hash) {
+        String testURI = PrefixService.getPrefix("tddt") + sourcePrefix + "-" + patternID + "-" ;
+        String md5Hash = TestUtil.MD5(string2hash);
+        if (md5Hash == null)
+            testURI += JenaUUID.generate().asString();
+        else
+            testURI += md5Hash;
+        return testURI;
+    }
+
+    // Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
+    public static String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
     }
 }

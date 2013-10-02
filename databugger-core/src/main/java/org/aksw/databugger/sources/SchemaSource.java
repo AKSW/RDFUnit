@@ -20,13 +20,13 @@ public class SchemaSource extends Source {
 
     protected final String schema;
 
-    public SchemaSource(String uri) {
-        this(uri,uri);
+    public SchemaSource(String prefix, String uri) {
+        this(prefix, uri, uri);
 
     }
 
-    public SchemaSource(String uri, String schema) {
-        super(uri);
+    public SchemaSource(String prefix, String uri, String schema) {
+        super(prefix, uri);
         this.schema = schema;
     }
 
