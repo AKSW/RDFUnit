@@ -126,12 +126,12 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 #### owl symmetric property constraints generator
 ################################################################################
 
-tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
-    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:SymmetricProperty .
-                              }""" ;
-    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
+# tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
+#    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
+#    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+#                                ?P1 a owl:SymmetricProperty .
+#                              }""" ;
+#    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
 
 
 ################################################################################
@@ -150,12 +150,12 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 #### owl transitive property constraints generator
 ################################################################################
 
-tddg:OWLTRANSPROP a tddo:TestGenerator ;
-    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:TransitiveProperty .
-                              }""" ;
-    tddo:basedOnPattern tddd:OWLTRANSPROP .
+# tddg:OWLTRANSPROP a tddo:TestGenerator ;
+#    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
+#    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+#                                ?P1 a owl:TransitiveProperty .
+#                              }""" ;
+#    tddo:basedOnPattern tddd:OWLTRANSPROP .
 
 
 ################################################################################
