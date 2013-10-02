@@ -98,6 +98,7 @@ public class DatabuggerUtils {
         SchemaService.addSchemaDecl("prov", "http://www.w3.org/ns/prov");
         SchemaService.addSchemaDecl("frbrer", "http://iflastandards.info/ns/fr/frbr/frbrer/");
         SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
+        SchemaService.addSchemaDecl("lgdo", "http://linkedgeodata.org/ontology\thttp://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt");
 
         // Add from LOV
         //fillSchemasFromLOV()
