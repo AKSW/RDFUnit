@@ -67,7 +67,7 @@ public class UnitTest {
 
         Resource resource = model.createResource(testURI)
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Test"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource("tddp:" + getPattern()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + getPattern()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "generated"), model.createResource(getGenerated().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testGenerator"), model.createResource(getAutoGeneratorURI()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "appliesTo"), model.createResource(getAppliesTo().getUri()))
