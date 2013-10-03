@@ -411,28 +411,28 @@ tddp:TYPDEP-T2 a tddo:Parameter ;
 
 ################################################################################
 #### PROPDEP
-#### resource has propertyA but not propertyB
+#### resource has propertyA but not propertyB (same as PVT)
 ################################################################################
 
-tddp:PROPDEP a tddo:Pattern ;
-      dcterms:identifier "PROPDEP" ;
-      dcterms:description """Resource has propertyA but not propertyB"""@en ;
-      tddo:patternSPARQL """SELECT DISTINCT ?s WHERE {
-                                ?s %%P1%% ?v1
-                                FILTER NOT EXISTS {?s %%P2%% ?v2}
-                            }""" ;
-      tddo:patternPrevalenceSPARQL """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?v1 . }""" ;
-      tddo:selectVariable "s" ;
-      tddo:parameter tddp:PROPDEP-P1 ;
-      tddo:parameter tddp:PROPDEP-P2 .
-
-tddp:PROPDEP-P1 a tddo:Parameter ;
-      dcterms:identifier "P1" ;
-      tddo:parameterConstraint tddo:Property .
-      
-tddp:PROPDEP-P2 a tddo:Parameter ;
-      dcterms:identifier "P2" ;
-      tddo:parameterConstraint tddo:Property .
+#tddp:PROPDEP a tddo:Pattern ;
+#      dcterms:identifier "PROPDEP" ;
+#      dcterms:description """Resource has propertyA but not propertyB"""@en ;
+#      tddo:patternSPARQL """SELECT DISTINCT ?s WHERE {
+#                                ?s %%P1%% ?v1
+#                                FILTER NOT EXISTS {?s %%P2%% ?v2}
+#                            }""" ;
+#      tddo:patternPrevalenceSPARQL """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?v1 . }""" ;
+#      tddo:selectVariable "s" ;
+#      tddo:parameter tddp:PROPDEP-P1 ;
+#      tddo:parameter tddp:PROPDEP-P2 .
+#
+#tddp:PROPDEP-P1 a tddo:Parameter ;
+#      dcterms:identifier "P1" ;
+#      tddo:parameterConstraint tddo:Property .
+#
+#tddp:PROPDEP-P2 a tddo:Parameter ;
+#      dcterms:identifier "P2" ;
+#      tddo:parameterConstraint tddo:Property .
 
 
 ################################################################################
