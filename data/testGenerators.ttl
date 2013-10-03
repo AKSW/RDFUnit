@@ -41,6 +41,17 @@ tddg:OWLDISJC a tddo:TestGenerator ;
 
 
 ##########################################
+#### owl:propertyDisjointWith pattern
+##########################################
+
+tddg:OWLDISJP a tddo:TestGenerator ;
+    dcterms:description """Generate all owl:propertyDisjointWith constrains defined in a schema"""@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ?P2 WHERE {
+                             ?P1 owl:propertyDisjointWith ?P2 . } """ ;
+    tddo:basedOnPattern tddd:OWLDISJP .
+
+
+##########################################
 #### owl:complementOf pattern
 ##########################################
 

@@ -94,6 +94,29 @@ tddp:OWLDISJC-T2 a tddo:Parameter ;
     tddo:parameterConstraint tddo:Class .
 
 ##########################################
+#### owl:propertyDisjointWith pattern
+##########################################
+
+tddp:OWLDISJP a tddo:Pattern ;
+    dcterms:identifier "OWLDISJP" ;
+    dcterms:description """Emulates the owl:disjointProperty constrain"""@en ;
+    tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
+                           ?s %%P1%% ?v1 .
+                           ?s %%P2%% ?v2 .} """ ;
+    tddo:patternPrevalenceSPARQL """  """ ;
+    tddo:selectVariable "s" ;
+    tddo:parameter tddp:OWLDISJP-P1 ;
+    tddo:parameter tddp:OWLDISJP-P2 .
+
+tddp:OWLDISJP-P1 a tddo:Parameter ;
+    dcterms:identifier "P1" ;
+    tddo:parameterConstraint tddo:Property .
+
+tddp:OWLDISJP-P2 a tddo:Parameter ;
+    dcterms:identifier "P2" ;
+    tddo:parameterConstraint tddo:Property .
+
+##########################################
 #### owl cardinality constrains pattern
 ##########################################
 
