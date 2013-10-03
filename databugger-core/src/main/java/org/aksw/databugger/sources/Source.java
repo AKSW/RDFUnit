@@ -21,7 +21,7 @@ public abstract class Source {
 
     private final String prefix;
     private final String uri;
-    private final List<SchemaSource> schemata;
+    private final List<SchemaSource> referencesSchemata;
 
     private QueryExecutionFactory queryFactory;
     private String baseCacheFolder = "";
@@ -29,7 +29,7 @@ public abstract class Source {
     public Source(String prefix, String uri) {
         this.prefix = prefix;
         this.uri = uri;
-        this.schemata = new ArrayList<SchemaSource>();
+        this.referencesSchemata = new ArrayList<SchemaSource>();
     }
 
     public String getPrefix() {
@@ -87,16 +87,16 @@ public abstract class Source {
 
     public void setBaseCacheFolder(String baseCacheFolder) {
         this.baseCacheFolder = baseCacheFolder;
-        for (Source src : getSchemata()) {
+        for (Source src : getReferencesSchemata()) {
             src.setBaseCacheFolder(baseCacheFolder);
         }
     }
 
-    public List<SchemaSource> getSchemata() {
-        return schemata;
+    public List<SchemaSource> getReferencesSchemata() {
+        return referencesSchemata;
     }
 
-    public void addSchemata(List<SchemaSource> schemata) {
-        this.schemata.addAll(schemata);
+    public void addReferencesSchemata(List<SchemaSource> schemata) {
+        this.referencesSchemata.addAll(schemata);
     }
 }

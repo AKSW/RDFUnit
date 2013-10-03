@@ -32,7 +32,7 @@ public class DatasetSource extends Source {
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = sparqlGraph;
         if (schemata != null)
-            addSchemata(schemata);
+            addReferencesSchemata(schemata);
     }
 
     @Override

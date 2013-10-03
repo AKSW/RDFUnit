@@ -38,7 +38,6 @@ public class DatabuggerUtils {
         List<SchemaSource> sources = SchemaService.getSourceList(
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "frbrer", "isbd", "dcterms", "skos"));
 
-        // TODO add endpoint / graph
         DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", "http://datos.bne.es", sources);
 
         return dataset;
@@ -50,8 +49,7 @@ public class DatabuggerUtils {
         List<SchemaSource> sources = SchemaService.getSourceList(
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "foaf", "dcterms", "skos"));
 
-        // TODO add endpoint / graph
-        DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "-", "-", sources);
+        DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "http://localhost:8890/sparql", "http://id.loc.gov", sources);
 
         return dataset;
     }

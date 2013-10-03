@@ -8,8 +8,6 @@ import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
 import org.aksw.databugger.sources.DatasetSource;
-import org.aksw.databugger.sources.EnrichedSchemaSource;
-import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestUtil;
@@ -119,7 +117,7 @@ public class Databugger {
         dataset.setBaseCacheFolder("../data/tests/");
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
-        for (Source s: dataset.getSchemata()) {
+        for (Source s: dataset.getReferencesSchemata()) {
 
             log.info("Generating tests for: "+ s.getUri());
             List<UnitTest> tests = databugger.generateTestsFromAG(s);
