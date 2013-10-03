@@ -36,10 +36,10 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
         List<SchemaSource> sources = SchemaService.getSourceList(
-                Arrays.asList("frbrer", "isbd", "dcterms", "skos"));
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "frbrer", "isbd", "dcterms", "skos"));
 
         // TODO add endpoint / graph
-        DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://datos.bne.es/sparql", "", sources);
+        DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", "http://datos.bne.es", sources);
 
         return dataset;
     }
@@ -48,7 +48,7 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
         List<SchemaSource> sources = SchemaService.getSourceList(
-                Arrays.asList("foaf", "dcterms", "skos"));
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "foaf", "dcterms", "skos"));
 
         // TODO add endpoint / graph
         DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "-", "-", sources);
@@ -60,7 +60,7 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(
-                Arrays.asList("dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
         sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
@@ -75,7 +75,7 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(
-            Arrays.asList("dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
+            Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
         sources.add(new EnrichedSchemaSource("dbo", "http://nl.dbpedia.org"));
@@ -88,6 +88,9 @@ public class DatabuggerUtils {
 
     public static void fillSchemaService(){
         // Manual
+        SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
+        SchemaService.addSchemaDecl("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         SchemaService.addSchemaDecl("dbo", "http://dbpedia.org/ontology/\thttp://mappings.dbpedia.org/server/ontology/dbpedia.owl");
         SchemaService.addSchemaDecl("foaf", "http://xmlns.com/foaf/0.1/");
         SchemaService.addSchemaDecl("dcterms", "http://purl.org/dc/terms/");

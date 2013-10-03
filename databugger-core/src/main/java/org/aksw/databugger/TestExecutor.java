@@ -43,6 +43,7 @@ public class TestExecutor {
         }
 
         int counter = 1;
+        int testSize = tests.size();
         for (UnitTest t : tests ) {
 
             if (testExists(model,t.getTestURI()))
@@ -69,7 +70,7 @@ public class TestExecutor {
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(source.getUri()))
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "query"), model.createResource(t.getTestURI()));
 
-            log.info("Returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
+            log.info("Testing " + source.getPrefix() + "(" +counter + "/" + testSize + ") returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
 
             if (counter % 50 == 0) {
                 try {
