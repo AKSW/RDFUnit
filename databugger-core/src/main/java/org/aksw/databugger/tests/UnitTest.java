@@ -154,6 +154,10 @@ public class UnitTest {
         return references;
     }
 
+    public void addReferences(List<String> references) {
+        this.references.addAll(references);
+    }
+
     public String getTestURI() {
         return testURI;
     }

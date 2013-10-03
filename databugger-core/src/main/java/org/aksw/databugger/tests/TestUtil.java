@@ -9,6 +9,8 @@ import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
+import org.aksw.databugger.enums.TestAppliesTo;
+import org.aksw.databugger.enums.TestGeneration;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -91,8 +93,8 @@ public class TestUtil {
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?test ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
-                " ?test a tddo:Test ; " +
+                " SELECT DISTINCT ?testURI ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
+                " ?testURI a tddo:Test ; " +
                 " tddo:appliesTo ?appliesTo ;" +
                 " tddo:basedOnPattern ?basedOnPattern ;" +
                 " tddo:generated ?generated ;" +
@@ -107,11 +109,54 @@ public class TestUtil {
         ResultSet results = qe.execSelect();
 
 
+        UnitTest lastTest = new UnitTest("", "", "");
         while (results.hasNext()) {
             QuerySolution qs = results.next();
 
-            //TODO implement (references property yields multiple results)
+            String testURI = qs.get("testURI").toString();
+
+            String appliesTo = qs.get("appliesTo").toString();
+            String basedOnPattern = qs.get("basedOnPattern").toString();
+            String generated = qs.get("generated").toString();
+            String source = qs.get("source").toString();
+            String sparql = qs.get("sparql").toString();
+            String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
+            //optional / check if exists
+            List<String> referencesLst = new ArrayList<String>();
+            String references = "";
+            if (qs.contains("references") ) {
+                references = qs.get("references").toString();
+                if ( ! references.equals("")) {
+                    referencesLst.add(references);
+                }
+            }
+            String testGenerator = "";
+            if (qs.contains("testGenerator") )
+                testGenerator = qs.get("testGenerator").toString();
+
+
+            UnitTest currentTest = new UnitTest(
+                    testURI,
+                    basedOnPattern,
+                    TestGeneration.resolve(generated),
+                    testGenerator,
+                    TestAppliesTo.resolve(appliesTo),
+                    source,
+                    new TestAnnotation(),
+                    sparql,
+                    sparqlPrevalence,
+                    referencesLst);
+
+            if (lastTest.getTestURI() != testURI) {
+                tests.add(lastTest);
+            } else {
+                lastTest.addReferences(currentTest.getReferences());
+            }
+
         }
+        // add last row
+        if (!lastTest.getPattern().equals(""))
+            tests.add(lastTest);
         qe.close();
 
 

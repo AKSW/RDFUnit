@@ -1,5 +1,7 @@
 package org.aksw.databugger.enums;
 
+import org.aksw.databugger.PrefixService;
+
 /**
  * User: Dimitris Kontokostas
  * Describes where a test can apply to
@@ -29,11 +31,27 @@ public enum TestAppliesTo {
 
     public String getUri() {
         // TODO make prefix configurable
-        return "http://databugger.aksw.org/ontology/" + name();
+        return PrefixService.getPrefix("tddo") + name();
     }
 
     @Override
     public String toString() {
         return getUri();
+    }
+
+    public static TestAppliesTo resolve(String value) {
+
+        String s = value.replace(PrefixService.getPrefix("tddo"), "");
+        if (s.equals("Schema")) {
+            return Schema;
+        } else if (s.equals("EnrichedSchema")) {
+            return EnrichedSchema;
+        } else if (s.equals("Dataset")) {
+            return Dataset;
+        } else if (s.equals("Application")) {
+            return Application;
+        }
+
+        return null;
     }
 }

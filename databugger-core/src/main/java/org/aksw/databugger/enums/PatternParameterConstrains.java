@@ -1,5 +1,7 @@
 package org.aksw.databugger.enums;
 
+import org.aksw.databugger.PrefixService;
+
 /**
  * User: Dimitris Kontokostas
  * Enumerates the different parameter constrains
@@ -32,12 +34,9 @@ public enum PatternParameterConstrains {
      * */
     None;
 
-    private static final String uri = "http://databugger.aksw.org/ontology/";
-
-
     public String getUri() {
         // TODO make prefix configurable
-        return uri + name();
+        return PrefixService.getPrefix("tddo") + name();
     }
 
     @Override
@@ -47,7 +46,7 @@ public enum PatternParameterConstrains {
 
     public static PatternParameterConstrains resolve(String value) {
 
-        String s = value.replace(uri, "");
+        String s = value.replace(PrefixService.getPrefix("tddo"), "");
         if (s.equals("Resource")) {
             return Resource;
         } else if (s.equals("Property")) {
