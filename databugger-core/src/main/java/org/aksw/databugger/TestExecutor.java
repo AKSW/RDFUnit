@@ -66,7 +66,7 @@ public class TestExecutor {
                     .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "count"), ""+total)
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "prevalence"), ""+total)
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(t.getSourceUri()))
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(source.getUri()))
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "query"), model.createResource(t.getTestURI()));
 
             log.info("Returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
