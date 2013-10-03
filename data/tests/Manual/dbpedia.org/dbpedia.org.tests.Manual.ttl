@@ -9,6 +9,7 @@
 @prefix tddt: <http://databugger.aksw.org/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
+# rdfs:label should be the same as foaf:name
 tddt:dbo-COMP-rdfslabelfoafname
       a tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -24,7 +25,9 @@ tddt:dbo-COMP-rdfslabelfoafname
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
 				 ?s <http://xmlns.com/foaf/0.1/name> ?v2 . } """ .
-
+				 
+				 
+# Wrong character casing in yago uri's
 tddt:dbo-MATCH-yagocharactercasing
       a tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -38,6 +41,8 @@ tddt:dbo-MATCH-yagocharactercasing
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?t1 . } """ .
                                  
+                                 
+# Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
 tddt:dbo-PROPDEP-dateofbirthbirthdate
       a tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -52,7 +57,8 @@ tddt:dbo-PROPDEP-dateofbirthbirthdate
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ .
 
-                                 
+
+# Resource is in birthday category but has no dbo:birthDate
 tddt:dbo-PVT-birthcategorywithoutbirthdate
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -69,6 +75,7 @@ tddt:dbo-PVT-birthcategorywithoutbirthdate
                                  ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:1907_births> . } """ .
 
                                  
+# Resource has a geo location template but no coordinates
 tddt:dbo-PVT-geotemplatecoordinates
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -84,7 +91,8 @@ tddt:dbo-PVT-geotemplatecoordinates
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Geographic_location> . } """ .
 
-                                 
+
+# Resource in cities category but not of the type dbo:City                                 
 tddt:dbo-RDFSDOMAIN-capitalsafricaplace
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -101,6 +109,7 @@ tddt:dbo-RDFSDOMAIN-capitalsafricaplace
                                  ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Capitals_in_Africa> . } """ .
 
                                  
+# Wikipedia articles with a missing file                                
 tddt:dbo-TRIPLE-articlesmissingfile
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -115,6 +124,7 @@ tddt:dbo-TRIPLE-articlesmissingfile
                                  ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Articles_with_missing_files> . } """ .
 
                                  
+# Wikipedia articles with an inconsistent citation format                                
 tddt:dbo-TRIPLE-inconsistantcitation
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -129,6 +139,7 @@ tddt:dbo-TRIPLE-inconsistantcitation
                                  ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Inconsistent_citations> . } """ .
 
                                  
+# Wikipedia articles that are possibly copy-pasted                               
 tddt:dbo-TRIPLE-possiblecutpastemoves
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -142,7 +153,7 @@ tddt:dbo-TRIPLE-possiblecutpastemoves
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> . } """ .
 
-                                 
+# Resource has coordinates but is not a place                              
 tddt:dbo-TYPDEP-coordinatesandnotplace
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -157,7 +168,7 @@ tddt:dbo-TYPDEP-coordinatesandnotplace
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://www.opengis.net/gml/_Feature> . } """ .
 
-                                 
+# Resource is a foaf:Person but not a dbo:Person                                 
 tddt:dbo-TYPDEP-foafdbpediaperson
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -173,21 +184,7 @@ tddt:dbo-TYPDEP-foafdbpediaperson
                                  ?s a <http://xmlns.com/foaf/0.1/Person> . } """ .
 
                                  
-tddt:dbo-TYPDEP-foafdbpediaperson
-      a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:TYPDEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
-      tddo:references <http://dbpedia.org/ontology/Person> ;
-      tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://xmlns.com/foaf/0.1/Person> .
-                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/Person>} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://xmlns.com/foaf/0.1/Person> . } """ .
-
-                                 
+# Place without latitude
 tddt:dbo-TYPRODEP-placewithoutlatitude
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
@@ -202,4 +199,18 @@ tddt:dbo-TYPRODEP-placewithoutlatitude
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://dbpedia.org/ontology/Place> . } """ .
 
+# Place without longitude
+tddt:dbo-TYPRODEP-placewithoutlongitude
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/ontology/Place> ;
+      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long>  ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://dbpedia.org/ontology/Place> .
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 } } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://dbpedia.org/ontology/Place> . } """ .
                                  
