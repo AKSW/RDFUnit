@@ -11,29 +11,46 @@
 
 
 
+# geo:lat must be in the range [-90,90]
 tddt:dbo-LITRAN-rangegeolatitude
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern <tddp:LITRAN> ;
       tddo:generated tddo:Manual ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-      tddo:source <http://dbpedia.org> ;
+      tddo:source <<http://www.w3.org/2003/01/geo/wgs84_pos#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 .
                                  FILTER (! (?v1 >= -90 && ?v1 <= 90) ) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 . } """ .
 
-
+# geo:long must be in the range [-18,180]
 tddt:dbo-LITRAN-rangegeolatitude
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:Manual ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-      tddo:source <http://dbpedia.org> ;
+      tddo:source <<http://www.w3.org/2003/01/geo/wgs84_pos#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 .
                                  FILTER (! (?v1 >= -180 && ?v1 <= 180) ) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 . } """ .
+
+
+# geo:geometry should be a soft inverseFunctional property
+tddt:dbo-INVFUNC-uniquegeometry
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:INVFUNC ;
+      tddo:generated tddo:Manual ;
+      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+      tddo:source <<http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+      tddo:sparql """ SELECT DISTINCT ?v1 WHERE {
+                       ?a <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 .
+                       ?b <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 .
+                       FILTER (?a != ?b)
+                     } """ ;
+      tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?v1) AS ?total) WHERE { ?a <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 . } """ .
