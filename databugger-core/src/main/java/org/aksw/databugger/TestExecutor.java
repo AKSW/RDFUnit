@@ -1,9 +1,6 @@
 package org.aksw.databugger;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -13,6 +10,9 @@ import org.aksw.databugger.tests.UnitTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -33,10 +33,20 @@ public class TestExecutor {
         this.delay = delay;
     }
 
-    public Model executeTestsCounts() {
+    public Model executeTestsCounts(String filename) {
         Model model = ModelFactory.createDefaultModel();
 
+        try {
+            model.read(new FileInputStream(filename), null, "TURTLE");
+        } catch (Exception e) {
+            // TODO handle exception
+        }
+
+        int counter = 1;
         for (UnitTest t : tests ) {
+
+            if (testExists(model,t.getTestURI()))
+                continue;
 
             int total = -1, prevalence = -1;
 
@@ -61,6 +71,15 @@ public class TestExecutor {
 
             log.info("Returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
 
+            if (counter % 50 == 0) {
+                try {
+                    model.write(new FileOutputStream(filename),"TURTLE");
+                } catch (Exception e) {
+                    log.error("Cannot write tests to file: ");
+                }
+            }
+
+
             if (delay>0) {
                 try {
                     Thread.sleep(delay);
@@ -68,6 +87,7 @@ public class TestExecutor {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }
+            counter ++;
         }
         return model;
     }
@@ -88,6 +108,21 @@ public class TestExecutor {
 
         return result;
 
+    }
+
+    private boolean testExists(Model model, String testURI) {
+
+        boolean result = false;
+        Query query = QueryFactory.create("select * where { ?s ?p <" + testURI + "> }");
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet  results = qe.execSelect();
+
+        if ( results != null && results.hasNext()) {
+            result = true;
+        }
+        qe.close();
+
+        return result;
     }
 
 }

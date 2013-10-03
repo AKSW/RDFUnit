@@ -128,8 +128,10 @@ public class Databugger {
             TestUtil.writeTestsToFile(tests, databugger.getPrefixes(), s.getTestFile());
         }
 
+
         TestExecutor te = new TestExecutor(dataset,allTests, 0);
-        Model model = te.executeTestsCounts();
+        // warning, caches intermediate results
+        Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl");
 
 
         try {
