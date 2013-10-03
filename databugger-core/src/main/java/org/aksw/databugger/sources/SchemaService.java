@@ -1,11 +1,8 @@
 package org.aksw.databugger.sources;
 
-import org.aksw.databugger.patterns.Pattern;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * User: Dimitris Kontokostas

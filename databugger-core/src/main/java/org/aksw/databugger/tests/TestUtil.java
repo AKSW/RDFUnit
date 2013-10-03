@@ -11,7 +11,6 @@ import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactoryBackQuery;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +18,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +91,7 @@ public class TestUtil {
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
-                " SELECT ?test ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
+                " SELECT DISTINCT ?test ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
                 " ?test a tddo:Test ; " +
                 " tddo:appliesTo ?appliesTo ;" +
                 " tddo:basedOnPattern ?basedOnPattern ;" +
@@ -108,6 +105,7 @@ public class TestUtil {
 
         QueryExecution qe = qef.createQueryExecution(sparqlSelect);
         ResultSet results = qe.execSelect();
+
 
         while (results.hasNext()) {
             QuerySolution qs = results.next();

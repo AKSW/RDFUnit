@@ -9,7 +9,6 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 /**
  * User: Dimitris Kontokostas

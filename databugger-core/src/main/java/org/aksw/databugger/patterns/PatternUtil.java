@@ -1,6 +1,8 @@
 package org.aksw.databugger.patterns;
 
-import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.enums.PatternParameterConstrains;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;

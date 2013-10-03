@@ -1,7 +1,5 @@
 package org.aksw.databugger;
 
-import org.aksw.databugger.patterns.Pattern;
-
 import java.util.HashMap;
 import java.util.Set;
 

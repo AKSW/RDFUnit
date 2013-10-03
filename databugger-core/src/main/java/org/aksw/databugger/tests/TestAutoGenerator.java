@@ -2,10 +2,8 @@ package org.aksw.databugger.tests;
 
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.sparql.core.Var;
 import org.aksw.databugger.DatabuggerUtils;
-import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.enums.TestGeneration;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;

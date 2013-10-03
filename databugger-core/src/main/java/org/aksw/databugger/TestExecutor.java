@@ -10,7 +10,6 @@ import org.aksw.databugger.tests.UnitTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -42,10 +41,11 @@ public class TestExecutor {
             // TODO handle exception
         }
 
-        int counter = 1;
+        int counter = 0;
         int testSize = tests.size();
         for (UnitTest t : tests ) {
 
+            counter ++;
             if (testExists(model,t.getTestURI()))
                 continue;
 
@@ -72,7 +72,7 @@ public class TestExecutor {
 
             log.info("Testing " + source.getPrefix() + "(" +counter + "/" + testSize + ") returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
 
-            if (counter % 50 == 0) {
+            if (counter % 20 == 0) {
                 try {
                     model.write(new FileOutputStream(filename),"TURTLE");
                 } catch (Exception e) {
@@ -88,7 +88,6 @@ public class TestExecutor {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }
-            counter ++;
         }
         return model;
     }
