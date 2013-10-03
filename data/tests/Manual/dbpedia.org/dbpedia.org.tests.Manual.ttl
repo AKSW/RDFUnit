@@ -1,11 +1,205 @@
-@prefix dc:      <http://purl.org/dc/elements/1.1/> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix tddg:    <http://databugger.aksw.org/generators#> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
-@prefix owl:     <http://www.w3.org/2002/07/owl#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo:    <http://databugger.aksw.org/ontology#> .
-@prefix tddp:    <http://databugger.aksw.org/patterns#> .
-@prefix tddt:    <http://databugger.aksw.org/tests#> .
-@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tddg: <http://databugger.aksw.org/generators#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddp: <http://databugger.aksw.org/patterns#> .
+@prefix tddt: <http://databugger.aksw.org/tests#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 
+tddt:dbo-COMP-rdfslabelfoafname
+      a tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:COMP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+      tddo:references <http://xmlns.com/foaf/0.1/name> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
+				 ?s <http://xmlns.com/foaf/0.1/name> ?v2 .
+                                 FILTER (?v1 != ?v2) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
+				 ?s <http://xmlns.com/foaf/0.1/name> ?v2 . } """ .
+
+tddt:dbo-MATCH-yagocharactercasing
+      a tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:MATCH ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?t1 .
+                                 FILTER (regex(str(?t), "^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$")) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?t1 . } """ .
+                                 
+tddt:dbo-PROPDEP-dateofbirthbirthdate
+      a tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:PROPDEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/ontology/birthDate> ;
+      tddo:references <http://dbpedia.org/property/dateOfBirth>  ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://dbpedia.org/property/dateOfBirth> ?v1 .
+                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v2} } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ .
+
+                                 
+tddt:dbo-PVT-birthcategorywithoutbirthdate
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/resource/Category:1907_births> ;
+      tddo:references <http://purl.org/dc/terms/subject> ;
+      tddo:references <http://dbpedia.org/ontology/birthDate> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:1907_births> .
+                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v1 } } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:1907_births> . } """ .
+
+                                 
+tddt:dbo-PVT-geotemplatecoordinates
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+      tddo:references <http://www.georss.org/georss/point> ;
+      tddo:references <http://dbpedia.org/resource/Template:Geographic_location> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Geographic_location> .
+                                 FILTER NOT EXISTS {?s <http://www.georss.org/georss/point> ?v1 } } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Geographic_location> . } """ .
+
+                                 
+tddt:dbo-RDFSDOMAIN-capitalsafricaplace
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:RDFSDOMAIN ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://purl.org/dc/terms/subject> ;
+      tddo:references <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
+      tddo:references <http://dbpedia.org/ontology/City> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Capitals_in_Africa> .
+                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/City>} } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Capitals_in_Africa> . } """ .
+
+                                 
+tddt:dbo-TRIPLE-articlesmissingfile
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://purl.org/dc/terms/subject> ;
+      tddo:references <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Articles_with_missing_files> . } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Articles_with_missing_files> . } """ .
+
+                                 
+tddt:dbo-TRIPLE-inconsistantcitation
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+      tddo:references <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
+      tddo:source <http://dbpedia.org> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Inconsistent_citations> . } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Inconsistent_citations> . } """ .
+
+                                 
+tddt:dbo-TRIPLE-possiblecutpastemoves
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://purl.org/dc/terms/subject> ;
+      tddo:references <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> . } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> . } """ .
+
+                                 
+tddt:dbo-TYPDEP-coordinatesandnotplace
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPDEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/ontology/Place> ;
+      tddo:references <http://www.opengis.net/gml/_Feature> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://www.opengis.net/gml/_Feature> .
+                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/Place>} } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.opengis.net/gml/_Feature> . } """ .
+
+                                 
+tddt:dbo-TYPDEP-foafdbpediaperson
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPDEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/ontology/Person> ;
+      tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://xmlns.com/foaf/0.1/Person> .
+                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/Person>} } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://xmlns.com/foaf/0.1/Person> . } """ .
+
+                                 
+tddt:dbo-TYPDEP-foafdbpediaperson
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPDEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/ontology/Person> ;
+      tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://xmlns.com/foaf/0.1/Person> .
+                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/Person>} } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://xmlns.com/foaf/0.1/Person> . } """ .
+
+                                 
+tddt:dbo-TYPRODEP-placewithoutlatitude
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://dbpedia.org/ontology/Place> ;
+      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat>  ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://dbpedia.org/ontology/Place> .
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 } } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://dbpedia.org/ontology/Place> . } """ .
+
+                                 
