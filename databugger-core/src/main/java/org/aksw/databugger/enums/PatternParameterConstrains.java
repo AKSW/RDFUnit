@@ -11,27 +11,27 @@ public enum PatternParameterConstrains {
 
     /**
      * The parameter can a resource
-     * */
+     */
     Resource,
 
     /**
      * The parameter is restricted to a property
-     * */
+     */
     Property,
 
     /**
      * The parameter is restricted to a Class
-     * */
+     */
     Class,
 
     /**
      * The parameter can be an operator
-     * */
+     */
     Operator,
 
     /**
      * The parameter can be anything, even a free variable (?var)
-     * */
+     */
     None;
 
     public String getUri() {

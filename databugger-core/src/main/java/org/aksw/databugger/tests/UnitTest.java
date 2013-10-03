@@ -123,11 +123,11 @@ public class UnitTest {
     }
 
     public Query getSparqlQuery() {
-        return  QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
+        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
     }
 
     public String getSparqlAsCount() {
-        String newSparql = sparql.replaceFirst("SELECT", "SELECT (count( " );
+        String newSparql = sparql.replaceFirst("SELECT", "SELECT (count( ");
         newSparql = newSparql.replaceFirst("WHERE", ") AS ?total ) WHERE");
         return newSparql;
     }

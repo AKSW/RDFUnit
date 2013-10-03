@@ -34,9 +34,9 @@ public class SchemaService {
             return new SchemaSource(id, split[0]);
     }
 
-    public  static List<SchemaSource> getSourceList(List<String> ids) {
+    public static List<SchemaSource> getSourceList(List<String> ids) {
         List<SchemaSource> sources = new ArrayList<SchemaSource>();
-        for (String id: ids) {
+        for (String id : ids) {
             SchemaSource src = getSource(id);
             if (src != null)
                 sources.add(src);

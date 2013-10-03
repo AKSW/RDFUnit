@@ -34,14 +34,14 @@ public class TestUtil {
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-        String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
-                        " SELECT ?generator ?desc ?query ?patternID WHERE { " +
-                        " ?generator a tddo:TestGenerator ; " +
-                        "  dcterms:description ?desc ; " +
-                        "  tddo:generatorSPARQL ?query ; " +
-                        "  tddo:basedOnPattern ?sparqlPattern . " +
-                        " ?sparqlPattern dcterms:identifier ?patternID ." +
-                        "} ";
+        String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
+                " SELECT ?generator ?desc ?query ?patternID WHERE { " +
+                " ?generator a tddo:TestGenerator ; " +
+                "  dcterms:description ?desc ; " +
+                "  tddo:generatorSPARQL ?query ; " +
+                "  tddo:basedOnPattern ?sparqlPattern . " +
+                " ?sparqlPattern dcterms:identifier ?patternID ." +
+                "} ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelect);
         ResultSet results = qe.execSelect();
@@ -54,7 +54,7 @@ public class TestUtil {
             String query = qs.get("query").toString();
             String patternID = qs.get("patternID").toString();
 
-            TestAutoGenerator tag = new TestAutoGenerator(generator, description, query,patternID);
+            TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, patternID);
             if (tag.isValid())
                 autoGenerators.add(tag);
             else {
@@ -71,8 +71,8 @@ public class TestUtil {
     public static List<UnitTest> instantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
-        for (TestAutoGenerator tag: autoGenerators ) {
-            tests.addAll( tag.generate(source));
+        for (TestAutoGenerator tag : autoGenerators) {
+            tests.addAll(tag.generate(source));
         }
 
         return tests;
@@ -87,12 +87,12 @@ public class TestUtil {
         try {
             model.read(new FileInputStream(filename), null, "TURTLE");
         } catch (Exception e) {
-            log.error("Cannot read tests from file: " +filename);
+            log.error("Cannot read tests from file: " + filename);
             System.exit(-1);
         }
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
-        String sparqlSelect =  DatabuggerUtils.getAllPrefixes() +
+        String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
                 " ?testURI a tddo:Test ; " +
                 " tddo:appliesTo ?appliesTo ;" +
@@ -124,14 +124,14 @@ public class TestUtil {
             //optional / check if exists
             List<String> referencesLst = new ArrayList<String>();
             String references = "";
-            if (qs.contains("references") ) {
+            if (qs.contains("references")) {
                 references = qs.get("references").toString();
-                if ( ! references.equals("")) {
+                if (!references.equals("")) {
                     referencesLst.add(references);
                 }
             }
             String testGenerator = "";
-            if (qs.contains("testGenerator") )
+            if (qs.contains("testGenerator"))
                 testGenerator = qs.get("testGenerator").toString();
 
 
@@ -166,21 +166,21 @@ public class TestUtil {
 
     public static void writeTestsToFile(List<UnitTest> tests, PrefixMapping prefixes, String filename) {
         Model model = ModelFactory.createDefaultModel();
-        for (UnitTest t: tests)
+        for (UnitTest t : tests)
             t.saveTestToModel(model);
         try {
             File f = new File(filename);
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(prefixes);
-            model.write(new FileOutputStream(filename),"TURTLE");
+            model.write(new FileOutputStream(filename), "TURTLE");
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);
         }
     }
 
     public static String generateTestURI(String sourcePrefix, String patternID, String string2hash) {
-        String testURI = PrefixService.getPrefix("tddt") + sourcePrefix + "-" + patternID + "-" ;
+        String testURI = PrefixService.getPrefix("tddt") + sourcePrefix + "-" + patternID + "-";
         String md5Hash = TestUtil.MD5(string2hash);
         if (md5Hash == null)
             testURI += JenaUUID.generate().asString();
@@ -196,7 +196,7 @@ public class TestUtil {
             byte[] array = md.digest(md5.getBytes());
             StringBuffer sb = new StringBuffer();
             for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {

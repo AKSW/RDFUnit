@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class DatabuggerUtils {
     public static String getAllPrefixes() {
-        return  " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+        return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                 " PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
                 " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
@@ -68,7 +68,7 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(
-            Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
         sources.add(new EnrichedSchemaSource("dbo", "http://nl.dbpedia.org"));
@@ -79,7 +79,7 @@ public class DatabuggerUtils {
         return dataset;
     }
 
-    public static void fillSchemaService(){
+    public static void fillSchemaService() {
         // Manual
         SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
@@ -100,32 +100,32 @@ public class DatabuggerUtils {
         //fillSchemasFromLOV()
     }
 
-    public static void fillSchemasFromLOV(){
+    public static void fillSchemasFromLOV() {
         List<Source> sources = new ArrayList<Source>();
-        Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov","", null);
+        Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", "", null);
 
         // Example from http://lov.okfn.org/endpoint/lov
         QueryExecution qe = lov.getExecutionFactory().createQueryExecution(
                 "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n" +
-                "PREFIX dcterms:<http://purl.org/dc/terms/>\n" +
-                "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>\n" +
-                "PREFIX owl:<http://www.w3.org/2002/07/owl#>\n" +
-                "PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n" +
-                "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\n" +
-                "PREFIX void:<http://rdfs.org/ns/void#>\n" +
-                "PREFIX bibo:<http://purl.org/ontology/bibo/>\n" +
-                "PREFIX vann:<http://purl.org/vocab/vann/>\n" +
-                "PREFIX voaf:<http://purl.org/vocommons/voaf#>\n" +
-                "PREFIX frbr:<http://purl.org/vocab/frbr/core#>\n" +
-                "PREFIX lov:<http://lov.okfn.org/dataset/lov/lov#>\n" +
-                "\n" +
-                "SELECT ?vocabPrefix ?vocabURI \n" +
-                "WHERE{\n" +
-                "\t?vocabURI a voaf:Vocabulary.\n" +
-                "\t?vocabURI vann:preferredNamespacePrefix ?vocabPrefix.\n" +
-                "} \n" +
-                "ORDER BY ?vocabPrefix ");
+                        "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n" +
+                        "PREFIX dcterms:<http://purl.org/dc/terms/>\n" +
+                        "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>\n" +
+                        "PREFIX owl:<http://www.w3.org/2002/07/owl#>\n" +
+                        "PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n" +
+                        "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\n" +
+                        "PREFIX void:<http://rdfs.org/ns/void#>\n" +
+                        "PREFIX bibo:<http://purl.org/ontology/bibo/>\n" +
+                        "PREFIX vann:<http://purl.org/vocab/vann/>\n" +
+                        "PREFIX voaf:<http://purl.org/vocommons/voaf#>\n" +
+                        "PREFIX frbr:<http://purl.org/vocab/frbr/core#>\n" +
+                        "PREFIX lov:<http://lov.okfn.org/dataset/lov/lov#>\n" +
+                        "\n" +
+                        "SELECT ?vocabPrefix ?vocabURI \n" +
+                        "WHERE{\n" +
+                        "\t?vocabURI a voaf:Vocabulary.\n" +
+                        "\t?vocabURI vann:preferredNamespacePrefix ?vocabPrefix.\n" +
+                        "} \n" +
+                        "ORDER BY ?vocabPrefix ");
 
         ResultSet rs = qe.execSelect();
         while (rs.hasNext()) {

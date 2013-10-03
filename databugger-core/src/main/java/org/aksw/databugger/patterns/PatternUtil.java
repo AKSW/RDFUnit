@@ -20,22 +20,22 @@ public class PatternUtil {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
         String sparqlSelectPatterns = DatabuggerUtils.getAllPrefixes() +
-                        "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
-                        " ?sparqlPattern a tddo:Pattern ; " +
-                        "  dcterms:identifier ?id ; " +
-                        "  dcterms:description ?desc ; " +
-                        "  tddo:patternSPARQL ?sparql ; " +
-                        "  tddo:patternPrevalenceSPARQL ?sparqlPrev ; " +
-                        "  tddo:selectVariable ?variable . " +
-                        "} ORDER BY ?sparqlPattern";
+                "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
+                " ?sparqlPattern a tddo:Pattern ; " +
+                "  dcterms:identifier ?id ; " +
+                "  dcterms:description ?desc ; " +
+                "  tddo:patternSPARQL ?sparql ; " +
+                "  tddo:patternPrevalenceSPARQL ?sparqlPrev ; " +
+                "  tddo:selectVariable ?variable . " +
+                "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = DatabuggerUtils.getAllPrefixes() +
-                        " SELECT distinct ?parameterURI ?id ?constrain ?constrainPattern WHERE { " +
-                        " %%PATTERN%%  tddo:parameter ?parameterURI . " +
-                        " ?parameterURI a tddo:Parameter . " +
-                        " ?parameterURI dcterms:identifier ?id . " +
-                        " OPTIONAL {?parameterURI tddo:parameterConstraint ?constrain .}" +
-                        " OPTIONAL {?parameterURI tddo:constrainPattern ?constrainPattern .}" +
-                        " } ";
+                " SELECT distinct ?parameterURI ?id ?constrain ?constrainPattern WHERE { " +
+                " %%PATTERN%%  tddo:parameter ?parameterURI . " +
+                " ?parameterURI a tddo:Parameter . " +
+                " ?parameterURI dcterms:identifier ?id . " +
+                " OPTIONAL {?parameterURI tddo:parameterConstraint ?constrain .}" +
+                " OPTIONAL {?parameterURI tddo:constrainPattern ?constrainPattern .}" +
+                " } ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
         ResultSet results = qe.execSelect();

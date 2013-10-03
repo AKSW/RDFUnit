@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * User: Dimitris Kontokostas
  * Takes a sparqlPattern and a SPARQL query and based on the data
@@ -37,11 +38,11 @@ public class TestAutoGenerator {
 
     /**
      * Checks if the the generator is valid (provides correct parameters)
-     * */
+     */
     public boolean isValid() {
         Pattern pattern = PatternService.getPattern(getPatternID());
         Query q;
-        if ( pattern == null ) {
+        if (pattern == null) {
             log.error(getURI() + " : Pattern " + getPatternID() + " does not exist");
             return false;
         }
@@ -81,8 +82,7 @@ public class TestAutoGenerator {
                     if (n.isResource()) {
                         bindings.add("<" + n.toString() + ">");
                         references.add(n.toString());
-                    }
-                    else
+                    } else
                         bindings.add(n.toString());
                 } else {
                     break;

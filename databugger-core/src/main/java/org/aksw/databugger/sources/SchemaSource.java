@@ -42,14 +42,13 @@ public class SchemaSource extends Source {
             File f = new File(this.getCacheFile());
             if (f.exists()) {
                 model.read(new FileInputStream(f), null, "TURTLE");
-            }
-            else {
+            } else {
                 model.read(schema);
                 f.getParentFile().mkdirs();
-                model.write(new FileOutputStream(f),"TURTLE");
+                model.write(new FileOutputStream(f), "TURTLE");
             }
         } catch (Exception e) {
-            log.error("Cannot load ontology from URI: "+schema);
+            log.error("Cannot load ontology from URI: " + schema);
         }
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
     }

@@ -44,13 +44,13 @@ public class Databugger {
         this.patterns = getPatterns();
 
         // Update pattern service
-        for (Pattern pattern : patterns ) {
+        for (Pattern pattern : patterns) {
             PatternService.addPattern(pattern.getId(), pattern);
         }
 
         // Update Prefix Service
         Map<String, String> prf = prefixes.getNsPrefixMap();
-        for (String id: prf.keySet()) {
+        for (String id : prf.keySet()) {
             PrefixService.addPrefix(id, prf.get(id));
         }
 
@@ -74,7 +74,7 @@ public class Databugger {
         return new QueryExecutionFactoryModel(patternModel);
     }
 
-    private void setPrefixes(String pref){
+    private void setPrefixes(String pref) {
 
         Model prefixModel = ModelFactory.createDefaultModel();
         try {
@@ -90,16 +90,16 @@ public class Databugger {
         return prefixes;
     }
 
-    public List<Pattern> getPatterns(){
+    public List<Pattern> getPatterns() {
         return PatternUtil.instantiatePatternsFromModel(patternQueryFactory);
     }
 
-    public List<TestAutoGenerator> getAutoGenerators(){
-         return TestUtil.instantiateTestGeneratorsFromModel(patternQueryFactory);
+    public List<TestAutoGenerator> getAutoGenerators() {
+        return TestUtil.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 
-    public List<UnitTest> generateTestsFromAG(Source source){
-        return  TestUtil.instantiateTestsFromAG(autoGenerators, source);
+    public List<UnitTest> generateTestsFromAG(Source source) {
+        return TestUtil.instantiateTestsFromAG(autoGenerators, source);
     }
 
     public static void main(String[] args) throws Exception {
@@ -117,9 +117,9 @@ public class Databugger {
         dataset.setBaseCacheFolder("../data/tests/");
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
-        for (Source s: dataset.getReferencesSchemata()) {
+        for (Source s : dataset.getReferencesSchemata()) {
 
-            log.info("Generating tests for: "+ s.getUri());
+            log.info("Generating tests for: " + s.getUri());
             List<UnitTest> tests = databugger.generateTestsFromAG(s);
             allTests.addAll(tests);
             // write to file for backup
@@ -127,7 +127,7 @@ public class Databugger {
         }
 
 
-        TestExecutor te = new TestExecutor(dataset,allTests, 0);
+        TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results
         Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl");
 
@@ -137,7 +137,7 @@ public class Databugger {
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(databugger.getPrefixes());
-            model.write(new FileOutputStream(f),"TURTLE");
+            model.write(new FileOutputStream(f), "TURTLE");
         } catch (Exception e) {
             log.error("Cannot write tests to file: ");
         }

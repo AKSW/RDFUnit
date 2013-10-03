@@ -24,12 +24,12 @@ public class Pattern {
         this.parameters = parameters;
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         if (getParameters() == null || getParameters().size() == 0)
             return false;
         //check if defined parameters exist is sparql
-        for (PatternParameter p: getParameters()) {
-            if ( getSparqlPattern().indexOf("%%" + p.getId() + "%%") == -1 )
+        for (PatternParameter p : getParameters()) {
+            if (getSparqlPattern().indexOf("%%" + p.getId() + "%%") == -1)
                 return false;
         }
         // TODO search if we need more parameters
@@ -39,12 +39,14 @@ public class Pattern {
 
     // TODO assumes ordered bindings / parameters might not do like this in the end
     public String instantiateSparqlPattern(List<String> bindings) throws Exception {
-        if (bindings.size() != getParameters().size()) throw new Exception("Bindings different in number than parameters");
+        if (bindings.size() != getParameters().size())
+            throw new Exception("Bindings different in number than parameters");
         return instantiateBindings(bindings, getSparqlPattern());
     }
 
     public String instantiateSparqlPatternPrevalence(List<String> bindings) throws Exception {
-        if (bindings.size() != getParameters().size()) throw new Exception("Bindings different in number than parameters");
+        if (bindings.size() != getParameters().size())
+            throw new Exception("Bindings different in number than parameters");
         return instantiateBindings(bindings, getSparqlPatternPrevalence());
     }
 

@@ -28,13 +28,12 @@ public class EnrichedSchemaSource extends SchemaSource {
             File f = new File(this.getCacheFile());
             if (f.exists()) {
                 model.read(new FileInputStream(f), null, "TURTLE");
-            }
-            else {
+            } else {
                 log.error("Cannot read ontology from : " + f.getAbsolutePath() + "\nPlease enrich first");
                 System.exit(-1);
             }
         } catch (Exception e) {
-            log.error("Cannot load ontology from URI: "+schema);
+            log.error("Cannot load ontology from URI: " + schema);
         }
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -45,17 +44,17 @@ public class EnrichedSchemaSource extends SchemaSource {
     }
 
     @Override
-    public  String getPrefix() {
-        return  "enriched-" + super.getPrefix() ;
+    public String getPrefix() {
+        return "enriched-" + super.getPrefix();
     }
 
-    public void enrichDataset(){
+    public void enrichDataset() {
         enrichDataset(0.9);
     }
 
     //TODO enrich
     // call default DLLearner's output
-    public void enrichDataset(double confidence){
+    public void enrichDataset(double confidence) {
 
     }
 
