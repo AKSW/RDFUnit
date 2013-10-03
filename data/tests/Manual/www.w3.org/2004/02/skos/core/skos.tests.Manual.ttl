@@ -8,3 +8,263 @@
 @prefix tddp:    <http://databugger.aksw.org/patterns#> .
 @prefix tddt:    <http://databugger.aksw.org/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
+
+# Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
+tddt:dbo-CARD-rdfslabelforeachlanguage
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:CARD ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
+                                 GROUP BY ?s
+                                 HAVING count(?v1) > 20 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 . } """ .
+
+# Missing rdfs:label
+tddt:dbo-TYPRODEP-resourcewithoutrdfslabel
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:TYPRODEP ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2002/07/owl#Thing> ;
+      tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://dbpedia.org/ontology/Thing> .
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 } } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://dbpedia.org/ontology/Thing> . } """ .
+
+                                 
+# Loose Concepts
+
+
+# Disjoint OWL Classes
+# skos:Concept is not a skos:ConceptScheme
+tddt:dbo-DISJOIN-conceptconceptscheme
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
+                                 ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
+
+                                 
+# skos:Concept is not a skos:Collection
+tddt:dbo-DISJOIN-conceptconceptscheme
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#Collection> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
+                                 ?s a <http://www.w3.org/2004/02/skos/Collection> } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
+    
+    
+# skos:Concept is not a skos:Collection
+tddt:dbo-DISJOIN-conceptconceptscheme
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#Collection> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
+                                 ?s a <http://www.w3.org/2004/02/skos/Collection> } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
+
+                                 
+# skos:ConceptScheme is not a skos:Collection
+tddt:dbo-DISJOIN-conceptconceptscheme
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#Collection> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+                                 ?s a <http://www.w3.org/2004/02/skos/core#Collection> } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ .
+                                 
+# AmbiguousprefLabelvalues
+# skos:prefLabel cannot exists more than once 
+tddt:dbo-CARD-prefLabel
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:CARD ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
+                                 GROUP BY ?s
+                                 HAVING count(?v1) > 1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 . } """ .
+
+# Overlap in Disjoint Label Properties
+# skos:prefLabel is not a skos:altLabel
+tddt:dbo-OWLDISJOINTPROPERTY-skosaltpreflabel
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
+                                 ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#prefLabel> . } """ .
+
+
+# skos:prefLabel is not a skos:hiddenLabel
+tddt:dbo-OWLDISJOINTPROPERTY-skoshiddenpreflabel
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
+                                 ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#prefLabel> . } """ .
+
+                                 
+# skos:altLabel is not a skos:hiddenLabel
+tddt:dbo-OWLDISJOINTPROPERTY-skosalthiddenlabel
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
+                                 ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#altLabel> . } """ .
+
+                                 
+# Consistent Use of Mapping Properties
+# skos:exactMatch is not a skos:broadMatch
+tddt:dbo-OWLDISJOINTPROPERTY-skosexactbroadmatch
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v1 .
+                                 ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#exactMatch> . } """ .
+
+
+# skos:exactMatch is not a skos:broadMatch
+tddt:dbo-OWLDISJOINTPROPERTY-skosexactrelatedmatch
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v1 .
+                                 ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#exactMatch> . } """ .
+                         
+                         
+# Disjoint Semantic Relations
+# skos:related is not a skos:broaderTransitive
+tddt:dbo-OWLDISJOINTPROPERTY-skosrelatedbroadertransitive
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#related> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
+      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#related> ?v1 .
+                                 ?s <http://www.w3.org/2004/02/skos/core#broaderTransitive> ?v1 } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s a <http://www.w3.org/2004/02/skos/core#related> . } """ .
+                         
+
+# Cycles inbroaderHierarchy
+
+# Extra Whitespace
+# skos:altLabel whitespace
+tddt:dbo-MATCH-altlabelwhitespace
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:MATCH ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
+                                 FILTER (! regex(str(?v1), "^[ \t]+|[ \t]+$")) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 . } """ .
+
+# skos:prefLabel whitespace
+tddt:dbo-MATCH-preflabelwhitespace
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:MATCH ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
+                                 FILTER (! regex(str(?v1), "^[ \t]+|[ \t]+$")) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 . } """ .
+                                
+# skos:hiddenLabel whitespace
+tddt:dbo-MATCH-hiddenlabelwhitespace
+      a       tddo:Test ;
+      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:basedOnPattern tddp:MATCH ;
+      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 .
+                                 FILTER (! regex(str(?v1), "^[ \t]+|[ \t]+$")) } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+                                 ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 . } """ .
+                
+                
