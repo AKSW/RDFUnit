@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -19,12 +21,15 @@ public abstract class Source {
 
     private final String prefix;
     private final String uri;
+    private final List<SchemaSource> schemata;
+
     private QueryExecutionFactory queryFactory;
     private String baseCacheFolder = "";
 
     public Source(String prefix, String uri) {
         this.prefix = prefix;
         this.uri = uri;
+        this.schemata = new ArrayList<SchemaSource>();
     }
 
     public String getPrefix() {
@@ -46,14 +51,23 @@ public abstract class Source {
         return queryFactory;
     }
 
-    public String getTestFile(){
-        return getBaseCacheFolder() + getCacheFolder() + prefix +".tests." + getSourceType().name() + ".ttl";
-    }
-    public String getCacheFile(){
-        return getBaseCacheFolder() +getCacheFolder() + prefix +".cache." + getSourceType().name() + ".ttl";
+    public String getTestFile() {
+        return getFile("tests", getSourceType().name());
     }
 
-    protected String getCacheFolder(){
+    public String getTestFileManual() {
+        return getFile("tests", "Manual");
+    }
+
+    public String getCacheFile() {
+        return getFile("cache", getSourceType().name());
+    }
+
+    private String getFile(String type, String sourceType) {
+        return getBaseCacheFolder() + getCacheFolder() + prefix + "." + type + "." + sourceType + ".ttl";
+    }
+
+    protected String getCacheFolder() {
         String retVal = null;
         try {
             URI tmp = new URI(getUri());
@@ -73,5 +87,16 @@ public abstract class Source {
 
     public void setBaseCacheFolder(String baseCacheFolder) {
         this.baseCacheFolder = baseCacheFolder;
+        for (Source src : getSchemata()) {
+            src.setBaseCacheFolder(baseCacheFolder);
+        }
+    }
+
+    public List<SchemaSource> getSchemata() {
+        return schemata;
+    }
+
+    public void addSchemata(List<SchemaSource> schemata) {
+        this.schemata.addAll(schemata);
     }
 }

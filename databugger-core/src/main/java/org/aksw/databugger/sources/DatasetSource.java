@@ -11,7 +11,6 @@ import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,8 +23,6 @@ public class DatasetSource extends Source {
     private final String sparqlEndpoint;
     private final String sparqlGraph;
 
-    private final List<SchemaSource> schemata;
-
     public DatasetSource(String prefix, String uri) {
         this(prefix, uri, uri, "", null);
     }
@@ -34,10 +31,8 @@ public class DatasetSource extends Source {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = sparqlGraph;
-        if (schemata == null)
-            this.schemata = new ArrayList<SchemaSource>();
-        else
-            this.schemata = schemata;
+        if (schemata != null)
+            addSchemata(schemata);
     }
 
     @Override
@@ -76,18 +71,5 @@ public class DatasetSource extends Source {
         qef = new QueryExecutionFactoryPaginated(qef, 900);
 
         return qef;
-
-    }
-
-    @Override
-    public void setBaseCacheFolder(String baseCacheFolder) {
-        super.setBaseCacheFolder(baseCacheFolder);
-        for (Source src: schemata) {
-            src.setBaseCacheFolder(baseCacheFolder);
-        }
-    }
-
-    public List<SchemaSource> getSchemata() {
-        return schemata;
     }
 }
