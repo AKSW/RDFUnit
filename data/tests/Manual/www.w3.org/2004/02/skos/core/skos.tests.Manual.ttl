@@ -17,7 +17,7 @@ tddt:skos-CARD-rdfslabelforeachlanguage
       tddo:basedOnPattern tddp:CARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
                                  GROUP BY ?s
@@ -34,7 +34,7 @@ tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 } } """ ;
@@ -50,7 +50,7 @@ tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 } } """ ;
@@ -67,7 +67,7 @@ tddt:skos-CARD-prefLabel
       tddo:basedOnPattern tddp:CARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  GROUP BY ?s
@@ -84,7 +84,7 @@ tddt:skos-OWLDISJP-skosaltpreflabel
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 } """ ;
@@ -100,7 +100,7 @@ tddt:skos-OWLDISJP-skoshiddenpreflabel
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 } """ ;
@@ -116,7 +116,7 @@ tddt:skos-OWLDISJP-skosalthiddenlabel
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 } """ ;
@@ -133,7 +133,7 @@ tddt:skos-OWLDISJP-skosexactbroadmatch
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v1 } """ ;
@@ -149,7 +149,7 @@ tddt:skos-OWLDISJP-skosexactrelatedmatch
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v1 } """ ;
@@ -166,7 +166,7 @@ tddt:skos-OWLDISJP-skosrelatedbroadertransitive
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#related> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#related> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#broaderTransitive> ?v1 } """ ;
@@ -184,7 +184,7 @@ tddt:skos-MATCH-altlabelwhitespace
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
@@ -198,7 +198,7 @@ tddt:skos-MATCH-preflabelwhitespace
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
@@ -212,7 +212,7 @@ tddt:skos-MATCH-hiddenlabelwhitespace
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 .
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
