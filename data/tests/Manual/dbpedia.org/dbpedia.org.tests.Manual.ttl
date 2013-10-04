@@ -12,9 +12,9 @@
 # rdfs:label should be the same as foaf:name
 tddt:dbpedia-org-COMP-rdfslabelfoafname
       a tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:references <http://xmlns.com/foaf/0.1/name> ;
       tddo:source <http://dbpedia.org> ;
@@ -30,9 +30,9 @@ tddt:dbpedia-org-COMP-rdfslabelfoafname
 # Wrong character casing in yago uri's
 tddt:dbpedia-org-MATCH-yagocharactercasing
       a tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
       tddo:source <http://dbpedia.org> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -45,9 +45,9 @@ tddt:dbpedia-org-MATCH-yagocharactercasing
 # Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
 tddt:dbpedia-org-PROPDEP-dateofbirthbirthdate
       a tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:references <http://dbpedia.org/property/dateOfBirth>  ;
       tddo:source <http://dbpedia.org> ;
@@ -61,9 +61,9 @@ tddt:dbpedia-org-PROPDEP-dateofbirthbirthdate
 # Resource is in birthday category but has no dbo:birthDate
 tddt:dbpedia-org-PVT-birthcategorywithoutbirthdate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/resource/Category:1907_births> ;
       tddo:references <http://purl.org/dc/terms/subject> ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
@@ -78,9 +78,9 @@ tddt:dbpedia-org-PVT-birthcategorywithoutbirthdate
 # Resource has a geo location template but no coordinates
 tddt:dbpedia-org-PVT-geotemplatecoordinates
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
       tddo:references <http://www.georss.org/georss/point> ;
       tddo:references <http://dbpedia.org/resource/Template:Geographic_location> ;
@@ -95,9 +95,9 @@ tddt:dbpedia-org-PVT-geotemplatecoordinates
 # Resource in cities category but not of the type dbo:City                                 
 tddt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSDOMAIN ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://purl.org/dc/terms/subject> ;
       tddo:references <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
       tddo:references <http://dbpedia.org/ontology/City> ;
@@ -112,9 +112,9 @@ tddt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
 # Wikipedia articles with a missing file                                
 tddt:dbpedia-org-TRIPLE-articlesmissingfile
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://purl.org/dc/terms/subject> ;
       tddo:references <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
       tddo:source <http://dbpedia.org> ;
@@ -127,9 +127,9 @@ tddt:dbpedia-org-TRIPLE-articlesmissingfile
 # Wikipedia articles with an inconsistent citation format                                
 tddt:dbpedia-org-TRIPLE-inconsistantcitation
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
       tddo:references <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
       tddo:source <http://dbpedia.org> ;
@@ -142,9 +142,9 @@ tddt:dbpedia-org-TRIPLE-inconsistantcitation
 # Wikipedia articles that are possibly copy-pasted                               
 tddt:dbpedia-org-TRIPLE-possiblecutpastemoves
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://purl.org/dc/terms/subject> ;
       tddo:references <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
       tddo:source <http://dbpedia.org> ;
@@ -156,9 +156,9 @@ tddt:dbpedia-org-TRIPLE-possiblecutpastemoves
 # Resource has coordinates but is not a place                              
 tddt:dbpedia-org-TYPDEP-coordinatesandnotplace
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPDEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Place> ;
       tddo:references <http://www.opengis.net/gml/_Feature> ;
       tddo:source <http://dbpedia.org> ;
@@ -171,9 +171,9 @@ tddt:dbpedia-org-TYPDEP-coordinatesandnotplace
 # Resource is a foaf:Person but not a dbo:Person                                 
 tddt:dbpedia-org-TYPDEP-foafdbpediaperson
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPDEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
       tddo:source <http://dbpedia.org> ;
@@ -187,9 +187,9 @@ tddt:dbpedia-org-TYPDEP-foafdbpediaperson
 # Place without latitude
 tddt:dbpedia-org-TYPRODEP-placewithoutlatitude
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Place> ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat>  ;
       tddo:source <http://dbpedia.org> ;
@@ -202,9 +202,9 @@ tddt:dbpedia-org-TYPRODEP-placewithoutlatitude
 # Place without longitude
 tddt:dbpedia-org-TYPRODEP-placewithoutlongitude
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Place> ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long>  ;
       tddo:source <http://dbpedia.org> ;

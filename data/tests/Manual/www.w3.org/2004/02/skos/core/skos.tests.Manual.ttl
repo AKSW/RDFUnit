@@ -13,9 +13,9 @@
 # Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
 tddt:skos-CARD-rdfslabelforeachlanguage
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -29,9 +29,9 @@ tddt:skos-CARD-rdfslabelforeachlanguage
 # Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
 tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -45,9 +45,9 @@ tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
 # Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#Concept>
 tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -63,9 +63,9 @@ tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
 # skos:prefLabel cannot exists more than once 
 tddt:skos-CARD-prefLabel
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -79,9 +79,9 @@ tddt:skos-CARD-prefLabel
 # skos:prefLabel is not a skos:altLabel
 tddt:skos-OWLDISJP-skosaltpreflabel
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -95,9 +95,9 @@ tddt:skos-OWLDISJP-skosaltpreflabel
 # skos:prefLabel is not a skos:hiddenLabel
 tddt:skos-OWLDISJP-skoshiddenpreflabel
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -111,9 +111,9 @@ tddt:skos-OWLDISJP-skoshiddenpreflabel
 # skos:altLabel is not a skos:hiddenLabel
 tddt:skos-OWLDISJP-skosalthiddenlabel
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -128,9 +128,9 @@ tddt:skos-OWLDISJP-skosalthiddenlabel
 # skos:exactMatch is not a skos:broadMatch
 tddt:skos-OWLDISJP-skosexactbroadmatch
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -144,9 +144,9 @@ tddt:skos-OWLDISJP-skosexactbroadmatch
 # skos:exactMatch is not a skos:broadMatch
 tddt:skos-OWLDISJP-skosexactrelatedmatch
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -161,9 +161,9 @@ tddt:skos-OWLDISJP-skosexactrelatedmatch
 # skos:related is not a skos:broaderTransitive
 tddt:skos-OWLDISJP-skosrelatedbroadertransitive
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#related> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -180,9 +180,9 @@ tddt:skos-OWLDISJP-skosrelatedbroadertransitive
 # skos:altLabel whitespace
 tddt:skos-MATCH-altlabelwhitespace
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -194,9 +194,9 @@ tddt:skos-MATCH-altlabelwhitespace
 # skos:prefLabel whitespace
 tddt:skos-MATCH-preflabelwhitespace
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -208,9 +208,9 @@ tddt:skos-MATCH-preflabelwhitespace
 # skos:hiddenLabel whitespace
 tddt:skos-MATCH-hiddenlabelwhitespace
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
