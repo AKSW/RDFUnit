@@ -25,8 +25,8 @@ tddt:dbo-LITRAN-rangegeolatitude
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 . } """ .
 
-# geo:long must be in the range [-18,180]
-tddt:dbo-LITRAN-rangegeolatitude
+# geo:long must be in the range [-180,180]
+tddt:dbo-LITRAN-rangegeolongtitude
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
