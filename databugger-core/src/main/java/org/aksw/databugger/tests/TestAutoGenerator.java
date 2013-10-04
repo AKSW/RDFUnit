@@ -29,6 +29,9 @@ public class TestAutoGenerator {
     private final String query;
     private final String patternID;
 
+    //tmp  for UML Diagram // TODO remove
+    private Pattern pattern=null;
+
     public TestAutoGenerator(String uri, String description, String query, String patternID) {
         this.URI = uri;
         this.description = description;

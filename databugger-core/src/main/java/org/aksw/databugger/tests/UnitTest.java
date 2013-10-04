@@ -14,6 +14,8 @@ import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGeneration;
+import org.aksw.databugger.patterns.Pattern;
+import org.aksw.databugger.sources.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,10 @@ public class UnitTest {
     private final String sparql;
     private final String sparqlPrevalence;
     private final List<String> references;
+
+    //tmp  for UML Diagram // TODO remove
+    private Pattern tmpPattern=null;
+    private Source tmpSource=null;
 
     public UnitTest(String sparql, String sparqlPrevalence, String testURI) {
         this(JenaUUID.generate().asString(), "", TestGeneration.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
