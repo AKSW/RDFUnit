@@ -81,8 +81,8 @@ public class Databugger {
 
         Databugger databugger = new Databugger();
 
-        DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
-        //DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
+        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
+        DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
         //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
         //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
 
@@ -114,6 +114,13 @@ public class Databugger {
             // write to file for backup
         }
 
+        File f = new File(dataset.getTestFileManual());
+        if (f.exists()) {
+            List<UnitTest> testsManuals = TestUtil.instantiateTestsFromFile(dataset.getTestFileManual());
+            allTests.addAll(testsManuals);
+            log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
+        }
+
 
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results
@@ -121,7 +128,7 @@ public class Databugger {
 
 
         try {
-            File f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
+            f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(PrefixService.getPrefixMap());
