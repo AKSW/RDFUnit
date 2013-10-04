@@ -187,7 +187,7 @@ tddt:skos-MATCH-altlabelwhitespace
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
-                                 FILTER (! regex(str(?v1), "^[ \t]+|[ \t]+$")) } """ ;
+                                 FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 . } """ .
 
@@ -201,7 +201,7 @@ tddt:skos-MATCH-preflabelwhitespace
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
-                                 FILTER (! regex(str(?v1), "^[ \t]+|[ \t]+$")) } """ ;
+                                 FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 . } """ .
                                 
@@ -215,7 +215,7 @@ tddt:skos-MATCH-hiddenlabelwhitespace
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 .
-                                 FILTER (! regex(str(?v1), "^[ \t]+|[ \t]+$")) } """ ;
+                                 FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 . } """ .
                 
