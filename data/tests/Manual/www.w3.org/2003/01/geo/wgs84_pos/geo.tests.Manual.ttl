@@ -15,10 +15,10 @@
 tddt:dbo-LITRAN-rangegeolatitude
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern <tddp:LITRAN> ;
-      tddo:generated tddo:Manual ;
+      tddo:basedOnPattern tddp:LITRAN ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-      tddo:source <<http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+      tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 .
                                  FILTER (! (?v1 >= -90 && ?v1 <= 90) ) } """ ;
@@ -30,9 +30,9 @@ tddt:dbo-LITRAN-rangegeolatitude
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated tddo:Manual ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-      tddo:source <<http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+      tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 .
                                  FILTER (! (?v1 >= -180 && ?v1 <= 180) ) } """ ;
@@ -45,9 +45,9 @@ tddt:dbo-INVFUNC-uniquegeometry
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:INVFUNC ;
-      tddo:generated tddo:Manual ;
+      tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
-      tddo:source <<http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+      tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
       tddo:sparql """ SELECT DISTINCT ?v1 WHERE {
                        ?a <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 .
                        ?b <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 .
