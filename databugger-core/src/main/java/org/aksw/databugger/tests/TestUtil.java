@@ -101,9 +101,9 @@ public class TestUtil {
                 " tddo:source ?source ;" +
                 " tddo:sparql ?sparql ;" +
                 " tddo:sparqlPrevalence ?sparqlPrevalence ;" +
-                " OPTIONAL {?test tddo:references ?references .}" +
-                " OPTIONAL {?test tddo:testGenerator ?testGenerator .}" +
-                "} ";
+                " OPTIONAL {?testURI tddo:references ?references .}" +
+                " OPTIONAL {?testURI tddo:testGenerator ?testGenerator .}" +
+                "} ORDER BY ?testURI ";
 
         QueryExecution qe = qef.createQueryExecution(sparqlSelect);
         ResultSet results = qe.execSelect();
@@ -137,7 +137,7 @@ public class TestUtil {
 
             UnitTest currentTest = new UnitTest(
                     testURI,
-                    basedOnPattern,
+                    basedOnPattern.replace(PrefixService.getPrefix("tddp"),""),
                     TestGeneration.resolve(generated),
                     testGenerator,
                     TestAppliesTo.resolve(appliesTo),
@@ -147,12 +147,16 @@ public class TestUtil {
                     sparqlPrevalence,
                     referencesLst);
 
+            if (lastTest.getPattern().equals("")) {
+                lastTest = currentTest.clone();
+                continue;
+            }
             if (lastTest.getTestURI() != testURI) {
                 tests.add(lastTest);
+                lastTest = currentTest.clone();
             } else {
                 lastTest.addReferences(currentTest.getReferences());
             }
-
         }
         // add last row
         if (!lastTest.getPattern().equals(""))
@@ -164,7 +168,7 @@ public class TestUtil {
 
     }
 
-    public static void writeTestsToFile(List<UnitTest> tests, PrefixMapping prefixes, String filename) {
+    public static void writeTestsToFile(List<UnitTest> tests, String filename) {
         Model model = ModelFactory.createDefaultModel();
         for (UnitTest t : tests)
             t.saveTestToModel(model);
@@ -172,7 +176,7 @@ public class TestUtil {
             File f = new File(filename);
             f.getParentFile().mkdirs();
 
-            model.setNsPrefixes(prefixes);
+            model.setNsPrefixes(PrefixService.getPrefixMap());
             model.write(new FileOutputStream(filename), "TURTLE");
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);

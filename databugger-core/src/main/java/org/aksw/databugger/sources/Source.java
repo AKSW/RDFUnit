@@ -64,7 +64,7 @@ public abstract class Source {
     }
 
     private String getFile(String type, String sourceType) {
-        return getBaseCacheFolder() + getCacheFolder() + prefix + "." + type + "." + sourceType + ".ttl";
+        return getBaseCacheFolder() + sourceType + "/" + getCacheFolder() + prefix + "." + type + "." + sourceType + ".ttl";
     }
 
     protected String getCacheFolder() {
@@ -73,7 +73,7 @@ public abstract class Source {
             URI tmp = new URI(getUri());
             String host = tmp.getHost();
             String path = tmp.getPath();
-            retVal = getSourceType().name() + "/" + host + path + "/";
+            retVal = host + path + "/";
         } catch (Exception e) {
             // TODO handle exception
         }
