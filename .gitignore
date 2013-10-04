@@ -6,4 +6,4 @@
 *.settings
 .idea
 target
-tests
+tests/auto/
