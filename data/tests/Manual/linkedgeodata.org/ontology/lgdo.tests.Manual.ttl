@@ -1,0 +1,116 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tddg: <http://databugger.aksw.org/generators#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddp: <http://databugger.aksw.org/patterns#> .
+@prefix tddt: <http://databugger.aksw.org/tests#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix lgd: <http://linkedgeodata.org/> .
+@prefix lgdo:<http://linkedgeodata.org/ontology/> .
+
+# not applicable in general since there are too much different formats and
+# a dump for the whole world is considered here
+#
+# tddt:lgd-MATCH-postal_code
+#     a tddo:Test ;
+#     tddo:appliesTo tddo:Schema ;
+#     tddo:basedOnPattern tddp:MATCH ;
+#     tddo:generated tddo:Manual ;
+#     tddo:references lgdo:postal_code ;
+#     tddo:source <http://linkedgeodata.org/ontology/> ;
+#     tddo:sparql """ SELECT DISTINCT ?s WHERE {
+#                         ?s lgdo:postal_code ?value .
+#                         FILTER (! regex(str(?value), "^^[0-9]{5}$$"))
+#                     } """
+#     tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE { ?s lgdo:postal_code ?value . } """ .
+
+# all cases where phone area numbers do not start with a zero or a + sign
+tddt:lgd-MATCH-telephone_area_code
+    a tddo:Test ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:MATCH ;
+    tddo:generated tddo:Manual ;
+    tddo:references <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ;
+    tddo:source <http://linkedgeodata.org/ontology/> ;
+    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                        ?s <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ?v .
+                        FILTER( !regex(str(?v), "^(0|\\+)"))
+                    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE {
+                                  ?s <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ?v .
+                              } """ .
+
+# all cases where phone numbers contain any characters
+tddt:lgd-MATCH-phone
+    a tddo:Test ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:MATCH ;
+    tddo:generated tddo:Manual ;
+    tddo:references <http://xmlns.com/foaf/0.1/phone> ;
+    tddo:source <http://linkedgeodata.org/ontology/> ;
+    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                        ?s <http://xmlns.com/foaf/0.1/phone> ?v .
+                        FILTER( regex(str(?v), "[A-Za-z]"))
+                    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE {
+                                  ?s <http://xmlns.com/foaf/0.1/phone> ?v .
+                              } """ .
+
+# all cases where the speed limit is not within (0, 300]
+tddt:lgd-LITRAN-maxspeed
+    a tddo:Test ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:LITRAN ;
+    tddo:generated tddo:Manual ;
+    tddo:references lgdo:maxspeed ;
+    tddo:source <http://linkedgeodata.org/ontology/> ;
+    tddo:sparql """ SELECT ?s WHERE {
+                        ?s lgdo:maxspeed ?v.
+                        FILTER(!(xsd:int(?v)>0 && xsd:int(?v)<300))
+                    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:maxspeed ?v. } """ .
+
+
+# all cases where a resource has a property lgdo:start but no lgdo:end
+tddt:lgd-PROPDEP-start_end
+    a tddo:Test ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:PROPDEP ;
+    tddo:generated tddo:Manual ;
+    tddo:references lgdo:start ;
+    tddo:references lgdo:end ;
+    tddo:source <http://linkedgeodata.org/ontology/> ;
+    tddo:sparql """ SELECT ?s WHERE {
+                        ?s lgdo:start ?value1.
+                        OPTIONAL {?s lgdo:end ?value2. }
+                        FILTER(!BOUND(?value2))
+                    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:start ?v . } """ .
+
+
+# all resources that have a lgdo:fixme property
+tddt:lgd-TRIPLE-fixme
+    a tddo:Test ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:TRIPLE ;
+    tddo:generated tddo:Manual ;
+    tddo:references lgdo:fixme ;
+    tddo:source <http://linkedgeodata.org/ontology/> ;
+    tddo:sparql """ SELECT ?s WHERE { ?s lgdo:fixme [] . } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:fixme [] . } """ .
+
+
+# all resources that have a lgdo:todo property
+tddt:lgd-TRIPLE-todo
+    a tddo:Test ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:TRIPLE ;
+    tddo:generated tddo:Manual ;
+    tddo:references lgdo:todo ;
+    tddo:source <http://linkedgeodata.org/ontology/> ;
+    tddo:sparql """ SELECT ?s WHERE { ?s lgdo:todo [] . } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:todo [] . } """ .
+
