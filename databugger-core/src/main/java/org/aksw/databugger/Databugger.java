@@ -97,16 +97,21 @@ public class Databugger {
             if (f.exists()) {
                 List<UnitTest> testsAutoCached = TestUtil.instantiateTestsFromFile(s.getTestFile());
                 allTests.addAll(testsAutoCached);
+                log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests");
             } else {
                 List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
                 allTests.addAll(testsAuto);
+                TestUtil.writeTestsToFile(testsAuto,  s.getTestFile());
+                log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
             }
 
-
-            List<UnitTest> testsManuals = TestUtil.instantiateTestsFromFile(s.getTestFileManual());
-            allTests.addAll(testsManuals);
+            f = new File(s.getTestFileManual());
+            if (f.exists()) {
+                List<UnitTest> testsManuals = TestUtil.instantiateTestsFromFile(s.getTestFileManual());
+                allTests.addAll(testsManuals);
+                log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
+            }
             // write to file for backup
-            //TestUtil.writeTestsToFile(tests,  s.getTestFile());
         }
 
 
