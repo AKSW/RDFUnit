@@ -43,5 +43,12 @@ public class SchemaService {
         }
         return sources;
     }
+
+    public static List<SchemaSource> getSourceListAll() {
+        List<String> prefixes = new ArrayList<String>();
+        prefixes.addAll(schemata.keySet());
+
+        return getSourceList(prefixes);
+    }
 }
 

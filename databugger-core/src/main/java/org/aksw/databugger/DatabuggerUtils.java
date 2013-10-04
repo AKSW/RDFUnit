@@ -57,7 +57,7 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(
-                Arrays.asList(/*"rdf", "rdfs",*//* "owl", "dbo", "foaf", "dcterms", "dc", "skos",*/ "geo"/*, /*"georss",*//* "prov"*/));
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
         //sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
@@ -84,6 +84,10 @@ public class DatabuggerUtils {
     }
 
     public static void fillSchemaService() {
+
+        // Add from LOV
+        fillSchemasFromLOV();
+
         // Manual
         SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
@@ -100,8 +104,7 @@ public class DatabuggerUtils {
         SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
         SchemaService.addSchemaDecl("lgdo", "http://linkedgeodata.org/ontology\thttp://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt");
 
-        // Add from LOV
-        //fillSchemasFromLOV()
+
     }
 
     public static void fillSchemasFromLOV() {
