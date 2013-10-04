@@ -12,9 +12,9 @@
 # dbo:birthDate cannot exists more than once 
 tddt:dbo-CARD-birthDate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -28,9 +28,9 @@ tddt:dbo-CARD-birthDate
 # dbo:latestReleaseDate cannot exists more than once 
 tddt:dbo-CARD-latestreleasedate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/latestReleaseDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -44,9 +44,9 @@ tddt:dbo-CARD-latestreleasedate
 # dbo:Person/weight (a Person has only one weight in KG)
 tddt:dbo-CARD-personweight
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/Person/weight> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -60,9 +60,9 @@ tddt:dbo-CARD-personweight
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages) 
 tddt:dbo-CARD-rdfslabelforeachlanguage
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -76,9 +76,9 @@ tddt:dbo-CARD-rdfslabelforeachlanguage
 # dbo:deathDate after dbo:birthDate
 tddt:dbo-COMP-birthdeatdate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:references <http://dbpedia.org/ontology/deathDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -94,9 +94,9 @@ tddt:dbo-COMP-birthdeatdate
 # dbo:demolitionDate after dbo:buildingStartDate
 tddt:dbo-COMP-demolitionbuildingstartdate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/demolitionDate> ;
       tddo:references <http://dbpedia.org/ontology/buildingStartDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -112,9 +112,9 @@ tddt:dbo-COMP-demolitionbuildingstartdate
 # dbo:latestReleaseDate after dbo:releaseDate
 tddt:dbo-COMP-releaselatestreleasedate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/latestReleaseDate> ;
       tddo:references <http://dbpedia.org/ontology/releaseDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -130,9 +130,9 @@ tddt:dbo-COMP-releaselatestreleasedate
 # Different countries having the same capital
 tddt:dbo-INVFUNC-countriessamecapital
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/capital> ;
       tddo:references <http://dbpedia.org/ontology/Country> ;
       tddo:source <http://dbpedia.org> ;
@@ -150,9 +150,9 @@ tddt:dbo-INVFUNC-countriessamecapital
 # Two dbo:Persons with the same dbo:spouse                                 
 tddt:dbo-INVFUNC-spouseperson
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/spouse> ;
       tddo:references <http://dbpedia.org/ontology/Person> ; 
       tddo:source <http://dbpedia.org> ;
@@ -168,9 +168,9 @@ tddt:dbo-INVFUNC-spouseperson
 # height of a dbo:Person between 0.4 and 2.5 meter
 tddt:dbo-LITRAN-rangeheightperson
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://dbpedia.org/ontology/height> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -184,9 +184,9 @@ tddt:dbo-LITRAN-rangeheightperson
 # weight of a dbo:Person is between 1 and 375 KG        
 tddt:dbo-LITRAN-rangeweightperson
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/Person/weight> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -199,9 +199,9 @@ tddt:dbo-LITRAN-rangeweightperson
 # dbo:isbn format
 tddt:dbo-MATCH-isbnformat
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/isbn> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -214,9 +214,9 @@ tddt:dbo-MATCH-isbnformat
 # dbo:iso6393Code format
 tddt:dbo-MATCH-iso6393codeformat
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/iso6393Code> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -229,9 +229,9 @@ tddt:dbo-MATCH-iso6393codeformat
 # dbo:postalCode format
 tddt:dbo-MATCH-postalcodeformat
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/postalCode> ;
       tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -244,9 +244,9 @@ tddt:dbo-MATCH-postalcodeformat
 # Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate                                 
 tddt:dbo-PROPDEP-activeYearsEndStartDate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/activeYearsEndDate> ;
       tddo:references <http://dbpedia.org/ontology/activeYearsStartDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -259,9 +259,9 @@ tddt:dbo-PROPDEP-activeYearsEndStartDate
 # Resource has dbo:deatDate but no dbo:birthDate                                 
 tddt:dbo-PROPDEP-deathdatebirthdate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:references <http://dbpedia.org/ontology/deathDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -275,9 +275,9 @@ tddt:dbo-PROPDEP-deathdatebirthdate
 # Resource has dbo:dissolved but is not of type dbo:SoccerClub
 tddt:dbo-RDFSDOMAIN-dissolvedsoccerclub
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSDOMAIN ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/SoccerClub> ;
       tddo:references <http://dbpedia.org/ontology/dissolved> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -291,9 +291,9 @@ tddt:dbo-RDFSDOMAIN-dissolvedsoccerclub
 # Resource cannot have a foaf property if it is not an owl:Thing
 tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSDOMAIN ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://xmlns.com/foaf/0.1/name> ;
       tddo:references <http://www.w3.org/2002/07/owl#Thing> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -307,9 +307,9 @@ tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
 # The dbo:dean of an EducationaInstitution must be a dbo:Person
 tddt:dbo-RDFSRANGE-deanperson
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/dean> ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -323,9 +323,9 @@ tddt:dbo-RDFSRANGE-deanperson
 # The dbo:birthPlace must be a dbo:Place
 tddt:dbo-RDFSRANGE-placebirthplace
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/birthPlace> ;
       tddo:references <http://dbpedia.org/ontology/Place> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -339,9 +339,9 @@ tddt:dbo-RDFSRANGE-placebirthplace
 # The dbo:spouse must be a dbo:Person
 tddt:dbo-RDFSRANGE-spouseperson
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/spouse> ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -355,9 +355,9 @@ tddt:dbo-RDFSRANGE-spouseperson
 # The dbo:university must be a dbo:EducationalInstitution
 tddt:dbo-RDFSRANGE-universityeducationalinstitution
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/university> ;
       tddo:references <http://dbpedia.org/ontology/EducationalInstitution> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -371,9 +371,9 @@ tddt:dbo-RDFSRANGE-universityeducationalinstitution
 # dbo:Person without a dbo:birthDate
 tddt:dbo-TYPRODEP-personwithoutbirthdate
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
@@ -387,9 +387,9 @@ tddt:dbo-TYPRODEP-personwithoutbirthdate
 # dbo:Person without foaf:depiction
 tddt:dbo-TYPRODEP-personwithoutdepiction
       a       tddo:Test ;
-      tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
+      tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
+      tddo:generated tddo:Manual ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://xmlns.com/foaf/0.1/depiction> ;
       tddo:source <http://dbpedia.org/ontology/> ;
