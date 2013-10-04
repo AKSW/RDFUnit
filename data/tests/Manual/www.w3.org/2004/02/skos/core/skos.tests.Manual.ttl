@@ -34,10 +34,10 @@ tddt:dbo-TYPRODEP-resourcewithoutrdfslabel
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Thing> .
+                                 ?s a <http://www.w3.org/2002/07/owl#Thing> .
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 } } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Thing> . } """ .
+                                 ?s a <http://www.w3.org/2002/07/owl#Thing> . } """ .
 
                                  
 # Loose Concepts
@@ -45,10 +45,10 @@ tddt:dbo-TYPRODEP-resourcewithoutrdfslabel
 
 # Disjoint OWL Classes
 # skos:Concept is not a skos:ConceptScheme
-tddt:dbo-DISJOIN-conceptconceptscheme
+tddt:dbo-OWLDISJC-conceptconceptscheme
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:basedOnPattern tddp:OWLDISJC ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
@@ -61,10 +61,10 @@ tddt:dbo-DISJOIN-conceptconceptscheme
 
                                  
 # skos:Concept is not a skos:Collection
-tddt:dbo-DISJOIN-conceptconceptscheme
+tddt:dbo-OWLDISJC-conceptconceptscheme
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:basedOnPattern tddp:OWLDISJC ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Collection> ;
@@ -75,16 +75,16 @@ tddt:dbo-DISJOIN-conceptconceptscheme
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
     
-    
+
 # skos:Concept is not a skos:Collection
-tddt:dbo-DISJOIN-conceptconceptscheme
+tddt:dbo-OWLDISJC-conceptconceptscheme
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:basedOnPattern tddp:OWLDISJC ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Collection> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
                                  ?s a <http://www.w3.org/2004/02/skos/Collection> } """ ;
@@ -93,20 +93,20 @@ tddt:dbo-DISJOIN-conceptconceptscheme
 
                                  
 # skos:ConceptScheme is not a skos:Collection
-tddt:dbo-DISJOIN-conceptconceptscheme
+tddt:dbo-OWLDISJC-conceptconceptscheme
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:DISJOIN ;
+      tddo:basedOnPattern tddp:OWLDISJC ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Collection> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
+      tddo:source <http://dbpedia.org/ontology/> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
                                  ?s a <http://www.w3.org/2004/02/skos/core#Collection> } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ .
-                                 
+
 # AmbiguousprefLabelvalues
 # skos:prefLabel cannot exists more than once 
 tddt:dbo-CARD-prefLabel
@@ -125,10 +125,10 @@ tddt:dbo-CARD-prefLabel
 
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
-tddt:dbo-OWLDISJOINTPROPERTY-skosaltpreflabel
+tddt:dbo-OWLDISJP-skosaltpreflabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
@@ -141,10 +141,10 @@ tddt:dbo-OWLDISJOINTPROPERTY-skosaltpreflabel
 
 
 # skos:prefLabel is not a skos:hiddenLabel
-tddt:dbo-OWLDISJOINTPROPERTY-skoshiddenpreflabel
+tddt:dbo-OWLDISJP-skoshiddenpreflabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
@@ -157,10 +157,10 @@ tddt:dbo-OWLDISJOINTPROPERTY-skoshiddenpreflabel
 
                                  
 # skos:altLabel is not a skos:hiddenLabel
-tddt:dbo-OWLDISJOINTPROPERTY-skosalthiddenlabel
+tddt:dbo-OWLDISJP-skosalthiddenlabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
@@ -174,10 +174,10 @@ tddt:dbo-OWLDISJOINTPROPERTY-skosalthiddenlabel
                                  
 # Consistent Use of Mapping Properties
 # skos:exactMatch is not a skos:broadMatch
-tddt:dbo-OWLDISJOINTPROPERTY-skosexactbroadmatch
+tddt:dbo-OWLDISJP-skosexactbroadmatch
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> ;
@@ -190,10 +190,10 @@ tddt:dbo-OWLDISJOINTPROPERTY-skosexactbroadmatch
 
 
 # skos:exactMatch is not a skos:broadMatch
-tddt:dbo-OWLDISJOINTPROPERTY-skosexactrelatedmatch
+tddt:dbo-OWLDISJP-skosexactrelatedmatch
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
@@ -207,10 +207,10 @@ tddt:dbo-OWLDISJOINTPROPERTY-skosexactrelatedmatch
                          
 # Disjoint Semantic Relations
 # skos:related is not a skos:broaderTransitive
-tddt:dbo-OWLDISJOINTPROPERTY-skosrelatedbroadertransitive
+tddt:dbo-OWLDISJP-skosrelatedbroadertransitive
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
-      tddo:basedOnPattern tddp:OWLDISJOINTPROPERTY ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated <http://databugger.aksw.org/ontology/Manual> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#related> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
