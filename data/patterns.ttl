@@ -101,8 +101,8 @@ tddp:OWLDISJP a tddo:Pattern ;
     dcterms:identifier "OWLDISJP" ;
     dcterms:description """Emulates the owl:disjointProperty constrain"""@en ;
     tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
-                           ?s %%P1%% ?v1 .
-                           ?s %%P2%% ?v2 .} """ ;
+                           ?s %%P1%% ?v .
+                           ?s %%P2%% ?v .} """ ;
     tddo:patternPrevalenceSPARQL """  """ ;
     tddo:selectVariable "s" ;
     tddo:parameter tddp:OWLDISJP-P1 ;
