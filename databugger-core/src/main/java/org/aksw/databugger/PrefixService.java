@@ -1,6 +1,7 @@
 package org.aksw.databugger;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,5 +26,9 @@ public class PrefixService {
 
     public static Set<String> getPrefixList() {
         return prefixes.keySet();
+    }
+
+    public static Map<String,String> getPrefixMap() {
+        return prefixes;
     }
 }

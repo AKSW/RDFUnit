@@ -3,11 +3,15 @@ package org.aksw.databugger;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.sources.*;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -53,10 +57,10 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(
-                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
+                Arrays.asList(/*"rdf", "rdfs",*//* "owl", "dbo", "foaf", "dcterms", "dc", "skos",*/ "geo"/*, /*"georss",*//* "prov"*/));
 
         //Enriched Schema (cached in folder)
-        sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
+        //sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
 
         DatasetSource dataset = new DatasetSource("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
 
@@ -135,5 +139,22 @@ public class DatabuggerUtils {
             String vocab = row.get("vocabURI").toString();
             SchemaService.addSchemaDecl(prefix, vocab);
         }
+    }
+
+    public static void fillPrefixService(String filename) {
+
+        Model prefixModel = ModelFactory.createDefaultModel();
+        try {
+            prefixModel.read(new FileInputStream(filename), null, "TURTLE");
+        } catch (Exception e) {
+            // TODO handle exception
+        }
+
+        // Update Prefix Service
+        Map<String, String> prf = prefixModel.getNsPrefixMap();
+        for (String id : prf.keySet()) {
+            PrefixService.addPrefix(id, prf.get(id));
+        }
+
     }
 }

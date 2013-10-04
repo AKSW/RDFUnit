@@ -2,8 +2,6 @@ package org.aksw.databugger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.shared.PrefixMapping;
-import com.hp.hpl.jena.shared.impl.PrefixMappingImpl;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
@@ -33,14 +31,13 @@ import java.util.Map;
 public class Databugger {
     private static Logger log = LoggerFactory.getLogger(Databugger.class);
 
-    private PrefixMapping prefixes = new PrefixMappingImpl();
     QueryExecutionFactory patternQueryFactory;
 
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
     Databugger() {
-        this.patternQueryFactory = loadPatterns("../data/patterns.ttl", "../data/testGenerators.ttl", "../data/prefixes.ttl");
+        this.patternQueryFactory = loadPatterns("../data/patterns.ttl", "../data/testGenerators.ttl");
         this.patterns = getPatterns();
 
         // Update pattern service
@@ -48,20 +45,12 @@ public class Databugger {
             PatternService.addPattern(pattern.getId(), pattern);
         }
 
-        // Update Prefix Service
-        Map<String, String> prf = prefixes.getNsPrefixMap();
-        for (String id : prf.keySet()) {
-            PrefixService.addPrefix(id, prf.get(id));
-        }
-
         this.autoGenerators = getAutoGenerators();
 
 
     }
 
-    public QueryExecutionFactory loadPatterns(String patf, String genf, String pref) {
-
-        setPrefixes(pref);
+    public QueryExecutionFactory loadPatterns(String patf, String genf) {
 
         Model patternModel = ModelFactory.createDefaultModel();
         try {
@@ -70,24 +59,8 @@ public class Databugger {
         } catch (Exception e) {
             // TODO handle exception
         }
-        patternModel.setNsPrefixes(getPrefixes());
+        patternModel.setNsPrefixes(PrefixService.getPrefixMap());
         return new QueryExecutionFactoryModel(patternModel);
-    }
-
-    private void setPrefixes(String pref) {
-
-        Model prefixModel = ModelFactory.createDefaultModel();
-        try {
-            prefixModel.read(new FileInputStream(pref), null, "TURTLE");
-        } catch (Exception e) {
-            // TODO handle exception
-        }
-
-        getPrefixes().setNsPrefixes(prefixModel.getNsPrefixMap());
-    }
-
-    public PrefixMapping getPrefixes() {
-        return prefixes;
     }
 
     public List<Pattern> getPatterns() {
@@ -98,19 +71,18 @@ public class Databugger {
         return TestUtil.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 
-    public List<UnitTest> generateTestsFromAG(Source source) {
-        return TestUtil.instantiateTestsFromAG(autoGenerators, source);
-    }
+
 
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure("log4j.properties");
 
+        DatabuggerUtils.fillPrefixService("../data/prefixes.ttl");
         DatabuggerUtils.fillSchemaService();
 
         Databugger databugger = new Databugger();
 
-        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
-        DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
+        DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
+        //DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
         //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
         //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
 
@@ -120,10 +92,21 @@ public class Databugger {
         for (Source s : dataset.getReferencesSchemata()) {
 
             log.info("Generating tests for: " + s.getUri());
-            List<UnitTest> tests = databugger.generateTestsFromAG(s);
-            allTests.addAll(tests);
+            // attempt to read from file
+            File f = new File(s.getTestFile());
+            if (f.exists()) {
+                List<UnitTest> testsAutoCached = TestUtil.instantiateTestsFromFile(s.getTestFile());
+                allTests.addAll(testsAutoCached);
+            } else {
+                List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
+                allTests.addAll(testsAuto);
+            }
+
+
+            List<UnitTest> testsManuals = TestUtil.instantiateTestsFromFile(s.getTestFileManual());
+            allTests.addAll(testsManuals);
             // write to file for backup
-            TestUtil.writeTestsToFile(tests, databugger.getPrefixes(), s.getTestFile());
+            //TestUtil.writeTestsToFile(tests,  s.getTestFile());
         }
 
 
@@ -136,7 +119,7 @@ public class Databugger {
             File f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
             f.getParentFile().mkdirs();
 
-            model.setNsPrefixes(databugger.getPrefixes());
+            model.setNsPrefixes(PrefixService.getPrefixMap());
             model.write(new FileOutputStream(f), "TURTLE");
         } catch (Exception e) {
             log.error("Cannot write tests to file: ");
