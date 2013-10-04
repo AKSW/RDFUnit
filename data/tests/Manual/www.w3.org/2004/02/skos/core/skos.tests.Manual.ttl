@@ -11,7 +11,7 @@
 
 # TODO Check this one (http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf)
 # Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
-tddt:dbo-CARD-rdfslabelforeachlanguage
+tddt:skos-CARD-rdfslabelforeachlanguage
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:CARD ;
@@ -27,7 +27,7 @@ tddt:dbo-CARD-rdfslabelforeachlanguage
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
-tddt:dbo-TYPRODEP-ConseptSchemeWithoutRdfslabel
+tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:TYPRODEP ;
@@ -43,7 +43,7 @@ tddt:dbo-TYPRODEP-ConseptSchemeWithoutRdfslabel
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#Concept>
-tddt:dbo-TYPRODEP-ConseptWithoutRdfslabel
+tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:TYPRODEP ;
@@ -61,7 +61,7 @@ tddt:dbo-TYPRODEP-ConseptWithoutRdfslabel
 
 # AmbiguousprefLabelvalues
 # skos:prefLabel cannot exists more than once 
-tddt:dbo-CARD-prefLabel
+tddt:skos-CARD-prefLabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:CARD ;
@@ -77,7 +77,7 @@ tddt:dbo-CARD-prefLabel
 
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
-tddt:dbo-OWLDISJP-skosaltpreflabel
+tddt:skos-OWLDISJP-skosaltpreflabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:OWLDISJP ;
@@ -93,7 +93,7 @@ tddt:dbo-OWLDISJP-skosaltpreflabel
 
 
 # skos:prefLabel is not a skos:hiddenLabel
-tddt:dbo-OWLDISJP-skoshiddenpreflabel
+tddt:skos-OWLDISJP-skoshiddenpreflabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:OWLDISJP ;
@@ -109,7 +109,7 @@ tddt:dbo-OWLDISJP-skoshiddenpreflabel
 
                                  
 # skos:altLabel is not a skos:hiddenLabel
-tddt:dbo-OWLDISJP-skosalthiddenlabel
+tddt:skos-OWLDISJP-skosalthiddenlabel
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:OWLDISJP ;
@@ -126,7 +126,7 @@ tddt:dbo-OWLDISJP-skosalthiddenlabel
                                  
 # Consistent Use of Mapping Properties
 # skos:exactMatch is not a skos:broadMatch
-tddt:dbo-OWLDISJP-skosexactbroadmatch
+tddt:skos-OWLDISJP-skosexactbroadmatch
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:OWLDISJP ;
@@ -142,7 +142,7 @@ tddt:dbo-OWLDISJP-skosexactbroadmatch
 
 
 # skos:exactMatch is not a skos:broadMatch
-tddt:dbo-OWLDISJP-skosexactrelatedmatch
+tddt:skos-OWLDISJP-skosexactrelatedmatch
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:OWLDISJP ;
@@ -159,7 +159,7 @@ tddt:dbo-OWLDISJP-skosexactrelatedmatch
                          
 # Disjoint Semantic Relations
 # skos:related is not a skos:broaderTransitive
-tddt:dbo-OWLDISJP-skosrelatedbroadertransitive
+tddt:skos-OWLDISJP-skosrelatedbroadertransitive
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:OWLDISJP ;
@@ -178,7 +178,7 @@ tddt:dbo-OWLDISJP-skosrelatedbroadertransitive
 
 # Extra Whitespace
 # skos:altLabel whitespace
-tddt:dbo-MATCH-altlabelwhitespace
+tddt:skos-MATCH-altlabelwhitespace
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:MATCH ;
@@ -192,7 +192,7 @@ tddt:dbo-MATCH-altlabelwhitespace
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 . } """ .
 
 # skos:prefLabel whitespace
-tddt:dbo-MATCH-preflabelwhitespace
+tddt:skos-MATCH-preflabelwhitespace
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:MATCH ;
@@ -206,7 +206,7 @@ tddt:dbo-MATCH-preflabelwhitespace
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 . } """ .
                                 
 # skos:hiddenLabel whitespace
-tddt:dbo-MATCH-hiddenlabelwhitespace
+tddt:skos-MATCH-hiddenlabelwhitespace
       a       tddo:Test ;
       tddo:appliesTo <http://databugger.aksw.org/ontology/Schema> ;
       tddo:basedOnPattern tddp:MATCH ;
