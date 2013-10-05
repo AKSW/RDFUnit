@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.activation.DataSource;
+
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -83,6 +85,31 @@ public class DatabuggerUtils {
         return dataset;
     }
 
+    public static DatasetSource getLGDDataset() {
+        /*
+         * http://geovocab.org/geometry#
+         * http://geovocab.org/spatial#
+         * http://linkedgeodata.org/meta/
+         * http://linkedgeodata.org/ontology/
+         * http://purl.org/dc/terms/
+         * http://www.opengis.net/ont/geosparql#
+         * http://www.w3.org/1999/02/22-rdf-syntax-ns#
+         * http://www.w3.org/2000/01/rdf-schema#
+         * http://www.w3.org/2002/07/owl#
+         * http://www.w3.org/2003/01/geo/wgs84_pos#
+         * http://www.w3.org/2004/02/skos/core#
+         * http://xmlns.com/foaf/0.1/
+         */
+        List<SchemaSource> sources = SchemaService.getSourceList(Arrays.asList(
+                "geom", "spatial", "lgdm", "lgdo", "dcterms", "ogc", "rdf",
+                "rdfs", "owl", "geo", "skos", "foaf"));
+        DatasetSource dataset = new DatasetSource("linkedgeodata.org",
+                "http://linkedgeodata.org", "http://linkedgeodata.org/sparql",
+                "http://linkedgeodata.org", sources);
+        
+        return dataset;
+    }
+
     public static void fillSchemaService() {
 
         // Add from LOV
@@ -103,8 +130,10 @@ public class DatabuggerUtils {
         SchemaService.addSchemaDecl("frbrer", "http://iflastandards.info/ns/fr/frbr/frbrer/");
         SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
         SchemaService.addSchemaDecl("lgdo", "http://linkedgeodata.org/ontology\thttp://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt");
-
-
+        SchemaService.addSchemaDecl("lgdm", "http://linkedgeodata.org/meta/");
+        SchemaService.addSchemaDecl("geom", "http://geovocab.org/geometry#");
+        SchemaService.addSchemaDecl("spatial", "http://geovocab.org/spatial#");
+        SchemaService.addSchemaDecl("ogc", "http://www.opengis.net/ont/geosparql#");
     }
 
     public static void fillSchemasFromLOV() {
