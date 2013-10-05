@@ -98,7 +98,7 @@ public class DatabuggerUtils {
         SchemaService.addSchemaDecl("dc", "http://purl.org/dc/elements/1.1/");
         SchemaService.addSchemaDecl("skos", "http://www.w3.org/2004/02/skos/core#");
         SchemaService.addSchemaDecl("georss", "http://www.georss.org/georss/");
-        SchemaService.addSchemaDecl("geo", "http://www.w3.org/2003/01/geo/wgs84_pos");
+        SchemaService.addSchemaDecl("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#");
         SchemaService.addSchemaDecl("prov", "http://www.w3.org/ns/prov");
         SchemaService.addSchemaDecl("frbrer", "http://iflastandards.info/ns/fr/frbr/frbrer/");
         SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
