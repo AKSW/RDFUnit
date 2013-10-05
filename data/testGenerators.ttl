@@ -14,7 +14,9 @@ tddg:RDFSRANGE a tddo:TestGenerator ;
                              ?P1 rdfs:range ?T1 .
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal") )} """ ;
+                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
+                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
+                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGE .
 
 
@@ -28,7 +30,8 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
                              ?P1 rdfs:domain ?T1 .
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"))} """ ;
+                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
+                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
     tddo:basedOnPattern tddd:RDFSDOMAIN .
 
 
