@@ -18,7 +18,7 @@
 #     a tddo:Test ;
 #     tddo:appliesTo tddo:Schema ;
 #     tddo:basedOnPattern tddp:MATCH ;
-#     tddo:generated tddo:Manual ;
+#     tddo:generated tddo:ManuallyGenerated ;
 #     tddo:references lgdo:postal_code ;
 #     tddo:source <http://linkedgeodata.org/ontology/> ;
 #     tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -32,7 +32,7 @@ tddt:lgd-MATCH-telephone_area_code
     a tddo:Test ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:MATCH ;
-    tddo:generated tddo:Manual ;
+    tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
     tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -48,7 +48,7 @@ tddt:lgd-MATCH-phone
     a tddo:Test ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:MATCH ;
-    tddo:generated tddo:Manual ;
+    tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://xmlns.com/foaf/0.1/phone> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
     tddo:sparql """ SELECT DISTINCT ?s WHERE {
@@ -64,7 +64,7 @@ tddt:lgd-LITRAN-maxspeed
     a tddo:Test ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:LITRAN ;
-    tddo:generated tddo:Manual ;
+    tddo:generated tddo:ManuallyGenerated ;
     tddo:references lgdo:maxspeed ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
     tddo:sparql """ SELECT ?s WHERE {
@@ -79,7 +79,7 @@ tddt:lgd-PROPDEP-start_end
     a tddo:Test ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:PROPDEP ;
-    tddo:generated tddo:Manual ;
+    tddo:generated tddo:ManuallyGenerated ;
     tddo:references lgdo:start ;
     tddo:references lgdo:end ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
@@ -96,7 +96,7 @@ tddt:lgd-TRIPLE-fixme
     a tddo:Test ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:TRIPLE ;
-    tddo:generated tddo:Manual ;
+    tddo:generated tddo:ManuallyGenerated ;
     tddo:references lgdo:fixme ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
     tddo:sparql """ SELECT ?s WHERE { ?s lgdo:fixme [] . } """ ;
@@ -108,7 +108,7 @@ tddt:lgd-TRIPLE-todo
     a tddo:Test ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:TRIPLE ;
-    tddo:generated tddo:Manual ;
+    tddo:generated tddo:ManuallyGenerated ;
     tddo:references lgdo:todo ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
     tddo:sparql """ SELECT ?s WHERE { ?s lgdo:todo [] . } """ ;
