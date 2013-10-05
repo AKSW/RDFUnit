@@ -11,19 +11,72 @@
 
 # TODO Check this one (http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf)
 # Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
-tddt:skos-CARD-rdfslabelforeachlanguage
+
+# multiple languages in prefLabel (en)
+tddt:skos-CARD-singleEnPrefLabel
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:CARD ;
+      tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
-                                 GROUP BY ?s
-                                 HAVING count(?v1) > 20 } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 . } """ .
+      tddo:sparql """SELECT DISTINCT ?s WHERE {
+                                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
+                                                  BIND ( lang(?c) AS ?l )
+                                                  FILTER (isLiteral (?c) && lang(?c) = 'en')
+                                              } GROUP BY ?s
+                                              HAVING COUNT (?l) > 1""" ;
+      tddo:sparqlPrevalence """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c }""" .
+
+# multiple languages in prefLabel (es)
+tddt:skos-CARD-singleEsPrefLabel
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:ONELANG ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
+      tddo:sparql """SELECT DISTINCT ?s WHERE {
+                                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
+                                                  BIND ( lang(?c) AS ?l )
+                                                  FILTER (isLiteral (?c) && lang(?c) = 'es')
+                                              } GROUP BY ?s
+                                              HAVING COUNT (?l) > 1""" ;
+      tddo:sparqlPrevalence """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c }""" .
+
+
+# multiple languages in prefLabel (fr)
+tddt:skos-CARD-singleFrPrefLabel
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:ONELANG ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
+      tddo:sparql """SELECT DISTINCT ?s WHERE {
+                                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
+                                                  BIND ( lang(?c) AS ?l )
+                                                  FILTER (isLiteral (?c) && lang(?c) = 'fr')
+                                              } GROUP BY ?s
+                                              HAVING COUNT (?l) > 1""" ;
+      tddo:sparqlPrevalence """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c }""" .
+
+
+# multiple languages in prefLabel (de)
+tddt:skos-CARD-singleDePrefLabel
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:ONELANG ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
+      tddo:sparql """SELECT DISTINCT ?s WHERE {
+                                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
+                                                  BIND ( lang(?c) AS ?l )
+                                                  FILTER (isLiteral (?c) && lang(?c) = 'de')
+                                              } GROUP BY ?s
+                                              HAVING COUNT (?l) > 1""" ;
+      tddo:sparqlPrevalence """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c }""" .
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
