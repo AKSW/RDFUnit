@@ -83,8 +83,8 @@ public class TestAutoGenerator {
                 if (row.contains(p.getId())) {
                     RDFNode n = row.get(p.getId());
                     if (n.isResource()) {
-                        bindings.add("<" + n.toString() + ">");
-                        references.add(n.toString());
+                        bindings.add("<" + n.toString().trim() + ">");
+                        references.add(n.toString().trim());
                     } else
                         bindings.add(n.toString());
                 } else {
