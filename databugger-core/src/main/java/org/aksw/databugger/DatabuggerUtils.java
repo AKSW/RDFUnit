@@ -66,7 +66,7 @@ public class DatabuggerUtils {
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
-        //sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
+        sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
 
         DatasetSource dataset = new DatasetSource("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
 
