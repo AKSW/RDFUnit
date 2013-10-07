@@ -79,7 +79,8 @@ tddt:skos-CARD-singleDePrefLabel
       tddo:sparqlPrevalence """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c }""" .
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
-# Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
+# Missing  rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
+# TODO not according to pattern (2 filters)
 tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
@@ -90,12 +91,14 @@ tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
-                                 FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 } } """ ;
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ .
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
-# Missing rdfs:label in <http://www.w3.org/2004/02/skos/core#Concept>
+# Missing rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#Concept>
+# TODO not according to pattern (2 filters)
 tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
@@ -106,7 +109,8 @@ tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
       tddo:sparql """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
-                                 FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 } } """ ;
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
+                                 FILTER NOT EXISTS {?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
                                  
