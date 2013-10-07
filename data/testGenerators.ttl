@@ -88,8 +88,13 @@ tddg:OWLCARDEX a tddo:TestGenerator ;
                              FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
-# owl:cardinality number = 0 (must not exist
-# TODO TRIPLE PATTERN
+# owl:cardinality number = 0 (must not exist)
+tddg:OWLCARD0 a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality is 0"""@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('?v1' as ?V1) WHERE {
+                             ?P1 owl:cardinality ?v .
+                             FILTER (?v = 0) .} """ ;
+    tddo:basedOnPattern tddd:TRIPLE .
 
 # owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCARD-MIN a tddo:TestGenerator ;
@@ -107,7 +112,7 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
                              FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
-# owl:minCardinality number > 0 (count restriction if exists)
+# owl:manCardinality number > 0 (count restriction if exists)
 tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) WHERE {
@@ -116,7 +121,12 @@ tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     tddo:basedOnPattern tddd:OWLCARD .
 
 # owl:maxCardinality number = 0 (must not exist
-# TODO TRIPLE PATTERN
+tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0"""@en ;
+    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('?v1' as ?V1)  WHERE {
+                              ?P1 owl:maxCardinality ?v .
+                              FILTER (?v = 0) . } """ ;
+    tddo:basedOnPattern tddd:TRIPLE .
 
 ##########################################
 #### owl functional property constrains generators
