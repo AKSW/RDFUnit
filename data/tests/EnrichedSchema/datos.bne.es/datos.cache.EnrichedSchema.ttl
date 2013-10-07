@@ -1,0 +1,32 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://iflastandards.info/ns/fr/frbr/frbrer/C1003>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.w3.org/2004/02/skos/core#Concept>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.w3.org/2004/02/skos/core#broader>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#closeMatch>, <http://www.w3.org/2004/02/skos/core#inScheme>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related> .
+
+<http://www.w3.org/2004/02/skos/core#closeMatch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#inScheme>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related> .
+
+<http://www.w3.org/2004/02/skos/core#inScheme>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related> .
+
+<http://www.w3.org/2004/02/skos/core#narrower>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#related> .
+
+<http://www.w3.org/2004/02/skos/core#notation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+
+<http://www.w3.org/2004/02/skos/core#related>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<owlapi:ontology:ont1>
+    a <http://www.w3.org/2002/07/owl#Ontology> .

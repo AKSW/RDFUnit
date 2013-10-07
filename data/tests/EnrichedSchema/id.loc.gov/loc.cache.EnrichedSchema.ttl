@@ -1,0 +1,94 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://id.loc.gov/vocabulary/countries/MARC_Country>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.loc.gov/mads/rdf/v1#Authority>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.loc.gov/mads/rdf/v1#Geographic>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.loc.gov/mads/rdf/v1#hasBroaderAuthority>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#broader> .
+
+<http://www.loc.gov/mads/rdf/v1#hasCloseExternalAuthority>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#closeMatch> .
+
+<http://www.loc.gov/mads/rdf/v1#hasNarrowerAuthority>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#narrower> .
+
+<http://www.loc.gov/mads/rdf/v1#hasNarrowerExternalAuthority>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#narrowMatch> .
+
+<http://www.loc.gov/mads/rdf/v1#hasReciprocalAuthority>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#related> .
+
+<http://www.loc.gov/mads/rdf/v1#isMemberOfMADSScheme>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.loc.gov/mads/rdf/v1#isTopMemberOfMADSScheme>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+rdf:Resource
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.w3.org/2004/02/skos/core#Concept>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.w3.org/2004/02/skos/core#broader>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.loc.gov/mads/rdf/v1#hasBroaderAuthority> ;
+    <http://www.w3.org/2002/07/owl#inverseOf> <http://www.w3.org/2004/02/skos/core#narrower> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#closeMatch>, <http://www.w3.org/2004/02/skos/core#exactMatch>, <http://www.w3.org/2004/02/skos/core#inScheme>, <http://www.w3.org/2004/02/skos/core#member>, <http://www.w3.org/2004/02/skos/core#narrowMatch>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#closeMatch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.loc.gov/mads/rdf/v1#hasCloseExternalAuthority> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#exactMatch>, <http://www.w3.org/2004/02/skos/core#inScheme>, <http://www.w3.org/2004/02/skos/core#member>, <http://www.w3.org/2004/02/skos/core#narrowMatch>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#exactMatch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#narrowMatch>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#inScheme>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#equivalentProperty> <http://www.w3.org/2004/02/skos/core#topConceptOf> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#narrowMatch>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#member>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#narrowMatch>, <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#narrowMatch>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.loc.gov/mads/rdf/v1#hasNarrowerExternalAuthority> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#narrower>, <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#narrower>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.loc.gov/mads/rdf/v1#hasNarrowerAuthority> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#related>, <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#notation>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://www.w3.org/2004/02/skos/core#related>
+    a <http://www.w3.org/2002/07/owl#ObjectProperty>, <http://www.w3.org/2002/07/owl#SymmetricProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.loc.gov/mads/rdf/v1#hasReciprocalAuthority> ;
+    <http://www.w3.org/2002/07/owl#inverseOf> <http://www.w3.org/2004/02/skos/core#related> ;
+    <http://www.w3.org/2002/07/owl#propertyDisjointWith> <http://www.w3.org/2004/02/skos/core#topConceptOf> .
+
+<http://www.w3.org/2004/02/skos/core#topConceptOf>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty>, <http://www.w3.org/2002/07/owl#IrreflexiveProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+    <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.loc.gov/mads/rdf/v1#isMemberOfMADSScheme>, <http://www.loc.gov/mads/rdf/v1#isTopMemberOfMADSScheme>, <http://www.w3.org/2004/02/skos/core#inScheme> .
+
+<owlapi:ontology:ont1>
+    a <http://www.w3.org/2002/07/owl#Ontology> .
