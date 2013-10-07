@@ -39,6 +39,8 @@ public class DatabuggerUtils {
         List<SchemaSource> sources = SchemaService.getSourceList(
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "frbrer", "isbd", "dcterms", "skos"));
 
+        sources.add(new EnrichedSchemaSource("datos", "http://datos.bne.es"));
+
         DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", "http://datos.bne.es", sources);
 
         return dataset;
@@ -48,9 +50,11 @@ public class DatabuggerUtils {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
         List<SchemaSource> sources = SchemaService.getSourceList(
-                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "foaf", "dcterms", "skos"));
+                Arrays.asList(/*"rdf", "rdfs", "owl",*/ "foaf", "dcterms", "skos", "mads", "mrel", "premis"));
+        sources.add(new EnrichedSchemaSource("loc", "http://id.loc.gov"));
 
-        DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "http://localhost:8890/sparql", "http://id.loc.gov", sources);
+
+        DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "http://localhost:8891/sparql", "http://id.loc.gov", sources);
 
         return dataset;
     }
@@ -101,8 +105,8 @@ public class DatabuggerUtils {
          * http://xmlns.com/foaf/0.1/
          */
         List<SchemaSource> sources = SchemaService.getSourceList(Arrays.asList(
-                "geom", "spatial", "lgdm", "lgdo", "dcterms", "ogc", "rdf",
-                "rdfs", "owl", "geo", "skos", "foaf"));
+                "geom", "spatial", "lgdm", "lgdo", "dcterms", "ogc", /*"rdf",
+                "rdfs",*/ "owl", "geo", "skos", "foaf"));
         DatasetSource dataset = new DatasetSource("linkedgeodata.org",
                 "http://linkedgeodata.org", "http://linkedgeodata.org/sparql",
                 "http://linkedgeodata.org", sources);
@@ -134,6 +138,11 @@ public class DatabuggerUtils {
         SchemaService.addSchemaDecl("geom", "http://geovocab.org/geometry#");
         SchemaService.addSchemaDecl("spatial", "http://geovocab.org/spatial#");
         SchemaService.addSchemaDecl("ogc", "http://www.opengis.net/ont/geosparql#");
+        SchemaService.addSchemaDecl("mads","http://www.loc.gov/mads/rdf/v1#");
+        SchemaService.addSchemaDecl("premis","http://www.loc.gov/premis/rdf/v1");
+        SchemaService.addSchemaDecl("mrel","http://id.loc.gov/vocabulary/relators");
+
+
     }
 
     public static void fillSchemasFromLOV() {
