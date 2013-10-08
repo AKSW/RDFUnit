@@ -180,39 +180,7 @@ tddt:skos-OWLDISJP-skosalthiddenlabel
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#altLabel> . } """ .
 
-                                 
-# Consistent Use of Mapping Properties
-# skos:exactMatch is not a skos:broadMatch
-tddt:skos-OWLDISJP-skosexactbroadmatch
-      a       tddo:Test ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v1 .
-                                 ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v1 } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://www.w3.org/2004/02/skos/core#exactMatch> . } """ .
 
-
-# skos:exactMatch is not a skos:broadMatch
-tddt:skos-OWLDISJP-skosexactrelatedmatch
-      a       tddo:Test ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v1 .
-                                 ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v1 } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://www.w3.org/2004/02/skos/core#exactMatch> . } """ .
-                         
                          
 # Disjoint Semantic Relations
 # skos:related is not a skos:broaderTransitive
@@ -275,5 +243,91 @@ tddt:skos-MATCH-hiddenlabelwhitespace
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 . } """ .
-                
-                
+
+# skos:broader and skos:narrower should be disjoint
+tddt:skos-OWLDISJP-broaderDisjNarrower
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#broader> ;
+      tddo:source <http://id.loc.gov> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                           ?s <http://www.w3.org/2004/02/skos/core#broader> ?v .
+                           ?s <http://www.w3.org/2004/02/skos/core#narrower> ?v .} """ ;
+      tddo:sparqlPrevalence
+              "  " .
+
+# skos:broader and skos:related should be disjoint
+tddt:skos-OWLDISJP-broaderDisjRelated
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#related> ;
+      tddo:source <http://id.loc.gov> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                           ?s <http://www.w3.org/2004/02/skos/core#broader> ?v .
+                           ?s <http://www.w3.org/2004/02/skos/core#related> ?v .} """ ;
+      tddo:sparqlPrevalence
+              "  " .
+
+
+# skos:narrower and skos:related should be disjoint
+tddt:skos-OWLDISJP-narrowerDisjRelated
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#related> ;
+      tddo:source <http://id.loc.gov> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                           ?s <http://www.w3.org/2004/02/skos/core#narrower> ?v .
+                           ?s <http://www.w3.org/2004/02/skos/core#related> ?v .} """ ;
+      tddo:sparqlPrevalence
+              "  " .
+
+
+# skos:exactMatch and skos:broadMatch should be disjoint
+tddt:skos-OWLDISJP-exactMatchDisjbroadMatch
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#broadMatch> ;
+      tddo:source <http://id.loc.gov> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                           ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v .
+                           ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v .} """ ;
+      tddo:sparqlPrevalence
+              "  " .
+
+
+# skos:exactMatch and skos:relatedMatch should be disjoint
+tddt:skos-OWLDISJP-exactMatchDisjrelatedMatch
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
+      tddo:source <http://id.loc.gov> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                           ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v .
+                           ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v .} """ ;
+      tddo:sparqlPrevalence
+              "  " .
+
+
+# skos:broadMatch and skos:relatedMatch should be disjoint
+tddt:skos-OWLDISJP-broadMatchDisjrelatedMatch
+      a       tddo:Test ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:basedOnPattern tddp:OWLDISJP ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> , <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
+      tddo:source <http://id.loc.gov> ;
+      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                           ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v .
+                           ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v .} """ ;
+      tddo:sparqlPrevalence
+              "  " .

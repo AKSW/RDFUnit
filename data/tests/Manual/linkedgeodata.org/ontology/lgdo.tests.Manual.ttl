@@ -8,8 +8,6 @@
 @prefix tddp: <http://databugger.aksw.org/patterns#> .
 @prefix tddt: <http://databugger.aksw.org/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix lgd: <http://linkedgeodata.org/> .
-@prefix lgdo:<http://linkedgeodata.org/ontology/> .
 
 # not applicable in general since there are too much different formats and
 # a dump for the whole world is considered here
@@ -65,13 +63,13 @@ tddt:lgd-LITRAN-maxspeed
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:LITRAN ;
     tddo:generated tddo:ManuallyGenerated ;
-    tddo:references lgdo:maxspeed ;
+    tddo:references <http://linkedgeodata.org/ontology/maxspeed> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT ?s WHERE {
-                        ?s lgdo:maxspeed ?v.
+    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                        ?s <http://linkedgeodata.org/ontology/maxspeed> ?v.
                         FILTER(!(xsd:int(?v)>0 && xsd:int(?v)<300))
                     } """ ;
-    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:maxspeed ?v. } """ .
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/maxspeed> ?v. } """ .
 
 
 # all cases where a resource has a property lgdo:start but no lgdo:end
@@ -80,15 +78,14 @@ tddt:lgd-PROPDEP-start_end
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:PROPDEP ;
     tddo:generated tddo:ManuallyGenerated ;
-    tddo:references lgdo:start ;
-    tddo:references lgdo:end ;
+    tddo:references <http://linkedgeodata.org/ontology/start> ;
+    tddo:references <http://linkedgeodata.org/ontology/end> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT ?s WHERE {
-                        ?s lgdo:start ?value1.
-                        OPTIONAL {?s lgdo:end ?value2. }
-                        FILTER(!BOUND(?value2))
-                    } """ ;
-    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:start ?v . } """ .
+    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+                    ?s <http://linkedgeodata.org/ontology/start> ?v1 .
+                    FILTER NOT EXISTS {?s <http://linkedgeodata.org/ontology/end> ?p}
+                } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/start> ?v . } """ .
 
 
 # all resources that have a lgdo:fixme property
@@ -97,10 +94,10 @@ tddt:lgd-TRIPLE-fixme
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:TRIPLE ;
     tddo:generated tddo:ManuallyGenerated ;
-    tddo:references lgdo:fixme ;
+    tddo:references <http://linkedgeodata.org/ontology/fixme> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT ?s WHERE { ?s lgdo:fixme [] . } """ ;
-    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:fixme [] . } """ .
+    tddo:sparql """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ .
 
 
 # all resources that have a lgdo:todo property
@@ -109,8 +106,8 @@ tddt:lgd-TRIPLE-todo
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:TRIPLE ;
     tddo:generated tddo:ManuallyGenerated ;
-    tddo:references lgdo:todo ;
+    tddo:references <http://linkedgeodata.org/ontology/todo> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT ?s WHERE { ?s lgdo:todo [] . } """ ;
-    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s lgdo:todo [] . } """ .
+    tddo:sparql """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ ;
+    tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ .
 

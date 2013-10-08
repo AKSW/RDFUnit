@@ -13,7 +13,7 @@
 tddt:dbo-CARD-birthDate
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:CARD ;
+      tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -29,7 +29,7 @@ tddt:dbo-CARD-birthDate
 tddt:dbo-CARD-latestreleasedate
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:CARD ;
+      tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/latestReleaseDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -45,7 +45,7 @@ tddt:dbo-CARD-latestreleasedate
 tddt:dbo-CARD-personweight
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:CARD ;
+      tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person/weight> ;
       tddo:source <http://dbpedia.org/ontology/> ;
@@ -61,7 +61,7 @@ tddt:dbo-CARD-personweight
 tddt:dbo-CARD-rdfslabelforeachlanguage
       a       tddo:Test ;
       tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:CARD ;
+      tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;
