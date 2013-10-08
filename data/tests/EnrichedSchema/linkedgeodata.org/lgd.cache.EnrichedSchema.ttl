@@ -1,0 +1,247 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix tddg:    <http://databugger.aksw.org/generators#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix tddo:    <http://databugger.aksw.org/ontology#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tddt:    <http://databugger.aksw.org/tests#> .
+@prefix tddp:    <http://databugger.aksw.org/patterns#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://geovocab.org/spatial#Feature>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/meta/Node>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/meta/Way>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Amenity>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Bank>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Bench>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/EmergencyThing>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/HighwayThing>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Pharmacy>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Place>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/PublicTransportThing>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/RailwayThing>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Telephone>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/Toilets>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/TourismInformation>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/TourismThing>
+    a <http://www.w3.org/2002/07/owl#Class> .
+
+<http://linkedgeodata.org/ontology/agricultural>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/area>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/asb>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/atm>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/backrest>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/bar>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/bench>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/bin>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/blz>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/boat>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/bridge>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/building>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/bus>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/charge>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/cutting>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/diaper>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/dispensing>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/disused>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/ele>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/elevator>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/embankment>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/erected>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/fenced>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/frequency>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/gauge>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/horse>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/lanes>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/layer>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/level>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/lit>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/maxheight>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/maxspeed>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/maxweight>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/maxwidth>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/minspeed>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/monument>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/motorroad>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/noexit>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/oneway>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/onkz>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/population>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/public>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/rcn>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/ruins>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/seasonal>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/seats>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/segregated>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/shelter>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/ski>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/sms>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/snowmobile>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/stars>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/taxi>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/toilet>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/tram>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/tunnel>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/uic_ref>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/unisex>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/verified>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/video>
+    a <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+
+<http://linkedgeodata.org/ontology/wheelchair>
+    a <http://www.w3.org/2002/07/owl#AsymmetricProperty>, <http://www.w3.org/2002/07/owl#DatatypeProperty>, <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<owlapi:ontology:ont1>
+    a <http://www.w3.org/2002/07/owl#Ontology> .
