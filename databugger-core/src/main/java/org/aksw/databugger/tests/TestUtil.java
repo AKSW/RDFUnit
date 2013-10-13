@@ -5,12 +5,11 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
-import org.aksw.databugger.enums.TestGeneration;
+import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -138,7 +137,7 @@ public class TestUtil {
             UnitTest currentTest = new UnitTest(
                     testURI,
                     basedOnPattern.replace(PrefixService.getPrefix("tddp"),""),
-                    TestGeneration.resolve(generated),
+                    TestGenerationType.resolve(generated),
                     testGenerator,
                     TestAppliesTo.resolve(appliesTo),
                     source,

@@ -4,7 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.databugger.DatabuggerUtils;
-import org.aksw.databugger.enums.PatternParameterConstrains;
+import org.aksw.databugger.enums.PatternParameterConstraints;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class PatternUtil {
                     constrainPat = parSol.get("constrainPattern").toString();
                 }
 
-                PatternParameterConstrains constrain = PatternParameterConstrains.resolve(constrainStr);
+                PatternParameterConstraints constrain = PatternParameterConstraints.resolve(constrainStr);
                 parameters.add(new PatternParameter(parameterURI, parameterID, constrain, constrainPat));
             }
             qeNested.close();

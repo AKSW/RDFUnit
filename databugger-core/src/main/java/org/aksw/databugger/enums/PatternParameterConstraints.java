@@ -7,7 +7,7 @@ import org.aksw.databugger.PrefixService;
  * Enumerates the different parameter constrains
  * Created: 9/25/13 10:35 AM
  */
-public enum PatternParameterConstrains {
+public enum PatternParameterConstraints {
 
     /**
      * The parameter can a resource
@@ -44,7 +44,7 @@ public enum PatternParameterConstrains {
         return getUri();
     }
 
-    public static PatternParameterConstrains resolve(String value) {
+    public static PatternParameterConstraints resolve(String value) {
 
         String s = value.replace(PrefixService.getPrefix("tddo"), "");
         if (s.equals("Resource")) {

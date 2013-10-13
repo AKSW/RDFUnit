@@ -13,7 +13,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
-import org.aksw.databugger.enums.TestGeneration;
+import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.sources.Source;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class UnitTest {
 
     private final String testURI;
     private final String pattern;
-    private final TestGeneration generated;
+    private final TestGenerationType generated;
     private final String autoGeneratorURI;
     private final TestAppliesTo appliesTo;
     private final String sourceUri;
@@ -46,10 +46,10 @@ public class UnitTest {
     private Source tmpSource=null;
 
     public UnitTest(String sparql, String sparqlPrevalence, String testURI) {
-        this(JenaUUID.generate().asString(), "", TestGeneration.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
+        this(JenaUUID.generate().asString(), "", TestGenerationType.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
     }
 
-    public UnitTest(String testURI, String pattern, TestGeneration generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
+    public UnitTest(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
         this.testURI = testURI;
         this.pattern = pattern;
         this.generated = generated;
@@ -104,7 +104,7 @@ public class UnitTest {
         return pattern;
     }
 
-    public TestGeneration getGenerated() {
+    public TestGenerationType getGenerated() {
         return generated;
     }
 

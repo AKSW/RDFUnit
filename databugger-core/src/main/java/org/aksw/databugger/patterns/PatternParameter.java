@@ -1,6 +1,6 @@
 package org.aksw.databugger.patterns;
 
-import org.aksw.databugger.enums.PatternParameterConstrains;
+import org.aksw.databugger.enums.PatternParameterConstraints;
 
 /**
  * User: Dimitris Kontokostas
@@ -10,10 +10,10 @@ import org.aksw.databugger.enums.PatternParameterConstrains;
 public class PatternParameter {
     private final String URI;
     private final String id;
-    private final PatternParameterConstrains constrain;
+    private final PatternParameterConstraints constrain;
     private final String pattern;
 
-    public PatternParameter(String uri, String id, PatternParameterConstrains constrain, String pattern) {
+    public PatternParameter(String uri, String id, PatternParameterConstraints constrain, String pattern) {
         URI = uri;
         this.id = id;
         this.constrain = constrain;
@@ -28,7 +28,7 @@ public class PatternParameter {
         return id;
     }
 
-    public PatternParameterConstrains getConstrain() {
+    public PatternParameterConstraints getConstrain() {
         return constrain;
     }
 
