@@ -52,16 +52,22 @@ public class TestExecutor {
             int total = -1, prevalence = -1;
 
             try {
-                total = getCountNumber(model, t.getSparqlAsCountQuery(), "total");
-            } catch (Exception e) {
-                //query failed total remains -1
-            }
-
-            try {
                 prevalence = getCountNumber(model, t.getSparqlPrevalenceQuery(), "total");
             } catch (Exception e) {
                 //query failed total remains -1
             }
+
+            if (prevalence != 0) {
+                // if prevalence !=0 calculate total
+                try {
+                    total = getCountNumber(model, t.getSparqlAsCountQuery(), "total");
+                } catch (Exception e) {
+                    //query failed total remains -1
+                }
+            }
+            else
+                // else total will be 0 anyway
+                total = 0;
 
             model.createResource()
                     .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
