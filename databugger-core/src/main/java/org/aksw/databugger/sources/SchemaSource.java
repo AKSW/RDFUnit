@@ -50,6 +50,6 @@ public class SchemaSource extends Source {
         } catch (Exception e) {
             log.error("Cannot load ontology from URI: " + schema);
         }
-        return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
+        return new QueryExecutionFactoryModel(model);
     }
 }

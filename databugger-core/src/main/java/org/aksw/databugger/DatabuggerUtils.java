@@ -107,9 +107,9 @@ public class DatabuggerUtils {
         List<SchemaSource> sources = SchemaService.getSourceList(Arrays.asList(
                 "geom", "spatial", "lgdm", "lgdo", "dcterms", "ogc", /*"rdf",
                 "rdfs",*/ "owl", "geo", "skos", "foaf"));
-        DatasetSource dataset = new DatasetSource("linkedgeodata.org",
-                "http://linkedgeodata.org", "http://linkedgeodata.org/sparql",
-                "http://linkedgeodata.org", sources);
+
+        sources.add(new EnrichedSchemaSource("lgd", "http://linkedgeodata.org"));
+        DatasetSource dataset = new DatasetSource("linkedgeodata.org", "http://linkedgeodata.org", "http://localhost:8891/sparql", "http://linkedgeodata.org", sources);
         
         return dataset;
     }
@@ -135,9 +135,9 @@ public class DatabuggerUtils {
         SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
         SchemaService.addSchemaDecl("lgdo", "http://linkedgeodata.org/ontology\thttp://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt");
         SchemaService.addSchemaDecl("lgdm", "http://linkedgeodata.org/meta/");
-        SchemaService.addSchemaDecl("geom", "http://geovocab.org/geometry#");
+        SchemaService.addSchemaDecl("ngeo", "http://geovocab.org/geometry#");
         SchemaService.addSchemaDecl("spatial", "http://geovocab.org/spatial#");
-        SchemaService.addSchemaDecl("ogc", "http://www.opengis.net/ont/geosparql#");
+        SchemaService.addSchemaDecl("gsp", "http://www.opengis.net/ont/geosparql#");
         SchemaService.addSchemaDecl("mads","http://www.loc.gov/mads/rdf/v1#");
         SchemaService.addSchemaDecl("premis","http://www.loc.gov/premis/rdf/v1");
         SchemaService.addSchemaDecl("mrel","http://id.loc.gov/vocabulary/relators");

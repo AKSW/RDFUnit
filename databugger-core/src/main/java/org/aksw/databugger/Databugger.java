@@ -6,6 +6,7 @@ import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
 import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.SchemaService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestUtil;
@@ -74,17 +75,32 @@ public class Databugger {
 
 
     public static void main(String[] args) throws Exception {
+
+        //TODO change PROPDEP to PVT
+
         PropertyConfigurator.configure("log4j.properties");
 
         DatabuggerUtils.fillPrefixService("../data/prefixes.ttl");
         DatabuggerUtils.fillSchemaService();
 
         Databugger databugger = new Databugger();
+         /*
+        // Generates all tests from LOV
+        for (Source s: SchemaService.getSourceListAll()) {
+            s.setBaseCacheFolder("../data/tests/");
+            File f = new File(s.getTestFile());
+            if (!f.exists()) {
+                List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
+                TestUtil.writeTestsToFile(testsAuto,  s.getTestFile());
+            }
+        }
+        // */
 
-        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
-        DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
+        DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
+        //DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
         //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
         //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
+        //DatasetSource dataset = DatabuggerUtils.getLGDDataset();
 
         dataset.setBaseCacheFolder("../data/tests/");
 
@@ -120,8 +136,7 @@ public class Databugger {
             allTests.addAll(testsManuals);
             log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
         }
-
-
+        /*
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results
         Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl");
@@ -136,6 +151,19 @@ public class Databugger {
         } catch (Exception e) {
             log.error("Cannot write tests to file: ");
         }
+        //*/
+
+        // Calculate coverage
+
+
+        Model m = ModelFactory.createDefaultModel();
+        m.setNsPrefixes(PrefixService.getPrefixMap());
+        for (UnitTest ut: allTests) {
+            m.add(ut.getUnitTestModel());
+        }
+
+        TestCoverageEvaluator tce = new TestCoverageEvaluator();
+        tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix()+".property.count", dataset.getPrefix()+".class.count");
     }
 
 
