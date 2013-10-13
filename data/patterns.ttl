@@ -13,11 +13,11 @@
 tddp:RDFSRANGE a tddo:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain. Can use the rdf:type as transitive using the '+' operator"""@en ;
-    tddo:patternSPARQL """ SELECT DISTINCT ?c WHERE {
+    tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
                             ?s %%P1%% ?c.
                             FILTER NOT EXISTS {?c rdf:type%%OP%% %%T1%%} } """ ;
-    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?c) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
-    tddo:selectVariable "c" ;
+    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
+    tddo:selectVariable "s" ;
     tddo:parameter tddp:RDFSRANGE-P1 ;
     tddo:parameter tddp:RDFSRANGE-OP ;
     tddo:parameter tddp:RDFSRANGE-T1 .
@@ -35,6 +35,32 @@ tddp:RDFSRANGE-OP a tddo:Parameter ;
 tddp:RDFSRANGE-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
     tddo:parameterConstraint tddo:Class .
+
+
+##########################################
+#### rdfs:range (datatype) pattern
+##########################################
+
+tddp:RDFSRANGED a tddo:Pattern ;
+    dcterms:identifier "RDFSRANGED" ;
+    dcterms:description """Emulates the rdfs:range (datatype) constrain."""@en ;
+    tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
+                            ?s %%P1%% ?c.
+                            FILTER (DATATYPE(?c) != %%D1%%) } """ ;
+    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?c) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
+    tddo:selectVariable "s" ;
+    tddo:parameter tddp:RDFSRANGED-P1 ;
+    tddo:parameter tddp:RDFSRANGED-D1.
+
+
+tddp:RDFSRANGED-P1 a tddo:Parameter ;
+    dcterms:identifier "P1" ;
+    tddo:parameterConstraint tddo:Property .
+
+tddp:RDFSRANGED-D1 a tddo:Parameter ;
+      dcterms:identifier "D1" ;
+      tddo:parameterConstraint tddo:None .
+
 
 ##########################################
 #### rdfs:domain pattern

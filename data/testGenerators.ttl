@@ -8,16 +8,47 @@
 #### rdfs:range pattern
 ##########################################
 
-tddg:RDFSRANGE a tddo:TestGenerator ;
+# Class range
+tddg:RDFSRANGEC a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
     tddo:generatorSPARQL """ select distinct ?P1 ('+' as ?OP) ?T1 where {
-                             ?P1 rdfs:range ?T1 .
-                             FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
-                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )} """ ;
+                              {
+                              ?P1 rdfs:range ?T1 .
+                              ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
+                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
+                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )
+                              } UNION {
+                              ?P1 rdfs:range ?T1 .
+                              ?T1 rdf:type <http://www.w3.org/2002/07/owl#Class> .
+                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
+                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )} } """ ;
     tddo:basedOnPattern tddd:RDFSRANGE .
+
+# Datatype range
+tddg:RDFSRANGED a tddo:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
+    tddo:generatorSPARQL """ select distinct ?P1 ?D1 where {
+                              {
+                                  ?P1 rdfs:range ?D1 .
+                                  ?P1 rdf:type <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+                                  FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
+                              } UNION {
+                                  ?P1 rdfs:range ?D1 .
+                                  ?D1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+                              } UNION {
+                                  ?P1 rdfs:range ?D1 .
+                                  ?P1 rdf:type+ <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+                              } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
+                                         (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) } """ ;
+    tddo:basedOnPattern tddd:RDFSRANGED .
 
 
 ##########################################
