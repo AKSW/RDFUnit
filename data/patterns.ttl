@@ -47,7 +47,7 @@ tddp:RDFSRANGED a tddo:Pattern ;
     tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
                             ?s %%P1%% ?c.
                             FILTER (DATATYPE(?c) != %%D1%%) } """ ;
-    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?c) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
+    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
     tddo:selectVariable "s" ;
     tddo:parameter tddp:RDFSRANGED-P1 ;
     tddo:parameter tddp:RDFSRANGED-D1.
