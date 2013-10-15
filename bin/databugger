@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#
+# example call for dbpedia:
+# bin/databugger -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org/ontology -p dbo -n dbpedia.org -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
+#
+
+MAIN_CLS="org.aksw.databugger.Databugger"
+MVN="mvn"
+
+cd databugger-core/
+$MVN exec:java -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
+cd - > /dev/null

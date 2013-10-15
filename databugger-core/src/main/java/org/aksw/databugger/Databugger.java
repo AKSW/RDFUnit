@@ -1,28 +1,34 @@
 package org.aksw.databugger;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
 import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.EnrichedSchemaSource;
 import org.aksw.databugger.sources.SchemaService;
+import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 /**
  * User: Dimitris Kontokostas
@@ -31,6 +37,24 @@ import java.util.Map;
  */
 public class Databugger {
     private static Logger log = LoggerFactory.getLogger(Databugger.class);
+    private static final Options cliOptions = new Options();
+    static {
+        cliOptions.addOption("h", "help", false, "show this help message");
+        cliOptions.addOption("d", "dataset-uri", true,
+                "the URI of the dataset (required)");
+        cliOptions.addOption("e", "endpoint", true,
+                "the endpoint to run the tests on (required)");
+        cliOptions.addOption("g", "graph", true, "the graph to use (required)");
+        cliOptions.addOption("s", "schemas", true,
+                "the schemas used in the chosen graph " +
+                "(comma separated prefixes according to http://prefix.cc)");
+        cliOptions.addOption("n", "enrichment-id", true,
+                "an id for this dataset used for caching the schema " +
+                "enrichment (no slashes allowed), e.g. dbpedia.org (required)");
+        cliOptions.addOption("p", "enrichment-prefix", true,
+                "the prefix of this dataset used for caching the schema " +
+                "enrichment, e.g. dbo (required)");
+    }
 
     QueryExecutionFactory patternQueryFactory;
 
@@ -73,8 +97,41 @@ public class Databugger {
     }
 
 
+    private static List<String> getUriStrs(String parameterStr) {
+        List<String> uriStrs = new ArrayList<String>();
+        if (parameterStr == null) return uriStrs;
+        
+        for (String uriStr : parameterStr.split(",")) {
+            uriStrs.add(uriStr.trim());
+        }
+        
+        return uriStrs;
+    }
 
     public static void main(String[] args) throws Exception {
+        
+        /* <cliStuff> */
+        CommandLineParser cliParser = new GnuParser();
+        CommandLine commandLine = cliParser.parse(cliOptions, args);
+        
+        if (commandLine.hasOption("h") || !commandLine.hasOption("d")
+                || !commandLine.hasOption("e") || !commandLine.hasOption("g")
+                || !commandLine.hasOption("n") || !commandLine.hasOption("p")) {
+            
+            if (!commandLine.hasOption("h"))
+                System.out.println("\nError: Required arguments are missing.");
+            
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp( "databugger", cliOptions );
+            System.exit(1);
+        }
+        String datasetUri = commandLine.getOptionValue("d");
+        String endpointUriStr = commandLine.getOptionValue("e");
+        String graphUriStr = commandLine.getOptionValue("g");
+        List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
+        String enrichmentCachePrefix = commandLine.getOptionValue("p");
+        String enrichmentCacheId = commandLine.getOptionValue("n");
+        /* </cliStuff> */
 
         //TODO change PROPDEP to PVT
 
@@ -96,7 +153,17 @@ public class Databugger {
         }
         // */
 
-        DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
+        /* <cliStuff> */
+        List<SchemaSource> sources = SchemaService.getSourceList(schemaUriStrs);
+
+        //Enriched Schema (cached in folder)
+        sources.add(new EnrichedSchemaSource(enrichmentCachePrefix, datasetUri));
+        // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
+        DatasetSource dataset = new DatasetSource(enrichmentCacheId, datasetUri,
+                endpointUriStr, graphUriStr, sources);		
+        /* </cliStuff> */
+		
+        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
         //DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
         //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
         //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
