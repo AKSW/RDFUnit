@@ -45,10 +45,10 @@ public class Databugger {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (required)");
-        cliOptions.addOption("g", "graph", false, "the graph to use (defaults to '')");
+        cliOptions.addOption("g", "graph", false, "the graphs to use, separate multiple graphs with '|' (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
-                "(comma separated prefixes according to http://prefix.cc)");
+                "(comma separated prefixes according to http://lov.okfn.org/)");
         cliOptions.addOption("n", "enrichment-id", true,
                 "an id for this dataset used for caching the schema " +
                 "enrichment (no slashes allowed), e.g. dbpedia.org (required)");
@@ -128,6 +128,7 @@ public class Databugger {
             formatter.printHelp( "databugger", cliOptions );
             System.exit(1);
         }
+
         String datasetUri = commandLine.getOptionValue("d");
         String endpointUriStr = commandLine.getOptionValue("e");
         String graphUriStr = commandLine.getOptionValue("g","");
