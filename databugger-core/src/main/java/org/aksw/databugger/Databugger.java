@@ -45,17 +45,16 @@ public class Databugger {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (required)");
-        cliOptions.addOption("g", "graph", false, "the graphs to use, separate multiple graphs with '|' (defaults to '')");
+        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                 "(comma separated prefixes according to http://lov.okfn.org/)");
-        cliOptions.addOption("n", "enrichment-id", true,
-                "an id for this dataset used for caching the schema " +
-                "enrichment (no slashes allowed), e.g. dbpedia.org (required)");
-        cliOptions.addOption("p", "enrichment-prefix", true,
+        cliOptions.addOption("i", "schema-id", true,
+                "an id for this dataset (no slashes allowed), e.g. dbpedia.org");
+        cliOptions.addOption("p", "prefix", true,
                 "the prefix of this dataset used for caching the schema " +
-                "enrichment, e.g. dbo (required)");
-        cliOptions.addOption("f", "data-folder", false, "the location of the data folder (defaults to '../data/'");
+                "enrichment, e.g. dbo");
+        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/'");
 
     }
 
@@ -119,7 +118,7 @@ public class Databugger {
         
         if (commandLine.hasOption("h") || !commandLine.hasOption("d")
                 || !commandLine.hasOption("e") || !commandLine.hasOption("g")
-                || !commandLine.hasOption("n") || !commandLine.hasOption("p")) {
+                || !commandLine.hasOption("i")) {
             
             if (!commandLine.hasOption("h"))
                 System.out.println("\nError: Required arguments are missing.");
@@ -131,10 +130,10 @@ public class Databugger {
 
         String datasetUri = commandLine.getOptionValue("d");
         String endpointUriStr = commandLine.getOptionValue("e");
-        String graphUriStr = commandLine.getOptionValue("g","");
+        String graphUriStrs = commandLine.getOptionValue("g","");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
         String enrichmentCachePrefix = commandLine.getOptionValue("p");
-        String enrichmentCacheId = commandLine.getOptionValue("n");
+        String schemaId = commandLine.getOptionValue("i");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         /* </cliStuff> */
 
@@ -161,10 +160,22 @@ public class Databugger {
         /* <cliStuff> */
         List<SchemaSource> sources = SchemaService.getSourceList(schemaUriStrs);
 
+        List<String> graphUris = getUriStrs(graphUriStrs);
+        System.out.println(graphUris);
+        // FIXME: this is just a workaround since the handling of multiple
+        // graphs isn't implemented, yet
+        // <workaround>
+        String graphUriStr;
+        if (graphUris.size()==0) graphUriStr = "";
+        else graphUriStr = graphUris.get(0);
+        // </workaround>
+        
         //Enriched Schema (cached in folder)
-        sources.add(new EnrichedSchemaSource(enrichmentCachePrefix, datasetUri));
+        if (enrichmentCachePrefix != null)
+            sources.add(new EnrichedSchemaSource(enrichmentCachePrefix, datasetUri));
+        
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatasetSource dataset = new DatasetSource(enrichmentCacheId, datasetUri,
+        DatasetSource dataset = new DatasetSource(schemaId, datasetUri,
                 endpointUriStr, graphUriStr, sources);		
         /* </cliStuff> */
 
