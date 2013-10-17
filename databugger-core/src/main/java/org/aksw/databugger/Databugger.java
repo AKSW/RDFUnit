@@ -45,10 +45,10 @@ public class Databugger {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (required)");
-        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (defaults to '')");
+        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
-                "(comma separated prefixes according to http://lov.okfn.org/)");
+                "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
         cliOptions.addOption("i", "schema-id", true,
                 "an id for this dataset (no slashes allowed), e.g. dbpedia.org");
         cliOptions.addOption("p", "prefix", true,
@@ -161,7 +161,6 @@ public class Databugger {
         List<SchemaSource> sources = SchemaService.getSourceList(schemaUriStrs);
 
         List<String> graphUris = getUriStrs(graphUriStrs);
-        System.out.println(graphUris);
         // FIXME: this is just a workaround since the handling of multiple
         // graphs isn't implemented, yet
         // <workaround>
