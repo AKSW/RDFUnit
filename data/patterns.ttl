@@ -13,11 +13,12 @@
 tddp:RDFSRANGE a tddo:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain. Can use the rdf:type as transitive using the '+' operator"""@en ;
-    tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
+    tddo:patternSPARQL """ SELECT DISTINCT ?c WHERE {
                             ?s %%P1%% ?c.
-                            FILTER NOT EXISTS {?c rdf:type%%OP%% %%T1%%} } """ ;
-    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
-    tddo:selectVariable "s" ;
+                            FILTER NOT EXISTS {?c rdf:type ?T1 . ?T1 rdfs:subClassOf%%OP%% %%T1%% . }
+                            FILTER NOT EXISTS {?c rdf:type %%T1%%  } } """ ;
+    tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?c) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
+    tddo:selectVariable "c" ;
     tddo:parameter tddp:RDFSRANGE-P1 ;
     tddo:parameter tddp:RDFSRANGE-OP ;
     tddo:parameter tddp:RDFSRANGE-T1 .
@@ -71,7 +72,8 @@ tddp:RDFSDOMAIN a tddo:Pattern ;
     dcterms:description """Emulates the rdfs:domain constrain. It can be extended by using specific values in V1 or making rdf:type transitive using the '+' operator"""@en ;
     tddo:patternSPARQL """ SELECT DISTINCT ?s WHERE {
                                  ?s %%P1%% %%V1%%
-                                 FILTER NOT EXISTS {?s rdf:type%%OP%% %%T1%%} } """ ;
+                                 FILTER NOT EXISTS {?s rdf:type ?T1 . ?T1 rdfs:subClassOf%%OP%% %%T1%% . }
+                                 FILTER NOT EXISTS {?s rdf:type %%T1%%  } } """ ;
     tddo:patternPrevalenceSPARQL """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
     tddo:selectVariable "s" ;
     tddo:parameter tddp:RDFSDOMAIN-P1 ;
