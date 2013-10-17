@@ -2,6 +2,7 @@ package org.aksw.databugger;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class Databugger {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (required)");
-        cliOptions.addOption("g", "graph", true, "the graph to use (required)");
+        cliOptions.addOption("g", "graph", false, "the graph to use (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                 "(comma separated prefixes according to http://prefix.cc)");
@@ -54,6 +55,8 @@ public class Databugger {
         cliOptions.addOption("p", "enrichment-prefix", true,
                 "the prefix of this dataset used for caching the schema " +
                 "enrichment, e.g. dbo (required)");
+        cliOptions.addOption("f", "data-folder", false, "the location of the data folder (defaults to '../data/'");
+
     }
 
     QueryExecutionFactory patternQueryFactory;
@@ -61,8 +64,8 @@ public class Databugger {
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-    Databugger() {
-        this.patternQueryFactory = loadPatterns("../data/patterns.ttl", "../data/testGenerators.ttl");
+    Databugger(String dataFolder) {
+        this.patternQueryFactory = loadPatterns(dataFolder + "patterns.ttl", dataFolder + "testGenerators.ttl");
         this.patterns = getPatterns();
 
         // Update pattern service
@@ -127,20 +130,21 @@ public class Databugger {
         }
         String datasetUri = commandLine.getOptionValue("d");
         String endpointUriStr = commandLine.getOptionValue("e");
-        String graphUriStr = commandLine.getOptionValue("g");
+        String graphUriStr = commandLine.getOptionValue("g","");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
         String enrichmentCachePrefix = commandLine.getOptionValue("p");
         String enrichmentCacheId = commandLine.getOptionValue("n");
+        String dataFolder = commandLine.getOptionValue("f", "../data/");
         /* </cliStuff> */
 
         //TODO change PROPDEP to PVT
 
         PropertyConfigurator.configure("log4j.properties");
 
-        DatabuggerUtils.fillPrefixService("../data/prefixes.ttl");
+        DatabuggerUtils.fillPrefixService(dataFolder + "prefixes.ttl");
         DatabuggerUtils.fillSchemaService();
 
-        Databugger databugger = new Databugger();
+        Databugger databugger = new Databugger(dataFolder);
          /*
         // Generates all tests from LOV
         for (Source s: SchemaService.getSourceListAll()) {
@@ -162,14 +166,8 @@ public class Databugger {
         DatasetSource dataset = new DatasetSource(enrichmentCacheId, datasetUri,
                 endpointUriStr, graphUriStr, sources);		
         /* </cliStuff> */
-		
-        //DatasetSource dataset = DatabuggerUtils.getDBpediaENDataset();
-        //DatasetSource dataset = DatabuggerUtils.getDBpediaNLDataset();
-        //DatasetSource dataset = DatabuggerUtils.getDatosBneEsDataset();
-        //DatasetSource dataset = DatabuggerUtils.getLCSHDataset();
-        //DatasetSource dataset = DatabuggerUtils.getLGDDataset();
 
-        dataset.setBaseCacheFolder("../data/tests/");
+        dataset.setBaseCacheFolder(dataFolder + "tests/");
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
         for (Source s : dataset.getReferencesSchemata()) {
@@ -203,7 +201,7 @@ public class Databugger {
             allTests.addAll(testsManuals);
             log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
         }
-        /*
+
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results
         Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl");
@@ -218,7 +216,7 @@ public class Databugger {
         } catch (Exception e) {
             log.error("Cannot write tests to file: ");
         }
-        //*/
+
 
         // Calculate coverage
 
