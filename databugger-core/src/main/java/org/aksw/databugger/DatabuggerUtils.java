@@ -105,7 +105,7 @@ public class DatabuggerUtils {
          * http://xmlns.com/foaf/0.1/
          */
         List<SchemaSource> sources = SchemaService.getSourceList(Arrays.asList(
-                "geom", "spatial", "lgdm", "lgdo", "dcterms", "ogc", /*"rdf",
+                "ngeo", "spatial", "lgdm", "lgdo", "dcterms", "gsp", /*"rdf",
                 "rdfs",*/ "owl", "geo", "skos", "foaf"));
 
         sources.add(new EnrichedSchemaSource("lgd", "http://linkedgeodata.org"));
