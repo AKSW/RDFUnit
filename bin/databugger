@@ -2,7 +2,7 @@
 
 #
 # example call for dbpedia:
-# bin/databugger -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org/ontology -p dbo -n dbpedia.org -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
+# bin/databugger -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -p dbo -n dbpedia.org -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
 #
 
 MAIN_CLS="org.aksw.databugger.Databugger"
