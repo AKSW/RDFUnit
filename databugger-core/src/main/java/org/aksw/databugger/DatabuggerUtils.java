@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.sources.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -196,6 +197,10 @@ public class DatabuggerUtils {
         for (String id : prf.keySet()) {
             PrefixService.addPrefix(id, prf.get(id));
         }
+    }
 
+    public static boolean fileExists(String path) {
+        File f = new File(path);
+        return f.exists();
     }
 }

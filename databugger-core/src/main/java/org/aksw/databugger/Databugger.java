@@ -137,6 +137,11 @@ public class Databugger {
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         /* </cliStuff> */
 
+        if (! DatabuggerUtils.fileExists(dataFolder)) {
+            log.error("Path : " + dataFolder + " does not exists");
+            System.exit(1);
+        }
+
         //TODO change PROPDEP to PVT
 
         PropertyConfigurator.configure("log4j.properties");
