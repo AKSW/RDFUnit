@@ -172,11 +172,8 @@ public class TestUtil {
         for (UnitTest t : tests)
             t.saveTestToModel(model);
         try {
-            File f = new File(filename);
-            f.getParentFile().mkdirs();
-
             model.setNsPrefixes(PrefixService.getPrefixMap());
-            model.write(new FileOutputStream(filename), "TURTLE");
+            DatabuggerUtils.writeModelToFile(model,"TURTLE",filename,true);
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);
         }

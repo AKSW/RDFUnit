@@ -84,7 +84,8 @@ public class Databugger {
             patternModel.read(new FileInputStream(patf), null, "TURTLE");
             patternModel.read(new FileInputStream(genf), null, "TURTLE");
         } catch (Exception e) {
-            // TODO handle exception
+            log.error("patterns and generators files were not found in data folder");
+            System.exit(1);
         }
         patternModel.setNsPrefixes(PrefixService.getPrefixMap());
         return new QueryExecutionFactoryModel(patternModel);
@@ -228,7 +229,7 @@ public class Databugger {
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(PrefixService.getPrefixMap());
-            model.write(new FileOutputStream(f), "TURTLE");
+            DatabuggerUtils.writeModelToFile(model,"TURTLE", f, true);
         } catch (Exception e) {
             log.error("Cannot write tests to file: ");
         }

@@ -9,6 +9,8 @@ import org.aksw.databugger.sources.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -202,5 +204,18 @@ public class DatabuggerUtils {
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
+    }
+
+    public static void writeModelToFile(Model model, String filetype, File file, boolean createParentFolders) throws FileNotFoundException {
+        if (createParentFolders) {
+            File parentF = file.getParentFile();
+            if (!parentF.exists())
+                file.getParentFile().mkdirs();
+        }
+        model.write(new FileOutputStream(file), filetype);
+    }
+
+    public static void writeModelToFile(Model model, String filetype, String filename, boolean createParentFolders) throws FileNotFoundException {
+        writeModelToFile(model, filetype, new File(filename), createParentFolders);
     }
 }

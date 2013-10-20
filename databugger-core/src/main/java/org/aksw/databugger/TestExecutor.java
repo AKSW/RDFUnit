@@ -80,7 +80,7 @@ public class TestExecutor {
 
             if (counter % 20 == 0) {
                 try {
-                    model.write(new FileOutputStream(filename), "TURTLE");
+                    DatabuggerUtils.writeModelToFile(model,"TURTLE",filename,true);
                 } catch (Exception e) {
                     log.error("Cannot write tests to file: ");
                 }

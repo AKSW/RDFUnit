@@ -3,6 +3,7 @@ package org.aksw.databugger.sources;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -44,8 +45,7 @@ public class SchemaSource extends Source {
                 model.read(new FileInputStream(f), null, "TURTLE");
             } else {
                 model.read(schema);
-                f.getParentFile().mkdirs();
-                model.write(new FileOutputStream(f), "TURTLE");
+                DatabuggerUtils.writeModelToFile(model,"TURTLE",f,true);
             }
         } catch (Exception e) {
             log.error("Cannot load ontology from URI: " + schema);
