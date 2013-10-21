@@ -85,7 +85,7 @@ There are several call parameters that can be looked up calling
 ```console
 user@host Databugger $ bin/databugger -h
 ```
-To start databugger using
+To start Databugger using
 - the *SPARQL endpoint* `http://dbpedia.org/sparql`
 - of the *dataset* with the general *URI* `http://dbpedia.org/`
 - with the *schema id* `dbpedia.org`
