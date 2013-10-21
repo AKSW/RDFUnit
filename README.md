@@ -28,7 +28,7 @@ These test cases are then specific to a given schema and can be re-used.
 To run a data quality assessment of a certain SPARQL endpoint the following steps have to be done:
 
 1. Create manual data quality test cases (optional)
-2. Get/create data quality test cases for schemas re-used in the considered dataset
+2. Get/create data quality test cases for schemas re-used in the considered dataset (optional)
 3. Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) (optional)
 4. Run the automatic pattern instantiation for the dataset to be assessed
 5. Run the actual assessment based on the tests created
@@ -46,8 +46,12 @@ TODO
 
 ### 2) Get/create data quality test cases for schemas
 
-If there are already data quality test cases for a schema used in the dataset, these can be copied to the `data/tests/Schema/<schema-path>`. The schema-path is the schema URI having stripped off the protocol identifier. So for the OWL schema (`http://www.w3.org/2002/07/owl#`) the directory structure would be `data/tests/Schema/www.w3.org/2002/07/owl/`. Inside this directory a file named `<schema-prefix>.tests.Schema.ttl` is expected.
+If there are already data quality test cases for a schema used in the dataset, these can be copied to the `data/tests/Schema/<schema-path>` directory.
+The schema-path is the schema URI having stripped off the protocol identifier.
+So for the OWL schema (`http://www.w3.org/2002/07/owl#`) the directory structure would be `data/tests/Schema/www.w3.org/2002/07/owl/`.
+Inside this directory a file named `<schema-prefix>.tests.Schema.ttl` is expected.
 Currently Databugger already provides schema test cases for the following schemas:
+
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
 - `http://www.w3.org/2002/07/owl#`
@@ -59,20 +63,25 @@ Currently Databugger already provides schema test cases for the following schema
 ### 3) Enrich the schema of the considered dataset
 
 The enrichment of the schema is not necessary per se, but may lead to better results in cases where the schema/ontology of the considered dataset is in some sense light-weight, meaning that there are only a few constraints that can be used for automatic pattern instantiation.
-Since the enrichment is run by an external tool, the [DL-Learner](http://dl-learner.org/Projects/DLLearner), we refer to the [project site](http://dl-learner.org/wiki/SVNRun) for further details how to run the enrichment.
-An example to invoke the DL-Learner could be
+
+Since the enrichment is performed by an external tool (the [DL-Learner](http://dl-learner.org/Projects/DLLearner)) we refer to the [project site](http://dl-learner.org/wiki/SVNRun) for further details how to run it.
+
+An example for the enrichment of the [DBpedia](http://dbpedia.org) dataset could be
 ```console
 user@host interfaces $ mvn exec:java -e -Dexec.mainClass="org.dllearner.cli.Enrichment" -Dexec.args="-e http://dbpedia.org/sparql -g http://dbpedia.org -f rdf/xml -o enrichment_dbpediaorg.xml -s enrichment_dbpediaorg.owl -l -1 -t 0.9"
 ```
 
 ### 4) Run the automatic pattern instantiation
 
-The automatic pattern instantiation will be performed automatically if Databugger is run. The results of the instantiation will be cached and can be re-used once they were created.
-The tests will be found in the directory `data/tests/schema/<schema-path>/`
+The automatic pattern instantiation will be performed automatically if Databugger is run.
+The results of the instantiation will be cached and can be re-used once they were created.
+
+The instantiated test cases will reside in the directory `data/tests/schema/<schema-path>/`
 
 ### 5) Run the assessment
 
-Databugger is invoked using the start script given in the bin/ directory of the repository. There are several call parameters that can be looked up calling
+Databugger is invoked using the start script given in the `bin/` directory of the repository.
+There are several call parameters that can be looked up calling
 ```console
 user@host Databugger $ bin/databugger -h
 ```
@@ -82,6 +91,7 @@ To start databugger using
 - with the *schema id* `dbpedia.org`
 - referring to the *graph* `http://dbpedia.org/ontology`
 - that uses the *schemas* `owl`, `dbo`, `foaf`, `dcterms`, `dc`, `skos`, `geo`, `prov`
+
 the command to invoke would be
 ```console
 user@host Databugger $ bin/databugger -e http://dbpedia.org/sparql -d http://dbpedia.org/ -i dbpedia.org -g http://dbpedia.org/ontology -s owl,dbo,foaf,dcterms,dc,skos,geo,prov
