@@ -1,7 +1,10 @@
 Databugger
 ==========
 
-This repository contains the *Databugger* -- a tool for test-driven quality evaluation of Linked Data quality. Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in our [submission](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf) for World Wide Web Conference 2014. This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions. After having instantiated such patterns for a concrete dataset possible errors of the corresponding kind can be detected. An example would be the following pattern:
+This repository contains the *Databugger* -- a tool for test-driven quality evaluation of Linked Data quality.
+Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in our [submission](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf) for World Wide Web Conference 2014.
+This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
+After having instantiated such patterns for a concrete dataset possible errors of the corresponding kind can be detected. An example would be the following pattern:
 
 ```
 SELECT ?s WHERE {
@@ -17,8 +20,13 @@ SELECT ?s WHERE {
             FILTER ( ?v1 > ?v2 ) }
 ```
 referring to the case where an individual died before it was born.
-The Databugger tool provides a vocabulary to define such pattern instantiations called *data quality test cases*. Apart from a manual instantiations some of the test patterns can also be instantiated automatically. These test cases are then specific to a given schema and can be re-used.
+
+The Databugger tool provides a vocabulary to define such pattern instantiations called *data quality test cases*.
+Apart from manual instantiations some of the test patterns can also be instantiated automatically.
+These test cases are then specific to a given schema and can be re-used.
+
 To run a data quality assessment of a certain SPARQL endpoint the following steps have to be done:
+
 1. Create manual data quality test cases (optional)
 2. Get/create data quality test cases for schemas re-used in the considered dataset
 3. Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) (optional)
