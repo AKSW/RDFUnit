@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# removes SPARQL proxy cache
+# bin/clearCachedSPARQL
+#
+
+rm -r databugger-core/cache/sparql/
