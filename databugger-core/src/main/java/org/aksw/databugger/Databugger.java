@@ -49,8 +49,8 @@ public class Databugger {
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                 "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
-        cliOptions.addOption("i", "schema-id", true,
-                "an id for this dataset (no slashes allowed), e.g. dbpedia.org");
+        cliOptions.addOption("i", "schema-id", false,
+                "an id for this dataset (no slashes allowed), e.g. dbpedia.org (defaults to the datasetUri without 'http://')");
         cliOptions.addOption("p", "prefix", true,
                 "the prefix of this dataset used for caching the schema " +
                 "enrichment, e.g. dbo");
@@ -103,11 +103,11 @@ public class Databugger {
     private static List<String> getUriStrs(String parameterStr) {
         List<String> uriStrs = new ArrayList<String>();
         if (parameterStr == null) return uriStrs;
-        
+
         for (String uriStr : parameterStr.split(",")) {
             uriStrs.add(uriStr.trim());
         }
-        
+
         return uriStrs;
     }
 
@@ -133,7 +133,7 @@ public class Databugger {
         String endpointUriStr = commandLine.getOptionValue("e");
         String graphUriStrs = commandLine.getOptionValue("g","");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
-        String enrichmentCachePrefix = commandLine.getOptionValue("p");
+        String enrichmentCachePrefix = commandLine.getOptionValue("p", datasetUri.replace("http://",""));
         String schemaId = commandLine.getOptionValue("i");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         /* </cliStuff> */
@@ -166,22 +166,14 @@ public class Databugger {
         /* <cliStuff> */
         List<SchemaSource> sources = SchemaService.getSourceList(schemaUriStrs);
 
-        List<String> graphUris = getUriStrs(graphUriStrs);
-        // FIXME: this is just a workaround since the handling of multiple
-        // graphs isn't implemented, yet
-        // <workaround>
-        String graphUriStr;
-        if (graphUris.size()==0) graphUriStr = "";
-        else graphUriStr = graphUris.get(0);
-        // </workaround>
-        
+
         //Enriched Schema (cached in folder)
         if (enrichmentCachePrefix != null)
             sources.add(new EnrichedSchemaSource(enrichmentCachePrefix, datasetUri));
         
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
         DatasetSource dataset = new DatasetSource(schemaId, datasetUri,
-                endpointUriStr, graphUriStr, sources);		
+                endpointUriStr, graphUriStrs, sources);
         /* </cliStuff> */
 
         dataset.setBaseCacheFolder(dataFolder + "tests/");
