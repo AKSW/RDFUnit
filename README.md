@@ -59,9 +59,21 @@ An example call with already defined manual and enriched test cases is:
 $ bin/databugger -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -i dbpedia.org -p dbo
 ```
 
-### 1) Create manual data quality test cases
+### Data folder structure
 
-TODO
+the data folder consists of the following folders:
+* `ontology` holds the databugger ontology
+* `results` stores the results of the evaluation in RDF
+* `tests` stores the test cases along with a cache of the schema source in turtle
+    * `Schema` holds the automatically generated test cases are stored
+    * `EnrichedSchema` holds the automatically generated test cases from an enriched schema
+    * `Manual` here we define the manual test cases for a source. Note that a source can be either a schema or a dataset and we use their URI to destinguish them.
+
+
+### Create manual data quality test cases
+
+We plan to provide an interface to ease the manual pattern instantiation.
+At the moment you can store your manually generated queries in the respective `Manual` subfolder.
 
 ### 2) Get/create data quality test cases for schemas
 
