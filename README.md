@@ -65,7 +65,7 @@ $ bin/databugger -h
 $ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...>
 
 # with use of enriched ontnology
-$ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -i <enriched-schema-id> -p <enriched-schema-prefix>
+$ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
 ```
 
 To brief the options, you need to provide:
@@ -73,7 +73,6 @@ To brief the options, you need to provide:
 - the *SPARQL endpoint* `http://dbpedia.org/sparql`
 - referring to the *graph* `http://dbpedia.org/ontology`
 - that uses the *schemas* `owl`, `dbo`, `foaf`, `dcterms`, `dc`, `skos`, `geo`, `prov`
-- with the *enriched schema id* `dbpedia.org`
 - with the *enriched schema prefix* `dbo`
 
 
@@ -84,7 +83,7 @@ Future versions of the tool will work directly with a SPARQL endpoint.
 
 An example call with already defined manual and enriched test cases is:
 ```console
-$ bin/databugger -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -i dbpedia.org -p dbo
+$ bin/databugger -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -p dbo
 ```
 
 ### Data folder structure
