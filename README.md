@@ -3,7 +3,8 @@ Databugger
 
 This repository contains the *Databugger* -- a tool for test-driven quality evaluation of Linked Data quality.
 Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in our [submission](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf) for World Wide Web Conference 2014.
-This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
+The results of this work are available [here](https://github.com/AKSW/Databugger/tree/master/data/archive/WWW_2014) . 
+)This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
 After having instantiated such patterns for a concrete dataset possible errors of the corresponding kind can be detected. An example would be the following pattern:
 
 ```
@@ -25,19 +26,37 @@ The Databugger tool provides a vocabulary to define such pattern instantiations 
 Apart from manual instantiations some of the test patterns can also be instantiated automatically.
 These test cases are then specific to a given schema and can be re-used.
 
+### Usage
+
 To run a data quality assessment of a certain SPARQL endpoint the following steps have to be done:
 
-1. Create manual data quality test cases (optional)
-2. Get/create data quality test cases for schemas re-used in the considered dataset (optional)
-3. Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) (optional)
-4. Run the automatic pattern instantiation for the dataset to be assessed
+1. Get/Create manual data quality test cases for the used schemas (optional)
+2. Get/create manual data quality test cases for the evaluated dataset (optional)
+3. Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. 
+   The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) (optional)
+4. Get/Create automatically instantiated test cases for the schemas used inthe evaluation (automatic)
 5. Run the actual assessment based on the tests created
 
 To do so, you first have to clone this repository and install the software using the Maven 3 build tool as follows:
 ```console
-user@host develop $ git clone https://github.com/AKSW/Databugger.git
-user@host develop $ cd Databugger/
-user@host Databugger $ mvn clean install
+$ git clone https://github.com/AKSW/Databugger.git
+$ cd Databugger/
+$ mvn clean install
+
+# Simple call
+$ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...>
+
+# with use of enriched ontnology
+$ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -i <enriched-schema-id> -p <enriched-schema-prefix>
+```
+
+Note that all schemas are resolved using the LOV dataset and are downloaded automatically.
+The framework automatically loads all associated tests (manual, automatic and enriched) that are defined (See next section) and at the moment uses files to store/retrieve them.
+Future versions of the tool will work directly with a SPARQL endpoint.
+
+An example call with already defined manual and enriched test cases is:
+```console
+$ bin/databugger -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -i dbpedia.org -p dbo
 ```
 
 ### 1) Create manual data quality test cases
