@@ -4,7 +4,7 @@ Databugger
 This repository contains the *Databugger* -- a tool for test-driven quality evaluation of Linked Data quality.
 Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in our [submission](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf) for World Wide Web Conference 2014.
 The results of this work are available [here](https://github.com/AKSW/Databugger/tree/master/data/archive/WWW_2014) . 
-)This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
+This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
 After having instantiated such patterns for a concrete dataset possible errors of the corresponding kind can be detected. An example would be the following pattern:
 
 ```
