@@ -25,6 +25,21 @@ referring to the case where an individual died before it was born.
 The Databugger tool provides a vocabulary to define such pattern instantiations called *data quality test cases*.
 Apart from manual instantiations some of the test patterns can also be instantiated automatically.
 These test cases are then specific to a given schema and can be re-used.
+For now we support the following axioms: 
+`rdfs:domain`,
+`rdfs:range`,
+`owl:cardinality`,
+`owl:minCardinality`,
+`owl:maxCardinality`,
+`owl:functionalProperty`,
+`owl:disjointClass`,
+`owl:propertyDisjointWith`,
+`owl:complementOf`,
+`owl:InverseFunctionalProperty`,
+`owl:AsymmetricProperty` and `owl:IrreflexiveProperty`.
+and we plan to extend them over time.
+
+*Please note that this work is still in beta*
 
 ### Usage
 
