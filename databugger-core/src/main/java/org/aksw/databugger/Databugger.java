@@ -45,7 +45,7 @@ public class Databugger {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (required)");
-        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
+        cliOptions.addOption("g", "graph", false, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                 "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
@@ -118,8 +118,7 @@ public class Databugger {
         CommandLine commandLine = cliParser.parse(cliOptions, args);
         
         if (commandLine.hasOption("h") || !commandLine.hasOption("d")
-                || !commandLine.hasOption("e") || !commandLine.hasOption("g")
-                || !commandLine.hasOption("i")) {
+                || !commandLine.hasOption("e") || !commandLine.hasOption("g")) {
             
             if (!commandLine.hasOption("h"))
                 System.out.println("\nError: Required arguments are missing.");
@@ -133,13 +132,13 @@ public class Databugger {
         String endpointUriStr = commandLine.getOptionValue("e");
         String graphUriStrs = commandLine.getOptionValue("g","");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
-        String enrichmentCachePrefix = commandLine.getOptionValue("p", datasetUri.replace("http://",""));
-        String schemaId = commandLine.getOptionValue("i");
+        String datasetPrefix = commandLine.getOptionValue("p", datasetUri.replace("http://",""));
+        String enrichedSchemaId = commandLine.getOptionValue("i");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         /* </cliStuff> */
 
         if (! DatabuggerUtils.fileExists(dataFolder)) {
-            log.error("Path : " + dataFolder + " does not exists");
+            log.error("Path : " + dataFolder + " does not exists, use -f argument");
             System.exit(1);
         }
 
@@ -168,11 +167,11 @@ public class Databugger {
 
 
         //Enriched Schema (cached in folder)
-        if (enrichmentCachePrefix != null)
-            sources.add(new EnrichedSchemaSource(enrichmentCachePrefix, datasetUri));
+        if (enrichedSchemaId != null)
+            sources.add(new EnrichedSchemaSource(datasetPrefix, datasetUri));
         
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatasetSource dataset = new DatasetSource(schemaId, datasetUri,
+        DatasetSource dataset = new DatasetSource(datasetPrefix, datasetUri,
                 endpointUriStr, graphUriStrs, sources);
         /* </cliStuff> */
 

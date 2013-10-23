@@ -76,7 +76,7 @@ public class TestExecutor {
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(source.getUri()))
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "query"), model.createResource(t.getTestURI()));
 
-            log.info("Testing " + source.getPrefix() + "(" + counter + "/" + testSize + ") returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
+            log.info("Testing " + source.getPrefix() + " (" + counter + "/" + testSize + ") returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
 
             if (counter % 20 == 0) {
                 try {

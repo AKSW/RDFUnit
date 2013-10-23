@@ -9,5 +9,6 @@ MAIN_CLS="org.aksw.databugger.Databugger"
 MVN="mvn"
 
 cd databugger-core/
+$MVN install
 $MVN exec:java -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
 cd - > /dev/null
