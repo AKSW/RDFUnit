@@ -51,10 +51,10 @@ public class Databugger {
                 "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
         cliOptions.addOption("i", "schema-id", false,
                 "an id for this dataset (no slashes allowed), e.g. dbpedia.org (defaults to the datasetUri without 'http://')");
-        cliOptions.addOption("p", "prefix", true,
+        cliOptions.addOption("p", "prefix", false,
                 "the prefix of this dataset used for caching the schema " +
                 "enrichment, e.g. dbo");
-        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/'");
+        cliOptions.addOption("f", "data-folder", false, "the location of the data folder (defaults to '../data/'");
 
     }
 

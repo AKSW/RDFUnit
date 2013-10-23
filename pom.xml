@@ -14,7 +14,7 @@
 
     <modules>
         <!--<module></module> -->
-        <module>databugger-ui</module>
+    <!--    <module>databugger-ui</module> -->
         <module>databugger-core</module>
     </modules>
 
