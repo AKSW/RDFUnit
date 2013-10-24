@@ -45,16 +45,16 @@ public class Databugger {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (required)");
-        cliOptions.addOption("g", "graph", false, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
+        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                 "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
-        cliOptions.addOption("i", "schema-id", false,
+        cliOptions.addOption("i", "schema-id", true,
                 "an id for this dataset (no slashes allowed), e.g. dbpedia.org (defaults to the datasetUri without 'http://')");
-        cliOptions.addOption("p", "prefix", false,
+        cliOptions.addOption("p", "prefix", true,
                 "the prefix of this dataset used for caching the schema " +
                 "enrichment, e.g. dbo");
-        cliOptions.addOption("f", "data-folder", false, "the location of the data folder (defaults to '../data/'");
+        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/'");
 
     }
 
