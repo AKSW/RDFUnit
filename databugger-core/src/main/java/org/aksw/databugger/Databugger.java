@@ -169,7 +169,7 @@ public class Databugger {
             sources.add(new EnrichedSchemaSource(enrichedDatasetPrefix, datasetUri));
         
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatasetSource dataset = new DatasetSource(enrichedDatasetPrefix, datasetUri,
+        DatasetSource dataset = new DatasetSource(datasetUri.replace("http://",""), datasetUri,
                 endpointUriStr, graphUriStrs, sources);
         /* </cliStuff> */
 

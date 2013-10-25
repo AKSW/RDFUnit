@@ -4,9 +4,13 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.UnitTest;
+import org.aksw.jena_sparql_api.core.*;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,19 +44,20 @@ public class TestExecutor {
         } catch (Exception e) {
             // TODO handle exception
         }
+        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         int counter = 0;
         int testSize = tests.size();
         for (UnitTest t : tests) {
 
             counter++;
-            if (testExists(model, t.getTestURI()))
+            if (testExists(qef, t.getTestURI()))
                 continue;
 
             int total = -1, prevalence = -1;
 
             try {
-                prevalence = getCountNumber(model, t.getSparqlPrevalenceQuery(), "total");
+                prevalence = getCountNumber(source.getExecutionFactory(), t.getSparqlPrevalenceQuery(), "total");
             } catch (Exception e) {
                 //query failed total remains -1
             }
@@ -60,7 +65,7 @@ public class TestExecutor {
             if (prevalence != 0) {
                 // if prevalence !=0 calculate total
                 try {
-                    total = getCountNumber(model, t.getSparqlAsCountQuery(), "total");
+                    total = getCountNumber(source.getExecutionFactory(), t.getSparqlAsCountQuery(), "total");
                 } catch (Exception e) {
                     //query failed total remains -1
                 }
@@ -95,13 +100,41 @@ public class TestExecutor {
                 }
             }
         }
+        generateStats(qef);
         return model;
     }
 
-    private int getCountNumber(Model model, Query query, String var) {
+    private void generateStats(QueryExecutionFactory qef) {
+        String result = DatabuggerUtils.getAllPrefixes() +
+                " SELECT (count(?s) AS ?total) where {\n" +
+                " ?s a tddo:Result.\n" +
+                " ?s tddo:count ?errors .\n" +
+                " FILTER (xsd:decimal(?errors) %%OPVAL%% ) }";
+        int pass    = getCountNumber(qef, result.replace("%%OPVAL%%"," =  0 "), "total");
+        int fail    = getCountNumber(qef, result.replace("%%OPVAL%%"," >  0 "), "total");
+        int timeout = getCountNumber(qef, result.replace("%%OPVAL%%"," = -1 "), "total");
+        int total   = pass + fail + timeout ;
+        log.info("Total tests: " + total + " Pass: " + pass + " Fail: " + fail + " Timeout: " + timeout );
+
+        String totalErrors = DatabuggerUtils.getAllPrefixes() +
+                " SELECT (sum(xsd:decimal(?errors)) AS ?total) WHERE {\n" +
+                " ?s a tddo:Result.\n" +
+                " ?s tddo:count ?errors .\n" +
+                " FILTER (xsd:decimal(?errors) > 0 )}";
+        int errors = getCountNumber(qef, totalErrors, "total");
+        log.info("Total Errors: " + errors );
+
+
+
+    }
+
+    private int getCountNumber(QueryExecutionFactory model, String query, String var) {
+        return getCountNumber(model, QueryFactory.create(query), var);
+    }
+    private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
 
         int result = 0;
-        QueryExecution qe = source.getExecutionFactory().createQueryExecution(query);
+        QueryExecution qe = model.createQueryExecution(query);
         ResultSet results = qe.execSelect();
 
         if (results != null && results.hasNext()) {
@@ -116,11 +149,10 @@ public class TestExecutor {
 
     }
 
-    private boolean testExists(Model model, String testURI) {
+    private boolean testExists(QueryExecutionFactory qef, String testURI) {
 
         boolean result = false;
-        Query query = QueryFactory.create("select * where { ?s ?p <" + testURI + "> }");
-        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        QueryExecution qe = qef.createQueryExecution("select * where { ?s ?p <" + testURI + "> }");
         ResultSet results = qe.execSelect();
 
         if (results != null && results.hasNext()) {
