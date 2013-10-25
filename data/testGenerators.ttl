@@ -169,14 +169,6 @@ tddg:OWLFUNC a tddo:TestGenerator ;
                              ?P1 rdf:type+ owl:FunctionalProperty . } """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
-tddg:OWLFUNCEX a tddo:TestGenerator ;
-    dcterms:description """ Generates owl:FunctionalProperty constrains. We ensure that the property exists at least once"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
-                             ?P1 rdf:type+ owl:FunctionalProperty .
-                             ?P1 rdfs:domain ?T1 .} """ ;
-    tddo:basedOnPattern tddd:TYPRODEP .
-
-
 ################################################################################
 ### owl inverse functional property constraints generator
 ################################################################################
