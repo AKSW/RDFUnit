@@ -36,7 +36,6 @@ public class Pattern {
         return true;
     }
 
-
     // TODO assumes ordered bindings / parameters might not do like this in the end
     public String instantiateSparqlPattern(List<String> bindings) throws Exception {
         if (bindings.size() != getParameters().size())
@@ -49,7 +48,6 @@ public class Pattern {
             throw new Exception("Bindings different in number than parameters");
         return instantiateBindings(bindings, getSparqlPatternPrevalence());
     }
-
 
     private String instantiateBindings(List<String> bindings, String query) {
         String sparql = query;

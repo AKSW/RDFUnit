@@ -42,8 +42,8 @@ public class UnitTest {
     private final List<String> references;
 
     //tmp  for UML Diagram // TODO remove
-    private Pattern tmpPattern=null;
-    private Source tmpSource=null;
+    private Pattern tmpPattern = null;
+    private Source tmpSource = null;
 
     public UnitTest(String sparql, String sparqlPrevalence, String testURI) {
         this(JenaUUID.generate().asString(), "", TestGenerationType.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());

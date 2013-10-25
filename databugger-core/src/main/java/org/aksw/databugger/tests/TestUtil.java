@@ -16,9 +16,7 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,7 +134,7 @@ public class TestUtil {
 
             UnitTest currentTest = new UnitTest(
                     testURI,
-                    basedOnPattern.replace(PrefixService.getPrefix("tddp"),""),
+                    basedOnPattern.replace(PrefixService.getPrefix("tddp"), ""),
                     TestGenerationType.resolve(generated),
                     testGenerator,
                     TestAppliesTo.resolve(appliesTo),
@@ -173,7 +171,7 @@ public class TestUtil {
             t.saveTestToModel(model);
         try {
             model.setNsPrefixes(PrefixService.getPrefixMap());
-            DatabuggerUtils.writeModelToFile(model,"TURTLE",filename,true);
+            DatabuggerUtils.writeModelToFile(model, "TURTLE", filename, true);
         } catch (Exception e) {
             log.error("Cannot write tests to file: " + filename);
         }

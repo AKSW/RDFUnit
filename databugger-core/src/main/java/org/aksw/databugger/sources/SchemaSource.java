@@ -10,7 +10,6 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 /**
  * User: Dimitris Kontokostas
@@ -45,7 +44,7 @@ public class SchemaSource extends Source {
                 model.read(new FileInputStream(f), null, "TURTLE");
             } else {
                 model.read(schema);
-                DatabuggerUtils.writeModelToFile(model,"TURTLE",f,true);
+                DatabuggerUtils.writeModelToFile(model, "TURTLE", f, true);
             }
         } catch (Exception e) {
             log.error("Cannot load ontology from URI: " + schema);

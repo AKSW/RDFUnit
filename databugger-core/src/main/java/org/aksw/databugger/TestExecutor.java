@@ -4,18 +4,15 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.UnitTest;
-import org.aksw.jena_sparql_api.core.*;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -25,7 +22,6 @@ import java.util.List;
  */
 public class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
-
     private final Source source;
     private final List<UnitTest> tests;
     private final int delay;
@@ -69,8 +65,7 @@ public class TestExecutor {
                 } catch (Exception e) {
                     //query failed total remains -1
                 }
-            }
-            else
+            } else
                 // else total will be 0 anyway
                 total = 0;
 
@@ -85,7 +80,7 @@ public class TestExecutor {
 
             if (counter % 20 == 0) {
                 try {
-                    DatabuggerUtils.writeModelToFile(model,"TURTLE",filename,true);
+                    DatabuggerUtils.writeModelToFile(model, "TURTLE", filename, true);
                 } catch (Exception e) {
                     log.error("Cannot write tests to file: ");
                 }
@@ -110,11 +105,11 @@ public class TestExecutor {
                 " ?s a tddo:Result.\n" +
                 " ?s tddo:count ?errors .\n" +
                 " FILTER (xsd:decimal(?errors) %%OPVAL%% ) }";
-        int pass    = getCountNumber(qef, result.replace("%%OPVAL%%"," =  0 "), "total");
-        int fail    = getCountNumber(qef, result.replace("%%OPVAL%%"," >  0 "), "total");
-        int timeout = getCountNumber(qef, result.replace("%%OPVAL%%"," = -1 "), "total");
-        int total   = pass + fail + timeout ;
-        log.info("Total tests: " + total + " Pass: " + pass + " Fail: " + fail + " Timeout: " + timeout );
+        int pass = getCountNumber(qef, result.replace("%%OPVAL%%", " =  0 "), "total");
+        int fail = getCountNumber(qef, result.replace("%%OPVAL%%", " >  0 "), "total");
+        int timeout = getCountNumber(qef, result.replace("%%OPVAL%%", " = -1 "), "total");
+        int total = pass + fail + timeout;
+        log.info("Total tests: " + total + " Pass: " + pass + " Fail: " + fail + " Timeout: " + timeout);
 
         String totalErrors = DatabuggerUtils.getAllPrefixes() +
                 " SELECT (sum(xsd:decimal(?errors)) AS ?total) WHERE {\n" +
@@ -122,8 +117,7 @@ public class TestExecutor {
                 " ?s tddo:count ?errors .\n" +
                 " FILTER (xsd:decimal(?errors) > 0 )}";
         int errors = getCountNumber(qef, totalErrors, "total");
-        log.info("Total Errors: " + errors );
-
+        log.info("Total Errors: " + errors);
 
 
     }
@@ -131,6 +125,7 @@ public class TestExecutor {
     private int getCountNumber(QueryExecutionFactory model, String query, String var) {
         return getCountNumber(model, QueryFactory.create(query), var);
     }
+
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
 
         int result = 0;

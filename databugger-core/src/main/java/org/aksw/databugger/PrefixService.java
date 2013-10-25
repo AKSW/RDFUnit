@@ -28,7 +28,7 @@ public class PrefixService {
         return prefixes.keySet();
     }
 
-    public static Map<String,String> getPrefixMap() {
+    public static Map<String, String> getPrefixMap() {
         return prefixes;
     }
 }

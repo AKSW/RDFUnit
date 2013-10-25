@@ -30,7 +30,7 @@ public class TestAutoGenerator {
     private final String patternID;
 
     //tmp  for UML Diagram // TODO remove
-    private Pattern pattern=null;
+    private Pattern pattern = null;
 
     public TestAutoGenerator(String uri, String description, String query, String patternID) {
         this.URI = uri;
@@ -84,8 +84,8 @@ public class TestAutoGenerator {
                 if (row.contains(p.getId())) {
                     RDFNode n = row.get(p.getId());
                     if (n.isResource()) {
-                        bindings.add("<" + n.toString().trim().replace(" ","") + ">");
-                        references.add(n.toString().trim().replace(" ",""));
+                        bindings.add("<" + n.toString().trim().replace(" ", "") + ">");
+                        references.add(n.toString().trim().replace(" ", ""));
                     } else
                         bindings.add(n.toString());
                 } else {

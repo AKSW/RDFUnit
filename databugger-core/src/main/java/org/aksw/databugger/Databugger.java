@@ -1,35 +1,25 @@
 package org.aksw.databugger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
-import org.aksw.databugger.sources.DatasetSource;
-import org.aksw.databugger.sources.EnrichedSchemaSource;
-import org.aksw.databugger.sources.SchemaService;
-import org.aksw.databugger.sources.SchemaSource;
-import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.sources.*;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
+import org.apache.commons.cli.*;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -37,8 +27,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * Created: 9/20/13 5:59 PM
  */
 public class Databugger {
-    private static Logger log = LoggerFactory.getLogger(Databugger.class);
     private static final Options cliOptions = new Options();
+
     static {
         cliOptions.addOption("h", "help", false, "show this help message");
         cliOptions.addOption("d", "dataset-uri", true,
@@ -48,16 +38,16 @@ public class Databugger {
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
-                "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
-        cliOptions.addOption("c", "test-coverage",false,"Calculate test-coverage scores");
+        cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/'");
 
     }
 
+    private static Logger log = LoggerFactory.getLogger(Databugger.class);
     QueryExecutionFactory patternQueryFactory;
-
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
@@ -75,29 +65,6 @@ public class Databugger {
 
     }
 
-    public QueryExecutionFactory loadPatterns(String patf, String genf) {
-
-        Model patternModel = ModelFactory.createDefaultModel();
-        try {
-            patternModel.read(new FileInputStream(patf), null, "TURTLE");
-            patternModel.read(new FileInputStream(genf), null, "TURTLE");
-        } catch (Exception e) {
-            log.error("patterns and generators files were not found in data folder");
-            System.exit(1);
-        }
-        patternModel.setNsPrefixes(PrefixService.getPrefixMap());
-        return new QueryExecutionFactoryModel(patternModel);
-    }
-
-    public List<Pattern> getPatterns() {
-        return PatternUtil.instantiatePatternsFromModel(patternQueryFactory);
-    }
-
-    public List<TestAutoGenerator> getAutoGenerators() {
-        return TestUtil.instantiateTestGeneratorsFromModel(patternQueryFactory);
-    }
-
-
     private static List<String> getUriStrs(String parameterStr) {
         List<String> uriStrs = new ArrayList<String>();
         if (parameterStr == null) return uriStrs;
@@ -110,32 +77,32 @@ public class Databugger {
     }
 
     public static void main(String[] args) throws Exception {
-        
+
         /* <cliStuff> */
         CommandLineParser cliParser = new GnuParser();
         CommandLine commandLine = cliParser.parse(cliOptions, args);
-        
+
         if (commandLine.hasOption("h") || !commandLine.hasOption("d")
                 || !commandLine.hasOption("e") || !commandLine.hasOption("g")) {
-            
+
             if (!commandLine.hasOption("h"))
                 System.out.println("\nError: Required arguments are missing.");
-            
+
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp( "databugger", cliOptions );
+            formatter.printHelp("databugger", cliOptions);
             System.exit(1);
         }
 
         String datasetUri = commandLine.getOptionValue("d");
         String endpointUriStr = commandLine.getOptionValue("e");
-        String graphUriStrs = commandLine.getOptionValue("g","");
+        String graphUriStrs = commandLine.getOptionValue("g", "");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
 
-        if (! DatabuggerUtils.fileExists(dataFolder)) {
+        if (!DatabuggerUtils.fileExists(dataFolder)) {
             log.error("Path : " + dataFolder + " does not exists, use -f argument");
             System.exit(1);
         }
@@ -167,9 +134,9 @@ public class Databugger {
         //Enriched Schema (cached in folder)
         if (enrichedDatasetPrefix != null)
             sources.add(new EnrichedSchemaSource(enrichedDatasetPrefix, datasetUri));
-        
+
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatasetSource dataset = new DatasetSource(datasetUri.replace("http://",""), datasetUri,
+        DatasetSource dataset = new DatasetSource(datasetUri.replace("http://", ""), datasetUri,
                 endpointUriStr, graphUriStrs, sources);
         /* </cliStuff> */
 
@@ -188,7 +155,7 @@ public class Databugger {
             } else {
                 List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
                 allTests.addAll(testsAuto);
-                TestUtil.writeTestsToFile(testsAuto,  s.getTestFile());
+                TestUtil.writeTestsToFile(testsAuto, s.getTestFile());
                 log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
             }
 
@@ -218,7 +185,7 @@ public class Databugger {
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(PrefixService.getPrefixMap());
-            DatabuggerUtils.writeModelToFile(model,"TURTLE", f, true);
+            DatabuggerUtils.writeModelToFile(model, "TURTLE", f, true);
         } catch (Exception e) {
             log.error("Cannot write tests to file: ");
         }
@@ -228,13 +195,35 @@ public class Databugger {
         if (calculateCoverage) {
             Model m = ModelFactory.createDefaultModel();
             m.setNsPrefixes(PrefixService.getPrefixMap());
-            for (UnitTest ut: allTests) {
+            for (UnitTest ut : allTests) {
                 m.add(ut.getUnitTestModel());
             }
 
             TestCoverageEvaluator tce = new TestCoverageEvaluator();
-            tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix()+".property.count", dataset.getPrefix()+".class.count");
+            tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix() + ".property.count", dataset.getPrefix() + ".class.count");
         }
+    }
+
+    public QueryExecutionFactory loadPatterns(String patf, String genf) {
+
+        Model patternModel = ModelFactory.createDefaultModel();
+        try {
+            patternModel.read(new FileInputStream(patf), null, "TURTLE");
+            patternModel.read(new FileInputStream(genf), null, "TURTLE");
+        } catch (Exception e) {
+            log.error("patterns and generators files were not found in data folder");
+            System.exit(1);
+        }
+        patternModel.setNsPrefixes(PrefixService.getPrefixMap());
+        return new QueryExecutionFactoryModel(patternModel);
+    }
+
+    public List<Pattern> getPatterns() {
+        return PatternUtil.instantiatePatternsFromModel(patternQueryFactory);
+    }
+
+    public List<TestAutoGenerator> getAutoGenerators() {
+        return TestUtil.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 
 
