@@ -49,11 +49,9 @@ public class Databugger {
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                 "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
-        cliOptions.addOption("i", "schema-id", true,
-                "an id for this dataset (no slashes allowed), e.g. dbpedia.org (defaults to the datasetUri without 'http://')");
-        cliOptions.addOption("p", "prefix", true,
-                "the prefix of this dataset used for caching the schema " +
-                "enrichment, e.g. dbo");
+        cliOptions.addOption("p", "enriched-prefix", true,
+                "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
+        cliOptions.addOption("c", "test-coverage",false,"Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/'");
 
     }
@@ -132,9 +130,9 @@ public class Databugger {
         String endpointUriStr = commandLine.getOptionValue("e");
         String graphUriStrs = commandLine.getOptionValue("g","");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
-        String datasetPrefix = commandLine.getOptionValue("p", datasetUri.replace("http://",""));
-        String enrichedSchemaId = commandLine.getOptionValue("i");
+        String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
+        boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
 
         if (! DatabuggerUtils.fileExists(dataFolder)) {
@@ -167,11 +165,11 @@ public class Databugger {
 
 
         //Enriched Schema (cached in folder)
-        if (enrichedSchemaId != null)
-            sources.add(new EnrichedSchemaSource(datasetPrefix, datasetUri));
+        if (enrichedDatasetPrefix != null)
+            sources.add(new EnrichedSchemaSource(enrichedDatasetPrefix, datasetUri));
         
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatasetSource dataset = new DatasetSource(datasetPrefix, datasetUri,
+        DatasetSource dataset = new DatasetSource(enrichedDatasetPrefix, datasetUri,
                 endpointUriStr, graphUriStrs, sources);
         /* </cliStuff> */
 
@@ -227,16 +225,16 @@ public class Databugger {
 
 
         // Calculate coverage
+        if (calculateCoverage) {
+            Model m = ModelFactory.createDefaultModel();
+            m.setNsPrefixes(PrefixService.getPrefixMap());
+            for (UnitTest ut: allTests) {
+                m.add(ut.getUnitTestModel());
+            }
 
-
-        Model m = ModelFactory.createDefaultModel();
-        m.setNsPrefixes(PrefixService.getPrefixMap());
-        for (UnitTest ut: allTests) {
-            m.add(ut.getUnitTestModel());
+            TestCoverageEvaluator tce = new TestCoverageEvaluator();
+            tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix()+".property.count", dataset.getPrefix()+".class.count");
         }
-
-        TestCoverageEvaluator tce = new TestCoverageEvaluator();
-        tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix()+".property.count", dataset.getPrefix()+".class.count");
     }
 
 
