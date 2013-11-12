@@ -3,26 +3,28 @@ package org.aksw.databugger;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.vaadin.annotations.Title;
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
+import javax.servlet.annotation.WebServlet;
 import java.util.HashMap;
 
-/**
- * User: Dimitris Kontokostas
- * UI class is the starting point for your app. You may deploy it with VaadinServlet
- * or VaadinPortlet by giving your UI class name a parameter. When you browse to your
- * app a web page showing your UI is automatically generated. Or you may choose to 
- * embed your UI to an existing web page. 
- */
-@Title("Addressbook")
+/*
+* User: Dimitris Kontokostas
+*/
+@SuppressWarnings("serial")
 public class DatabuggerUI extends UI {
 
-	/* User interface components are stored in session. */
+    @WebServlet(value = "/*", asyncSupported = true)
+    @VaadinServletConfiguration(productionMode = false, ui = DatabuggerUI.class, widgetset = "org.aksw.databugger.AppWidgetSet")
+    public static class Servlet extends VaadinServlet {
+    }
+    	/* User interface components are stored in session. */
 
     private TextField txtSchemaURI = new TextField("Schema URI","");
     private TextField txtSchemaDataURI = new TextField("Schema Data URI","");
@@ -125,9 +127,9 @@ public class DatabuggerUI extends UI {
 
     private void _populateClassTreeTable() {
         String getClassQuery = prefixes +
-                               " SELECT ?class ?subclass WHERE {" +
-                               "  ?class a owl:Class .\n" +
-                               " OPTIONAL { ?class rdfs:subClassOf ?subclass } }";
+                " SELECT ?class ?subclass WHERE {" +
+                "  ?class a owl:Class .\n" +
+                " OPTIONAL { ?class rdfs:subClassOf ?subclass } }";
 
         Query q = QueryFactory.create(getClassQuery);
         QueryExecution qe = com.hp.hpl.jena.query.QueryExecutionFactory.create(q, model);

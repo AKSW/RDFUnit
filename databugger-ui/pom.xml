@@ -11,287 +11,40 @@
 	<packaging>war</packaging>
 	<name>Databugger - UI</name>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.0.0</vaadin.version>
-		<gwt.version>2.5.0</gwt.version>
-		<gwt.plugin.version>2.2.0</gwt.plugin.version>
-	</properties>
-
-	<profiles>
-		<profile>
-			<id>compile-widgetset</id>
-			<activation>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>gwt-maven-plugin</artifactId>
-						<version>${gwt.plugin.version}</version>
-						<configuration>
-
-							<webappDirectory>src/main/webapp/VAADIN/widgetsets</webappDirectory>
-							<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-							<runTarget>ore-web</runTarget>
-							<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
-							<noServer>true</noServer>
-							<port>8080</port>
-							<compileReport>false</compileReport>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>resources</goal>
-									<goal>compile</goal>
-								</goals>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>com.google.gwt</groupId>
-								<artifactId>gwt-dev</artifactId>
-								<version>${gwt.version}</version>
-							</dependency>
-							<dependency>
-								<groupId>com.google.gwt</groupId>
-								<artifactId>gwt-user</artifactId>
-								<version>${gwt.version}</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-					<plugin>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-maven-plugin</artifactId>
-				<version>1.0.2</version>
-				<configuration>
-					<extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>
-					<!-- <runTarget>mobilemail</runTarget> -->
-					<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
-						way compatible with Vaadin eclipse plugin. -->
-					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
-					</webappDirectory>
-					<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
-					</hostedWebapp>
-					<noServer>true</noServer>
-					<!-- Remove draftCompile when project is ready -->
-					<draftCompile>true</draftCompile>
-					<compileReport>true</compileReport>
-					<style>OBF</style>
-					<strict>true</strict>
-					<runTarget>http://localhost:8080/</runTarget>
-					<!-- Remove these when going to release dependencies -->
-					<force>true</force>
-				</configuration>
-				<executions>
-					<execution>
-						<configuration>
-							<!-- if you don't specify any modules, the plugin will find them -->
-							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
-								</modules> -->
-						</configuration>
-						<goals>
-<!-- 							<goal>resources</goal> -->
-							<goal>update-widgetset</goal>
-<!-- 							<goal>compile</goal> -->
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-<!-- 					<plugin> -->
-<!-- 				<artifactId>maven-clean-plugin</artifactId> -->
-<!-- 				<configuration> -->
-<!-- 					<filesets> -->
-<!-- 						<fileset> -->
-<!-- 							<directory>src/main/webapp/VAADIN/widgetsets</directory> -->
-<!-- 						</fileset> -->
-<!-- 					</filesets> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
-				</plugins>
-
-			</build>
-		</profile>
-		<profile>
-			<id>jrebel</id>
-			<activation>
-				<property>
-					<name>env</name>
-					<value>jrebel</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.zeroturnaround</groupId>
-						<artifactId>jrebel-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>generate-rebel-xml</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-
-	<id>debian</id>
-<build>
-<plugins>
-        <plugin>
-            <artifactId>jdeb</artifactId>
-            <groupId>org.vafer</groupId>
-            <version>1.0</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>jdeb</goal>
-                    </goals>
-                    <configuration>
-                        <dataSet>
-                            <data>
-                                <src>${project.build.directory}/${project.build.finalName}.war</src>
-                                <type>file</type>
-                            </data>
-                        </dataSet>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-</profile>
-	</profiles>
-
-	<build>
-		<finalName>databugger-ui</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.0-beta-1</version>
-				<configuration>
-					<server>local</server>
-					<url>http://127.0.0.1:8080/manager</url>
-					<path>/${project.build.finalName}</path>
-				</configuration>
-			</plugin>
-
-			<!-- Compile custom GWT components or widget dependencies with the GWT 
-				compiler -->
-
-
-
-			<!-- A simple Jetty test server at http://localhost:8080/ore-web can be 
-				launched with the Maven goal jetty:run and stopped with jetty:stop -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.6.v20120903</version>
-				<configuration>
-					<systemProperties>
-						<systemProperty>
-							<name>jetty.port</name>
-							<value>5678</value>
-						</systemProperty>
-					</systemProperties>
-					<scanIntervalSeconds>0</scanIntervalSeconds>
-                    <stopPort/>
-                    <stopKey/>
-                </configuration>
-				<executions>
-					<!-- start and stop jetty (running our app) when running integration 
-						tests -->
-					<execution>
-						<id>start-jetty</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>run-exploded</goal>
-						</goals>
-						<configuration>
-							<scanIntervalSeconds>0</scanIntervalSeconds>
-							<daemon>true</daemon>
-							<stopKey>STOP</stopKey>
-							<stopPort>8866</stopPort>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop-jetty</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-						<configuration>
-							<stopPort>8866</stopPort>
-							<stopKey>STOP</stopKey>
-						</configuration>
-					</execution>
-				</executions>
-
-			</plugin>
-			
-		</plugins>
-	</build>
-
-	<repositories>
-		<repository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>vaadin-addons</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-		<repository>
-			<id>eclipselink</id>
-			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>codehaus-snapshots</id>
-			<url>http://nexus.codehaus.org/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-
-
-	<dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <vaadin.version>7.1.7</vaadin.version>
+        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+    </properties>
+    <repositories>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+        <repository>
+            <id>vaadin-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>vaadin-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
@@ -302,6 +55,21 @@
             <artifactId>vaadin-client-compiled</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
+        <!--
+          Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
+
+          For widgetset compilation, vaadin-client-compiler is automatically added on the
+          compilation classpath by vaadin-maven-plugin so normally there is no need for an
+          explicit dependency.
+        -->
+        <!--
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiler</artifactId>
+            <version>${vaadin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client</artifactId>
@@ -310,42 +78,25 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-push</artifactId>
+            <version>${vaadin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-dev</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
-
-
-
-
-		<!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
-			<version>${gwt.version}</version> <scope>provided</scope> </dependency> <dependency> 
-			<groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
-			<version>1.0.0.GA</version> <scope>provided</scope> </dependency> <dependency> 
-			<groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
-			<version>1.0.0.GA</version> <classifier>sources</classifier> <scope>provided</scope> 
-			</dependency> -->
-		<dependency>
-			<groupId>org.aksw.databugger</groupId>
-			<artifactId>databugger-core</artifactId>
-			<version>0.1</version>
-		</dependency>
-
+        <dependency>
+            <groupId>org.aksw.databugger</groupId>
+            <artifactId>databugger-core</artifactId>
+            <version>0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>
@@ -354,11 +105,124 @@
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
         </dependency>
-		<dependency>
-			<groupId>org.ini4j</groupId>
-			<artifactId>ini4j</artifactId>
-			<version>0.5.2</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.ini4j</groupId>
+            <artifactId>ini4j</artifactId>
+            <version>0.5.2</version>
+        </dependency>
+    </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
+            <!-- directory is cleaned properly -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/webapp/VAADIN/widgetsets</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.plugin.version}</version>
+                <configuration>
+                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <!-- <runTarget>mobilemail</runTarget> -->
+                    <!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This
+                        way compatible with Vaadin eclipse plugin. -->
+                    <webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
+                    </webappDirectory>
+                    <hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
+                    </hostedWebapp>
+                    <noServer>true</noServer>
+                    <!-- Remove draftCompile when project is ready -->
+                    <draftCompile>false</draftCompile>
+                    <compileReport>true</compileReport>
+                    <style>OBF</style>
+                    <strict>true</strict>
+                    <runTarget>http://localhost:8080/</runTarget>
+                </configuration>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <!-- if you don't specify any modules, the plugin will find them -->
+                            <!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module>
+                                </modules> -->
+                        </configuration>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>resources</goal>
+                            <goal>update-theme</goal>
+                            <goal>update-widgetset</goal>
+                            <goal>compile-theme</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>com.vaadin</groupId>
+                                        <artifactId>
+                                            vaadin-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [7.1.7,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>resources</goal>
+                                            <goal>update-widgetset</goal>
+                                            <goal>compile</goal>
+                                            <goal>update-theme</goal>
+                                            <goal>compile-theme</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
