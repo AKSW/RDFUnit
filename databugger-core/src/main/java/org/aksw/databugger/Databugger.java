@@ -94,6 +94,8 @@ public class Databugger {
         }
 
         String datasetUri = commandLine.getOptionValue("d");
+        if (datasetUri.endsWith("/"))
+            datasetUri = datasetUri.substring(0,datasetUri.length()-1);
         String endpointUriStr = commandLine.getOptionValue("e");
         String graphUriStrs = commandLine.getOptionValue("g", "");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
@@ -101,6 +103,8 @@ public class Databugger {
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
+
+
 
         if (!DatabuggerUtils.fileExists(dataFolder)) {
             log.error("Path : " + dataFolder + " does not exists, use -f argument");
