@@ -1,4 +1,4 @@
-package org.aksw.databugger.TripleWriters;
+package org.aksw.databugger.tripleWriters;
 
 import com.hp.hpl.jena.rdf.model.Model;
 

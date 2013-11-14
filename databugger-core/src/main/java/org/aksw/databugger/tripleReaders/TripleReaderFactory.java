@@ -1,7 +1,7 @@
 package org.aksw.databugger.tripleReaders;
 
-import org.aksw.databugger.TripleWriters.TripleFileWriter;
-import org.aksw.databugger.TripleWriters.TripleWriter;
+import org.aksw.databugger.tripleWriters.TripleFileWriter;
+import org.aksw.databugger.tripleWriters.TripleWriter;
 
 import java.util.ArrayList;
 import java.util.List;
