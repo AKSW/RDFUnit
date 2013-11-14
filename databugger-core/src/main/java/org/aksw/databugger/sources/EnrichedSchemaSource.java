@@ -4,6 +4,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.enums.TestAppliesTo;
+import org.aksw.databugger.tripleReaders.TripleReader;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
@@ -17,8 +18,8 @@ import java.io.FileInputStream;
  */
 public class EnrichedSchemaSource extends SchemaSource {
 
-    public EnrichedSchemaSource(String prefix, String uri) {
-        super(prefix, uri);
+    public EnrichedSchemaSource(String prefix, String uri, TripleReader schemaReader) {
+        super(prefix, uri, schemaReader);
     }
 
     @Override

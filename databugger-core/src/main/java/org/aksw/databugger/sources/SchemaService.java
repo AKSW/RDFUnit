@@ -24,31 +24,46 @@ public class SchemaService {
     }
 
     public static SchemaSource getSource(String id) {
+        return getSource(null,id);
+    }
+
+    public static SchemaSource getSource(String baseFolder, String id) {
         String sourceUriURL = schemata.get(id);
         if (sourceUriURL == null)
             return null;
         String[] split = sourceUriURL.split("\t");
-        if (split.length == 2)
-            return new SchemaSource(id, split[0], split[1]);
-        else
-            return new SchemaSource(id, split[0]);
+        if (split.length == 2) {
+            if (baseFolder != null)
+                return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0], split[1]);
+            else
+                return SourceFactory.createSchemaSourceDereference(id, split[0], split[1]);
+        }
+        else {
+            if (baseFolder != null)
+                return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0]);
+            else
+                return SourceFactory.createSchemaSourceDereference(id, split[0]);
+        }
     }
 
-    public static List<SchemaSource> getSourceList(List<String> ids) {
+    public static List<SchemaSource> getSourceList(String baseFolder, List<String> ids) {
         List<SchemaSource> sources = new ArrayList<SchemaSource>();
         for (String id : ids) {
-            SchemaSource src = getSource(id);
+            SchemaSource src = getSource(baseFolder, id);
             if (src != null)
                 sources.add(src);
         }
         return sources;
     }
 
-    public static List<SchemaSource> getSourceListAll() {
+    public static List<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) {
         List<String> prefixes = new ArrayList<String>();
         prefixes.addAll(schemata.keySet());
 
-        return getSourceList(prefixes);
+        if (fileCache)
+            return getSourceList(baseFolder, prefixes);
+        else
+            return getSourceList(null, prefixes);
     }
 }
 

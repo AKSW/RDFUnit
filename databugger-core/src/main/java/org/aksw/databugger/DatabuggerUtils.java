@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.sources.*;
+import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,25 +39,25 @@ public class DatabuggerUtils {
                 ;
     }
 
-    public static DatasetSource getDatosBneEsDataset() {
+    public static DatasetSource getDatosBneEsDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
-        List<SchemaSource> sources = SchemaService.getSourceList(
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "frbrer", "isbd", "dcterms", "skos"));
 
-        sources.add(new EnrichedSchemaSource("datos", "http://datos.bne.es"));
+        sources.add( SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder,"datos", "http://datos.bne.es"));
 
         DatasetSource dataset = new DatasetSource("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", "http://datos.bne.es", sources);
 
         return dataset;
     }
 
-    public static DatasetSource getLCSHDataset() {
+    public static DatasetSource getLCSHDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
-        List<SchemaSource> sources = SchemaService.getSourceList(
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs", "owl",*/ "foaf", "dcterms", "skos", "mads", "mrel", "premis"));
-        sources.add(new EnrichedSchemaSource("loc", "http://id.loc.gov"));
+        sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder,"loc", "http://id.loc.gov"));
 
 
         DatasetSource dataset = new DatasetSource("id.loc.gov", "http://id.loc.gov", "http://localhost:8891/sparql", "http://id.loc.gov", sources);
@@ -64,14 +65,14 @@ public class DatabuggerUtils {
         return dataset;
     }
 
-    public static DatasetSource getDBpediaENDataset() {
+    public static DatasetSource getDBpediaENDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        List<SchemaSource> sources = SchemaService.getSourceList(
+        List<SchemaSource> sources = SchemaService.getSourceList( baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
-        sources.add(new EnrichedSchemaSource("dbo", "http://dbpedia.org"));
+        sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder,"dbo", "http://dbpedia.org"));
 
         DatasetSource dataset = new DatasetSource("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
 
@@ -79,14 +80,14 @@ public class DatabuggerUtils {
         return dataset;
     }
 
-    public static DatasetSource getDBpediaNLDataset() {
+    public static DatasetSource getDBpediaNLDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        List<SchemaSource> sources = SchemaService.getSourceList(
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
-        sources.add(new EnrichedSchemaSource("dbo", "http://nl.dbpedia.org"));
+        sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder,"dbo", "http://nl.dbpedia.org"));
 
         DatasetSource dataset = new DatasetSource("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
 
@@ -94,7 +95,7 @@ public class DatabuggerUtils {
         return dataset;
     }
 
-    public static DatasetSource getLGDDataset() {
+    public static DatasetSource getLGDDataset(String baseFolder) {
         /*
          * http://geovocab.org/geometry#
          * http://geovocab.org/spatial#
@@ -109,11 +110,11 @@ public class DatabuggerUtils {
          * http://www.w3.org/2004/02/skos/core#
          * http://xmlns.com/foaf/0.1/
          */
-        List<SchemaSource> sources = SchemaService.getSourceList(Arrays.asList(
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder, Arrays.asList(
                 "ngeo", "spatial", "lgdm", "lgdo", "dcterms", "gsp", /*"rdf",
                 "rdfs",*/ "owl", "geo", "skos", "foaf"));
 
-        sources.add(new EnrichedSchemaSource("lgd", "http://linkedgeodata.org"));
+        sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder,"lgd", "http://linkedgeodata.org"));
         DatasetSource dataset = new DatasetSource("linkedgeodata.org", "http://linkedgeodata.org", "http://localhost:8891/sparql", "http://linkedgeodata.org", sources);
         
         return dataset;

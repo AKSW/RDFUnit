@@ -134,12 +134,12 @@ public class Databugger {
         // */
 
         /* <cliStuff> */
-        List<SchemaSource> sources = SchemaService.getSourceList(schemaUriStrs);
+        List<SchemaSource> sources = SchemaService.getSourceList(dataFolder, schemaUriStrs);
 
 
         //Enriched Schema (cached in folder)
         if (enrichedDatasetPrefix != null)
-            sources.add(new EnrichedSchemaSource(enrichedDatasetPrefix, datasetUri));
+            sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(dataFolder, enrichedDatasetPrefix, datasetUri));
 
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
         DatasetSource dataset = new DatasetSource(datasetUri.replace("http://", ""), datasetUri,
