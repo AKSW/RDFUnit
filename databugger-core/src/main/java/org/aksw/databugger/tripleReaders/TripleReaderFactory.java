@@ -1,5 +1,8 @@
 package org.aksw.databugger.tripleReaders;
 
+import org.aksw.databugger.TripleWriters.TripleFileWriter;
+import org.aksw.databugger.TripleWriters.TripleWriter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,9 @@ public class TripleReaderFactory {
         readers.add(new TripleFileReader(filename));
         readers.add(new TripleDereferenceReader(uri));
 
-        return new TripleFirstSuccessReader(readers);
+        TripleReader r = new TripleFirstSuccessReader(readers);
+        TripleWriter w = new TripleFileWriter(filename,true);
+        return new TripleReadAndCacheReader(r,w);
 
     }
 

@@ -15,10 +15,10 @@ public class CacheUtils {
         return baseFolder + schemaType.name() + "/" + getCacheFolderForURI(uri) + prefix + ".cache." + schemaType.name() + ".ttl";
     }
 
-    private static String getCacheFolderForURI(String uri) {
+    public static String getCacheFolderForURI(String uri) {
         String retVal = "";
         try {
-            URI tmp = new URI("");
+            URI tmp = new URI(uri);
             String host = tmp.getHost();
             String path = tmp.getPath();
             retVal = host + path + "/";

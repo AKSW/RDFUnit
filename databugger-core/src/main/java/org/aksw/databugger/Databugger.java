@@ -103,6 +103,8 @@ public class Databugger {
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
+        String testFolder = dataFolder + "tests/";
+
         boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
 
@@ -136,19 +138,19 @@ public class Databugger {
         // */
 
         /* <cliStuff> */
-        List<SchemaSource> sources = SchemaService.getSourceList(dataFolder, schemaUriStrs);
+        List<SchemaSource> sources = SchemaService.getSourceList(testFolder, schemaUriStrs);
 
 
         //Enriched Schema (cached in folder)
         if (enrichedDatasetPrefix != null)
-            sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(dataFolder, enrichedDatasetPrefix, datasetUri));
+            sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedDatasetPrefix, datasetUri));
 
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
         DatasetSource dataset = new DatasetSource(datasetUri.replace("http://", ""), datasetUri,
                 endpointUriStr, graphUriStrs, sources);
         /* </cliStuff> */
 
-        dataset.setBaseCacheFolder(dataFolder + "tests/");
+        dataset.setBaseCacheFolder(testFolder);
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
         for (Source s : dataset.getReferencesSchemata()) {
