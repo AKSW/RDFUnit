@@ -2,6 +2,7 @@ package org.aksw.databugger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
 import org.aksw.databugger.patterns.PatternUtil;
@@ -9,6 +10,7 @@ import org.aksw.databugger.sources.*;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.apache.commons.cli.*;
@@ -152,33 +154,40 @@ public class Databugger {
         for (Source s : dataset.getReferencesSchemata()) {
 
             log.info("Generating tests for: " + s.getUri());
+
             // attempt to read from file
-            File f = new File(s.getTestFile());
-            if (f.exists()) {
-                List<UnitTest> testsAutoCached = TestUtil.instantiateTestsFromFile(s.getTestFile());
+            try {
+                List<UnitTest> testsAutoCached = TestUtil.instantiateTestsFromModel(
+                        TripleReaderFactory.createTripleFileReader(s.getTestFile()).read());
                 allTests.addAll(testsAutoCached);
-                log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests");
-            } else {
+                log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
+
+            } catch (TripleReaderException e){
+                // cannot read from file  / generate
                 List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
                 allTests.addAll(testsAuto);
                 TestUtil.writeTestsToFile(testsAuto, s.getTestFile());
                 log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
             }
 
-            f = new File(s.getTestFileManual());
-            if (f.exists()) {
-                List<UnitTest> testsManuals = TestUtil.instantiateTestsFromFile(s.getTestFileManual());
+            try {
+                List<UnitTest> testsManuals = TestUtil.instantiateTestsFromModel(
+                        TripleReaderFactory.createTripleFileReader(s.getTestFileManual()).read());
                 allTests.addAll(testsManuals);
                 log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
+            } catch (TripleReaderException e){
+                // Do nothing, Manual tests do not exist
             }
             // write to file for backup
         }
 
-        File f = new File(dataset.getTestFileManual());
-        if (f.exists()) {
-            List<UnitTest> testsManuals = TestUtil.instantiateTestsFromFile(dataset.getTestFileManual());
+        try {
+            List<UnitTest> testsManuals = TestUtil.instantiateTestsFromModel(
+                    TripleReaderFactory.createTripleFileReader(dataset.getTestFileManual()).read());
             allTests.addAll(testsManuals);
             log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
+        } catch (TripleReaderException e){
+            // Do nothing, Manual tests do not exist
         }
 
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
@@ -187,7 +196,7 @@ public class Databugger {
 
 
         try {
-            f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
+            File f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
             f.getParentFile().mkdirs();
 
             model.setNsPrefixes(PrefixService.getPrefixMap());

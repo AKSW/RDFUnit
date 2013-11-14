@@ -18,4 +18,9 @@ public class TripleReaderFactory {
         return new TripleFirstSuccessReader(readers);
 
     }
+
+    public static TripleReader createTripleFileReader(String filename) {
+        return new TripleFileReader(filename);
+
+    }
 }

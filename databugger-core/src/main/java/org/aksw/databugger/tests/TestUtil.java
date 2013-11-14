@@ -77,16 +77,8 @@ public class TestUtil {
     }
 
 
-    public static List<UnitTest> instantiateTestsFromFile(String filename) {
+    public static List<UnitTest> instantiateTestsFromModel(Model model) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
-
-        Model model = ModelFactory.createDefaultModel();
-        try {
-            model.read(new FileInputStream(filename), null, "TURTLE");
-        } catch (Exception e) {
-            log.error("Cannot read tests from file: " + filename);
-            System.exit(-1);
-        }
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
