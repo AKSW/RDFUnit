@@ -3,7 +3,7 @@ package org.aksw.databugger.sources;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.databugger.DatabuggerUtils;
+import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.tripleReaders.TripleReader;

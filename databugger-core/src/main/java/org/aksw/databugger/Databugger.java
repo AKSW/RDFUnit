@@ -2,13 +2,14 @@ package org.aksw.databugger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.Utils.PatternUtils;
+import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternService;
-import org.aksw.databugger.patterns.PatternUtil;
 import org.aksw.databugger.sources.*;
 import org.aksw.databugger.tests.TestAutoGenerator;
-import org.aksw.databugger.tests.TestUtil;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -131,8 +132,8 @@ public class Databugger {
             s.setBaseCacheFolder("../data/tests/");
             File f = new File(s.getTestFile());
             if (!f.exists()) {
-                List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
-                TestUtil.writeTestsToFile(testsAuto,  s.getTestFile());
+                List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
+                TestUtils.writeTestsToFile(testsAuto,  s.getTestFile());
             }
         }
         // */
@@ -159,21 +160,21 @@ public class Databugger {
 
             // attempt to read from file
             try {
-                List<UnitTest> testsAutoCached = TestUtil.instantiateTestsFromModel(
+                List<UnitTest> testsAutoCached = TestUtils.instantiateTestsFromModel(
                         TripleReaderFactory.createTripleFileReader(s.getTestFile()).read());
                 allTests.addAll(testsAutoCached);
                 log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
             } catch (TripleReaderException e){
                 // cannot read from file  / generate
-                List<UnitTest> testsAuto = TestUtil.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
+                List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
                 allTests.addAll(testsAuto);
-                TestUtil.writeTestsToFile(testsAuto, s.getTestFile());
+                TestUtils.writeTestsToFile(testsAuto, s.getTestFile());
                 log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
             }
 
             try {
-                List<UnitTest> testsManuals = TestUtil.instantiateTestsFromModel(
+                List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
                         TripleReaderFactory.createTripleFileReader(s.getTestFileManual()).read());
                 allTests.addAll(testsManuals);
                 log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
@@ -184,7 +185,7 @@ public class Databugger {
         }
 
         try {
-            List<UnitTest> testsManuals = TestUtil.instantiateTestsFromModel(
+            List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
                     TripleReaderFactory.createTripleFileReader(dataset.getTestFileManual()).read());
             allTests.addAll(testsManuals);
             log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
@@ -236,11 +237,11 @@ public class Databugger {
     }
 
     public List<Pattern> getPatterns() {
-        return PatternUtil.instantiatePatternsFromModel(patternQueryFactory);
+        return PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
     }
 
     public List<TestAutoGenerator> getAutoGenerators() {
-        return TestUtil.instantiateTestGeneratorsFromModel(patternQueryFactory);
+        return TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 
 

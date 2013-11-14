@@ -1,6 +1,7 @@
 package org.aksw.databugger;
 
 import com.hp.hpl.jena.query.*;
+import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

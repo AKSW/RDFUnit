@@ -2,7 +2,7 @@ package org.aksw.databugger.tripleReaders;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.databugger.DatabuggerUtils;
+import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.exceptions.TripleReaderException;
 
 import java.io.File;

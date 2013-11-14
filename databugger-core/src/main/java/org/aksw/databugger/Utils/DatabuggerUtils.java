@@ -1,10 +1,11 @@
-package org.aksw.databugger;
+package org.aksw.databugger.Utils;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.sources.*;
 import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.slf4j.Logger;

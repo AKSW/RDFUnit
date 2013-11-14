@@ -10,7 +10,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.databugger.DatabuggerUtils;
+import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;

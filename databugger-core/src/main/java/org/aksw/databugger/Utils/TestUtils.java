@@ -1,4 +1,4 @@
-package org.aksw.databugger.tests;
+package org.aksw.databugger.Utils;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -6,17 +6,18 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
-import org.aksw.databugger.DatabuggerUtils;
 import org.aksw.databugger.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.tests.TestAnnotation;
+import org.aksw.databugger.tests.TestAutoGenerator;
+import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,8 @@ import java.util.List;
  * Various utility test functions for tests
  * Created: 9/24/13 10:59 AM
  */
-public class TestUtil {
-    private static final Logger log = LoggerFactory.getLogger(TestUtil.class);
+public class TestUtils {
+    private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
 
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
@@ -171,7 +172,7 @@ public class TestUtil {
 
     public static String generateTestURI(String sourcePrefix, String patternID, String string2hash) {
         String testURI = PrefixService.getPrefix("tddt") + sourcePrefix + "-" + patternID + "-";
-        String md5Hash = TestUtil.MD5(string2hash);
+        String md5Hash = TestUtils.MD5(string2hash);
         if (md5Hash == null)
             testURI += JenaUUID.generate().asString();
         else

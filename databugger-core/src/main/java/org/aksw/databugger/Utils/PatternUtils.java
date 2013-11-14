@@ -1,10 +1,13 @@
-package org.aksw.databugger.patterns;
+package org.aksw.databugger.Utils;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import org.aksw.databugger.DatabuggerUtils;
+import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.enums.PatternParameterConstraints;
+import org.aksw.databugger.patterns.Pattern;
+import org.aksw.databugger.patterns.PatternParameter;
+import org.aksw.databugger.patterns.PatternService;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.List;
  * Description
  * Created: 9/23/13 11:09 AM
  */
-public class PatternUtil {
+public class PatternUtils {
     public static List<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
