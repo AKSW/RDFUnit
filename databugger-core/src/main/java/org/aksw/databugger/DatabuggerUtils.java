@@ -6,11 +6,10 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.sources.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +23,8 @@ import javax.activation.DataSource;
  * Created: 9/24/13 11:25 AM
  */
 public class DatabuggerUtils {
+    private static Logger log = LoggerFactory.getLogger(DatabuggerUtils.class);
+
     public static String getAllPrefixes() {
         return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
@@ -118,38 +119,54 @@ public class DatabuggerUtils {
         return dataset;
     }
 
-    public static void fillSchemaService() {
+    public static void fillSchemaServiceFromFile(String additionalCSV) {
 
-        // Add from LOV
-        fillSchemasFromLOV();
+        int count=0;
 
-        // Manual
-        SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-        SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
-        SchemaService.addSchemaDecl("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        SchemaService.addSchemaDecl("dbo", "http://dbpedia.org/ontology/\thttp://mappings.dbpedia.org/server/ontology/dbpedia.owl");
-        SchemaService.addSchemaDecl("foaf", "http://xmlns.com/foaf/0.1/");
-        SchemaService.addSchemaDecl("dcterms", "http://purl.org/dc/terms/");
-        SchemaService.addSchemaDecl("dc", "http://purl.org/dc/elements/1.1/");
-        SchemaService.addSchemaDecl("skos", "http://www.w3.org/2004/02/skos/core#");
-        SchemaService.addSchemaDecl("georss", "http://www.georss.org/georss/");
-        SchemaService.addSchemaDecl("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#");
-        SchemaService.addSchemaDecl("prov", "http://www.w3.org/ns/prov");
-        SchemaService.addSchemaDecl("frbrer", "http://iflastandards.info/ns/fr/frbr/frbrer/");
-        SchemaService.addSchemaDecl("isbd", "http://iflastandards.info/ns/isbd/elements/");
-        SchemaService.addSchemaDecl("lgdo", "http://linkedgeodata.org/ontology\thttp://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt");
-        SchemaService.addSchemaDecl("lgdm", "http://linkedgeodata.org/meta/");
-        SchemaService.addSchemaDecl("ngeo", "http://geovocab.org/geometry#");
-        SchemaService.addSchemaDecl("spatial", "http://geovocab.org/spatial#");
-        SchemaService.addSchemaDecl("gsp", "http://www.opengis.net/ont/geosparql#");
-        SchemaService.addSchemaDecl("mads","http://www.loc.gov/mads/rdf/v1#");
-        SchemaService.addSchemaDecl("premis","http://www.loc.gov/premis/rdf/v1");
-        SchemaService.addSchemaDecl("mrel","http://id.loc.gov/vocabulary/relators");
+        if (additionalCSV != null && !additionalCSV.isEmpty()) {
+            BufferedReader in = null;
+            try {
+                in = new BufferedReader(new InputStreamReader(new FileInputStream(additionalCSV), "UTF-8"));
+
+                String line = null;
 
 
+                while ((line = in.readLine()) != null) {
+                    // skip comments & empty lines
+                    if (line.startsWith("#") || line.trim().isEmpty())
+                        continue;
+
+                    count++;
+
+                    String [] parts = line.split(",");
+                    switch (parts.length) {
+                        case 2:
+                            SchemaService.addSchemaDecl(parts[0],parts[1]);
+                            break;
+                        case 3:
+                            SchemaService.addSchemaDecl(parts[0],parts[1], parts[2]);
+                            break;
+                        default:
+                            log.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);
+                            count--;
+                    }
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                System.exit(1);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                System.exit(1);
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                System.exit(1);
+            }
+
+            log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
+        }
     }
 
-    public static void fillSchemasFromLOV() {
+    public static void fillSchemaServiceFromLOV() {
         List<Source> sources = new ArrayList<Source>();
         Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", "", null);
 
@@ -176,6 +193,7 @@ public class DatabuggerUtils {
                         "} \n" +
                         "ORDER BY ?vocabPrefix ");
 
+        int count =0;
         ResultSet rs = qe.execSelect();
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
@@ -183,7 +201,10 @@ public class DatabuggerUtils {
             String prefix = row.get("vocabPrefix").toString();
             String vocab = row.get("vocabURI").toString();
             SchemaService.addSchemaDecl(prefix, vocab);
+            count++;
         }
+
+        log.info("Loaded " + count + " schema declarations from LOV SPARQL Endpoint");
     }
 
     public static void fillPrefixService(String filename) {

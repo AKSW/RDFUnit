@@ -116,7 +116,9 @@ public class Databugger {
         PropertyConfigurator.configure("log4j.properties");
 
         DatabuggerUtils.fillPrefixService(dataFolder + "prefixes.ttl");
-        DatabuggerUtils.fillSchemaService();
+
+        DatabuggerUtils.fillSchemaServiceFromLOV();
+        DatabuggerUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
         Databugger databugger = new Databugger(dataFolder);
          /*

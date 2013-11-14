@@ -1,0 +1,22 @@
+#prefix,URI,URL(if URI does not dereference)
+rdfs,http://www.w3.org/2000/01/rdf-schema#
+owl,http://www.w3.org/2002/07/owl#
+rdf,http://www.w3.org/1999/02/22-rdf-syntax-ns#
+dbo,http://dbpedia.org/ontology/,http://mappings.dbpedia.org/server/ontology/dbpedia.owl
+foaf,http://xmlns.com/foaf/0.1/
+dcterms,http://purl.org/dc/terms/
+dc,http://purl.org/dc/elements/1.1/
+skos,http://www.w3.org/2004/02/skos/core#
+georss,http://www.georss.org/georss/
+geo,http://www.w3.org/2003/01/geo/wgs84_pos#
+prov,http://www.w3.org/ns/prov
+frbrer,http://iflastandards.info/ns/fr/frbr/frbrer/
+isbd,http://iflastandards.info/ns/isbd/elements/
+lgdo,http://linkedgeodata.org/ontology,http://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt
+lgdm,http://linkedgeodata.org/meta/
+ngeo,http://geovocab.org/geometry#
+spatial,http://geovocab.org/spatial#
+gsp,http://www.opengis.net/ont/geosparql#
+mads","http://www.loc.gov/mads/rdf/v1#
+premis","http://www.loc.gov/premis/rdf/v1
+mrel","http://id.loc.gov/vocabulary/relators
