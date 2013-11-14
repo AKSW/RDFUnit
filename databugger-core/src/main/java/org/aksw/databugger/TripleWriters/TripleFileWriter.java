@@ -52,7 +52,7 @@ public class TripleFileWriter extends TripleWriter{
                 if (!parentF.exists())
                     file.getParentFile().mkdirs();
             }
-            model.write(new FileOutputStream(file), "TURTLE");
+            model.write(new FileOutputStream(file), filetype);
 
         } catch (Exception e) {
 
