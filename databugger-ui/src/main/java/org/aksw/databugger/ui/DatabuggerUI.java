@@ -1,15 +1,15 @@
-package org.aksw.databugger;
+package org.aksw.databugger.ui;
 
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
+import org.aksw.databugger.ui.view.EndointTestMainView;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.HashMap;
@@ -25,6 +25,13 @@ public class DatabuggerUI extends UI {
     public static class Servlet extends VaadinServlet {
     }
     	/* User interface components are stored in session. */
+
+    private final HorizontalLayout headerLayout = new HorizontalLayout();
+    private final VerticalLayout sidebarLayout = new VerticalLayout();
+    private final Panel  mainNavigator = new Panel();
+    private final HorizontalLayout layoutFooter = new HorizontalLayout();
+
+    private final Navigator navigator = new Navigator(this, mainNavigator);
 
     private TextField txtSchemaURI = new TextField("Schema URI","");
     private TextField txtSchemaDataURI = new TextField("Schema Data URI","");
@@ -87,6 +94,25 @@ public class DatabuggerUI extends UI {
         VerticalLayout page = new VerticalLayout();
         setContent(page);
 
+        initLayoutHeader();
+        page.addComponent(headerLayout);
+
+        HorizontalLayout mainContent = new HorizontalLayout();
+        page.addComponent(mainContent);
+
+        initLayoutSidebar();
+        mainContent.addComponent(sidebarLayout);
+
+        initLayoutMain();
+        mainContent.addComponent(mainNavigator);
+
+        initLayoutFooter();
+        page.addComponent(layoutFooter);
+
+        navigator.addView("EndpointTest", new EndointTestMainView());
+        navigator.navigateTo("EndpointTest");
+
+        /*
         page.addComponent(txtSchemaURI);
         page.addComponent(txtSchemaDataURI);
         //txtSchemaDataURI.setEnabled(false);
@@ -111,8 +137,34 @@ public class DatabuggerUI extends UI {
                 _populatePropertyTreeTable();
             }
         });
+        */
 
+    }
 
+    /*
+    * setup the header of the page
+    * */
+    private void initLayoutHeader() {
+        headerLayout.addComponent(new Label("Header"));
+    }
+
+    /*
+    * setup the sidebar
+    * */
+    private void initLayoutSidebar() {
+        sidebarLayout.addComponent(new Label("Sidebar"));
+    }
+
+    /*
+    * setup the main content of the page
+    * */
+    private void initLayoutMain() {}
+
+    /*
+    * Setup the footer of the page
+    * */
+    private void initLayoutFooter() {
+        layoutFooter.addComponent(new Label("Footer"));
     }
 
     private void initClassTree() {
