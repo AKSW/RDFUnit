@@ -24,7 +24,6 @@ public class DatabuggerConfiguration {
 
     private final List<SchemaSource> sources;
 
-    private final DatasetSource datasetSource;
 
     public DatabuggerConfiguration(String prefix, String uri, String endpoint, String graphs, List<SchemaSource> sources) {
         this.prefix = prefix;
@@ -32,8 +31,6 @@ public class DatabuggerConfiguration {
         this.endpoint = endpoint;
         this.graphs = graphs;
         this.sources = sources;
-
-        this.datasetSource = new DatasetSource(prefix, uri, endpoint, graphs, sources);
     }
 
     public DatabuggerConfiguration(String uri, String endpoint, String graphs, List<SchemaSource> sources) {
@@ -49,6 +46,6 @@ public class DatabuggerConfiguration {
     }
 
     public DatasetSource getDatasetSource() {
-        return datasetSource;
+        return new DatasetSource(prefix, uri, endpoint, graphs, sources);
     }
 }
