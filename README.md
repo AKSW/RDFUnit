@@ -69,9 +69,9 @@ $ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <sch
 ```
 
 To brief the options, you need to provide:
-- of the *dataset* with the general *URI* `http://dbpedia.org/`
+- of the *dataset* with the general *URI* `http://dbpedia.org`
 - the *SPARQL endpoint* `http://dbpedia.org/sparql`
-- referring to the *graph* `http://dbpedia.org/ontology`
+- referring to the *graph* `http://dbpedia.org`
 - that uses the *schemas* `owl`, `dbo`, `foaf`, `dcterms`, `dc`, `skos`, `geo`, `prov`
 - with the *enriched schema prefix* `dbo`
 
