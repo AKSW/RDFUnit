@@ -1,4 +1,4 @@
-package org.aksw.databugger;
+package org.aksw.databugger.tests;
 
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -8,7 +8,6 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tests.UnitTest;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;

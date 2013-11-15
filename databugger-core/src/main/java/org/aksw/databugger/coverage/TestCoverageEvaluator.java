@@ -1,4 +1,4 @@
-package org.aksw.databugger;
+package org.aksw.databugger.coverage;
 
 import com.hp.hpl.jena.query.*;
 import org.aksw.databugger.Utils.DatabuggerUtils;

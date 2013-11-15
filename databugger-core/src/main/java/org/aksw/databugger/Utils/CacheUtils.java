@@ -29,4 +29,8 @@ public class CacheUtils {
         return retVal;
     }
 
+    public static String getAutoPrefixForURI(String uri) {
+        return uri.replace("http://","").replaceAll("[?\"'\\/<>*|:#,&]", "_");
+    }
+
 }

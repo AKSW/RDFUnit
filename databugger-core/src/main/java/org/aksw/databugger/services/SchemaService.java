@@ -52,7 +52,7 @@ public class SchemaService {
     public static List<SchemaSource> getSourceList(String baseFolder, List<String> ids) {
         List<SchemaSource> sources = new ArrayList<SchemaSource>();
         for (String id : ids) {
-            SchemaSource src = getSource(baseFolder, id);
+            SchemaSource src = getSource(baseFolder, id.trim());
             if (src != null)
                 sources.add(src);
         }
