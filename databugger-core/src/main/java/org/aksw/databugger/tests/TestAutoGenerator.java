@@ -8,7 +8,7 @@ import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
-import org.aksw.databugger.patterns.PatternService;
+import org.aksw.databugger.services.PatternService;
 import org.aksw.databugger.sources.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

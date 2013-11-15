@@ -1,4 +1,7 @@
-package org.aksw.databugger.sources;
+package org.aksw.databugger.services;
+
+import org.aksw.databugger.sources.SchemaSource;
+import org.aksw.databugger.sources.SourceFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;

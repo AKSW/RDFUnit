@@ -5,9 +5,9 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.databugger.PrefixService;
+import org.aksw.databugger.services.PrefixService;
+import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.*;
-import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import javax.activation.DataSource;
 
 /**
  * User: Dimitris Kontokostas

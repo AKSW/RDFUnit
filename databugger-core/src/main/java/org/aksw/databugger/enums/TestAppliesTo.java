@@ -1,6 +1,6 @@
 package org.aksw.databugger.enums;
 
-import org.aksw.databugger.PrefixService;
+import org.aksw.databugger.services.PrefixService;
 
 /**
  * User: Dimitris Kontokostas

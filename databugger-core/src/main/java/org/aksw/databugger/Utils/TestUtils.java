@@ -6,7 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
-import org.aksw.databugger.PrefixService;
+import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.sources.Source;

@@ -3,11 +3,10 @@ package org.aksw.databugger.Utils;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.enums.PatternParameterConstraints;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
-import org.aksw.databugger.patterns.PatternService;
+import org.aksw.databugger.services.PatternService;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package org.aksw.databugger.patterns;
+package org.aksw.databugger.services;
+
+import org.aksw.databugger.patterns.Pattern;
 
 import java.util.HashMap;
 import java.util.Set;
