@@ -10,7 +10,10 @@ import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.services.PatternService;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.services.SchemaService;
-import org.aksw.databugger.sources.*;
+import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.SchemaSource;
+import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.databugger.tripleReaders.TripleReaderFactory;
@@ -100,7 +103,7 @@ public class Databugger {
 
         String datasetUri = commandLine.getOptionValue("d");
         if (datasetUri.endsWith("/"))
-            datasetUri = datasetUri.substring(0,datasetUri.length()-1);
+            datasetUri = datasetUri.substring(0, datasetUri.length() - 1);
         String endpointUriStr = commandLine.getOptionValue("e");
         String graphUriStrs = commandLine.getOptionValue("g", "");
         List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
@@ -110,7 +113,6 @@ public class Databugger {
 
         boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
-
 
 
         if (!DatabuggerUtils.fileExists(dataFolder)) {
@@ -167,7 +169,7 @@ public class Databugger {
                 allTests.addAll(testsAutoCached);
                 log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
-            } catch (TripleReaderException e){
+            } catch (TripleReaderException e) {
                 // cannot read from file  / generate
                 List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
                 allTests.addAll(testsAuto);
@@ -180,7 +182,7 @@ public class Databugger {
                         TripleReaderFactory.createTripleFileReader(s.getTestFileManual()).read());
                 allTests.addAll(testsManuals);
                 log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
-            } catch (TripleReaderException e){
+            } catch (TripleReaderException e) {
                 // Do nothing, Manual tests do not exist
             }
             // write to file for backup
@@ -191,7 +193,7 @@ public class Databugger {
                     TripleReaderFactory.createTripleFileReader(dataset.getTestFileManual()).read());
             allTests.addAll(testsManuals);
             log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
-        } catch (TripleReaderException e){
+        } catch (TripleReaderException e) {
             // Do nothing, Manual tests do not exist
         }
 
