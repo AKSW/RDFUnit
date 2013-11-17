@@ -104,6 +104,7 @@
 										</data>
 									</dataSet>
 									<changesIn>${basedir}/debian/CHANGES.txt</changesIn>
+									<changesSave>${basedir}/debian/CHANGES.txt</changesSave>
 									<changesOut>${project.build.directory}/${project.build.finalName}.changes</changesOut>
 								</configuration>
 							</execution>
