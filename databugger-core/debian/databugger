@@ -1,0 +1,3 @@
+#!/bin/bash
+mkdir ~/databugger/
+java -jar /etc/share/java/Databugger/databugger*.jar -f ~/databugger/
