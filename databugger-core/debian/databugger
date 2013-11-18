@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 if ( "-f" ~~ @argv ){
-	system ("java", "-jar" "/etc/share/java/databugger/*.jar", @argv);
+	system ("java", "-jar", "/etc/share/java/databugger/*.jar", @argv);
 	print("a");
 } else {
 	push (@argv, "-f");
@@ -12,6 +12,6 @@ if ( "-f" ~~ @argv ){
 		print ("Copying data to ~/databugger\n");
 		system("cp","-r","/etc/share/java/databugger/data/*","/databugger");
 	}
-	system ("java", "-jar" "/etc/share/java/databugger/*.jar", @argv);
+	system ("java", "-jar", "/etc/share/java/databugger/*.jar", @argv);
 
 }
