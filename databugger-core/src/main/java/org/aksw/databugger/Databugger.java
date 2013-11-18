@@ -153,8 +153,10 @@ public class Databugger {
             sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedDatasetPrefix, datasetUri));
 
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatasetSource dataset = new DatasetSource(datasetUri.replace("http://", ""), datasetUri,
+        DatabuggerConfiguration testContext = new DatabuggerConfiguration(datasetUri,
                 endpointUriStr, graphUriStrs, sources);
+
+        DatasetSource dataset = testContext.getDatasetSource();
         /* </cliStuff> */
 
         dataset.setBaseCacheFolder(testFolder);

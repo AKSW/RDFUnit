@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>databugger-parent</artifactId>
-		<groupId>org.aksw.databugger</groupId>
-		<version>0.1</version>
-	</parent>
-	<artifactId>databugger-ui</artifactId>
-	<packaging>war</packaging>
-	<name>Databugger - UI</name>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>databugger-parent</artifactId>
+        <groupId>org.aksw.databugger</groupId>
+        <version>0.1</version>
+    </parent>
+    <artifactId>databugger-ui</artifactId>
+    <packaging>war</packaging>
+    <name>Databugger - UI</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,10 +30,6 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -199,6 +195,14 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
+                <!-- <configuration>
+                 <webApp>
+                     <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                         <resourcesAsCSV>../data</resourcesAsCSV>
+                     </baseResource>
+                 </webApp>
+                 </configuration>
+                 -->
             </plugin>
         </plugins>
         <pluginManagement>

@@ -1,0 +1,38 @@
+/* Import the runo theme. */
+/* This only allows us to use the mixins defined in it and does not add any styles by itself. */
+@import "../runo/runo.scss";
+
+/* This contains all of your theme. */
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin databugger {
+/* Include all the styles from the runo theme */
+  @include runo;
+
+/* Insert your theme rules here */
+  #page {
+    padding: 10px;
+  }
+
+  #header {
+    padding: 0px;
+  }
+
+  .align-right {
+    float: right;
+  }
+
+  .bold-text {
+    font-weight: bold;
+  }
+
+  #EndointTestTab {
+
+    .example {
+
+    }
+
+  }
+
+
+
+}
