@@ -90,7 +90,7 @@
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
-												<prefix>/usr/share/java/databugger</prefix>
+												<prefix>/etc/share/java/databugger</prefix>
 											</mapper>
 										</data>
 										<data>
