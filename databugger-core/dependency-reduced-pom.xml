@@ -12,6 +12,7 @@
     <profile>
       <id>debpackage</id>
       <build>
+        <finalName>databugger-core</finalName>
         <plugins>
           <plugin>
             <artifactId>maven-shade-plugin</artifactId>
@@ -48,11 +49,11 @@
                   <controlDir>/Users/didier/Documents/Databugger/databugger-core/debian</controlDir>
                   <dataSet>
                     <data>
-                      <src>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core-0.1.jar</src>
+                      <src>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core.jar</src>
                       <type>file</type>
                       <mapper>
                         <type>perm</type>
-                        <prefix>/usr/share/java/databugger</prefix>
+                        <prefix>/etc/share/java/databugger</prefix>
                       </mapper>
                     </data>
                     <data>
@@ -76,7 +77,7 @@
                   </dataSet>
                   <changesIn>/Users/didier/Documents/Databugger/databugger-core/debian/CHANGES.txt</changesIn>
                   <changesSave>/Users/didier/Documents/Databugger/databugger-core/debian/CHANGES.txt</changesSave>
-                  <changesOut>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core-0.1.changes</changesOut>
+                  <changesOut>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core.changes</changesOut>
                 </configuration>
               </execution>
             </executions>

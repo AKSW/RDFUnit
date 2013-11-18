@@ -45,7 +45,9 @@
 	<profiles>
 		<profile>
 			<id>debpackage</id>
+			
 			<build>
+			<finalName>databugger-core</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -86,7 +88,7 @@
 									<controlDir>${basedir}/debian</controlDir>
 									<dataSet>
 										<data>
-											<src>${basedir}/target/databugger-core-${version}.jar</src>
+											<src>${basedir}/target/databugger-core.jar</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
