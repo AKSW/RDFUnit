@@ -10,7 +10,7 @@ if ( "-f" ~~ @argv ){
 		$ok=mkdir("$ENV{HOME}/databugger",0777);
 		print "$!\n" if ($ok == 0);
 		print ("Copying data to ~/databugger\n");
-		system("cp","-r","/etc/share/java/databugger/data/*","/databugger");
+		system("cp","-r","/etc/share/java/databugger/data/","/databugger");
 	}
 	system ("java", "-jar", "/etc/share/java/databugger/*.jar", @argv);
 
