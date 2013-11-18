@@ -82,7 +82,7 @@
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
-									<deb>${buildDirectory}/databugger-core_${version}.deb</deb>
+									<deb>${basedir}/target/databugger-core_${version}.deb</deb>
 									<controlDir>${basedir}/debian</controlDir>
 									<dataSet>
 										<data>
@@ -107,8 +107,7 @@
 										<data>
 											<src>${basedir}/../data</src>
 											<type>directory</type>
-											<includes />
-											<excludes>**/.svn</excludes>
+											<includes>*</includes>
 											<mapper>
 												<type>perm</type>
 												<prefix>/etc/share/java/databugger/data/</prefix>
