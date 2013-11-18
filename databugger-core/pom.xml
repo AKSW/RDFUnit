@@ -111,7 +111,6 @@
 											<excludes>**/.svn</excludes>
 											<mapper>
 												<type>perm</type>
-												<filemode>777</filemode>
 												<prefix>/etc/share/java/databugger/data/</prefix>
 											</mapper>
 										</data>
