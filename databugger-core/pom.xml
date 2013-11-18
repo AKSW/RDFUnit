@@ -86,11 +86,11 @@
 									<controlDir>${basedir}/debian</controlDir>
 									<dataSet>
 										<data>
-											<src>${project.build.directory}/${project.build.finalName}.jar</src>
+											<src>${basedir}/target/*.jar</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
-												<prefix>/usr/share/java/Databugger</prefix>
+												<prefix>/usr/share/java/databugger</prefix>
 											</mapper>
 										</data>
 										<data>
