@@ -3,15 +3,11 @@ package org.aksw.databugger.sources;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.tripleReaders.TripleReader;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-
-import java.io.File;
-import java.io.FileInputStream;
 
 /**
  * User: Dimitris Kontokostas
@@ -31,6 +27,11 @@ public class SchemaSource extends Source {
         super(prefix, uri);
         this.schema = schema;
         this.schemaReader = schemaReader;
+    }
+    public SchemaSource(SchemaSource source) {
+        super(source);
+        this.schema = source.schema;
+        this.schemaReader = source.schemaReader;
     }
 
     @Override

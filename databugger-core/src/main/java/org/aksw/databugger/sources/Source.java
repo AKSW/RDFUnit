@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 9/16/13 1:15 PM
  */
 
-public abstract class Source {
+public abstract class Source implements Comparable<Source> {
     protected static final Logger log = LoggerFactory.getLogger(Source.class);
 
     private final String prefix;
@@ -30,6 +30,11 @@ public abstract class Source {
         this.prefix = prefix;
         this.uri = uri;
         this.referencesSchemata = new ArrayList<SchemaSource>();
+    }
+
+    public Source(Source source) {
+        this(source.getPrefix(), source.getUri());
+        this.referencesSchemata.addAll(source.getReferencesSchemata());
     }
 
     public String getPrefix() {
@@ -98,5 +103,13 @@ public abstract class Source {
 
     public void addReferencesSchemata(List<SchemaSource> schemata) {
         this.referencesSchemata.addAll(schemata);
+    }
+
+    @Override
+    public int compareTo(Source o) {
+        if (this.getPrefix().equals(o.getPrefix()) && this.getUri().equals(o.getUri()))
+            return 0;
+        else
+            return -1;
     }
 }

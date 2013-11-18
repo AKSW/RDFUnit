@@ -35,6 +35,10 @@ public class DatasetSource extends Source {
             addReferencesSchemata(schemata);
     }
 
+    public DatasetSource(DatasetSource source) {
+        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraph(),source.getReferencesSchemata());
+    }
+
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.Dataset;
@@ -44,7 +48,7 @@ public class DatasetSource extends Source {
     protected QueryExecutionFactory initQueryFactory() {
 
         // Create a query execution over DBpedia
-        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(sparqlEndpoint, sparqlGraph);
+        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraph());
 
         // Add delay in order to be nice to the remote server (delay in milli seconds)
         qef = new QueryExecutionFactoryDelay(qef, 7000);
@@ -71,5 +75,13 @@ public class DatasetSource extends Source {
         qef = new QueryExecutionFactoryPaginated(qef, 900);
 
         return qef;
+    }
+
+    public String getSparqlEndpoint() {
+        return sparqlEndpoint;
+    }
+
+    public String getSparqlGraph() {
+        return sparqlGraph;
     }
 }
