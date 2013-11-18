@@ -112,4 +112,9 @@ public abstract class Source implements Comparable<Source> {
         else
             return -1;
     }
+
+    @Override
+    public String toString() {
+        return getPrefix() + " (" + getUri() + ")";
+    }
 }
