@@ -1,9 +1,9 @@
 package org.aksw.databugger.ui.view;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import sun.awt.HorizBagLayout;
+import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.ui.widgets.SchemaSelectorWidget;
+import org.vaadin.tokenfield.TokenField;
 
 /**
  * User: Dimitris Kontokostas
@@ -16,6 +16,8 @@ public class EndointTestTab extends VerticalLayout {
     private final NativeSelect examples = new NativeSelect("Select an example");
     private final TextField endpoint = new TextField();
     private final TextField graph = new TextField();
+    private final TokenField vocabularies = new TokenField("Vocabularies");
+
 
     public EndointTestTab() {
         initLayout();
@@ -29,7 +31,7 @@ public class EndointTestTab extends VerticalLayout {
 
         this.addComponent(horizontalLayout);
 
-        examples.addStyleName("example");
+        examples.addStyleName("col-1");
         examples.addItem("DBpedia");
         examples.addItem("DBpedia in Dutch");
         examples.addItem("DBpedia Live");
@@ -37,6 +39,7 @@ public class EndointTestTab extends VerticalLayout {
         horizontalLayout.addComponent(examples);
 
         VerticalLayout textboxes = new VerticalLayout();
+        textboxes.addStyleName("col-2");
         horizontalLayout.addComponent(textboxes);
 
         textboxes.addComponent(new Label("SPARQL Endpoint"));
@@ -44,6 +47,8 @@ public class EndointTestTab extends VerticalLayout {
         textboxes.addComponent(new Label("Graph"));
         textboxes.addComponent(graph);
 
+        vocabularies.addStyleName("col-3");
+        horizontalLayout.addComponent(new SchemaSelectorWidget());
 
 
     }

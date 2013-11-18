@@ -110,7 +110,20 @@ public abstract class Source implements Comparable<Source> {
         if (this.getPrefix().equals(o.getPrefix()) && this.getUri().equals(o.getUri()))
             return 0;
         else
-            return -1;
+            return this.getPrefix().compareTo(o.getPrefix());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Source) {
+            return this.compareTo((Source) obj) == 0;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
     }
 
     @Override
