@@ -82,11 +82,11 @@
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
-									<deb>${basedir}/target/databugger-core_${version}.deb</deb>
+									<deb>${basedir}/target/databugger-core-${version}.deb</deb>
 									<controlDir>${basedir}/debian</controlDir>
 									<dataSet>
 										<data>
-											<src>${basedir}/target/*.jar</src>
+											<src>${basedir}/target/databugger-core-${version}.jar</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
