@@ -45,9 +45,9 @@
 	<profiles>
 		<profile>
 			<id>debpackage</id>
-			
+
 			<build>
-			<finalName>databugger-core</finalName>
+				<finalName>databugger-core</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -69,6 +69,16 @@
 											<mainClass>org.aksw.databugger.Databugger</mainClass>
 										</transformer>
 									</transformers>
+									<filters>
+										<filter>
+											<artifact>*:*</artifact>
+											<excludes>
+												<exclude>META-INF/*.SF</exclude>
+												<exclude>META-INF/*.DSA</exclude>
+												<exclude>META-INF/*.RSA</exclude>
+											</excludes>
+										</filter>
+									</filters>
 								</configuration>
 							</execution>
 						</executions>
