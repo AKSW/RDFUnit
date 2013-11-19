@@ -95,8 +95,9 @@ public class DatabuggerUI extends UI {
     * Setup the footer of the page
     * */
     private void initLayoutFooter() {
-
-        layoutFooter.addComponent(new Label("@copyright AKSW"));
+        layoutFooter.setHeight("40px");
+        layoutFooter.addStyleName("v-link");
+        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://aksw.org/Projects/Databugger\">Databugger</a>", ContentMode.HTML ));
     }
 
 }
