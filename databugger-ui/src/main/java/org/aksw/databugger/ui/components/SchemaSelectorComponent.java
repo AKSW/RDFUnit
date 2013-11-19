@@ -1,4 +1,4 @@
-package org.aksw.databugger.ui.widgets;
+package org.aksw.databugger.ui.components;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -22,11 +22,11 @@ import java.util.*;
  * provides a schema
  * Created: 11/18/13 11:26 AM
  */
-public class SchemaSelectorWidget extends VerticalLayout {
+public class SchemaSelectorComponent extends VerticalLayout {
 
     final TokenField tokenField;
 
-    public SchemaSelectorWidget() {
+    public SchemaSelectorComponent() {
 
         VerticalLayout p = new VerticalLayout();
         //p.getContent().setStyleName("black");

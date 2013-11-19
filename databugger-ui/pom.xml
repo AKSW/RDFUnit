@@ -195,6 +195,14 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
+               <!-- <configuration>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                        <baseResource implementation="org.mortbay.resource.ResourceCollection">
+                            <resources>../data</resources>
+                        </baseResource>
+                    </webAppConfig>
+                </configuration> -->
                 <!-- <configuration>
                  <webApp>
                      <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
@@ -204,6 +212,7 @@
                  </configuration>
                  -->
             </plugin>
+            <!-- This plugin copies the configuration in the war file for deployment -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.6</version>

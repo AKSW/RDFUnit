@@ -1,8 +1,7 @@
 package org.aksw.databugger.ui.view;
 
 import com.vaadin.ui.*;
-import org.aksw.databugger.ui.widgets.SchemaSelectorWidget;
-import org.vaadin.tokenfield.TokenField;
+import org.aksw.databugger.ui.components.SchemaSelectorComponent;
 
 /**
  * User: Dimitris Kontokostas
@@ -15,9 +14,10 @@ public class EndointTestTab extends VerticalLayout {
     private final NativeSelect examplesSelect = new NativeSelect("Select an example");
     private final TextField endpointField = new TextField();
     private final TextField graphField = new TextField();
-    private final SchemaSelectorWidget schemaSelectorWidget = new SchemaSelectorWidget();
+    private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
 
     private final NativeSelect limitSelect = new NativeSelect();
+    private final Button clearButton = new Button("Clear");
     private final Button generateTestsButton = new Button("Generate tests");
 
 
@@ -32,7 +32,7 @@ public class EndointTestTab extends VerticalLayout {
 
         HorizontalLayout configurationSetLayout = new HorizontalLayout();
         configurationSetLayout.setId("test-configuration");
-        configurationSetLayout.setWidth("100%");
+        //configurationSetLayout.setWidth("100%");
 
         this.addComponent(configurationSetLayout);
 
@@ -63,8 +63,11 @@ public class EndointTestTab extends VerticalLayout {
 
         HorizontalLayout hz = new HorizontalLayout();
         this.addComponent(hz);
+        hz.addComponent(clearButton);
+        hz.setComponentAlignment(clearButton, Alignment.MIDDLE_LEFT);
         hz.addComponent(generateTestsButton);
         hz.setComponentAlignment(generateTestsButton, Alignment.MIDDLE_RIGHT);
+
 
 
 
