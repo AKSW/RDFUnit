@@ -27,19 +27,26 @@
 
   #EndointTestTab {
 
-    .v-slot-col-1 {
-      padding: 0 15px 18px 0;
-      border-right: 1px solid;
+    #test-configuration{
+
+      .v-slot-examples {
+        padding: 0 15px 18px 0;
+      }
+
+      .v-slot-manual {
+        padding: 0 15px 18px 15px;
+        border-left: 1px solid;
+      }
+
+      .v-slot-schema-selector {
+        padding: 0 15px 18px 15px;
+      }
+
+      border-bottom: 1px solid;
+
     }
 
-    .v-slot-col-2 {
-      padding: 0 15px 18px 15px;
-    }
 
-    .v-slot-col-3 {
-      padding: 0 15px 18px 15px;
-      border-right: 1px solid;
-    }
 
   }
 

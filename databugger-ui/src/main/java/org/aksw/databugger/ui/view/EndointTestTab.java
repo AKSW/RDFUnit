@@ -1,7 +1,6 @@
 package org.aksw.databugger.ui.view;
 
 import com.vaadin.ui.*;
-import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.ui.widgets.SchemaSelectorWidget;
 import org.vaadin.tokenfield.TokenField;
 
@@ -13,10 +12,13 @@ import org.vaadin.tokenfield.TokenField;
 
 public class EndointTestTab extends VerticalLayout {
 
-    private final NativeSelect examples = new NativeSelect("Select an example");
-    private final TextField endpoint = new TextField();
-    private final TextField graph = new TextField();
-    private final TokenField vocabularies = new TokenField("Vocabularies");
+    private final NativeSelect examplesSelect = new NativeSelect("Select an example");
+    private final TextField endpointField = new TextField();
+    private final TextField graphField = new TextField();
+    private final SchemaSelectorWidget schemaSelectorWidget = new SchemaSelectorWidget();
+
+    private final NativeSelect limitSelect = new NativeSelect();
+    private final Button generateTestsButton = new Button("Generate tests");
 
 
     public EndointTestTab() {
@@ -26,29 +28,45 @@ public class EndointTestTab extends VerticalLayout {
     private void initLayout() {
         this.setMargin(true);
         this.setId("EndointTestTab");
+        this.setWidth("100%");
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        HorizontalLayout configurationSetLayout = new HorizontalLayout();
+        configurationSetLayout.setId("test-configuration");
+        configurationSetLayout.setWidth("100%");
 
-        this.addComponent(horizontalLayout);
+        this.addComponent(configurationSetLayout);
 
-        examples.addStyleName("col-1");
-        examples.addItem("DBpedia");
-        examples.addItem("DBpedia in Dutch");
-        examples.addItem("DBpedia Live");
+        examplesSelect.addStyleName("examples");
+        examplesSelect.addItem("DBpedia");
+        examplesSelect.addItem("DBpedia in Dutch");
+        examplesSelect.addItem("DBpedia Live");
 
-        horizontalLayout.addComponent(examples);
+        configurationSetLayout.addComponent(examplesSelect);
+
+        HorizontalLayout manualConfigurationLayout = new HorizontalLayout();
+        configurationSetLayout.addComponent(manualConfigurationLayout);
+        configurationSetLayout.setExpandRatio(manualConfigurationLayout,1.0f);
+        manualConfigurationLayout.addStyleName("manual");
+
 
         VerticalLayout textboxes = new VerticalLayout();
-        textboxes.addStyleName("col-2");
-        horizontalLayout.addComponent(textboxes);
+        manualConfigurationLayout.addComponent(textboxes);
 
         textboxes.addComponent(new Label("SPARQL Endpoint"));
-        textboxes.addComponent(endpoint);
+        textboxes.addComponent(endpointField);
         textboxes.addComponent(new Label("Graph"));
-        textboxes.addComponent(graph);
+        textboxes.addComponent(graphField);
 
-        vocabularies.addStyleName("col-3");
-        horizontalLayout.addComponent(new SchemaSelectorWidget());
+        schemaSelectorWidget.addStyleName("schema-selector");
+        manualConfigurationLayout.addComponent(schemaSelectorWidget);
+        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget,1.0f);
+
+        HorizontalLayout hz = new HorizontalLayout();
+        this.addComponent(hz);
+        hz.addComponent(generateTestsButton);
+        hz.setComponentAlignment(generateTestsButton, Alignment.MIDDLE_RIGHT);
+
+
 
 
     }
