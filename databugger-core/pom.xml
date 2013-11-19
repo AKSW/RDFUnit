@@ -66,7 +66,7 @@
 									<transformers>
 										<transformer
 											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-											<mainClass>org.aksw.databugger.Databugger</mainClass>
+											<mainClass>org.aksw.databugger.Main</mainClass>
 										</transformer>
 									</transformers>
 									<filters>
