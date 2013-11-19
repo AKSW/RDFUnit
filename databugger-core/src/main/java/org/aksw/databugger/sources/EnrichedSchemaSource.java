@@ -34,7 +34,7 @@ public class EnrichedSchemaSource extends SchemaSource {
                 System.exit(-1);
             }
         } catch (Exception e) {
-            log.error("Cannot load ontology from URI: " + schema);
+            log.error("Cannot load ontology from URI: " + getSchema());
         }
         return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
     }

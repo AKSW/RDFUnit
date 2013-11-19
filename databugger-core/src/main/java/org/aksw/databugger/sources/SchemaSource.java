@@ -30,7 +30,7 @@ public class SchemaSource extends Source {
     }
     public SchemaSource(SchemaSource source) {
         super(source);
-        this.schema = source.schema;
+        this.schema = source.getSchema();
         this.schemaReader = source.schemaReader;
     }
 
@@ -45,8 +45,18 @@ public class SchemaSource extends Source {
         try {
             schemaReader.read(model);
         } catch (TripleReaderException e) {
-            log.error("Cannot load ontology: " + schema + " Reason: " +e.getMessage());
+            log.error("Cannot load ontology: " + getSchema() + " Reason: " +e.getMessage());
         }
         return new QueryExecutionFactoryModel(model);
     }
+
+    public String getSchema() {
+        return schema;
+    }
+
+    @Override
+    public String toString() {
+        return getPrefix() + " (" + getSchema() + ")";
+    }
+
 }
