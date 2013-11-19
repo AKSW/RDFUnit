@@ -45,7 +45,9 @@
 	<profiles>
 		<profile>
 			<id>debpackage</id>
+
 			<build>
+				<finalName>databugger-core</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -67,6 +69,16 @@
 											<mainClass>org.aksw.databugger.Databugger</mainClass>
 										</transformer>
 									</transformers>
+									<filters>
+										<filter>
+											<artifact>*:*</artifact>
+											<excludes>
+												<exclude>META-INF/*.SF</exclude>
+												<exclude>META-INF/*.DSA</exclude>
+												<exclude>META-INF/*.RSA</exclude>
+											</excludes>
+										</filter>
+									</filters>
 								</configuration>
 							</execution>
 						</executions>
@@ -82,14 +94,15 @@
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
+									<deb>${basedir}/target/databugger-core-${version}.deb</deb>
 									<controlDir>${basedir}/debian</controlDir>
 									<dataSet>
 										<data>
-											<src>${project.build.directory}/${project.build.finalName}.jar</src>
+											<src>${basedir}/target/databugger-core.jar</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
-												<prefix>/usr/share/java/Databugger</prefix>
+												<prefix>/etc/share/java/databugger</prefix>
 											</mapper>
 										</data>
 										<data>
@@ -100,6 +113,17 @@
 												<type>perm</type>
 												<filemode>777</filemode>
 												<prefix>/usr/bin</prefix>
+											</mapper>
+										</data>
+
+										<data>
+											<src>${basedir}/../data</src>
+											<type>directory</type>
+											<includes>*</includes>
+											<mapper>
+												<type>perm</type>
+												<filemode>777</filemode>
+												<prefix>/etc/share/java/databugger/data/</prefix>
 											</mapper>
 										</data>
 									</dataSet>
