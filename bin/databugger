@@ -5,7 +5,7 @@
 # bin/databugger -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -p dbo -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
 #
 
-MAIN_CLS="org.aksw.databugger.Databugger"
+MAIN_CLS="org.aksw.databugger.Main"
 MVN="mvn"
 
 cd databugger-core/
