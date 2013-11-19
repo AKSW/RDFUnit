@@ -29,6 +29,16 @@
                       <mainClass>org.aksw.databugger.Databugger</mainClass>
                     </transformer>
                   </transformers>
+                  <filters>
+                    <filter>
+                      <artifact>*:*</artifact>
+                      <excludes>
+                        <exclude>META-INF/*.SF</exclude>
+                        <exclude>META-INF/*.DSA</exclude>
+                        <exclude>META-INF/*.RSA</exclude>
+                      </excludes>
+                    </filter>
+                  </filters>
                 </configuration>
               </execution>
             </executions>
@@ -45,11 +55,11 @@
                   <goal>jdeb</goal>
                 </goals>
                 <configuration>
-                  <deb>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core-0.1.deb</deb>
-                  <controlDir>/Users/didier/Documents/Databugger/databugger-core/debian</controlDir>
+                  <deb>/home/jim/work/code/java/Databugger/databugger-core/target/databugger-core-0.1.deb</deb>
+                  <controlDir>/home/jim/work/code/java/Databugger/databugger-core/debian</controlDir>
                   <dataSet>
                     <data>
-                      <src>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core.jar</src>
+                      <src>/home/jim/work/code/java/Databugger/databugger-core/target/databugger-core.jar</src>
                       <type>file</type>
                       <mapper>
                         <type>perm</type>
@@ -57,7 +67,7 @@
                       </mapper>
                     </data>
                     <data>
-                      <src>/Users/didier/Documents/Databugger/databugger-core/debian/databugger</src>
+                      <src>/home/jim/work/code/java/Databugger/databugger-core/debian/databugger</src>
                       <type>file</type>
                       <mapper>
                         <type>perm</type>
@@ -66,18 +76,19 @@
                       </mapper>
                     </data>
                     <data>
-                      <src>/Users/didier/Documents/Databugger/databugger-core/../data</src>
+                      <src>/home/jim/work/code/java/Databugger/databugger-core/../data</src>
                       <type>directory</type>
                       <includes>*</includes>
                       <mapper>
                         <type>perm</type>
-                        <prefix>/etc/share/java/databugger/data/</prefix>
+                        <filemode>777</filemode>
+                        <prefix>/etc/share/java/databugger/data</prefix>
                       </mapper>
                     </data>
                   </dataSet>
-                  <changesIn>/Users/didier/Documents/Databugger/databugger-core/debian/CHANGES.txt</changesIn>
-                  <changesSave>/Users/didier/Documents/Databugger/databugger-core/debian/CHANGES.txt</changesSave>
-                  <changesOut>/Users/didier/Documents/Databugger/databugger-core/target/databugger-core.changes</changesOut>
+                  <changesIn>/home/jim/work/code/java/Databugger/databugger-core/debian/CHANGES.txt</changesIn>
+                  <changesSave>/home/jim/work/code/java/Databugger/databugger-core/debian/CHANGES.txt</changesSave>
+                  <changesOut>/home/jim/work/code/java/Databugger/databugger-core/target/databugger-core.changes</changesOut>
                 </configuration>
               </execution>
             </executions>

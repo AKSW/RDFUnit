@@ -94,7 +94,7 @@
 									<goal>jdeb</goal>
 								</goals>
 								<configuration>
-									<deb>${basedir}/target/databugger-core-${version}.deb</deb>
+									<deb>${basedir}/target/databugger-core-${project.version}.deb</deb>
 									<controlDir>${basedir}/debian</controlDir>
 									<dataSet>
 										<data>
@@ -123,7 +123,7 @@
 											<mapper>
 												<type>perm</type>
 												<filemode>777</filemode>
-												<prefix>/etc/share/java/databugger/data/</prefix>
+												<prefix>/etc/share/java/databugger/data</prefix>
 											</mapper>
 										</data>
 									</dataSet>
