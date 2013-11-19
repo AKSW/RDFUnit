@@ -18,6 +18,7 @@ import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tripleReaders.TripleReader;
 import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -44,8 +45,17 @@ public class Databugger {
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-    public Databugger(String dataFolder) {
-        this.patternQueryFactory = loadPatterns(dataFolder + "patterns.ttl", dataFolder + "testGenerators.ttl");
+    public Databugger(TripleReader patterReader, TripleReader testGeneratorReader ) throws TripleReaderException {
+
+        Model patternModel = ModelFactory.createDefaultModel();
+        try {
+            patterReader.read(patternModel);
+            testGeneratorReader.read(patternModel);
+        } catch (TripleReaderException e) {
+            throw new TripleReaderException(e.getMessage());
+        }
+        patternModel.setNsPrefixes(PrefixService.getPrefixMap());
+        this.patternQueryFactory = new QueryExecutionFactoryModel(patternModel);
         this.patterns = getPatterns();
 
         // Update pattern service
@@ -56,20 +66,6 @@ public class Databugger {
         this.autoGenerators = getAutoGenerators();
 
 
-    }
-
-    public QueryExecutionFactory loadPatterns(String patf, String genf) {
-
-        Model patternModel = ModelFactory.createDefaultModel();
-        try {
-            patternModel.read(new FileInputStream(patf), null, "TURTLE");
-            patternModel.read(new FileInputStream(genf), null, "TURTLE");
-        } catch (Exception e) {
-            log.error("patterns and generators files were not found in data folder");
-            System.exit(1);
-        }
-        patternModel.setNsPrefixes(PrefixService.getPrefixMap());
-        return new QueryExecutionFactoryModel(patternModel);
     }
 
     public List<Pattern> getPatterns() {

@@ -14,6 +14,7 @@ import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tripleReaders.TripleReader;
 import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.apache.commons.cli.*;
@@ -108,7 +109,16 @@ public class Main {
         DatabuggerUtils.fillSchemaServiceFromLOV();
         DatabuggerUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
-        Databugger databugger = new Databugger(dataFolder);
+
+        TripleReader patternReader = TripleReaderFactory.createTripleFileReader(dataFolder+"patterns.ttl");
+        TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(dataFolder+"testGenerators.ttl");
+        Databugger databugger = null;
+        try {
+            databugger = new Databugger(patternReader, testGeneratorReader);
+        } catch (TripleReaderException e) {
+            log.error("Cannot read patterns and/or pattern generators");
+            System.exit(1);
+        }
          /*
         // Generates all tests from LOV
         for (Source s: SchemaService.getSourceListAll()) {
