@@ -8,11 +8,13 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
+import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAnnotation;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tripleReaders.TripleReaderFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
@@ -28,6 +30,50 @@ import java.util.List;
  */
 public class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
+
+    public static List<UnitTest> instantiateUnitTestsFromSource(Source dataset, List<TestAutoGenerator> autoGenerators) {
+
+        List<UnitTest> allTests = new ArrayList<UnitTest>();
+        for (Source s : dataset.getReferencesSchemata()) {
+
+            log.info("Generating tests for: " + s.getUri());
+
+            // attempt to read from file
+            try {
+                List<UnitTest> testsAutoCached = TestUtils.instantiateTestsFromModel(
+                        TripleReaderFactory.createTripleFileReader(s.getTestFile()).read());
+                allTests.addAll(testsAutoCached);
+                log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
+
+            } catch (TripleReaderException e) {
+                // cannot read from file  / generate
+                List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
+                allTests.addAll(testsAuto);
+                TestUtils.writeTestsToFile(testsAuto, s.getTestFile());
+                log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
+            }
+
+            try {
+                List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
+                        TripleReaderFactory.createTripleFileReader(s.getTestFileManual()).read());
+                allTests.addAll(testsManuals);
+                log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
+            } catch (TripleReaderException e) {
+                // Do nothing, Manual tests do not exist
+            }
+            // write to file for backup
+        }
+
+        try {
+            List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
+                    TripleReaderFactory.createTripleFileReader(dataset.getTestFileManual()).read());
+            allTests.addAll(testsManuals);
+            log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
+        } catch (TripleReaderException e) {
+            // Do nothing, Manual tests do not exist
+        }
+        return  allTests;
+    }
 
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();

@@ -49,7 +49,7 @@ public class Main {
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
-        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/'");
+        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.databugger'");
 
     }
 
@@ -148,45 +148,7 @@ public class Main {
 
         dataset.setBaseCacheFolder(testFolder);
 
-        List<UnitTest> allTests = new ArrayList<UnitTest>();
-        for (Source s : dataset.getReferencesSchemata()) {
-
-            log.info("Generating tests for: " + s.getUri());
-
-            // attempt to read from file
-            try {
-                List<UnitTest> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                        TripleReaderFactory.createTripleFileReader(s.getTestFile()).read());
-                allTests.addAll(testsAutoCached);
-                log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
-
-            } catch (TripleReaderException e) {
-                // cannot read from file  / generate
-                List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
-                allTests.addAll(testsAuto);
-                TestUtils.writeTestsToFile(testsAuto, s.getTestFile());
-                log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
-            }
-
-            try {
-                List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
-                        TripleReaderFactory.createTripleFileReader(s.getTestFileManual()).read());
-                allTests.addAll(testsManuals);
-                log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
-            } catch (TripleReaderException e) {
-                // Do nothing, Manual tests do not exist
-            }
-            // write to file for backup
-        }
-
-        try {
-            List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
-                    TripleReaderFactory.createTripleFileReader(dataset.getTestFileManual()).read());
-            allTests.addAll(testsManuals);
-            log.info(dataset.getUri() + " contains " + testsManuals.size() + " manually created tests");
-        } catch (TripleReaderException e) {
-            // Do nothing, Manual tests do not exist
-        }
+        List<UnitTest> allTests = TestUtils.instantiateUnitTestsFromSource(dataset, databugger.getAutoGenerators());
 
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results
