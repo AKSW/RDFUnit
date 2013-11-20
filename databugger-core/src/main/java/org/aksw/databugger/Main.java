@@ -3,16 +3,15 @@ package org.aksw.databugger;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.Utils.DatabuggerUtils;
-import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.coverage.TestCoverageEvaluator;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
-import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestExecutor;
+import org.aksw.databugger.tests.TestGeneratorExecutor;
 import org.aksw.databugger.tests.UnitTest;
 import org.aksw.databugger.tripleReaders.TripleReader;
 import org.aksw.databugger.tripleReaders.TripleReaderFactory;
@@ -148,7 +147,8 @@ public class Main {
 
         dataset.setBaseCacheFolder(testFolder);
 
-        List<UnitTest> allTests = TestUtils.instantiateUnitTestsFromSource(dataset, databugger.getAutoGenerators());
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
+        List<UnitTest> allTests = testGeneratorExecutor.generateTests(dataset,databugger.getAutoGenerators());
 
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results

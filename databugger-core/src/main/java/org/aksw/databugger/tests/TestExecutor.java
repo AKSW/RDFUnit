@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,31 @@ import java.util.List;
  */
 public class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
+
+    public interface TestExecutorMonitor{
+        /*
+        * Called when testing starts
+        * */
+        void testingStarted(long numberOfTests);
+
+        /*
+        * Called when a single test starts
+        * */
+        void singleTestStarted(UnitTest test);
+
+        /*
+        * Called when a single test is executed
+        * */
+        void singleTestExecuted(UnitTest test, String uri, long errors, long prevalence);
+
+        /*
+        * Called when testing ends
+        * */
+        void testingFinished();
+    }
+
+    private final List<TestExecutorMonitor> progressMonitors = new ArrayList<TestExecutorMonitor>();
+
     private final Source source;
     private final List<UnitTest> tests;
     private final int delay;
@@ -34,6 +60,12 @@ public class TestExecutor {
     }
 
     public Model executeTestsCounts(String filename) {
+
+        /*notify start of testing */
+        for (TestExecutorMonitor monitor : progressMonitors){
+            monitor.testingStarted(tests.size());
+        }
+
         Model model = ModelFactory.createDefaultModel();
 
         try {
@@ -46,6 +78,11 @@ public class TestExecutor {
         int counter = 0;
         int testSize = tests.size();
         for (UnitTest t : tests) {
+
+            /*notify start of single test */
+            for (TestExecutorMonitor monitor : progressMonitors){
+                monitor.singleTestStarted(t);
+            }
 
             counter++;
             if (testExists(qef, t.getTestURI()))
@@ -69,6 +106,11 @@ public class TestExecutor {
             } else
                 // else total will be 0 anyway
                 total = 0;
+
+            /*notify end of single test */
+            for (TestExecutorMonitor monitor : progressMonitors){
+                monitor.singleTestExecuted(t, t.getTestURI(), total, prevalence);
+            }
 
             model.createResource()
                     .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
@@ -97,6 +139,12 @@ public class TestExecutor {
             }
         }
         generateStats(qef);
+
+        /*notify end of testing */
+        for (TestExecutorMonitor monitor : progressMonitors){
+            monitor.testingFinished();
+        }
+
         return model;
     }
 
@@ -157,6 +205,14 @@ public class TestExecutor {
         qe.close();
 
         return result;
+    }
+
+    public void addTestExecutorMonitor(TestExecutorMonitor monitor) {
+        progressMonitors.add(monitor);
+    }
+
+    public void removeTestExecutorMonitor(TestExecutorMonitor monitor) {
+        progressMonitors.remove(monitor);
     }
 
 }

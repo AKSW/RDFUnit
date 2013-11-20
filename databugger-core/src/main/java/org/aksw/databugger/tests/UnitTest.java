@@ -167,4 +167,12 @@ public class UnitTest {
     public String getTestURI() {
         return testURI;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UnitTest) {
+            return this.getTestURI().compareTo(((UnitTest) obj).getTestURI()) == 0;
+        }
+        return false;
+    }
 }
