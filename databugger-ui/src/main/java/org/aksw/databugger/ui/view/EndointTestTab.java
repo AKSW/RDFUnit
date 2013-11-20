@@ -1,7 +1,10 @@
 package org.aksw.databugger.ui.view;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.ui.components.SchemaSelectorComponent;
+import org.aksw.databugger.ui.components.TestResultsComponent;
 
 /**
  * User: Dimitris Kontokostas
@@ -11,24 +14,36 @@ import org.aksw.databugger.ui.components.SchemaSelectorComponent;
 
 public class EndointTestTab extends VerticalLayout {
 
+    private TestExecutor testExecutor = null;
+
     private final NativeSelect examplesSelect = new NativeSelect("Select an example");
     private final TextField endpointField = new TextField();
     private final TextField graphField = new TextField();
     private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
+    private final TestResultsComponent testResultsComponent = new TestResultsComponent();
 
     private final NativeSelect limitSelect = new NativeSelect();
     private final Button clearButton = new Button("Clear");
     private final Button generateTestsButton = new Button("Generate tests");
+    private final Button startTestingButton = new Button("Run tests");
+    private final Button resultsButton = new Button("Display Results");
+
+
+
 
 
     public EndointTestTab() {
         initLayout();
+
+
     }
 
     private void initLayout() {
         this.setMargin(true);
         this.setId("EndointTestTab");
         this.setWidth("100%");
+
+        this.addComponent(new Label("<h2>Testing Configuration</h2>", ContentMode.HTML));
 
         HorizontalLayout configurationSetLayout = new HorizontalLayout();
         configurationSetLayout.setId("test-configuration");
@@ -68,6 +83,15 @@ public class EndointTestTab extends VerticalLayout {
         hz.addComponent(generateTestsButton);
         hz.setComponentAlignment(generateTestsButton, Alignment.MIDDLE_RIGHT);
 
+
+        this.addComponent(new Label("<h2>Test Generation</h2>", ContentMode.HTML));
+        this.addComponent(this.startTestingButton);
+        this.startTestingButton.setEnabled(false);
+
+        this.addComponent(new Label("<h2>Testing</h2>", ContentMode.HTML));
+        this.addComponent(this.testResultsComponent);
+        this.addComponent(this.resultsButton);
+        this.resultsButton.setEnabled(false);
 
 
 

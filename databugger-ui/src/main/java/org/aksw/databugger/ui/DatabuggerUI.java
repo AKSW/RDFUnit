@@ -5,11 +5,13 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.aksw.databugger.DatabuggerConfiguration;
+import org.aksw.databugger.DatabuggerConfigurationFactory;
 import org.aksw.databugger.ui.view.EndointTestTab;
 import org.aksw.databugger.ui.view.IntroTab;
 
 import javax.servlet.annotation.WebServlet;
-
+import org.slf4j.bridge.SLF4JBridgeHandler;
 /*
 * User: Dimitris Kontokostas
 */
@@ -20,6 +22,10 @@ public class DatabuggerUI extends UI {
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = DatabuggerUI.class, widgetset = "org.aksw.databugger.ui.AppWidgetSet")
     public static class Servlet extends VaadinServlet {
+    }
+
+    static {
+        SLF4JBridgeHandler.install();
     }
         /* User interface components are stored in session. */
 

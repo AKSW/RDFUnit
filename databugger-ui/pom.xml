@@ -120,6 +120,11 @@
             <artifactId>ini4j</artifactId>
             <version>0.5.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.7.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -195,6 +200,7 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.14.v20131031</version>
                <!-- <configuration>
                     <webAppConfig>
                         <contextPath>/</contextPath>

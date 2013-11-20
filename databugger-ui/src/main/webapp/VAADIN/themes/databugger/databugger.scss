@@ -27,6 +27,11 @@
 
   #EndointTestTab {
 
+    h2 {
+      padding: 5px 0 ;
+      border-bottom: 1px solid;
+    }
+
     #test-configuration{
 
       .v-slot-examples {
@@ -41,8 +46,6 @@
       .v-slot-schema-selector {
         padding: 0 0 18px 15px;
       }
-
-      border-bottom: 1px solid;
 
     }
 
