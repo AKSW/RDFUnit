@@ -19,7 +19,7 @@ public class SourceFactory {
 
     public static SchemaSource createSchemaSourceFromCache(String baseFolder, String prefix, String uri, String schema) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.Schema, prefix, uri);
-        TripleReader reader = TripleReaderFactory.createFileOrDereferenceTripleReader(cacheFile, uri);
+        TripleReader reader = TripleReaderFactory.createFileOrDereferenceTripleReader(cacheFile, schema);
         return new SchemaSource(prefix, uri, schema, reader);
     }
 
