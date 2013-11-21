@@ -24,6 +24,7 @@ import java.util.List;
  */
 public class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
+    private boolean isCanceled = false;
 
     public interface TestExecutorMonitor{
         /*
@@ -49,17 +50,16 @@ public class TestExecutor {
 
     private final List<TestExecutorMonitor> progressMonitors = new ArrayList<TestExecutorMonitor>();
 
-    private final Source source;
-    private final List<UnitTest> tests;
-    private final int delay;
+    public TestExecutor() {
 
-    public TestExecutor(Source source, List<UnitTest> tests, int delay) {
-        this.source = source;
-        this.tests = tests;
-        this.delay = delay;
     }
 
-    public Model executeTestsCounts(String filename) {
+    public void cancel(){
+        isCanceled = true;
+    }
+
+    public Model executeTestsCounts(String filename, Source source, List<UnitTest> tests, int delay) {
+        isCanceled = false;
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors){
@@ -78,6 +78,9 @@ public class TestExecutor {
         int counter = 0;
         int testSize = tests.size();
         for (UnitTest t : tests) {
+            if (isCanceled == true) {
+                break;
+            }
 
             /*notify start of single test */
             for (TestExecutorMonitor monitor : progressMonitors){

@@ -148,9 +148,9 @@ public class Main {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         List<UnitTest> allTests = testGeneratorExecutor.generateTests(testFolder, dataset,databugger.getAutoGenerators());
 
-        TestExecutor te = new TestExecutor(dataset, allTests, 0);
+        TestExecutor te = new TestExecutor();
         // warning, caches intermediate results
-        Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl");
+        Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl", dataset, allTests, 0);
 
 
         try {

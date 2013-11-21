@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class TestGeneratorExecutor {
     private static Logger log = LoggerFactory.getLogger(TestGeneratorExecutor.class);
+    private boolean isCanceled = false;
 
     public interface TestGeneratorExecutorMonitor{
         /*
@@ -46,6 +47,11 @@ public class TestGeneratorExecutor {
     private final List<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<TestGeneratorExecutorMonitor>();
 
 
+    public void cancel(){
+        isCanceled = true;
+    }
+
+
     public List<UnitTest> generateTests(String testFolder, Source dataset, List<TestAutoGenerator> autoGenerators) {
 
         List<SchemaSource> sources = dataset.getReferencesSchemata();
@@ -58,6 +64,9 @@ public class TestGeneratorExecutor {
 
         List<UnitTest> allTests = new ArrayList<UnitTest>();
         for (SchemaSource s : sources) {
+            if (isCanceled == true) {
+                break;
+            }
 
             log.info("Generating tests for: " + s.getUri());
 
@@ -67,8 +76,9 @@ public class TestGeneratorExecutor {
             allTests.addAll(generateManualTestsForSource(testFolder, s,autoGenerators));
         }
 
-        //Find manual tests for dataset
-        allTests.addAll(generateManualTestsForSource(testFolder, dataset,autoGenerators));
+        //Find manual tests for dataset (if not canceled
+        if (isCanceled == false)
+            allTests.addAll(generateManualTestsForSource(testFolder, dataset,autoGenerators));
 
         /*notify start of testing */
         for (TestGeneratorExecutorMonitor monitor : progressMonitors){
