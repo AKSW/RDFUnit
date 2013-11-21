@@ -27,7 +27,7 @@ import java.util.List;
  * Description
  * Created: 9/23/13 6:31 AM
  */
-public class UnitTest {
+public class UnitTest implements Comparable<UnitTest> {
     private static Logger log = LoggerFactory.getLogger(UnitTest.class);
 
     private final String testURI;
@@ -169,10 +169,25 @@ public class UnitTest {
     }
 
     @Override
+    public int compareTo(UnitTest o) {
+        return this.getTestURI().compareTo(o.getTestURI());
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof UnitTest) {
             return this.getTestURI().compareTo(((UnitTest) obj).getTestURI()) == 0;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.getTestURI();
     }
 }
