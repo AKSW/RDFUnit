@@ -1,5 +1,6 @@
 package org.aksw.databugger.tests;
 
+import org.aksw.databugger.Utils.CacheUtils;
 import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.exceptions.TripleReaderException;
@@ -24,17 +25,17 @@ public class TestGeneratorExecutor {
         /*
         * Called when testing starts
         * */
-        void generationStarted(Source source, long numberOfSources);
+        void generationStarted(final Source source, final long numberOfSources);
 
         /*
         * Called when a test generation starts
         * */
-        void sourceGenerationStarted(Source source, TestGenerationType generationType);
+        void sourceGenerationStarted(final Source source, final TestGenerationType generationType);
 
         /*
         * Called when a test generation starts
         * */
-        void sourceGenerationExecuted(Source source, TestGenerationType generationType, long testsCreated);
+        void sourceGenerationExecuted(final Source source, final TestGenerationType generationType, final long testsCreated);
 
         /*
         * Called when test generation ends
@@ -45,7 +46,7 @@ public class TestGeneratorExecutor {
     private final List<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<TestGeneratorExecutorMonitor>();
 
 
-    public List<UnitTest> generateTests(Source dataset, List<TestAutoGenerator> autoGenerators) {
+    public List<UnitTest> generateTests(String testFolder, Source dataset, List<TestAutoGenerator> autoGenerators) {
 
         List<SchemaSource> sources = dataset.getReferencesSchemata();
 
@@ -61,13 +62,13 @@ public class TestGeneratorExecutor {
             log.info("Generating tests for: " + s.getUri());
 
             //Generate auto tests from schema
-            allTests.addAll(generateAutoTestsForSchemaSource(s,autoGenerators));
+            allTests.addAll(generateAutoTestsForSchemaSource(testFolder, s,autoGenerators));
             //Find manual tests for schema
-            allTests.addAll(generateManualTestsForSource(s,autoGenerators));
+            allTests.addAll(generateManualTestsForSource(testFolder, s,autoGenerators));
         }
 
         //Find manual tests for dataset
-        allTests.addAll(generateManualTestsForSource(dataset,autoGenerators));
+        allTests.addAll(generateManualTestsForSource(testFolder, dataset,autoGenerators));
 
         /*notify start of testing */
         for (TestGeneratorExecutorMonitor monitor : progressMonitors){
@@ -77,7 +78,7 @@ public class TestGeneratorExecutor {
         return  allTests;
     }
 
-    private List<UnitTest> generateAutoTestsForSchemaSource(SchemaSource s, List<TestAutoGenerator> autoGenerators) {
+    private List<UnitTest> generateAutoTestsForSchemaSource(String testFolder, SchemaSource s, List<TestAutoGenerator> autoGenerators) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors){
@@ -86,7 +87,7 @@ public class TestGeneratorExecutor {
 
         try {
             List<UnitTest> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                    TripleReaderFactory.createTripleFileReader(s.getTestFile()).read());
+                    TripleReaderFactory.createTripleFileReader(CacheUtils.getSourceAutoTestFile(testFolder,s)).read());
             tests.addAll(testsAutoCached);
             log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
@@ -94,7 +95,7 @@ public class TestGeneratorExecutor {
             // cannot read from file  / generate
             List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
             tests.addAll(testsAuto);
-            TestUtils.writeTestsToFile(testsAuto, s.getTestFile());
+            TestUtils.writeTestsToFile(testsAuto, CacheUtils.getSourceAutoTestFile(testFolder,s));
             log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
         }
 
@@ -105,7 +106,7 @@ public class TestGeneratorExecutor {
         return tests;
     }
 
-    private List<UnitTest> generateManualTestsForSource(Source s, List<TestAutoGenerator> autoGenerators) {
+    private List<UnitTest> generateManualTestsForSource(String testFolder, Source s, List<TestAutoGenerator> autoGenerators) {
         List<UnitTest> tests = new ArrayList<UnitTest>();
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors){
@@ -113,7 +114,7 @@ public class TestGeneratorExecutor {
         }
         try {
             List<UnitTest> testsManuals = TestUtils.instantiateTestsFromModel(
-                    TripleReaderFactory.createTripleFileReader(s.getTestFileManual()).read());
+                    TripleReaderFactory.createTripleFileReader(CacheUtils.getSourceManualTestFile(testFolder,s)).read());
             tests.addAll(testsManuals);
             log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
         } catch (TripleReaderException e) {

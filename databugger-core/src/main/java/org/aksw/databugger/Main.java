@@ -145,10 +145,8 @@ public class Main {
         DatasetSource dataset = testContext.getDatasetSource();
         /* </cliStuff> */
 
-        dataset.setBaseCacheFolder(testFolder);
-
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-        List<UnitTest> allTests = testGeneratorExecutor.generateTests(dataset,databugger.getAutoGenerators());
+        List<UnitTest> allTests = testGeneratorExecutor.generateTests(testFolder, dataset,databugger.getAutoGenerators());
 
         TestExecutor te = new TestExecutor(dataset, allTests, 0);
         // warning, caches intermediate results

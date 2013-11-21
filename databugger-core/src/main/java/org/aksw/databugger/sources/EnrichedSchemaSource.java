@@ -23,23 +23,6 @@ public class EnrichedSchemaSource extends SchemaSource {
     }
 
     @Override
-    protected QueryExecutionFactory initQueryFactory() {
-        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
-        try {
-            File f = new File(this.getCacheFile());
-            if (f.exists()) {
-                model.read(new FileInputStream(f), null, "TURTLE");
-            } else {
-                log.error("Cannot read ontology from : " + f.getAbsolutePath() + "\nPlease enrich first");
-                System.exit(-1);
-            }
-        } catch (Exception e) {
-            log.error("Cannot load ontology from URI: " + getSchema());
-        }
-        return new QueryExecutionFactoryModel(model);  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.EnrichedSchema;
     }

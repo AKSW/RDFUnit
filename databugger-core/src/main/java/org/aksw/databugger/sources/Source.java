@@ -24,7 +24,6 @@ public abstract class Source implements Comparable<Source> {
     private final List<SchemaSource> referencesSchemata;
 
     private QueryExecutionFactory queryFactory;
-    private String baseCacheFolder = "";
 
     public Source(String prefix, String uri) {
         this.prefix = prefix;
@@ -54,47 +53,6 @@ public abstract class Source implements Comparable<Source> {
         if (queryFactory == null)
             queryFactory = initQueryFactory();
         return queryFactory;
-    }
-
-    public String getTestFile() {
-        return getFile("tests", getSourceType().name());
-    }
-
-    public String getTestFileManual() {
-        return getFile("tests", "Manual");
-    }
-
-    public String getCacheFile() {
-        return getFile("cache", getSourceType().name());
-    }
-
-    private String getFile(String type, String sourceType) {
-        return getBaseCacheFolder() + sourceType + "/" + getCacheFolder() + prefix + "." + type + "." + sourceType + ".ttl";
-    }
-
-    protected String getCacheFolder() {
-        String retVal = null;
-        try {
-            URI tmp = new URI(getUri());
-            String host = tmp.getHost();
-            String path = tmp.getPath();
-            retVal = host + path + "/";
-        } catch (Exception e) {
-            // TODO handle exception
-        }
-
-        return retVal;
-    }
-
-    protected String getBaseCacheFolder() {
-        return baseCacheFolder;
-    }
-
-    public void setBaseCacheFolder(String baseCacheFolder) {
-        this.baseCacheFolder = baseCacheFolder;
-        for (Source src : getReferencesSchemata()) {
-            src.setBaseCacheFolder(baseCacheFolder);
-        }
     }
 
     public List<SchemaSource> getReferencesSchemata() {
