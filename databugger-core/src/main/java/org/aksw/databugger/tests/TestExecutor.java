@@ -178,16 +178,19 @@ public class TestExecutor {
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
 
         int result = 0;
-        QueryExecution qe = model.createQueryExecution(query);
-        ResultSet results = qe.execSelect();
+        QueryExecution qe = null;
+        try {
+            qe = model.createQueryExecution(query);
+            ResultSet results = qe.execSelect();
 
-        if (results != null && results.hasNext()) {
-            QuerySolution qs = results.next();
-
-            result = qs.get(var).asLiteral().getInt();
-
+            if (results != null && results.hasNext()) {
+                QuerySolution qs = results.next();
+                result = qs.get(var).asLiteral().getInt();
+            }
+        } finally {
+            if (qe != null)
+                qe.close();
         }
-        qe.close();
 
         return result;
 
@@ -196,14 +199,20 @@ public class TestExecutor {
     private boolean testExists(QueryExecutionFactory qef, String testURI) {
 
         boolean result = false;
-        QueryExecution qe = qef.createQueryExecution("select * where { ?s ?p <" + testURI + "> }");
-        ResultSet results = qe.execSelect();
+        QueryExecution qe = null;
+        try {
+            qe = qef.createQueryExecution("select * where { ?s ?p <" + testURI + "> }");
+            ResultSet results = qe.execSelect();
 
-        if (results != null && results.hasNext()) {
-            result = true;
+            if (results != null && results.hasNext()) {
+                result = true;
+            }
+        } catch (Exception e) {
+            //DO nothing (returns false)
+        }   finally {
+            if (qe != null)
+                qe.close();
         }
-        qe.close();
-
         return result;
     }
 
