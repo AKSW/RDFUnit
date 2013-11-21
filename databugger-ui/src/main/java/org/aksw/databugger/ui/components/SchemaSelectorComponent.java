@@ -111,6 +111,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
         tokenField.setFilteringMode(FilteringMode.CONTAINS); // suggest
         tokenField.setInputPrompt("Enter prefix or URI");
         tokenField.setRememberNewTokens(false); // we'll do this via the dialog
+        tokenField.setImmediate(true);
     }
 
 
@@ -269,8 +270,14 @@ public class SchemaSelectorComponent extends VerticalLayout {
     public List<SchemaSource> getSelections(){
         List<SchemaSource> sources = new ArrayList<SchemaSource>();
 
-        for (Object o: tokenField.getTokenIds() )
-            sources.add((SchemaSource)o);
+        Object selectedSources = tokenField.getValue();
+
+        if (selectedSources instanceof Set) {
+            for (Object o: (Set) selectedSources )
+                sources.add((SchemaSource)o);
+        }
+        else
+            sources.add((SchemaSource) selectedSources);
 
         return sources;
     }
@@ -282,8 +289,8 @@ public class SchemaSelectorComponent extends VerticalLayout {
     }
 
     private void clearSelections() {
-        for (Object o: tokenField.getTokenIds() )
-            tokenField.removeToken(o);
+        tokenField.setValue(new LinkedHashSet<SchemaSource>());
+
     }
 
 }

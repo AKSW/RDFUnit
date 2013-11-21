@@ -19,16 +19,26 @@ import java.util.List;
 /**
  * User: Dimitris Kontokostas
  * Keeps user session variables
+ * TODO refactor
  * Created: 11/15/13 9:52 AM
  */
 public class DatabuggerUISession extends VaadinSession {
 
-    protected static  Databugger databugger = null;
-    protected static  String baseDir = null;
+    protected static Databugger databugger = null;
+    protected static String baseDir = null;
+    protected static TestGeneratorExecutor testGeneratorExecutor = null;
 
 
     public DatabuggerUISession(VaadinService service) {
         super(service);
+    }
+
+    public static String getBaseDir() {
+        if (baseDir == null) {
+            File f = VaadinSession.getCurrent().getService().getBaseDirectory();
+            baseDir = f.getAbsolutePath()+"/data/";
+        }
+        return baseDir;
     }
 
     public static Databugger getDatabugger(){
@@ -36,10 +46,9 @@ public class DatabuggerUISession extends VaadinSession {
         if (databugger == null) {
 
             try {
-                File f = VaadinSession.getCurrent().getService().getBaseDirectory();
-                baseDir = f.getAbsolutePath()+"/data/";
 
-                DatabuggerUtils.fillPrefixService(baseDir + "prefixes.ttl");
+
+                DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
                 TripleReader patternReader = TripleReaderFactory.createTripleFileReader(baseDir + "patterns.ttl");
                 TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(baseDir+"testGenerators.ttl");
@@ -55,7 +64,7 @@ public class DatabuggerUISession extends VaadinSession {
     public static List<UnitTest> generateTests(Source source){
         try {
             TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-            return testGeneratorExecutor.generateTests(source,databugger.getAutoGenerators());
+            return testGeneratorExecutor.generateTests(getBaseDir()+"tests/", source,databugger.getAutoGenerators());
         } catch (Exception e) {
             return new ArrayList<UnitTest>();
         }
