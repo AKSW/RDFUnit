@@ -25,6 +25,24 @@ public class DatabuggerConfigurationFactory {
         return new DatabuggerConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
     }
 
+    public static DatabuggerConfiguration createDBpediaConfigurationSimple(String baseFolder) {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
+
+        return new DatabuggerConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
+    }
+
+    public static DatabuggerConfiguration createDBpediaLiveConfigurationSimple(String baseFolder) {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
+
+        return new DatabuggerConfiguration("live.dbpedia.org", "http://live.dbpedia.org", "http://live.dbpedia.org/sparql", "http://dbpedia.org", sources);
+    }
+
     public static DatabuggerConfiguration createDatosBneEsDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
@@ -56,6 +74,15 @@ public class DatabuggerConfigurationFactory {
 
         //Enriched Schema (cached in folder)
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "dbo", "http://nl.dbpedia.org"));
+
+        return new DatabuggerConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
+    }
+
+    public static DatabuggerConfiguration createDBpediaNLDatasetSimple(String baseFolder) {
+
+        // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
+        List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+                Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         return new DatabuggerConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
     }
