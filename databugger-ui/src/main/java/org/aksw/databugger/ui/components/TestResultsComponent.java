@@ -1,7 +1,9 @@
 package org.aksw.databugger.ui.components;
 
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -33,7 +35,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
 
         //resultsTable.setSizeFull();
         resultsTable.addContainerProperty("S", String.class, null);
-        resultsTable.addContainerProperty("Test", String.class, null);
+        resultsTable.addContainerProperty("Test", Label.class, null);
         resultsTable.addContainerProperty("Errors", String.class, null);
         resultsTable.addContainerProperty("Prevalence", String.class, null);
         resultsTable.setColumnCollapsingAllowed(true);
@@ -64,9 +66,11 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
+                Label testLabel = new Label(test.getTestURI());
+                testLabel.setDescription("<pre>" + SafeHtmlUtils.htmlEscape(test.getSparql())+ "</pre>" );
                 resultsTable.addItem(new Object[]{
-                        "R", test.getTestURI(), "", ""}, test);
-                resultsTable.setItemCaption(test, test.getSparql());
+                        "R", testLabel, "", ""}, test);
+
                 resultsTable.setCurrentPageFirstItemIndex(resultsTable.getCurrentPageFirstItemIndex() + 1);
 
             }

@@ -13,6 +13,7 @@ import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tripleReaders.TripleDereferenceReader;
+import org.aksw.databugger.ui.DatabuggerUISession;
 import org.vaadin.tokenfield.TokenField;
 
 import java.util.*;
@@ -205,6 +206,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
                 SchemaSource.class);
 
         DatabuggerUtils.fillSchemaServiceFromLOV();
+        DatabuggerUtils.fillSchemaServiceFromFile(DatabuggerUISession.getBaseDir() + "schemaDecl.csv");
         List<SchemaSource> sources = SchemaService.getSourceListAll(false, null);
         Collections.sort(sources);
 

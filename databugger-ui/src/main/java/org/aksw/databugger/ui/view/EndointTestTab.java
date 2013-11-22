@@ -254,7 +254,7 @@ public class EndointTestTab extends VerticalLayout {
                         count = 0;
                         tests = 0;
                         generateTestsProgress.setEnabled(true);
-                        generateTestsProgress.setValue(new Float(0.0));
+                        generateTestsProgress.setValue(0.0f);
                         generateTestsProgressLabel.setValue("0/"+numberOfSources);
                     }
                 });
@@ -272,7 +272,7 @@ public class EndointTestTab extends VerticalLayout {
                     public void run() {
                         count++;
                         tests += testsCreated;
-                        generateTestsProgress.setValue(new Float(count / total));
+                        generateTestsProgress.setValue((float)count / total);
                         generateTestsProgressLabel.setValue(count + "/" + total);
                     }
                 });
@@ -283,7 +283,7 @@ public class EndointTestTab extends VerticalLayout {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
-                        generateTestsProgress.setValue(new Float(1.0));
+                        generateTestsProgress.setValue(1.0f);
                         generateTestsProgressLabel.setValue("Completed! Generated " + tests + " tests");
                         generateTestsCancelButton.setEnabled(false);
                     }
@@ -347,7 +347,7 @@ public class EndointTestTab extends VerticalLayout {
 
                         startTestingCancelButton.setEnabled(true);
                         testingProgress.setEnabled(true);
-                        testingProgress.setValue(new Float(0.0));
+                        testingProgress.setValue(0.0f);
                         testingProgressLabel.setValue("0/"+numberOfTests);
 
                     }
@@ -380,7 +380,7 @@ public class EndointTestTab extends VerticalLayout {
                                 failTest++;
                         }
 
-                        testingProgress.setValue(new Float(count / total));
+                        testingProgress.setValue((float)count / total);
                         testingProgressLabel.setValue(count + "/" + total + " (S: " + sucessTests + " / F: " + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
                     }
                 });
@@ -391,7 +391,7 @@ public class EndointTestTab extends VerticalLayout {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
-                        testingProgress.setValue(new Float(1.0));
+                        testingProgress.setValue(1.0f);
                         testingProgressLabel.setValue("Completed! (S: " + sucessTests + " / F:" + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
                         startTestingCancelButton.setEnabled(false);
                     }
