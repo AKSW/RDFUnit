@@ -67,7 +67,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
             @Override
             public void run() {
                 Label testLabel = new Label(test.getTestURI());
-                testLabel.setDescription("<pre>" + SafeHtmlUtils.htmlEscape(test.getSparql())+ "</pre>" );
+                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ")+ "\n  </pre>" );
                 resultsTable.addItem(new Object[]{
                         "R", testLabel, "", ""}, test);
 
