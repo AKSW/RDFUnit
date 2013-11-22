@@ -42,7 +42,7 @@ public class DatabuggerUI extends UI {
 
         mainTab.addTab(new IntroTab(), "Welcome");
         mainTab.addTab(new EndointTestTab(), "Test an Endpoint");
-        mainTab.setSelectedTab(1);
+        //mainTab.setSelectedTab(1);
 
     }
 
