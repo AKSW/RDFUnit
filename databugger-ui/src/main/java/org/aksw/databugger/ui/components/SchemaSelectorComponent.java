@@ -7,7 +7,7 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.*;
+import com.vaadin.ui.Button.ClickEvent;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.SchemaSource;
@@ -61,7 +61,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
                 if (set != null && set.contains(s)) {
                     // duplicate
                     Notification.show(getTokenCaption(tokenId)
-                                    + " already exists");
+                            + " already exists");
                 } else {
                     if (s == null || !cb.containsId(s)) {
                         // don't add directly,
@@ -181,13 +181,12 @@ public class SchemaSelectorComponent extends VerticalLayout {
                         public void buttonClick(ClickEvent event) {
                             prefix = prefixField.getValue();
                             uri = uriField.getValue();
-                            if (! (prefix == null || uri == null || prefix.isEmpty() || uri.isEmpty())) {
-                                SchemaSource source = new SchemaSource(prefix,uri, new TripleDereferenceReader(uri));
+                            if (!(prefix == null || uri == null || prefix.isEmpty() || uri.isEmpty())) {
+                                SchemaSource source = new SchemaSource(prefix, uri, new TripleDereferenceReader(uri));
                                 ((BeanItemContainer) f.getContainerDataSource())
                                         .addBean(source);
                                 f.addToken(source);
-                            }
-                            else {
+                            } else {
                                 Notification.show("Invalid source for prefix: \"" + prefix + "\" and URI: " + uri + "\"");
                             }
                             close();
@@ -209,7 +208,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
         List<SchemaSource> sources = SchemaService.getSourceListAll(false, null);
         Collections.sort(sources);
 
-        for (SchemaSource s: sources)
+        for (SchemaSource s : sources)
             container.addBean(s);
         return container;
     }
@@ -267,16 +266,15 @@ public class SchemaSelectorComponent extends VerticalLayout {
         }
     }
 
-    public List<SchemaSource> getSelections(){
+    public List<SchemaSource> getSelections() {
         List<SchemaSource> sources = new ArrayList<SchemaSource>();
 
         Object selectedSources = tokenField.getValue();
 
         if (selectedSources instanceof Set) {
-            for (Object o: (Set) selectedSources )
-                sources.add((SchemaSource)o);
-        }
-        else
+            for (Object o : (Set) selectedSources)
+                sources.add((SchemaSource) o);
+        } else
             sources.add((SchemaSource) selectedSources);
 
         return sources;
@@ -284,7 +282,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
 
     public void setSelections(List<SchemaSource> sources) {
         clearSelections();
-        for (SchemaSource s: sources)
+        for (SchemaSource s : sources)
             tokenField.addToken(s);
     }
 

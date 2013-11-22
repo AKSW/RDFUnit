@@ -7,9 +7,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
-import org.aksw.databugger.tests.UnitTest;
 
 /**
  * User: Dimitris Kontokostas
@@ -20,12 +18,12 @@ public class TestGenerationComponent extends VerticalLayout implements TestGener
 
     private Table resultsTable = new Table("Test Results");
 
-    public TestGenerationComponent(){
+    public TestGenerationComponent() {
         initLayout();
 
     }
 
-    public void initLayout(){
+    public void initLayout() {
         this.setWidth("100%");
 
         resultsTable.setHeight("200px");
@@ -34,18 +32,26 @@ public class TestGenerationComponent extends VerticalLayout implements TestGener
         resultsTable.addContainerProperty("A", String.class, null);
         resultsTable.addContainerProperty("M", String.class, null);
         resultsTable.setColumnCollapsingAllowed(true);
+        resultsTable.setSelectable(true);
+        resultsTable.setVisible(false);
+        TestGenerationComponent.this.addComponent(resultsTable);
+    }
+
+    public void clearTableRowsAndHide() {
+        resultsTable.removeAllItems();
+        resultsTable.setVisible(false);
     }
 
     @Override
-    public void generationStarted(final Source source, final long numberOfSources)  {
+    public void generationStarted(final Source source, final long numberOfSources) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
-                resultsTable.setPageLength((int) Math.min(7,numberOfSources));
-                TestGenerationComponent.this.addComponent(resultsTable);
+                resultsTable.setVisible(true);
+                resultsTable.setPageLength((int) Math.min(7, numberOfSources));
+
             }
         });
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -53,9 +59,9 @@ public class TestGenerationComponent extends VerticalLayout implements TestGener
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
-                resultsTable.addItem(new Object[] {
-                source.getClass().getSimpleName(),source.getUri(),"-","-"},source) ;
-                resultsTable.setCurrentPageFirstItemIndex(resultsTable.getCurrentPageFirstItemIndex()+1);
+                resultsTable.addItem(new Object[]{
+                        source.getClass().getSimpleName(), source.getUri(), "-", "-"}, source);
+                resultsTable.setCurrentPageFirstItemIndex(resultsTable.getCurrentPageFirstItemIndex() + 1);
             }
         });
     }

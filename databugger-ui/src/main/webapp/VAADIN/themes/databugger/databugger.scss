@@ -29,6 +29,12 @@
 
     h2 {
       padding: 5px 0 ;
+    }
+
+    .v-slot-header {
+      .v-slot {
+        margin-right: 15px;
+      }
       border-bottom: 1px solid;
     }
 
