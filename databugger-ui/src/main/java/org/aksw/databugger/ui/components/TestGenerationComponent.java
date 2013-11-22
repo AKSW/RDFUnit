@@ -2,6 +2,7 @@ package org.aksw.databugger.ui.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import org.aksw.databugger.Utils.CacheUtils;
@@ -31,7 +32,7 @@ public class TestGenerationComponent extends VerticalLayout implements TestGener
 
         resultsTable.setHeight("200px");
         resultsTable.addContainerProperty("Type", String.class, null);
-        resultsTable.addContainerProperty("URI", String.class, null);
+        resultsTable.addContainerProperty("URI", Link.class, null);
         resultsTable.addContainerProperty("Automatic", AbstractComponent.class, null);
         resultsTable.addContainerProperty("Manual", AbstractComponent.class, null);
         resultsTable.setColumnCollapsingAllowed(true);
@@ -62,8 +63,10 @@ public class TestGenerationComponent extends VerticalLayout implements TestGener
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
+                Link uriLink = new Link(source.getUri(), new ExternalResource(source.getUri()));
+                uriLink.setTargetName("_blank");
                 resultsTable.addItem(new Object[]{
-                        source.getClass().getSimpleName(), source.getUri(), new Label("-"), new Label("-")}, source);
+                        source.getClass().getSimpleName(), uriLink, new Label("-"), new Label("-")}, source);
                 resultsTable.setCurrentPageFirstItemIndex(resultsTable.getCurrentPageFirstItemIndex() + 1);
             }
         });
