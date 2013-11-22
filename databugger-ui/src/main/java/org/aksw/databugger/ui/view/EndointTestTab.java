@@ -419,6 +419,9 @@ public class EndointTestTab extends VerticalLayout {
         startTestingButton.setEnabled(false);
         resultsButton.setEnabled(false);
 
+        generateTestsProgressLabel.setValue("0/0");
+        testingProgressLabel.setValue("0/0");
+
     }
 
     private DatabuggerConfiguration getCurrentConfiguration(){

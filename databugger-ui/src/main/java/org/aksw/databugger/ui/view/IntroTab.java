@@ -33,7 +33,7 @@ public class IntroTab  extends VerticalLayout {
 
         HorizontalLayout links = new HorizontalLayout();
         this.addComponent(links);
-        links.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        links.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
 
         links.addComponent(homepage);
         links.addComponent(new Label(" / "));
