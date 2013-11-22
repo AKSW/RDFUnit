@@ -10,6 +10,7 @@
 
 	<artifactId>databugger-core</artifactId>
 	<name>Databugger - Core</name>
+    <version>${project.parent.version}</version>
 
 	<dependencies>
 
