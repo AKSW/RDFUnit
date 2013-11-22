@@ -310,7 +310,7 @@ public class EndointTestTab extends VerticalLayout {
                 try {
                     f.delete();
                 } catch (Exception e) {}
-                DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, EndointTestTab.this.tests,0);
+                DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, EndointTestTab.this.tests,3);
 
                 UI.getCurrent().setPollInterval(-1);
             }
