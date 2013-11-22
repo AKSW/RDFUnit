@@ -30,17 +30,17 @@ public class TestExecutor {
         /*
         * Called when testing starts
         * */
-        void testingStarted(long numberOfTests);
+        void testingStarted(final long numberOfTests);
 
         /*
         * Called when a single test starts
         * */
-        void singleTestStarted(UnitTest test);
+        void singleTestStarted(final UnitTest test);
 
         /*
         * Called when a single test is executed
         * */
-        void singleTestExecuted(UnitTest test, String uri, long errors, long prevalence);
+        void singleTestExecuted(final UnitTest test, final String uri, final long errors, final long prevalence);
 
         /*
         * Called when testing ends
