@@ -2,16 +2,17 @@ package org.aksw.databugger.ui;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.server.*;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.databugger.DatabuggerConfiguration;
-import org.aksw.databugger.DatabuggerConfigurationFactory;
 import org.aksw.databugger.ui.view.EndointTestTab;
 import org.aksw.databugger.ui.view.IntroTab;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import javax.servlet.annotation.WebServlet;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 /*
 * User: Dimitris Kontokostas
 */
@@ -43,6 +44,14 @@ public class DatabuggerUI extends UI {
         mainTab.addTab(new IntroTab(), "Welcome");
         mainTab.addTab(new EndointTestTab(), "Test an Endpoint");
         //mainTab.setSelectedTab(1);
+
+        // When user exits (window close, loose session) stop background threads
+        this.addDetachListener(new DetachListener() {
+            public void detach(DetachEvent event) {
+                DatabuggerUISession.getTestExecutor().cancel();
+                DatabuggerUISession.getTestGeneratorExecutor().cancel();
+            }
+        });
 
     }
 

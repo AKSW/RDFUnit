@@ -32,10 +32,7 @@ import java.util.List;
 
 public class EndointTestTab extends VerticalLayout {
 
-    private TestExecutor testExecutor = new TestExecutor();
-    private TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
     private final List<UnitTest> tests = new ArrayList<UnitTest>();
-    private DatasetSource dataset = null;
 
     private final NativeSelect examplesSelect = new NativeSelect("Select an example");
     private final TextField endpointField = new TextField();
@@ -205,10 +202,10 @@ public class EndointTestTab extends VerticalLayout {
                 EndointTestTab.this.tests.clear();
                 Databugger databugger = DatabuggerUISession.getDatabugger();
 
-                testGeneratorExecutor.addTestExecutorMonitor(testGenerationComponent);
+                DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
                 EndointTestTab.this.tests.addAll(
-                        testGeneratorExecutor.generateTests(
+                        DatabuggerUISession.getTestGeneratorExecutor().generateTests(
                                 DatabuggerUISession.getBaseDir()+"tests/",
                                 dataset,
                                 databugger.getAutoGenerators()));
@@ -239,7 +236,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        testGeneratorExecutor.addTestExecutorMonitor(new TestGeneratorExecutor.TestGeneratorExecutorMonitor() {
+        DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutor.TestGeneratorExecutorMonitor() {
             private long count = 0;
             private long total = 0;
             private long tests = 0;
@@ -294,7 +291,7 @@ public class EndointTestTab extends VerticalLayout {
         generateTestsCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                EndointTestTab.this.testGeneratorExecutor.cancel();
+                DatabuggerUISession.getTestGeneratorExecutor().cancel();
             }
         });
 
@@ -306,14 +303,14 @@ public class EndointTestTab extends VerticalLayout {
 
                 DatasetSource dataset = getCurrentConfiguration().getDatasetSource();
 
-                testExecutor.addTestExecutorMonitor(testResultsComponent);
+                DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
                 String resultsFile = DatabuggerUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
                 //TODO refactor this, do not use cache here
                 File f = new File(resultsFile);
                 try {
                     f.delete();
                 } catch (Exception e) {}
-                testExecutor.executeTestsCounts(resultsFile, dataset, EndointTestTab.this.tests,0);
+                DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, EndointTestTab.this.tests,0);
 
                 UI.getCurrent().setPollInterval(-1);
             }
@@ -330,7 +327,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        testExecutor.addTestExecutorMonitor(new TestExecutor.TestExecutorMonitor() {
+        DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(new TestExecutor.TestExecutorMonitor() {
             private long count = 0;
             private long totalErrors = 0;
             private long failTest = 0;
@@ -402,7 +399,7 @@ public class EndointTestTab extends VerticalLayout {
         startTestingCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                EndointTestTab.this.testExecutor.cancel();
+                DatabuggerUISession.getTestExecutor().cancel();
             }
         });
 
