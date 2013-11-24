@@ -32,7 +32,6 @@ import java.util.List;
 
 public class EndointTestTab extends VerticalLayout {
 
-    private final List<UnitTest> tests = new ArrayList<UnitTest>();
 
     private final NativeSelect examplesSelect = new NativeSelect("Select an example");
     private final TextField endpointField = new TextField();
@@ -64,6 +63,7 @@ public class EndointTestTab extends VerticalLayout {
         DatabuggerConfiguration dbpediaConf = DatabuggerConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
         DatabuggerConfiguration dbpediaLConf = DatabuggerConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
         DatabuggerConfiguration dbpediaNLConf = DatabuggerConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
+        DatabuggerConfiguration linkedChemistry = new DatabuggerConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", "http://linkedchemistry.info/chembl/", "cheminf,cito");
 
         examplesSelect.addItem(dbpediaConf);
         examplesSelect.setItemCaption(dbpediaConf,"DBpedia");
@@ -71,6 +71,8 @@ public class EndointTestTab extends VerticalLayout {
         examplesSelect.setItemCaption(dbpediaLConf,"DBpedia Live");
         examplesSelect.addItem(dbpediaNLConf);
         examplesSelect.setItemCaption(dbpediaNLConf,"DBpedia NL");
+        examplesSelect.addItem(linkedChemistry);
+        examplesSelect.setItemCaption(linkedChemistry,"LinkedChemistry");
 
         initInteractions();
     }
@@ -199,27 +201,25 @@ public class EndointTestTab extends VerticalLayout {
                 DatasetSource dataset = configuration.getDatasetSource();
 
 
-                EndointTestTab.this.tests.clear();
-                Databugger databugger = DatabuggerUISession.getDatabugger();
+                DatabuggerUISession.getTests().clear();
+                DatabuggerUISession.initDatabugger();
 
                 DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
-                EndointTestTab.this.tests.addAll(
+                DatabuggerUISession.getTests().addAll(
                         DatabuggerUISession.getTestGeneratorExecutor().generateTests(
                                 DatabuggerUISession.getBaseDir()+"tests/",
                                 dataset,
-                                databugger.getAutoGenerators()));
+                                DatabuggerUISession.getDatabugger().getAutoGenerators()));
 
-                if (EndointTestTab.this.tests.size() != 0) {
-                    startTestingButton.setEnabled(true);
+                if (DatabuggerUISession.getTests().size() != 0) {
+                    UI.getCurrent().access(new Runnable() {
+                        @Override
+                        public void run() {
+                            startTestingButton.setEnabled(true);
+                        }
+                    });
                 }
-
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        UI.getCurrent().setPollInterval(-1);
-                    }
-                });
             }
         }
 
@@ -283,6 +283,7 @@ public class EndointTestTab extends VerticalLayout {
                         generateTestsProgress.setValue(1.0f);
                         generateTestsProgressLabel.setValue("Completed! Generated " + tests + " tests");
                         generateTestsCancelButton.setEnabled(false);
+                        UI.getCurrent().setPollInterval(-1);
                     }
                 });
             }
@@ -310,9 +311,8 @@ public class EndointTestTab extends VerticalLayout {
                 try {
                     f.delete();
                 } catch (Exception e) {}
-                DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, EndointTestTab.this.tests,3);
+                DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, DatabuggerUISession.getTests(),3);
 
-                UI.getCurrent().setPollInterval(-1);
             }
         }
 
@@ -391,6 +391,7 @@ public class EndointTestTab extends VerticalLayout {
                         testingProgress.setValue(1.0f);
                         testingProgressLabel.setValue("Completed! (S: " + sucessTests + " / F:" + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
                         startTestingCancelButton.setEnabled(false);
+                        UI.getCurrent().setPollInterval(-1);
                     }
                 });
             }

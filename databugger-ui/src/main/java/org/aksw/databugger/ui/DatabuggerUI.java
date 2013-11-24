@@ -39,6 +39,9 @@ public class DatabuggerUI extends UI {
      * up your user interface here.
      */
     protected void init(VaadinRequest request) {
+
+        DatabuggerUISession.init();
+
         initLayout();
 
         mainTab.addTab(new IntroTab(), "Welcome");

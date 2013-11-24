@@ -205,8 +205,6 @@ public class SchemaSelectorComponent extends VerticalLayout {
         BeanItemContainer<SchemaSource> container = new BeanItemContainer<SchemaSource>(
                 SchemaSource.class);
 
-        DatabuggerUtils.fillSchemaServiceFromLOV();
-        DatabuggerUtils.fillSchemaServiceFromFile(DatabuggerUISession.getBaseDir() + "schemaDecl.csv");
         List<SchemaSource> sources = SchemaService.getSourceListAll(false, null);
         Collections.sort(sources);
 

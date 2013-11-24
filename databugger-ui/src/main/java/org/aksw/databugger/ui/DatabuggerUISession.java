@@ -23,41 +23,39 @@ import java.util.List;
  */
 public class DatabuggerUISession extends VaadinSession {
 
-    private static Databugger databugger = null;
-    private static String baseDir = null;
-    private static TestGeneratorExecutor testGeneratorExecutor = null;
-    private static TestExecutor testExecutor = null;
-
+    private final static Databugger databugger = new Databugger();
+    private final static String baseDir = _getBaseDir();
+    private final static TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
+    private final static TestExecutor testExecutor = new TestExecutor();;
+    private final static List<UnitTest> tests = new ArrayList<UnitTest>();
 
     public DatabuggerUISession(VaadinService service) {
         super(service);
     }
 
-    public static String getBaseDir() {
-        if (baseDir == null) {
-            File f = VaadinSession.getCurrent().getService().getBaseDirectory();
-            baseDir = f.getAbsolutePath()+"/data/";
-        }
-        return baseDir;
+    public static void init() {
+        DatabuggerUtils.fillSchemaServiceFromLOV();
+        DatabuggerUtils.fillSchemaServiceFromFile(DatabuggerUISession.getBaseDir() + "schemaDecl.csv");
     }
 
-    public static Databugger getDatabugger(){
+    private static String _getBaseDir() {
+        File f = VaadinSession.getCurrent().getService().getBaseDirectory();
+        return f.getAbsolutePath()+"/data/";
+    }
 
-        if (databugger == null) {
-
-            try {
-
-
-                DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
+    public static void initDatabugger() {
+        try {
+            DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
                 TripleReader patternReader = TripleReaderFactory.createTripleFileReader(baseDir + "patterns.ttl");
                 TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(baseDir+"testGenerators.ttl");
-                databugger = new Databugger(patternReader, testGeneratorReader);
+                databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
             } catch (Exception e) {
                 //TODO
-                return null;
-            }
         }
+    }
+
+    public static Databugger getDatabugger(){
         return databugger;
     }
 
@@ -70,15 +68,19 @@ public class DatabuggerUISession extends VaadinSession {
         }
     }
 
+    public static String getBaseDir(){
+        return baseDir;
+    }
+
     public static TestGeneratorExecutor getTestGeneratorExecutor() {
-        if (testGeneratorExecutor == null)
-            testGeneratorExecutor = new TestGeneratorExecutor();
         return testGeneratorExecutor;
     }
 
     public static TestExecutor getTestExecutor() {
-        if (testExecutor == null)
-            testExecutor = new TestExecutor();
         return testExecutor;
+    }
+
+    public static List<UnitTest> getTests() {
+        return tests;
     }
 }

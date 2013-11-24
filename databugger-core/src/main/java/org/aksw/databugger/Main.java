@@ -111,9 +111,9 @@ public class Main {
 
         TripleReader patternReader = TripleReaderFactory.createTripleFileReader(dataFolder+"patterns.ttl");
         TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(dataFolder+"testGenerators.ttl");
-        Databugger databugger = null;
+        Databugger databugger = new Databugger();
         try {
-            databugger = new Databugger(patternReader, testGeneratorReader);
+            databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (TripleReaderException e) {
             log.error("Cannot read patterns and/or pattern generators");
             System.exit(1);
