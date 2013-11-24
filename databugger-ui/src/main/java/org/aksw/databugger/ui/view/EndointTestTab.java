@@ -64,7 +64,10 @@ public class EndointTestTab extends VerticalLayout {
         DatabuggerConfiguration dbpediaLConf = DatabuggerConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
         DatabuggerConfiguration dbpediaNLConf = DatabuggerConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
         DatabuggerConfiguration linkedChemistry = new DatabuggerConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", "http://linkedchemistry.info/chembl/", "cheminf,cito");
+        DatabuggerConfiguration uriBurner = new DatabuggerConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/","","foaf,skos,geo,dcterms,prov");
 
+        examplesSelect.addItem(uriBurner);
+        examplesSelect.setItemCaption(uriBurner,"Uri Burner");
         examplesSelect.addItem(dbpediaConf);
         examplesSelect.setItemCaption(dbpediaConf,"DBpedia");
         examplesSelect.addItem(dbpediaLConf);
@@ -73,6 +76,7 @@ public class EndointTestTab extends VerticalLayout {
         examplesSelect.setItemCaption(dbpediaNLConf,"DBpedia NL");
         examplesSelect.addItem(linkedChemistry);
         examplesSelect.setItemCaption(linkedChemistry,"LinkedChemistry");
+
 
         initInteractions();
     }
@@ -208,7 +212,7 @@ public class EndointTestTab extends VerticalLayout {
 
                 DatabuggerUISession.getTests().addAll(
                         DatabuggerUISession.getTestGeneratorExecutor().generateTests(
-                                DatabuggerUISession.getBaseDir()+"tests/",
+                                DatabuggerUISession.getBaseDir() + "tests/",
                                 dataset,
                                 DatabuggerUISession.getDatabugger().getAutoGenerators()));
 
