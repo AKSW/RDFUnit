@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.services.PrefixService;
+import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -30,7 +31,7 @@ public class TestExecutor {
         /*
         * Called when testing starts
         * */
-        void testingStarted(final long numberOfTests);
+        void testingStarted(final Source dataset, final long numberOfTests);
 
         /*
         * Called when a single test starts
@@ -63,7 +64,7 @@ public class TestExecutor {
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors){
-            monitor.testingStarted(tests.size());
+            monitor.testingStarted(source, tests.size());
         }
 
         Model model = ModelFactory.createDefaultModel();

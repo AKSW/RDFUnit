@@ -3,10 +3,9 @@ package org.aksw.databugger.ui.components;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.UnitTest;
 
@@ -18,6 +17,7 @@ import org.aksw.databugger.tests.UnitTest;
 public class TestResultsComponent extends VerticalLayout implements TestExecutor.TestExecutorMonitor {
 
     private Table resultsTable = new Table("Test Results");
+    private Source source = null;
 
     public TestResultsComponent() {
         initLayout();
@@ -50,7 +50,8 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void testingStarted(final long numberOfTests) {
+    public void testingStarted(final Source source, final long numberOfTests) {
+        this.source = source;
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
@@ -69,7 +70,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                 Label testLabel = new Label(test.getTestURI());
                 testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ")+ "\n  </pre>" );
                 resultsTable.addItem(new Object[]{
-                        "R", testLabel, "", ""}, test);
+                        "R", testLabel, new Label(""), ""}, test);
 
                 resultsTable.setCurrentPageFirstItemIndex(resultsTable.getCurrentPageFirstItemIndex() + 1);
 
@@ -90,9 +91,9 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                         item.getItemProperty("S");
                 statusProperty.setValue(errors == 0 ? "S" : (errors > 0 ? "F" : "-"));
 
-                Property<String> errorsProperty =
+                Property<Label> errorsProperty =
                         item.getItemProperty("Errors");
-                errorsProperty.setValue(errors < 0 ? "-" : "" + errors);
+                errorsProperty.setValue(errors < 0 ? new Label("-") : new Label("" + errors));
 
                 Property<String> prevProperty =
                         item.getItemProperty("Prevalence");

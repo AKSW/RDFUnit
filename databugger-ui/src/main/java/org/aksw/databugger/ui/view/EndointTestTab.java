@@ -335,7 +335,7 @@ public class EndointTestTab extends VerticalLayout {
             private long timeoutTests = 0;
             private long total = 0;
             @Override
-            public void testingStarted(final long numberOfTests) {
+            public void testingStarted(final Source source, final long numberOfTests) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
