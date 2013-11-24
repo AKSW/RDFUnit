@@ -1,13 +1,17 @@
 package org.aksw.databugger.ui.components;
 
+import com.google.gwt.http.client.URL;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.*;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.UnitTest;
+
+import java.net.URLEncoder;
 
 /**
  * User: Dimitris Kontokostas
@@ -36,7 +40,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
         //resultsTable.setSizeFull();
         resultsTable.addContainerProperty("S", String.class, null);
         resultsTable.addContainerProperty("Test", Label.class, null);
-        resultsTable.addContainerProperty("Errors", String.class, null);
+        resultsTable.addContainerProperty("Errors", AbstractComponent.class, null);
         resultsTable.addContainerProperty("Prevalence", String.class, null);
         resultsTable.setColumnCollapsingAllowed(true);
         resultsTable.setSelectable(true);
@@ -91,9 +95,35 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                         item.getItemProperty("S");
                 statusProperty.setValue(errors == 0 ? "S" : (errors > 0 ? "F" : "-"));
 
-                Property<Label> errorsProperty =
-                        item.getItemProperty("Errors");
-                errorsProperty.setValue(errors < 0 ? new Label("-") : new Label("" + errors));
+
+                if (errors <= 0) {
+                    Property<AbstractComponent> errorsProperty =
+                            item.getItemProperty("Errors");
+                    errorsProperty.setValue(new Label("-"));
+                }
+                else {
+                    if (source instanceof DatasetSource) {
+                        String endpoint = ((DatasetSource) source).getSparqlEndpoint();
+                        String graph = ((DatasetSource) source).getSparqlGraph();
+                        String query = test.getSparqlQuery() + " LIMIT 10";
+                        try {
+                            String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph,"UTF-8") + "&query=" + URLEncoder.encode(query,"UTF-8");
+                            Link link = new Link(""+errors, new ExternalResource(url));
+                            link.setTargetName("_blank");
+                            Property<AbstractComponent> errorsProperty =
+                                    item.getItemProperty("Errors");
+                            errorsProperty.setValue(link);
+                        } catch (Exception e) {
+                            Property<AbstractComponent> errorsProperty =
+                                    item.getItemProperty("Errors");
+                            errorsProperty.setValue(new Label("" + errors));
+                        }
+                    } else {
+                        Property<AbstractComponent> errorsProperty =
+                                item.getItemProperty("Errors");
+                        errorsProperty.setValue(new Label("" + errors));
+                    }
+                }
 
                 Property<String> prevProperty =
                         item.getItemProperty("Prevalence");
