@@ -22,3 +22,6 @@ premis,http://www.loc.gov/premis/rdf/v1
 mrel,http://id.loc.gov/vocabulary/relators
 cheminf,http://semanticscience.org/ontology/cheminf,http://semanticscience.org/ontology/cheminf.owl
 cito,http://purl.org/spar/cito
+po,http://purl.org/ontology/po/
+mo,http://purl.org/ontology/mo/
+rooms,http://vocab.deri.ie/rooms#

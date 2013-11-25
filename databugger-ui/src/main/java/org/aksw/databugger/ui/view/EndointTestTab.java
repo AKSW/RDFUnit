@@ -65,17 +65,34 @@ public class EndointTestTab extends VerticalLayout {
         DatabuggerConfiguration dbpediaNLConf = DatabuggerConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
         DatabuggerConfiguration linkedChemistry = new DatabuggerConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", "http://linkedchemistry.info/chembl/", "cheminf,cito");
         DatabuggerConfiguration uriBurner = new DatabuggerConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/","","foaf,skos,geo,dcterms,prov");
+        DatabuggerConfiguration bbcNature = new DatabuggerConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://www.bbc.co.uk/nature/","dcterms,po,wo,wlo,foaf");
+        DatabuggerConfiguration musicBrainz = new DatabuggerConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://www.bbc.co.uk/nature/","ov,mo,foaf");
+        DatabuggerConfiguration umls = new DatabuggerConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://linkedlifedata.com/resource/umls","dcterms,skos,owl");
+        DatabuggerConfiguration umbel = new DatabuggerConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://umbel.org","vann,skos,owl");
+        DatabuggerConfiguration datasw = new DatabuggerConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://data.semanticweb.org","cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf");
+
 
         examplesSelect.addItem(uriBurner);
         examplesSelect.setItemCaption(uriBurner,"Uri Burner");
+        examplesSelect.addItem(bbcNature);
+        examplesSelect.setItemCaption(bbcNature,"BBC Nature (LOD Cache)");
+        examplesSelect.addItem(musicBrainz);
+        examplesSelect.setItemCaption(musicBrainz,"MusicBrainz (LOD Cache)");
+        examplesSelect.addItem(umls);
+        examplesSelect.setItemCaption(umls,"LinkedLifeData UMLS (LOD Cache)");
+        examplesSelect.addItem(umbel);
+        examplesSelect.setItemCaption(umbel,"umbel (LOD Cache)");
+        examplesSelect.addItem(datasw);
+        examplesSelect.setItemCaption(datasw,"data.semanticweb.org (LOD Cache)");
+        examplesSelect.addItem(linkedChemistry);
+        examplesSelect.setItemCaption(linkedChemistry,"LinkedChemistry");
         examplesSelect.addItem(dbpediaConf);
         examplesSelect.setItemCaption(dbpediaConf,"DBpedia");
         examplesSelect.addItem(dbpediaLConf);
         examplesSelect.setItemCaption(dbpediaLConf,"DBpedia Live");
         examplesSelect.addItem(dbpediaNLConf);
         examplesSelect.setItemCaption(dbpediaNLConf,"DBpedia NL");
-        examplesSelect.addItem(linkedChemistry);
-        examplesSelect.setItemCaption(linkedChemistry,"LinkedChemistry");
+
 
 
         initInteractions();
