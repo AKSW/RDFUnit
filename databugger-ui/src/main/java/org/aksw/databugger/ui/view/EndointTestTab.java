@@ -200,6 +200,7 @@ public class EndointTestTab extends VerticalLayout {
                 DatabuggerConfiguration configuration = (DatabuggerConfiguration) property.getValue();
                 if (configuration != null) {
                     setExampleConfiguration(configuration);
+                    DatabuggerUISession.setDatabuggerConfiguration(configuration);
                 }
             }
         });
@@ -218,29 +219,40 @@ public class EndointTestTab extends VerticalLayout {
             @Override
             public void run() {
 
-                DatabuggerConfiguration configuration = getCurrentConfiguration();
-                DatasetSource dataset = configuration.getDatasetSource();
+                createConfigurationFromUser();
+                if (DatabuggerUISession.getDatabuggerConfiguration() != null ) {
+                    DatasetSource dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
 
 
-                DatabuggerUISession.getTests().clear();
-                DatabuggerUISession.initDatabugger();
+                    DatabuggerUISession.getTests().clear();
+                    DatabuggerUISession.initDatabugger();
 
-                DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
+                    DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
-                DatabuggerUISession.getTests().addAll(
-                        DatabuggerUISession.getTestGeneratorExecutor().generateTests(
-                                DatabuggerUISession.getBaseDir() + "tests/",
-                                dataset,
-                                DatabuggerUISession.getDatabugger().getAutoGenerators()));
+                    DatabuggerUISession.getTests().addAll(
+                            DatabuggerUISession.getTestGeneratorExecutor().generateTests(
+                                    DatabuggerUISession.getBaseDir() + "tests/",
+                                    dataset,
+                                    DatabuggerUISession.getDatabugger().getAutoGenerators()));
 
-                if (DatabuggerUISession.getTests().size() != 0) {
+                    if (DatabuggerUISession.getTests().size() != 0) {
+                        UI.getCurrent().access(new Runnable() {
+                            @Override
+                            public void run() {
+                                startTestingButton.setEnabled(true);
+                            }
+                        });
+                    }
+                }
+                else {
                     UI.getCurrent().access(new Runnable() {
                         @Override
                         public void run() {
-                            startTestingButton.setEnabled(true);
+                            generateTestsButton.setEnabled(true);
                         }
                     });
                 }
+
             }
         }
 
@@ -323,16 +335,19 @@ public class EndointTestTab extends VerticalLayout {
             @Override
             public void run() {
 
-                DatasetSource dataset = getCurrentConfiguration().getDatasetSource();
+                //TODO make this cleaner
+                if (DatabuggerUISession.getDatabuggerConfiguration() != null) {
+                    DatasetSource dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
 
-                DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
-                String resultsFile = DatabuggerUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
-                //TODO refactor this, do not use cache here
-                File f = new File(resultsFile);
-                try {
-                    f.delete();
-                } catch (Exception e) {}
-                DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, DatabuggerUISession.getTests(),3);
+                    DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
+                    String resultsFile = DatabuggerUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
+                    //TODO refactor this, do not use cache here
+                    File f = new File(resultsFile);
+                    try {
+                        f.delete();
+                    } catch (Exception e) {}
+                    DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, DatabuggerUISession.getTests(),3);
+                }
 
             }
         }
@@ -446,8 +461,9 @@ public class EndointTestTab extends VerticalLayout {
 
     }
 
-    private DatabuggerConfiguration getCurrentConfiguration(){
-        return new DatabuggerConfiguration(endpointField.getValue().replace("/sparql",""),endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections());
+    private void createConfigurationFromUser(){
+        DatabuggerUISession.setDatabuggerConfiguration(
+                new DatabuggerConfiguration(endpointField.getValue().replace("/sparql",""),endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections()));
     }
 
     private void setExampleConfiguration(DatabuggerConfiguration configuration){

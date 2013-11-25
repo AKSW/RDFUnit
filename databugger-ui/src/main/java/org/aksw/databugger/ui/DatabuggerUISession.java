@@ -3,6 +3,7 @@ package org.aksw.databugger.ui;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import org.aksw.databugger.Databugger;
+import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
@@ -85,6 +86,14 @@ public class DatabuggerUISession extends VaadinSession {
 
     public static List<UnitTest> getTests() {
         return VaadinSession.getCurrent().getAttribute(UnitTestList.class).tests;
+    }
+
+    public static void setDatabuggerConfiguration(DatabuggerConfiguration configuration) {
+        VaadinSession.getCurrent().setAttribute(DatabuggerConfiguration.class, configuration);
+    }
+
+    public static DatabuggerConfiguration getDatabuggerConfiguration() {
+        return VaadinSession.getCurrent().getAttribute(DatabuggerConfiguration.class);
     }
 
     static class UnitTestList {
