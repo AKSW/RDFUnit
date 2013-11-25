@@ -4,7 +4,6 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import org.aksw.databugger.Databugger;
 import org.aksw.databugger.Utils.DatabuggerUtils;
-import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
 import org.aksw.databugger.tests.UnitTest;
@@ -23,64 +22,75 @@ import java.util.List;
  */
 public class DatabuggerUISession extends VaadinSession {
 
-    private final static Databugger databugger = new Databugger();
-    private final static String baseDir = _getBaseDir();
-    private final static TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-    private final static TestExecutor testExecutor = new TestExecutor();;
-    private final static List<UnitTest> tests = new ArrayList<UnitTest>();
 
     public DatabuggerUISession(VaadinService service) {
         super(service);
     }
 
     public static void init() {
+
+        Databugger databugger = new Databugger();
+        VaadinSession.getCurrent().setAttribute(Databugger.class, databugger);
+
+        String baseDir = _getBaseDir();
+        VaadinSession.getCurrent().setAttribute(String.class, baseDir);
+
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
+        VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
+
+        TestExecutor testExecutor = new TestExecutor();
+        VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
+
+        UnitTestList testList = new UnitTestList();
+        testList.tests = new ArrayList<UnitTest>();
+        VaadinSession.getCurrent().setAttribute(UnitTestList.class, testList);
+
+        //Fill the service schema
         DatabuggerUtils.fillSchemaServiceFromLOV();
-        DatabuggerUtils.fillSchemaServiceFromFile(DatabuggerUISession.getBaseDir() + "schemaDecl.csv");
+        DatabuggerUtils.fillSchemaServiceFromFile(getBaseDir() + "schemaDecl.csv");
     }
 
     private static String _getBaseDir() {
         File f = VaadinSession.getCurrent().getService().getBaseDirectory();
-        return f.getAbsolutePath()+"/data/";
+        return f.getAbsolutePath() + "/data/";
     }
 
     public static void initDatabugger() {
         try {
             DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
-                TripleReader patternReader = TripleReaderFactory.createTripleFileReader(baseDir + "patterns.ttl");
-                TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(baseDir+"testGenerators.ttl");
-                databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
-            } catch (Exception e) {
-                //TODO
-        }
-    }
-
-    public static Databugger getDatabugger(){
-        return databugger;
-    }
-
-    public static List<UnitTest> generateTests(Source source){
-        try {
-            TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-            return testGeneratorExecutor.generateTests(getBaseDir()+"tests/", source,databugger.getAutoGenerators());
+            TripleReader patternReader = TripleReaderFactory.createTripleFileReader(getBaseDir() + "patterns.ttl");
+            TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(getBaseDir() + "testGenerators.ttl");
+            getDatabugger().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
-            return new ArrayList<UnitTest>();
+            //TODO
         }
     }
 
-    public static String getBaseDir(){
-        return baseDir;
+    public static Databugger getDatabugger() {
+        return VaadinSession.getCurrent().getAttribute(Databugger.class);
+    }
+
+    public static String getBaseDir() {
+        return VaadinSession.getCurrent().getAttribute(String.class);
     }
 
     public static TestGeneratorExecutor getTestGeneratorExecutor() {
-        return testGeneratorExecutor;
+        return VaadinSession.getCurrent().getAttribute(TestGeneratorExecutor.class);
     }
 
     public static TestExecutor getTestExecutor() {
-        return testExecutor;
+        return VaadinSession.getCurrent().getAttribute(TestExecutor.class);
     }
 
     public static List<UnitTest> getTests() {
-        return tests;
+        return VaadinSession.getCurrent().getAttribute(UnitTestList.class).tests;
+    }
+
+    static class UnitTestList {
+        List<UnitTest> tests;
+
+        public UnitTestList() {
+        }
     }
 }
