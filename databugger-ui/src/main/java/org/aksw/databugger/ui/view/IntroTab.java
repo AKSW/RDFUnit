@@ -18,12 +18,15 @@ public class IntroTab  extends VerticalLayout {
 
     private void initLayout() {
         this.setMargin(true);
-        this.addComponent( new Label("<h2>Welcome to the Databugger Demo</h2>", ContentMode.HTML));
+        this.addComponent( new Label("<h2>Databugger - A Data Debugging Framework for the Web of Data</h2>", ContentMode.HTML));
 
         this.addComponent( new Label(
-                "<p>Please note that you cannot use all features of Databugger from this UI, for example, you cannot define your own tests cases or get your hands-on the generated test cases & results in RDF. " +
-                        "For more thorough testing please try a local version of this UI and/or the command line (CLI) version.</p>" +
-                "<p>Use the tab-sheets above to navigate or click on the buttons below to learn more about our tool.</p>",
+                "<p><strong>Welcome to the Databugger Demo</strong></p>"+
+                "<p>Databugger is a testing framework that can verify your data against a schema / vocabulary or custom SPARQL test cases.</p>" +
+                "<p>Select the <strong>Test an Endpoint</strong> option to from the menu to test your endpoint against a set of schemas or try one of our predefined examples. " +
+                        "We make use of SPARQL 1.1 property paths thus, an endpoint with such functionality (i.e. Virtuoso 7) is recommended.</p>" +
+                "<p>Please note that you cannot use all features of Databugger from this UI. For example, you cannot define your own tests cases or get your hands-on the generated test cases & results in RDF. " +
+                    "For more thorough testing please try a local version of this UI and/or the command line (CLI) version.</p>" ,
                 ContentMode.HTML));
 
         Link homepage = new Link("Homepage", new ExternalResource("http://databugger.aksw.org/"));
@@ -34,7 +37,7 @@ public class IntroTab  extends VerticalLayout {
         HorizontalLayout links = new HorizontalLayout();
         this.addComponent(links);
         links.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-
+        links.addComponent(new Label("To learn more about Databugger you can navigate to our: &nbsp;", ContentMode.HTML));
         links.addComponent(homepage);
         links.addComponent(new Label(" / "));
         links.addComponent(aksw);
