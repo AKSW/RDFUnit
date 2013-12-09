@@ -415,6 +415,13 @@ public class EndointTestTab extends VerticalLayout {
 
                         testingProgress.setValue((float)count / total);
                         testingProgressLabel.setValue(count + "/" + total + " (S: " + sucessTests + " / F: " + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
+
+                        if ((timeoutTests == 10 || timeoutTests == 30) && sucessTests == 0 && failTest == 0) {
+                            //Too many timeouts maybe banned
+                            Notification.show("Too many timeouts",
+                                    "Maybe the endpoint banned this IP. Try a different endpoint of try the tool from a different IP.",
+                                    Notification.Type.WARNING_MESSAGE);
+                        }
                     }
                 });
             }
