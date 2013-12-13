@@ -6,7 +6,7 @@ import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tripleReaders.TripleReaderFactory;
+import org.aksw.databugger.io.TripleReaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

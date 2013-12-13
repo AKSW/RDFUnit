@@ -2,33 +2,19 @@ package org.aksw.databugger;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.Utils.PatternUtils;
 import org.aksw.databugger.Utils.TestUtils;
-import org.aksw.databugger.coverage.TestCoverageEvaluator;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.services.PatternService;
 import org.aksw.databugger.services.PrefixService;
-import org.aksw.databugger.services.SchemaService;
-import org.aksw.databugger.sources.DatasetSource;
-import org.aksw.databugger.sources.SchemaSource;
-import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestAutoGenerator;
-import org.aksw.databugger.tests.TestExecutor;
-import org.aksw.databugger.tests.UnitTest;
-import org.aksw.databugger.tripleReaders.TripleReader;
-import org.aksw.databugger.tripleReaders.TripleReaderFactory;
+import org.aksw.databugger.io.TripleReader;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.apache.commons.cli.*;
-import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 

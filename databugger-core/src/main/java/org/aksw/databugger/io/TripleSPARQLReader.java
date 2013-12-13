@@ -1,4 +1,4 @@
-package org.aksw.databugger.tripleReaders;
+package org.aksw.databugger.io;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.databugger.exceptions.TripleReaderException;

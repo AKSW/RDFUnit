@@ -2,9 +2,9 @@ package org.aksw.databugger.sources;
 
 import org.aksw.databugger.Utils.CacheUtils;
 import org.aksw.databugger.enums.TestAppliesTo;
-import org.aksw.databugger.tripleReaders.TripleDereferenceReader;
-import org.aksw.databugger.tripleReaders.TripleReader;
-import org.aksw.databugger.tripleReaders.TripleReaderFactory;
+import org.aksw.databugger.io.TripleDereferenceReader;
+import org.aksw.databugger.io.TripleReader;
+import org.aksw.databugger.io.TripleReaderFactory;
 
 /**
  * User: Dimitris Kontokostas

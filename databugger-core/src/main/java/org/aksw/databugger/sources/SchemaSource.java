@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.exceptions.TripleReaderException;
-import org.aksw.databugger.tripleReaders.TripleReader;
+import org.aksw.databugger.io.TripleReader;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 

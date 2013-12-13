@@ -8,8 +8,8 @@ import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
 import org.aksw.databugger.tests.UnitTest;
-import org.aksw.databugger.tripleReaders.TripleReader;
-import org.aksw.databugger.tripleReaders.TripleReaderFactory;
+import org.aksw.databugger.io.TripleReader;
+import org.aksw.databugger.io.TripleReaderFactory;
 
 import java.io.File;
 import java.util.ArrayList;
