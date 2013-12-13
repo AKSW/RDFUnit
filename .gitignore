@@ -6,4 +6,5 @@
 *.settings
 .idea
 target
-data/tests/auto/
+dependency-reduced-pom.xml
+
