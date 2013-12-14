@@ -1,0 +1,383 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://databugger.aksw.org/ontology#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://databugger.aksw.org/ontology#">
+    <Prefix name="" IRI="http://www.semanticweb.org/owl/owlapi/turtle#"/>
+    <Prefix name="dc" IRI="http://purl.org/dc/elements/1.1/"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="tddo" IRI="http://databugger.aksw.org/ontology#"/>
+    <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
+    <Annotation>
+        <AnnotationProperty IRI="http://purl.org/vocab/vann/preferredNamespacePrefix"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">tddo</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty IRI="http://purl.org/vocab/vann/preferredNamespaceUri"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://databugger.aksw.org/ontology#</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:creator"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Roland Cornelissen</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:date"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">2013-12-14</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty IRI="http://purl.org/vocab/vann/changes"/>
+        <IRI>https://github.com/AKSW/Databugger/commits/master/ontology</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:creator"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Sören Auer</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:creator"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Patrick Westphal</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:rights"/>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Test-Driven Data Debugging Ontology</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:creator"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Jens Lehmann</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:description"/>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:creator"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Sebastian Hellmann</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <IRI>http://aksw.org/Projects/Databugger.html</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:creator"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Dimitris Kontokostas</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="Parameter"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="ParameterConstraint"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Pattern"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Test"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="TestAppliesTo"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="TestGenerationType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="TestGenerator"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="appliesTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="basedOnPattern"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="generated"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="parameter"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="parameterConstraint"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="references"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="source"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="generatorSPARQL"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="patternPrevalenceSPARQL"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="patternSPARQL"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="selectVariable"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="sparql"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Application"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="AutoGenerated"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Class"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Dataset"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="EnrichedSchema"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ManuallyGenerated"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="None"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Operator"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Property"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Resource"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Schema"/>
+    </Declaration>
+    <ClassAssertion>
+        <Class IRI="TestAppliesTo"/>
+        <NamedIndividual IRI="Application"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="TestGenerationType"/>
+        <NamedIndividual IRI="AutoGenerated"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="ParameterConstraint"/>
+        <NamedIndividual IRI="Class"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="TestAppliesTo"/>
+        <NamedIndividual IRI="Dataset"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="TestAppliesTo"/>
+        <NamedIndividual IRI="EnrichedSchema"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="TestGenerationType"/>
+        <NamedIndividual IRI="ManuallyGenerated"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="ParameterConstraint"/>
+        <NamedIndividual IRI="None"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="ParameterConstraint"/>
+        <NamedIndividual IRI="Operator"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="ParameterConstraint"/>
+        <NamedIndividual IRI="Property"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="ParameterConstraint"/>
+        <NamedIndividual IRI="Resource"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="TestAppliesTo"/>
+        <NamedIndividual IRI="Schema"/>
+    </ClassAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="appliesTo"/>
+        <Class IRI="Test"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="generated"/>
+        <Class IRI="Test"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="parameter"/>
+        <Class IRI="Pattern"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="parameterConstraint"/>
+        <Class IRI="Parameter"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="references"/>
+        <Class IRI="Test"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="source"/>
+        <Class IRI="Test"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="appliesTo"/>
+        <Class IRI="TestAppliesTo"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="basedOnPattern"/>
+        <Class IRI="Pattern"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="generated"/>
+        <Class IRI="TestGenerationType"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="parameter"/>
+        <Class IRI="Parameter"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="parameterConstraint"/>
+        <Class IRI="ParameterConstraint"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="generatorSPARQL"/>
+        <Class IRI="TestGenerator"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="patternPrevalenceSPARQL"/>
+        <Class IRI="Pattern"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="patternSPARQL"/>
+        <Class IRI="Pattern"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="selectVariable"/>
+        <Class IRI="Pattern"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="sparql"/>
+        <Class IRI="Test"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
+        <Class IRI="Test"/>
+    </DataPropertyDomain>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Application</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Application: When the tests are specific to an application only</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>AutoGenerated</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">AutoGenerated: This test was created automatically</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Class</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The parameter is restricted to a Class.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Dataset</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Dataset: When the tests applies to a dataset only (i.e. a SPARQL Endpoint)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>EnrichedSchema</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">EnrichedSchema: When the tests applies to an ontology / vocabulary enriched with external (semi-)automatic approaches</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>ManuallyGenerated</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">ManuallyGenerated: This test was created manually</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>None</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The parameter can be anything, even a free variable (?var)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Operator</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The parameter can be an operator.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Property</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The parameter is restricted to a property.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Resource</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The pattern can be a resource.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>Test</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A Test is a testcase in which all properties of the test are described.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>appliesTo</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">applies to describes the ontology used for terms in the Test.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>basedOnPattern</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>generated</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">generated specifies the way the test was constructed.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>patternSPARQL</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral"></Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>references</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">references specifies the Classes and Properties involved in the described testcase.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>source</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">source is the SPARQL endpoint specified in the testcase.</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
