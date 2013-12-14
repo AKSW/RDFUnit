@@ -1,5 +1,5 @@
 @prefix tddd: <http://databugger.aksw.org/patterns#> .
-@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddo: <http://databugger.aksw.org/ontology/core#> .
 @prefix tddg: <http://databugger.aksw.org/generators#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .

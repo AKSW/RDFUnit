@@ -7,7 +7,7 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 @prefix tddp: <http://databugger.aksw.org/patterns#> .
-@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddo: <http://databugger.aksw.org/ontology/core#> .
 @prefix tddg: <http://databugger.aksw.org/generators#> .
 @prefix tddt: <http://databugger.aksw.org/tests#> .
 
