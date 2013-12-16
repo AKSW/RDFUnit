@@ -148,6 +148,34 @@
     
 
 
+    <!-- http://databugger.aksw.org/ontology/core#generatorSPARQL -->
+
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#generatorSPARQL">
+        <rdfs:label xml:lang="en">generatorSPARQL</rdfs:label>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#TestGenerator"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL -->
+
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL">
+        <rdfs:label xml:lang="en">patternPRevalenceSPARQL</rdfs:label>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://databugger.aksw.org/ontology/core#patternSPARQL -->
+
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#patternSPARQL">
+        <rdfs:label xml:lang="en">patternSPARQL</rdfs:label>
+        <rdfs:comment xml:lang="en"></rdfs:comment>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://databugger.aksw.org/ontology/core#resultCount -->
 
     <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#resultCount">
@@ -175,7 +203,6 @@
     <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#selectVariable">
         <rdfs:label xml:lang="en">selectVariable</rdfs:label>
         <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
 
@@ -183,31 +210,8 @@
     <!-- http://databugger.aksw.org/ontology/core#sparql -->
 
     <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#sparql">
-        <rdfs:label xml:lang="en">sparql</rdfs:label>
-        <rdfs:comment xml:lang="en">A sparql query</rdfs:comment>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://databugger.aksw.org/ontology/core#sparqlPattern -->
-
-    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#sparqlPattern">
-        <rdfs:label xml:lang="en">sparqlPattern</rdfs:label>
-        <rdfs:comment xml:lang="en">A pattern sparql query</rdfs:comment>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern -->
-
-    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern">
-        <rdfs:label xml:lang="en">sparqlPrevalencePattern</rdfs:label>
-        <rdfs:comment xml:lang="en">A pattern sparql prevalence query</rdfs:comment>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">sparql</rdfs:comment>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Test"/>
     </owl:DatatypeProperty>
     
 
@@ -216,8 +220,7 @@
 
     <owl:DatatypeProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence">
         <rdfs:label xml:lang="en">sparqlPrevalence</rdfs:label>
-        <rdfs:comment xml:lang="en">A sparql query for prevalence</rdfs:comment>
-        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Test"/>
     </owl:DatatypeProperty>
     
 
@@ -259,7 +262,10 @@
 
     <!-- http://databugger.aksw.org/ontology/core#Result -->
 
-    <owl:Class rdf:about="http://databugger.aksw.org/ontology/core#Result"/>
+    <owl:Class rdf:about="http://databugger.aksw.org/ontology/core#Result">
+        <rdfs:label xml:lang="en">Result</rdfs:label>
+        <rdfs:comment xml:lang="en">A class that holds the results of a single test execution</rdfs:comment>
+    </owl:Class>
     
 
 

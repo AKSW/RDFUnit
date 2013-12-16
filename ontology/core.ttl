@@ -276,7 +276,11 @@
 
 ###  http://databugger.aksw.org/ontology/core#Result
 
-<http://databugger.aksw.org/ontology/core#Result> rdf:type owl:Class .
+<http://databugger.aksw.org/ontology/core#Result> rdf:type owl:Class ;
+                                                  
+                                                  rdfs:label "Result"@en ;
+                                                  
+                                                  rdfs:comment "A class that holds the results of a single test execution"@en .
 
 
 
