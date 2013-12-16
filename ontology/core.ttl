@@ -151,38 +151,6 @@
 #################################################################
 
 
-###  http://databugger.aksw.org/ontology/core#generatorSPARQL
-
-<http://databugger.aksw.org/ontology/core#generatorSPARQL> rdf:type owl:DatatypeProperty ;
-                                                           
-                                                           rdfs:label "generatorSPARQL"@en ;
-                                                           
-                                                           rdfs:domain <http://databugger.aksw.org/ontology/core#TestGenerator> .
-
-
-
-###  http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL
-
-<http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL> rdf:type owl:DatatypeProperty ;
-                                                                   
-                                                                   rdfs:label "patternPRevalenceSPARQL"@en ;
-                                                                   
-                                                                   rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
-
-
-
-###  http://databugger.aksw.org/ontology/core#patternSPARQL
-
-<http://databugger.aksw.org/ontology/core#patternSPARQL> rdf:type owl:DatatypeProperty ;
-                                                         
-                                                         rdfs:label "patternSPARQL"@en ;
-                                                         
-                                                         rdfs:comment ""@en ;
-                                                         
-                                                         rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
-
-
-
 ###  http://databugger.aksw.org/ontology/core#resultCount
 
 <http://databugger.aksw.org/ontology/core#resultCount> rdf:type owl:DatatypeProperty ;
@@ -217,7 +185,9 @@
                                                           
                                                           rdfs:label "selectVariable"@en ;
                                                           
-                                                          rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
+                                                          rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> ;
+                                                          
+                                                          rdfs:range xsd:string .
 
 
 
@@ -225,9 +195,39 @@
 
 <http://databugger.aksw.org/ontology/core#sparql> rdf:type owl:DatatypeProperty ;
                                                   
-                                                  rdfs:comment "sparql"@en ;
+                                                  rdfs:label "sparql"@en ;
                                                   
-                                                  rdfs:domain <http://databugger.aksw.org/ontology/core#Test> .
+                                                  rdfs:comment "A sparql query"@en ;
+                                                  
+                                                  rdfs:range xsd:string .
+
+
+
+###  http://databugger.aksw.org/ontology/core#sparqlPattern
+
+<http://databugger.aksw.org/ontology/core#sparqlPattern> rdf:type owl:DatatypeProperty ;
+                                                         
+                                                         rdfs:label "sparqlPattern"@en ;
+                                                         
+                                                         rdfs:comment "A pattern sparql query"@en ;
+                                                         
+                                                         rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> ;
+                                                         
+                                                         rdfs:range xsd:string .
+
+
+
+###  http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern
+
+<http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern> rdf:type owl:DatatypeProperty ;
+                                                                   
+                                                                   rdfs:label "sparqlPrevalencePattern"@en ;
+                                                                   
+                                                                   rdfs:comment "A pattern sparql prevalence query"@en ;
+                                                                   
+                                                                   rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> ;
+                                                                   
+                                                                   rdfs:range xsd:string .
 
 
 
@@ -237,7 +237,9 @@
                                                             
                                                             rdfs:label "sparqlPrevalence"@en ;
                                                             
-                                                            rdfs:domain <http://databugger.aksw.org/ontology/core#Test> .
+                                                            rdfs:comment "A sparql query for prevalence"@en ;
+                                                            
+                                                            rdfs:range xsd:string .
 
 
 
