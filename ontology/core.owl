@@ -149,10 +149,10 @@
         <DataProperty IRI="sparqlPattern"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="sparqlPrevalencePattern"/>
+        <DataProperty IRI="sparqlPrevalence"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
+        <DataProperty IRI="sparqlPrevalencePattern"/>
     </Declaration>
     <Declaration>
         <NamedIndividual IRI="Application"/>
@@ -316,11 +316,11 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
-        <DataProperty IRI="sparqlPrevalencePattern"/>
+        <DataProperty IRI="sparqlPrevalence"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
-        <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
+        <DataProperty IRI="sparqlPrevalencePattern"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <AnnotationAssertion>
@@ -585,6 +585,16 @@
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>sparqlPrevalence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A sparql query for prevalence</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>sparqlPrevalence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">sparqlPrevalence</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>sparqlPrevalencePattern</IRI>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A pattern sparql prevalence query</Literal>
     </AnnotationAssertion>
@@ -602,16 +612,6 @@
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
         <IRI>test</IRI>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">test</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
-        <IRI>http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A sparql query for prevalence</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
-        <IRI>http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">sparqlPrevalence</Literal>
     </AnnotationAssertion>
 </Ontology>
 

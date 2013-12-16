@@ -231,9 +231,9 @@
 
 
 
-###  http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence
+###  http://databugger.aksw.org/ontology/core#sparqlPrevalence
 
-<http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence> rdf:type owl:DatatypeProperty ;
+<http://databugger.aksw.org/ontology/core#sparqlPrevalence> rdf:type owl:DatatypeProperty ;
                                                             
                                                             rdfs:label "sparqlPrevalence"@en ;
                                                             
