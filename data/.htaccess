@@ -1,0 +1,14 @@
+AddType  text/turtle             .ttl
+
+
+# Rewrite engine setup
+RewriteEngine On
+RewriteBase /data
+
+# Rewrite rule to serve TURTLE content if requested
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^patterns$ patterns.ttl [R=303]
+RewriteRule ^generators$ testAutoGenerators.ttl [R=303]
+RewriteRule ^tests$ tests.ttl [R=303]
+
+		
