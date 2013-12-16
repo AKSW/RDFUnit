@@ -1,12 +1,12 @@
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
-@prefix tddg:    <http://databugger.aksw.org/generators#> .
+@prefix tddg:    <http://databugger.aksw.org/data/generators#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix tddo:    <http://databugger.aksw.org/ontology/core#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddt:    <http://databugger.aksw.org/tests#> .
-@prefix tddp:    <http://databugger.aksw.org/patterns#> .
+@prefix tddt:    <http://databugger.aksw.org/data/tests#> .
+@prefix tddp:    <http://databugger.aksw.org/data/patterns#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 
 
