@@ -26,8 +26,8 @@ public class PatternUtils {
                 " ?sparqlPattern a tddo:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
                 "  dcterms:description ?desc ; " +
-                "  tddo:patternSPARQL ?sparql ; " +
-                "  tddo:patternPrevalenceSPARQL ?sparqlPrev ; " +
+                "  tddo:sparqlPattern ?sparql ; " +
+                "  tddo:sparqlPrevalencePattern ?sparqlPrev ; " +
                 "  tddo:selectVariable ?variable . " +
                 "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = DatabuggerUtils.getAllPrefixes() +

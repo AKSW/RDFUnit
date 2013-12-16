@@ -36,9 +36,9 @@ public class TestUtils {
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                 " ?generator a tddo:TestGenerator ; " +
                 "  dcterms:description ?desc ; " +
-                "  tddo:generatorSPARQL ?query ; " +
-                "  tddo:basedOnPattern ?sparqlPattern . " +
-                " ?sparqlPattern dcterms:identifier ?patternID ." +
+                "  tddo:sparql ?query ; " +
+                "  tddo:basedOnPattern ?pattern . " +
+                " ?pattern dcterms:identifier ?patternID ." +
                 "} ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelect);

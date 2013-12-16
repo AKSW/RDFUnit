@@ -118,10 +118,10 @@ public class TestExecutor {
 
             model.createResource()
                     .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "count"), "" + total)
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "prevalence"), "" + total)
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultCount"), "" + total)
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultPrevalence"), "" + total)
                     .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(source.getUri()))
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "query"), model.createResource(t.getTestURI()));
+                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "test"), model.createResource(t.getTestURI()));
 
             log.info("Testing " + source.getPrefix() + " (" + counter + "/" + testSize + ") returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
 

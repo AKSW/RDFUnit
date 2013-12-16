@@ -11,7 +11,7 @@
 # Class range
 tddg:RDFSRANGEC a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ select distinct ?P1 ('+' as ?OP) ?T1 where {
+    tddo:sparql """ select distinct ?P1 ('+' as ?OP) ?T1 where {
                               {
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
@@ -35,7 +35,7 @@ tddg:RDFSRANGEC a tddo:TestGenerator ;
 # Datatype range
 tddg:RDFSRANGED a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ select distinct ?P1 ?D1 where {
+    tddo:sparql """ select distinct ?P1 ?D1 where {
                               {
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
@@ -57,7 +57,7 @@ tddg:RDFSRANGED a tddo:TestGenerator ;
 
 tddg:RDFSDOMAIN a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ select distinct ?P1 ('?v1' as ?V1) ('+' as ?OP) ?T1 where {
+    tddo:sparql """ select distinct ?P1 ('?v1' as ?V1) ('+' as ?OP) ?T1 where {
                              ?P1 rdfs:domain ?T1 .
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
@@ -72,7 +72,7 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
 
 tddg:OWLDISJC a tddo:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ?T2 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?T1 ?T2 WHERE {
                              ?T1 owl:disjointWith ?T2 . } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
@@ -83,7 +83,7 @@ tddg:OWLDISJC a tddo:TestGenerator ;
 
 tddg:OWLDISJP a tddo:TestGenerator ;
     dcterms:description """Generate all owl:propertyDisjointWith constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ?P2 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ?P2 WHERE {
                              ?P1 owl:propertyDisjointWith ?P2 . } """ ;
     tddo:basedOnPattern tddd:OWLDISJP .
 
@@ -94,7 +94,7 @@ tddg:OWLDISJP a tddo:TestGenerator ;
 
 tddg:OWLCOMPL a tddo:TestGenerator ;
     dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ?T2 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?T1 ?T2 WHERE {
                              ?T1 owl:complementOf ?T2 . } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
@@ -105,7 +105,7 @@ tddg:OWLCOMPL a tddo:TestGenerator ;
 # owl:cardinality number > 0 (count restriction if exists)
 tddg:OWLCARD a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('!=' as ?OP) (str(?v)  as ?V2) WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ('!=' as ?OP) (str(?v)  as ?V2) WHERE {
                              ?P1 owl:cardinality ?v .
                              FILTER (?v > 0) .} """ ;
     tddo:basedOnPattern tddd:OWLCARD .
@@ -113,7 +113,7 @@ tddg:OWLCARD a tddo:TestGenerator ;
 # owl:cardinality number > 0 (exists in db)
 tddg:OWLCARDEX a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
                              ?P1 owl:cardinality ?v .
                              ?P1 rdfs:domain ?T1 .
                              FILTER (?v > 0) .} """ ;
@@ -122,7 +122,7 @@ tddg:OWLCARDEX a tddo:TestGenerator ;
 # owl:cardinality number = 0 (must not exist)
 tddg:OWLCARD0 a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality is 0"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('?v1' as ?V1) WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ('?v1' as ?V1) WHERE {
                              ?P1 owl:cardinality ?v .
                              FILTER (?v = 0) .} """ ;
     tddo:basedOnPattern tddd:TRIPLE .
@@ -130,14 +130,14 @@ tddg:OWLCARD0 a tddo:TestGenerator ;
 # owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCARD-MIN a tddo:TestGenerator ;
     dcterms:description """Generates owl:minCardinality constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('<=' as ?OP) (str(?v)  as ?V2) WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ('<=' as ?OP) (str(?v)  as ?V2) WHERE {
                              ?P1 owl:minCardinality ?v . } """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
 # owl:minCardinality number > 0 (exists in db)
 tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
     dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
                              ?P1 owl:minCardinality ?v .
                              ?P1 rdfs:domain ?T1 .
                              FILTER (?v > 0) .} """ ;
@@ -146,7 +146,7 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
 # owl:manCardinality number > 0 (count restriction if exists)
 tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) WHERE {
                              ?P1 owl:maxCardinality ?v .
                              FILTER (?v > 0) . } """ ;
     tddo:basedOnPattern tddd:OWLCARD .
@@ -154,7 +154,7 @@ tddg:OWLCGARD-MAX a tddo:TestGenerator ;
 # owl:maxCardinality number = 0 (must not exist
 tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('?v1' as ?V1)  WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ('?v1' as ?V1)  WHERE {
                               ?P1 owl:maxCardinality ?v .
                               FILTER (?v = 0) . } """ ;
     tddo:basedOnPattern tddd:TRIPLE .
@@ -165,7 +165,7 @@ tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
 
 tddg:OWLFUNC a tddo:TestGenerator ;
     dcterms:description """ Generates owl:FunctionalProperty constrains. IF the property exists we ensure it exists only once"""@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) WHERE {
                              ?P1 rdf:type+ owl:FunctionalProperty . } """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
@@ -175,7 +175,7 @@ tddg:OWLFUNC a tddo:TestGenerator ;
 
 tddg:OWLINVFUNC a tddo:TestGenerator ;
     dcterms:description """ Generates owl:InverseFunctionalProperty constraints. If such a property exists we ensure that resources are assigned only once via this property """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 WHERE {
                                 ?P1 a owl:InverseFunctionalProperty .
                               }""" ;
     tddo:basedOnPattern tddd:INVFUNC .
@@ -187,7 +187,7 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 
 # tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
 #    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
-#    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+#    tddo:sparql """ SELECT DISTINCT ?P1 WHERE {
 #                                ?P1 a owl:SymmetricProperty .
 #                              }""" ;
 #    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
@@ -199,7 +199,7 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 
 tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
     dcterms:description """ Generates owl:AsymmetricProperty constraints. Given a statement with an asymmetric property we ensure that no inverse statements with the same property exist in the dataset """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 WHERE {
                                 ?P1 a owl:AsymmetricProperty .
                               } """ ;
     tddo:basedOnPattern tddd:OWLASYMMETRICPROP .
@@ -211,7 +211,7 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 
 # tddg:OWLTRANSPROP a tddo:TestGenerator ;
 #    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
-#    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+#    tddo:sparql """ SELECT DISTINCT ?P1 WHERE {
 #                                ?P1 a owl:TransitiveProperty .
 #                              }""" ;
 #    tddo:basedOnPattern tddd:OWLTRANSPROP .
@@ -223,7 +223,7 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 
 tddg:OWLIRREFLEXIVE a tddo:TestGenerator ;
     dcterms:description """ Generates owl:IrreflexiveProperty constraints. Given an irreflexive property we ensure that it is not used reflexively """@en ;
-    tddo:generatorSPARQL """ SELECT DISTINCT ?P1 WHERE {
+    tddo:sparql """ SELECT DISTINCT ?P1 WHERE {
                                 ?P1 a owl:IrreflexiveProperty .
                               }""" ;
     tddo:basedOnPattern tddd:OWLIRREFLEXIVE .

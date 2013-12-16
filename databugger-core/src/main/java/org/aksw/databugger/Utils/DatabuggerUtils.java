@@ -33,7 +33,7 @@ public class DatabuggerUtils {
                 " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
                 " PREFIX dc: <http://purl.org/dc/elements/1.1/> \n" +
                 " PREFIX tddp: <http://databugger.aksw.org/patterns#> \n" +
-                " PREFIX tddo: <http://databugger.aksw.org/ontology#> \n" +
+                " PREFIX tddo: <http://databugger.aksw.org/ontology/core#> \n" +
                 " PREFIX tddg: <http://databugger.aksw.org/generators#> \n"
                 ;
     }

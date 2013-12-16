@@ -26,19 +26,19 @@
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:dcterms="http://purl.org/dc/terms/">
     <owl:Ontology rdf:about="http://databugger.aksw.org/ontology/core#">
+        <vann:preferredNamespaceUri>http://databugger.aksw.org/ontology/core#</vann:preferredNamespaceUri>
         <dc:date>2013-12-14</dc:date>
         <dc:creator xml:lang="en">Dimitris Kontokostas</dc:creator>
-        <vann:preferredNamespacePrefix>tddo</vann:preferredNamespacePrefix>
-        <vann:preferredNamespaceUri>http://databugger.aksw.org/ontology/core#</vann:preferredNamespaceUri>
         <dc:creator xml:lang="en">Jens Lehmann</dc:creator>
         <dc:creator xml:lang="en">Patrick Westphal</dc:creator>
         <dc:creator xml:lang="en">Roland Cornelissen</dc:creator>
         <dc:creator xml:lang="en">Sebastian Hellmann</dc:creator>
         <dc:creator xml:lang="en">Sören Auer</dc:creator>
         <dcterms:title xml:lang="en">Test-Driven Data Debugging Ontology</dcterms:title>
-        <rdfs:comment xml:lang="en">The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.</rdfs:comment>
         <dc:description xml:lang="en">The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.</dc:description>
+        <rdfs:comment xml:lang="en">The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.</rdfs:comment>
         <dc:rights xml:lang="en">This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)</dc:rights>
+        <vann:preferredNamespacePrefix>tddo</vann:preferredNamespacePrefix>
         <rdfs:seeAlso rdf:resource="http://aksw.org/Projects/Databugger.html"/>
         <vann:changes rdf:resource="https://github.com/AKSW/Databugger/commits/master/ontology"/>
     </owl:Ontology>
@@ -122,8 +122,17 @@
 
     <owl:ObjectProperty rdf:about="http://databugger.aksw.org/ontology/core#source">
         <rdfs:label xml:lang="en">source</rdfs:label>
-        <rdfs:comment xml:lang="en">source is the SPARQL endpoint specified in the testcase.</rdfs:comment>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Test"/>
+        <rdfs:comment xml:lang="en">source is a URI that points to a general Source, which can be a schema, a dataset or an application</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://databugger.aksw.org/ontology/core#test -->
+
+    <owl:ObjectProperty rdf:about="http://databugger.aksw.org/ontology/core#test">
+        <rdfs:label xml:lang="en">test</rdfs:label>
+        <rdfs:comment>points to a Test</rdfs:comment>
+        <rdfs:range rdf:resource="http://databugger.aksw.org/ontology/core#Test"/>
     </owl:ObjectProperty>
     
 
@@ -139,30 +148,24 @@
     
 
 
-    <!-- http://databugger.aksw.org/ontology/core#generatorSPARQL -->
+    <!-- http://databugger.aksw.org/ontology/core#resultCount -->
 
-    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#generatorSPARQL">
-        <rdfs:label xml:lang="en">generatorSPARQL</rdfs:label>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#TestGenerator"/>
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#resultCount">
+        <rdfs:label xml:lang="en">resultCount</rdfs:label>
+        <rdfs:comment xml:lang="en">The error results of a test execution</rdfs:comment>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Result"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL -->
+    <!-- http://databugger.aksw.org/ontology/core#resultPrevalence -->
 
-    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL">
-        <rdfs:label xml:lang="en">patternPRevalenceSPARQL</rdfs:label>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://databugger.aksw.org/ontology/core#patternSPARQL -->
-
-    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#patternSPARQL">
-        <rdfs:label xml:lang="en">patternSPARQL</rdfs:label>
-        <rdfs:comment xml:lang="en"></rdfs:comment>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#resultPrevalence">
+        <rdfs:label xml:lang="en">resultPrevalence</rdfs:label>
+        <rdfs:comment xml:lang="en">The prevalence result of a test execution</rdfs:comment>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Result"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
     </owl:DatatypeProperty>
     
 
@@ -172,6 +175,7 @@
     <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#selectVariable">
         <rdfs:label xml:lang="en">selectVariable</rdfs:label>
         <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
 
@@ -179,8 +183,31 @@
     <!-- http://databugger.aksw.org/ontology/core#sparql -->
 
     <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#sparql">
-        <rdfs:comment xml:lang="en">sparql</rdfs:comment>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Test"/>
+        <rdfs:label xml:lang="en">sparql</rdfs:label>
+        <rdfs:comment xml:lang="en">A sparql query</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://databugger.aksw.org/ontology/core#sparqlPattern -->
+
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#sparqlPattern">
+        <rdfs:label xml:lang="en">sparqlPattern</rdfs:label>
+        <rdfs:comment xml:lang="en">A pattern sparql query</rdfs:comment>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern -->
+
+    <owl:DatatypeProperty rdf:about="http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern">
+        <rdfs:label xml:lang="en">sparqlPrevalencePattern</rdfs:label>
+        <rdfs:comment xml:lang="en">A pattern sparql prevalence query</rdfs:comment>
+        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Pattern"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
 
@@ -189,7 +216,8 @@
 
     <owl:DatatypeProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence">
         <rdfs:label xml:lang="en">sparqlPrevalence</rdfs:label>
-        <rdfs:domain rdf:resource="http://databugger.aksw.org/ontology/core#Test"/>
+        <rdfs:comment xml:lang="en">A sparql query for prevalence</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
 
@@ -226,6 +254,12 @@
     <owl:Class rdf:about="http://databugger.aksw.org/ontology/core#Pattern">
         <rdfs:label xml:lang="en">Pattern</rdfs:label>
     </owl:Class>
+    
+
+
+    <!-- http://databugger.aksw.org/ontology/core#Result -->
+
+    <owl:Class rdf:about="http://databugger.aksw.org/ontology/core#Result"/>
     
 
 

@@ -30,10 +30,6 @@
         <Literal datatypeIRI="&rdf;PlainLiteral">tddo</Literal>
     </Annotation>
     <Annotation>
-        <AnnotationProperty IRI="http://purl.org/vocab/vann/preferredNamespaceUri"/>
-        <Literal datatypeIRI="&rdf;PlainLiteral">http://databugger.aksw.org/ontology/core#</Literal>
-    </Annotation>
-    <Annotation>
         <AnnotationProperty abbreviatedIRI="dc:creator"/>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Roland Cornelissen</Literal>
     </Annotation>
@@ -82,6 +78,10 @@
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Jens Lehmann</Literal>
     </Annotation>
     <Annotation>
+        <AnnotationProperty IRI="http://purl.org/vocab/vann/preferredNamespaceUri"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://databugger.aksw.org/ontology/core#</Literal>
+    </Annotation>
+    <Annotation>
         <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
         <IRI>http://aksw.org/Projects/Databugger.html</IRI>
     </Annotation>
@@ -95,6 +95,9 @@
         <Class IRI="Pattern"/>
     </Declaration>
     <Declaration>
+        <Class IRI="Result"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="Test"/>
     </Declaration>
     <Declaration>
@@ -128,19 +131,25 @@
         <ObjectProperty IRI="source"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="generatorSPARQL"/>
+        <ObjectProperty IRI="test"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="patternPrevalenceSPARQL"/>
+        <DataProperty IRI="resultCount"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="patternSPARQL"/>
+        <DataProperty IRI="resultPrevalence"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="selectVariable"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="sparql"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="sparqlPattern"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="sparqlPrevalencePattern"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
@@ -242,10 +251,6 @@
         <ObjectProperty IRI="references"/>
         <Class IRI="Test"/>
     </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
-        <ObjectProperty IRI="source"/>
-        <Class IRI="Test"/>
-    </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="appliesTo"/>
         <Class IRI="TestAppliesTo"/>
@@ -266,30 +271,58 @@
         <ObjectProperty IRI="parameterConstraint"/>
         <Class IRI="ParameterConstraint"/>
     </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="test"/>
+        <Class IRI="Test"/>
+    </ObjectPropertyRange>
     <DataPropertyDomain>
-        <DataProperty IRI="generatorSPARQL"/>
-        <Class IRI="TestGenerator"/>
+        <DataProperty IRI="resultCount"/>
+        <Class IRI="Result"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="patternPrevalenceSPARQL"/>
-        <Class IRI="Pattern"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="patternSPARQL"/>
-        <Class IRI="Pattern"/>
+        <DataProperty IRI="resultPrevalence"/>
+        <Class IRI="Result"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="selectVariable"/>
         <Class IRI="Pattern"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="sparql"/>
-        <Class IRI="Test"/>
+        <DataProperty IRI="sparqlPattern"/>
+        <Class IRI="Pattern"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
-        <Class IRI="Test"/>
+        <DataProperty IRI="sparqlPrevalencePattern"/>
+        <Class IRI="Pattern"/>
     </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="resultCount"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="resultPrevalence"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="selectVariable"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="sparql"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="sparqlPattern"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="sparqlPrevalencePattern"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>Application</IRI>
@@ -467,11 +500,6 @@
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
-        <IRI>generatorSPARQL</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">generatorSPARQL</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
         <IRI>parameter</IRI>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">parameter</Literal>
     </AnnotationAssertion>
@@ -479,21 +507,6 @@
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
         <IRI>parameterConstraint</IRI>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">parameterConstrain</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
-        <IRI>patternPrevalenceSPARQL</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">patternPRevalenceSPARQL</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
-        <IRI>patternSPARQL</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral"></Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
-        <IRI>patternSPARQL</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">patternSPARQL</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
@@ -506,6 +519,26 @@
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">references</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>resultCount</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">The error results of a test execution</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>resultCount</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">resultCount</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>resultPrevalence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">The prevalence result of a test execution</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>resultPrevalence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">resultPrevalence</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
         <IRI>selectVariable</IRI>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">selectVariable</Literal>
@@ -513,7 +546,7 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>source</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">source is the SPARQL endpoint specified in the testcase.</Literal>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">source is a URI that points to a general Source, which can be a schema, a dataset or an application</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
@@ -523,7 +556,47 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>sparql</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A sparql query</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>sparql</IRI>
         <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">sparql</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>sparqlPattern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A pattern sparql query</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>sparqlPattern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">sparqlPattern</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>sparqlPrevalencePattern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A pattern sparql prevalence query</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>sparqlPrevalencePattern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">sparqlPrevalencePattern</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>test</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">points to a Test</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>test</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">test</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">A sparql query for prevalence</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>

@@ -110,7 +110,7 @@ public class Main {
 
 
         TripleReader patternReader = TripleReaderFactory.createTripleFileReader(dataFolder+"patterns.ttl");
-        TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(dataFolder+"testGenerators.ttl");
+        TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(dataFolder+"testAutoGenerators.ttl");
         Databugger databugger = new Databugger();
         try {
             databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
