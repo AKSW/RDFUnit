@@ -1,0 +1,450 @@
+@prefix : <http://www.semanticweb.org/owl/owlapi/turtle#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://databugger.aksw.org/ontology/core#> .
+
+<http://databugger.aksw.org/ontology/core#> rdf:type owl:Ontology ;
+                                            
+                                            dc:date "2013-12-14" ;
+                                            
+                                            dc:creator "Jens Lehmann"@en ;
+                                            
+                                            <http://purl.org/vocab/vann/preferredNamespacePrefix> "tddo" ;
+                                            
+                                            dc:creator "Dimitris Kontokostas"@en ;
+                                            
+                                            <http://purl.org/vocab/vann/preferredNamespaceUri> "http://databugger.aksw.org/ontology/core#" ;
+                                            
+                                            dc:creator "Sören Auer"@en ,
+                                                       "Roland Cornelissen"@en ,
+                                                       "Patrick Westphal"@en ,
+                                                       "Sebastian Hellmann"@en ;
+                                            
+                                            dcterms:title "Test-Driven Data Debugging Ontology"@en ;
+                                            
+                                            rdfs:comment "The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."@en ;
+                                            
+                                            dc:description "The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."@en ;
+                                            
+                                            dc:rights "This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)"@en ;
+                                            
+                                            rdfs:seeAlso <http://aksw.org/Projects/Databugger.html> ;
+                                            
+                                            <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/Databugger/commits/master/ontology> .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://databugger.aksw.org/ontology/core#appliesTo
+
+<http://databugger.aksw.org/ontology/core#appliesTo> rdf:type owl:ObjectProperty ;
+                                                     
+                                                     rdfs:label "appliesTo"@en ;
+                                                     
+                                                     rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
+                                                     
+                                                     rdfs:domain <http://databugger.aksw.org/ontology/core#Test> ;
+                                                     
+                                                     rdfs:range <http://databugger.aksw.org/ontology/core#TestAppliesTo> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#basedOnPattern
+
+<http://databugger.aksw.org/ontology/core#basedOnPattern> rdf:type owl:ObjectProperty ;
+                                                          
+                                                          rdfs:label "basedOnPattern"@en ;
+                                                          
+                                                          rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
+                                                          
+                                                          rdfs:range <http://databugger.aksw.org/ontology/core#Pattern> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#generated
+
+<http://databugger.aksw.org/ontology/core#generated> rdf:type owl:ObjectProperty ;
+                                                     
+                                                     rdfs:label "generated"@en ;
+                                                     
+                                                     rdfs:comment "generated specifies the way the test was constructed."@en ;
+                                                     
+                                                     rdfs:domain <http://databugger.aksw.org/ontology/core#Test> ;
+                                                     
+                                                     rdfs:range <http://databugger.aksw.org/ontology/core#TestGenerationType> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#parameter
+
+<http://databugger.aksw.org/ontology/core#parameter> rdf:type owl:ObjectProperty ;
+                                                     
+                                                     rdfs:label "parameter"@en ;
+                                                     
+                                                     rdfs:range <http://databugger.aksw.org/ontology/core#Parameter> ;
+                                                     
+                                                     rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#parameterConstraint
+
+<http://databugger.aksw.org/ontology/core#parameterConstraint> rdf:type owl:ObjectProperty ;
+                                                               
+                                                               rdfs:label "parameterConstrain"@en ;
+                                                               
+                                                               rdfs:domain <http://databugger.aksw.org/ontology/core#Parameter> ;
+                                                               
+                                                               rdfs:range <http://databugger.aksw.org/ontology/core#ParameterConstraint> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#references
+
+<http://databugger.aksw.org/ontology/core#references> rdf:type owl:ObjectProperty ;
+                                                      
+                                                      rdfs:label "references"@en ;
+                                                      
+                                                      rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
+                                                      
+                                                      rdfs:domain <http://databugger.aksw.org/ontology/core#Test> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#source
+
+<http://databugger.aksw.org/ontology/core#source> rdf:type owl:ObjectProperty ;
+                                                  
+                                                  rdfs:label "source"@en ;
+                                                  
+                                                  rdfs:comment "source is the SPARQL endpoint specified in the testcase."@en ;
+                                                  
+                                                  rdfs:domain <http://databugger.aksw.org/ontology/core#Test> .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://databugger.aksw.org/ontology/core#generatorSPARQL
+
+<http://databugger.aksw.org/ontology/core#generatorSPARQL> rdf:type owl:DatatypeProperty ;
+                                                           
+                                                           rdfs:label "generatorSPARQL"@en ;
+                                                           
+                                                           rdfs:domain <http://databugger.aksw.org/ontology/core#TestGenerator> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL
+
+<http://databugger.aksw.org/ontology/core#patternPrevalenceSPARQL> rdf:type owl:DatatypeProperty ;
+                                                                   
+                                                                   rdfs:label "patternPRevalenceSPARQL"@en ;
+                                                                   
+                                                                   rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#patternSPARQL
+
+<http://databugger.aksw.org/ontology/core#patternSPARQL> rdf:type owl:DatatypeProperty ;
+                                                         
+                                                         rdfs:label "patternSPARQL"@en ;
+                                                         
+                                                         rdfs:comment ""@en ;
+                                                         
+                                                         rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#selectVariable
+
+<http://databugger.aksw.org/ontology/core#selectVariable> rdf:type owl:DatatypeProperty ;
+                                                          
+                                                          rdfs:label "selectVariable"@en ;
+                                                          
+                                                          rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> .
+
+
+
+###  http://databugger.aksw.org/ontology/core#sparql
+
+<http://databugger.aksw.org/ontology/core#sparql> rdf:type owl:DatatypeProperty ;
+                                                  
+                                                  rdfs:comment "sparql"@en ;
+                                                  
+                                                  rdfs:domain <http://databugger.aksw.org/ontology/core#Test> .
+
+
+
+###  http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence
+
+<http://www.co-ode.org/ontologies/ont.owl#sparqlPrevalence> rdf:type owl:DatatypeProperty ;
+                                                            
+                                                            rdfs:label "sparqlPrevalence"@en ;
+                                                            
+                                                            rdfs:domain <http://databugger.aksw.org/ontology/core#Test> .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://databugger.aksw.org/ontology/core#Parameter
+
+<http://databugger.aksw.org/ontology/core#Parameter> rdf:type owl:Class ;
+                                                     
+                                                     rdfs:label "Parameter"@en .
+
+
+
+###  http://databugger.aksw.org/ontology/core#ParameterConstraint
+
+<http://databugger.aksw.org/ontology/core#ParameterConstraint> rdf:type owl:Class ;
+                                                               
+                                                               rdfs:label "ParameterConstrain"@en .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Pattern
+
+<http://databugger.aksw.org/ontology/core#Pattern> rdf:type owl:Class ;
+                                                   
+                                                   rdfs:label "Pattern"@en .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Test
+
+<http://databugger.aksw.org/ontology/core#Test> rdf:type owl:Class ;
+                                                
+                                                rdfs:label "Test"@en ;
+                                                
+                                                rdfs:comment "A Test is a testcase in which all properties of the test are described."@en .
+
+
+
+###  http://databugger.aksw.org/ontology/core#TestAppliesTo
+
+<http://databugger.aksw.org/ontology/core#TestAppliesTo> rdf:type owl:Class ;
+                                                         
+                                                         rdfs:label "TestAppliesTo"@en .
+
+
+
+###  http://databugger.aksw.org/ontology/core#TestGenerationType
+
+<http://databugger.aksw.org/ontology/core#TestGenerationType> rdf:type owl:Class ;
+                                                              
+                                                              rdfs:label "TestGenerationType"@en .
+
+
+
+###  http://databugger.aksw.org/ontology/core#TestGenerator
+
+<http://databugger.aksw.org/ontology/core#TestGenerator> rdf:type owl:Class ;
+                                                         
+                                                         rdfs:label "TestGenerator"@en .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://databugger.aksw.org/ontology/core#Application
+
+<http://databugger.aksw.org/ontology/core#Application> rdf:type <http://databugger.aksw.org/ontology/core#TestAppliesTo> ,
+                                                                owl:NamedIndividual ;
+                                              rdfs:label "Application"@en ;           
+                                                       rdfs:comment "Application: When the tests are specific to an application only"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Application> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#TestAppliesTo> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#AutoGenerated
+
+<http://databugger.aksw.org/ontology/core#AutoGenerated> rdf:type <http://databugger.aksw.org/ontology/core#TestGenerationType> ,
+                                                                  owl:NamedIndividual ;
+                                    rdfs:label "AutoGenerated"@en ;                       
+                                                         rdfs:comment "AutoGenerated: This test was created automatically"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#AutoGenerated> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#TestGenerationType> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Class
+
+<http://databugger.aksw.org/ontology/core#Class> rdf:type <http://databugger.aksw.org/ontology/core#ParameterConstraint> ,
+                                                          owl:NamedIndividual ;
+                           rdfs:label "Class"@en ;                        
+                                                 rdfs:comment "The parameter is restricted to a Class."@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Class> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#ParameterConstraint> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Dataset
+
+<http://databugger.aksw.org/ontology/core#Dataset> rdf:type <http://databugger.aksw.org/ontology/core#TestAppliesTo> ,
+                                                            owl:NamedIndividual ;
+                         rdfs:label "Dataset"@en ;                            
+                                                   rdfs:comment "Dataset: When the tests applies to a dataset only (i.e. a SPARQL Endpoint)"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Dataset> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#TestAppliesTo> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#EnrichedSchema
+
+<http://databugger.aksw.org/ontology/core#EnrichedSchema> rdf:type <http://databugger.aksw.org/ontology/core#TestAppliesTo> ,
+                                                                   owl:NamedIndividual ;
+                       rdfs:label "EnrichedSchema"@en ;                                     
+                                                          rdfs:comment "EnrichedSchema: When the tests applies to an ontology / vocabulary enriched with external (semi-)automatic approaches"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#EnrichedSchema> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#TestAppliesTo> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#ManuallyGenerated
+
+<http://databugger.aksw.org/ontology/core#ManuallyGenerated> rdf:type <http://databugger.aksw.org/ontology/core#TestGenerationType> ,
+                                                                      owl:NamedIndividual ;
+                   rdfs:label "ManuallyGenerated"@en ;                                            
+                                                             rdfs:comment "ManuallyGenerated: This test was created manually"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#ManuallyGenerated> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#TestGenerationType> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#None
+
+<http://databugger.aksw.org/ontology/core#None> rdf:type <http://databugger.aksw.org/ontology/core#ParameterConstraint> ,
+                                                         owl:NamedIndividual ;
+  rdfs:label "None"@en ;                                                
+                                                rdfs:comment "The parameter can be anything, even a free variable (?var)"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#None> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#ParameterConstraint> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Operator
+
+<http://databugger.aksw.org/ontology/core#Operator> rdf:type <http://databugger.aksw.org/ontology/core#ParameterConstraint> ,
+                                                             owl:NamedIndividual ;
+              rdfs:label "Operator"@en ;                                        
+                                                    rdfs:comment "The parameter can be an operator."@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Operator> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#ParameterConstraint> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Property
+
+<http://databugger.aksw.org/ontology/core#Property> rdf:type <http://databugger.aksw.org/ontology/core#ParameterConstraint> ,
+                                                             owl:NamedIndividual ;
+                       rdfs:label "Property"@en ;                               
+                                                    rdfs:comment "The parameter is restricted to a property."@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#ParameterConstraint> ;
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Property> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Resource
+
+<http://databugger.aksw.org/ontology/core#Resource> rdf:type <http://databugger.aksw.org/ontology/core#ParameterConstraint> ,
+                                                             owl:NamedIndividual ;
+                                         rdfs:label "Resource"@en ;             
+                                                    rdfs:comment "The pattern can be a resource."@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#ParameterConstraint> ;
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Resource> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+###  http://databugger.aksw.org/ontology/core#Schema
+
+<http://databugger.aksw.org/ontology/core#Schema> rdf:type <http://databugger.aksw.org/ontology/core#TestAppliesTo> ,
+                                                           owl:NamedIndividual ;
+  rdfs:label "Schema"@en .
+[ rdf:type owl:Axiom ;
+
+  owl:annotatedSource <http://databugger.aksw.org/ontology/core#Schema> ;
+  owl:annotatedTarget <http://databugger.aksw.org/ontology/core#TestAppliesTo> ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+
+
+###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
+
