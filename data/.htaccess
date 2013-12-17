@@ -1,5 +1,5 @@
 AddType  text/turtle             .ttl
-
+AddType  application/rdf+xml     .rdf
 
 # Rewrite engine setup
 RewriteEngine On
@@ -11,4 +11,14 @@ RewriteRule ^patterns$ patterns.ttl [R=303]
 RewriteRule ^generators$ testAutoGenerators.ttl [R=303]
 RewriteRule ^tests$ tests.ttl [R=303]
 
+# Rewrite rule to serve RDF/XML content if requested
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^patterns$ patterns.rdf [R=303]
+RewriteRule ^generators$ testAutoGenerators.rdf [R=303]
+RewriteRule ^tests$ tests.rdf [R=303]
+
+# Choose the default response
+RewriteRule ^core$ core.ttl [R=303]
+RewriteRule ^generators$ testAutoGenerators.ttl [R=303]
+RewriteRule ^tests$ tests.ttl [R=303]
 		
