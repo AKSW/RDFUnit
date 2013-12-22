@@ -1,4 +1,20 @@
-PACKAGE (0) UNRELEASED; urgency=low
+databugger (0.21387263581) ldstack-nightly; urgency=low
+
+  * commit 05db0906d46f0621cba71f8fbf044cac83b30631 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Mon Dec 16 14:55:15 2013
+    +0200      dereference patterns, generators & tests
+
+ -- dcherix <dcherix@jl-Latitude-E6420>  Tue, 17 Dec 2013 08:11:52 +0100
+
+databugger (0.2) ldstack-nightly; urgency=low
+
+  * commit add3caf681faa2a5f25f4ac127bdae0fe34bc472 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Mon Nov 25 14:54:32 2013
+    +0200      Store configuration in session
+
+ -- dcherix <dcherix@jl-Latitude-E6420>  Mon, 09 Dec 2013 17:21:53 +0100
+
+databugger (0) UNRELEASED; urgency=low
 
   * Initial release. (Closes: #XXXXXX)
 

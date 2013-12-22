@@ -1,1 +1,11 @@
+release date=08:13 17.12.2013,version=0.2,urgency=low,by=Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>,distribution=development
+ * commit 05db0906d46f0621cba71f8fbf044cac83b30631Author: Dimitris Kontokostas <jimkont@gmail.com>Date:   Mon Dec 16 14:55:15 2013 +0200    dereference patterns, generators  tests
+release date=08:12 17.12.2013,version=0.21387263581,urgency=low,by=Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>,distribution=development
+ * commit 05db0906d46f0621cba71f8fbf044cac83b30631Author: Dimitris Kontokostas <jimkont@gmail.com>Date:   Mon Dec 16 14:55:15 2013 +0200    dereference patterns, generators  tests
+release date=17:22 09.12.2013,version=0.2,urgency=low,by=Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>,distribution=development
+ * commit add3caf681faa2a5f25f4ac127bdae0fe34bc472Author: Dimitris Kontokostas <jimkont@gmail.com>Date:   Mon Nov 25 14:54:32 2013 +0200    Store configuration in session
+release date=17:21 09.12.2013,version=0.2,urgency=low,by=Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>,distribution=development
+ * commit add3caf681faa2a5f25f4ac127bdae0fe34bc472Author: Dimitris Kontokostas <jimkont@gmail.com>Date:   Mon Nov 25 14:54:32 2013 +0200    Store configuration in session
+release date=17:16 09.12.2013,version=0.2,urgency=low,by=Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>,distribution=development
+ * commit add3caf681faa2a5f25f4ac127bdae0fe34bc472Author: Dimitris Kontokostas <jimkont@gmail.com>Date:   Mon Nov 25 14:54:32 2013 +0200    Store configuration in session
 release date=12:47 17.11.2013,version=0.1,urgency=low,by=Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>,distribution=development
