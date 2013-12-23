@@ -101,7 +101,7 @@
     <!-- http://databugger.aksw.org/ns/core#parameterConstraint -->
 
     <owl:ObjectProperty rdf:about="http://databugger.aksw.org/ns/core#parameterConstraint">
-        <rdfs:label xml:lang="en">parameterConstrain</rdfs:label>
+        <rdfs:label xml:lang="en">parameterConstraint</rdfs:label>
         <rdfs:domain rdf:resource="http://databugger.aksw.org/ns/core#Parameter"/>
         <rdfs:range rdf:resource="http://databugger.aksw.org/ns/core#ParameterConstraint"/>
     </owl:ObjectProperty>

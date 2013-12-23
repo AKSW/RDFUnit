@@ -100,7 +100,7 @@
 
 <http://databugger.aksw.org/ns/core#parameterConstraint> rdf:type owl:ObjectProperty ;
                                                                
-                                                               rdfs:label "parameterConstrain"@en ;
+                                                               rdfs:label "parameterConstraint"@en ;
                                                                
                                                                rdfs:domain <http://databugger.aksw.org/ns/core#Parameter> ;
                                                                
