@@ -32,9 +32,9 @@ public class DatabuggerUtils {
                 " PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
                 " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
                 " PREFIX dc: <http://purl.org/dc/elements/1.1/> \n" +
-                " PREFIX tddo: <http://databugger.aksw.org/ontology/core#> \n" +
+                " PREFIX tddo: <http://databugger.aksw.org/ns/core#> \n" +
                 " PREFIX tddp: <http://databugger.aksw.org/data/patterns#> \n" +
-                " PREFIX tddt: <http://databugger.aksw.org/ontology/tests#> \n" +
+                " PREFIX tddt: <http://databugger.aksw.org/data/tests#> \n" +
                 " PREFIX tddg: <http://databugger.aksw.org/data/generators#> \n"
                 ;
     }
