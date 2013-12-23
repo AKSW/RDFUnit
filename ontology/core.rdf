@@ -244,7 +244,7 @@
     <!-- http://databugger.aksw.org/ontology/core#ParameterConstraint -->
 
     <owl:Class rdf:about="http://databugger.aksw.org/ontology/core#ParameterConstraint">
-        <rdfs:label xml:lang="en">ParameterConstrain</rdfs:label>
+        <rdfs:label xml:lang="en">ParameterConstraint</rdfs:label>
     </owl:Class>
     
 

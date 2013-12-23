@@ -411,7 +411,7 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
         <IRI>ParameterConstraint</IRI>
-        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">ParameterConstrain</Literal>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">ParameterConstraint</Literal>
     </AnnotationAssertion>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>

@@ -217,6 +217,18 @@
 
 
 
+###  http://databugger.aksw.org/ontology/core#sparqlPrevalence
+
+<http://databugger.aksw.org/ontology/core#sparqlPrevalence> rdf:type owl:DatatypeProperty ;
+                                                            
+                                                            rdfs:label "sparqlPrevalence"@en ;
+                                                            
+                                                            rdfs:comment "A sparql query for prevalence"@en ;
+                                                            
+                                                            rdfs:range xsd:string .
+
+
+
 ###  http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern
 
 <http://databugger.aksw.org/ontology/core#sparqlPrevalencePattern> rdf:type owl:DatatypeProperty ;
@@ -228,18 +240,6 @@
                                                                    rdfs:domain <http://databugger.aksw.org/ontology/core#Pattern> ;
                                                                    
                                                                    rdfs:range xsd:string .
-
-
-
-###  http://databugger.aksw.org/ontology/core#sparqlPrevalence
-
-<http://databugger.aksw.org/ontology/core#sparqlPrevalence> rdf:type owl:DatatypeProperty ;
-                                                            
-                                                            rdfs:label "sparqlPrevalence"@en ;
-                                                            
-                                                            rdfs:comment "A sparql query for prevalence"@en ;
-                                                            
-                                                            rdfs:range xsd:string .
 
 
 
@@ -264,7 +264,7 @@
 
 <http://databugger.aksw.org/ontology/core#ParameterConstraint> rdf:type owl:Class ;
                                                                
-                                                               rdfs:label "ParameterConstrain"@en .
+                                                               rdfs:label "ParameterConstraint"@en .
 
 
 
