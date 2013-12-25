@@ -1,510 +1,315 @@
-@prefix : <http://www.semanticweb.org/owl/owlapi/turtle#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix tddo: <http://databugger.aksw.org/ontology#> .
+@prefix tddo: <http://databugger.aksw.org/ns/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@base <http://databugger.aksw.org/ns/core#> .
 
-<http://databugger.aksw.org/ns/core#> rdf:type owl:Ontology ;
-                                      
-                                      <http://purl.org/vocab/vann/preferredNamespacePrefix> "tddo" ;
-                                      
-                                      <http://purl.org/vocab/vann/preferredNamespaceUri> "http://databugger.aksw.org/ns/core#" ;
-                                      
-                                      dc:date "2013-12-14" ;
-                                      
-                                      dc:creator "Dimitris Kontokostas"@en ,
-                                                 "Jens Lehmann"@en ,
-                                                 "Patrick Westphal"@en ,
-                                                 "Roland Cornelissen"@en ,
-                                                 "Sebastian Hellmann"@en ,
-                                                 "Sören Auer"@en ;
-                                      
-                                      dcterms:title "Test-Driven Data Debugging Ontology"@en ;
-                                      
-                                      rdfs:comment "The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."@en ;
-                                      
-                                      dc:description "The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."@en ;
-                                      
-                                      dc:rights "This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)"@en ;
-                                      
-                                      rdfs:seeAlso <http://aksw.org/Projects/Databugger.html> ;
-                                      
-                                      <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/Databugger/commits/master/ontology> .
+<http://databugger.aksw.org/ns/core#>
+    a owl:Ontology ;
+
+    <http://purl.org/vocab/vann/preferredNamespacePrefix> "tddo" ;
+    <http://purl.org/vocab/vann/preferredNamespaceUri> "http://databugger.aksw.org/ns/core#" ;
+    <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/Databugger/commits/master/ontology> ;
+
+#   owl:versionInfo "" ;
+
+    rdfs:label "Test-Driven Data Debugging Ontology"@en ;
+    dcterms:title "Test-Driven Data Debugging Ontology"@en ;
+    rdfs:isDefinedBy <http://databugger.aksw.org/ns/core.ttl> ;
+    dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dc:rights "This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)"@en ;
+    dc:date "2013-12-14" ;
+    dc:creator "Dimitris Kontokostas"@en ,
+               "Jens Lehmann"@en ,
+               "Patrick Westphal"@en ,
+               "Roland Cornelissen"@en ,
+               "Sebastian Hellmann"@en ,
+               "Sören Auer"@en ;
+
+#	dc:description <diagram url> .
+
+    rdfs:comment
+        """The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+
+    dc:description
+        """The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+
+    rdfs:seeAlso <http://aksw.org/Projects/Databugger.html> .
 
 
 #################################################################
-#
 #    Annotation properties
-#
 #################################################################
 
+owl:cardinality
+    a owl:AnnotationProperty .
 
-###  http://www.w3.org/2002/07/owl#cardinality
-
-owl:cardinality rdf:type owl:AnnotationProperty .
-
-
-
-###  http://www.w3.org/2002/07/owl#minCardinality
-
-owl:minCardinality rdf:type owl:AnnotationProperty .
-
-
-
+owl:minCardinality
+    a owl:AnnotationProperty .
 
 
 #################################################################
-#
-#    Object Properties
-#
+# Patterns
 #################################################################
 
+tddo:Pattern
+    a owl:Class ;
+    rdfs:label "Pattern"@en .
 
-###  http://databugger.aksw.org/ns/core#appliesTo
+tddo:selectVariable
+    a owl:DatatypeProperty ;
+    rdfs:label "selectVariable"@en ;
+    rdfs:comment "the select variable the Pattern uses e.g. '?s'."@en ;
+    rdfs:domain tddo:Pattern ;
+    rdfs:range xsd:string ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
 
-<http://databugger.aksw.org/ns/core#appliesTo> rdf:type owl:ObjectProperty ;
-                                               
-                                               rdfs:label "appliesTo"@en ;
-                                               
-                                               owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                               
-                                               rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
-                                               
-                                               rdfs:domain <http://databugger.aksw.org/ns/core#Test> ;
-                                               
-                                               rdfs:range <http://databugger.aksw.org/ns/core#TestAppliesTo> .
+tddo:sparqlPattern
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlPattern"@en ;
+    rdfs:comment "A pattern sparql query with placeholders (%%XYZ%%)for parameters"@en ;
+    rdfs:domain tddo:Pattern ;
+    rdfs:range xsd:string ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
 
+tddo:sparqlPrevalencePattern
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlPrevalencePattern"@en ;
+    rdfs:comment "A pattern sparql prevalence query, reuses the pattern parameters, maybe not all of them. The prevalence query may be empty"@en ;
+    rdfs:domain tddo:Pattern ;
+    rdfs:range xsd:string ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
 
-
-###  http://databugger.aksw.org/ns/core#basedOnPattern
-
-<http://databugger.aksw.org/ns/core#basedOnPattern> rdf:type owl:ObjectProperty ;
-                                                    
-                                                    rdfs:label "basedOnPattern"@en ;
-                                                    
-                                                    owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                                    
-                                                    rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
-                                                    
-                                                    rdfs:range <http://databugger.aksw.org/ns/core#Pattern> .
-
-
-
-###  http://databugger.aksw.org/ns/core#generated
-
-<http://databugger.aksw.org/ns/core#generated> rdf:type owl:ObjectProperty ;
-                                               
-                                               rdfs:label "generated"@en ;
-                                               
-                                               owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                               
-                                               rdfs:comment "generated specifies the way the test was constructed."@en ;
-                                               
-                                               rdfs:domain <http://databugger.aksw.org/ns/core#Test> ;
-                                               
-                                               rdfs:range <http://databugger.aksw.org/ns/core#TestGenerationType> .
-
-
-
-###  http://databugger.aksw.org/ns/core#parameter
-
-<http://databugger.aksw.org/ns/core#parameter> rdf:type owl:ObjectProperty ;
-                                               
-                                               rdfs:label "parameter"@en ;
-                                               
-                                               rdfs:range <http://databugger.aksw.org/ns/core#Parameter> ;
-                                               
-                                               rdfs:domain <http://databugger.aksw.org/ns/core#Pattern> .
-
-
-
-###  http://databugger.aksw.org/ns/core#parameterConstraint
-
-<http://databugger.aksw.org/ns/core#parameterConstraint> rdf:type owl:ObjectProperty ;
-                                                         
-                                                         rdfs:label "parameterConstraint"@en ;
-                                                         
-                                                         rdfs:domain <http://databugger.aksw.org/ns/core#Parameter> ;
-                                                         
-                                                         rdfs:range <http://databugger.aksw.org/ns/core#ParameterConstraint> .
-
-
-
-###  http://databugger.aksw.org/ns/core#references
-
-<http://databugger.aksw.org/ns/core#references> rdf:type owl:ObjectProperty ;
-                                                
-                                                rdfs:label "references"@en ;
-                                                
-                                                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                                                
-                                                rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
-                                                
-                                                rdfs:domain <http://databugger.aksw.org/ns/core#Test> .
-
-
-
-###  http://databugger.aksw.org/ns/core#source
-
-<http://databugger.aksw.org/ns/core#source> rdf:type owl:ObjectProperty ;
-                                            
-                                            rdfs:label "source"@en ;
-                                            
-                                            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                            
-                                            rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#test
-
-<http://databugger.aksw.org/ns/core#test> rdf:type owl:ObjectProperty ;
-                                          
-                                          rdfs:label "test"@en ;
-                                          
-                                          rdfs:comment "points to a Test" ;
-                                          
-                                          rdfs:range <http://databugger.aksw.org/ns/core#Test> .
-
-
-
+tddo:parameter
+    a owl:ObjectProperty ;
+    rdfs:label "parameter"@en ;
+    rdfs:comment "links a Pattern with a list of pattern parameters"@en ;
+    rdfs:range tddo:Parameter ;
+    rdfs:domain tddo:Pattern .
 
 
 #################################################################
-#
-#    Data properties
-#
+# Pattern Parameter
 #################################################################
 
 
-###  http://databugger.aksw.org/ns/core#resultCount
+tddo:Parameter
+    a owl:Class ;
+    rdfs:label "Parameter"@en .
 
-<http://databugger.aksw.org/ns/core#resultCount> rdf:type owl:DatatypeProperty ;
-                                                 
-                                                 rdfs:label "resultCount"@en ;
-                                                 
-                                                 rdfs:comment "The error results of a test execution"@en ;
-                                                 
-                                                 rdfs:domain <http://databugger.aksw.org/ns/core#Result> ;
-                                                 
-                                                 rdfs:range xsd:integer .
+tddo:parameterConstraint
+    a owl:ObjectProperty ;
+    rdfs:label "parameterConstraint"@en ;
+    rdfs:domain tddo:Parameter ;
+    rdfs:range tddo:ParameterConstraint .
 
+tddo:ParameterConstraint
+    a owl:Class ;
+    rdfs:label "ParameterConstraint"@en .
 
+# Parameter Constraint Instances
 
-###  http://databugger.aksw.org/ns/core#resultPrevalence
+tddo:None
+    a tddo:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "None"@en ;
+    rdfs:comment "The parameter can be anything, even a free variable (?var)"@en .
 
-<http://databugger.aksw.org/ns/core#resultPrevalence> rdf:type owl:DatatypeProperty ;
-                                                      
-                                                      rdfs:label "resultPrevalence"@en ;
-                                                      
-                                                      rdfs:comment "The prevalence result of a test execution"@en ;
-                                                      
-                                                      rdfs:domain <http://databugger.aksw.org/ns/core#Result> ;
-                                                      
-                                                      rdfs:range xsd:integer .
+tddo:Operator
+    a tddo:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Operator"@en ;
+    rdfs:comment "The parameter can be an operator."@en .
 
+tddo:Resource
+    a tddo:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Resource"@en ;
+    rdfs:comment "The pattern can be a resource."@en .
 
+tddo:Property
+    a tddo:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Property"@en ;
+    rdfs:comment "The parameter is restricted to a property."@en .
 
-###  http://databugger.aksw.org/ns/core#selectVariable
-
-<http://databugger.aksw.org/ns/core#selectVariable> rdf:type owl:DatatypeProperty ;
-                                                    
-                                                    rdfs:label "selectVariable"@en ;
-                                                    
-                                                    owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                                    
-                                                    rdfs:domain <http://databugger.aksw.org/ns/core#Pattern> ;
-                                                    
-                                                    rdfs:range xsd:string .
-
-
-
-###  http://databugger.aksw.org/ns/core#sparql
-
-<http://databugger.aksw.org/ns/core#sparql> rdf:type owl:DatatypeProperty ;
-                                            
-                                            rdfs:label "sparql"@en ;
-                                            
-                                            rdfs:comment "A sparql query"@en ;
-                                            
-                                            rdfs:domain <http://databugger.aksw.org/ns/core#Test> ;
-                                            
-                                            rdfs:range xsd:string .
-
-
-
-###  http://databugger.aksw.org/ns/core#sparqlGenerator
-
-<http://databugger.aksw.org/ns/core#sparqlGenerator> rdf:type owl:DatatypeProperty ;
-                                                     
-                                                     rdfs:label "sparqlGenerator"@en ;
-                                                     
-                                                     owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                                     
-                                                     rdfs:comment "A SPARQL query used to instantiate test cases based on patterns"@en ;
-                                                     
-                                                     rdfs:domain <http://databugger.aksw.org/ns/core#TestGenerator> ;
-                                                     
-                                                     rdfs:range xsd:string .
-
-
-
-###  http://databugger.aksw.org/ns/core#sparqlPattern
-
-<http://databugger.aksw.org/ns/core#sparqlPattern> rdf:type owl:DatatypeProperty ;
-                                                   
-                                                   rdfs:label "sparqlPattern"@en ;
-                                                   
-                                                   owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                                   
-                                                   rdfs:comment "A pattern sparql query"@en ;
-                                                   
-                                                   rdfs:domain <http://databugger.aksw.org/ns/core#Pattern> ;
-                                                   
-                                                   rdfs:range xsd:string .
-
-
-
-###  http://databugger.aksw.org/ns/core#sparqlPrevalence
-
-<http://databugger.aksw.org/ns/core#sparqlPrevalence> rdf:type owl:DatatypeProperty ;
-                                                      
-                                                      rdfs:label "sparqlPrevalence"@en ;
-                                                      
-                                                      rdfs:comment "A sparql query for prevalence"@en ;
-                                                      
-                                                      rdfs:domain <http://databugger.aksw.org/ns/core#Test> ;
-                                                      
-                                                      rdfs:range xsd:string .
-
-
-
-###  http://databugger.aksw.org/ns/core#sparqlPrevalencePattern
-
-<http://databugger.aksw.org/ns/core#sparqlPrevalencePattern> rdf:type owl:DatatypeProperty ;
-                                                             
-                                                             rdfs:label "sparqlPrevalencePattern"@en ;
-                                                             
-                                                             owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                                                             
-                                                             rdfs:comment "A pattern sparql prevalence query"@en ;
-                                                             
-                                                             rdfs:domain <http://databugger.aksw.org/ns/core#Pattern> ;
-                                                             
-                                                             rdfs:range xsd:string .
-
-
-
+tddo:Class
+    a tddo:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Class"@en ;
+    rdfs:comment "The parameter is restricted to a Class."@en .
 
 
 #################################################################
-#
-#    Classes
-#
+# Generators
 #################################################################
 
+tddo:TestGenerator
+    a owl:Class ;
+    rdfs:label "TestGenerator"@en .
 
-###  http://databugger.aksw.org/ns/core#Parameter
-
-<http://databugger.aksw.org/ns/core#Parameter> rdf:type owl:Class ;
-                                               
-                                               rdfs:label "Parameter"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#ParameterConstraint
-
-<http://databugger.aksw.org/ns/core#ParameterConstraint> rdf:type owl:Class ;
-                                                         
-                                                         rdfs:label "ParameterConstraint"@en .
+tddo:sparqlGenerator
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlGenerator"@en ;
+    rdfs:comment "A SPARQL query used to instantiate test cases based on patterns"@en ;
+    rdfs:domain tddo:TestGenerator ;
+    rdfs:range xsd:string ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
 
 
+#################################################################
+# Tests
+#################################################################
 
-###  http://databugger.aksw.org/ns/core#Pattern
+tddo:Test
+    a owl:Class ;
+    rdfs:label "Test"@en ;
+    rdfs:comment "A Test is a testcase in which all properties of the test are described."@en .
 
-<http://databugger.aksw.org/ns/core#Pattern> rdf:type owl:Class ;
-                                             
-                                             rdfs:label "Pattern"@en .
+tddo:appliesTo
+    a owl:ObjectProperty ;
+    rdfs:label "appliesTo"@en ;
+    rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
+    rdfs:domain tddo:Test ;
+    rdfs:range tddo:TestAppliesTo ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+tddo:basedOnPattern
+    a owl:ObjectProperty ;
+    rdfs:label "basedOnPattern"@en ;
+    rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
+    rdfs:range tddo:Pattern ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+tddo:generated
+    a owl:ObjectProperty ;
+    rdfs:label "generated"@en ;
+    rdfs:comment "generated specifies the way the test was constructed."@en ;
+    rdfs:domain tddo:Test ;
+    rdfs:range tddo:TestGenerationType ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+tddo:references
+    a owl:ObjectProperty ;
+    rdfs:label "references"@en ;
+    rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
+    rdfs:domain tddo:Test ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger .
 
 
+tddo:source
+    a owl:ObjectProperty ;
+    rdfs:label "source"@en ;
+    rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger .
 
-###  http://databugger.aksw.org/ns/core#Result
 
-<http://databugger.aksw.org/ns/core#Result> rdf:type owl:Class ;
-                                            
-                                            rdfs:label "Result"@en ;
-                                            
-                                            rdfs:comment "A class that holds the results of a single test execution"@en .
+tddo:sparql
+    a owl:DatatypeProperty ;
+    rdfs:label "sparql"@en ;
+    rdfs:comment "A sparql query"@en ;
+    rdfs:domain tddo:Test ;
+    rdfs:range xsd:string .
+
+#################################################################
+
+tddo:TestGenerationType
+    a owl:Class ;
+    rdfs:label "TestGenerationType"@en .
+
+# Generation Type Instances
+
+tddo:ManuallyGenerated
+    a tddo:TestGenerationType ,
+        owl:NamedIndividual ;
+    rdfs:label "ManuallyGenerated"@en ;
+    rdfs:comment "ManuallyGenerated: This test was created manually"@en .
+
+tddo:AutoGenerated
+    a tddo:TestGenerationType ,
+        owl:NamedIndividual ;
+    rdfs:label "AutoGenerated"@en ;
+    rdfs:comment "AutoGenerated: This test was created automatically"@en .
+
+
+#################################################################
+
+tddo:TestAppliesTo
+    a owl:Class ;
+    rdfs:label "TestAppliesTo"@en .
+
+# Test Applies To Instances
+
+tddo:Schema
+    a tddo:TestAppliesTo ,
+        owl:NamedIndividual ;
+    rdfs:label "Schema"@en .
+
+tddo:Dataset
+    a tddo:TestAppliesTo ,
+        owl:NamedIndividual ;
+    rdfs:label "Dataset"@en ;
+    rdfs:comment "Dataset: When the tests applies to a dataset only (i.e. a SPARQL Endpoint)"@en .
+
+tddo:EnrichedSchema
+    a tddo:TestAppliesTo ,
+        owl:NamedIndividual ;
+    rdfs:label "EnrichedSchema"@en ;
+    rdfs:comment "EnrichedSchema: When the tests applies to an ontology / vocabulary enriched with external (semi-)automatic approaches"@en .
+
+tddo:Application
+    a tddo:TestAppliesTo ,
+        owl:NamedIndividual ;
+    rdfs:label "Application"@en ;
+    rdfs:comment "Application: When the tests are specific to an application only"@en .
+
+tddo:sparqlPrevalence
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlPrevalence"@en ;
+    rdfs:comment "A sparql query for prevalence"@en ;
+    rdfs:domain tddo:Test ;
+    rdfs:range xsd:string .
+
+
 
 
 
 ###  http://databugger.aksw.org/ns/core#Test
 
-<http://databugger.aksw.org/ns/core#Test> rdf:type owl:Class ;
-                                          
-                                          rdfs:label "Test"@en ;
-                                          
-                                          rdfs:comment "A Test is a testcase in which all properties of the test are described."@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#TestAppliesTo
-
-<http://databugger.aksw.org/ns/core#TestAppliesTo> rdf:type owl:Class ;
-                                                   
-                                                   rdfs:label "TestAppliesTo"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#TestGenerationType
-
-<http://databugger.aksw.org/ns/core#TestGenerationType> rdf:type owl:Class ;
-                                                        
-                                                        rdfs:label "TestGenerationType"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#TestGenerator
-
-<http://databugger.aksw.org/ns/core#TestGenerator> rdf:type owl:Class ;
-                                                   
-                                                   rdfs:label "TestGenerator"@en .
 
 
 
 
 
 #################################################################
-#
-#    Individuals
-#
+# Results
 #################################################################
 
+tddo:Result
+    a owl:Class ;
+    rdfs:label "Result"@en ;
+    rdfs:comment "A class that holds the results of a single test execution"@en .
 
-###  http://databugger.aksw.org/ns/core#Application
+tddo:test
+    a owl:ObjectProperty ;
+    rdfs:label "test"@en ;
+    rdfs:comment "points to a Test" ;
+    rdfs:range tddo:Test .
 
-<http://databugger.aksw.org/ns/core#Application> rdf:type <http://databugger.aksw.org/ns/core#TestAppliesTo> ,
-                                                          owl:NamedIndividual ;
-                                                 
-                                                 rdfs:label "Application"@en ;
-                                                 
-                                                 rdfs:comment "Application: When the tests are specific to an application only"@en .
+tddo:resultCount
+    a owl:DatatypeProperty ;
+    rdfs:label "resultCount"@en ;
+    rdfs:comment "The error results of a test execution"@en ;
+    rdfs:domain tddo:Result ;
+    rdfs:range xsd:integer .
 
-
-
-###  http://databugger.aksw.org/ns/core#AutoGenerated
-
-<http://databugger.aksw.org/ns/core#AutoGenerated> rdf:type <http://databugger.aksw.org/ns/core#TestGenerationType> ,
-                                                            owl:NamedIndividual ;
-                                                   
-                                                   rdfs:label "AutoGenerated"@en ;
-                                                   
-                                                   rdfs:comment "AutoGenerated: This test was created automatically"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#Class
-
-<http://databugger.aksw.org/ns/core#Class> rdf:type <http://databugger.aksw.org/ns/core#ParameterConstraint> ,
-                                                    owl:NamedIndividual ;
-                                           
-                                           rdfs:label "Class"@en ;
-                                           
-                                           rdfs:comment "The parameter is restricted to a Class."@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#Dataset
-
-<http://databugger.aksw.org/ns/core#Dataset> rdf:type <http://databugger.aksw.org/ns/core#TestAppliesTo> ,
-                                                      owl:NamedIndividual ;
-                                             
-                                             rdfs:label "Dataset"@en ;
-                                             
-                                             rdfs:comment "Dataset: When the tests applies to a dataset only (i.e. a SPARQL Endpoint)"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#EnrichedSchema
-
-<http://databugger.aksw.org/ns/core#EnrichedSchema> rdf:type <http://databugger.aksw.org/ns/core#TestAppliesTo> ,
-                                                             owl:NamedIndividual ;
-                                                    
-                                                    rdfs:label "EnrichedSchema"@en ;
-                                                    
-                                                    rdfs:comment "EnrichedSchema: When the tests applies to an ontology / vocabulary enriched with external (semi-)automatic approaches"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#ManuallyGenerated
-
-<http://databugger.aksw.org/ns/core#ManuallyGenerated> rdf:type <http://databugger.aksw.org/ns/core#TestGenerationType> ,
-                                                                owl:NamedIndividual ;
-                                                       
-                                                       rdfs:label "ManuallyGenerated"@en ;
-                                                       
-                                                       rdfs:comment "ManuallyGenerated: This test was created manually"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#None
-
-<http://databugger.aksw.org/ns/core#None> rdf:type <http://databugger.aksw.org/ns/core#ParameterConstraint> ,
-                                                   owl:NamedIndividual ;
-                                          
-                                          rdfs:label "None"@en ;
-                                          
-                                          rdfs:comment "The parameter can be anything, even a free variable (?var)"@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#Operator
-
-<http://databugger.aksw.org/ns/core#Operator> rdf:type <http://databugger.aksw.org/ns/core#ParameterConstraint> ,
-                                                       owl:NamedIndividual ;
-                                              
-                                              rdfs:label "Operator"@en ;
-                                              
-                                              rdfs:comment "The parameter can be an operator."@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#Property
-
-<http://databugger.aksw.org/ns/core#Property> rdf:type <http://databugger.aksw.org/ns/core#ParameterConstraint> ,
-                                                       owl:NamedIndividual ;
-                                              
-                                              rdfs:label "Property"@en ;
-                                              
-                                              rdfs:comment "The parameter is restricted to a property."@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#Resource
-
-<http://databugger.aksw.org/ns/core#Resource> rdf:type <http://databugger.aksw.org/ns/core#ParameterConstraint> ,
-                                                       owl:NamedIndividual ;
-                                              
-                                              rdfs:label "Resource"@en ;
-                                              
-                                              rdfs:comment "The pattern can be a resource."@en .
-
-
-
-###  http://databugger.aksw.org/ns/core#Schema
-
-<http://databugger.aksw.org/ns/core#Schema> rdf:type <http://databugger.aksw.org/ns/core#TestAppliesTo> ,
-                                                     owl:NamedIndividual ;
-                                            
-                                            rdfs:label "Schema"@en .
-
-
-
-
-###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
-
+tddo:resultPrevalence
+    a owl:DatatypeProperty ;
+    rdfs:label "resultPrevalence"@en ;
+    rdfs:comment "The prevalence result of a test execution"@en ;
+    rdfs:domain tddo:Result ;
+    rdfs:range xsd:integer .
