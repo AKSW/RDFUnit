@@ -42,47 +42,48 @@
 
 
 #################################################################
-#    Annotation properties
-#################################################################
-
-owl:cardinality
-    a owl:AnnotationProperty .
-
-owl:minCardinality
-    a owl:AnnotationProperty .
-
-
-#################################################################
 # Patterns
 #################################################################
 
 tddo:Pattern
     a owl:Class ;
-    rdfs:label "Pattern"@en .
+    rdfs:label "Pattern"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:selectVariable;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:sparqlPattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:sparqlPrevalencePattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] .
 
 tddo:selectVariable
     a owl:DatatypeProperty ;
     rdfs:label "selectVariable"@en ;
     rdfs:comment "the select variable the Pattern uses e.g. '?s'."@en ;
     rdfs:domain tddo:Pattern ;
-    rdfs:range xsd:string ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range xsd:string .
 
 tddo:sparqlPattern
     a owl:DatatypeProperty ;
     rdfs:label "sparqlPattern"@en ;
     rdfs:comment "A pattern sparql query with placeholders (%%XYZ%%)for parameters"@en ;
     rdfs:domain tddo:Pattern ;
-    rdfs:range xsd:string ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range xsd:string .
 
 tddo:sparqlPrevalencePattern
     a owl:DatatypeProperty ;
     rdfs:label "sparqlPrevalencePattern"@en ;
     rdfs:comment "A pattern sparql prevalence query, reuses the pattern parameters, maybe not all of them. The prevalence query may be empty"@en ;
     rdfs:domain tddo:Pattern ;
-    rdfs:range xsd:string ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range xsd:string .
 
 tddo:parameter
     a owl:ObjectProperty ;
@@ -150,15 +151,19 @@ tddo:Class
 
 tddo:TestGenerator
     a owl:Class ;
-    rdfs:label "TestGenerator"@en .
+    rdfs:label "TestGenerator"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:sparqlGenerator;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] .
 
 tddo:sparqlGenerator
     a owl:DatatypeProperty ;
     rdfs:label "sparqlGenerator"@en ;
     rdfs:comment "A SPARQL query used to instantiate test cases based on patterns"@en ;
     rdfs:domain tddo:TestGenerator ;
-    rdfs:range xsd:string ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range xsd:string .
 
 
 #################################################################
@@ -168,44 +173,64 @@ tddo:sparqlGenerator
 tddo:Test
     a owl:Class ;
     rdfs:label "Test"@en ;
-    rdfs:comment "A Test is a testcase in which all properties of the test are described."@en .
+    rdfs:comment "A Test is a testcase in which all properties of the test are described."@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:appliesTo;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:basedOnPattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:generated;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:source;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:references;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] .
 
 tddo:appliesTo
     a owl:ObjectProperty ;
     rdfs:label "appliesTo"@en ;
     rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
     rdfs:domain tddo:Test ;
-    rdfs:range tddo:TestAppliesTo ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range tddo:TestAppliesTo .
 
 tddo:basedOnPattern
     a owl:ObjectProperty ;
     rdfs:label "basedOnPattern"@en ;
     rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
-    rdfs:range tddo:Pattern ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range tddo:Pattern .
 
 tddo:generated
     a owl:ObjectProperty ;
     rdfs:label "generated"@en ;
     rdfs:comment "generated specifies the way the test was constructed."@en ;
     rdfs:domain tddo:Test ;
-    rdfs:range tddo:TestGenerationType ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:range tddo:TestGenerationType .
 
 tddo:references
     a owl:ObjectProperty ;
     rdfs:label "references"@en ;
     rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
-    rdfs:domain tddo:Test ;
-    owl:minCardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:domain tddo:Test .
 
 
 tddo:source
     a owl:ObjectProperty ;
     rdfs:label "source"@en ;
-    rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger .
+    rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
 
 
 tddo:sparql
@@ -273,16 +298,6 @@ tddo:sparqlPrevalence
     rdfs:comment "A sparql query for prevalence"@en ;
     rdfs:domain tddo:Test ;
     rdfs:range xsd:string .
-
-
-
-
-
-###  http://databugger.aksw.org/ns/core#Test
-
-
-
-
 
 
 #################################################################
