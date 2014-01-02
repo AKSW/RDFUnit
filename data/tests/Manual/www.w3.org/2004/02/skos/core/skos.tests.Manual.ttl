@@ -14,7 +14,7 @@
 
 # multiple languages in prefLabel (en)
 tddt:skos-CARD-singleEnPrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -30,7 +30,7 @@ tddt:skos-CARD-singleEnPrefLabel
 
 # multiple languages in prefLabel (es)
 tddt:skos-CARD-singleEsPrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -47,7 +47,7 @@ tddt:skos-CARD-singleEsPrefLabel
 
 # multiple languages in prefLabel (fr)
 tddt:skos-CARD-singleFrPrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -64,7 +64,7 @@ tddt:skos-CARD-singleFrPrefLabel
 
 # multiple languages in prefLabel (de)
 tddt:skos-CARD-singleDePrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -82,7 +82,7 @@ tddt:skos-CARD-singleDePrefLabel
 # Missing  rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
 # TODO not according to pattern (2 filters)
 tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -100,7 +100,7 @@ tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
 # Missing rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#Concept>
 # TODO not according to pattern (2 filters)
 tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -119,7 +119,7 @@ tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
 # AmbiguousprefLabelvalues
 # skos:prefLabel cannot exists more than once 
 tddt:skos-CARD-prefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -135,7 +135,7 @@ tddt:skos-CARD-prefLabel
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
 tddt:skos-OWLDISJP-skosaltpreflabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -151,7 +151,7 @@ tddt:skos-OWLDISJP-skosaltpreflabel
 
 # skos:prefLabel is not a skos:hiddenLabel
 tddt:skos-OWLDISJP-skoshiddenpreflabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -167,7 +167,7 @@ tddt:skos-OWLDISJP-skoshiddenpreflabel
                                  
 # skos:altLabel is not a skos:hiddenLabel
 tddt:skos-OWLDISJP-skosalthiddenlabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -185,7 +185,7 @@ tddt:skos-OWLDISJP-skosalthiddenlabel
 # Disjoint Semantic Relations
 # skos:related is not a skos:broaderTransitive
 tddt:skos-OWLDISJP-skosrelatedbroadertransitive
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -204,7 +204,7 @@ tddt:skos-OWLDISJP-skosrelatedbroadertransitive
 # Extra Whitespace
 # skos:altLabel whitespace
 tddt:skos-MATCH-altlabelwhitespace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -218,7 +218,7 @@ tddt:skos-MATCH-altlabelwhitespace
 
 # skos:prefLabel whitespace
 tddt:skos-MATCH-preflabelwhitespace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -232,7 +232,7 @@ tddt:skos-MATCH-preflabelwhitespace
                                 
 # skos:hiddenLabel whitespace
 tddt:skos-MATCH-hiddenlabelwhitespace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -246,7 +246,7 @@ tddt:skos-MATCH-hiddenlabelwhitespace
 
 # skos:broader and skos:narrower should be disjoint
 tddt:skos-OWLDISJP-broaderDisjNarrower
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -260,7 +260,7 @@ tddt:skos-OWLDISJP-broaderDisjNarrower
 
 # skos:broader and skos:related should be disjoint
 tddt:skos-OWLDISJP-broaderDisjRelated
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -275,7 +275,7 @@ tddt:skos-OWLDISJP-broaderDisjRelated
 
 # skos:narrower and skos:related should be disjoint
 tddt:skos-OWLDISJP-narrowerDisjRelated
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -290,7 +290,7 @@ tddt:skos-OWLDISJP-narrowerDisjRelated
 
 # skos:exactMatch and skos:broadMatch should be disjoint
 tddt:skos-OWLDISJP-exactMatchDisjbroadMatch
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -305,7 +305,7 @@ tddt:skos-OWLDISJP-exactMatchDisjbroadMatch
 
 # skos:exactMatch and skos:relatedMatch should be disjoint
 tddt:skos-OWLDISJP-exactMatchDisjrelatedMatch
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -320,7 +320,7 @@ tddt:skos-OWLDISJP-exactMatchDisjrelatedMatch
 
 # skos:broadMatch and skos:relatedMatch should be disjoint
 tddt:skos-OWLDISJP-broadMatchDisjrelatedMatch
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;

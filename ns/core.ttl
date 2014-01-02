@@ -181,7 +181,7 @@ tddo:basedOnPattern
 # Tests
 #################################################################
 
-tddo:Test
+tddo:TestCase
     a owl:Class ;
     rdfs:label "Test"@en ;
     rdfs:comment "A Test is a testcase in which all properties of the test are described."@en ;
@@ -220,21 +220,21 @@ tddo:appliesTo
     a owl:ObjectProperty ;
     rdfs:label "appliesTo"@en ;
     rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
-    rdfs:domain tddo:Test ;
+    rdfs:domain tddo:TestCase ;
     rdfs:range tddo:TestAppliesTo .
 
 tddo:generated
     a owl:ObjectProperty ;
     rdfs:label "generated"@en ;
     rdfs:comment "generated specifies the way the test was constructed."@en ;
-    rdfs:domain tddo:Test ;
+    rdfs:domain tddo:TestCase ;
     rdfs:range tddo:TestGenerationType .
 
 tddo:references
     a owl:ObjectProperty ;
     rdfs:label "references"@en ;
     rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
-    rdfs:domain tddo:Test .
+    rdfs:domain tddo:TestCase .
 
 
 tddo:source
@@ -247,7 +247,7 @@ tddo:sparql
     a owl:DatatypeProperty ;
     rdfs:label "sparql"@en ;
     rdfs:comment "A sparql query"@en ;
-    rdfs:domain tddo:Test ;
+    rdfs:domain tddo:TestCase ;
     rdfs:range xsd:string .
 
 #################################################################
@@ -306,7 +306,7 @@ tddo:sparqlPrevalence
     a owl:DatatypeProperty ;
     rdfs:label "sparqlPrevalence"@en ;
     rdfs:comment "A sparql query for prevalence"@en ;
-    rdfs:domain tddo:Test ;
+    rdfs:domain tddo:TestCase ;
     rdfs:range xsd:string .
 
 
@@ -319,11 +319,11 @@ tddo:Result
     rdfs:label "Result"@en ;
     rdfs:comment "A class that holds the results of a single test execution"@en .
 
-tddo:test
+tddo:testCase
     a owl:ObjectProperty ;
     rdfs:label "test"@en ;
     rdfs:comment "points to a Test" ;
-    rdfs:range tddo:Test .
+    rdfs:range tddo:TestCase .
 
 tddo:resultCount
     a owl:DatatypeProperty ;

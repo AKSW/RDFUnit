@@ -75,7 +75,7 @@ public class TestCase implements Comparable<TestCase> {
     public void saveTestToModel(Model model) {
 
         Resource resource = model.createResource(testURI)
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Test"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "TestCase"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + getPattern()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "generated"), model.createResource(getGenerated().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testGenerator"), model.createResource(getAutoGeneratorURI()))

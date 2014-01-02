@@ -13,7 +13,7 @@
 # a dump for the whole world is considered here
 #
 # tddt:lgd-MATCH-postal_code
-#     a tddo:Test ;
+#     a tddo:TestCase ;
 #     tddo:appliesTo tddo:Schema ;
 #     tddo:basedOnPattern tddp:MATCH ;
 #     tddo:generated tddo:ManuallyGenerated ;
@@ -27,7 +27,7 @@
 
 # all cases where phone area numbers do not start with a zero or a + sign
 tddt:lgd-MATCH-telephone_area_code
-    a tddo:Test ;
+    a tddo:TestCase ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:MATCH ;
     tddo:generated tddo:ManuallyGenerated ;
@@ -43,7 +43,7 @@ tddt:lgd-MATCH-telephone_area_code
 
 # all cases where phone numbers contain any characters
 tddt:lgd-MATCH-phone
-    a tddo:Test ;
+    a tddo:TestCase ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:MATCH ;
     tddo:generated tddo:ManuallyGenerated ;
@@ -59,7 +59,7 @@ tddt:lgd-MATCH-phone
 
 # all cases where the speed limit is not within (0, 300]
 tddt:lgd-LITRAN-maxspeed
-    a tddo:Test ;
+    a tddo:TestCase ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:LITRAN ;
     tddo:generated tddo:ManuallyGenerated ;
@@ -74,7 +74,7 @@ tddt:lgd-LITRAN-maxspeed
 
 # all cases where a resource has a property lgdo:start but no lgdo:end
 tddt:lgd-PROPDEP-start_end
-    a tddo:Test ;
+    a tddo:TestCase ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:PROPDEP ;
     tddo:generated tddo:ManuallyGenerated ;
@@ -90,7 +90,7 @@ tddt:lgd-PROPDEP-start_end
 
 # all resources that have a lgdo:fixme property
 tddt:lgd-TRIPLE-fixme
-    a tddo:Test ;
+    a tddo:TestCase ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:TRIPLE ;
     tddo:generated tddo:ManuallyGenerated ;
@@ -102,7 +102,7 @@ tddt:lgd-TRIPLE-fixme
 
 # all resources that have a lgdo:todo property
 tddt:lgd-TRIPLE-todo
-    a tddo:Test ;
+    a tddo:TestCase ;
     tddo:appliesTo tddo:Schema ;
     tddo:basedOnPattern tddp:TRIPLE ;
     tddo:generated tddo:ManuallyGenerated ;

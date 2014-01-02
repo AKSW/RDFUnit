@@ -84,7 +84,7 @@ public class TestUtils {
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
-                " ?testURI a tddo:Test ; " +
+                " ?testURI a tddo:TestCase ; " +
                 " tddo:appliesTo ?appliesTo ;" +
                 " tddo:basedOnPattern ?basedOnPattern ;" +
                 " tddo:generated ?generated ;" +

@@ -13,7 +13,7 @@
 
 # geo:lat must be in the range [-90,90]
 tddt:dbo-LITRAN-rangegeolatitude
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -27,7 +27,7 @@ tddt:dbo-LITRAN-rangegeolatitude
 
 # geo:long must be in the range [-180,180]
 tddt:dbo-LITRAN-rangegeolongtitude
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -42,7 +42,7 @@ tddt:dbo-LITRAN-rangegeolongtitude
 
 # geo:geometry should be a soft inverseFunctional property
 tddt:dbo-INVFUNC-uniquegeometry
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:INVFUNC ;
       tddo:generated tddo:ManuallyGenerated ;
