@@ -28,8 +28,7 @@ public class TripleFirstSuccessReader extends TripleReader {
                 // return on first read() that does not throw an exception
                 return;
             } catch (TripleReaderException e) {
-                if (!message.isEmpty())
-                    message += "\n";
+                message += "\n";
                 if (e.getMessage() != null)
                     message += e.getMessage();
                 else

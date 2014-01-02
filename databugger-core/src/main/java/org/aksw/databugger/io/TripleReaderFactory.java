@@ -20,9 +20,4 @@ public class TripleReaderFactory {
         return new TripleReadAndCacheReader(r,w);
 
     }
-
-    public static TripleReader createTripleFileReader(String filename) {
-        return new TripleFileReader(filename);
-
-    }
 }

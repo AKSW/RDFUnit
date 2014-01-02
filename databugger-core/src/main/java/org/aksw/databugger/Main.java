@@ -5,16 +5,19 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.coverage.TestCoverageEvaluator;
 import org.aksw.databugger.exceptions.TripleReaderException;
+import org.aksw.databugger.exceptions.TripleWriterException;
+import org.aksw.databugger.io.*;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
+import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
 import org.aksw.databugger.tests.TestCase;
-import org.aksw.databugger.io.TripleReader;
-import org.aksw.databugger.io.TripleReaderFactory;
+import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
+import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.apache.commons.cli.*;
 import org.apache.log4j.PropertyConfigurator;
@@ -109,8 +112,8 @@ public class Main {
         DatabuggerUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
 
-        TripleReader patternReader = TripleReaderFactory.createTripleFileReader(dataFolder+"patterns.ttl");
-        TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(dataFolder+"testAutoGenerators.ttl");
+        TripleReader patternReader = new TripleFileReader(dataFolder+"patterns.ttl");
+        TripleReader testGeneratorReader = new TripleFileReader(dataFolder+"testAutoGenerators.ttl");
         Databugger databugger = new Databugger();
         try {
             databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
@@ -142,26 +145,93 @@ public class Main {
         DatabuggerConfiguration testContext = new DatabuggerConfiguration(datasetUri,
                 endpointUriStr, graphUriStrs, sources);
 
-        DatasetSource dataset = testContext.getDatasetSource();
+        final DatasetSource dataset = testContext.getDatasetSource();
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         List<TestCase> allTests = testGeneratorExecutor.generateTests(testFolder, dataset,databugger.getAutoGenerators());
 
-        TestExecutor te = new TestExecutor();
+
+
+        TestExecutor.TestExecutorMonitor testExecutorMonitor = new TestExecutor.TestExecutorMonitor() {
+
+            TripleWriter resultWriter;
+            Source testedDataset;
+            Model model;
+            long counter;
+            long totalTests;
+            long success, fail, timeout, error, totalErrors;
+
+            @Override
+            public void testingStarted(Source dataset, long numberOfTests) {
+                testedDataset = dataset;
+                resultWriter = new TripleFileWriter("../data/results/" + dataset.getPrefix() + ".results.ttl");
+                model = ModelFactory.createDefaultModel();
+                model.setNsPrefixes(PrefixService.getPrefixMap());
+                counter = success = fail = timeout = error = totalErrors = 0;
+                totalTests = numberOfTests;
+
+                log.info("Testing " + testedDataset.getUri());
+            }
+
+            @Override
+            public void singleTestStarted(TestCase test) {
+                counter++;
+            }
+
+            @Override
+            public void singleTestExecuted(TestCase test, List<TestCaseResult> results) {
+                for (TestCaseResult result : results) {
+                    log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
+                    result.writeToModel(model, testedDataset.getUri());
+
+                    if (result instanceof AggregatedTestCaseResult) {
+                        long currentErrors = ((AggregatedTestCaseResult) result).getErrorCount();
+                        if (currentErrors == -2)
+                            error ++;
+                        if (currentErrors == -1)
+                            timeout++;
+                        if (currentErrors == 0)
+                            success++;
+                        if (currentErrors > 0) {
+                            error ++;
+                            totalErrors += currentErrors;
+                        }
+                    }
+
+                }
+
+                // cache intermediate results
+                if (counter % 10 == 0) {
+                    try {
+
+                        resultWriter.write(model);
+                    } catch (TripleWriterException e) {
+                        log.error("Cannot write tests to file: " + e.getMessage());
+                    }
+                }
+
+            }
+
+            @Override
+            public void testingFinished() {
+                try {
+
+                    resultWriter.write(model);
+                } catch (TripleWriterException e) {
+                    log.error("Cannot write tests to file: " + e.getMessage());
+                }
+            }
+        };
+
+        TestExecutor testExecutor = new TestExecutor();
+        testExecutor.addTestExecutorMonitor(testExecutorMonitor);
+
+
         // warning, caches intermediate results
-        Model model = te.executeTestsCounts("../data/results/" + dataset.getPrefix() + ".results.ttl", dataset, allTests, 0);
+        testExecutor.executeTestsCounts(dataset, allTests, 0);
 
 
-        try {
-            File f = new File("../data/results/" + dataset.getPrefix() + ".results.ttl");
-            f.getParentFile().mkdirs();
-
-            model.setNsPrefixes(PrefixService.getPrefixMap());
-            DatabuggerUtils.writeModelToFile(model, "TURTLE", f, true);
-        } catch (Exception e) {
-            log.error("Cannot write tests to file: ");
-        }
 
 
         // Calculate coverage

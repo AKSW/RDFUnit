@@ -7,12 +7,15 @@ import com.vaadin.ui.*;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.DatabuggerConfigurationFactory;
 import org.aksw.databugger.enums.TestGenerationType;
+import org.aksw.databugger.io.TripleFileWriter;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
+import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.databugger.ui.DatabuggerUISession;
 import org.aksw.databugger.ui.components.SchemaSelectorComponent;
 import org.aksw.databugger.ui.components.TestGenerationComponent;
@@ -20,6 +23,7 @@ import org.aksw.databugger.ui.components.TestResultsComponent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -344,7 +348,7 @@ public class EndointTestTab extends VerticalLayout {
                     try {
                         f.delete();
                     } catch (Exception e) {}
-                    DatabuggerUISession.getTestExecutor().executeTestsCounts(resultsFile, dataset, DatabuggerUISession.getTests(),3);
+                    DatabuggerUISession.getTestExecutor().executeTestsCounts(dataset, DatabuggerUISession.getTests(),3);
                 }
 
             }
@@ -386,7 +390,7 @@ public class EndointTestTab extends VerticalLayout {
             }
 
             @Override
-            public void singleTestStarted(TestCase test) {
+            public void singleTestStarted(final TestCase test) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
@@ -396,10 +400,15 @@ public class EndointTestTab extends VerticalLayout {
             }
 
             @Override
-            public void singleTestExecuted(TestCase test, String uri, final long errors, long prevalence) {
+            public void singleTestExecuted(final TestCase test, final List<TestCaseResult> results) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
+                        long errors = 0;
+                        TestCaseResult result = results.get(0);
+                        if (result != null && result instanceof AggregatedTestCaseResult) {
+                            errors = ((AggregatedTestCaseResult) result).getErrorCount();
+                        }
                         count++;
                         totalErrors += (errors > 0 ? errors : 0);
                         if (errors == -1)

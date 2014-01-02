@@ -6,8 +6,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.io.TripleWriter;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
+import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
@@ -15,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,7 +44,7 @@ public class TestExecutor {
         /*
         * Called when a single test is executed
         * */
-        void singleTestExecuted(final TestCase test, final String uri, final long errors, final long prevalence);
+        void singleTestExecuted(final TestCase test, final List<TestCaseResult> results);
 
         /*
         * Called when testing ends
@@ -58,25 +62,16 @@ public class TestExecutor {
         isCanceled = true;
     }
 
-    public Model executeTestsCounts(String filename, Source source, List<TestCase> tests, int delay) {
+    public List<TestCaseResult> executeTestsCounts(Source source, List<TestCase> tests, int delay) {
         isCanceled = false;
+
+        List<TestCaseResult> results = new ArrayList<TestCaseResult>();
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors){
             monitor.testingStarted(source, tests.size());
         }
 
-        Model model = ModelFactory.createDefaultModel();
-
-        try {
-            model.read(new FileInputStream(filename), null, "TURTLE");
-        } catch (Exception e) {
-            // TODO handle exception
-        }
-        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
-
-        int counter = 0;
-        int testSize = tests.size();
         for (TestCase t : tests) {
             if (isCanceled == true) {
                 break;
@@ -87,91 +82,58 @@ public class TestExecutor {
                 monitor.singleTestStarted(t);
             }
 
-            counter++;
-            if (testExists(qef, t.getTestURI()))
-                continue;
+            //TODO check cache
+            //if (testExists(qef, t.getTestURI()))
+            //    continue;
 
             int total = -1, prevalence = -1;
 
             try {
                 prevalence = getCountNumber(source.getExecutionFactory(), t.getSparqlPrevalenceQuery(), "total");
+            } catch (QueryParseException e) {
+                if (! t.getSparqlPrevalence().trim().isEmpty())
+                    total = -2;
             } catch (Exception e) {
-                //query failed total remains -1
+                //query time out total remains -1
+                total = -1;
             }
 
             if (prevalence != 0) {
                 // if prevalence !=0 calculate total
                 try {
                     total = getCountNumber(source.getExecutionFactory(), t.getSparqlAsCountQuery(), "total");
+                } catch (QueryParseException e) {
+                    total = -2;
                 } catch (Exception e) {
-                    //query failed total remains -1
+                    //query time out total remains -1
+                    total = -1;
                 }
             } else
                 // else total will be 0 anyway
                 total = 0;
 
+            TestCaseResult result = new AggregatedTestCaseResult(t, total, prevalence);
+            results.add(result);
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors){
-                monitor.singleTestExecuted(t, t.getTestURI(), total, prevalence);
+                monitor.singleTestExecuted(t, Arrays.<TestCaseResult>asList(result));
             }
-
-            model.createResource()
-                    .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultCount"), "" + total)
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultPrevalence"), "" + total)
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(source.getUri()))
-                    .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "test"), model.createResource(t.getTestURI()));
-
-            log.info("Testing " + source.getPrefix() + " (" + counter + "/" + testSize + ") returned " + total + " errors ( " + prevalence + " prevalence) for test: " + t.getTestURI());
-
-            if (counter % 20 == 0) {
-                try {
-                    DatabuggerUtils.writeModelToFile(model, "TURTLE", filename, true);
-                } catch (Exception e) {
-                    log.error("Cannot write tests to file: ");
-                }
-            }
-
 
             if (delay > 0) {
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    // do nothing
                 }
             }
         }
-        generateStats(qef);
 
         /*notify end of testing */
         for (TestExecutorMonitor monitor : progressMonitors){
             monitor.testingFinished();
         }
 
-        return model;
-    }
-
-    private void generateStats(QueryExecutionFactory qef) {
-        String result = DatabuggerUtils.getAllPrefixes() +
-                " SELECT (count(?s) AS ?total) where {\n" +
-                " ?s a tddo:Result.\n" +
-                " ?s tddo:count ?errors .\n" +
-                " FILTER (xsd:decimal(?errors) %%OPVAL%% ) }";
-        int pass = getCountNumber(qef, result.replace("%%OPVAL%%", " =  0 "), "total");
-        int fail = getCountNumber(qef, result.replace("%%OPVAL%%", " >  0 "), "total");
-        int timeout = getCountNumber(qef, result.replace("%%OPVAL%%", " = -1 "), "total");
-        int total = pass + fail + timeout;
-        log.info("Total tests: " + total + " Pass: " + pass + " Fail: " + fail + " Timeout: " + timeout);
-
-        String totalErrors = DatabuggerUtils.getAllPrefixes() +
-                " SELECT (sum(xsd:decimal(?errors)) AS ?total) WHERE {\n" +
-                " ?s a tddo:Result.\n" +
-                " ?s tddo:count ?errors .\n" +
-                " FILTER (xsd:decimal(?errors) > 0 )}";
-        int errors = getCountNumber(qef, totalErrors, "total");
-        log.info("Total Errors: " + errors);
-
-
+        return results;
     }
 
     private int getCountNumber(QueryExecutionFactory model, String query, String var) {
@@ -198,7 +160,7 @@ public class TestExecutor {
         return result;
 
     }
-
+/*
     private boolean testExists(QueryExecutionFactory qef, String testURI) {
 
         boolean result = false;
@@ -218,7 +180,7 @@ public class TestExecutor {
         }
         return result;
     }
-
+*/
     public void addTestExecutorMonitor(TestExecutorMonitor monitor) {
         progressMonitors.add(monitor);
     }

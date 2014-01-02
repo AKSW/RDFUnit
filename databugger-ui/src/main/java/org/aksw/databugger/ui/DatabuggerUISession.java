@@ -5,6 +5,7 @@ import com.vaadin.server.VaadinSession;
 import org.aksw.databugger.Databugger;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.io.TripleFileReader;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
@@ -60,8 +61,8 @@ public class DatabuggerUISession extends VaadinSession {
         try {
             DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
-            TripleReader patternReader = TripleReaderFactory.createTripleFileReader(getBaseDir() + "patterns.ttl");
-            TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(getBaseDir() + "testGenerators.ttl");
+            TripleReader patternReader = new TripleFileReader(getBaseDir() + "patterns.ttl");
+            TripleReader testGeneratorReader = new TripleFileReader(getBaseDir() + "testGenerators.ttl");
             getDatabugger().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO
