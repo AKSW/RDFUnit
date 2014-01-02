@@ -37,7 +37,6 @@ public class TestCase implements Comparable<TestCase> {
     private final String autoGeneratorURI;
     private final TestAppliesTo appliesTo;
     private final String sourceUri;
-    private final TestAnnotation annotation;
     private final String sparql;
     private final String sparqlPrevalence;
     private final List<String> references;
@@ -46,24 +45,23 @@ public class TestCase implements Comparable<TestCase> {
     private Source tmpSource = null;
 
     public TestCase(String sparql, String sparqlPrevalence, String testURI) {
-        this(JenaUUID.generate().asString(), "", TestGenerationType.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
+        this(JenaUUID.generate().asString(), "", TestGenerationType.ManuallyGenerated, "", null, "", sparql, sparqlPrevalence, new ArrayList<String>());
     }
 
-    public TestCase(String testURI, Pattern pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
+    public TestCase(String testURI, Pattern pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, String sparql, String sparqlPrevalence, List<String> references) {
         this.testURI = testURI;
         this.pattern = pattern;
         this.generated = generated;
         this.autoGeneratorURI = autoGeneratorURI;
         this.appliesTo = appliesTo;
         this.sourceUri = sourceUri;
-        this.annotation = annotation;
         this.sparql = sparql;
         this.sparqlPrevalence = sparqlPrevalence;
         this.references = references;
     }
 
-    public TestCase(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
-        this(testURI, PatternService.getPattern(pattern), generated, autoGeneratorURI, appliesTo, sourceUri, annotation, sparql, sparqlPrevalence, references);
+    public TestCase(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, String sparql, String sparqlPrevalence, List<String> references) {
+        this(testURI, PatternService.getPattern(pattern), generated, autoGeneratorURI, appliesTo, sourceUri, sparql, sparqlPrevalence, references);
     }
 
     public Model getUnitTestModel() {
@@ -98,7 +96,6 @@ public class TestCase implements Comparable<TestCase> {
                 autoGeneratorURI,
                 appliesTo,
                 sourceUri,
-                annotation,
                 sparql,
                 sparqlPrevalence,
                 references);
@@ -122,10 +119,6 @@ public class TestCase implements Comparable<TestCase> {
 
     public String getSourceUri() {
         return sourceUri;
-    }
-
-    public TestAnnotation getAnnotation() {
-        return annotation;
     }
 
     public String getSparql() {

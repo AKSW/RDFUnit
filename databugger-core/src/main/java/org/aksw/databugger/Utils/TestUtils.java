@@ -12,7 +12,6 @@ import org.aksw.databugger.exceptions.TripleWriterException;
 import org.aksw.databugger.io.TripleWriter;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tests.TestAnnotation;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -134,7 +133,6 @@ public class TestUtils {
                     testGenerator,
                     TestAppliesTo.resolve(appliesTo),
                     source,
-                    new TestAnnotation(),
                     sparqlWhere,
                     sparqlPrevalence,
                     referencesLst);

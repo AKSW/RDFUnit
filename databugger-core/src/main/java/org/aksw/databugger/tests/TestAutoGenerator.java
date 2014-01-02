@@ -107,7 +107,6 @@ public class TestAutoGenerator {
                         this.getURI(),
                         source.getSourceType(),
                         source.getUri(),
-                        new TestAnnotation(),
                         sparql,
                         sparqlPrev,
                         references));

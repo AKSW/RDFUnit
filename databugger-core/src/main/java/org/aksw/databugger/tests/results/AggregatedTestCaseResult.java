@@ -32,7 +32,7 @@ public class AggregatedTestCaseResult extends TestCaseResult {
     @Override
     public void writeToModel(Model model, String sourceURI) {
         model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Result"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "AggregatedTestResult"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultCount"), "" + errorCount)
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultPrevalence"), "" + prevalenceCount)
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(sourceURI))
@@ -41,6 +41,6 @@ public class AggregatedTestCaseResult extends TestCaseResult {
 
     @Override
     public String toString() {
-        return errorCount + " Errors with " + prevalenceCount + " Prevalence. Test: " + getTestCase().getTestURI();
+        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + getTestCase().getTestURI();
     }
 }
