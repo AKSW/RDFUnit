@@ -1,6 +1,5 @@
 package org.aksw.databugger.ui.components;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -8,8 +7,8 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.*;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestExecutor;
-import org.aksw.databugger.tests.UnitTest;
 
 import java.net.URLEncoder;
 
@@ -67,7 +66,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void singleTestStarted(final UnitTest test) {
+    public void singleTestStarted(final TestCase test) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
@@ -84,7 +83,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void singleTestExecuted(final UnitTest test, final String uri, final long errors, final long prevalence) {
+    public void singleTestExecuted(final TestCase test, final String uri, final long errors, final long prevalence) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {

@@ -5,9 +5,9 @@ import com.vaadin.server.VaadinSession;
 import org.aksw.databugger.Databugger;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
-import org.aksw.databugger.tests.UnitTest;
 import org.aksw.databugger.io.TripleReader;
 import org.aksw.databugger.io.TripleReaderFactory;
 
@@ -43,7 +43,7 @@ public class DatabuggerUISession extends VaadinSession {
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
 
         UnitTestList testList = new UnitTestList();
-        testList.tests = new ArrayList<UnitTest>();
+        testList.tests = new ArrayList<TestCase>();
         VaadinSession.getCurrent().setAttribute(UnitTestList.class, testList);
 
         //Fill the service schema
@@ -84,7 +84,7 @@ public class DatabuggerUISession extends VaadinSession {
         return VaadinSession.getCurrent().getAttribute(TestExecutor.class);
     }
 
-    public static List<UnitTest> getTests() {
+    public static List<TestCase> getTests() {
         return VaadinSession.getCurrent().getAttribute(UnitTestList.class).tests;
     }
 
@@ -97,7 +97,7 @@ public class DatabuggerUISession extends VaadinSession {
     }
 
     static class UnitTestList {
-        List<UnitTest> tests;
+        List<TestCase> tests;
 
         public UnitTestList() {
         }

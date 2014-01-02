@@ -12,7 +12,7 @@ import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
-import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.io.TripleReader;
 import org.aksw.databugger.io.TripleReaderFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -124,7 +124,7 @@ public class Main {
             s.setBaseCacheFolder("../data/tests/");
             File f = new File(s.getTestFile());
             if (!f.exists()) {
-                List<UnitTest> testsAuto = TestUtils.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
+                List<TestCase> testsAuto = TestUtils.instantiateTestsFromAG(databugger.getAutoGenerators(), s);
                 TestUtils.writeTestsToFile(testsAuto,  s.getTestFile());
             }
         }
@@ -146,7 +146,7 @@ public class Main {
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-        List<UnitTest> allTests = testGeneratorExecutor.generateTests(testFolder, dataset,databugger.getAutoGenerators());
+        List<TestCase> allTests = testGeneratorExecutor.generateTests(testFolder, dataset,databugger.getAutoGenerators());
 
         TestExecutor te = new TestExecutor();
         // warning, caches intermediate results
@@ -168,7 +168,7 @@ public class Main {
         if (calculateCoverage) {
             Model m = ModelFactory.createDefaultModel();
             m.setNsPrefixes(PrefixService.getPrefixMap());
-            for (UnitTest ut : allTests) {
+            for (TestCase ut : allTests) {
                 m.add(ut.getUnitTestModel());
             }
 

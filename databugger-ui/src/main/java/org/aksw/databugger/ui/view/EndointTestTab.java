@@ -4,7 +4,6 @@ import com.vaadin.data.Property;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.databugger.Databugger;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.DatabuggerConfigurationFactory;
 import org.aksw.databugger.enums.TestGenerationType;
@@ -13,7 +12,7 @@ import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestExecutor;
 import org.aksw.databugger.tests.TestGeneratorExecutor;
-import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.ui.DatabuggerUISession;
 import org.aksw.databugger.ui.components.SchemaSelectorComponent;
 import org.aksw.databugger.ui.components.TestGenerationComponent;
@@ -21,7 +20,6 @@ import org.aksw.databugger.ui.components.TestResultsComponent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -388,7 +386,7 @@ public class EndointTestTab extends VerticalLayout {
             }
 
             @Override
-            public void singleTestStarted(UnitTest test) {
+            public void singleTestStarted(TestCase test) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
@@ -398,7 +396,7 @@ public class EndointTestTab extends VerticalLayout {
             }
 
             @Override
-            public void singleTestExecuted(UnitTest test, String uri, final long errors, long prevalence) {
+            public void singleTestExecuted(TestCase test, String uri, final long errors, long prevalence) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {

@@ -12,7 +12,7 @@ import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAnnotation;
 import org.aksw.databugger.tests.TestAutoGenerator;
-import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tests.TestCase;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
@@ -66,8 +66,8 @@ public class TestUtils {
 
     }
 
-    public static List<UnitTest> instantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
-        List<UnitTest> tests = new ArrayList<UnitTest>();
+    public static List<TestCase> instantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
+        List<TestCase> tests = new ArrayList<TestCase>();
 
         for (TestAutoGenerator tag : autoGenerators) {
             tests.addAll(tag.generate(source));
@@ -78,8 +78,8 @@ public class TestUtils {
     }
 
 
-    public static List<UnitTest> instantiateTestsFromModel(Model model) {
-        List<UnitTest> tests = new ArrayList<UnitTest>();
+    public static List<TestCase> instantiateTestsFromModel(Model model) {
+        List<TestCase> tests = new ArrayList<TestCase>();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
@@ -99,7 +99,7 @@ public class TestUtils {
         ResultSet results = qe.execSelect();
 
 
-        UnitTest lastTest = new UnitTest("", "", "");
+        TestCase lastTest = new TestCase("", "", "");
         while (results.hasNext()) {
             QuerySolution qs = results.next();
 
@@ -125,7 +125,7 @@ public class TestUtils {
                 testGenerator = qs.get("testGenerator").toString();
 
 
-            UnitTest currentTest = new UnitTest(
+            TestCase currentTest = new TestCase(
                     testURI,
                     basedOnPattern.replace(PrefixService.getPrefix("tddp"), ""),
                     TestGenerationType.resolve(generated),
@@ -158,9 +158,9 @@ public class TestUtils {
 
     }
 
-    public static void writeTestsToFile(List<UnitTest> tests, String filename) {
+    public static void writeTestsToFile(List<TestCase> tests, String filename) {
         Model model = ModelFactory.createDefaultModel();
-        for (UnitTest t : tests)
+        for (TestCase t : tests)
             t.saveTestToModel(model);
         try {
             model.setNsPrefixes(PrefixService.getPrefixMap());

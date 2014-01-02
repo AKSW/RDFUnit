@@ -28,8 +28,8 @@ import java.util.List;
  * Description
  * Created: 9/23/13 6:31 AM
  */
-public class UnitTest implements Comparable<UnitTest> {
-    private static Logger log = LoggerFactory.getLogger(UnitTest.class);
+public class TestCase implements Comparable<TestCase> {
+    private static Logger log = LoggerFactory.getLogger(TestCase.class);
 
     private final String testURI;
     private final Pattern pattern;
@@ -45,11 +45,11 @@ public class UnitTest implements Comparable<UnitTest> {
     //tmp  for UML Diagram // TODO remove
     private Source tmpSource = null;
 
-    public UnitTest(String sparql, String sparqlPrevalence, String testURI) {
+    public TestCase(String sparql, String sparqlPrevalence, String testURI) {
         this(JenaUUID.generate().asString(), "", TestGenerationType.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
     }
 
-    public UnitTest(String testURI, Pattern pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
+    public TestCase(String testURI, Pattern pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
         this.testURI = testURI;
         this.pattern = pattern;
         this.generated = generated;
@@ -62,7 +62,7 @@ public class UnitTest implements Comparable<UnitTest> {
         this.references = references;
     }
 
-    public UnitTest(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
+    public TestCase(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
         this(testURI, PatternService.getPattern(pattern), generated, autoGeneratorURI, appliesTo, sourceUri, annotation, sparql, sparqlPrevalence, references);
     }
 
@@ -90,8 +90,8 @@ public class UnitTest implements Comparable<UnitTest> {
 
     }
 
-    public UnitTest clone() {
-        return new UnitTest(
+    public TestCase clone() {
+        return new TestCase(
                 testURI,
                 pattern,
                 generated,
@@ -173,14 +173,14 @@ public class UnitTest implements Comparable<UnitTest> {
     }
 
     @Override
-    public int compareTo(UnitTest o) {
+    public int compareTo(TestCase o) {
         return this.getTestURI().compareTo(o.getTestURI());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof UnitTest) {
-            return this.getTestURI().compareTo(((UnitTest) obj).getTestURI()) == 0;
+        if (obj instanceof TestCase) {
+            return this.getTestURI().compareTo(((TestCase) obj).getTestURI()) == 0;
         }
         return false;
     }

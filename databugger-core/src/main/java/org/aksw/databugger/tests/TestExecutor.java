@@ -7,7 +7,6 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.services.PrefixService;
-import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -36,12 +35,12 @@ public class TestExecutor {
         /*
         * Called when a single test starts
         * */
-        void singleTestStarted(final UnitTest test);
+        void singleTestStarted(final TestCase test);
 
         /*
         * Called when a single test is executed
         * */
-        void singleTestExecuted(final UnitTest test, final String uri, final long errors, final long prevalence);
+        void singleTestExecuted(final TestCase test, final String uri, final long errors, final long prevalence);
 
         /*
         * Called when testing ends
@@ -59,7 +58,7 @@ public class TestExecutor {
         isCanceled = true;
     }
 
-    public Model executeTestsCounts(String filename, Source source, List<UnitTest> tests, int delay) {
+    public Model executeTestsCounts(String filename, Source source, List<TestCase> tests, int delay) {
         isCanceled = false;
 
         /*notify start of testing */
@@ -78,7 +77,7 @@ public class TestExecutor {
 
         int counter = 0;
         int testSize = tests.size();
-        for (UnitTest t : tests) {
+        for (TestCase t : tests) {
             if (isCanceled == true) {
                 break;
             }
