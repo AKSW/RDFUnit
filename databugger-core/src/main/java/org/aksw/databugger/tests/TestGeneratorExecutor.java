@@ -4,6 +4,8 @@ import org.aksw.databugger.Utils.CacheUtils;
 import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.exceptions.TripleReaderException;
+import org.aksw.databugger.io.TripleFileReader;
+import org.aksw.databugger.io.TripleFileWriter;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.io.TripleReaderFactory;
@@ -97,7 +99,7 @@ public class TestGeneratorExecutor {
 
         try {
             List<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                    TripleReaderFactory.createTripleFileReader(CacheUtils.getSourceAutoTestFile(testFolder,s)).read());
+                    new TripleFileReader(CacheUtils.getSourceAutoTestFile(testFolder,s)).read());
             tests.addAll(testsAutoCached);
             log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
@@ -105,7 +107,7 @@ public class TestGeneratorExecutor {
             // cannot read from file  / generate
             List<TestCase> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
             tests.addAll(testsAuto);
-            TestUtils.writeTestsToFile(testsAuto, CacheUtils.getSourceAutoTestFile(testFolder,s));
+            TestUtils.writeTestsToFile(testsAuto, new TripleFileWriter(CacheUtils.getSourceAutoTestFile(testFolder,s)));
             log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
         }
 
@@ -124,7 +126,7 @@ public class TestGeneratorExecutor {
         }
         try {
             List<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    TripleReaderFactory.createTripleFileReader(CacheUtils.getSourceManualTestFile(testFolder,s)).read());
+                    new TripleFileReader(CacheUtils.getSourceManualTestFile(testFolder,s)).read());
             tests.addAll(testsManuals);
             log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
         } catch (TripleReaderException e) {

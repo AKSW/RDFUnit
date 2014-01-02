@@ -12,15 +12,13 @@ public class Pattern {
     private final String description;
     private final String sparqlWherePattern;
     private final String sparqlPatternPrevalence;
-    private final String selectVariable;
     private final List<PatternParameter> parameters;
 
-    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, String selectVariable, List<PatternParameter> parameters) {
+    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, List<PatternParameter> parameters) {
         this.id = id;
         this.description = description;
         this.sparqlWherePattern = sparqlWherePattern;
         this.sparqlPatternPrevalence = sparqlPatternPrevalence;
-        this.selectVariable = selectVariable;
         this.parameters = parameters;
     }
 
@@ -79,10 +77,6 @@ public class Pattern {
 
     public String getSparqlPatternPrevalence() {
         return sparqlPatternPrevalence;
-    }
-
-    public String getSelectVariable() {
-        return selectVariable;
     }
 
     public List<PatternParameter> getParameters() {

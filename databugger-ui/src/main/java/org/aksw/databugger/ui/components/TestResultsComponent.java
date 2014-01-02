@@ -9,8 +9,11 @@ import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestExecutor;
+import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
+import org.aksw.databugger.tests.results.TestCaseResult;
 
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -83,12 +86,18 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void singleTestExecuted(final TestCase test, final String uri, final long errors, final long prevalence) {
+    public void singleTestExecuted(final TestCase test, final List<TestCaseResult> results) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 Item item = resultsTable.getItem(test);
                 // Access a property in the item
+                long errors = 0, prevalence = 0;
+                TestCaseResult result = results.get(0);
+                if (result != null && result instanceof AggregatedTestCaseResult) {
+                    errors = ((AggregatedTestCaseResult) result).getErrorCount();
+                    prevalence = ((AggregatedTestCaseResult) result).getPrevalenceCount();
+                }
 
                 Property<String> statusProperty =
                         item.getItemProperty("S");

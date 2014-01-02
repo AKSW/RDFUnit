@@ -147,17 +147,4 @@ public class DatabuggerUtils {
         File f = new File(path);
         return f.exists();
     }
-
-    public static void writeModelToFile(Model model, String filetype, File file, boolean createParentFolders) throws FileNotFoundException {
-        if (createParentFolders) {
-            File parentF = file.getParentFile();
-            if (!parentF.exists())
-                file.getParentFile().mkdirs();
-        }
-        model.write(new FileOutputStream(file), filetype);
-    }
-
-    public static void writeModelToFile(Model model, String filetype, String filename, boolean createParentFolders) throws FileNotFoundException {
-        writeModelToFile(model, filetype, new File(filename), createParentFolders);
-    }
 }

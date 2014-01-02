@@ -8,6 +8,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
+import org.aksw.databugger.exceptions.TripleWriterException;
+import org.aksw.databugger.io.TripleWriter;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAnnotation;
@@ -83,13 +85,13 @@ public class TestUtils {
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?testURI ?appliesTo ?basedOnPattern ?generated ?source ?sparql ?sparqlPrevalence ?references ?testGenerator WHERE { " +
+                " SELECT DISTINCT ?testURI ?appliesTo ?basedOnPattern ?generated ?source ?sparqlWhere ?sparqlPrevalence ?references ?testGenerator WHERE { " +
                 " ?testURI a tddo:TestCase ; " +
                 " tddo:appliesTo ?appliesTo ;" +
                 " tddo:basedOnPattern ?basedOnPattern ;" +
                 " tddo:generated ?generated ;" +
                 " tddo:source ?source ;" +
-                " tddo:sparql ?sparql ;" +
+                " tddo:sparqlWhere ?sparqlWhere ;" +
                 " tddo:sparqlPrevalence ?sparqlPrevalence ;" +
                 " OPTIONAL {?testURI tddo:references ?references .}" +
                 " OPTIONAL {?testURI tddo:testGenerator ?testGenerator .}" +
@@ -109,7 +111,7 @@ public class TestUtils {
             String basedOnPattern = qs.get("basedOnPattern").toString();
             String generated = qs.get("generated").toString();
             String source = qs.get("source").toString();
-            String sparql = qs.get("sparql").toString();
+            String sparqlWhere = qs.get("sparqlWhere").toString();
             String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
             //optional / check if exists
             List<String> referencesLst = new ArrayList<String>();
@@ -133,7 +135,7 @@ public class TestUtils {
                     TestAppliesTo.resolve(appliesTo),
                     source,
                     new TestAnnotation(),
-                    sparql,
+                    sparqlWhere,
                     sparqlPrevalence,
                     referencesLst);
 
@@ -158,15 +160,15 @@ public class TestUtils {
 
     }
 
-    public static void writeTestsToFile(List<TestCase> tests, String filename) {
+    public static void writeTestsToFile(List<TestCase> tests, TripleWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests)
             t.saveTestToModel(model);
         try {
             model.setNsPrefixes(PrefixService.getPrefixMap());
-            DatabuggerUtils.writeModelToFile(model, "TURTLE", filename, true);
-        } catch (Exception e) {
-            log.error("Cannot write tests to file: " + filename);
+            testCache.write(model);
+        } catch (TripleWriterException e) {
+            log.error("Cannot cache tests: " + e.getMessage());
         }
     }
 

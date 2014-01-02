@@ -50,11 +50,6 @@ tddo:Pattern
     rdfs:label "Pattern"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty tddo:selectVariable;
-        owl:cardinality "1"^^xsd:nonNegativeInteger
-    ] ;
-    rdfs:subClassOf [
-        rdf:type owl:Restriction;
         owl:onProperty tddo:sparqlWherePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
@@ -63,13 +58,6 @@ tddo:Pattern
         owl:onProperty tddo:sparqlPrevalencePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] .
-
-tddo:selectVariable
-    a owl:DatatypeProperty ;
-    rdfs:label "selectVariable"@en ;
-    rdfs:comment "the select variable the Pattern uses e.g. '?s'."@en ;
-    rdfs:domain tddo:Pattern ;
-    rdfs:range xsd:string .
 
 tddo:sparqlWherePattern
     a owl:DatatypeProperty ;
@@ -243,10 +231,18 @@ tddo:source
     rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
 
 
-tddo:sparql
+tddo:sparqlWhere
     a owl:DatatypeProperty ;
     rdfs:label "sparql"@en ;
-    rdfs:comment "A sparql query"@en ;
+    rdfs:comment "The WHERE part of a sparql query"@en ;
+    rdfs:domain tddo:TestCase ;
+    rdfs:range xsd:string .
+
+
+tddo:sparqlPrevalence
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlPrevalence"@en ;
+    rdfs:comment "A sparql query for prevalence"@en ;
     rdfs:domain tddo:TestCase ;
     rdfs:range xsd:string .
 
@@ -301,13 +297,6 @@ tddo:Application
         owl:NamedIndividual ;
     rdfs:label "Application"@en ;
     rdfs:comment "Application: When the tests are specific to an application only"@en .
-
-tddo:sparqlPrevalence
-    a owl:DatatypeProperty ;
-    rdfs:label "sparqlPrevalence"@en ;
-    rdfs:comment "A sparql query for prevalence"@en ;
-    rdfs:domain tddo:TestCase ;
-    rdfs:range xsd:string .
 
 
 #################################################################

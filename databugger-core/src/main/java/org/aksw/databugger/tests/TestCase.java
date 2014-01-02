@@ -76,12 +76,12 @@ public class TestCase implements Comparable<TestCase> {
 
         Resource resource = model.createResource(testURI)
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "TestCase"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + getPattern()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + getPattern().getId()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "generated"), model.createResource(getGenerated().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testGenerator"), model.createResource(getAutoGeneratorURI()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "appliesTo"), model.createResource(getAppliesTo().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(getSourceUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "sparql"), getSparql())
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "sparqlWhere"), getSparql())
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "sparqlPrevalence"), getSparqlPrevalence());
 
         for (String r : getReferences()) {
@@ -133,13 +133,12 @@ public class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlQuery() {
-        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
+        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + " SELECT DISTINCT ?resource ?message ?logLevel  WHERE " + sparql);
     }
 
     public String getSparqlAsCount() {
-        String newSparql = sparql.replaceFirst("SELECT", "SELECT (count( ");
-        newSparql = newSparql.replaceFirst("WHERE", ") AS ?total ) WHERE");
-        return newSparql;
+        String testSPARQL =  " SELECT (count( ?resource ) AS ?total ) WHERE " + sparql;
+        return testSPARQL;
     }
 
     public Query getSparqlAsCountQuery() {

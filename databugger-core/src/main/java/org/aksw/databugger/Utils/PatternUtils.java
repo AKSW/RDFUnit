@@ -26,9 +26,8 @@ public class PatternUtils {
                 " ?sparqlPattern a tddo:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
                 "  dcterms:description ?desc ; " +
-                "  tddo:sparqlPattern ?sparql ; " +
+                "  tddo:sparqlWherePattern ?sparql ; " +
                 "  tddo:sparqlPrevalencePattern ?sparqlPrev ; " +
-                "  tddo:selectVariable ?variable . " +
                 "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = DatabuggerUtils.getAllPrefixes() +
                 " SELECT distinct ?parameterURI ?id ?constrain ?constrainPattern WHERE { " +
@@ -50,7 +49,6 @@ public class PatternUtils {
             String desc = qs.get("desc").toString();
             String sparql = qs.get("sparql").toString();
             String sparqlPrev = qs.get("sparqlPrev").toString();
-            String variable = qs.get("variable").toString();
             List<PatternParameter> parameters = new ArrayList<PatternParameter>();
 
             QueryExecution qeNested = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
@@ -76,7 +74,7 @@ public class PatternUtils {
             }
             qeNested.close();
 
-            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, variable, parameters);
+            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters);
             if (pat.isValid())
                 patterns.add(pat);
             else {
