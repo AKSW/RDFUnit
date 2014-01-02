@@ -156,6 +156,11 @@ tddo:TestGenerator
         rdf:type owl:Restriction;
         owl:onProperty tddo:sparqlGenerator;
         owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:basedOnPattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
     ] .
 
 tddo:sparqlGenerator
@@ -164,6 +169,12 @@ tddo:sparqlGenerator
     rdfs:comment "A SPARQL query used to instantiate test cases based on patterns"@en ;
     rdfs:domain tddo:TestGenerator ;
     rdfs:range xsd:string .
+
+tddo:basedOnPattern
+    a owl:ObjectProperty ;
+    rdfs:label "basedOnPattern"@en ;
+    rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
+    rdfs:range tddo:Pattern .
 
 
 #################################################################
@@ -196,6 +207,11 @@ tddo:Test
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
+        owl:onProperty tddo:basedOnPattern;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
         owl:onProperty tddo:references;
         owl:minCardinality "1"^^xsd:nonNegativeInteger
     ] .
@@ -206,12 +222,6 @@ tddo:appliesTo
     rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
     rdfs:domain tddo:Test ;
     rdfs:range tddo:TestAppliesTo .
-
-tddo:basedOnPattern
-    a owl:ObjectProperty ;
-    rdfs:label "basedOnPattern"@en ;
-    rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
-    rdfs:range tddo:Pattern .
 
 tddo:generated
     a owl:ObjectProperty ;
