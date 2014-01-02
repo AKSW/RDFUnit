@@ -11,6 +11,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.services.PatternService;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
@@ -31,7 +32,7 @@ public class UnitTest implements Comparable<UnitTest> {
     private static Logger log = LoggerFactory.getLogger(UnitTest.class);
 
     private final String testURI;
-    private final String pattern;
+    private final Pattern pattern;
     private final TestGenerationType generated;
     private final String autoGeneratorURI;
     private final TestAppliesTo appliesTo;
@@ -42,14 +43,13 @@ public class UnitTest implements Comparable<UnitTest> {
     private final List<String> references;
 
     //tmp  for UML Diagram // TODO remove
-    private Pattern tmpPattern = null;
     private Source tmpSource = null;
 
     public UnitTest(String sparql, String sparqlPrevalence, String testURI) {
         this(JenaUUID.generate().asString(), "", TestGenerationType.ManuallyGenerated, "", null, "", null, sparql, sparqlPrevalence, new ArrayList<String>());
     }
 
-    public UnitTest(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
+    public UnitTest(String testURI, Pattern pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
         this.testURI = testURI;
         this.pattern = pattern;
         this.generated = generated;
@@ -60,6 +60,10 @@ public class UnitTest implements Comparable<UnitTest> {
         this.sparql = sparql;
         this.sparqlPrevalence = sparqlPrevalence;
         this.references = references;
+    }
+
+    public UnitTest(String testURI, String pattern, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, TestAnnotation annotation, String sparql, String sparqlPrevalence, List<String> references) {
+        this(testURI, PatternService.getPattern(pattern), generated, autoGeneratorURI, appliesTo, sourceUri, annotation, sparql, sparqlPrevalence, references);
     }
 
     public Model getUnitTestModel() {
@@ -100,7 +104,7 @@ public class UnitTest implements Comparable<UnitTest> {
                 references);
     }
 
-    public String getPattern() {
+    public Pattern getPattern() {
         return pattern;
     }
 

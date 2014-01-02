@@ -137,7 +137,7 @@ public class TestUtils {
                     sparqlPrevalence,
                     referencesLst);
 
-            if (lastTest.getPattern().equals("")) {
+            if (lastTest.getPattern() == null) {
                 lastTest = currentTest.clone();
                 continue;
             }
@@ -149,7 +149,7 @@ public class TestUtils {
             }
         }
         // add last row
-        if (!lastTest.getPattern().equals(""))
+        if (!(lastTest.getPattern() == null))
             tests.add(lastTest);
         qe.close();
 
