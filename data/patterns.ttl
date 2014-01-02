@@ -13,12 +13,12 @@
 tddp:RDFSRANGE a tddo:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain. Can use the rdf:type as transitive using the '+' operator"""@en ;
+    tddo:selectVariable "c" ;
     tddo:sparqlPattern """ SELECT DISTINCT ?c WHERE {
-                            ?s %%P1%% ?c.
+                            _:s %%P1%% ?c.
                             FILTER NOT EXISTS {?c rdf:type ?T1 . ?T1 rdfs:subClassOf%%OP%% %%T1%% . }
                             FILTER NOT EXISTS {?c rdf:type %%T1%%  } } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?c) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
-    tddo:selectVariable "c" ;
+    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?c) AS ?total) WHERE { _:s %%P1%% ?c .} """ ;
     tddo:parameter tddp:RDFSRANGE-P1 ;
     tddo:parameter tddp:RDFSRANGE-OP ;
     tddo:parameter tddp:RDFSRANGE-T1 .
@@ -45,11 +45,11 @@ tddp:RDFSRANGE-T1 a tddo:Parameter ;
 tddp:RDFSRANGED a tddo:Pattern ;
     dcterms:identifier "RDFSRANGED" ;
     dcterms:description """Emulates the rdfs:range (datatype) constrain."""@en ;
-    tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
-                            ?s %%P1%% ?c.
-                            FILTER (DATATYPE(?c) != %%D1%%) } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
     tddo:selectVariable "s" ;
+    tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
+                            ?s %%P1%% _:c.
+                            FILTER (DATATYPE(_:c) != %%D1%%) } """ ;
+    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% _:c .} """ ;
     tddo:parameter tddp:RDFSRANGED-P1 ;
     tddo:parameter tddp:RDFSRANGED-D1.
 
@@ -70,12 +70,12 @@ tddp:RDFSRANGED-D1 a tddo:Parameter ;
 tddp:RDFSDOMAIN a tddo:Pattern ;
     dcterms:identifier "RDFSDOMAIN" ;
     dcterms:description """Emulates the rdfs:domain constrain. It can be extended by using specific values in V1 or making rdf:type transitive using the '+' operator"""@en ;
+    tddo:selectVariable "s" ;
     tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
                                  ?s %%P1%% %%V1%%
                                  FILTER NOT EXISTS {?s rdf:type ?T1 . ?T1 rdfs:subClassOf%%OP%% %%T1%% . }
                                  FILTER NOT EXISTS {?s rdf:type %%T1%%  } } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c .} """ ;
-    tddo:selectVariable "s" ;
+    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% _:c .} """ ;
     tddo:parameter tddp:RDFSDOMAIN-P1 ;
     tddo:parameter tddp:RDFSDOMAIN-V1 ;
     tddo:parameter tddp:RDFSDOMAIN-OP ;
@@ -99,17 +99,17 @@ tddp:RDFSDOMAIN-T1 a tddo:Parameter ;
 
 
 ##########################################
-#### owl:disjointClass pattern
+#### owl:disjointClass pattern  (#TODO fix transitive)
 ##########################################
 
 tddp:OWLDISJC a tddo:Pattern ;
     dcterms:identifier "OWLDISJC" ;
     dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
+    tddo:selectVariable "s" ;
     tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
                            ?s rdf:type %%T1%% .
                            ?s rdf:type %%T2%% .} """ ;
     tddo:sparqlPrevalencePattern """  """ ;
-    tddo:selectVariable "s" ;
     tddo:parameter tddp:OWLDISJC-T1 ;
     tddo:parameter tddp:OWLDISJC-T2 .
 
@@ -129,8 +129,8 @@ tddp:OWLDISJP a tddo:Pattern ;
     dcterms:identifier "OWLDISJP" ;
     dcterms:description """Emulates the owl:disjointProperty constrain"""@en ;
     tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
-                           ?s %%P1%% ?v .
-                           ?s %%P2%% ?v .} """ ;
+                           ?s %%P1%% _:v .
+                           ?s %%P2%% _:v .} """ ;
     tddo:sparqlPrevalencePattern """  """ ;
     tddo:selectVariable "s" ;
     tddo:parameter tddp:OWLDISJP-P1 ;
@@ -151,12 +151,12 @@ tddp:OWLDISJP-P2 a tddo:Parameter ;
 tddp:OWLCARD a tddo:Pattern ;
       dcterms:identifier "OWLCARD" ;
       dcterms:description """Emulates the owl:cardinality constrain"""@en ;
-      tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
-                                   ?s %%P1%% ?c.
-                                 } GROUP BY ?s
-                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
-      tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c. }""" ;
       tddo:selectVariable "s" ;
+      tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
+                                   ?s %%P1%% _:c.
+                                 } GROUP BY ?s
+                                 HAVING ( count(_:c)  %%OP%% %%V1%% ) """ ;
+      tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% _:c. }""" ;
       tddo:parameter tddp:OWLCARD-P1 ;
       tddo:parameter tddp:OWLCARD-OP ;
       tddo:parameter tddp:OWLCARD-V1 .
@@ -185,7 +185,7 @@ tddp:TYPRODEP a tddo:Pattern ;
       dcterms:description """ A property must exist in a class instance"""@en ;
       tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
                              ?s rdf:type%%OP%% %%T1%% .
-                             FILTER NOT EXISTS {?s %%P1%% ?v } } """ ;
+                             FILTER NOT EXISTS {?s %%P1%% _:v } } """ ;
       tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?s) AS ?total) WHERE { ?s rdf:type%%OP%% %%T1%% . } """ ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:TYPRODEP-T1 ;
@@ -214,11 +214,11 @@ tddp:INVFUNC a tddo:Pattern ;
       dcterms:identifier "INVFUNC" ;
       dcterms:description """ Unique value constraint of inverse functional properties """@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?v1 WHERE {
-                                ?a %%P1%% ?v1 .
-                                ?b %%P1%% ?v1 .
-                                FILTER (?a != ?b)
+                                _:a %%P1%% ?v1 .
+                                _:b %%P1%% ?v1 .
+                                FILTER (_:a != _:b)
                               }""" ;
-      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?v1) AS ?total) WHERE { ?a %%P1%% ?v1 . }""" ;
+      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?v1) AS ?total) WHERE { _:a %%P1%% ?v1 . }""" ;
       tddo:selectVariable "v1" ;
       tddo:parameter tddp:INVFUNC-P1 .
 
@@ -237,11 +237,11 @@ tddp:OWLSYMMETRICPROP a tddo:Pattern ;
       dcterms:identifier "OWLSYMMETRICPROP" ;
       dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?r2 WHERE {
-                              ?r1  %%P1%% ?r2 .
-                              FILTER NOT EXISTS {?r2 %%P1%% ?r1} .
+                              _:r1  %%P1%% ?r2 .
+                              FILTER NOT EXISTS {?r2 %%P1%% _:r1} .
                             }""" ;
       tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?r2) AS ?total) WHERE {
-                                        ?r1 %%P1%% ?r2 .
+                                        _:r1 %%P1%% ?r2 .
                                       }""" ;
       tddo:selectVariable "r2" ;
       tddo:parameter tddp:OWLSYMMETRICPROP-P1 .
@@ -261,10 +261,10 @@ tddp:OWLASYMMETRICPROP a tddo:Pattern ;
       dcterms:identifier "OWLASYMMETRICPROP" ;
       dcterms:description """ Given a property that is asymmetric, this pattern finds cases where it is nonetheless used as symmetric property """@en ;
       tddo:sparqlPattern """SELECT ?r1 WHERE {
-                              ?r1 %%P1%% ?r2 .
-                              ?r2 %%P1%% ?r1 .
+                              ?r1 %%P1%% _:r2 .
+                              _:r2 %%P1%% ?r1 .
                             }""" ;
-      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?r1) AS ?total) WHERE {?r1 %%P1%% ?r2 .}""";
+      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?r1) AS ?total) WHERE {?r1 %%P1%% _:r2 .}""";
       tddo:selectVariable "r1" ;
       tddo:parameter tddp:OWLASYMMETRICPROP-P1 .
 
@@ -285,11 +285,11 @@ tddp:OWLTRANSPROP a tddo:Pattern ;
       dcterms:identifier "OWLTRANSPROP" ;
       dcterms:description """ Given a transitive property, this pattern finds missing statements containing the consequent transitive entailments """@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?r1 WHERE {
-                              ?r1 %%P1%% ?r2 .
-                              ?r2 %%P1%% ?r3 .
-                              FILTER NOT EXISTS {?r1 %%P1%% ?r3} .
+                              ?r1 %%P1%% _:r2 .
+                              _:r2 %%P1%% _:r3 .
+                              FILTER NOT EXISTS {?r1 %%P1%% _:r3} .
                             }""" ;
-      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?r1) AS ?total) WHERE {?r1 %%P1%% ?r2 .}""" ;
+      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?r1) AS ?total) WHERE {?r1 %%P1%% _:r2 .}""" ;
       tddo:selectVariable "r1" ;
       tddo:parameter tddp:OWLTRANSPROP-P1 .
 
@@ -325,13 +325,13 @@ tddp:COMP a tddo:Pattern ;
       dcterms:identifier "COMP" ;
       dcterms:description """Comparison between two literal values in a resource"""@en ;
       tddo:sparqlPattern """SELECT ?s WHERE {
-                                ?s %%P1%% ?beforeVal .
-                                ?s %%P2%% ?afterVal .
-                                FILTER ( ?beforeVal %%OP%% ?afterVal )
+                                ?s %%P1%% _:beforeVal .
+                                ?s %%P2%% _:afterVal .
+                                FILTER ( _:beforeVal %%OP%% _:afterVal )
                             }""" ;
       tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE {
-                                            ?s %%P1%% ?beforeVal .
-                                            ?s %%P2%% ?afterVal .
+                                            ?s %%P1%% _:beforeVal .
+                                            ?s %%P2%% _:afterVal .
                                         }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:COMP-P1 ;
@@ -361,10 +361,10 @@ tddp:MATCH a tddo:Pattern ;
       dcterms:identifier "MATCH" ;
       dcterms:description """Literal in not in a desired pattern"""@en ;
       tddo:sparqlPattern """ SELECT DISTINCT ?s WHERE {
-                                ?s %%P1%% ?value .
-                                FILTER (%%OP%% regex(str(?value), %%REGEX%%)) .
+                                ?s %%P1%% _:value .
+                                FILTER (%%OP%% regex(str(_:value), %%REGEX%%)) .
                             } """ ;
-      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?value . }""" ;
+      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% _:value . }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:MATCH-P1 ;
       tddo:parameter tddp:MATCH-OP ;
@@ -394,13 +394,13 @@ tddp:LITRAN a tddo:Pattern ;
       dcterms:description """Literal in specific range"""@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?s WHERE {
                                 ?s a %%T1%% .
-                                ?s %%P1%% ?value.
-                                FILTER( %%NOP%% ( ?value > %%valueMin%% &&
-                                                  ?value < %%valueMax%% )))
+                                ?s %%P1%% _:value.
+                                FILTER( %%NOP%% ( _:value > %%valueMin%% &&
+                                                  _:value < %%valueMax%% )))
                             }""" ;
       tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE {
                                           ?s a %%T1%% .
-                                          ?s %%P1%% ?value .
+                                          ?s %%P1%% _:value .
                                       }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:LITRAN-T1 ;
@@ -461,32 +461,6 @@ tddp:TYPDEP-T2 a tddo:Parameter ;
 
 
 ################################################################################
-#### PROPDEP
-#### resource has propertyA but not propertyB (same as PVT)
-################################################################################
-
-#tddp:PROPDEP a tddo:Pattern ;
-#      dcterms:identifier "PROPDEP" ;
-#      dcterms:description """Resource has propertyA but not propertyB"""@en ;
-#      tddo:sparqlPattern """SELECT DISTINCT ?s WHERE {
-#                                ?s %%P1%% ?v1
-#                                FILTER NOT EXISTS {?s %%P2%% ?v2}
-#                            }""" ;
-#      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?v1 . }""" ;
-#      tddo:selectVariable "s" ;
-#      tddo:parameter tddp:PROPDEP-P1 ;
-#      tddo:parameter tddp:PROPDEP-P2 .
-#
-#tddp:PROPDEP-P1 a tddo:Parameter ;
-#      dcterms:identifier "P1" ;
-#      tddo:parameterConstraint tddo:Property .
-#
-#tddp:PROPDEP-P2 a tddo:Parameter ;
-#      dcterms:identifier "P2" ;
-#      tddo:parameterConstraint tddo:Property .
-
-
-################################################################################
 #### PVT
 #### Resources with a propertyA having valueA should contain a triple with
 #### propertyB
@@ -497,7 +471,7 @@ tddp:PVT a tddo:Pattern ;
       dcterms:description """Resources with a propertyA having valueA should contain a triple with propertyB"""@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?s WHERE {
                                 ?s %%P1%% %%V1%%
-                                FILTER NOT EXISTS {?s %%P2%% ?p}
+                                FILTER NOT EXISTS {?s %%P2%% _:p}
                             }""" ;
       tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% %%V1%% }""" ;
       tddo:selectVariable "s" ;
@@ -526,7 +500,7 @@ tddp:TRIPLE a tddo:Pattern ;
       dcterms:identifier "TRIPLE" ;
       dcterms:description """Resource has ValueA for PropertyB"""@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?s WHERE { ?s %%P1%% %%V1%% }""" ;
-      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?value }""" ;
+      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% _:value }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:TRIPLE-P1 ;
       tddo:parameter tddp:TRIPLE-V1 .
@@ -550,12 +524,12 @@ tddp:ONELANG a tddo:Pattern ;
       dcterms:identifier "ONELANG" ;
       dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
       tddo:sparqlPattern """SELECT DISTINCT ?s WHERE {
-                                ?s %%P1%% ?c
-                                BIND ( lang(?c) AS ?l )
-                                FILTER (isLiteral (?c) && lang(?c) = %%V1%%)
+                                ?s %%P1%% _:c
+                                BIND ( lang(_:c) AS ?l )
+                                FILTER (isLiteral (_:c) && lang(_:c) = %%V1%%)
                             } GROUP BY ?s 
                             HAVING COUNT (?l) > 1""" ;
-      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% ?c }""" ;
+      tddo:sparqlPrevalencePattern """SELECT (count( DISTINCT ?s) AS ?total) WHERE { ?s %%P1%% _:c }""" ;
       tddo:selectVariable "s" ;
       tddo:parameter tddp:ONELANG-P1 ;
       tddo:parameter tddp:ONELANG-V1 .
