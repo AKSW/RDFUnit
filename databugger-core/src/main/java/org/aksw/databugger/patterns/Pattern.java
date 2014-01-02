@@ -4,21 +4,21 @@ import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
- * Class that holds a sparqlPattern definition
+ * Class that holds a sparqlWherePattern definition
  * Created: 9/16/13 1:14 PM
  */
 public class Pattern {
     private final String id;
     private final String description;
-    private final String sparqlPattern;
+    private final String sparqlWherePattern;
     private final String sparqlPatternPrevalence;
     private final String selectVariable;
     private final List<PatternParameter> parameters;
 
-    public Pattern(String id, String description, String sparqlPattern, String sparqlPatternPrevalence, String selectVariable, List<PatternParameter> parameters) {
+    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, String selectVariable, List<PatternParameter> parameters) {
         this.id = id;
         this.description = description;
-        this.sparqlPattern = sparqlPattern;
+        this.sparqlWherePattern = sparqlWherePattern;
         this.sparqlPatternPrevalence = sparqlPatternPrevalence;
         this.selectVariable = selectVariable;
         this.parameters = parameters;
@@ -29,7 +29,7 @@ public class Pattern {
             return false;
         //check if defined parameters exist is sparql
         for (PatternParameter p : getParameters()) {
-            if (getSparqlPattern().indexOf("%%" + p.getId() + "%%") == -1)
+            if (getSparqlWherePattern().indexOf("%%" + p.getId() + "%%") == -1)
                 return false;
         }
         // TODO search if we need more parameters
@@ -40,7 +40,7 @@ public class Pattern {
     public String instantiateSparqlPattern(List<String> bindings) throws Exception {
         if (bindings.size() != getParameters().size())
             throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings, getSparqlPattern());
+        return instantiateBindings(bindings, getSparqlWherePattern());
     }
 
     public String instantiateSparqlPatternPrevalence(List<String> bindings) throws Exception {
@@ -73,8 +73,8 @@ public class Pattern {
         return description;
     }
 
-    public String getSparqlPattern() {
-        return sparqlPattern;
+    public String getSparqlWherePattern() {
+        return sparqlWherePattern;
     }
 
     public String getSparqlPatternPrevalence() {

@@ -55,7 +55,7 @@ tddo:Pattern
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty tddo:sparqlPattern;
+        owl:onProperty tddo:sparqlWherePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
@@ -71,10 +71,10 @@ tddo:selectVariable
     rdfs:domain tddo:Pattern ;
     rdfs:range xsd:string .
 
-tddo:sparqlPattern
+tddo:sparqlWherePattern
     a owl:DatatypeProperty ;
-    rdfs:label "sparqlPattern"@en ;
-    rdfs:comment "A pattern sparql query with placeholders (%%XYZ%%)for parameters"@en ;
+    rdfs:label "sparqlWherePattern"@en ;
+    rdfs:comment "The WHERE part of sparql pattern  query with placeholders (%%XYZ%%) for parameters"@en ;
     rdfs:domain tddo:Pattern ;
     rdfs:range xsd:string .
 
