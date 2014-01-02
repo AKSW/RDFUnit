@@ -20,6 +20,7 @@ public class TripleFirstSuccessReader extends TripleReader {
 
     @Override
     public void read(Model model) throws TripleReaderException {
+        String message = "";
         // return the first successful attempt
         for (TripleReader r: readers ) {
             try {
@@ -27,10 +28,15 @@ public class TripleFirstSuccessReader extends TripleReader {
                 // return on first read() that does not throw an exception
                 return;
             } catch (TripleReaderException e) {
-                String message = e.getMessage();
+                if (!message.isEmpty())
+                    message += "\n";
+                if (e.getMessage() != null)
+                    message += e.getMessage();
+                else
+                    message += e.toString();
             }
         }
 
-        throw new TripleReaderException("Cannot read from any reader");
+        throw new TripleReaderException("Cannot read from any reader: " + message);
     }
 }
