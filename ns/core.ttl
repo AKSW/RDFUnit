@@ -123,6 +123,12 @@ tddo:parameterConstraint
     rdfs:domain tddo:Parameter ;
     rdfs:range tddo:ParameterConstraint .
 
+tddo:constrainPattern
+    a owl:DatatypeProperty ;
+    rdfs:label "constrainPattern"@en ;
+    rdfs:domain tddo:Parameter ;
+    rdfs:range xsd:string .
+
 tddo:ParameterConstraint
     a owl:Class ;
     rdfs:label "ParameterConstraint"@en .
@@ -198,16 +204,11 @@ tddo:basedOnPattern
 
 tddo:TestCase
     a owl:Class ;
-    rdfs:label "TestSase"@en ;
+    rdfs:label "TestCase"@en ;
     rdfs:comment "A superclass of TestCases. Defines properties all test cases can have but concrete implementation occurs on subclasses."@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
         owl:onProperty tddo:appliesTo;
-        owl:cardinality "1"^^xsd:nonNegativeInteger
-    ] ;
-    rdfs:subClassOf [
-        rdf:type owl:Restriction;
-        owl:onProperty tddo:basedOnPattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
@@ -248,7 +249,7 @@ tddo:generated
 tddo:references
     a owl:ObjectProperty ;
     rdfs:label "references"@en ;
-    rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
+    rdfs:comment "references specifies the Classes and Properties involved in the described test case."@en ;
     rdfs:domain tddo:TestCase .
 
 tddo:source
@@ -346,7 +347,7 @@ tddo:ManualTestCase
 
 tddo:sparqlWhere
     a owl:DatatypeProperty ;
-    rdfs:label "sparql"@en ;
+    rdfs:label "sparqlWhere"@en ;
     rdfs:comment
         """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and use the following variables: ?resource, ?message and ?logLevel.
         ?resource is URI the constraint violation occurs in, ?message is a logging message and ?logLevel is an instance of rlog:Level"""@en ;
@@ -425,8 +426,8 @@ tddo:Result
 
 tddo:testCase
     a owl:ObjectProperty ;
-    rdfs:label "test"@en ;
-    rdfs:comment "points to a Test" ;
+    rdfs:label "testCase"@en ;
+    rdfs:comment "points to a test case" ;
     rdfs:range tddo:TestCase .
 
 tddo:resultCount
