@@ -19,7 +19,7 @@
 #     tddo:generated tddo:ManuallyGenerated ;
 #     tddo:references lgdo:postal_code ;
 #     tddo:source <http://linkedgeodata.org/ontology/> ;
-#     tddo:sparql """ SELECT DISTINCT ?s WHERE {
+#     tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
 #                         ?s lgdo:postal_code ?value .
 #                         FILTER (! regex(str(?value), "^^[0-9]{5}$$"))
 #                     } """
@@ -33,7 +33,7 @@ tddt:lgd-MATCH-telephone_area_code
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+    tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                         ?s <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ?v .
                         FILTER( !regex(str(?v), "^(0|\\+)"))
                     } """ ;
@@ -49,7 +49,7 @@ tddt:lgd-MATCH-phone
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://xmlns.com/foaf/0.1/phone> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+    tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                         ?s <http://xmlns.com/foaf/0.1/phone> ?v .
                         FILTER( regex(str(?v), "[A-Za-z]"))
                     } """ ;
@@ -65,7 +65,7 @@ tddt:lgd-LITRAN-maxspeed
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://linkedgeodata.org/ontology/maxspeed> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+    tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                         ?s <http://linkedgeodata.org/ontology/maxspeed> ?v.
                         FILTER(!(xsd:int(?v)>0 && xsd:int(?v)<300))
                     } """ ;
@@ -81,7 +81,7 @@ tddt:lgd-PROPDEP-start_end
     tddo:references <http://linkedgeodata.org/ontology/start> ;
     tddo:references <http://linkedgeodata.org/ontology/end> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT DISTINCT ?s WHERE {
+    tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                     ?s <http://linkedgeodata.org/ontology/start> ?v1 .
                     FILTER NOT EXISTS {?s <http://linkedgeodata.org/ontology/end> ?p}
                 } """ ;
@@ -96,7 +96,7 @@ tddt:lgd-TRIPLE-fixme
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://linkedgeodata.org/ontology/fixme> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ ;
+    tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ ;
     tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ .
 
 
@@ -108,6 +108,6 @@ tddt:lgd-TRIPLE-todo
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://linkedgeodata.org/ontology/todo> ;
     tddo:source <http://linkedgeodata.org/ontology/> ;
-    tddo:sparql """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ ;
+    tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ ;
     tddo:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ .
 
