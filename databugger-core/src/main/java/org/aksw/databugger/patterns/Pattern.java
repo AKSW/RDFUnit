@@ -34,27 +34,6 @@ public class Pattern {
         return true;
     }
 
-    // TODO assumes ordered bindings / parameters might not do like this in the end
-    public String instantiateSparqlPattern(List<String> bindings) throws Exception {
-        if (bindings.size() != getParameters().size())
-            throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings, getSparqlWherePattern());
-    }
-
-    public String instantiateSparqlPatternPrevalence(List<String> bindings) throws Exception {
-        if (bindings.size() != getParameters().size())
-            throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings, getSparqlPatternPrevalence());
-    }
-
-    private String instantiateBindings(List<String> bindings, String query) {
-        String sparql = query;
-        for (int i = 0; i < bindings.size(); i++) {
-            sparql = sparql.replace("%%" + getParameters().get(i).getId() + "%%", bindings.get(i));
-        }
-        return sparql;
-    }
-
     /*
     * Checks if all given arguments exist in the patters and the opposite
     * */
@@ -81,5 +60,13 @@ public class Pattern {
 
     public List<PatternParameter> getParameters() {
         return parameters;
+    }
+
+    public PatternParameter getParameter(String parameterURI) {
+        for (PatternParameter parameter : parameters) {
+            if (parameter.getURI().equals(parameterURI))
+                return parameter;
+        }
+        return null;
     }
 }
