@@ -1,4 +1,4 @@
-package org.aksw.databugger.tests;
+package org.aksw.databugger.tests.executors;
 
 import org.aksw.databugger.Utils.CacheUtils;
 import org.aksw.databugger.Utils.TestUtils;
@@ -8,7 +8,8 @@ import org.aksw.databugger.io.TripleFileReader;
 import org.aksw.databugger.io.TripleFileWriter;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.io.TripleReaderFactory;
+import org.aksw.databugger.tests.TestAutoGenerator;
+import org.aksw.databugger.tests.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,27 +24,17 @@ import java.util.List;
 public class TestGeneratorExecutor {
     private static Logger log = LoggerFactory.getLogger(TestGeneratorExecutor.class);
     private boolean isCanceled = false;
+    private final boolean loadFromCache;
+    private final boolean useManualTests;
 
-    public interface TestGeneratorExecutorMonitor{
-        /*
-        * Called when testing starts
-        * */
-        void generationStarted(final Source source, final long numberOfSources);
+    public TestGeneratorExecutor() {
+        this.loadFromCache = true;
+        this.useManualTests = true;
+    }
 
-        /*
-        * Called when a test generation starts
-        * */
-        void sourceGenerationStarted(final Source source, final TestGenerationType generationType);
-
-        /*
-        * Called when a test generation starts
-        * */
-        void sourceGenerationExecuted(final Source source, final TestGenerationType generationType, final long testsCreated);
-
-        /*
-        * Called when test generation ends
-        * */
-        void generationFinished();
+    public TestGeneratorExecutor(boolean loadFromCache, boolean useManualTests) {
+        this.loadFromCache = loadFromCache;
+        this.useManualTests = useManualTests;
     }
 
     private final List<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<TestGeneratorExecutorMonitor>();
@@ -74,12 +65,14 @@ public class TestGeneratorExecutor {
 
             //Generate auto tests from schema
             allTests.addAll(generateAutoTestsForSchemaSource(testFolder, s,autoGenerators));
+
             //Find manual tests for schema
-            allTests.addAll(generateManualTestsForSource(testFolder, s,autoGenerators));
+            if (useManualTests)
+                allTests.addAll(generateManualTestsForSource(testFolder, s,autoGenerators));
         }
 
         //Find manual tests for dataset (if not canceled
-        if (isCanceled == false)
+        if (isCanceled == false && useManualTests == true)
             allTests.addAll(generateManualTestsForSource(testFolder, dataset,autoGenerators));
 
         /*notify start of testing */
@@ -98,8 +91,11 @@ public class TestGeneratorExecutor {
         }
 
         try {
+            String cachedTestsLocation = CacheUtils.getSourceAutoTestFile(testFolder,s);
+            if (loadFromCache == false)
+                cachedTestsLocation = ""; // non existing path
             List<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                    new TripleFileReader(CacheUtils.getSourceAutoTestFile(testFolder,s)).read());
+                    new TripleFileReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
             log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 

@@ -8,7 +8,7 @@ import com.vaadin.ui.*;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
-import org.aksw.databugger.tests.TestExecutor;
+import org.aksw.databugger.tests.executors.TestExecutorMonitor;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * Description
  * Created: 11/20/13 5:20 PM
  */
-public class TestResultsComponent extends VerticalLayout implements TestExecutor.TestExecutorMonitor {
+public class TestResultsComponent extends VerticalLayout implements TestExecutorMonitor {
 
     private Table resultsTable = new Table("Test Results");
     private Source source = null;

@@ -13,8 +13,9 @@ import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.sources.SourceFactory;
-import org.aksw.databugger.tests.TestExecutor;
-import org.aksw.databugger.tests.TestGeneratorExecutor;
+import org.aksw.databugger.tests.executors.TestExecutor;
+import org.aksw.databugger.tests.executors.TestExecutorMonitor;
+import org.aksw.databugger.tests.executors.TestGeneratorExecutor;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
@@ -24,7 +25,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +153,7 @@ public class Main {
 
 
 
-        TestExecutor.TestExecutorMonitor testExecutorMonitor = new TestExecutor.TestExecutorMonitor() {
+        TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
 
             TripleWriter resultWriter;
             Source testedDataset;
@@ -194,7 +194,7 @@ public class Main {
                         if (currentErrors == 0)
                             success++;
                         if (currentErrors > 0) {
-                            error ++;
+                            fail ++;
                             totalErrors += currentErrors;
                         }
                     }
@@ -215,8 +215,8 @@ public class Main {
 
             @Override
             public void testingFinished() {
+                log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
                 try {
-
                     resultWriter.write(model);
                 } catch (TripleWriterException e) {
                     log.error("Cannot write tests to file: " + e.getMessage());

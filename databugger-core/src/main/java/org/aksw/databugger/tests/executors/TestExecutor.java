@@ -1,22 +1,14 @@
-package org.aksw.databugger.tests;
+package org.aksw.databugger.tests.executors;
 
 import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.databugger.Utils.DatabuggerUtils;
-import org.aksw.databugger.io.TripleWriter;
-import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,28 +21,6 @@ import java.util.List;
 public class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
     private boolean isCanceled = false;
-
-    public interface TestExecutorMonitor{
-        /*
-        * Called when testing starts
-        * */
-        void testingStarted(final Source dataset, final long numberOfTests);
-
-        /*
-        * Called when a single test starts
-        * */
-        void singleTestStarted(final TestCase test);
-
-        /*
-        * Called when a single test is executed
-        * */
-        void singleTestExecuted(final TestCase test, final List<TestCaseResult> results);
-
-        /*
-        * Called when testing ends
-        * */
-        void testingFinished();
-    }
 
     private final List<TestExecutorMonitor> progressMonitors = new ArrayList<TestExecutorMonitor>();
 

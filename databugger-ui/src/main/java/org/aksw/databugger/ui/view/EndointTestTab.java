@@ -7,13 +7,12 @@ import com.vaadin.ui.*;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.DatabuggerConfigurationFactory;
 import org.aksw.databugger.enums.TestGenerationType;
-import org.aksw.databugger.io.TripleFileWriter;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tests.TestExecutor;
-import org.aksw.databugger.tests.TestGeneratorExecutor;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.executors.TestExecutorMonitor;
+import org.aksw.databugger.tests.executors.TestGeneratorExecutorMonitor;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.databugger.ui.DatabuggerUISession;
@@ -271,7 +270,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutor.TestGeneratorExecutorMonitor() {
+        DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutorMonitor() {
             private long count = 0;
             private long total = 0;
             private long tests = 0;
@@ -365,7 +364,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(new TestExecutor.TestExecutorMonitor() {
+        DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(new TestExecutorMonitor() {
             private long count = 0;
             private long totalErrors = 0;
             private long failTest = 0;

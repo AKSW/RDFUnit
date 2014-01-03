@@ -8,7 +8,7 @@ import com.vaadin.ui.*;
 import org.aksw.databugger.Utils.CacheUtils;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tests.TestGeneratorExecutor;
+import org.aksw.databugger.tests.executors.TestGeneratorExecutorMonitor;
 import org.aksw.databugger.ui.DatabuggerUISession;
 
 import java.io.File;
@@ -18,7 +18,7 @@ import java.io.File;
  * Description
  * Created: 11/20/13 5:20 PM
  */
-public class TestGenerationComponent extends VerticalLayout implements TestGeneratorExecutor.TestGeneratorExecutorMonitor {
+public class TestGenerationComponent extends VerticalLayout implements TestGeneratorExecutorMonitor {
 
     private Table resultsTable = new Table("Test Results");
 
