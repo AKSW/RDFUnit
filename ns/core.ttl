@@ -51,6 +51,11 @@ tddo:Pattern
     rdfs:label "Pattern"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
+        owl:onProperty dcterms:identifier;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
         owl:onProperty tddo:sparqlWherePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
@@ -58,7 +63,13 @@ tddo:Pattern
         rdf:type owl:Restriction;
         owl:onProperty tddo:sparqlPrevalencePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
-    ] .
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:parameter;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
 
 tddo:sparqlWherePattern
     a owl:DatatypeProperty ;
@@ -88,7 +99,23 @@ tddo:parameter
 
 tddo:Parameter
     a owl:Class ;
-    rdfs:label "Parameter"@en .
+    rdfs:label "Parameter"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty dcterms:identifier ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:parameterConstraint ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:constrainPattern ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
 
 tddo:parameterConstraint
     a owl:ObjectProperty ;
