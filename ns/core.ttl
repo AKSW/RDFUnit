@@ -6,6 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix tddo: <http://databugger.aksw.org/ns/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 
 <http://databugger.aksw.org/ns/core#>
     a owl:Ontology ;
@@ -77,8 +78,7 @@ tddo:parameter
     a owl:ObjectProperty ;
     rdfs:label "parameter"@en ;
     rdfs:comment "links a Pattern with a list of pattern parameters"@en ;
-    rdfs:range tddo:Parameter ;
-    rdfs:domain tddo:Pattern .
+    rdfs:range tddo:Parameter .
 
 
 #################################################################
@@ -166,13 +166,13 @@ tddo:basedOnPattern
 
 
 #################################################################
-# Tests
+# Tests / TestCase
 #################################################################
 
 tddo:TestCase
     a owl:Class ;
-    rdfs:label "Test"@en ;
-    rdfs:comment "A Test is a testcase in which all properties of the test are described."@en ;
+    rdfs:label "TestSase"@en ;
+    rdfs:comment "A superclass of TestCases. Defines properties all test cases can have but concrete implementation occurs on subclasses."@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
         owl:onProperty tddo:appliesTo;
@@ -224,27 +224,115 @@ tddo:references
     rdfs:comment "references specifies the Classes and Properties involved in the described testcase."@en ;
     rdfs:domain tddo:TestCase .
 
-
 tddo:source
     a owl:ObjectProperty ;
     rdfs:label "source"@en ;
     rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
 
 
+#################################################################
+# Tests / ManualTestCase
+################################################################
+
+tddo:PatternBasedTestCase
+    a owl:Class ;
+    rdfs:subClassOf tddo:TestCase ;
+    rdfs:label "PatternBasedTestCase"@en ;
+    rdfs:comment "A test case that is based on a Pattern"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:basedOnPattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:binding;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rlog:level;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rlog:message;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+tddo:binding
+    a owl:ObjectProperty ;
+    rdfs:label "binding"@en ;
+    rdfs:comment "defines a binding between a pattern parameter and a value"@en ;
+    rdfs:domain tddo:PatternBasedTestCase ;
+    rdfs:range tddo:Binding .
+
+
+#################################################################
+# Tests / Binding
+#################################################################
+
+tddo:Binding
+    a owl:Class ;
+    rdfs:label "Binding"@en ;
+    rdfs:comment "A binding between a pattern parameter and a value"@en  ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:parameter ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:bindingValue;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+tddo:bindingValue
+    a rdf:Property ;
+    rdfs:label "bindingValue"@en ;
+    rdfs:comment "the value of a Binding"@en ;
+    rdfs:domain tddo:Binding .
+
+
+#################################################################
+# Tests / ManualTestCase
+#################################################################
+
+tddo:ManualTestCase
+    a owl:Class ;
+    rdfs:subClassOf tddo:TestCase ;
+    rdfs:label "ManualTestCase"@en ;
+    rdfs:comment "A test case where the SPARQL is defined manually"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:sparqlWhere ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:sparqlPrevalence;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
 tddo:sparqlWhere
     a owl:DatatypeProperty ;
     rdfs:label "sparql"@en ;
-    rdfs:comment "The WHERE part of a sparql query"@en ;
-    rdfs:domain tddo:TestCase ;
+    rdfs:comment
+        """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and use the following variables: ?resource, ?message and ?logLevel.
+        ?resource is URI the constraint violation occurs in, ?message is a logging message and ?logLevel is an instance of rlog:Level"""@en ;
+    rdfs:domain tddo:ManualTestCase ;
     rdfs:range xsd:string .
-
 
 tddo:sparqlPrevalence
     a owl:DatatypeProperty ;
     rdfs:label "sparqlPrevalence"@en ;
     rdfs:comment "A sparql query for prevalence"@en ;
-    rdfs:domain tddo:TestCase ;
+    rdfs:domain tddo:ManualTestCase ;
     rdfs:range xsd:string .
+
 
 #################################################################
 
