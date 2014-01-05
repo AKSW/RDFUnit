@@ -5,6 +5,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.databugger.enums.PatternParameterConstraints;
+import org.aksw.databugger.exceptions.BindingException;
 import org.aksw.databugger.patterns.PatternParameter;
 import org.aksw.databugger.services.PrefixService;
 
@@ -17,9 +19,13 @@ public class Binding {
     private final PatternParameter parameter;
     private final RDFNode value;
 
-    public Binding(PatternParameter parameter, RDFNode value) {
+    public Binding(PatternParameter parameter, RDFNode value) throws BindingException {
         this.parameter = parameter;
         this.value = value;
+
+        //Validate bibding
+        if (validateType() == false)
+            throw  new BindingException("Binding is of incorrect constraint type");
     }
 
     public String getValue() {
@@ -37,5 +43,32 @@ public class Binding {
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "parameter"), model.createResource(parameter.getURI()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "bindingValue"), value);
 
+    }
+
+    private boolean validateType() {
+        PatternParameterConstraints pc = parameter.getConstrain();
+        if (pc.equals(PatternParameterConstraints.None))
+            return true;
+        if (value.isResource() ) {
+            if (pc.equals(PatternParameterConstraints.Resource) ||
+                pc.equals(PatternParameterConstraints.Property) ||
+                pc.equals(PatternParameterConstraints.Class) )
+                return true;
+        }
+        if (value.isLiteral()) {
+            if (pc.equals(PatternParameterConstraints.Operator)) {
+                return true;
+            }
+        }
+
+        // TODO check for more
+        return false;
+    }
+
+    private boolean validatePattern() {
+        if (parameter.getConstraintPattern().equals(""))
+            return true;
+        // TODO Check the pattern
+        return true;
     }
 }

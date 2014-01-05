@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
+import org.aksw.databugger.exceptions.BindingException;
 import org.aksw.databugger.exceptions.TripleWriterException;
 import org.aksw.databugger.io.TripleWriter;
 import org.aksw.databugger.patterns.Pattern;
@@ -302,7 +303,11 @@ public class TestUtils {
 
                 RDFNode value = qs.get("value");
 
-                bindings.add(new Binding(parameter, value));
+                try {
+                    bindings.add(new Binding(parameter, value));
+                } catch (BindingException e) {
+                    log.error("Non valid binding for parameter " + parameter.getId() + " in Test: " + testURI);
+                }
             }
         } finally {
             if (qe != null)

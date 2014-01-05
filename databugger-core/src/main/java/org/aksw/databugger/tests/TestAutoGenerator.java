@@ -6,6 +6,7 @@ import com.hp.hpl.jena.sparql.core.Var;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.enums.TestGenerationType;
+import org.aksw.databugger.exceptions.BindingException;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
 import org.aksw.databugger.sources.Source;
@@ -79,7 +80,14 @@ public class TestAutoGenerator {
             for (PatternParameter p : pattern.getParameters()) {
                 if (row.contains(p.getId())) {
                     RDFNode n = row.get(p.getId());
-                    bindings.add(new Binding(p, n));
+                    Binding b = null;
+                    try {
+                        b = new Binding(p,n);
+                    } catch (BindingException e) {
+                        log.error("Non valid binding for parameter " + p.getId() + " in AutoGenerator: " + this.getURI());
+                        continue;
+                    }
+                    bindings.add(b);
                     if (n.isResource()) {
                         references.add(n.toString().trim().replace(" ", ""));
                     }

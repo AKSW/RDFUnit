@@ -70,7 +70,7 @@ public class PatternUtils {
                 }
 
                 PatternParameterConstraints constrain = PatternParameterConstraints.resolve(constrainStr);
-                parameters.add(new PatternParameter(parameterURI, parameterID, constrain, PatternService.getPattern(constrainPat)));
+                parameters.add(new PatternParameter(parameterURI, parameterID, constrain, constrainPat));
             }
             qeNested.close();
 
