@@ -11,7 +11,7 @@
 # Class range
 tddg:RDFSRANGEC a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ select distinct ?P1 ('+' as ?OP) ?T1 where {
+    tddo:sparqlGenerator """ select distinct ?P1 ('+' as ?OP) ?T1 ?MESSAGE ?LOGLEVEL where {
                               {
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
@@ -29,13 +29,15 @@ tddg:RDFSRANGEC a tddo:TestGenerator ;
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
-                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )} } """ ;
+                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )}
+                              BIND (concat(str(?P1)," does not have rdfs:range: ",str(?T1)) AS ?MESSAGE)
+                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGE .
 
 # Datatype range
 tddg:RDFSRANGED a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ select distinct ?P1 ?D1 where {
+    tddo:sparqlGenerator """ select distinct ?P1 ?D1 ?MESSAGE ?LOGLEVEL where {
                               {
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
@@ -47,7 +49,9 @@ tddg:RDFSRANGED a tddo:TestGenerator ;
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type+ <http://www.w3.org/2002/07/owl#DatatypeProperty> .
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
-                                         (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) } """ ;
+                                         (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
+                              BIND (concat(str(?P1)," does not have datatype: ",str(?T1)) AS ?MESSAGE)
+                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGED .
 
 
@@ -57,8 +61,10 @@ tddg:RDFSRANGED a tddo:TestGenerator ;
 
 tddg:RDFSDOMAIN a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ('+' as ?OP) ?T1 where {
+    tddo:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ('+' as ?OP) ?T1 ?MESSAGE ?LOGLEVEL where {
                              ?P1 rdfs:domain ?T1 .
+                             BIND (concat(str(?P1)," does not have rdfs:domain: ",str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
@@ -72,8 +78,10 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
 
 tddg:OWLDISJC a tddo:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 WHERE {
-                             ?T1 owl:disjointWith ?T2 . } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
+                             ?T1 owl:disjointWith ?T2 . 
+                             BIND ( concat("Class ", str(?T1)," is owl:disjointWith with ",str(?T2)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
 
@@ -83,8 +91,10 @@ tddg:OWLDISJC a tddo:TestGenerator ;
 
 tddg:OWLDISJP a tddo:TestGenerator ;
     dcterms:description """Generate all owl:propertyDisjointWith constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 WHERE {
-                             ?P1 owl:propertyDisjointWith ?P2 . } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 ?MESSAGE ?LOGLEVEL WHERE {
+                             ?P1 owl:propertyDisjointWith ?P2 . 
+							 BIND ( concat("Property ", str(?P1)," is owl:propertyDisjointWith with ",str(?P2)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
     tddo:basedOnPattern tddd:OWLDISJP .
 
 
@@ -94,8 +104,10 @@ tddg:OWLDISJP a tddo:TestGenerator ;
 
 tddg:OWLCOMPL a tddo:TestGenerator ;
     dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 WHERE {
-                             ?T1 owl:complementOf ?T2 . } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
+                             ?T1 owl:complementOf ?T2 . 
+							 BIND ( concat( str(?T1)," is owl:complementOf with ",str(?T2)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
 ##########################################
@@ -105,72 +117,91 @@ tddg:OWLCOMPL a tddo:TestGenerator ;
 # owl:cardinality number > 0 (count restriction if exists)
 tddg:OWLCARD a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) (str(?v)  as ?V2) WHERE {
-                             ?t a  owl:Restriction .
-                             ?t owl:onProperty ?P1 .
-                             ?t owl:cardinality ?v .
-                             FILTER (?v > 0) .} """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) (str(?v)  as ?V2) ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction ;
+                                owl:onProperty ?P1 ;
+                                owl:cardinality ?v .
+                             FILTER (?v > 0) .
+							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
 # owl:cardinality number > 0 (exists in db)
 tddg:OWLCARDEX a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
-                             ?t a  owl:Restriction .
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+							 ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
-                             ?P1 rdfs:domain ?T1 .
-                             FILTER (?v > 0) .} """ ;
+                             FILTER (?v > 0) .
+							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
 # owl:cardinality number = 0 (must not exist)
 tddg:OWLCARD0 a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality is 0"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1) WHERE {
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
-                             FILTER (?v = 0) .} """ ;
+                             FILTER (?v = 0) .
+							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TRIPLE .
 
 # owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCARD-MIN a tddo:TestGenerator ;
     dcterms:description """Generates owl:minCardinality constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('<=' as ?OP) (str(?v)  as ?V2) WHERE {
-                              ?t a  owl:Restriction .
-                              ?t owl:onProperty ?P1 .
-                              ?t owl:minCardinality ?v . } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('<=' as ?OP) (str(?v)  as ?V2) ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction .
+                             ?t owl:onProperty ?P1 .
+                             ?t owl:minCardinality ?v . 
+							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
 # owl:minCardinality number > 0 (exists in db)
 tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
     dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 WHERE {
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ('+' as ?OP) ?P1 ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v .
-                             ?P1 rdfs:domain ?T1 .
-                             FILTER (?v > 0) .} """ ;
+                             FILTER (?v > 0) .
+							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
 # owl:manCardinality number > 0 (count restriction if exists)
 tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) WHERE {
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('>' as ?OP) (str(?v)  as ?V2) ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
-                             FILTER (?v > 0) . } """ ;
+                             FILTER (?v > 0) . 
+							 BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLCARD .
 
 # owl:maxCardinality number = 0 (must not exist
 tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1)  WHERE {
-                              ?t a  owl:Restriction .
-                              ?t owl:onProperty ?P1 .
-                              ?t owl:maxCardinality ?v .
-                              FILTER (?v = 0) . } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction .
+                             ?t owl:onProperty ?P1 .
+                             ?t owl:maxCardinality ?v .
+                             FILTER (?v = 0) . 
+							 BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TRIPLE .
 
 ##########################################
@@ -179,8 +210,14 @@ tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
 
 tddg:OWLFUNC a tddo:TestGenerator ;
     dcterms:description """ Generates owl:FunctionalProperty constrains. IF the property exists we ensure it exists only once"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) WHERE {
-                             ?P1 rdf:type+ owl:FunctionalProperty . } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
+							 { 
+							   ?P1 rdf:type owl:FunctionalProperty .
+							 } UNION {
+                               ?P1 rdfs:subClassOf+ owl:FunctionalProperty .
+							 }  
+							 BIND ( concat(str(?P1)," is an owl:FunctionalProperty and should occur at most once in a resource") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL )}""" ;
     tddo:basedOnPattern tddd:OWLCARD .
 
 ################################################################################
@@ -189,9 +226,14 @@ tddg:OWLFUNC a tddo:TestGenerator ;
 
 tddg:OWLINVFUNC a tddo:TestGenerator ;
     dcterms:description """ Generates owl:InverseFunctionalProperty constraints. If such a property exists we ensure that resources are assigned only once via this property """@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:InverseFunctionalProperty .
-                              }""" ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE ?LOGLEVEL WHERE {
+                             { 
+							   ?P1 rdf:type owl:InverseFunctionalProperty .
+							 } UNION {
+                               ?P1 rdfs:subClassOf+ owl:InverseFunctionalProperty .
+							 }  
+							 BIND ( concat(str(?P1)," is an owl:InverseFunctionalProperty and should be unique") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) }""" ;
     tddo:basedOnPattern tddd:INVFUNC .
 
 
@@ -201,7 +243,7 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 
 # tddg:OWLSYMMETRICPROP a tddo:TestGenerator ;
 #    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
-#    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 WHERE {
+#    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE ?LOGLEVEL WHERE {
 #                                ?P1 a owl:SymmetricProperty .
 #                              }""" ;
 #    tddo:basedOnPattern tddd:OWLSYMMETRICPROP .
@@ -213,9 +255,14 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 
 tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
     dcterms:description """ Generates owl:AsymmetricProperty constraints. Given a statement with an asymmetric property we ensure that no inverse statements with the same property exist in the dataset """@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:AsymmetricProperty .
-                              } """ ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE ?LOGLEVEL WHERE {
+                             { 
+							   ?P1 rdf:type owl:AsymmetricProperty .
+							 } UNION {
+                               ?P1 rdfs:subClassOf+ owl:AsymmetricProperty .
+							 }   
+							 BIND ( concat(str(?P1)," is an owl:AsymmetricProperty and should be used as an owl:SymetricProperty") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) }""" ;
     tddo:basedOnPattern tddd:OWLASYMMETRICPROP .
 
 
@@ -225,7 +272,7 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 
 # tddg:OWLTRANSPROP a tddo:TestGenerator ;
 #    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
-#    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 WHERE {
+#    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE ?LOGLEVEL WHERE {
 #                                ?P1 a owl:TransitiveProperty .
 #                              }""" ;
 #    tddo:basedOnPattern tddd:OWLTRANSPROP .
@@ -237,9 +284,14 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 
 tddg:OWLIRREFLEXIVE a tddo:TestGenerator ;
     dcterms:description """ Generates owl:IrreflexiveProperty constraints. Given an irreflexive property we ensure that it is not used reflexively """@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 WHERE {
-                                ?P1 a owl:IrreflexiveProperty .
-                              }""" ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE ?LOGLEVEL WHERE {
+                             { 
+							   ?P1 rdf:type owl:IrreflexiveProperty .
+							 } UNION {
+                               ?P1 rdfs:subClassOf+ owl:IrreflexiveProperty .
+							 }    
+							 BIND ( concat(str(?P1)," is an owl:IrreflexiveProperty and a subject must not be the the object") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) }""" ;
     tddo:basedOnPattern tddd:OWLIRREFLEXIVE .
 
 
