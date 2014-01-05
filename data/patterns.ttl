@@ -12,30 +12,24 @@
 
 tddp:RDFSRANGE a tddo:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
-    dcterms:description """Emulates the rdfs:range constrain. Can use the rdf:type as transitive using the '+' operator"""@en ;
+    dcterms:description """Emulates the rdfs:range constrain."""@en ;
     tddo:sparqlWherePattern """ {
                                     ?s %%P1%% ?resource.
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?T1 .
-                                        ?T1 rdfs:subClassOf%%OP%% %%T1%% . }
+                                        ?T1 rdfs:subClassOf+ %%T1%% . }
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type %%T1%%  }
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
     tddo:parameter tddp:RDFSRANGE-P1 ;
-    tddo:parameter tddp:RDFSRANGE-OP ;
     tddo:parameter tddp:RDFSRANGE-T1 .
 
 
 tddp:RDFSRANGE-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
     tddo:parameterConstraint tddo:Property .
-
-tddp:RDFSRANGE-OP a tddo:Parameter ;
-    dcterms:identifier "OP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """+|""".
 
 tddp:RDFSRANGE-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -74,12 +68,12 @@ tddp:RDFSRANGED-D1 a tddo:Parameter ;
 
 tddp:RDFSDOMAIN a tddo:Pattern ;
     dcterms:identifier "RDFSDOMAIN" ;
-    dcterms:description """Emulates the rdfs:domain constrain. It can be extended by using specific values in V1 or making rdf:type transitive using the '+' operator"""@en ;
+    dcterms:description """Emulates the rdfs:domain constrain. It can be extended by using specific values in V1"""@en ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?T1 .
-                                        ?T1 rdfs:subClassOf%%OP%% %%T1%% . }
+                                        ?T1 rdfs:subClassOf+ %%T1%% . }
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type %%T1%%  }
                                 } """ ;
@@ -87,7 +81,6 @@ tddp:RDFSDOMAIN a tddo:Pattern ;
                                      WHERE { ?resource %%P1%% ?c .} """ ;
     tddo:parameter tddp:RDFSDOMAIN-P1 ;
     tddo:parameter tddp:RDFSDOMAIN-V1 ;
-    tddo:parameter tddp:RDFSDOMAIN-OP ;
     tddo:parameter tddp:RDFSDOMAIN-T1 .
 
 tddp:RDFSDOMAIN-P1 a tddo:Parameter ;
@@ -96,11 +89,6 @@ tddp:RDFSDOMAIN-P1 a tddo:Parameter ;
 
 tddp:RDFSDOMAIN-V1 a tddo:Parameter ;
     dcterms:identifier "V1" .
-
-tddp:RDFSDOMAIN-OP a tddo:Parameter ;
-    dcterms:identifier "OP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """+|\\*|""".
 
 tddp:RDFSDOMAIN-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -159,7 +147,7 @@ tddp:OWLDISJP-P2 a tddo:Parameter ;
 
 tddp:OWLCARD a tddo:Pattern ;
     dcterms:identifier "OWLCARD" ;
-    dcterms:description """Emulates the owl:cardinality constrain"""@en ;
+    dcterms:description """Emulates the owl:cardinality constrain without a Class constraint"""@en ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
                                 } GROUP BY ?resource
@@ -184,6 +172,55 @@ tddp:OWLCARD-V1 a tddo:Parameter ;
     tddo:parameterConstraint tddo:None ;
     tddo:constrainPattern """[0-9]*""" .
 
+##########################################
+#### owl cardinality constrains pattern on Class
+##########################################
+
+tddp:OWLCARDT a tddo:Pattern ;
+    dcterms:identifier "OWLCARDT" ;
+    dcterms:description """Emulates the owl:cardinality constrain on a Class"""@en ;
+    tddo:sparqlWherePattern """ {
+									{
+                                    	?resource rdf:type %%T1%%.
+                                    	?resource %%P1%% ?c.
+									} UNION {
+										?resource rdf:type ?t1.
+										?t1 rdfs:subClassOf+ %%T1%%.
+                                    	?resource %%P1%% ?c.
+									}
+
+                                } GROUP BY ?resource
+                                HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
+    tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
+                                    	?resource rdf:type %%T1%%.
+                                    	?resource %%P1%% ?c.
+									} UNION {
+										?resource rdf:type ?t1.
+										?t1 rdfs:subClassOf+ %%T1%%.
+                                    	?resource %%P1%% ?c.
+									} }""" ;
+    tddo:parameter tddp:OWLCARDT-T1 ;
+    tddo:parameter tddp:OWLCARDT-P1 ;
+    tddo:parameter tddp:OWLCARDT-OP ;
+    tddo:parameter tddp:OWLCARDT-V1 .
+
+tddp:OWLCARDT-T1 a tddo:Parameter ;
+    dcterms:identifier "T1" ;
+    tddo:parameterConstraint tddo:Class .
+
+tddp:OWLCARDT-P1 a tddo:Parameter ;
+    dcterms:identifier "P1" ;
+    tddo:parameterConstraint tddo:Property .
+
+tddp:OWLCARDT-OP a tddo:Parameter ;
+    dcterms:identifier "OP" ;
+    tddo:parameterConstraint tddo:Operator ;
+    tddo:constrainPattern """<|<=|>|>=|=|!=""" .
+
+tddp:OWLCARDT-V1 a tddo:Parameter ;
+    dcterms:identifier "V1" ;
+    tddo:parameterConstraint tddo:None ;
+    tddo:constrainPattern """[0-9]*""" .
 
 ##########################################
 #### Type & Property dependency (equivalent to card > 0)
@@ -191,25 +228,33 @@ tddp:OWLCARD-V1 a tddo:Parameter ;
 
 tddp:TYPRODEP a tddo:Pattern ;
     dcterms:identifier "TYPRODEP" ;
-    dcterms:description """ A property must exist in a class instance"""@en ;
+    dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence"""@en ;
     tddo:sparqlWherePattern """ {
-                                    ?resource rdf:type%%OP%% %%T1%% .
-                                    FILTER NOT EXISTS {?resource %%P1%% ?v }
+                                    {
+										?resource rdf:type %%T1%% .
+                                    	FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
+									} UNION {
+										?resource rdf:type ?t1 . 
+										?t1 rdfs:subClassOf+ %%T1%%
+										FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
+									}
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?resource rdf:type%%OP%% %%T1%% . } """ ;
+                                     WHERE { {?resource rdf:type %%T1%% .}
+									 		UNION { ?resource rdf:type ?t1 . 
+											?t1 rdfs:subClassOf+ %%T1%% .} } """ ;
     tddo:parameter tddp:TYPRODEP-T1 ;
-    tddo:parameter tddp:TYPRODEP-OP ;
+    tddo:parameter tddp:TYPRODEP-NOT ;
     tddo:parameter tddp:TYPRODEP-P1 .
 
 tddp:TYPRODEP-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
     tddo:parameterConstraint tddo:Class .
 
-tddp:TYPRODEP-OP a tddo:Parameter ;
-    dcterms:identifier "OP"  ;
+tddp:TYPRODEP-NOT a tddo:Parameter ;
+    dcterms:identifier "NOT" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """+|\\*|""".
+    tddo:constrainPattern """NOT|""" .
 
 tddp:TYPRODEP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
