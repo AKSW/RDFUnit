@@ -18,11 +18,15 @@ public class PatternBasedTestCase extends TestCase {
 
     private final Pattern pattern;
     private final List<Binding> bindings;
+    private final String message;
+    private final String logLevel;
 
-    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, List<Binding> bindings) {
+    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, List<Binding> bindings, String message, String logLevel) {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
+        this.message = message;
+        this.logLevel = logLevel;
     }
 
     @Override
@@ -32,7 +36,9 @@ public class PatternBasedTestCase extends TestCase {
 
         resource
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "PatternBasedTestCase"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + pattern.getId()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + pattern.getId()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "message"), message)
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "level"), model.createResource(logLevel));
 
 
         for (Binding binding : bindings) {

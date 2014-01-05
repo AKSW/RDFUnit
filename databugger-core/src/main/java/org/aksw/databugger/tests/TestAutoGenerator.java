@@ -54,7 +54,7 @@ public class TestAutoGenerator {
         }
 
         List<Var> sv = q.getProjectVars();
-        if (sv.size() != pattern.getParameters().size()) {
+        if (sv.size() != pattern.getParameters().size() + 2) {   // +2 is about ?MESSAGE & LOGLEVEL
             log.error(getURI() + " Select variables are different than Pattern parameters");
             return false;
         }
@@ -84,9 +84,15 @@ public class TestAutoGenerator {
                         references.add(n.toString().trim().replace(" ", ""));
                     }
                 } else {
+                    //TODO exception
                     break;
                 }
             }
+            String message = "", logLevel = "";
+            if (row.contains("MESSAGE"))
+                message = row.get("MESSAGE").toString();
+            if (row.contains("LOGLEVEL"))
+                logLevel = row.get("LOGLEVEL").toString();
 
             try {
                 tests.add(new PatternBasedTestCase(
@@ -98,7 +104,7 @@ public class TestAutoGenerator {
                                 source.getUri(),
                                 references),
                         pattern,
-                        bindings));
+                        bindings, message, logLevel));
             } catch (Exception e) {
 
             }
