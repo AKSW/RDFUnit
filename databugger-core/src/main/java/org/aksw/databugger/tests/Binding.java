@@ -24,7 +24,7 @@ public class Binding {
         this.value = value;
 
         //Validate bibding
-        if (validateType() == false)
+        if (!validateType())
             throw  new BindingException("Binding is of incorrect constraint type");
     }
 

@@ -55,7 +55,7 @@ public class TripleFileWriter extends TripleWriter{
             model.write(new FileOutputStream(file), filetype);
 
         } catch (Exception e) {
-
+            throw new TripleWriterException("Error writing file: " + e.getMessage());
         }
 
     }

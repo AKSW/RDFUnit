@@ -27,7 +27,7 @@ public class Databugger {
 
 
     private static Logger log = LoggerFactory.getLogger(Databugger.class);
-    QueryExecutionFactory patternQueryFactory;
+    private QueryExecutionFactory patternQueryFactory;
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 

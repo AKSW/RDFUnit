@@ -27,7 +27,7 @@ public class Pattern {
             return false;
         //check if defined parameters exist is sparql
         for (PatternParameter p : getParameters()) {
-            if (getSparqlWherePattern().indexOf("%%" + p.getId() + "%%") == -1)
+            if (!getSparqlWherePattern().contains("%%" + p.getId() + "%%"))
                 return false;
         }
         // TODO search if we need more parameters

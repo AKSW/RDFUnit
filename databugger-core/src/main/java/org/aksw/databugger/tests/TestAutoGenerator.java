@@ -80,7 +80,7 @@ public class TestAutoGenerator {
             for (PatternParameter p : pattern.getParameters()) {
                 if (row.contains(p.getId())) {
                     RDFNode n = row.get(p.getId());
-                    Binding b = null;
+                    Binding b;
                     try {
                         b = new Binding(p,n);
                     } catch (BindingException e) {

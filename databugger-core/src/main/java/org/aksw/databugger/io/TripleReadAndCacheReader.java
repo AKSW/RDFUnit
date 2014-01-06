@@ -20,11 +20,8 @@ public class TripleReadAndCacheReader extends TripleReader{
 
     @Override
     public void read(Model model) throws TripleReaderException {
-        try {
-            reader.read(model);
-        } catch (TripleReaderException e) {
-            throw  e;
-        }
+        reader.read(model);
+        //If read succeeds try to write
         try {
             writer.write(model);
         } catch (TripleWriterException e) {

@@ -57,7 +57,7 @@ public class TestGeneratorExecutor {
 
         List<TestCase> allTests = new ArrayList<TestCase>();
         for (SchemaSource s : sources) {
-            if (isCanceled == true) {
+            if (isCanceled) {
                 break;
             }
 
@@ -72,7 +72,7 @@ public class TestGeneratorExecutor {
         }
 
         //Find manual tests for dataset (if not canceled
-        if (isCanceled == false && useManualTests == true)
+        if (!isCanceled && useManualTests)
             allTests.addAll(generateManualTestsForSource(testFolder, dataset,autoGenerators));
 
         /*notify start of testing */
@@ -92,7 +92,7 @@ public class TestGeneratorExecutor {
 
         try {
             String cachedTestsLocation = CacheUtils.getSourceAutoTestFile(testFolder,s);
-            if (loadFromCache == false)
+            if (!loadFromCache)
                 cachedTestsLocation = ""; // non existing path
             List<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
                     new TripleFileReader(cachedTestsLocation).read());

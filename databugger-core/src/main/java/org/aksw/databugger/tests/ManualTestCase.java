@@ -12,8 +12,8 @@ import org.aksw.databugger.services.PrefixService;
  * Created: 1/3/14 3:57 PM
  */
 public class ManualTestCase extends TestCase {
-    protected final String sparqlWhere;
-    protected final String sparqlPrevalence;
+    private final String sparqlWhere;
+    private final String sparqlPrevalence;
 
     public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) {
         super(testURI, annotation);

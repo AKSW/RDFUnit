@@ -43,7 +43,7 @@ public class TestExecutor {
         }
 
         for (TestCase t : tests) {
-            if (isCanceled == true) {
+            if (isCanceled) {
                 break;
             }
 
