@@ -29,7 +29,7 @@ public class TestCaseAnnotation {
         this.references = references;
     }
 
-    public Resource saveAnnotationToResource(Resource resource, Model model) {
+    public Resource serialize(Resource resource, Model model) {
         resource
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "generated"), model.createResource(getGenerated().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testGenerator"), model.createResource(getAutoGeneratorURI()))

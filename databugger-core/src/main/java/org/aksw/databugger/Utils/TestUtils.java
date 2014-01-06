@@ -243,7 +243,7 @@ public class TestUtils {
     public static void writeTestsToFile(List<TestCase> tests, TripleWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests)
-            t.saveTestToModel(model);
+            t.serialize(model);
         try {
             model.setNsPrefixes(PrefixService.getPrefixMap());
             testCache.write(model);

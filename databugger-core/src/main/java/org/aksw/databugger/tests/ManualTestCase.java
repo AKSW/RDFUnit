@@ -22,9 +22,9 @@ public class ManualTestCase extends TestCase {
     }
 
     @Override
-    public Resource saveTestToModel(Model model) {
+    public Resource serialize(Model model) {
 
-        Resource resource = super.saveTestToModel(model);
+        Resource resource = super.serialize(model);
 
         resource
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "ManualTestCase"))

@@ -31,7 +31,7 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     public Model getUnitTestModel() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
-        saveTestToModel(model);
+        serialize(model);
         return model;
     }
 
@@ -39,10 +39,10 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     public abstract String getSparqlPrevalence();
 
-    public Resource saveTestToModel(Model model) {
+    public Resource serialize(Model model) {
 
         Resource resource = model.createResource(testURI);
-        annotation.saveAnnotationToResource(resource, model);
+        annotation.serialize(resource, model);
         return resource;
 
     }
