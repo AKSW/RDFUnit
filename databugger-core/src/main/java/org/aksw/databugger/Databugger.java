@@ -31,9 +31,10 @@ public class Databugger {
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-    public Databugger() {}
+    public Databugger() {
+    }
 
-    public void initPatternsAndGenerators(TripleReader patterReader, TripleReader testGeneratorReader ) throws TripleReaderException {
+    public void initPatternsAndGenerators(TripleReader patterReader, TripleReader testGeneratorReader) throws TripleReaderException {
         Model patternModel = ModelFactory.createDefaultModel();
         try {
             patterReader.read(patternModel);

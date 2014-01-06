@@ -28,7 +28,7 @@ public class TestExecutor {
 
     }
 
-    public void cancel(){
+    public void cancel() {
         isCanceled = true;
     }
 
@@ -38,7 +38,7 @@ public class TestExecutor {
         List<TestCaseResult> results = new ArrayList<TestCaseResult>();
 
         /*notify start of testing */
-        for (TestExecutorMonitor monitor : progressMonitors){
+        for (TestExecutorMonitor monitor : progressMonitors) {
             monitor.testingStarted(source, tests.size());
         }
 
@@ -48,7 +48,7 @@ public class TestExecutor {
             }
 
             /*notify start of single test */
-            for (TestExecutorMonitor monitor : progressMonitors){
+            for (TestExecutorMonitor monitor : progressMonitors) {
                 monitor.singleTestStarted(t);
             }
 
@@ -61,7 +61,7 @@ public class TestExecutor {
             try {
                 prevalence = getCountNumber(source.getExecutionFactory(), t.getSparqlPrevalenceQuery(), "total");
             } catch (QueryParseException e) {
-                if (! t.getSparqlPrevalence().trim().isEmpty())
+                if (!t.getSparqlPrevalence().trim().isEmpty())
                     total = -2;
             } catch (Exception e) {
                 //query time out total remains -1
@@ -85,7 +85,7 @@ public class TestExecutor {
             TestCaseResult result = new AggregatedTestCaseResult(t, total, prevalence);
             results.add(result);
             /*notify end of single test */
-            for (TestExecutorMonitor monitor : progressMonitors){
+            for (TestExecutorMonitor monitor : progressMonitors) {
                 monitor.singleTestExecuted(t, Arrays.<TestCaseResult>asList(result));
             }
 
@@ -99,7 +99,7 @@ public class TestExecutor {
         }
 
         /*notify end of testing */
-        for (TestExecutorMonitor monitor : progressMonitors){
+        for (TestExecutorMonitor monitor : progressMonitors) {
             monitor.testingFinished();
         }
 
@@ -130,27 +130,28 @@ public class TestExecutor {
         return result;
 
     }
-/*
-    private boolean testExists(QueryExecutionFactory qef, String testURI) {
 
-        boolean result = false;
-        QueryExecution qe = null;
-        try {
-            qe = qef.createQueryExecution("select * where { ?s ?p <" + testURI + "> }");
-            ResultSet results = qe.execSelect();
+    /*
+        private boolean testExists(QueryExecutionFactory qef, String testURI) {
 
-            if (results != null && results.hasNext()) {
-                result = true;
+            boolean result = false;
+            QueryExecution qe = null;
+            try {
+                qe = qef.createQueryExecution("select * where { ?s ?p <" + testURI + "> }");
+                ResultSet results = qe.execSelect();
+
+                if (results != null && results.hasNext()) {
+                    result = true;
+                }
+            } catch (Exception e) {
+                //DO nothing (returns false)
+            }   finally {
+                if (qe != null)
+                    qe.close();
             }
-        } catch (Exception e) {
-            //DO nothing (returns false)
-        }   finally {
-            if (qe != null)
-                qe.close();
+            return result;
         }
-        return result;
-    }
-*/
+    */
     public void addTestExecutorMonitor(TestExecutorMonitor monitor) {
         progressMonitors.add(monitor);
     }

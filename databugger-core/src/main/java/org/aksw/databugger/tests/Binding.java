@@ -25,7 +25,7 @@ public class Binding {
 
         //Validate bibding
         if (!validateType())
-            throw  new BindingException("Binding is of incorrect constraint type");
+            throw new BindingException("Binding is of incorrect constraint type");
     }
 
     public String getValue() {
@@ -49,10 +49,10 @@ public class Binding {
         PatternParameterConstraints pc = parameter.getConstrain();
         if (pc.equals(PatternParameterConstraints.None))
             return true;
-        if (value.isResource() ) {
+        if (value.isResource()) {
             if (pc.equals(PatternParameterConstraints.Resource) ||
-                pc.equals(PatternParameterConstraints.Property) ||
-                pc.equals(PatternParameterConstraints.Class) )
+                    pc.equals(PatternParameterConstraints.Property) ||
+                    pc.equals(PatternParameterConstraints.Class))
                 return true;
         }
         if (value.isLiteral()) {

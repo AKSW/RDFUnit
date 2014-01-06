@@ -36,7 +36,7 @@ public class DatasetSource extends Source {
     }
 
     public DatasetSource(DatasetSource source) {
-        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraph(),source.getReferencesSchemata());
+        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraph(), source.getReferencesSchemata());
     }
 
     @Override

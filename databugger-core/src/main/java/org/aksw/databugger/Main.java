@@ -115,8 +115,8 @@ public class Main {
         DatabuggerUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
 
-        TripleReader patternReader = new TripleFileReader(dataFolder+"patterns.ttl");
-        TripleReader testGeneratorReader = new TripleFileReader(dataFolder+"testAutoGenerators.ttl");
+        TripleReader patternReader = new TripleFileReader(dataFolder + "patterns.ttl");
+        TripleReader testGeneratorReader = new TripleFileReader(dataFolder + "testAutoGenerators.ttl");
         Databugger databugger = new Databugger();
         try {
             databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
@@ -152,8 +152,7 @@ public class Main {
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-        List<TestCase> allTests = testGeneratorExecutor.generateTests(testFolder, dataset,databugger.getAutoGenerators());
-
+        List<TestCase> allTests = testGeneratorExecutor.generateTests(testFolder, dataset, databugger.getAutoGenerators());
 
 
         TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
@@ -163,7 +162,15 @@ public class Main {
             Model model;
             long counter;
             long totalTests;
-            long success, fail, timeout, error, totalErrors;
+            long success
+                    ,
+                    fail
+                    ,
+                    timeout
+                    ,
+                    error
+                    ,
+                    totalErrors;
 
             @Override
             public void testingStarted(Source dataset, long numberOfTests) {
@@ -191,13 +198,13 @@ public class Main {
                     if (result instanceof AggregatedTestCaseResult) {
                         long currentErrors = ((AggregatedTestCaseResult) result).getErrorCount();
                         if (currentErrors == -2)
-                            error ++;
+                            error++;
                         if (currentErrors == -1)
                             timeout++;
                         if (currentErrors == 0)
                             success++;
                         if (currentErrors > 0) {
-                            fail ++;
+                            fail++;
                             totalErrors += currentErrors;
                         }
                     }
@@ -233,8 +240,6 @@ public class Main {
 
         // warning, caches intermediate results
         testExecutor.executeTestsCounts(dataset, allTests, 0);
-
-
 
 
         // Calculate coverage

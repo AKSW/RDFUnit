@@ -20,7 +20,7 @@ public class TripleMultipleWriter extends TripleWriter {
     @Override
     public void write(Model model) throws TripleWriterException {
         //TODO check for early exceptions
-        for (TripleWriter w: writers) {
+        for (TripleWriter w : writers) {
             w.write(model);
         }
     }

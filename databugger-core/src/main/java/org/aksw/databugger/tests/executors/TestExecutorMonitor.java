@@ -7,10 +7,10 @@ import org.aksw.databugger.tests.results.TestCaseResult;
 import java.util.List;
 
 /**
-* User: Dimitris Kontokostas
-* Description
-* Created: 1/3/14 12:23 PM
-*/
+ * User: Dimitris Kontokostas
+ * Description
+ * Created: 1/3/14 12:23 PM
+ */
 public interface TestExecutorMonitor {
     /*
     * Called when testing starts

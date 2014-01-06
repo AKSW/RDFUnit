@@ -4,10 +4,10 @@ import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.sources.Source;
 
 /**
-* User: Dimitris Kontokostas
-* Description
-* Created: 1/3/14 12:23 PM
-*/
+ * User: Dimitris Kontokostas
+ * Description
+ * Created: 1/3/14 12:23 PM
+ */
 public interface TestGeneratorExecutorMonitor {
     /*
     * Called when testing starts

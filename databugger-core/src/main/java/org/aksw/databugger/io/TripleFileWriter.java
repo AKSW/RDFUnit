@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
  * Writes a Model to a file
  * Created: 11/14/13 1:01 PM
  */
-public class TripleFileWriter extends TripleWriter{
+public class TripleFileWriter extends TripleWriter {
     private final String filename;
     private final String filetype;
     private final boolean skipIfExists;
@@ -19,13 +19,12 @@ public class TripleFileWriter extends TripleWriter{
     private final boolean overwrite;
 
 
-
     public TripleFileWriter(String filename) {
-        this(filename,"TURTLE", false, true, true);
+        this(filename, "TURTLE", false, true, true);
     }
 
     public TripleFileWriter(String filename, boolean skipIfExists) {
-        this(filename,"TURTLE", skipIfExists, true, true);
+        this(filename, "TURTLE", skipIfExists, true, true);
     }
 
     public TripleFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {

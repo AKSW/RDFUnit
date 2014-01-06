@@ -82,7 +82,7 @@ public class TestAutoGenerator {
                     RDFNode n = row.get(p.getId());
                     Binding b;
                     try {
-                        b = new Binding(p,n);
+                        b = new Binding(p, n);
                     } catch (BindingException e) {
                         log.error("Non valid binding for parameter " + p.getId() + " in AutoGenerator: " + this.getURI());
                         continue;
