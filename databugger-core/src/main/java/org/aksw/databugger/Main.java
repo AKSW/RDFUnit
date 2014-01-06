@@ -161,17 +161,13 @@ public class Main {
             TripleWriter resultWriter;
             Source testedDataset;
             Model model;
-            long counter;
-            long totalTests;
-            long success
-                    ,
-                    fail
-                    ,
-                    timeout
-                    ,
-                    error
-                    ,
-                    totalErrors;
+            long counter = 0;
+            long totalTests = 0;
+            long success = 0;
+            long fail = 0;
+            long timeout = 0;
+            long error = 0;
+            long totalErrors = 0;
 
             @Override
             public void testingStarted(Source dataset, long numberOfTests) {
@@ -194,7 +190,7 @@ public class Main {
             public void singleTestExecuted(TestCase test, List<TestCaseResult> results) {
                 for (TestCaseResult result : results) {
                     log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
-                    result.writeToModel(model, testedDataset.getUri());
+                    result.serialize(model, testedDataset.getUri());
 
                     if (result instanceof AggregatedTestCaseResult) {
                         long currentErrors = ((AggregatedTestCaseResult) result).getErrorCount();
@@ -240,7 +236,7 @@ public class Main {
 
 
         // warning, caches intermediate results
-        testExecutor.executeTestsCounts(dataset, testSuite, 0);
+        testExecutor.execute(dataset, testSuite, 1, 0);
 
 
         // Calculate coverage

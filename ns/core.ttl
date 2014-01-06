@@ -13,7 +13,7 @@
 
     <http://purl.org/vocab/vann/preferredNamespacePrefix> "tddo" ;
     <http://purl.org/vocab/vann/preferredNamespaceUri> "http://databugger.aksw.org/ns/core#" ;
-    <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/Databugger/commits/master/ontology> ;
+    <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/Databugger/commits/master/ns> ;
 
 #   owl:versionInfo "" ;
 

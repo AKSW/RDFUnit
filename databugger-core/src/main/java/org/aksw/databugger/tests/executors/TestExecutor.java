@@ -33,61 +33,42 @@ public class TestExecutor {
         isCanceled = true;
     }
 
-    public List<TestCaseResult> executeTestsCounts(Source source, TestSuite testSuite, int delay) {
+    public void execute(Source source, TestSuite testSuite, int resultType, int delay) {
         isCanceled = false;
-
-        List<TestCaseResult> results = new ArrayList<TestCaseResult>();
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors) {
             monitor.testingStarted(source, testSuite.size());
         }
 
-        for (TestCase t : testSuite.getTestCases()) {
+        for (TestCase testCase : testSuite.getTestCases()) {
             if (isCanceled) {
                 break;
             }
 
             /*notify start of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {
-                monitor.singleTestStarted(t);
+                monitor.singleTestStarted(testCase);
             }
 
-            //TODO check cache
-            //if (testExists(qef, t.getTestURI()))
-            //    continue;
-
-            int total = -1, prevalence = -1;
-
-            try {
-                prevalence = getCountNumber(source.getExecutionFactory(), t.getSparqlPrevalenceQuery(), "total");
-            } catch (QueryParseException e) {
-                if (!t.getSparqlPrevalence().trim().isEmpty())
-                    total = -2;
-            } catch (Exception e) {
-                //query time out total remains -1
-                total = -1;
+            List<TestCaseResult> results = new ArrayList<TestCaseResult>();
+            switch (resultType) {
+                case 1:
+                    results = getAggregatedResult(source, testCase);
+                    break;
+                case 2:
+                    //results = getRLOGTestResultResult(source, testCase);
+                    break;
+                case 3:
+                    //results = getExtendedResult(source, testCase);
+                    break;
+                default:
+                    results = getAggregatedResult(source, testCase); //getStatusResult(source, testCase);
             }
 
-            if (prevalence != 0) {
-                // if prevalence !=0 calculate total
-                try {
-                    total = getCountNumber(source.getExecutionFactory(), t.getSparqlAsCountQuery(), "total");
-                } catch (QueryParseException e) {
-                    total = -2;
-                } catch (Exception e) {
-                    //query time out total remains -1
-                    total = -1;
-                }
-            } else
-                // else total will be 0 anyway
-                total = 0;
-
-            TestCaseResult result = new AggregatedTestCaseResult(t, total, prevalence);
-            results.add(result);
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {
-                monitor.singleTestExecuted(t, Arrays.<TestCaseResult>asList(result));
+                monitor.singleTestExecuted(testCase, results);
             }
 
             if (delay > 0) {
@@ -103,8 +84,38 @@ public class TestExecutor {
         for (TestExecutorMonitor monitor : progressMonitors) {
             monitor.testingFinished();
         }
+    }
 
-        return results;
+    private List<TestCaseResult> getAggregatedResult(Source source, TestCase testCase) {
+
+        int total = -1, prevalence = -1;
+
+        try {
+            prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
+        } catch (QueryParseException e) {
+            if (!testCase.getSparqlPrevalence().trim().isEmpty())
+                total = -2;
+        } catch (Exception e) {
+            //query time out total remains -1
+            total = -1;
+        }
+
+        if (prevalence != 0) {
+            // if prevalence !=0 calculate total
+            try {
+                total = getCountNumber(source.getExecutionFactory(), testCase.getSparqlAsCountQuery(), "total");
+            } catch (QueryParseException e) {
+                total = -2;
+            } catch (Exception e) {
+                //query time out total remains -1
+                total = -1;
+            }
+        } else
+            // else total will be 0 anyway
+            total = 0;
+
+        return Arrays.<TestCaseResult>asList(new AggregatedTestCaseResult(testCase, total, prevalence));
+
     }
 
     private int getCountNumber(QueryExecutionFactory model, String query, String var) {

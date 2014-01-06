@@ -30,8 +30,8 @@ public class TripleFileWriter extends TripleWriter {
     public TripleFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {
         this.filename = filename;
         this.filetype = filetype;
-        this.createParentDirectories = createParentDirectories;
         this.skipIfExists = skipIfExists;
+        this.createParentDirectories = createParentDirectories;
         this.overwrite = overwrite;
     }
 

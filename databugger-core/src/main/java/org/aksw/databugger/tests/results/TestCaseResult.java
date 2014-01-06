@@ -1,6 +1,7 @@
 package org.aksw.databugger.tests.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.databugger.tests.TestCase;
 
 /**
@@ -15,7 +16,7 @@ public abstract class TestCaseResult {
         this.testCase = testCase;
     }
 
-    public abstract void writeToModel(Model model, String sourceURI);
+    public abstract Resource serialize(Model model, String sourceURI);
 
     public TestCase getTestCase() {
         return testCase;

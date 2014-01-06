@@ -344,7 +344,7 @@ public class EndointTestTab extends VerticalLayout {
                     try {
                         f.delete();
                     } catch (Exception e) {}
-                    DatabuggerUISession.getTestExecutor().executeTestsCounts(dataset, DatabuggerUISession.getTestSuite(),3);
+                    DatabuggerUISession.getTestExecutor().execute(dataset, DatabuggerUISession.getTestSuite(), 1, 3);
                 }
 
             }
