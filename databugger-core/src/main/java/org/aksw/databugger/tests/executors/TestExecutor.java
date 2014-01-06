@@ -3,6 +3,7 @@ package org.aksw.databugger.tests.executors;
 import com.hp.hpl.jena.query.*;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -32,17 +33,17 @@ public class TestExecutor {
         isCanceled = true;
     }
 
-    public List<TestCaseResult> executeTestsCounts(Source source, List<TestCase> tests, int delay) {
+    public List<TestCaseResult> executeTestsCounts(Source source, TestSuite testSuite, int delay) {
         isCanceled = false;
 
         List<TestCaseResult> results = new ArrayList<TestCaseResult>();
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors) {
-            monitor.testingStarted(source, tests.size());
+            monitor.testingStarted(source, testSuite.size());
         }
 
-        for (TestCase t : tests) {
+        for (TestCase t : testSuite.getTestCases()) {
             if (isCanceled) {
                 break;
             }

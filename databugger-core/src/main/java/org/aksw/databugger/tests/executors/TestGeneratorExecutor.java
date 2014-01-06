@@ -10,6 +10,7 @@ import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestAutoGenerator;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class TestGeneratorExecutor {
     }
 
 
-    public List<TestCase> generateTests(String testFolder, Source dataset, List<TestAutoGenerator> autoGenerators) {
+    public TestSuite generateTestSuite(String testFolder, Source dataset, List<TestAutoGenerator> autoGenerators) {
 
         List<SchemaSource> sources = dataset.getReferencesSchemata();
 
@@ -80,7 +81,7 @@ public class TestGeneratorExecutor {
             monitor.generationFinished();
         }
 
-        return allTests;
+        return new TestSuite(allTests);
     }
 
     private List<TestCase> generateAutoTestsForSchemaSource(String testFolder, SchemaSource s, List<TestAutoGenerator> autoGenerators) {

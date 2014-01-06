@@ -224,19 +224,16 @@ public class EndointTestTab extends VerticalLayout {
                 if (DatabuggerUISession.getDatabuggerConfiguration() != null ) {
                     DatasetSource dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
 
-
-                    DatabuggerUISession.getTests().clear();
                     DatabuggerUISession.initDatabugger();
-
                     DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
-                    DatabuggerUISession.getTests().addAll(
-                            DatabuggerUISession.getTestGeneratorExecutor().generateTests(
+                    DatabuggerUISession.setTestSuite(
+                            DatabuggerUISession.getTestGeneratorExecutor().generateTestSuite(
                                     DatabuggerUISession.getBaseDir() + "tests/",
                                     dataset,
                                     DatabuggerUISession.getDatabugger().getAutoGenerators()));
 
-                    if (DatabuggerUISession.getTests().size() != 0) {
+                    if (DatabuggerUISession.getTestSuite().size() != 0) {
                         UI.getCurrent().access(new Runnable() {
                             @Override
                             public void run() {
@@ -347,7 +344,7 @@ public class EndointTestTab extends VerticalLayout {
                     try {
                         f.delete();
                     } catch (Exception e) {}
-                    DatabuggerUISession.getTestExecutor().executeTestsCounts(dataset, DatabuggerUISession.getTests(),3);
+                    DatabuggerUISession.getTestExecutor().executeTestsCounts(dataset, DatabuggerUISession.getTestSuite(),3);
                 }
 
             }

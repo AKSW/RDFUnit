@@ -7,6 +7,7 @@ import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.io.TripleFileReader;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.executors.TestExecutor;
 import org.aksw.databugger.tests.executors.TestGeneratorExecutor;
 import org.aksw.databugger.io.TripleReader;
@@ -42,9 +43,8 @@ public class DatabuggerUISession extends VaadinSession {
         TestExecutor testExecutor = new TestExecutor();
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
 
-        UnitTestList testList = new UnitTestList();
-        testList.tests = new ArrayList<TestCase>();
-        VaadinSession.getCurrent().setAttribute(UnitTestList.class, testList);
+        TestSuite testSuite = new TestSuite( new ArrayList<TestCase>() );
+        VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
         //Fill the service schema
         DatabuggerUtils.fillSchemaServiceFromLOV();
@@ -84,8 +84,12 @@ public class DatabuggerUISession extends VaadinSession {
         return VaadinSession.getCurrent().getAttribute(TestExecutor.class);
     }
 
-    public static List<TestCase> getTests() {
-        return VaadinSession.getCurrent().getAttribute(UnitTestList.class).tests;
+    public static TestSuite getTestSuite() {
+        return VaadinSession.getCurrent().getAttribute(TestSuite.class);
+    }
+
+    public static void setTestSuite(TestSuite testSuite) {
+        VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
     }
 
     public static void setDatabuggerConfiguration(DatabuggerConfiguration configuration) {
@@ -94,12 +98,5 @@ public class DatabuggerUISession extends VaadinSession {
 
     public static DatabuggerConfiguration getDatabuggerConfiguration() {
         return VaadinSession.getCurrent().getAttribute(DatabuggerConfiguration.class);
-    }
-
-    static class UnitTestList {
-        List<TestCase> tests;
-
-        public UnitTestList() {
-        }
     }
 }

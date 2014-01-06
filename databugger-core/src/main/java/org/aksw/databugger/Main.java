@@ -17,6 +17,7 @@ import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.sources.SourceFactory;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.executors.TestExecutor;
 import org.aksw.databugger.tests.executors.TestExecutorMonitor;
 import org.aksw.databugger.tests.executors.TestGeneratorExecutor;
@@ -152,7 +153,7 @@ public class Main {
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
-        List<TestCase> allTests = testGeneratorExecutor.generateTests(testFolder, dataset, databugger.getAutoGenerators());
+        TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, databugger.getAutoGenerators());
 
 
         TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
@@ -239,14 +240,14 @@ public class Main {
 
 
         // warning, caches intermediate results
-        testExecutor.executeTestsCounts(dataset, allTests, 0);
+        testExecutor.executeTestsCounts(dataset, testSuite, 0);
 
 
         // Calculate coverage
         if (calculateCoverage) {
             Model m = ModelFactory.createDefaultModel();
             m.setNsPrefixes(PrefixService.getPrefixMap());
-            for (TestCase ut : allTests) {
+            for (TestCase ut : testSuite.getTestCases()) {
                 m.add(ut.getUnitTestModel());
             }
 
