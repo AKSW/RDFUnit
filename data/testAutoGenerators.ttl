@@ -50,7 +50,7 @@ tddg:RDFSRANGED a tddo:TestGenerator ;
                                   ?P1 rdf:type+ <http://www.w3.org/2002/07/owl#DatatypeProperty> .
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                          (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
-                              BIND (concat("'", str(?P1)," does not have datatype: ", str(?T1), "'") AS ?MESSAGE)
+                              BIND (concat("'", str(?P1)," does not have datatype: ", str(?D1), "'") AS ?MESSAGE)
                               BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGED .
 

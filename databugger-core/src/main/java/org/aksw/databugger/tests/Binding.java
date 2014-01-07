@@ -37,6 +37,10 @@ public class Binding {
             return value.toString();
     }
 
+    public String getParameterId() {
+        return parameter.getId();
+    }
+
     public Resource writeToModel(Model model) {
         return model.createResource()
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "Binding"))

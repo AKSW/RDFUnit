@@ -4,10 +4,12 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.exceptions.TestCaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,16 +19,17 @@ import org.slf4j.LoggerFactory;
  * Created: 9/23/13 6:31 AM
  */
 public abstract class TestCase implements Comparable<TestCase> {
-    private static Logger log = LoggerFactory.getLogger(TestCase.class);
+    protected Logger log = LoggerFactory.getLogger(TestCase.class);
 
     protected final String testURI;
 
 
     protected final TestCaseAnnotation annotation;
 
-    public TestCase(String testURI, TestCaseAnnotation annotation) {
+    public TestCase(String testURI, TestCaseAnnotation annotation) throws TestCaseException {
         this.testURI = testURI;
         this.annotation = annotation;
+        // Validate on subclasses
     }
 
     public Model getUnitTestModel() {
@@ -79,12 +82,35 @@ public abstract class TestCase implements Comparable<TestCase> {
         return getSparqlQuery();
     }
 
+    public String getSparqlAnnotated() {
+
+        // TODO set construct annotations
+        return getSparql();
+    }
+
     public Query getSparqlPrevalenceQuery() {
         return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getSparqlPrevalence());
     }
 
     public String getTestURI() {
         return testURI;
+    }
+
+    public void validateQueries() throws TestCaseException {
+        validateSPARQL(getSparql(), "SPARQL");
+        validateSPARQL(getSparqlAsCount(), "SPARQL Count");
+        validateSPARQL(getSparqlAsAsk(), "ASK");
+        validateSPARQL(getSparqlAnnotated(), "construct");
+        if (!getSparqlPrevalence().trim().equals("")) // Prevalence in not always defined
+            validateSPARQL(getSparqlPrevalence(), "prevalence");
+    }
+
+    private void validateSPARQL(String sparql, String type) throws TestCaseException {
+        try {
+            Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
+        } catch (QueryParseException e) {
+            throw new TestCaseException("QueryParseException in " + type + " query (line " +e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + DatabuggerUtils.getAllPrefixes() + sparql);
+        }
     }
 
     @Override

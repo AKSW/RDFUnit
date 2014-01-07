@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.databugger.exceptions.TestCaseException;
 import org.aksw.databugger.services.PrefixService;
 
 /**
@@ -15,10 +16,11 @@ public class ManualTestCase extends TestCase {
     private final String sparqlWhere;
     private final String sparqlPrevalence;
 
-    public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) {
+    public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) throws TestCaseException {
         super(testURI, annotation);
         this.sparqlWhere = sparqlWhere;
         this.sparqlPrevalence = sparqlPrevalence;
+        validateQueries();
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.databugger.enums.TestAppliesTo;
 import org.aksw.databugger.enums.TestGenerationType;
 import org.aksw.databugger.exceptions.BindingException;
+import org.aksw.databugger.exceptions.TestCaseException;
 import org.aksw.databugger.exceptions.TripleWriterException;
 import org.aksw.databugger.io.TripleWriter;
 import org.aksw.databugger.patterns.Pattern;
@@ -166,6 +167,9 @@ public class TestUtils {
                             sparqlWhere,
                             sparqlPrevalence);
             }
+        } catch (TestCaseException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -225,6 +229,9 @@ public class TestUtils {
                             pattern,
                             bindings);
             }
+        } catch (TestCaseException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
