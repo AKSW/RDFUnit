@@ -98,7 +98,7 @@ public class Main {
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         String testFolder = dataFolder + "tests/";
-        boolean useTestCache = !commandLine.hasOption("nlc"); // for automatically generated test cases
+        boolean useTestCache = !commandLine.hasOption("ntc"); // for automatically generated test cases
         boolean useManualTestCases = !commandLine.hasOption("nmt"); //Use only automatic tests
 
         boolean calculateCoverage = commandLine.hasOption("c");
