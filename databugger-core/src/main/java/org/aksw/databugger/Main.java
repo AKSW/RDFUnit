@@ -54,6 +54,8 @@ public class Main {
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
+        cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
+        cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.databugger'");
 
@@ -96,6 +98,8 @@ public class Main {
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         String testFolder = dataFolder + "tests/";
+        boolean useTestCache = !commandLine.hasOption("nlc"); // for automatically generated test cases
+        boolean useManualTestCases = !commandLine.hasOption("nmt"); //Use only automatic tests
 
         boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
@@ -152,7 +156,7 @@ public class Main {
         final DatasetSource dataset = testContext.getDatasetSource();
         /* </cliStuff> */
 
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(useTestCache, useManualTestCases);
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, databugger.getAutoGenerators());
 
 
