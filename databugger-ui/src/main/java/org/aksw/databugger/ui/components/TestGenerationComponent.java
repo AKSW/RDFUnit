@@ -20,7 +20,7 @@ import java.io.File;
  */
 public class TestGenerationComponent extends VerticalLayout implements TestGeneratorExecutorMonitor {
 
-    private Table resultsTable = new Table("Test Results");
+    private final Table resultsTable = new Table("Test Results");
 
     public TestGenerationComponent() {
         initLayout();

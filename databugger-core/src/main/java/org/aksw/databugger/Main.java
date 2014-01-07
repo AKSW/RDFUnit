@@ -38,7 +38,7 @@ import java.util.List;
  * Created: 11/19/13 10:49 AM
  */
 public class Main {
-    private static Logger log = LoggerFactory.getLogger(Main.class);
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     private static final Options cliOptions = new Options();
 

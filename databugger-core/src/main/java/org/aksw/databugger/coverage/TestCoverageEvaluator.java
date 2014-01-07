@@ -47,7 +47,10 @@ public class TestCoverageEvaluator {
             //if (count++ != 0) {
             //    inClause.append(" , ");
             //}
-            inClause.append(" ( <" + PrefixService.getPrefix("tddp") + s + "> ) ");
+            inClause.append(" ( <")
+                    .append(PrefixService.getPrefix("tddp"))
+                    .append(s)
+                    .append("> ) ");
         }
         return inClause.toString();
     }

@@ -23,7 +23,7 @@ import java.util.Map;
  * Created: 9/24/13 11:25 AM
  */
 public class DatabuggerUtils {
-    private static Logger log = LoggerFactory.getLogger(DatabuggerUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(DatabuggerUtils.class);
 
     public static String getAllPrefixes() {
         return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +

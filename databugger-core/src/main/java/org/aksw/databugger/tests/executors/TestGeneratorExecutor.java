@@ -23,7 +23,7 @@ import java.util.List;
  * Created: 11/20/13 7:31 PM
  */
 public class TestGeneratorExecutor {
-    private static Logger log = LoggerFactory.getLogger(TestGeneratorExecutor.class);
+    private static final Logger log = LoggerFactory.getLogger(TestGeneratorExecutor.class);
     private boolean isCanceled = false;
     private final boolean loadFromCache;
     private final boolean useManualTests;
@@ -69,12 +69,12 @@ public class TestGeneratorExecutor {
 
             //Find manual tests for schema
             if (useManualTests)
-                allTests.addAll(generateManualTestsForSource(testFolder, s, autoGenerators));
+                allTests.addAll(generateManualTestsForSource(testFolder, s));
         }
 
         //Find manual tests for dataset (if not canceled
         if (!isCanceled && useManualTests)
-            allTests.addAll(generateManualTestsForSource(testFolder, dataset, autoGenerators));
+            allTests.addAll(generateManualTestsForSource(testFolder, dataset));
 
         /*notify start of testing */
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -115,7 +115,7 @@ public class TestGeneratorExecutor {
         return tests;
     }
 
-    private List<TestCase> generateManualTestsForSource(String testFolder, Source s, List<TestAutoGenerator> autoGenerators) {
+    private List<TestCase> generateManualTestsForSource(String testFolder, Source s) {
         List<TestCase> tests = new ArrayList<TestCase>();
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {

@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class TestResultsComponent extends VerticalLayout implements TestExecutorMonitor {
 
-    private Table resultsTable = new Table("Test Results");
+    private final Table resultsTable = new Table("Test Results");
     private Source source = null;
 
     public TestResultsComponent() {
