@@ -1,0 +1,15 @@
+language: java
+jdk:
+  - openjdk7
+branches:
+  only:
+    - master
+    - dev
+install: /bin/true
+script: "mvn clean install"
+notifications:
+  email:
+    recipients:
+      - jimkont@gmail.com
+    on_success: change
+    on_failure: change
