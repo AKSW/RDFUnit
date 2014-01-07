@@ -57,8 +57,8 @@ public class PatternBasedTestCase extends TestCase {
 
     private String instantiateBindings(List<Binding> bindings, String query) {
         String sparql = query;
-        for (int i = 0; i < bindings.size(); i++) {
-            sparql = sparql.replace("%%" + pattern.getParameters().get(i).getId() + "%%", bindings.get(i).getValue());
+        for (Binding b : bindings) {
+            sparql = sparql.replace("%%" + b.getParameterId() + "%%", b.getValue());
         }
         return sparql;
     }
