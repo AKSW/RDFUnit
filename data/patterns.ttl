@@ -212,7 +212,7 @@ tddp:OWLCARD a tddo:Pattern ;
                                     ?resource %%P1%% ?c.
 									BIND ( %%MESSAGE%% AS ?message) 
 									BIND ( %%LOGLEVEL%% as ?logLevel )
-                                } GROUP BY ?resource
+                                } GROUP BY ?resource ?message ?logLevel
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
     tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c. }""" ;
@@ -262,7 +262,7 @@ tddp:OWLCARDT a tddo:Pattern ;
 									}
 									BIND ( %%MESSAGE%% AS ?message) 
 									BIND ( %%LOGLEVEL%% as ?logLevel )
-                                } GROUP BY ?resource
+                                } GROUP BY ?resource ?message ?logLevel
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
     tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
                                     	?resource rdf:type %%T1%%.
@@ -809,7 +809,7 @@ tddp:ONELANG a tddo:Pattern ;
                                     FILTER (isLiteral (?c) && lang(?c) = %%V1%%) .
 									BIND ( %%MESSAGE%% AS ?message) .
 									BIND ( %%LOGLEVEL%% as ?logLevel ) .
-                                } GROUP BY ?resource
+                                } GROUP BY ?resource ?message ?logLevel
                                 HAVING COUNT (?l) > 1 """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
