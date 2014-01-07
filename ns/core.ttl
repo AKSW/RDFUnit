@@ -279,16 +279,6 @@ tddo:PatternBasedTestCase
         owl:onProperty tddo:binding;
         owl:minCardinality "1"^^xsd:nonNegativeInteger
     ] ;
-    rdfs:subClassOf [
-        rdf:type owl:Restriction;
-        owl:onProperty rlog:level;
-        owl:cardinality "1"^^xsd:nonNegativeInteger
-    ] ;
-    rdfs:subClassOf [
-        rdf:type owl:Restriction;
-        owl:onProperty rlog:message;
-        owl:cardinality "1"^^xsd:nonNegativeInteger
-    ] ;
     .
 
 tddo:binding

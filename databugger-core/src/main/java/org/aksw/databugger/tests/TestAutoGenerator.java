@@ -49,13 +49,13 @@ public class TestAutoGenerator {
         try {
             q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getQuery());
         } catch (Exception e) {
-            log.error(getURI() + " Cannot parse query");
+            log.error(getURI() + " Cannot parse query:\n" + DatabuggerUtils.getAllPrefixes() + getQuery());
             e.printStackTrace();
             return false;
         }
 
         List<Var> sv = q.getProjectVars();
-        if (sv.size() != pattern.getParameters().size() + 2) {   // +2 is about ?MESSAGE & LOGLEVEL
+        if (sv.size() != pattern.getParameters().size()) {
             log.error(getURI() + " Select variables are different than Pattern parameters");
             return false;
         }
@@ -96,11 +96,6 @@ public class TestAutoGenerator {
                     break;
                 }
             }
-            String message = "", logLevel = "";
-            if (row.contains("MESSAGE"))
-                message = row.get("MESSAGE").toString();
-            if (row.contains("LOGLEVEL"))
-                logLevel = row.get("LOGLEVEL").toString();
 
             try {
                 tests.add(new PatternBasedTestCase(
@@ -112,7 +107,7 @@ public class TestAutoGenerator {
                                 source.getUri(),
                                 references),
                         pattern,
-                        bindings, message, logLevel));
+                        bindings));
             } catch (Exception e) {
 
             }

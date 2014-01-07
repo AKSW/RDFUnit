@@ -30,7 +30,7 @@ tddg:RDFSRANGEC a tddo:TestGenerator ;
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
                                        (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )}
-                              BIND (concat(str(?P1)," does not have rdfs:range: ",str(?T1)) AS ?MESSAGE)
+                              BIND (concat("'", str(?P1)," does not have rdfs:range: ", str(?T1), "'") AS ?MESSAGE)
                               BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGE .
 
@@ -50,7 +50,7 @@ tddg:RDFSRANGED a tddo:TestGenerator ;
                                   ?P1 rdf:type+ <http://www.w3.org/2002/07/owl#DatatypeProperty> .
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                          (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
-                              BIND (concat(str(?P1)," does not have datatype: ",str(?T1)) AS ?MESSAGE)
+                              BIND (concat("'", str(?P1)," does not have datatype: ", str(?T1), "'") AS ?MESSAGE)
                               BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:RDFSRANGED .
 
@@ -63,7 +63,7 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
     dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
     tddo:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?T1 ?MESSAGE ?LOGLEVEL where {
                              ?P1 rdfs:domain ?T1 .
-                             BIND (concat(str(?P1)," does not have rdfs:domain: ",str(?T1)) AS ?MESSAGE)
+                             BIND (concat("'", str(?P1)," does not have rdfs:domain: ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
@@ -80,7 +80,7 @@ tddg:OWLDISJC a tddo:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
     tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
                              ?T1 owl:disjointWith ?T2 . 
-                             BIND ( concat("Class ", str(?T1)," is owl:disjointWith with ",str(?T2)) AS ?MESSAGE)
+                             BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
@@ -93,7 +93,7 @@ tddg:OWLDISJP a tddo:TestGenerator ;
     dcterms:description """Generate all owl:propertyDisjointWith constrains defined in a schema"""@en ;
     tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 ?MESSAGE ?LOGLEVEL WHERE {
                              ?P1 owl:propertyDisjointWith ?P2 . 
-							 BIND ( concat("Property ", str(?P1)," is owl:propertyDisjointWith with ",str(?P2)) AS ?MESSAGE)
+							 BIND ( concat("'Property ", str(?P1)," is owl:propertyDisjointWith with ",str(?P2), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
     tddo:basedOnPattern tddd:OWLDISJP .
 
@@ -106,7 +106,7 @@ tddg:OWLCOMPL a tddo:TestGenerator ;
     dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
     tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
                              ?T1 owl:complementOf ?T2 . 
-							 BIND ( concat( str(?T1)," is owl:complementOf with ",str(?T2)) AS ?MESSAGE)
+							 BIND ( concat("'", str(?T1)," is owl:complementOf with ", str(?T2), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
@@ -123,7 +123,7 @@ tddg:OWLCARD a tddo:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:cardinality ?v .
                              FILTER (?v > 0) .
-							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLCARDT .
 
@@ -136,7 +136,7 @@ tddg:OWLCARDEX a tddo:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
                              FILTER (?v > 0) .
-							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
@@ -149,7 +149,7 @@ tddg:OWLCARD0 a tddo:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
                              FILTER (?v = 0) .
-							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TRIPLE .
 
@@ -161,7 +161,7 @@ tddg:OWLCARD-MIN a tddo:TestGenerator ;
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v . 
-							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+							 BIND ( concat("'Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:OWLCARDT .
 
@@ -174,7 +174,7 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v .
                              FILTER (?v > 0) .
-							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+							 BIND ( concat("'Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
@@ -187,8 +187,8 @@ tddg:OWLCGARD-MAX a tddo:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
                              FILTER (?v > 0) . 
-							 BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
-                             BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
+							 BIND ( concat("'Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE) .
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) .} """ ;
     tddo:basedOnPattern tddd:OWLCARDT .
 
 # owl:maxCardinality number = 0 (must not exist)
@@ -200,7 +200,7 @@ tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
                              FILTER (?v = 0) . 
-							 BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type " ,str(?T1)) AS ?MESSAGE)
+							 BIND ( concat("'Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )} """ ;
     tddo:basedOnPattern tddd:TYPRODEP .
 
@@ -216,7 +216,7 @@ tddg:OWLFUNC a tddo:TestGenerator ;
 							 } UNION {
                                ?P1 rdfs:subClassOf+ owl:FunctionalProperty .
 							 }  
-							 BIND ( concat(str(?P1)," is an owl:FunctionalProperty and should occur at most once in a resource") AS ?MESSAGE)
+							 BIND ( concat("'", str(?P1)," is an owl:FunctionalProperty and should occur at most once in a resource'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL )}""" ;
     tddo:basedOnPattern tddd:OWLCARD .
 
@@ -232,7 +232,7 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
 							 } UNION {
                                ?P1 rdfs:subClassOf+ owl:InverseFunctionalProperty .
 							 }  
-							 BIND ( concat(str(?P1)," is an owl:InverseFunctionalProperty and should be unique") AS ?MESSAGE)
+							 BIND ( concat("'", str(?P1)," is an owl:InverseFunctionalProperty and should be unique'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL ) }""" ;
     tddo:basedOnPattern tddd:INVFUNC .
 
@@ -261,8 +261,8 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
 							 } UNION {
                                ?P1 rdfs:subClassOf+ owl:AsymmetricProperty .
 							 }   
-							 BIND ( concat(str(?P1)," is an owl:AsymmetricProperty and should be used as an owl:SymetricProperty") AS ?MESSAGE)
-                             BIND ( rlog:ERROR as ?LOGLEVEL ) }""" ;
+							 BIND ( concat("'", str(?P1)," is an owl:AsymmetricProperty and should be used as an owl:SymetricProperty'") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
     tddo:basedOnPattern tddd:OWLASYMMETRICPROP .
 
 
@@ -290,7 +290,7 @@ tddg:OWLIRREFLEXIVE a tddo:TestGenerator ;
 							 } UNION {
                                ?P1 rdfs:subClassOf+ owl:IrreflexiveProperty .
 							 }    
-							 BIND ( concat(str(?P1)," is an owl:IrreflexiveProperty and a subject must not be the the object") AS ?MESSAGE)
+							 BIND ( concat("'", str(?P1)," is an owl:IrreflexiveProperty and a subject must not be the the object'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL ) }""" ;
     tddo:basedOnPattern tddd:OWLIRREFLEXIVE .
 

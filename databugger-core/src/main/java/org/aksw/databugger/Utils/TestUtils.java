@@ -181,14 +181,12 @@ public class TestUtils {
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?message ?logLevel WHERE { " +
+                " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator WHERE { " +
                 " <" + testURI + "> " +
                 "    tddo:appliesTo      ?appliesTo ;" +
                 "    tddo:generated      ?generated ;" +
                 "    tddo:source         ?source ;" +
                 "    tddo:basedOnPattern ?basedOnPattern ;" +
-                "    rlog:message        ?message ;" +
-                "    rlog:level          ?logLevel ." +
                 " OPTIONAL {<" + testURI + ">  tddo:testGenerator ?testGenerator .}" +
                 "} ";
 
@@ -205,8 +203,6 @@ public class TestUtils {
                 String source = qs.get("source").toString();
                 String patternURI = qs.get("basedOnPattern").toString();
                 Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getPrefix("tddp"), ""));
-                String message = qs.get("message").toString();
-                String logLevel = qs.get("logLevel").toString();
 
                 List<String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 List<Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
@@ -227,7 +223,7 @@ public class TestUtils {
                             testURI,
                             annotation,
                             pattern,
-                            bindings, message, logLevel);
+                            bindings);
             }
         } catch (Exception e) {
             e.printStackTrace();

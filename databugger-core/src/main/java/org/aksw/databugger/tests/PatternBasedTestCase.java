@@ -4,6 +4,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
+import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.services.PrefixService;
 
@@ -18,15 +20,11 @@ public class PatternBasedTestCase extends TestCase {
 
     private final Pattern pattern;
     private final List<Binding> bindings;
-    private final String message;
-    private final String logLevel;
 
-    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, List<Binding> bindings, String message, String logLevel) {
+    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, List<Binding> bindings) {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
-        this.message = message;
-        this.logLevel = logLevel;
     }
 
     @Override
@@ -37,8 +35,7 @@ public class PatternBasedTestCase extends TestCase {
         resource
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "PatternBasedTestCase"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + pattern.getId()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "message"), message)
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "level"), model.createResource(logLevel));
+                .addProperty(RDFS.comment, "SPARQL Query: \n" + DatabuggerUtils.getAllPrefixes() + getSparql() + "\n Pprevalence SPARQL Query :\n" + getSparqlPrevalence());
 
 
         for (Binding binding : bindings) {
