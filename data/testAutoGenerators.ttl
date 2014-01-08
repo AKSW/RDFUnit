@@ -295,5 +295,20 @@ tddg:OWLIRREFLEXIVE a tddo:TestGenerator ;
     tddo:basedOnPattern tddd:OWLIRREFLEXIVE .
 
 
-# TODO owl:deprecated (TRIPLE Pattern)
-# An annotation with the owl:deprecated annotation property and the value equal to "true"^^xsd:boolean can be used to specify that an IRI is deprecated.
+################################################################################
+#### owl DeprecatedProperty warning
+################################################################################
+
+tddg:OWLDEPRECATEDP a tddo:TestGenerator ;
+    dcterms:description """ Generates owl:DeprecatedProperty warnings. """@en ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1'  as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
+                             {
+							   ?P1 rdf:type owl:DeprecatedProperty .
+							 } UNION {
+                               ?P1 rdfs:subClassOf+ owl:DeprecatedProperty .
+							 }
+							 BIND ( concat("'", str(?P1)," is an owl:DeprecatedProperty and should not be used anymore'") AS ?MESSAGE)
+                             BIND ( rlog:WARN as ?LOGLEVEL ) }""" ;
+    tddo:basedOnPattern tddd:TRIPLE .
+
+# TODO owl:DeprecatedClass (needs a new transitive type pattern)
