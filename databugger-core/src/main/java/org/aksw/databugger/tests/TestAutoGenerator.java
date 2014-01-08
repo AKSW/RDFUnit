@@ -10,6 +10,7 @@ import org.aksw.databugger.exceptions.BindingException;
 import org.aksw.databugger.exceptions.TestCaseException;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
+import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,6 +91,8 @@ public class TestAutoGenerator {
                     }
                     bindings.add(b);
                     if (n.isResource()) {
+                        // Exclude RLog entries
+                        if (!n.toString().contains(PrefixService.getPrefix("rlog")))
                         references.add(n.toString().trim().replace(" ", ""));
                     }
                 } else {
