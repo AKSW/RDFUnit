@@ -117,7 +117,7 @@ tddg:OWLCOMPL a tddo:TestGenerator ;
 # owl:cardinality number > 0 (count restriction if exists)
 tddg:OWLCARD a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) (str(?v)  as ?V2) ?MESSAGE ?LOGLEVEL WHERE {
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) (str(?v)  as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction ;
                                 owl:onProperty ?P1 ;
@@ -156,7 +156,7 @@ tddg:OWLCARD0 a tddo:TestGenerator ;
 # owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCARD-MIN a tddo:TestGenerator ;
     dcterms:description """Generates owl:minCardinality constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<=' as ?OP) (str(?v)  as ?V2) ?MESSAGE ?LOGLEVEL WHERE {
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<=' as ?OP) (str(?v)  as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
@@ -181,7 +181,7 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
 # owl:manCardinality number > 0 (count restriction if exists)
 tddg:OWLCGARD-MAX a tddo:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V2) ?MESSAGE ?LOGLEVEL WHERE {
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?MESSAGE ?LOGLEVEL WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
