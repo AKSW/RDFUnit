@@ -92,8 +92,7 @@ public class TestUtils {
 
         String manualTestsSelectSparql = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a tddo:TestCase ." +
-                " FILTER NOT EXISTS {?testURI a tddo:PatternBasedTestCase } }";
+                " ?testURI a tddo:ManualTestCase }";
 
         QueryExecution qe = qef.createQueryExecution(manualTestsSelectSparql);
         ResultSet results = qe.execSelect();
