@@ -1,0 +1,53 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix tddg:    <http://databugger.aksw.org/data/generators#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix tddo:    <http://databugger.aksw.org/ns/core#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tddt:    <http://databugger.aksw.org/data/tests#> .
+@prefix tddp:    <http://databugger.aksw.org/data/patterns#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+tddt:nif-Deprecated-schema
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+	tddo:sparqlWhere """ {
+							?resource a ?class .
+							FILTER ( 
+								CONTAINS (str(?class), "http://nlp2rdf.lod2.eu/schema/string/") ||
+								CONTAINS (str(?class), "http://nlp2rdf.lod2.eu/schema/sso/")
+								) 
+							# README
+							BIND (concat(str(?resource),": is using the old vocabulary (",str(?class),") a newer version is available at http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#") AS ?message) 
+							BIND ( rlog:WARN as ?logLevel ) 
+						} """ ;
+    tddo:sparqlPrevalence """  """ .
+
+tddt:nif-isString-only-with-Context
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> , <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString>;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+	tddo:sparqlWhere """ {
+							{ ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+							  FILTER (NOT EXISTS {?resource  <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?o } )
+							}UNION{
+							  ?resource  <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> [] .
+							  FILTER (NOT EXISTS {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context>  } )
+							}
+							# README
+							BIND (concat(str(?resource), ": all nif:Context must have an explicit nif:isString, nif:isString can only occurr with a nif:Context") AS ?message)
+							BIND ( rlog:ERROR as ?logLevel ) 
+						} """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?s) AS ?total) WHERE {
+								{ 
+									?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+								}UNION{
+							  		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> [] . 
+								} } """ .
