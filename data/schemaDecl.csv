@@ -25,3 +25,6 @@ cito,http://purl.org/spar/cito
 po,http://purl.org/ontology/po/
 mo,http://purl.org/ontology/mo/
 rooms,http://vocab.deri.ie/rooms#
+nerd,http://nerd.eurecom.fr/ontology#,http://nerd.eurecom.fr/ontology/nerd-v0.5.n3
+itsrdf,http://www.w3.org/2005/11/its/rdf#,http://www.w3.org/2005/11/its/rdf-content/its-rdf.rdf
+olia,http://purl.org/olia
