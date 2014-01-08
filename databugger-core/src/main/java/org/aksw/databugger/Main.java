@@ -110,8 +110,6 @@ public class Main {
             System.exit(1);
         }
 
-        //TODO change PROPDEP to PVT
-
         PropertyConfigurator.configure("log4j.properties");
 
         DatabuggerUtils.fillPrefixService(dataFolder + "prefixes.ttl");
