@@ -90,9 +90,7 @@ public class TestAutoGenerator {
                         continue;
                     }
                     bindings.add(b);
-                    if (n.isResource()) {
-                        // Exclude RLog entries
-                        if (!n.toString().contains(PrefixService.getPrefix("rlog")))
+                    if (n.isResource() && p.getId() != "LOGLEVEL") {
                         references.add(n.toString().trim().replace(" ", ""));
                     }
                 } else {
