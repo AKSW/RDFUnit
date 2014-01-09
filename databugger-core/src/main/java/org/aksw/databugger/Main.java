@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.coverage.TestCoverageEvaluator;
+import org.aksw.databugger.enums.TestCaseResultStatus;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.exceptions.TripleWriterException;
 import org.aksw.databugger.io.TripleFileReader;
@@ -22,6 +23,7 @@ import org.aksw.databugger.tests.executors.TestExecutor;
 import org.aksw.databugger.tests.executors.TestExecutorMonitor;
 import org.aksw.databugger.tests.executors.TestGeneratorExecutor;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
+import org.aksw.databugger.tests.results.StatusTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.apache.commons.cli.*;
@@ -190,36 +192,51 @@ public class Main {
 
             @Override
             public void singleTestExecuted(TestCase test, List<TestCaseResult> results) {
-                for (TestCaseResult result : results) {
-                    log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
+
+                // in case we have 1 result but is not status
+                boolean statusResult = false;
+
+                if (results.size() == 1) {
+
+                    TestCaseResult result = results.get(0);
                     result.serialize(model, testedDataset.getUri());
 
-                    if (result instanceof AggregatedTestCaseResult) {
-                        long currentErrors = ((AggregatedTestCaseResult) result).getErrorCount();
-                        if (currentErrors == -2)
+                    if (result instanceof StatusTestCaseResult) {
+                        statusResult = true;
+
+                        log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
+                        TestCaseResultStatus status = ((StatusTestCaseResult) result).getStatus();
+
+                        if (status.equals(TestCaseResultStatus.Error))
                             error++;
-                        if (currentErrors == -1)
+                        if (status.equals(TestCaseResultStatus.Timeout))
                             timeout++;
-                        if (currentErrors == 0)
+                        if (status.equals(TestCaseResultStatus.Success))
                             success++;
-                        if (currentErrors > 0) {
+                        if (status.equals(TestCaseResultStatus.Fail))
                             fail++;
-                            totalErrors += currentErrors;
+
+                        if (result instanceof AggregatedTestCaseResult) {
+                            totalErrors += ((AggregatedTestCaseResult) result).getErrorCount();
                         }
                     }
+                }
 
+                if (!statusResult) {
+                    // TODO RLOG results
+                    for (TestCaseResult result : results) {
+
+                    }
                 }
 
                 // cache intermediate results
                 if (counter % 10 == 0) {
                     try {
-
                         resultWriter.write(model);
                     } catch (TripleWriterException e) {
-                        log.error("Cannot write tests to file: " + e.getMessage());
+                        log.error("Cannot write tests: " + e.getMessage());
                     }
                 }
-
             }
 
             @Override
