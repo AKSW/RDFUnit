@@ -12,7 +12,8 @@ public enum TestCaseResultStatus {
     Success,
     Fail,
     Timeout,
-    Error;
+    Error,
+    Running;
 
     public String getUri() {
         // TODO make prefix configurable

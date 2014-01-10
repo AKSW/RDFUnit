@@ -29,12 +29,12 @@ public class PatternUtils {
                 "  tddo:sparqlPrevalencePattern ?sparqlPrev ; " +
                 "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = DatabuggerUtils.getAllPrefixes() +
-                " SELECT distinct ?parameterURI ?id ?constrain ?constrainPattern WHERE { " +
+                " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
                 " %%PATTERN%%  tddo:parameter ?parameterURI . " +
                 " ?parameterURI a tddo:Parameter . " +
                 " ?parameterURI dcterms:identifier ?id . " +
-                " OPTIONAL {?parameterURI tddo:parameterConstraint ?constrain .}" +
-                " OPTIONAL {?parameterURI tddo:constrainPattern ?constrainPattern .}" +
+                " OPTIONAL {?parameterURI tddo:parameterConstraint ?constraint .}" +
+                " OPTIONAL {?parameterURI tddo:constraintPattern ?constraintPattern .}" +
                 " } ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
@@ -64,8 +64,8 @@ public class PatternUtils {
                     constrainStr = parSol.get("constrain").toString();
                 }
                 String constrainPat = "";
-                if (parSol.contains("constrainPattern")) {
-                    constrainPat = parSol.get("constrainPattern").toString();
+                if (parSol.contains("constraintPattern")) {
+                    constrainPat = parSol.get("constraintPattern").toString();
                 }
 
                 PatternParameterConstraints constrain = PatternParameterConstraints.resolve(constrainStr);

@@ -229,12 +229,12 @@ tddp:OWLCARD-P1 a tddo:Parameter ;
 tddp:OWLCARD-OP a tddo:Parameter ;
     dcterms:identifier "OP" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """<|<=|>|>=|=|!=""" .
+    tddo:constraintPattern """<|<=|>|>=|=|!=""" .
 
 tddp:OWLCARD-V1 a tddo:Parameter ;
     dcterms:identifier "V1" ;
     tddo:parameterConstraint tddo:None ;
-    tddo:constrainPattern """[0-9]*""" .
+    tddo:constraintPattern """[0-9]*""" .
 
 tddp:OWLCARD-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
@@ -290,12 +290,12 @@ tddp:OWLCARDT-P1 a tddo:Parameter ;
 tddp:OWLCARDT-OP a tddo:Parameter ;
     dcterms:identifier "OP" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """<|<=|>|>=|=|!=""" .
+    tddo:constraintPattern """<|<=|>|>=|=|!=""" .
 
 tddp:OWLCARDT-V1 a tddo:Parameter ;
     dcterms:identifier "V1" ;
     tddo:parameterConstraint tddo:None ;
-    tddo:constrainPattern """[0-9]*""" .
+    tddo:constraintPattern """[0-9]*""" .
 
 tddp:OWLCARDT-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
@@ -341,7 +341,7 @@ tddp:TYPRODEP-T1 a tddo:Parameter ;
 tddp:TYPRODEP-NOT a tddo:Parameter ;
     dcterms:identifier "NOT" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """NOT|""" .
+    tddo:constraintPattern """NOT|""" .
 
 tddp:TYPRODEP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -560,7 +560,7 @@ tddp:COMP-P2 a tddo:Parameter ;
 tddp:COMP-OP a tddo:Parameter ;
     dcterms:identifier "OP" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """<|<=|>|>=|=|!=""" .
+    tddo:constraintPattern """<|<=|>|>=|=|!=""" .
 
 tddp:COMP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
@@ -600,7 +600,7 @@ tddp:MATCH-P1 a tddo:Parameter ;
 tddp:MATCH-OP a tddo:Parameter ;
     dcterms:identifier "OP" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern """!|""" .
+    tddo:constraintPattern """!|""" .
 
 tddp:MATCH-REGEX a tddo:Parameter ;
     dcterms:identifier "REGEX" ;
@@ -654,17 +654,17 @@ tddp:LITRAN-P1 a tddo:Parameter ;
 tddp:LITRAN-NOP a tddo:Parameter ;
     dcterms:identifier "NOP" ;
     tddo:parameterConstraint tddo:Operator ;
-    tddo:constrainPattern "!|" .
+    tddo:constraintPattern "!|" .
 
 tddp:LITRAN-valueMin a tddo:Parameter ;
     dcterms:identifier "valueMin" ;
     tddo:parameterConstraint tddo:None ;
-    tddo:constrainPattern """[0-9]*\\.[0-9]*""" .
+    tddo:constraintPattern """[0-9]*\\.[0-9]*""" .
 
 tddp:LITRAN-valueMax a tddo:Parameter ;
     dcterms:identifier "valueMax" ;
     tddo:parameterConstraint tddo:None ;
-    tddo:constrainPattern """[0-9]*\\.[0-9]*""" .
+    tddo:constraintPattern """[0-9]*\\.[0-9]*""" .
 
 tddp:LITRAN-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;

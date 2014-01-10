@@ -118,7 +118,7 @@ tddo:Parameter
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty tddo:constrainPattern ;
+        owl:onProperty tddo:constraintPattern ;
         owl:maxCardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
@@ -129,9 +129,9 @@ tddo:parameterConstraint
     rdfs:domain tddo:Parameter ;
     rdfs:range tddo:ParameterConstraint .
 
-tddo:constrainPattern
+tddo:constraintPattern
     a owl:DatatypeProperty ;
-    rdfs:label "constrainPattern"@en ;
+    rdfs:label "constraintPattern"@en ;
     rdfs:domain tddo:Parameter ;
     rdfs:range xsd:string .
 
@@ -490,7 +490,7 @@ tddo:RLOGTestCaseResult
 
 tddo:ExtendedTestCaseResult
     a owl:Class ;
-    owl:equivalentClass spin:ConstraintViolation ;
+    rdfs:subClassOf spin:ConstraintViolation ;
 	rdfs:subClassOf tddo:RLOGTestCaseResult ;
     rdfs:label "ExtendedTestCaseResult"@en ;
 #    rdfs:comment "TODO"@en .
@@ -500,6 +500,34 @@ tddo:ExtendedTestCaseResult
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
+
+tddo:errorPropertyContext 
+    a owl:ObjectProperty ;
+    rdfs:label "errorPropertyContext"@en ;
+    rdfs:comment "Here we attach properties from the resource to provide the error context (i.e. the death date when the error is in the birth date)."@en ;
+    rdfs:domain tddo:ExtendedTestCaseResult ;
+    rdfs:range rdf:Property .
+
+tddo:errorClassification 
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:subject ;
+    rdfs:label "errorClassification"@en ;
+    rdfs:comment "This property is used to annotate an error with a classification. This classification is meant to be of higher level"@en ;
+    rdfs:domain tddo:ExtendedTestCaseResult .
+
+tddo:errorSource 
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:subject ;
+    rdfs:label "errorSource"@en ;
+    rdfs:comment "With this property we point to the error source (if known beforehand)"@en ;
+    rdfs:domain tddo:ExtendedTestCaseResult .
+
+tddo:errorType 
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:subject ;
+    rdfs:label "errorType"@en ;
+    rdfs:comment "We denote the exact problem of the error"@en ;
+    rdfs:domain spinrdf:ConstraintViolation .
 
 
 
