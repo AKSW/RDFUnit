@@ -356,6 +356,13 @@ tddo:TestSuite
     ] ;
     .
 
+tddo:testSuite
+    a owl:ObjectProperty ;
+    rdfs:label "testSuite"@en ;
+    rdfs:comment "links an ontology to TestSuite for validating data adhering to that ontology"@en;
+    rdfs:domain owl:Ontology ;
+    rdfs:range tddo:TestSuite .
+
 #################################################################
 # Test Execution
 #################################################################
