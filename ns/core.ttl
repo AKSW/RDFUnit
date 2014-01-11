@@ -158,7 +158,8 @@ tddo:TestGenerator
         rdf:type owl:Restriction;
         owl:onProperty tddo:basedOnPattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
-    ] .
+    ] ;
+    .
 
 tddo:sparqlGenerator
     a owl:DatatypeProperty ;
@@ -201,7 +202,8 @@ tddo:TestCase
         rdf:type owl:Restriction;
         owl:onProperty tddo:references;
         owl:minCardinality "1"^^xsd:nonNegativeInteger
-    ] .
+    ];
+    .
 
 tddo:appliesTo
     a owl:ObjectProperty ;
@@ -229,7 +231,7 @@ tddo:source
     rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
 
 
-#################################################################
+################################################################
 # Tests / PatternBasedTestCase
 ################################################################
 
@@ -346,7 +348,7 @@ tddo:TestSuite
     a owl:Class ;
     rdfs:label "TestSuite"@en ;
     rdfs:comment "A list of test cases. Use prov:hadMember for test case listing"@en ;
-    owl:equivalentClass prov:Collection ;
+    rdfs:subClassOf prov:Collection ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
         owl:onProperty prov:hadMember ;
@@ -362,7 +364,7 @@ tddo:TestExecution
     a owl:Class ;
     rdfs:label "TestExecution"@en ;
     rdfs:comment "Holds the results of a TestSuite execution against a dataset"@en ;
-    owl:equivalentClass prov:Activity ;
+    rdfs:subClassOf prov:Activity ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
         owl:onProperty prov:startedAtTime ;
@@ -373,9 +375,48 @@ tddo:TestExecution
         owl:onProperty prov:endedAtTime ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty tddo:source ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
     .
 
-# TODO add more properties here
+tddo:testsRun
+    a owl:DatatypeProperty ;
+    rdfs:label "testsRun"@en ;
+    rdfs:comment "Total tests run in a TestExecution"@en ;
+    rdfs:domain tddo:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+tddo:testsSucceeded
+    a owl:DatatypeProperty ;
+    rdfs:label "testsSucceeded"@en ;
+    rdfs:comment "Total tests that succedded in a TestExecution"@en ;
+    rdfs:domain tddo:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+tddo:testsFailed
+    a owl:DatatypeProperty ;
+    rdfs:label "testsFailed"@en ;
+    rdfs:comment "Total tests that failed in a TestExecution"@en ;
+    rdfs:domain tddo:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+tddo:testsTimeout
+    a owl:DatatypeProperty ;
+    rdfs:label "testsTimeout"@en ;
+    rdfs:comment "Total tests that timeout in a TestExecution"@en ;
+    rdfs:domain tddo:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+tddo:testsError
+    a owl:DatatypeProperty ;
+    rdfs:label "testsError"@en ;
+    rdfs:comment "Total tests that raised an error in a TestExecution"@en ;
+    rdfs:domain tddo:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
 
 #################################################################
 # Test Execution Results
@@ -465,7 +506,7 @@ tddo:resultPrevalence
 
 tddo:RLOGTestCaseResult
     a owl:Class ;
-    owl:equivalentClass rlog:Entry ;
+    rdfs:subClassOf rlog:Entry ;
 	rdfs:subClassOf tddo:TestCaseResult ;
     rdfs:label "RLOGTestCaseResult"@en ;
 #    rdfs:comment "TODO"@en .
@@ -527,8 +568,30 @@ tddo:errorType
     rdfs:subPropertyOf dcterms:subject ;
     rdfs:label "errorType"@en ;
     rdfs:comment "We denote the exact problem of the error"@en ;
-    rdfs:domain spinrdf:ConstraintViolation .
+    rdfs:domain tddo:ExtendedTestCaseResult .
 
+
+#################################################################
+# RresultAnnotation
+#################################################################
+
+tddo:ResultAnnotation
+    a owl:Class ;
+    rdfs:label "ResultAnnotation"@en ;
+    rdfs:comment "Used to further annotate an ExtendedTestCaseResult."@en.
+
+tddo:annotationProperty
+    a owl:ObjectProperty ;
+    rdfs:label "annotationProperty"@en ;
+#   rdfs:comment "TODO"@en ;
+    rdfs:domain tddo:ResultAnnotation;
+    rdfs:range rdf:Property .
+    
+tddo:annotationValue
+    a rdf:Property ;
+    rdfs:label "annotationValue"@en ;
+#   rdfs:comment "TODO"@en ;
+    rdfs:domain tddo:ResultAnnotation .
 
 
 #################################################################
