@@ -230,6 +230,14 @@ tddo:source
     rdfs:label "source"@en ;
     rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
 
+tddo:testCaseLogLevel
+    a owl:ObjectProperty ;
+    rdfs:label "testCaseLogLevel"@en ;
+    rdfs:comment "the rlog:Level this cases is associated with."@en ;
+    rdfs:domain tddo:TestCase ;
+    rdfs:range rlog:Level ;
+    .
+
 
 ################################################################
 # Tests / PatternBasedTestCase
@@ -362,6 +370,49 @@ tddo:testSuite
     rdfs:comment "links an ontology to TestSuite for validating data adhering to that ontology"@en;
     rdfs:domain owl:Ontology ;
     rdfs:range tddo:TestSuite .
+
+
+#################################################################
+# Test Case Dependencies
+#################################################################
+
+tddo:TestCaseDependency
+    a owl:Class ;
+    rdfs:label "TestCaseDependency"@en ;
+    rdfs:comment "defines a dependency between two test cases"@en ;
+    .
+
+tddo:dependencyFrom
+    a owl:ObjectProperty ;
+    rdfs:label "dependencyFrom"@en ;
+    rdfs:comment "the test case we depends upon"@en ;
+    rdfs:domain tddo:TestCaseDependency ;
+    rdfs:range tddo:TestCase ;
+    .
+
+tddo:dependencyTo
+    a owl:ObjectProperty ;
+    rdfs:label "dependencyTo"@en ;
+    rdfs:comment "the test case that depends on another test case"@en ;
+    rdfs:domain tddo:TestCaseDependency ;
+    rdfs:range tddo:TestCase ;
+    .
+
+tddo:dependencyCondition
+    a owl:ObjectProperty ;
+    rdfs:label "dependencyCondition"@en ;
+    rdfs:comment "the tddo:ResultStatus of the dependencyFrom result condition that triggers this dependency"@en ;
+    rdfs:domain tddo:TestCaseDependency ;
+    rdfs:range tddo:ResultStatus ;
+    .
+
+tddo:dependencyExecute
+    a owl:DatatypeProperty ;
+    rdfs:label "dependencyExecute"@en ;
+    rdfs:comment "'true' executes the dependecnyTo TestCase while false does not"@en ;
+    rdfs:domain tddo:TestCaseDependency ;
+    rdfs:range xsd:boolean ;
+    .
 
 #################################################################
 # Test Execution
