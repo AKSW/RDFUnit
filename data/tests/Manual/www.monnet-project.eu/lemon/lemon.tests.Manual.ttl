@@ -145,23 +145,6 @@ tddt:lemon-narrowerNoBroaderInverse
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower . } """ .
 
-# A lemon:Form needs at least one written representation
-tddt:lemon-formNoWrittenRep
-      a tddo:ManualTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.monnet-project.eu/lemon#writtenRep> , <http://www.monnet-project.eu/lemon#Form> ;
-      tddo:source <http://www.monnet-project.eu/lemon#> ;
-      tddo:sparqlWhere """ {
-                           ?resource rdf:type <http://www.monnet-project.eu/lemon#Form> .
-                           FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#writtenRep> ?v1 .})
-                           # README
-                           BIND (concat(str(?resource),": needs at least one lemon:writtenRep.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
-                            } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#Form> . } """ .
-
 # A lemon:component should have at least one lemon:element.
 tddt:lemon-componentNoElement
       a tddo:ManualTestCase ;
@@ -178,23 +161,6 @@ tddt:lemon-componentNoElement
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> . } """ .
-
-# A lemon:definition needs at least one value
-tddt:lemon-definitionNoValue
-      a tddo:ManualTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.monnet-project.eu/lemon#Definition> , <http://www.monnet-project.eu/lemon#value> ;
-      tddo:source <http://www.monnet-project.eu/lemon#> ;
-      tddo:sparqlWhere """ {
-                           ?resource rdf:type <http://www.monnet-project.eu/lemon#Definition> .
-                           FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#value> ?v1 .})
-                           # README
-                           BIND (concat(str(?resource),": is a lemon:Definition and needs a lemon:value property.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
-                            } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#Definition> . } """ .
 
 #Language property value should not have a language tag itself
 tddt:lemon-languageTagOnLanguageProperty
