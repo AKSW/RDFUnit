@@ -216,8 +216,10 @@ public class Main {
                         if (status.equals(TestCaseResultStatus.Fail))
                             fail++;
 
-                        if (result instanceof AggregatedTestCaseResult) {
-                            totalErrors += ((AggregatedTestCaseResult) result).getErrorCount();
+                        if (result instanceof AggregatedTestCaseResult ) {
+                            long errorCount = ((AggregatedTestCaseResult) result).getErrorCount();
+                            if (errorCount > 0)
+                                totalErrors += ((AggregatedTestCaseResult) result).getErrorCount();
                         }
                     }
                 }
