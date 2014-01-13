@@ -9,6 +9,7 @@
 @prefix tddt:    <http://databugger.aksw.org/data/tests#> .
 @prefix tddp:    <http://databugger.aksw.org/data/patterns#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
 
 tddt:nif-Deprecated-schema
     a       tddo:ManualTestCase ;
@@ -51,3 +52,249 @@ tddt:nif-isString-only-with-Context
                             }UNION{
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> [] . 
                             } } """ .
+
+tddt:nif-beginIndex-of-Context-MUST-be-zero
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:Context , nif:beginIndex ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+                         		?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?begin .
+                         		FILTER (xsd:nonNegativeInteger(?begin) != xsd:nonNegativeInteger(0))
+
+                         		# README
+                         		BIND (concat(str(?resource), ": nif:beginIndex of nif:Context MUST be zero, but is ", str(?begin)) AS ?message)
+                         		BIND ( rlog:ERROR as ?logLevel )
+                         	} """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?begin .} """ .
+
+tddt:nif-length-of-isString-equal-with-endIndex
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:Context , nif:beginIndex, nif:endIndex ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+                         		?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?string .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?length .
+                         		BIND ( xsd:nonNegativeInteger(strlen(?string)) as ?a)
+                         		BIND ( xsd:nonNegativeInteger(?length) as ?b)
+                         		FILTER ( ?a != ?b  )
+
+                         		# README
+                         		BIND (concat(str(?resource), ": for the context, the length of nif:isString (",str(?a), ") must equal nif:endIndex (",str(?b),")" ) AS ?message)
+                         		BIND ( rlog:ERROR as ?logLevel )
+                         		} """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?string .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?length . } """ .
+
+
+
+tddt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and-end-index
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:anchorOf , nif:beginIndex, nif:endIndex ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+                         		#not sure, if necessary -> ?s a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String> .
+                         		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf> ?anchorOf .
+                         		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?beginIndex .
+                         		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?endIndex .
+                         		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?referenceString ]  .
+                         		BIND (SUBSTR(?referenceString, ?beginIndex , (?endIndex - ?beginIndex) ) AS ?test ) .
+                         	    FILTER (str(?test) != str(?anchorOf )) .
+
+
+                         		# debugging query
+                         		#BIND ((xsd:int(?endIndex) - xsd:int(?beginIndex))  as ?diff )
+                         		#BIND ((?endIndex - ?beginIndex)   as ?diff )
+                         		#BIND (concat(str(?diff), "ass") AS ?message)
+                         		#BIND (SUBSTR(?referenceString, ?beginIndex , (?endIndex - ?beginIndex) ) AS ?test ) .
+                         		#BIND ("anything" AS ?test ) .
+                         		#BIND (concat(str(?referenceString), " " ,  ?beginIndex, ?endIndex," ", ?diff," ", ?test) AS ?message)
+                         		#BIND (concat(str(?referenceString), " " ,  ?beginIndex, ?diff," "," ", ?test) AS ?message)
+
+                         		# README - TODO this query does not work correctly
+                         		BIND (concat(str(?referenceString), ": nif:anchorOf must match the substring of nif:isString calculated with begin and end index") AS ?message)
+                         		BIND ( rlog:ERROR as ?logLevel )
+                         	} """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                #not sure, if necessary -> ?s a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String> .
+                                #?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf> ?anchorOf .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?beginIndex .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?endIndex .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?referenceString ]  . } """ .
+
+
+tddt:nif-rdftype-is-misspelled
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+        ?resource a ?class .
+        FILTER (
+            CONTAINS (str(?class), "RFC") &&  CONTAINS (str(?class), "147String") && ! CONTAINS (str(?class), "5") ||
+            CONTAINS (str(?class), "RFC5") &&  CONTAINS (str(?class), "47String") && ! CONTAINS (str(?class), "1") ||
+            CONTAINS (str(?class), "RFC51") &&  CONTAINS (str(?class), "7String") && ! CONTAINS (str(?class), "4") ||
+            CONTAINS (str(?class), "RFC514") &&  CONTAINS (str(?class), "String") && ! CONTAINS (str(?class), "7") ||
+            CONTAINS (str(?class), "5147String")  && ! CONTAINS (str(?class), "RFC") ||
+            CONTAINS (str(?class), "RFC") &&  CONTAINS (str(?class), "5147") && ! CONTAINS (str(?class), "String")
+            )
+
+        # README
+        BIND (concat("rdf:type of ",str(?resource)," is misspelled: ",str(?class)) AS ?message)
+        BIND ( rlog:ERROR as ?logLevel )
+    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                ?resource a ?class .  } """ .
+
+
+tddt:nif-non-context-CString-must-have-explicit-referenceContext
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+        {
+            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+            UNION
+            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+            UNION
+            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+        }
+        FILTER (NOT EXISTS {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> } ) .
+        FILTER (NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> ] . } )
+
+        # README
+        BIND (concat(str(?resource), ": all nif:CString and subclasses that aren't contexts must have an explicit referenceContext") AS ?message)
+        BIND ( rlog:ERROR as ?logLevel )
+        } """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+                                UNION
+                                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+                                UNION
+                                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+                            } """ . 
+
+#TODO change to two TYPRODEP cases
+tddt:nif-CString-and-subclasses-MUST-have-beginIndex-and-endIndex
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext, nif:endIndex ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+        {
+            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+            UNION
+            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+            UNION
+            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+        }
+        FILTER ( NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o  } 
+              || NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?o  }    )
+
+        # README
+        BIND ( concat(str(?resource), ":  all nif:CString and subclasses (i.e. RFC5147String, CStringImpl, OffsetBasedString) MUST have nif:beginIndex and nif:endIndex") AS ?message)
+        BIND ( rlog:ERROR as ?logLevel )
+    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                {
+                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+                                    UNION
+                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+                                    UNION
+                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+                                }
+                            } """ . 
+
+tddt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:beginIndex ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+        ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+        FILTER ( NOT EXISTS {
+            {
+                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+                UNION
+                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+                UNION
+                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+            }
+        })
+
+        # README
+        BIND (concat(str(?resource), ": all nif:Context must have rdf:type  of a subclass of nif:CString" ) AS ?message)
+        BIND ( rlog:ERROR as ?logLevel )
+    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
+                            } """ . 
+
+
+tddt:nif-beginIndex-and-endIndex-MUST-be-castable-to-xsd-nonNegativeInteger
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:beginIndex, nif:endIndex ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+        { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o . }
+        UNION
+        { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>   ?o . }
+
+        BIND (DATATYPE(xsd:nonNegativeInteger(?o)) AS ?test)
+        FILTER ( !bound (?test) )
+
+        # README
+        BIND (concat(str(?resource), ": nif:beginIndex and nif:endIndex MUST be castable to xsd:nonNegativeInteger") AS ?message)
+        BIND ( rlog:ERROR as ?logLevel )
+} """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o . }
+                                UNION
+                                { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>   ?o . }
+                            } """ . 
+
+
+
+tddt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
+    a       tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String ;
+    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:sparqlWhere """ {
+        ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
+        FILTER ( NOT EXISTS {
+            {
+                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+                UNION
+                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+                UNION
+                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+            }
+        })
+
+        # README
+        BIND (concat(str(?resource), ": nif:CString is an abstract class, it MUST only exist, if a subclass is used as well (e.g. CStringImpl, RFC5147String, OffsetBasedString)" ) AS ?message)
+        BIND ( rlog:ERROR as ?logLevel )
+    } """ ;
+    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
+                            } """ . 
