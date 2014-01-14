@@ -73,14 +73,44 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
 
 
 ##########################################
-#### owl:disjointClass pattern
+#### owl:disjointClass pattern (1) (without reverse relations)
 ##########################################
 
-tddg:OWLDISJC a tddo:TestGenerator ;
+tddg:OWLDISJC1 a tddo:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
     tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
-                             ?T1 owl:disjointWith ?T2 . 
+                             ?T1 owl:disjointWith ?T2 .
+                             FILTER NOT EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
+    tddo:basedOnPattern tddd:OWLDISJC .
+
+##########################################
+#### owl:disjointClass pattern (2) (filter out reverse relations)
+##########################################
+
+tddg:OWLDISJC2 a tddo:TestGenerator ;
+    dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
+                             ?T1 owl:disjointWith ?T2 .
+                             FILTER EXISTS { ?T2 owl:disjointWith ?T1 .  }
+                             FILTER (str(?T1) < str(?T2) ).
+                             BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE)
+                             BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
+    tddo:basedOnPattern tddd:OWLDISJC .
+
+##########################################
+#### owl:AllDisjointClasses pattern
+##########################################
+
+tddg:OWLALLDISJC a tddo:TestGenerator ;
+    dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
+    tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE ?LOGLEVEL WHERE {
+                             ?r rdf:type    owl:AllDisjointClasses ;
+                                owl:members ?T1 ;
+                                owl:members ?T2 .
+                             FILTER (str(?T1) < str(?T2) ).
+                             BIND ( concat("'Class ", str(?T1)," is owl:members of an owl:AllDisjointClasses with ", str(?T2), "'") AS ?MESSAGE)
                              BIND ( rlog:ERROR as ?LOGLEVEL ) } """ ;
     tddo:basedOnPattern tddd:OWLDISJC .
 
