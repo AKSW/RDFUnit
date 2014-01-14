@@ -17,6 +17,7 @@ tddt:nif-Deprecated-schema
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:WARN ;
     tddo:sparqlWhere """ {
                             ?resource a ?class .
                             FILTER ( 
@@ -35,6 +36,7 @@ tddt:nif-isString-only-with-Context
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> , <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString>;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
                             { ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
                                 FILTER (NOT EXISTS {?resource  <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?o } )
@@ -59,6 +61,7 @@ tddt:nif-beginIndex-of-Context-MUST-be-zero
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:Context , nif:beginIndex ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
                          		?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?begin .
@@ -78,6 +81,7 @@ tddt:nif-length-of-isString-equal-with-endIndex
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:Context , nif:beginIndex, nif:endIndex ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
                          		?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?string .
@@ -103,6 +107,7 @@ tddt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:anchorOf , nif:beginIndex, nif:endIndex ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
                          		#not sure, if necessary -> ?s a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String> .
                          		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf> ?anchorOf .
@@ -140,6 +145,7 @@ tddt:nif-rdftype-is-misspelled
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
         ?resource a ?class .
         FILTER (
@@ -165,6 +171,7 @@ tddt:nif-non-context-CString-must-have-explicit-referenceContext
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
         {
             {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
@@ -195,6 +202,7 @@ tddt:nif-CString-and-subclasses-MUST-have-beginIndex-and-endIndex
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext, nif:endIndex ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
         {
             {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
@@ -226,6 +234,7 @@ tddt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:beginIndex ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
         FILTER ( NOT EXISTS {
@@ -253,6 +262,7 @@ tddt:nif-beginIndex-and-endIndex-MUST-be-castable-to-xsd-nonNegativeInteger
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:beginIndex, nif:endIndex ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
         { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o . }
         UNION
@@ -279,6 +289,7 @@ tddt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
     tddo:generated tddo:ManuallyGenerated ;
     tddo:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String ;
     tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    tddo:testCaseLogLevel rlog:ERROR ;
     tddo:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
         FILTER ( NOT EXISTS {

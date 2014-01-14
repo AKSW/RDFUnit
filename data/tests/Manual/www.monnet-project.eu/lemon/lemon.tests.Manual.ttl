@@ -18,6 +18,7 @@ tddt:lemon-entryWithoutCanonicalForm
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
       tddo:sparqlWhere """ {
                            ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
                            FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#canonicalForm> ?v1 .})
@@ -35,6 +36,7 @@ tddt:lemon-entryWithoutLabel
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:INFO ;
       tddo:sparqlWhere """ {
                            ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
                            FILTER (NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .})
@@ -52,6 +54,7 @@ tddt:lemon-entryExactlyOneLanguage
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:INFO ;
       tddo:sparqlWhere """ {
                            		{?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
                            			FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#language> ?lang .})
@@ -75,6 +78,7 @@ tddt:lemon-lexicalSenseReferenceCount
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#LexicalSense>;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
       tddo:sparqlWhere """ {
                            		{?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> .
                            			FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#subsense> ?sub .})
@@ -101,6 +105,7 @@ tddt:lemon-narrowerNotSymmetric
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#narrower> ;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
       tddo:sparqlWhere """ {
                            ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower .
                            ?narrower <http://www.monnet-project.eu/lemon#narrower> ?resource .
@@ -118,6 +123,7 @@ tddt:lemon-broaderNotSymmetric
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#broader> ;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
       tddo:sparqlWhere """ {
                            ?resource <http://www.monnet-project.eu/lemon#broader> ?broader .
                            ?broader <http://www.monnet-project.eu/lemon#broader> ?resource .
@@ -135,6 +141,7 @@ tddt:lemon-narrowerNoBroaderInverse
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#broader> ;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:INFO ;
       tddo:sparqlWhere """ {
                            ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower .
                            FILTER (NOT EXISTS {?narrower <http://www.monnet-project.eu/lemon#broader> ?resource .})
@@ -152,6 +159,7 @@ tddt:lemon-componentNoElement
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.monnet-project.eu/lemon#Component> , <http://www.monnet-project.eu/lemon#element> ;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:WARN ;
       tddo:sparqlWhere """ {
                            ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> .
                            FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#element> ?v1 .})
@@ -169,6 +177,7 @@ tddt:lemon-languageTagOnLanguageProperty
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.lemon-model.net/lemon#language> ;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
       tddo:sparqlWhere """ {
                            ?resource <http://www.lemon-model.net/lemon#language> ?v1 .
                            FILTER (lang(?v1)!="")
@@ -186,6 +195,7 @@ tddt:lemon-languageTagOnRuleProperty
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.lemon-model.net/lemon#rule> ;
       tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
       tddo:sparqlWhere """ {
                            ?resource <http://www.lemon-model.net/lemon#rule> ?v1 .
                            FILTER (lang(?v1)!="")
