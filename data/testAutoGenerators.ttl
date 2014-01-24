@@ -420,7 +420,7 @@ tddg:OWLDEPRECATEDP a tddo:TestGenerator ;
     tddo:resultAnnotation [
         a tddo:ResultAnnotation ;
         tddo:annotationProperty rlog:level ;
-        tddo:annotationValue rlog:Error] ;
+        tddo:annotationValue rlog:Warn] ;
     .
 
 # TODO owl:DeprecatedClass (needs a new transitive type pattern)
