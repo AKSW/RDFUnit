@@ -48,7 +48,7 @@ public class TripleFileWriter extends TripleWriter {
 
             if (createParentDirectories) {
                 File parentF = file.getParentFile();
-                if (!parentF.exists())
+                if (parentF != null && !parentF.exists())
                     file.getParentFile().mkdirs();
             }
             model.write(new FileOutputStream(file), filetype);
