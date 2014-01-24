@@ -1,6 +1,7 @@
 package org.aksw.databugger.tests.executors;
 
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestSuite;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -92,23 +94,36 @@ public class TestExecutor {
 
         try {
             prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
-        } catch (QueryParseException e) {
-            if (!testCase.getSparqlPrevalence().trim().isEmpty())
+        } catch (QueryExceptionHTTP e) {
+            int httpCode = e.getResponseCode();
+            // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+            if (httpCode == 408 || httpCode == 504 || httpCode == 524) {
+                total = -1;
+            }
+            else
                 total = -2;
+
+
         } catch (Exception e) {
-            //query time out total remains -1
-            total = -1;
+            total = -2;
         }
 
         if (prevalence != 0) {
             // if prevalence !=0 calculate total
             try {
                 total = getCountNumber(source.getExecutionFactory(), testCase.getSparqlAsCountQuery(), "total");
-            } catch (QueryParseException e) {
-                total = -2;
+            } catch (QueryExceptionHTTP e) {
+                int httpCode = e.getResponseCode();
+                // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+                if (httpCode == 408 || httpCode == 504 || httpCode == 524) {
+                    total = -1;
+                }
+                else
+                    total = -2;
+
+
             } catch (Exception e) {
-                //query time out total remains -1
-                total = -1;
+                total = -2;
             }
         } else
             // else total will be 0 anyway
