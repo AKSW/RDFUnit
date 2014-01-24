@@ -26,7 +26,6 @@ tddt:nif-Deprecated-schema
                                 ) 
                             # README
                             BIND (concat(str(?resource),": is using the old vocabulary (",str(?class),") a newer version is available at http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#") AS ?message)
-                            BIND ( rlog:WARN as ?logLevel ) 
                         } """ ;
     tddo:sparqlPrevalence """  """ .
 
@@ -46,7 +45,6 @@ tddt:nif-isString-only-with-Context
                             }
                             # README
                             BIND (concat(str(?resource), ": all nif:Context must have an explicit nif:isString, nif:isString can only occurr with a nif:Context") AS ?message)
-                            BIND ( rlog:ERROR as ?logLevel ) 
                         } """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?s) AS ?total) WHERE {
                             { 
@@ -69,7 +67,6 @@ tddt:nif-beginIndex-of-Context-MUST-be-zero
 
                          		# README
                          		BIND (concat(str(?resource), ": nif:beginIndex of nif:Context MUST be zero, but is ", str(?begin)) AS ?message)
-                         		BIND ( rlog:ERROR as ?logLevel )
                          	} """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
@@ -92,7 +89,6 @@ tddt:nif-length-of-isString-equal-with-endIndex
 
                          		# README
                          		BIND (concat(str(?resource), ": for the context, the length of nif:isString (",str(?a), ") must equal nif:endIndex (",str(?b),")" ) AS ?message)
-                         		BIND ( rlog:ERROR as ?logLevel )
                          		} """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
@@ -129,7 +125,6 @@ tddt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and
 
                          		# README - TODO this query does not work correctly
                          		BIND (concat(str(?referenceString), ": nif:anchorOf must match the substring of nif:isString calculated with begin and end index") AS ?message)
-                         		BIND ( rlog:ERROR as ?logLevel )
                          	} """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 #not sure, if necessary -> ?s a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String> .
@@ -159,7 +154,6 @@ tddt:nif-rdftype-is-misspelled
 
         # README
         BIND (concat("rdf:type of ",str(?resource)," is misspelled: ",str(?class)) AS ?message)
-        BIND ( rlog:ERROR as ?logLevel )
     } """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a ?class .  } """ .
@@ -185,7 +179,6 @@ tddt:nif-non-context-CString-must-have-explicit-referenceContext
 
         # README
         BIND (concat(str(?resource), ": all nif:CString and subclasses that aren't contexts must have an explicit referenceContext") AS ?message)
-        BIND ( rlog:ERROR as ?logLevel )
         } """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
@@ -216,7 +209,6 @@ tddt:nif-CString-and-subclasses-MUST-have-beginIndex-and-endIndex
 
         # README
         BIND ( concat(str(?resource), ":  all nif:CString and subclasses (i.e. RFC5147String, CStringImpl, OffsetBasedString) MUST have nif:beginIndex and nif:endIndex") AS ?message)
-        BIND ( rlog:ERROR as ?logLevel )
     } """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 {
@@ -249,7 +241,6 @@ tddt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
 
         # README
         BIND (concat(str(?resource), ": all nif:Context must have rdf:type  of a subclass of nif:CString" ) AS ?message)
-        BIND ( rlog:ERROR as ?logLevel )
     } """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
@@ -277,7 +268,6 @@ tddt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
 
         # README
         BIND (concat(str(?resource), ": nif:CString is an abstract class, it MUST only exist, if a subclass is used as well (e.g. CStringImpl, RFC5147String, OffsetBasedString)" ) AS ?message)
-        BIND ( rlog:ERROR as ?logLevel )
     } """ ;
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .

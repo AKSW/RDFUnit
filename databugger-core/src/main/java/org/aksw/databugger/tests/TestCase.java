@@ -51,7 +51,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public String getSparql() {
-        return " SELECT DISTINCT ?resource ?message ?logLevel  WHERE " + getSparqlWhere();
+        return " SELECT DISTINCT ?resource ?message WHERE " + getSparqlWhere();
     }
 
     public Query getSparqlQuery() {

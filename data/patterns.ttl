@@ -21,14 +21,12 @@ tddp:RDFSRANGE a tddo:Pattern ;
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type %%T1%%  }
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
     tddo:parameter tddp:RDFSRANGE-P1 ;
     tddo:parameter tddp:RDFSRANGE-T1 ;
-    tddo:parameter tddp:RDFSRANGE-MESSAGE ;
-    tddo:parameter tddp:RDFSRANGE-LOGLEVEL .
+    tddo:parameter tddp:RDFSRANGE-MESSAGE .
 
 
 tddp:RDFSRANGE-P1 a tddo:Parameter ;
@@ -43,10 +41,6 @@ tddp:RDFSRANGE-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:RDFSRANGE-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
-
 
 ##########################################
 #### rdfs:range (datatype) pattern
@@ -59,14 +53,12 @@ tddp:RDFSRANGED a tddo:Pattern ;
                                     ?resource %%P1%% ?c.
                                     FILTER (DATATYPE(?c) != %%D1%%)
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
     tddo:parameter tddp:RDFSRANGED-P1 ;
     tddo:parameter tddp:RDFSRANGED-D1 ;
-    tddo:parameter tddp:RDFSRANGED-MESSAGE ;
-    tddo:parameter tddp:RDFSRANGED-LOGLEVEL .
+    tddo:parameter tddp:RDFSRANGED-MESSAGE .
 
 
 tddp:RDFSRANGED-P1 a tddo:Parameter ;
@@ -80,10 +72,6 @@ tddp:RDFSRANGED-D1 a tddo:Parameter ;
 tddp:RDFSRANGED-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:RDFSRANGED-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ##########################################
@@ -101,15 +89,13 @@ tddp:RDFSDOMAIN a tddo:Pattern ;
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type %%T1%%  }
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
     tddo:parameter tddp:RDFSDOMAIN-P1 ;
     tddo:parameter tddp:RDFSDOMAIN-V1 ;
     tddo:parameter tddp:RDFSDOMAIN-T1 ;
-    tddo:parameter tddp:RDFSDOMAIN-MESSAGE ;
-    tddo:parameter tddp:RDFSDOMAIN-LOGLEVEL .
+    tddo:parameter tddp:RDFSDOMAIN-MESSAGE .
 
 tddp:RDFSDOMAIN-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -126,10 +112,6 @@ tddp:RDFSDOMAIN-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:RDFSDOMAIN-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
-
 
 ##########################################
 #### owl:disjointClass pattern  (#TODO fix transitive)
@@ -142,13 +124,11 @@ tddp:OWLDISJC a tddo:Pattern ;
                                     ?resource rdf:type %%T1%% .
                                     ?resource rdf:type %%T2%% .
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """  """ ;
     tddo:parameter tddp:OWLDISJC-T1 ;
     tddo:parameter tddp:OWLDISJC-T2 ;
-    tddo:parameter tddp:OWLDISJC-MESSAGE ;
-    tddo:parameter tddp:OWLDISJC-LOGLEVEL .
+    tddo:parameter tddp:OWLDISJC-MESSAGE .
 
 tddp:OWLDISJC-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -162,9 +142,6 @@ tddp:OWLDISJC-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:OWLDISJC-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 ##########################################
 #### owl:propertyDisjointWith pattern
@@ -177,13 +154,11 @@ tddp:OWLDISJP a tddo:Pattern ;
                                     ?resource %%P1%% ?v .
                                     ?resource %%P2%% ?v .
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """  """ ;
     tddo:parameter tddp:OWLDISJP-P1 ;
     tddo:parameter tddp:OWLDISJP-P2 ;
-    tddo:parameter tddp:OWLDISJP-MESSAGE ;
-    tddo:parameter tddp:OWLDISJP-LOGLEVEL .
+    tddo:parameter tddp:OWLDISJP-MESSAGE .
 
 tddp:OWLDISJP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -197,9 +172,6 @@ tddp:OWLDISJP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:OWLDISJP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 ##########################################
 #### owl cardinality constrains pattern
@@ -211,16 +183,14 @@ tddp:OWLCARD a tddo:Pattern ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
-                                } GROUP BY ?resource ?message ?logLevel
+                                } GROUP BY ?resource ?message
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
     tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c. }""" ;
     tddo:parameter tddp:OWLCARD-P1 ;
     tddo:parameter tddp:OWLCARD-OP ;
     tddo:parameter tddp:OWLCARD-V1 ;
-    tddo:parameter tddp:OWLCARD-MESSAGE ;
-    tddo:parameter tddp:OWLCARD-LOGLEVEL .
+    tddo:parameter tddp:OWLCARD-MESSAGE .
 
 tddp:OWLCARD-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -240,9 +210,6 @@ tddp:OWLCARD-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:OWLCARD-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 ##########################################
 #### owl cardinality constrains pattern on Class
@@ -261,8 +228,7 @@ tddp:OWLCARDT a tddo:Pattern ;
                                     	?resource %%P1%% ?c.
 									}
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
-                                } GROUP BY ?resource ?message ?logLevel
+                                } GROUP BY ?resource ?message
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
     tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
                                     	?resource rdf:type %%T1%%.
@@ -276,8 +242,7 @@ tddp:OWLCARDT a tddo:Pattern ;
     tddo:parameter tddp:OWLCARDT-P1 ;
     tddo:parameter tddp:OWLCARDT-OP ;
     tddo:parameter tddp:OWLCARDT-V1 ;
-    tddo:parameter tddp:OWLCARDT-MESSAGE ;
-    tddo:parameter tddp:OWLCARDT-LOGLEVEL .
+    tddo:parameter tddp:OWLCARDT-MESSAGE .
 
 tddp:OWLCARDT-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -301,9 +266,6 @@ tddp:OWLCARDT-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:OWLCARDT-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 ##########################################
 #### Type & Property dependency (equivalent to card > 0)
@@ -322,7 +284,6 @@ tddp:TYPRODEP a tddo:Pattern ;
 										FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
 									}
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { {?resource rdf:type %%T1%% .}
@@ -331,8 +292,7 @@ tddp:TYPRODEP a tddo:Pattern ;
     tddo:parameter tddp:TYPRODEP-T1 ;
     tddo:parameter tddp:TYPRODEP-NOT ;
     tddo:parameter tddp:TYPRODEP-P1 ;
-    tddo:parameter tddp:TYPRODEP-MESSAGE ;
-    tddo:parameter tddp:TYPRODEP-LOGLEVEL .
+    tddo:parameter tddp:TYPRODEP-MESSAGE .
 
 tddp:TYPRODEP-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -351,10 +311,6 @@ tddp:TYPRODEP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:TYPRODEP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
-
 ################################################################################
 #### unique value constraint of inverse functional properties
 ################################################################################
@@ -367,13 +323,11 @@ tddp:INVFUNC a tddo:Pattern ;
                                     ?b %%P1%% ?resource .
                                     FILTER (?a != ?b)
 									BIND ( %%MESSAGE%% AS ?message) 
-									BIND ( %%LOGLEVEL%% as ?logLevel )
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?a %%P1%% ?resource . }""" ;
     tddo:parameter tddp:INVFUNC-P1 ;
-    tddo:parameter tddp:INVFUNC-MESSAGE ;
-    tddo:parameter tddp:INVFUNC-LOGLEVEL .
+    tddo:parameter tddp:INVFUNC-MESSAGE .
 
 tddp:INVFUNC-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -382,10 +336,6 @@ tddp:INVFUNC-P1 a tddo:Parameter ;
 tddp:INVFUNC-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:INVFUNC-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -401,13 +351,11 @@ tddp:OWLSYMMETRICPROP a tddo:Pattern ;
                                     ?r1  %%P1%% ?resource .
                                     FILTER NOT EXISTS {?resource %%P1%% ?r1} .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?r1 %%P1%% ?resource . }""" ;
     tddo:parameter tddp:OWLSYMMETRICPROP-P1 ;
-    tddo:parameter tddp:OWLSYMMETRICPROP-MESSAGE ;
-    tddo:parameter tddp:OWLSYMMETRICPROP-LOGLEVEL .
+    tddo:parameter tddp:OWLSYMMETRICPROP-MESSAGE .
 
 tddp:OWLSYMMETRICPROP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -416,10 +364,6 @@ tddp:OWLSYMMETRICPROP-P1 a tddo:Parameter ;
 tddp:OWLSYMMETRICPROP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:OWLSYMMETRICPROP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -435,13 +379,11 @@ tddp:OWLASYMMETRICPROP a tddo:Pattern ;
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?resource .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""";
     tddo:parameter tddp:OWLASYMMETRICPROP-P1 ;
-    tddo:parameter tddp:OWLASYMMETRICPROP-MESSAGE ;
-    tddo:parameter tddp:OWLASYMMETRICPROP-LOGLEVEL .
+    tddo:parameter tddp:OWLASYMMETRICPROP-MESSAGE .
 
 tddp:OWLASYMMETRICPROP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -451,9 +393,6 @@ tddp:OWLASYMMETRICPROP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:OWLASYMMETRICPROP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 ################################################################################
 #### in a dataset a transitive property is used for statements like
@@ -471,13 +410,11 @@ tddp:OWLTRANSPROP a tddo:Pattern ;
                                     ?r2 %%P1%% ?r3 .
                                     FILTER NOT EXISTS {?resource %%P1%% ?r3} .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 }""" ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""" ;
     tddo:parameter tddp:OWLTRANSPROP-P1 ;
-    tddo:parameter tddp:OWLTRANSPROP-MESSAGE ;
-    tddo:parameter tddp:OWLTRANSPROP-LOGLEVEL .
+    tddo:parameter tddp:OWLTRANSPROP-MESSAGE .
 
 tddp:OWLTRANSPROP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -486,10 +423,6 @@ tddp:OWLTRANSPROP-P1 a tddo:Parameter ;
 tddp:OWLTRANSPROP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:OWLTRANSPROP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -503,13 +436,11 @@ tddp:OWLIRREFLEXIVE a tddo:Pattern ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% ?resource .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?o .}""" ;
     tddo:parameter tddp:OWLIRREFLEXIVE-P1 ;
-    tddo:parameter tddp:OWLIRREFLEXIVE-MESSAGE ;
-    tddo:parameter tddp:OWLIRREFLEXIVE-LOGLEVEL .
+    tddo:parameter tddp:OWLIRREFLEXIVE-MESSAGE .
 
 tddp:OWLIRREFLEXIVE-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -518,10 +449,6 @@ tddp:OWLIRREFLEXIVE-P1 a tddo:Parameter ;
 tddp:OWLIRREFLEXIVE-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:OWLIRREFLEXIVE-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -537,7 +464,6 @@ tddp:COMP a tddo:Pattern ;
                                     ?resource %%P2%% ?afterVal .
                                     FILTER ( ?beforeVal %%OP%% ?afterVal )
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                         ?resource %%P1%% ?beforeVal .
@@ -546,8 +472,7 @@ tddp:COMP a tddo:Pattern ;
     tddo:parameter tddp:COMP-P1 ;
     tddo:parameter tddp:COMP-P2 ;
     tddo:parameter tddp:COMP-OP ;
-    tddo:parameter tddp:COMP-MESSAGE ;
-    tddo:parameter tddp:COMP-LOGLEVEL .
+    tddo:parameter tddp:COMP-MESSAGE .
 
 tddp:COMP-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -566,10 +491,6 @@ tddp:COMP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:COMP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
-
 
 ################################################################################
 #### MATCH
@@ -583,15 +504,13 @@ tddp:MATCH a tddo:Pattern ;
                                     ?resource %%P1%% ?value .
                                     FILTER (%%OP%% regex(str(?value), %%REGEX%%)) .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?value . }""" ;
     tddo:parameter tddp:MATCH-P1 ;
     tddo:parameter tddp:MATCH-OP ;
     tddo:parameter tddp:MATCH-REGEX ;
-    tddo:parameter tddp:MATCH-MESSAGE ;
-    tddo:parameter tddp:MATCH-LOGLEVEL .
+    tddo:parameter tddp:MATCH-MESSAGE .
 
 tddp:MATCH-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -610,10 +529,6 @@ tddp:MATCH-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:MATCH-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
-
 
 ################################################################################
 #### LITRAN
@@ -629,7 +544,6 @@ tddp:LITRAN a tddo:Pattern ;
                                     FILTER( %%NOP%% ( ?value > %%valueMin%% &&
                                                       ?value < %%valueMax%% ))) .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 }""" ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                         ?resource a      %%T1%% .
@@ -640,8 +554,7 @@ tddp:LITRAN a tddo:Pattern ;
     tddo:parameter tddp:LITRAN-NOP ;
     tddo:parameter tddp:LITRAN-valueMin ;
     tddo:parameter tddp:LITRAN-valueMax ;
-    tddo:parameter tddp:LITRAN-MESSAGE ;
-    tddo:parameter tddp:LITRAN-LOGLEVEL .
+    tddo:parameter tddp:LITRAN-MESSAGE .
 
 tddp:LITRAN-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -670,9 +583,6 @@ tddp:LITRAN-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:LITRAN-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -687,15 +597,13 @@ tddp:TYPDEP a tddo:Pattern ;
                                     ?resource rdf:type %%T1%% .
                                     FILTER NOT EXISTS {?resource rdf:type %%T2%%}
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
       
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource rdf:type %%T1%% . }""" ;
     tddo:parameter tddp:TYPDEP-T1 ;
     tddo:parameter tddp:TYPDEP-T2 ;
-    tddo:parameter tddp:TYPDEP-MESSAGE ;
-    tddo:parameter tddp:TYPDEP-LOGLEVEL .
+    tddo:parameter tddp:TYPDEP-MESSAGE .
 
 tddp:TYPDEP-T1 a tddo:Parameter ;
     dcterms:identifier "T1" ;
@@ -708,10 +616,6 @@ tddp:TYPDEP-T2 a tddo:Parameter ;
 tddp:TYPDEP-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:TYPDEP-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -727,15 +631,13 @@ tddp:PVT a tddo:Pattern ;
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {?resource %%P2%% ?p}
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% %%V1%% }""" ;
     tddo:parameter tddp:PVT-P1 ;
     tddo:parameter tddp:PVT-V1 ;
     tddo:parameter tddp:PVT-P2 ;
-    tddo:parameter tddp:PVT-MESSAGE ;
-    tddo:parameter tddp:PVT-LOGLEVEL .
+    tddo:parameter tddp:PVT-MESSAGE .
 
 tddp:PVT-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -753,9 +655,6 @@ tddp:PVT-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:PVT-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 ################################################################################
 #### TRIPLE
@@ -768,14 +667,12 @@ tddp:TRIPLE a tddo:Pattern ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%% .
 									BIND ( %%MESSAGE%% AS ?message) . 
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?value . }""" ;
     tddo:parameter tddp:TRIPLE-P1 ;
     tddo:parameter tddp:TRIPLE-V1 ;
-    tddo:parameter tddp:TRIPLE-MESSAGE ;
-    tddo:parameter tddp:TRIPLE-LOGLEVEL .
+    tddo:parameter tddp:TRIPLE-MESSAGE .
 
 tddp:TRIPLE-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -788,10 +685,6 @@ tddp:TRIPLE-V1 a tddo:Parameter ;
 tddp:TRIPLE-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
-
-tddp:TRIPLE-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .
 
 
 ################################################################################
@@ -808,15 +701,13 @@ tddp:ONELANG a tddo:Pattern ;
                                     BIND ( lang(?c) AS ?l ) .
                                     FILTER (isLiteral (?c) && lang(?c) = %%V1%%) .
 									BIND ( %%MESSAGE%% AS ?message) .
-									BIND ( %%LOGLEVEL%% as ?logLevel ) .
-                                } GROUP BY ?resource ?message ?logLevel
+                                } GROUP BY ?resource ?message
                                 HAVING COUNT (?l) > 1 """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
     tddo:parameter tddp:ONELANG-P1 ;
     tddo:parameter tddp:ONELANG-V1 ;
-    tddo:parameter tddp:ONELANG-MESSAGE ;
-    tddo:parameter tddp:ONELANG-LOGLEVEL .
+    tddo:parameter tddp:ONELANG-MESSAGE .
 
 tddp:ONELANG-P1 a tddo:Parameter ;
     dcterms:identifier "P1" ;
@@ -830,6 +721,3 @@ tddp:ONELANG-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 
-tddp:ONELANG-LOGLEVEL a tddo:Parameter ;
-    dcterms:identifier "LOGLEVEL" ;
-    tddo:parameterConstraint tddo:Resource .

@@ -24,7 +24,6 @@ tddt:lemon-entryWithoutCanonicalForm
                            FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#canonicalForm> ?v1 .})
                            # README
                            BIND (concat(str(?resource),": is a lemon:LexicalEntry and needs exactly one lemon:canonicalForm property.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
@@ -42,7 +41,6 @@ tddt:lemon-entryWithoutLabel
                            FILTER (NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .})
                            # README
                            BIND (concat(str(?resource),": has no rdfs:label.") AS ?message)
-                           BIND ( rlog:INFO as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
@@ -66,7 +64,6 @@ tddt:lemon-entryExactlyOneLanguage
 								}
                            		# README
 	                           BIND (concat(str(?resource),": has no lemon:language property.") AS ?message)
-    	                       BIND ( rlog:INFO as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
@@ -91,7 +88,6 @@ tddt:lemon-lexicalSenseReferenceCount
 								}
                            		# README
 	                           BIND (concat(str(?resource),": is a lemon:LexicalSense and either needs a subsense or exactly one reference.") AS ?message)
-    	                       BIND ( rlog:ERROR as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> . } """ .
@@ -111,7 +107,6 @@ tddt:lemon-narrowerNotSymmetric
                            ?narrower <http://www.monnet-project.eu/lemon#narrower> ?resource .
                            # README
                            BIND (concat(str(?resource),": is a broader sense than (",str(?narrower),"), the relation can not be symmetric.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
                           } """ ;
       tddo:sparqlPrevalence
               " " .
@@ -129,7 +124,6 @@ tddt:lemon-broaderNotSymmetric
                            ?broader <http://www.monnet-project.eu/lemon#broader> ?resource .
                            # README
                            BIND (concat(str(?resource),": is a narrower sense than (",str(?broader),"), the relation can not be symmetric.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
                           } """ ;
       tddo:sparqlPrevalence
               " " .
@@ -147,7 +141,6 @@ tddt:lemon-narrowerNoBroaderInverse
                            FILTER (NOT EXISTS {?narrower <http://www.monnet-project.eu/lemon#broader> ?resource .})
                            # README
                            BIND (concat(str(?resource),": is a broader sense than (",str(?narrower),"), so there should be an inverse lemon:broader property.") AS ?message)
-                           BIND ( rlog:INFO as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower . } """ .
@@ -165,7 +158,6 @@ tddt:lemon-componentNoElement
                            FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#element> ?v1 .})
                            # README
                            BIND (concat(str(?resource),": is a lemon:Component and needs a lemon:element property.") AS ?message)
-                           BIND ( rlog:WARN as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> . } """ .
@@ -183,7 +175,6 @@ tddt:lemon-languageTagOnLanguageProperty
                            FILTER (lang(?v1)!="")
                            # README
                            BIND (concat("Language literals may not have a language tag themselves.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://www.lemon-model.net/lemon#language> ?v1 . } """ .
@@ -201,7 +192,6 @@ tddt:lemon-languageTagOnRuleProperty
                            FILTER (lang(?v1)!="")
                            # README
                            BIND (concat("Rule literals may not have a language tag.") AS ?message)
-                           BIND ( rlog:ERROR as ?logLevel )
                             } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://www.lemon-model.net/lemon#rule> ?v1 . } """ .
