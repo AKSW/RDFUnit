@@ -3,6 +3,7 @@
 @prefix tddg: <http://databugger.aksw.org/data/generators#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 
 ##########################################
 #### rdfs:range pattern
@@ -31,7 +32,12 @@ tddg:RDFSRANGEC a tddo:TestGenerator ;
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
                                        (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )}
                               BIND (concat("'", str(?P1)," does not have rdfs:range: ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:RDFSRANGE .
+    tddo:basedOnPattern tddd:RDFSRANGE ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # Datatype range
 tddg:RDFSRANGED a tddo:TestGenerator ;
@@ -50,7 +56,12 @@ tddg:RDFSRANGED a tddo:TestGenerator ;
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                          (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
                               BIND (concat("'", str(?P1)," does not have datatype: ", str(?D1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:RDFSRANGED .
+    tddo:basedOnPattern tddd:RDFSRANGED ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 
 ##########################################
@@ -66,7 +77,12 @@ tddg:RDFSDOMAIN a tddo:TestGenerator ;
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
-    tddo:basedOnPattern tddd:RDFSDOMAIN .
+    tddo:basedOnPattern tddd:RDFSDOMAIN ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 
 ##########################################
@@ -79,7 +95,12 @@ tddg:OWLDISJC1 a tddo:TestGenerator ;
                              ?T1 owl:disjointWith ?T2 .
                              FILTER NOT EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE) } """ ;
-    tddo:basedOnPattern tddd:OWLDISJC .
+    tddo:basedOnPattern tddd:OWLDISJC ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 ##########################################
 #### owl:disjointClass pattern (2) (filter out reverse relations)
@@ -92,7 +113,12 @@ tddg:OWLDISJC2 a tddo:TestGenerator ;
                              FILTER EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              FILTER (str(?T1) < str(?T2) ).
                              BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE) } """ ;
-    tddo:basedOnPattern tddd:OWLDISJC .
+    tddo:basedOnPattern tddd:OWLDISJC ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 ##########################################
 #### owl:AllDisjointClasses pattern
@@ -106,7 +132,12 @@ tddg:OWLALLDISJC a tddo:TestGenerator ;
                                 owl:members ?T2 .
                              FILTER (str(?T1) < str(?T2) ).
                              BIND ( concat("'Class ", str(?T1)," is owl:members of an owl:AllDisjointClasses with ", str(?T2), "'") AS ?MESSAGE) } """ ;
-    tddo:basedOnPattern tddd:OWLDISJC .
+    tddo:basedOnPattern tddd:OWLDISJC ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 
 ##########################################
@@ -118,7 +149,13 @@ tddg:OWLDISJP a tddo:TestGenerator ;
     tddo:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 ?MESSAGE WHERE {
                              ?P1 owl:propertyDisjointWith ?P2 . 
 							 BIND ( concat("'Property ", str(?P1)," is owl:propertyDisjointWith with ",str(?P2), "'") AS ?MESSAGE) } """ ;
-    tddo:basedOnPattern tddd:OWLDISJP .
+    tddo:basedOnPattern tddd:OWLDISJP ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+
+    .
 
 
 ##########################################
@@ -130,7 +167,12 @@ tddg:OWLCOMPL a tddo:TestGenerator ;
     tddo:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
                              ?T1 owl:complementOf ?T2 . 
 							 BIND ( concat("'", str(?T1)," is owl:complementOf with ", str(?T2), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:OWLDISJC .
+    tddo:basedOnPattern tddd:OWLDISJC ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 ##########################################
 #### owl cardinality constrains generators
@@ -146,7 +188,12 @@ tddg:OWLCARD a tddo:TestGenerator ;
                                 owl:cardinality ?v .
                              FILTER (?v > 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:OWLCARDT .
+    tddo:basedOnPattern tddd:OWLCARDT ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # owl:cardinality number > 0 (exists in db)
 tddg:OWLCARDEX a tddo:TestGenerator ;
@@ -158,7 +205,12 @@ tddg:OWLCARDEX a tddo:TestGenerator ;
                              ?t owl:cardinality ?v .
                              FILTER (?v > 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:TYPRODEP .
+    tddo:basedOnPattern tddd:TYPRODEP ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # owl:cardinality number = 0 (must not exist)
 tddg:OWLCARD0 a tddo:TestGenerator ;
@@ -170,7 +222,12 @@ tddg:OWLCARD0 a tddo:TestGenerator ;
                              ?t owl:cardinality ?v .
                              FILTER (?v = 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:TRIPLE .
+    tddo:basedOnPattern tddd:TRIPLE ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # owl:minCardinality number > 0 (count restriction if exists)
 tddg:OWLCARD-MIN a tddo:TestGenerator ;
@@ -181,7 +238,12 @@ tddg:OWLCARD-MIN a tddo:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v . 
 							 BIND ( concat("'Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:OWLCARDT .
+    tddo:basedOnPattern tddd:OWLCARDT ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # owl:minCardinality number > 0 (exists in db)
 tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
@@ -193,7 +255,12 @@ tddg:OWLCARDEX-MIN a tddo:TestGenerator ;
                              ?t owl:minCardinality ?v .
                              FILTER (?v > 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:TYPRODEP .
+    tddo:basedOnPattern tddd:TYPRODEP ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # owl:manCardinality number > 0 (count restriction if exists)
 tddg:OWLCGARD-MAX a tddo:TestGenerator ;
@@ -205,7 +272,12 @@ tddg:OWLCGARD-MAX a tddo:TestGenerator ;
                              ?t owl:maxCardinality ?v .
                              FILTER (?v > 0) . 
 							 BIND ( concat("'Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE) .} """ ;
-    tddo:basedOnPattern tddd:OWLCARDT .
+    tddo:basedOnPattern tddd:OWLCARDT ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # owl:maxCardinality number = 0 (must not exist)
 tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
@@ -217,7 +289,12 @@ tddg:OWLCARD-MAX0 a tddo:TestGenerator ;
                              ?t owl:maxCardinality ?v .
                              FILTER (?v = 0) . 
 							 BIND ( concat("'Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    tddo:basedOnPattern tddd:TYPRODEP .
+    tddo:basedOnPattern tddd:TYPRODEP ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 ##########################################
 #### owl functional property constrains generators
@@ -232,7 +309,12 @@ tddg:OWLFUNC a tddo:TestGenerator ;
                                ?P1 rdfs:subClassOf+ owl:FunctionalProperty .
 							 }  
 							 BIND ( concat("'", str(?P1)," is an owl:FunctionalProperty and should occur at most once in a resource'") AS ?MESSAGE) }""" ;
-    tddo:basedOnPattern tddd:OWLCARD .
+    tddo:basedOnPattern tddd:OWLCARD ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 ################################################################################
 ### owl inverse functional property constraints generator
@@ -247,7 +329,12 @@ tddg:OWLINVFUNC a tddo:TestGenerator ;
                                ?P1 rdfs:subClassOf+ owl:InverseFunctionalProperty .
 							 }  
 							 BIND ( concat("'", str(?P1)," is an owl:InverseFunctionalProperty and should be unique'") AS ?MESSAGE) }""" ;
-    tddo:basedOnPattern tddd:INVFUNC .
+    tddo:basedOnPattern tddd:INVFUNC ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 
 ################################################################################
@@ -275,7 +362,12 @@ tddg:OWLASYMMETRICPROP a tddo:TestGenerator ;
                                ?P1 rdfs:subClassOf+ owl:AsymmetricProperty .
 							 }   
 							 BIND ( concat("'", str(?P1)," is an owl:AsymmetricProperty and should be used as an owl:SymetricProperty'") AS ?MESSAGE) } """ ;
-    tddo:basedOnPattern tddd:OWLASYMMETRICPROP .
+    tddo:basedOnPattern tddd:OWLASYMMETRICPROP ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 
 ################################################################################
@@ -303,7 +395,12 @@ tddg:OWLIRREFLEXIVE a tddo:TestGenerator ;
                                ?P1 rdfs:subClassOf+ owl:IrreflexiveProperty .
 							 }    
 							 BIND ( concat("'", str(?P1)," is an owl:IrreflexiveProperty and a subject must not be the the object'") AS ?MESSAGE) }""" ;
-    tddo:basedOnPattern tddd:OWLIRREFLEXIVE .
+    tddo:basedOnPattern tddd:OWLIRREFLEXIVE ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 
 ################################################################################
@@ -319,6 +416,11 @@ tddg:OWLDEPRECATEDP a tddo:TestGenerator ;
                                ?P1 rdfs:subClassOf+ owl:DeprecatedProperty .
 							 }
 							 BIND ( concat("'", str(?P1)," is an owl:DeprecatedProperty and should not be used anymore'") AS ?MESSAGE) }""" ;
-    tddo:basedOnPattern tddd:TRIPLE .
+    tddo:basedOnPattern tddd:TRIPLE ;
+    tddo:resultAnnotation [
+        a tddo:ResultAnnotation ;
+        tddo:annotationProperty rlog:level ;
+        tddo:annotationValue rlog:Error] ;
+    .
 
 # TODO owl:DeprecatedClass (needs a new transitive type pattern)

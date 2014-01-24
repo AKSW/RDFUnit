@@ -320,8 +320,8 @@ tddo:sparqlWhere
     a owl:DatatypeProperty ;
     rdfs:label "sparqlWhere"@en ;
     rdfs:comment
-        """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and use the following variables: ?resource, ?message and ?logLevel.
-        ?resource is URI the constraint violation occurs in, ?message is a logging message and ?logLevel is an instance of rlog:Level"""@en ;
+        """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and use the following variables: ?resource, ?message.
+        ?resource is URI the constraint violation occurs in and ?message is a logging message."""@en ;
     rdfs:domain tddo:ManualTestCase ;
     rdfs:range xsd:string .
 
@@ -630,7 +630,7 @@ tddo:errorType
 
 
 #################################################################
-# RresultAnnotation
+# ResultAnnotation
 #################################################################
 
 tddo:ResultAnnotation
@@ -650,6 +650,12 @@ tddo:annotationValue
     rdfs:label "annotationValue"@en ;
 #   rdfs:comment "TODO"@en ;
     rdfs:domain tddo:ResultAnnotation .
+
+tddo:resultAnnotation
+    a owl:ObjectProperty ;
+    rdfs:label "resultAnnotation"@en ;
+#    rdfs:comment "TODO"@en ;
+    rdfs:range tddo:ResultAnnotation .
 
 
 #################################################################
