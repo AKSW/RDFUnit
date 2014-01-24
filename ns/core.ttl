@@ -233,7 +233,7 @@ tddo:source
 tddo:testCaseLogLevel
     a owl:ObjectProperty ;
     rdfs:label "testCaseLogLevel"@en ;
-    rdfs:comment "the rlog:Level this cases is associated with."@en ;
+    rdfs:comment "the rlog:Level this case is associated with."@en ;
     rdfs:domain tddo:TestCase ;
     rdfs:range rlog:Level ;
     .
