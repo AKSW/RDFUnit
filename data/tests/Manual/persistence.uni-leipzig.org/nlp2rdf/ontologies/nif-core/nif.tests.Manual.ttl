@@ -25,7 +25,7 @@ tddt:nif-Deprecated-schema
                                 CONTAINS (str(?class), "http://nlp2rdf.lod2.eu/schema/sso/")
                                 ) 
                             # README
-                            BIND (concat(str(?resource),": is using the old vocabulary (",str(?class),") a newer version is available at http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#") AS ?message) 
+                            BIND (concat(str(?resource),": is using the old vocabulary (",str(?class),") a newer version is available at http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#") AS ?message)
                             BIND ( rlog:WARN as ?logLevel ) 
                         } """ ;
     tddo:sparqlPrevalence """  """ .
@@ -254,33 +254,6 @@ tddt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
     tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
                             } """ . 
-
-
-tddt:nif-beginIndex-and-endIndex-MUST-be-castable-to-xsd-nonNegativeInteger
-    a       tddo:ManualTestCase ;
-    tddo:appliesTo tddo:Schema ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references nif:beginIndex, nif:endIndex ;
-    tddo:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
-    tddo:testCaseLogLevel rlog:ERROR ;
-    tddo:sparqlWhere """ {
-        { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o . }
-        UNION
-        { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>   ?o . }
-
-        BIND (DATATYPE(xsd:nonNegativeInteger(?o)) AS ?test)
-        FILTER ( !bound (?test) )
-
-        # README
-        BIND (concat(str(?resource), ": nif:beginIndex and nif:endIndex MUST be castable to xsd:nonNegativeInteger") AS ?message)
-        BIND ( rlog:ERROR as ?logLevel )
-} """ ;
-    tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
-                                { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o . }
-                                UNION
-                                { ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>   ?o . }
-                            } """ . 
-
 
 
 tddt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
