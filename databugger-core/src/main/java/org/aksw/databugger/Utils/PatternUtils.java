@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.databugger.enums.PatternParameterConstraints;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
+import org.aksw.databugger.tests.results.ResultAnnotation;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -73,7 +74,10 @@ public class PatternUtils {
             }
             qeNested.close();
 
-            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters);
+            // Get annotations from TAG URI
+            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
+
+            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
             if (pat.isValid())
                 patterns.add(pat);
             else {

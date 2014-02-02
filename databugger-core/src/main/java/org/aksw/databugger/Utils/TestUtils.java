@@ -19,6 +19,7 @@ import org.aksw.databugger.services.PatternService;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.*;
+import org.aksw.databugger.tests.results.ResultAnnotation;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
@@ -59,7 +60,10 @@ public class TestUtils {
             String query = qs.get("query").toString();
             String patternID = qs.get("patternID").toString();
 
-            TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID));
+            // Get annotations from TAG URI
+            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory,generator);
+
+            TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid())
                 autoGenerators.add(tag);
             else {
@@ -129,6 +133,7 @@ public class TestUtils {
                 "    tddo:appliesTo        ?appliesTo ;" +
                 "    tddo:generated        ?generated ;" +
                 "    tddo:source           ?source ;" +
+                "    tddo:testCaseLogLevel ?testCaseLogLevel ;" +
                 "    tddo:sparqlWhere      ?sparqlWhere ;" +
                 "    tddo:sparqlPrevalence ?sparqlPrevalence ." +
                 " OPTIONAL {<" + testURI + ">  tddo:testGenerator ?testGenerator .}" +
@@ -144,6 +149,7 @@ public class TestUtils {
                 String appliesTo = qs.get("appliesTo").toString();
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
+                String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String sparqlWhere = qs.get("sparqlWhere").toString();
                 String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
                 List<String> referencesLst = getReferencesFromTestCase(qef, testURI);
@@ -151,13 +157,18 @@ public class TestUtils {
                 if (qs.contains("testGenerator"))
                     testGenerator = qs.get("testGenerator").toString();
 
+                // Get annotations from Test URI
+                List<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
+
                 TestCaseAnnotation annotation =
                         new TestCaseAnnotation(
                                 TestGenerationType.resolve(generated),
                                 testGenerator,
                                 TestAppliesTo.resolve(appliesTo),
                                 source,
-                                referencesLst);
+                                referencesLst,
+                                testCaseLogLevel,
+                                resultAnnotations);
 
                 if (!results.hasNext())
                     return new ManualTestCase(
@@ -189,6 +200,7 @@ public class TestUtils {
                 "    tddo:appliesTo      ?appliesTo ;" +
                 "    tddo:generated      ?generated ;" +
                 "    tddo:source         ?source ;" +
+                "    tddo:testCaseLogLevel ?testCaseLogLevel ;" +
                 "    tddo:basedOnPattern ?basedOnPattern ;" +
                 " OPTIONAL {<" + testURI + ">  tddo:testGenerator ?testGenerator .}" +
                 "} ";
@@ -204,6 +216,7 @@ public class TestUtils {
                 String appliesTo = qs.get("appliesTo").toString();
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
+                String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String patternURI = qs.get("basedOnPattern").toString();
                 Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getPrefix("tddp"), ""));
 
@@ -213,13 +226,18 @@ public class TestUtils {
                 if (qs.contains("testGenerator"))
                     testGenerator = qs.get("testGenerator").toString();
 
+                // Get annotations from Test URI
+                List<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
+
                 TestCaseAnnotation annotation =
                         new TestCaseAnnotation(
                                 TestGenerationType.resolve(generated),
                                 testGenerator,
                                 TestAppliesTo.resolve(appliesTo),
                                 source,
-                                referencesLst);
+                                referencesLst,
+                                testCaseLogLevel,
+                                resultAnnotations);
 
                 if (!results.hasNext())
                     return new PatternBasedTestCase(

@@ -10,8 +10,8 @@ import org.aksw.databugger.exceptions.BindingException;
 import org.aksw.databugger.exceptions.TestCaseException;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
-import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.sources.Source;
+import org.aksw.databugger.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,12 +31,15 @@ public class TestAutoGenerator {
     private final String description;
     private final String query;
     private final Pattern pattern;
+    private final List<ResultAnnotation> annotations;
 
-    public TestAutoGenerator(String uri, String description, String query, Pattern pattern) {
+    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, List<ResultAnnotation> annotations) {
         this.URI = uri;
         this.description = description;
         this.query = query;
         this.pattern = pattern;
+        this.annotations = annotations;
+        this.getAnnotations().addAll(pattern.getAnnotations()); // get Pattern annotations and add them
     }
 
     /**
@@ -110,7 +113,9 @@ public class TestAutoGenerator {
                                 this.getURI(),
                                 source.getSourceType(),
                                 source.getUri(),
-                                references),
+                                references,
+                                "",
+                                getAnnotations()),
                         pattern,
                         bindings);
                 tests.add(tc);
@@ -137,5 +142,9 @@ public class TestAutoGenerator {
 
     public Pattern getPattern() {
         return pattern;
+    }
+
+    public List<ResultAnnotation> getAnnotations() {
+        return annotations;
     }
 }

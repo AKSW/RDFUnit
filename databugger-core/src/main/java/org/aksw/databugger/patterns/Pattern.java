@@ -1,5 +1,7 @@
 package org.aksw.databugger.patterns;
 
+import org.aksw.databugger.tests.results.ResultAnnotation;
+
 import java.util.List;
 
 /**
@@ -13,13 +15,15 @@ public class Pattern {
     private final String sparqlWherePattern;
     private final String sparqlPatternPrevalence;
     private final List<PatternParameter> parameters;
+    private final List<ResultAnnotation> annotations;
 
-    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, List<PatternParameter> parameters) {
+    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, List<PatternParameter> parameters, List<ResultAnnotation> annotations) {
         this.id = id;
         this.description = description;
         this.sparqlWherePattern = sparqlWherePattern;
         this.sparqlPatternPrevalence = sparqlPatternPrevalence;
         this.parameters = parameters;
+        this.annotations = annotations;
     }
 
     public boolean isValid() {
@@ -68,5 +72,9 @@ public class Pattern {
                 return parameter;
         }
         return null;
+    }
+
+    public List<ResultAnnotation> getAnnotations() {
+        return annotations;
     }
 }
