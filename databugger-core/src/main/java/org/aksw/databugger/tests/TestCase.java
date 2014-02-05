@@ -135,6 +135,10 @@ public abstract class TestCase implements Comparable<TestCase> {
         // Message is allowed to exist either in SELECT or as a result annotation
         if (!hasMessage && annotation.getAnnotationMessage().equals(""))
             throw new TestCaseException("No message included in TestCase neither in SELECT nor as ResultAnnotation for Test: " + testURI);
+
+        if (getLogLevel() == null || getLogLevel().equals("")) {
+            throw new TestCaseException("No log level included for Test: " + testURI);
+        }
     }
 
     private void validateSPARQL(String sparql, String type) throws TestCaseException {

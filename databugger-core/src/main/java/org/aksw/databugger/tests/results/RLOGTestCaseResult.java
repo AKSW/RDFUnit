@@ -32,7 +32,9 @@ public class RLOGTestCaseResult extends TestCaseResult {
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "RLOGTestCaseResult"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "resource"), model.createResource(getResource()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "message"), getMessage())
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "level"), model.createResource(getLogLevel()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "level"), model.createResource(getLogLevel()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testCase"), model.createResource(getTestCase().getTestURI()));
     }
 
     public String getResource() {

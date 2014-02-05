@@ -239,9 +239,9 @@ public class Main {
                 }
 
                 if (!statusResult) {
-                    // TODO RLOG results
+                    // TODO RLOG+ results
                     for (TestCaseResult result : results) {
-
+                        result.serialize(model, executionUUID);
                     }
                 }
 

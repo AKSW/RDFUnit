@@ -36,7 +36,7 @@ public class TestCaseAnnotation {
         this.references = references;
         this.resultAnnotations = new ArrayList<ResultAnnotation>();
         this.getResultAnnotations().addAll(resultAnnotations);
-        this.testCaseLogLevel = findAnnotationLevel();
+        this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel);
         // cache
         this.annotationMessage = findAnnotationMessage();
     }
@@ -98,7 +98,7 @@ public class TestCaseAnnotation {
     /*
      * Get either testCAseLogLevel or generate it from resultAnnotations (and then remove the annotation)
      * */
-    private String findAnnotationLevel() {
+    private String findAnnotationLevel(String testCaseLogLevel) {
 
         String logLevel = testCaseLogLevel;
 
