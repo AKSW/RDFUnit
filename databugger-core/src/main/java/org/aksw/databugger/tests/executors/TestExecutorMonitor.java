@@ -2,6 +2,7 @@ package org.aksw.databugger.tests.executors;
 
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.results.TestCaseResult;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface TestExecutorMonitor {
     /*
     * Called when testing starts
     * */
-    void testingStarted(final Source dataset, final long numberOfTests);
+    void testingStarted(final Source dataset, final TestSuite testSuite);
 
     /*
     * Called when a single test starts

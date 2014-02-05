@@ -8,6 +8,7 @@ import com.vaadin.ui.*;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.executors.TestExecutorMonitor;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
@@ -56,13 +57,13 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void testingStarted(final Source source, final long numberOfTests) {
+    public void testingStarted(final Source source, final TestSuite testSuite) {
         this.source = source;
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 resultsTable.setVisible(true);
-                resultsTable.setPageLength((int) Math.min(15, numberOfTests));
+                resultsTable.setPageLength((int) Math.min(15, testSuite.size()));
 
             }
         });

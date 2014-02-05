@@ -3,6 +3,7 @@ package org.aksw.databugger;
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
@@ -169,6 +170,7 @@ public class Main {
 
             TripleWriter resultWriter;
             Source testedDataset;
+            TestSuite testSuite;
             Model model;
             long counter = 0;
             long totalTests = 0;
@@ -184,13 +186,14 @@ public class Main {
             String executionUUID = JenaUUID.generate().asString();
 
             @Override
-            public void testingStarted(Source dataset, long numberOfTests) {
+            public void testingStarted(Source dataset, TestSuite testSuite) {
                 testedDataset = dataset;
                 resultWriter = new TripleFileWriter("../data/results/" + dataset.getPrefix() + ".results.ttl");
                 model = ModelFactory.createDefaultModel();
                 model.setNsPrefixes(PrefixService.getPrefixMap());
                 counter = success = fail = timeout = error = totalErrors = 0;
-                totalTests = numberOfTests;
+                totalTests = testSuite.size();
+                this.testSuite = testSuite;
 
                 log.info("Testing " + testedDataset.getUri());
             }
@@ -256,9 +259,12 @@ public class Main {
             public void testingFinished() {
                 endTimeMillis = System.currentTimeMillis();
 
+                Resource testSuiteResource = testSuite.serialize(model);
+
                 model.createResource(executionUUID)
                         .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "TestExecution"))
                         .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Activity"))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "used"), testSuiteResource)
                         .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
                                 ResourceFactory.createTypedLiteral("" + startTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
                         .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),

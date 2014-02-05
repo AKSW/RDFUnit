@@ -1,5 +1,13 @@
 package org.aksw.databugger.tests;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
+import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.databugger.services.PrefixService;
+
 import java.util.List;
 
 /**
@@ -25,5 +33,18 @@ public class TestSuite {
 
     public int size() {
         return testCases.size();
+    }
+
+    public Resource serialize(Model model) {
+        Resource resource = model.createResource(JenaUUID.generate().asString())
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "TestSuite"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Collection"));
+
+        for (TestCase tc : testCases) {
+            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "hadMember"), model.createResource(tc.getTestURI()));
+        }
+        // TODO check whether to dump the complete test
+
+        return resource;
     }
 }

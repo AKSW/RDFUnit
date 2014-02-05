@@ -11,6 +11,7 @@ import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.executors.TestExecutorMonitor;
 import org.aksw.databugger.tests.executors.TestGeneratorExecutorMonitor;
 import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
@@ -369,17 +370,17 @@ public class EndointTestTab extends VerticalLayout {
             private long timeoutTests = 0;
             private long total = 0;
             @Override
-            public void testingStarted(final Source source, final long numberOfTests) {
+            public void testingStarted(final Source source, final TestSuite testSuite) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
                         count = totalErrors = failTest = sucessTests = timeoutTests = 0;
-                        total = (int) numberOfTests;
+                        total = testSuite.size();
 
                         startTestingCancelButton.setEnabled(true);
                         testingProgress.setEnabled(true);
                         testingProgress.setValue(0.0f);
-                        testingProgressLabel.setValue("0/"+numberOfTests);
+                        testingProgressLabel.setValue("0/"+total);
 
                     }
                 });

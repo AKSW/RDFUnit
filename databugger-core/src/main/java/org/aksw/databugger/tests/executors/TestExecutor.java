@@ -51,7 +51,7 @@ public abstract class TestExecutor {
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors) {
-            monitor.testingStarted(source, testSuite.size());
+            monitor.testingStarted(source, testSuite);
         }
 
         for (TestCase testCase : testSuite.getTestCases()) {
