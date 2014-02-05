@@ -61,7 +61,7 @@ public class TestUtils {
             String patternID = qs.get("patternID").toString();
 
             // Get annotations from TAG URI
-            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory,generator);
+            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
 
             TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid())
@@ -128,7 +128,7 @@ public class TestUtils {
     public static TestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator WHERE { " +
+                " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    tddo:appliesTo        ?appliesTo ;" +
                 "    tddo:generated        ?generated ;" +
@@ -195,7 +195,7 @@ public class TestUtils {
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator WHERE { " +
+                " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    tddo:appliesTo      ?appliesTo ;" +
                 "    tddo:generated      ?generated ;" +

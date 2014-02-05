@@ -1,19 +1,14 @@
 package org.aksw.databugger.tests.executors;
 
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
+import org.aksw.databugger.enums.TestCaseExecutionType;
 import org.aksw.databugger.sources.Source;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestSuite;
-import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
 import org.aksw.databugger.tests.results.TestCaseResult;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -21,7 +16,7 @@ import java.util.List;
  * Description
  * Created: 9/30/13 11:11 AM
  */
-public class TestExecutor {
+public abstract class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
     private boolean isCanceled = false;
 
@@ -35,7 +30,23 @@ public class TestExecutor {
         isCanceled = true;
     }
 
-    public void execute(Source source, TestSuite testSuite, int resultType, int delay) {
+    abstract protected List<TestCaseResult> executeSingleTest(Source source, TestCase testCase);
+
+    public static TestExecutor initExecutorFactory(TestCaseExecutionType executionType) {
+        switch (executionType) {
+            case statusTestCaseResult:
+                return new StatusTestExecutor();
+            case aggregatedTestCaseResult:
+                return new AggregatedTestExecutor();
+            case rlogTestCaseResult:
+                return new RLOGTestExecutor();
+            case extendedTestCaseResult:
+                return new ExtendedTestExecutor();
+        }
+        return null;
+    }
+
+    public void execute(Source source, TestSuite testSuite, int delay) {
         isCanceled = false;
 
         /*notify start of testing */
@@ -53,20 +64,7 @@ public class TestExecutor {
                 monitor.singleTestStarted(testCase);
             }
 
-            List<TestCaseResult> results = new ArrayList<TestCaseResult>();
-            switch (resultType) {
-                case 1:
-                    results = getAggregatedResult(source, testCase);
-                    break;
-                case 2:
-                    //results = getRLOGTestResultResult(source, testCase);
-                    break;
-                case 3:
-                    //results = getExtendedResult(source, testCase);
-                    break;
-                default:
-                    results = getAggregatedResult(source, testCase); //getStatusResult(source, testCase);
-            }
+            List<TestCaseResult> results = executeSingleTest(source, testCase);
 
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {
@@ -88,97 +86,6 @@ public class TestExecutor {
         }
     }
 
-    private List<TestCaseResult> getAggregatedResult(Source source, TestCase testCase) {
-
-        int total = -1, prevalence = -1;
-
-        try {
-            prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
-        } catch (QueryExceptionHTTP e) {
-            int httpCode = e.getResponseCode();
-            // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-            if (httpCode == 408 || httpCode == 504 || httpCode == 524) {
-                total = -1;
-            }
-            else
-                total = -2;
-
-
-        } catch (Exception e) {
-            total = -2;
-        }
-
-        if (prevalence != 0) {
-            // if prevalence !=0 calculate total
-            try {
-                total = getCountNumber(source.getExecutionFactory(), testCase.getSparqlAsCountQuery(), "total");
-            } catch (QueryExceptionHTTP e) {
-                int httpCode = e.getResponseCode();
-                // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-                if (httpCode == 408 || httpCode == 504 || httpCode == 524) {
-                    total = -1;
-                }
-                else
-                    total = -2;
-
-
-            } catch (Exception e) {
-                total = -2;
-            }
-        } else
-            // else total will be 0 anyway
-            total = 0;
-
-        return Arrays.<TestCaseResult>asList(new AggregatedTestCaseResult(testCase, total, prevalence));
-
-    }
-
-    private int getCountNumber(QueryExecutionFactory model, String query, String var) {
-        return getCountNumber(model, QueryFactory.create(query), var);
-    }
-
-    private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
-
-        int result = 0;
-        QueryExecution qe = null;
-        try {
-            qe = model.createQueryExecution(query);
-            ResultSet results = qe.execSelect();
-
-            if (results != null && results.hasNext()) {
-                QuerySolution qs = results.next();
-                result = qs.get(var).asLiteral().getInt();
-            }
-        } finally {
-            if (qe != null)
-                qe.close();
-        }
-
-        return result;
-
-    }
-
-    /*
-        private boolean testExists(QueryExecutionFactory qef, String testURI) {
-
-            boolean result = false;
-            QueryExecution qe = null;
-            try {
-                qe = qef.createQueryExecution("select * where { ?s ?p <" + testURI + "> }");
-                ResultSet results = qe.execSelect();
-
-                if (results != null && results.hasNext()) {
-                    result = true;
-                }
-            } catch (Exception e) {
-                //DO nothing (returns false)
-            }   finally {
-                if (qe != null)
-                    qe.close();
-            }
-            return result;
-        }
-    */
     public void addTestExecutorMonitor(TestExecutorMonitor monitor) {
         progressMonitors.add(monitor);
     }

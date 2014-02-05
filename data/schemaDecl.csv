@@ -9,7 +9,6 @@ dc,http://purl.org/dc/elements/1.1/
 skos,http://www.w3.org/2004/02/skos/core#
 georss,http://www.georss.org/georss/
 geo,http://www.w3.org/2003/01/geo/wgs84_pos#
-prov,http://www.w3.org/ns/prov
 frbrer,http://iflastandards.info/ns/fr/frbr/frbrer/
 isbd,http://iflastandards.info/ns/isbd/elements/
 lgdo,http://linkedgeodata.org/ontology,http://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt

@@ -35,7 +35,7 @@ public class TestCaseAnnotation {
         this.sourceUri = sourceUri;
         this.references = references;
         this.resultAnnotations = new ArrayList<ResultAnnotation>();
-        this.resultAnnotations.addAll(resultAnnotations);
+        this.getResultAnnotations().addAll(resultAnnotations);
         this.testCaseLogLevel = findAnnotationLevel();
         // cache
         this.annotationMessage = findAnnotationMessage();
@@ -53,7 +53,7 @@ public class TestCaseAnnotation {
             resource.addProperty(model.createProperty(PrefixService.getPrefix("tddo") + "references"), ResourceFactory.createResource(r));
         }
 
-        for (ResultAnnotation annotation: resultAnnotations) {
+        for (ResultAnnotation annotation : getResultAnnotations()) {
             resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultAnnotation"), annotation.serializeAsTestCase(model));
         }
 
@@ -85,9 +85,9 @@ public class TestCaseAnnotation {
     }
 
     private String findAnnotationMessage() {
-        if (resultAnnotations != null) {
-            for (ResultAnnotation annotation : resultAnnotations) {
-                if (annotation.getAnnotationProperty().equals(PrefixService.getPrefix("rlog")+ "message")) {
+        if (getResultAnnotations() != null) {
+            for (ResultAnnotation annotation : getResultAnnotations()) {
+                if (annotation.getAnnotationProperty().equals(PrefixService.getPrefix("rlog") + "message")) {
                     return annotation.getAnnotationValue().toString();
                 }
             }
@@ -104,15 +104,15 @@ public class TestCaseAnnotation {
 
 
         ResultAnnotation pointer = null;
-        for (ResultAnnotation annotation : resultAnnotations) {
-            if (annotation.getAnnotationProperty().equals(PrefixService.getPrefix("rlog")+ "level")) {
+        for (ResultAnnotation annotation : getResultAnnotations()) {
+            if (annotation.getAnnotationProperty().equals(PrefixService.getPrefix("rlog") + "level")) {
                 pointer = annotation;
             }
         }
         if (pointer != null) {
             if (logLevel == null || logLevel.equals("")) // Get new value only if testCaseLogLevel doesn't exists
                 logLevel = pointer.getAnnotationValue().toString();
-            resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
+            getResultAnnotations().remove(pointer); // remove now that we have testCaseLogLevel
         }
 
 
@@ -121,5 +121,9 @@ public class TestCaseAnnotation {
 
     public String getTestCaseLogLevel() {
         return testCaseLogLevel;
+    }
+
+    public List<ResultAnnotation> getResultAnnotations() {
+        return resultAnnotations;
     }
 }

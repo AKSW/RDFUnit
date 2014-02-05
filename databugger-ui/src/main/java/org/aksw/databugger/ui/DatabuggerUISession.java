@@ -5,6 +5,7 @@ import com.vaadin.server.VaadinSession;
 import org.aksw.databugger.Databugger;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
+import org.aksw.databugger.enums.TestCaseExecutionType;
 import org.aksw.databugger.io.TripleFileReader;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestSuite;
@@ -40,7 +41,7 @@ public class DatabuggerUISession extends VaadinSession {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
 
-        TestExecutor testExecutor = new TestExecutor();
+        TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.aggregatedTestCaseResult);
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
 
         TestSuite testSuite = new TestSuite( new ArrayList<TestCase>() );

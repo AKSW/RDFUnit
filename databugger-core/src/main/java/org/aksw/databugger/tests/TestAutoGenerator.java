@@ -93,7 +93,7 @@ public class TestAutoGenerator {
                         continue;
                     }
                     bindings.add(b);
-                    if (n.isResource() && ! p.getId().toLowerCase().equals("loglevel")) {
+                    if (n.isResource() && !p.getId().toLowerCase().equals("loglevel")) {
                         references.add(n.toString().trim().replace(" ", ""));
                     }
                 } else {

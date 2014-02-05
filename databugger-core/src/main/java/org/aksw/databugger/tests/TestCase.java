@@ -10,8 +10,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.exceptions.TestCaseException;
+import org.aksw.databugger.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -88,6 +91,18 @@ public abstract class TestCase implements Comparable<TestCase> {
         return getSparql();
     }
 
+    public String getResultMessage() {
+        return annotation.getAnnotationMessage();
+    }
+
+    public String getLogLevel() {
+        return annotation.getTestCaseLogLevel();
+    }
+
+    public List<ResultAnnotation> getResultAnnotations() {
+        return annotation.getResultAnnotations();
+    }
+
     public Query getSparqlPrevalenceQuery() {
         return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getSparqlPrevalence());
     }
@@ -103,13 +118,30 @@ public abstract class TestCase implements Comparable<TestCase> {
         validateSPARQL(getSparqlAnnotated(), "construct");
         if (!getSparqlPrevalence().trim().equals("")) // Prevalence in not always defined
             validateSPARQL(getSparqlPrevalence(), "prevalence");
+
+        List<String> vars = getSparqlQuery().getResultVars();
+        // check for Resource & message
+        boolean hasResource = false;
+        boolean hasMessage = false;
+        for (String v : vars) {
+            if (v.equals("resource"))
+                hasResource = true;
+            if (v.equals("message"))
+                hasMessage = true;
+        }
+        if (!hasResource)
+            throw new TestCaseException("?resource is not included in SELECT for Test: " + testURI);
+
+        // Message is allowed to exist either in SELECT or as a result annotation
+        if (!hasMessage && annotation.getAnnotationMessage().equals(""))
+            throw new TestCaseException("No message included in TestCase neither in SELECT nor as ResultAnnotation for Test: " + testURI);
     }
 
     private void validateSPARQL(String sparql, String type) throws TestCaseException {
         try {
             Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
         } catch (QueryParseException e) {
-            throw new TestCaseException("QueryParseException in " + type + " query (line " +e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + DatabuggerUtils.getAllPrefixes() + sparql);
+            throw new TestCaseException("QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + DatabuggerUtils.getAllPrefixes() + sparql);
         }
     }
 

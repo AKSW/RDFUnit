@@ -4,6 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.databugger.tests.results.ResultAnnotation;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
@@ -23,7 +24,7 @@ public class SparqlUtils {
                 " <" + uri + "> tddo:resultAnnotation ?annotation . " +
                 " ?annotation a tddo:ResultAnnotation ; " +
                 "   tddo:annotationProperty ?annotationProperty ; " +
-                "   tddo:annotationValue ?annotationValue . } " ;
+                "   tddo:annotationValue ?annotationValue . } ";
 
         QueryExecution qe = null;
 
@@ -46,5 +47,15 @@ public class SparqlUtils {
         }
 
         return annotations;
+    }
+
+    public static boolean checkStatusForTimeout(QueryExceptionHTTP e) {
+        int httpCode = e.getResponseCode();
+
+        // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+        if (httpCode == 408 || httpCode == 504 || httpCode == 524)
+            return true;
+        else
+            return false;
     }
 }

@@ -1,9 +1,14 @@
 package org.aksw.databugger;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
+import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.coverage.TestCoverageEvaluator;
+import org.aksw.databugger.enums.TestCaseExecutionType;
 import org.aksw.databugger.enums.TestCaseResultStatus;
 import org.aksw.databugger.exceptions.TripleReaderException;
 import org.aksw.databugger.exceptions.TripleWriterException;
@@ -173,6 +178,11 @@ public class Main {
             long error = 0;
             long totalErrors = 0;
 
+            long startTimeMillis = 0;
+            long endTimeMillis = 0;
+
+            String executionUUID = JenaUUID.generate().asString();
+
             @Override
             public void testingStarted(Source dataset, long numberOfTests) {
                 testedDataset = dataset;
@@ -188,6 +198,7 @@ public class Main {
             @Override
             public void singleTestStarted(TestCase test) {
                 counter++;
+                startTimeMillis = System.currentTimeMillis();
             }
 
             @Override
@@ -199,7 +210,7 @@ public class Main {
                 if (results.size() == 1) {
 
                     TestCaseResult result = results.get(0);
-                    result.serialize(model, testedDataset.getUri());
+                    result.serialize(model, executionUUID);
 
                     if (result instanceof StatusTestCaseResult) {
                         statusResult = true;
@@ -216,7 +227,7 @@ public class Main {
                         if (status.equals(TestCaseResultStatus.Fail))
                             fail++;
 
-                        if (result instanceof AggregatedTestCaseResult ) {
+                        if (result instanceof AggregatedTestCaseResult) {
                             long errorCount = ((AggregatedTestCaseResult) result).getErrorCount();
                             if (errorCount > 0)
                                 totalErrors += ((AggregatedTestCaseResult) result).getErrorCount();
@@ -243,6 +254,30 @@ public class Main {
 
             @Override
             public void testingFinished() {
+                endTimeMillis = System.currentTimeMillis();
+
+                model.createResource(executionUUID)
+                        .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "TestExecution"))
+                        .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Activity"))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
+                                ResourceFactory.createTypedLiteral("" + startTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),
+                                ResourceFactory.createTypedLiteral("" + endTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"),
+                                model.createResource(testedDataset.getUri()))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsRun"),
+                                ResourceFactory.createTypedLiteral("" + totalTests, XSDDatatype.XSDnonNegativeInteger))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsSuceedded"),
+                                ResourceFactory.createTypedLiteral("" + success, XSDDatatype.XSDnonNegativeInteger))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsFailed"),
+                                ResourceFactory.createTypedLiteral("" + fail, XSDDatatype.XSDnonNegativeInteger))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsTimeout"),
+                                ResourceFactory.createTypedLiteral("" + timeout, XSDDatatype.XSDnonNegativeInteger))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsError"),
+                                ResourceFactory.createTypedLiteral("" + error, XSDDatatype.XSDnonNegativeInteger))
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "totalIndividualErrors"),
+                                ResourceFactory.createTypedLiteral("" + totalErrors, XSDDatatype.XSDnonNegativeInteger));
+
                 log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
                 try {
                     resultWriter.write(model);
@@ -252,12 +287,16 @@ public class Main {
             }
         };
 
-        TestExecutor testExecutor = new TestExecutor();
+        TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.aggregatedTestCaseResult);
+        if (testExecutor == null) {
+            log.error("Cannot initialize test executor. Exiting");
+            System.exit(1);
+        }
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
 
         // warning, caches intermediate results
-        testExecutor.execute(dataset, testSuite, 1, 0);
+        testExecutor.execute(dataset, testSuite, 0);
 
 
         // Calculate coverage

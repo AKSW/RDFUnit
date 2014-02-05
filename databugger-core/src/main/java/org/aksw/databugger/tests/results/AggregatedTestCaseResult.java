@@ -1,5 +1,6 @@
 package org.aksw.databugger.tests.results;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -39,13 +40,12 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
 
     @Override
     public Resource serialize(Model model, String sourceURI) {
-        return model.createResource()
+        return super.serialize(model, sourceURI)
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "AggregatedTestResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultStatus"), model.createResource(getStatus().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultCount"), "" + errorCount)
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultPrevalence"), "" + prevalenceCount)
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testCase"), model.createResource(getTestCase().getTestURI()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultCount"),
+                        ResourceFactory.createTypedLiteral("" + errorCount, XSDDatatype.XSDnonNegativeInteger))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultPrevalence"),
+                        ResourceFactory.createTypedLiteral("" + prevalenceCount, XSDDatatype.XSDnonNegativeInteger));
     }
 
     @Override
