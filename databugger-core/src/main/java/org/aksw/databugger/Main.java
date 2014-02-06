@@ -64,6 +64,7 @@ public class Main {
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
         cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
+        cliOptions.addOption("rl", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.databugger'");
 
@@ -81,6 +82,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+
+        PropertyConfigurator.configure("log4j.properties");
 
         /* <cliStuff> */
         CommandLineParser cliParser = new GnuParser();
@@ -107,6 +110,21 @@ public class Main {
         boolean useTestCache = !commandLine.hasOption("ntc"); // for automatically generated test cases
         boolean useManualTestCases = !commandLine.hasOption("nmt"); //Use only automatic tests
 
+        TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
+        if (commandLine.hasOption("rl")) {
+            String rl = commandLine.getOptionValue("rl", "aggregate");
+            if (rl.equals("status"))
+                resultLevel = TestCaseExecutionType.statusTestCaseResult;
+            else if (rl.equals("aggregate"))
+                resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
+            else if (rl.equals("rlog"))
+                resultLevel = TestCaseExecutionType.rlogTestCaseResult;
+            else if (rl.equals("extended"))
+                resultLevel = TestCaseExecutionType.extendedTestCaseResult;
+            else
+                log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
+        }
+
         boolean calculateCoverage = commandLine.hasOption("c");
         /* </cliStuff> */
 
@@ -116,7 +134,6 @@ public class Main {
             System.exit(1);
         }
 
-        PropertyConfigurator.configure("log4j.properties");
 
         DatabuggerUtils.fillPrefixService(dataFolder + "prefixes.ttl");
 
@@ -291,7 +308,7 @@ public class Main {
             }
         };
 
-        TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.aggregatedTestCaseResult);
+        TestExecutor testExecutor = TestExecutor.initExecutorFactory(resultLevel);
         if (testExecutor == null) {
             log.error("Cannot initialize test executor. Exiting");
             System.exit(1);
