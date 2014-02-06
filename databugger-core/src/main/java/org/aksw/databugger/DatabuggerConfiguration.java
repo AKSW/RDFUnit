@@ -3,7 +3,9 @@ package org.aksw.databugger;
 import org.aksw.databugger.Utils.CacheUtils;
 import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.DatasetSource;
+import org.aksw.databugger.sources.DumpSource;
 import org.aksw.databugger.sources.SchemaSource;
+import org.aksw.databugger.sources.Source;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +47,13 @@ public class DatabuggerConfiguration {
         this(uri, endpoint, graphs, sourcePrefixes.split(","));
     }
 
-    public DatasetSource getDatasetSource() {
-        return new DatasetSource(prefix, uri, endpoint, graphs, sources);
+    // TODO change it back to Dateset after refactoring of Sources
+    public Source getDatasetSource() {
+        if ((endpoint == null || endpoint.equals("")) && (graphs == null || graphs.equals(""))) {
+            return new DumpSource(prefix, uri, sources);
+        }
+        else {
+            return new DatasetSource(prefix, uri, endpoint, graphs, sources);
+        }
     }
 }

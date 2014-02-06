@@ -221,7 +221,7 @@ public class EndointTestTab extends VerticalLayout {
 
                 createConfigurationFromUser();
                 if (DatabuggerUISession.getDatabuggerConfiguration() != null) {
-                    DatasetSource dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
+                    Source dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
 
                     DatabuggerUISession.initDatabugger();
                     DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
@@ -332,7 +332,7 @@ public class EndointTestTab extends VerticalLayout {
 
                 //TODO make this cleaner
                 if (DatabuggerUISession.getDatabuggerConfiguration() != null) {
-                    DatasetSource dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
+                    Source dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
 
                     DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
                     String resultsFile = DatabuggerUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
@@ -481,9 +481,15 @@ public class EndointTestTab extends VerticalLayout {
             clearConfigurations();
         }
 
-        DatasetSource dataset = configuration.getDatasetSource();
-        endpointField.setValue(dataset.getSparqlEndpoint());
-        graphField.setValue(dataset.getSparqlGraph());
+        Source dataset = configuration.getDatasetSource();
+        if (dataset instanceof DatasetSource) {
+            endpointField.setValue(((DatasetSource) dataset).getSparqlEndpoint());
+            graphField.setValue(((DatasetSource) dataset).getSparqlGraph());
+        }
+        else {
+            endpointField.setValue("");
+            graphField.setValue("");
+        }
         schemaSelectorWidget.setSelections(dataset.getReferencesSchemata());
     }
 }

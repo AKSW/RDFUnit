@@ -55,7 +55,7 @@ public class Main {
         cliOptions.addOption("d", "dataset-uri", true,
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
-                "the endpoint to run the tests on (required)");
+                "the endpoint to run the tests on (If no endpoint is provided Databugger will try to dereference the dataset-uri)");
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
@@ -86,9 +86,7 @@ public class Main {
         CommandLineParser cliParser = new GnuParser();
         CommandLine commandLine = cliParser.parse(cliOptions, args);
 
-        if (commandLine.hasOption("h") || !commandLine.hasOption("d")
-                || !commandLine.hasOption("e") || !commandLine.hasOption("g")) {
-
+        if (commandLine.hasOption("h") || !commandLine.hasOption("d")) {
             if (!commandLine.hasOption("h"))
                 System.out.println("\nError: Required arguments are missing.");
 
@@ -159,7 +157,7 @@ public class Main {
         DatabuggerConfiguration testContext = new DatabuggerConfiguration(datasetUri,
                 endpointUriStr, graphUriStrs, sources);
 
-        final DatasetSource dataset = testContext.getDatasetSource();
+        final Source dataset = testContext.getDatasetSource();
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(useTestCache, useManualTestCases);
