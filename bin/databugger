@@ -1,7 +1,10 @@
 #!/bin/bash
 
 #
-# example call for dbpedia:
+# example call for dump-based testing (You can use either a URI or a local file name):
+# bin/databugger -d https://raw.github.com/AKSW/n3-collection/master/News-100.ttl  -s nif
+#
+# example call for endpoint-based testing (dbpedia):
 # bin/databugger -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -p dbo -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
 #
 
