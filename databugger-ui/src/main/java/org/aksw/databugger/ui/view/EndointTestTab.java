@@ -60,41 +60,40 @@ public class EndointTestTab extends VerticalLayout {
 
         //TODO move this away from here
         File f = VaadinSession.getCurrent().getService().getBaseDirectory();
-        String baseDir = f.getAbsolutePath()+"/data/";
+        String baseDir = f.getAbsolutePath() + "/data/";
 
         DatabuggerConfiguration dbpediaConf = DatabuggerConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
         DatabuggerConfiguration dbpediaLConf = DatabuggerConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
         DatabuggerConfiguration dbpediaNLConf = DatabuggerConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
         DatabuggerConfiguration linkedChemistry = new DatabuggerConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", "http://linkedchemistry.info/chembl/", "cheminf,cito");
-        DatabuggerConfiguration uriBurner = new DatabuggerConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/","","foaf,skos,geo,dcterms,prov");
-        DatabuggerConfiguration bbcNature = new DatabuggerConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://www.bbc.co.uk/nature/","dcterms,po,wo,wlo,foaf");
-        DatabuggerConfiguration musicBrainz = new DatabuggerConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://www.bbc.co.uk/nature/","ov,mo,foaf");
-        DatabuggerConfiguration umls = new DatabuggerConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://linkedlifedata.com/resource/umls","dcterms,skos,owl");
-        DatabuggerConfiguration umbel = new DatabuggerConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://umbel.org","vann,skos,owl");
-        DatabuggerConfiguration datasw = new DatabuggerConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql","http://data.semanticweb.org","cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf");
+        DatabuggerConfiguration uriBurner = new DatabuggerConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", "", "foaf,skos,geo,dcterms,prov");
+        DatabuggerConfiguration bbcNature = new DatabuggerConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://www.bbc.co.uk/nature/", "dcterms,po,wo,wlo,foaf");
+        DatabuggerConfiguration musicBrainz = new DatabuggerConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://www.bbc.co.uk/nature/", "ov,mo,foaf");
+        DatabuggerConfiguration umls = new DatabuggerConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://linkedlifedata.com/resource/umls", "dcterms,skos,owl");
+        DatabuggerConfiguration umbel = new DatabuggerConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://umbel.org", "vann,skos,owl");
+        DatabuggerConfiguration datasw = new DatabuggerConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://data.semanticweb.org", "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf");
 
 
         examplesSelect.addItem(uriBurner);
-        examplesSelect.setItemCaption(uriBurner,"Uri Burner");
+        examplesSelect.setItemCaption(uriBurner, "Uri Burner");
         examplesSelect.addItem(bbcNature);
-        examplesSelect.setItemCaption(bbcNature,"BBC Nature (LOD Cache)");
+        examplesSelect.setItemCaption(bbcNature, "BBC Nature (LOD Cache)");
         examplesSelect.addItem(musicBrainz);
-        examplesSelect.setItemCaption(musicBrainz,"MusicBrainz (LOD Cache)");
+        examplesSelect.setItemCaption(musicBrainz, "MusicBrainz (LOD Cache)");
         examplesSelect.addItem(umls);
-        examplesSelect.setItemCaption(umls,"LinkedLifeData UMLS (LOD Cache)");
+        examplesSelect.setItemCaption(umls, "LinkedLifeData UMLS (LOD Cache)");
         examplesSelect.addItem(umbel);
-        examplesSelect.setItemCaption(umbel,"umbel (LOD Cache)");
+        examplesSelect.setItemCaption(umbel, "umbel (LOD Cache)");
         examplesSelect.addItem(datasw);
-        examplesSelect.setItemCaption(datasw,"data.semanticweb.org (LOD Cache)");
+        examplesSelect.setItemCaption(datasw, "data.semanticweb.org (LOD Cache)");
         examplesSelect.addItem(linkedChemistry);
-        examplesSelect.setItemCaption(linkedChemistry,"LinkedChemistry");
+        examplesSelect.setItemCaption(linkedChemistry, "LinkedChemistry");
         examplesSelect.addItem(dbpediaConf);
-        examplesSelect.setItemCaption(dbpediaConf,"DBpedia");
+        examplesSelect.setItemCaption(dbpediaConf, "DBpedia");
         examplesSelect.addItem(dbpediaLConf);
-        examplesSelect.setItemCaption(dbpediaLConf,"DBpedia Live");
+        examplesSelect.setItemCaption(dbpediaLConf, "DBpedia Live");
         examplesSelect.addItem(dbpediaNLConf);
-        examplesSelect.setItemCaption(dbpediaNLConf,"DBpedia NL");
-
+        examplesSelect.setItemCaption(dbpediaNLConf, "DBpedia NL");
 
 
         initInteractions();
@@ -129,7 +128,7 @@ public class EndointTestTab extends VerticalLayout {
 
         HorizontalLayout manualConfigurationLayout = new HorizontalLayout();
         configurationSetLayout.addComponent(manualConfigurationLayout);
-        configurationSetLayout.setExpandRatio(manualConfigurationLayout,1.0f);
+        configurationSetLayout.setExpandRatio(manualConfigurationLayout, 1.0f);
         manualConfigurationLayout.addStyleName("manual");
 
 
@@ -146,7 +145,7 @@ public class EndointTestTab extends VerticalLayout {
 
         schemaSelectorWidget.addStyleName("schema-selector");
         manualConfigurationLayout.addComponent(schemaSelectorWidget);
-        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget,1.0f);
+        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget, 1.0f);
 
 
         HorizontalLayout genHeader = new HorizontalLayout();
@@ -194,7 +193,7 @@ public class EndointTestTab extends VerticalLayout {
         this.resultsButton.setEnabled(false);
     }
 
-    private void initInteractions(){
+    private void initInteractions() {
         examplesSelect.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -215,14 +214,13 @@ public class EndointTestTab extends VerticalLayout {
         });
 
 
-
         class TestGenerationThread extends Thread {
 
             @Override
             public void run() {
 
                 createConfigurationFromUser();
-                if (DatabuggerUISession.getDatabuggerConfiguration() != null ) {
+                if (DatabuggerUISession.getDatabuggerConfiguration() != null) {
                     DatasetSource dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
 
                     DatabuggerUISession.initDatabugger();
@@ -242,8 +240,7 @@ public class EndointTestTab extends VerticalLayout {
                             }
                         });
                     }
-                }
-                else {
+                } else {
                     UI.getCurrent().access(new Runnable() {
                         @Override
                         public void run() {
@@ -284,7 +281,7 @@ public class EndointTestTab extends VerticalLayout {
                         tests = 0;
                         generateTestsProgress.setEnabled(true);
                         generateTestsProgress.setValue(0.0f);
-                        generateTestsProgressLabel.setValue("0/"+numberOfSources);
+                        generateTestsProgressLabel.setValue("0/" + numberOfSources);
                     }
                 });
 
@@ -301,7 +298,7 @@ public class EndointTestTab extends VerticalLayout {
                     public void run() {
                         count++;
                         tests += testsCreated;
-                        generateTestsProgress.setValue((float)count / total);
+                        generateTestsProgress.setValue((float) count / total);
                         generateTestsProgressLabel.setValue(count + "/" + total);
                     }
                 });
@@ -329,7 +326,6 @@ public class EndointTestTab extends VerticalLayout {
         });
 
 
-
         class TestExecutorThread extends Thread {
             @Override
             public void run() {
@@ -344,7 +340,8 @@ public class EndointTestTab extends VerticalLayout {
                     File f = new File(resultsFile);
                     try {
                         f.delete();
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                     DatabuggerUISession.getTestExecutor().execute(dataset, DatabuggerUISession.getTestSuite(), 3);
                 }
 
@@ -369,6 +366,7 @@ public class EndointTestTab extends VerticalLayout {
             private long sucessTests = 0;
             private long timeoutTests = 0;
             private long total = 0;
+
             @Override
             public void testingStarted(final Source source, final TestSuite testSuite) {
                 UI.getCurrent().access(new Runnable() {
@@ -380,7 +378,7 @@ public class EndointTestTab extends VerticalLayout {
                         startTestingCancelButton.setEnabled(true);
                         testingProgress.setEnabled(true);
                         testingProgress.setValue(0.0f);
-                        testingProgressLabel.setValue("0/"+total);
+                        testingProgressLabel.setValue("0/" + total);
 
                     }
                 });
@@ -417,7 +415,7 @@ public class EndointTestTab extends VerticalLayout {
                                 failTest++;
                         }
 
-                        testingProgress.setValue((float)count / total);
+                        testingProgress.setValue((float) count / total);
                         testingProgressLabel.setValue(count + "/" + total + " (S: " + sucessTests + " / F: " + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
 
                         if ((timeoutTests == 10 || timeoutTests == 30) && sucessTests == 0 && failTest == 0) {
@@ -453,7 +451,7 @@ public class EndointTestTab extends VerticalLayout {
 
     }
 
-    private void clearConfigurations(){
+    private void clearConfigurations() {
 
         endpointField.setValue("");
         graphField.setValue("");
@@ -472,12 +470,12 @@ public class EndointTestTab extends VerticalLayout {
 
     }
 
-    private void createConfigurationFromUser(){
+    private void createConfigurationFromUser() {
         DatabuggerUISession.setDatabuggerConfiguration(
-                new DatabuggerConfiguration(endpointField.getValue().replace("/sparql",""),endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections()));
+                new DatabuggerConfiguration(endpointField.getValue().replace("/sparql", ""), endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections()));
     }
 
-    private void setExampleConfiguration(DatabuggerConfiguration configuration){
+    private void setExampleConfiguration(DatabuggerConfiguration configuration) {
         if (!(endpointField.getValue().isEmpty() || graphField.getValue().isEmpty() || schemaSelectorWidget.getSelections().isEmpty())) {
             //TODO confirm dialog for clear
             clearConfigurations();

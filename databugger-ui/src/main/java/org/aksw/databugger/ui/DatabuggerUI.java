@@ -93,7 +93,6 @@ public class DatabuggerUI extends UI {
         databuggerLogo.addComponent(new Label("<span>A Data Debugging Framework</span>", ContentMode.HTML));
 
 
-
         headerLayout.addComponent(databuggerLogo);
 
         Link aksw = new Link("",
@@ -115,7 +114,7 @@ public class DatabuggerUI extends UI {
     private void initLayoutFooter() {
         layoutFooter.setHeight("40px");
         layoutFooter.addStyleName("v-link");
-        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://aksw.org/Projects/Databugger\">Databugger</a>", ContentMode.HTML ));
+        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://aksw.org/Projects/Databugger\">Databugger</a>", ContentMode.HTML));
     }
 
 }

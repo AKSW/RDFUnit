@@ -7,15 +7,14 @@ import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
 import org.aksw.databugger.enums.TestCaseExecutionType;
 import org.aksw.databugger.io.TripleFileReader;
+import org.aksw.databugger.io.TripleReader;
 import org.aksw.databugger.tests.TestCase;
 import org.aksw.databugger.tests.TestSuite;
 import org.aksw.databugger.tests.executors.TestExecutor;
 import org.aksw.databugger.tests.executors.TestGeneratorExecutor;
-import org.aksw.databugger.io.TripleReader;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -44,7 +43,7 @@ public class DatabuggerUISession extends VaadinSession {
         TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.aggregatedTestCaseResult);
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
 
-        TestSuite testSuite = new TestSuite( new ArrayList<TestCase>() );
+        TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
         //Fill the service schema

@@ -75,7 +75,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
             @Override
             public void run() {
                 Label testLabel = new Label(test.getTestURI());
-                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ")+ "\n  </pre>" );
+                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ") + "\n  </pre>");
                 resultsTable.addItem(new Object[]{
                         "R", testLabel, new Label(""), ""}, test);
 
@@ -109,15 +109,14 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                     Property<AbstractComponent> errorsProperty =
                             item.getItemProperty("Errors");
                     errorsProperty.setValue(new Label("-"));
-                }
-                else {
+                } else {
                     if (source instanceof DatasetSource) {
                         String endpoint = ((DatasetSource) source).getSparqlEndpoint();
                         String graph = ((DatasetSource) source).getSparqlGraph();
                         String query = test.getSparqlQuery() + " LIMIT 10";
                         try {
-                            String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph,"UTF-8") + "&query=" + URLEncoder.encode(query,"UTF-8");
-                            Link link = new Link(""+errors, new ExternalResource(url));
+                            String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph, "UTF-8") + "&query=" + URLEncoder.encode(query, "UTF-8");
+                            Link link = new Link("" + errors, new ExternalResource(url));
                             link.setTargetName("_blank");
                             Property<AbstractComponent> errorsProperty =
                                     item.getItemProperty("Errors");
