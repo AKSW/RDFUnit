@@ -3,6 +3,7 @@ package org.aksw.databugger.tests.results;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.tests.TestCase;
 
@@ -29,7 +30,8 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
     @Override
     public Resource serialize(Model model, String sourceURI) {
-        Resource resource = super.serialize(model, sourceURI);
+        Resource resource = super.serialize(model, sourceURI)
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "ExtendedTestCaseResult"));
 
         for (ResultAnnotation annotation : resultAnnotations) {
             resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultAnnotation"), annotation.serializeAsTestCase(model));
