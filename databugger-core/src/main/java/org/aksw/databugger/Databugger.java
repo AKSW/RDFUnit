@@ -5,11 +5,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.databugger.Utils.PatternUtils;
 import org.aksw.databugger.Utils.TestUtils;
 import org.aksw.databugger.exceptions.TripleReaderException;
+import org.aksw.databugger.io.TripleReader;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.services.PatternService;
 import org.aksw.databugger.services.PrefixService;
 import org.aksw.databugger.tests.TestAutoGenerator;
-import org.aksw.databugger.io.TripleReader;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
@@ -27,13 +27,14 @@ public class Databugger {
 
 
     private static Logger log = LoggerFactory.getLogger(Databugger.class);
-    QueryExecutionFactory patternQueryFactory;
+    private QueryExecutionFactory patternQueryFactory;
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-    public Databugger() {}
+    public Databugger() {
+    }
 
-    public void initPatternsAndGenerators(TripleReader patterReader, TripleReader testGeneratorReader ) throws TripleReaderException {
+    public void initPatternsAndGenerators(TripleReader patterReader, TripleReader testGeneratorReader) throws TripleReaderException {
         Model patternModel = ModelFactory.createDefaultModel();
         try {
             patterReader.read(patternModel);

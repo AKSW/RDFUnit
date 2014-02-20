@@ -16,13 +16,8 @@ public class TripleReaderFactory {
         readers.add(new TripleDereferenceReader(uri));
 
         TripleReader r = new TripleFirstSuccessReader(readers);
-        TripleWriter w = new TripleFileWriter(filename,true);
-        return new TripleReadAndCacheReader(r,w);
-
-    }
-
-    public static TripleReader createTripleFileReader(String filename) {
-        return new TripleFileReader(filename);
+        TripleWriter w = new TripleFileWriter(filename, true);
+        return new TripleReadAndCacheReader(r, w);
 
     }
 }

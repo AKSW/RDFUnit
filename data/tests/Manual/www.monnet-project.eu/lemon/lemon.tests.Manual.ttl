@@ -1,0 +1,201 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix tddg:    <http://databugger.aksw.org/data/generators#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix tddo:    <http://databugger.aksw.org/ns/core#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tddt:    <http://databugger.aksw.org/data/tests#> .
+@prefix tddp:    <http://databugger.aksw.org/data/patterns#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+
+# A lemon:LexicalEntry needs at least one lemon:canonicalForm.
+tddt:lemon-entryWithoutCanonicalForm
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
+      tddo:sparqlWhere """ {
+                           ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
+                           FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#canonicalForm> ?v1 .})
+                           # README
+                           BIND (concat(str(?resource),": is a lemon:LexicalEntry and needs exactly one lemon:canonicalForm property.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
+
+# A lemon:LexicalEntry should have an rdfs:label
+tddt:lemon-entryWithoutLabel
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:INFO ;
+      tddo:sparqlWhere """ {
+                           ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
+                           FILTER (NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .})
+                           # README
+                           BIND (concat(str(?resource),": has no rdfs:label.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
+
+# A lemon:LexicalEntry should have exactly one lemon:language.
+tddt:lemon-entryExactlyOneLanguage
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:INFO ;
+      tddo:sparqlWhere """ {
+                           		{?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
+                           			FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#language> ?lang .})
+                           		}UNION{
+								 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
+								 ?resource <http://www.monnet-project.eu/lemon#language> ?lang1 .
+								 ?resource <http://www.monnet-project.eu/lemon#language> ?lang2 .
+                           			FILTER (?lang1!=?lang2)
+								}
+                           		# README
+	                           BIND (concat(str(?resource),": has no lemon:language property.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
+
+# A lemon:LexicalSense either needs a subsense or exactly one reference
+tddt:lemon-lexicalSenseReferenceCount
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#LexicalSense>;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
+      tddo:sparqlWhere """ {
+                           		{?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> .
+                           			FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#subsense> ?sub .})
+                                    FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#reference> ?ref .})
+                           		}UNION{
+								 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> .
+								 ?resource <http://www.monnet-project.eu/lemon#reference> ?ref1 .
+								 ?resource <http://www.monnet-project.eu/lemon#reference> ?ref2 .
+                           			FILTER (?ref1!=?ref2)
+								}
+                           		# README
+	                           BIND (concat(str(?resource),": is a lemon:LexicalSense and either needs a subsense or exactly one reference.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> . } """ .
+
+
+
+# Narrower should not be symmetric
+tddt:lemon-narrowerNotSymmetric
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#narrower> ;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
+      tddo:sparqlWhere """ {
+                           ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower .
+                           ?narrower <http://www.monnet-project.eu/lemon#narrower> ?resource .
+                           # README
+                           BIND (concat(str(?resource),": is a broader sense than (",str(?narrower),"), the relation can not be symmetric.") AS ?message)
+                          } """ ;
+      tddo:sparqlPrevalence
+              " " .
+
+# Broader should not be symmetric
+tddt:lemon-broaderNotSymmetric
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#broader> ;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
+      tddo:sparqlWhere """ {
+                           ?resource <http://www.monnet-project.eu/lemon#broader> ?broader .
+                           ?broader <http://www.monnet-project.eu/lemon#broader> ?resource .
+                           # README
+                           BIND (concat(str(?resource),": is a narrower sense than (",str(?broader),"), the relation can not be symmetric.") AS ?message)
+                          } """ ;
+      tddo:sparqlPrevalence
+              " " .
+
+# If a sense is narrower than another, the other should be broader than the first one
+tddt:lemon-narrowerNoBroaderInverse
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#broader> ;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:INFO ;
+      tddo:sparqlWhere """ {
+                           ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower .
+                           FILTER (NOT EXISTS {?narrower <http://www.monnet-project.eu/lemon#broader> ?resource .})
+                           # README
+                           BIND (concat(str(?resource),": is a broader sense than (",str(?narrower),"), so there should be an inverse lemon:broader property.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower . } """ .
+
+# A lemon:component should have at least one lemon:element.
+tddt:lemon-componentNoElement
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.monnet-project.eu/lemon#Component> , <http://www.monnet-project.eu/lemon#element> ;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:WARN ;
+      tddo:sparqlWhere """ {
+                           ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> .
+                           FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#element> ?v1 .})
+                           # README
+                           BIND (concat(str(?resource),": is a lemon:Component and needs a lemon:element property.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> . } """ .
+
+#Language property value should not have a language tag itself
+tddt:lemon-languageTagOnLanguageProperty
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.lemon-model.net/lemon#language> ;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
+      tddo:sparqlWhere """ {
+                           ?resource <http://www.lemon-model.net/lemon#language> ?v1 .
+                           FILTER (lang(?v1)!="")
+                           # README
+                           BIND (concat("Language literals may not have a language tag themselves.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://www.lemon-model.net/lemon#language> ?v1 . } """ .
+
+#Rule property value should not have a language tag
+tddt:lemon-languageTagOnRuleProperty
+      a tddo:ManualTestCase ;
+      tddo:appliesTo tddo:Schema ;
+      tddo:generated tddo:ManuallyGenerated ;
+      tddo:references <http://www.lemon-model.net/lemon#rule> ;
+      tddo:source <http://www.monnet-project.eu/lemon#> ;
+      tddo:testCaseLogLevel rlog:ERROR ;
+      tddo:sparqlWhere """ {
+                           ?resource <http://www.lemon-model.net/lemon#rule> ?v1 .
+                           FILTER (lang(?v1)!="")
+                           # README
+                           BIND (concat("Rule literals may not have a language tag.") AS ?message)
+                            } """ ;
+      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://www.lemon-model.net/lemon#rule> ?v1 . } """ .
+
+#check for multiple lemon types
+
+#Strings should have language tags, language tags should match a regex (may take a long time to query, omitted)

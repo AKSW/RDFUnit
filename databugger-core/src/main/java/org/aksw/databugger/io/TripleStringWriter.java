@@ -28,7 +28,7 @@ public class TripleStringWriter extends TripleWriter {
         this.format = format;
     }
 
-    public String getString(){
+    public String getString() {
         return str.toString();
     }
 

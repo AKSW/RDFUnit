@@ -35,7 +35,7 @@ public class TestCoverageEvaluator {
     private final List<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
     private final String sparql = DatabuggerUtils.getAllPrefixes() +
             " SELECT distinct ?reference WHERE {\n" +
-            "   ?t a  tddo:Test ; \n" +
+            "   ?t a  tddo:TestCase ; \n" +
             "      tddo:basedOnPattern ?pattern ; \n" +
             "      tddo:references ?reference .\n" +
             "   VALUES ( ?pattern )  { %%PATTERNS%%} }";
@@ -47,7 +47,10 @@ public class TestCoverageEvaluator {
             //if (count++ != 0) {
             //    inClause.append(" , ");
             //}
-            inClause.append(" ( <" + PrefixService.getPrefix("tddp") + s + "> ) ");
+            inClause.append(" ( <")
+                    .append(PrefixService.getPrefix("tddp"))
+                    .append(s)
+                    .append("> ) ");
         }
         return inClause.toString();
     }

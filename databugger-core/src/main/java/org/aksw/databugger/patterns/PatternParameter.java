@@ -11,13 +11,13 @@ public class PatternParameter {
     private final String URI;
     private final String id;
     private final PatternParameterConstraints constrain;
-    private final Pattern pattern;
+    private final String constraintPattern;
 
-    public PatternParameter(String uri, String id, PatternParameterConstraints constrain, Pattern pattern) {
+    public PatternParameter(String uri, String id, PatternParameterConstraints constrain, String constraintPattern) {
         URI = uri;
         this.id = id;
         this.constrain = constrain;
-        this.pattern = pattern;
+        this.constraintPattern = constraintPattern;
     }
 
     public String getURI() {
@@ -32,7 +32,7 @@ public class PatternParameter {
         return constrain;
     }
 
-    public Pattern getPattern() {
-        return pattern;
+    public String getConstraintPattern() {
+        return constraintPattern;
     }
 }

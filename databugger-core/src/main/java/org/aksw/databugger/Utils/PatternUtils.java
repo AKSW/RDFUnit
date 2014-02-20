@@ -6,7 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.databugger.enums.PatternParameterConstraints;
 import org.aksw.databugger.patterns.Pattern;
 import org.aksw.databugger.patterns.PatternParameter;
-import org.aksw.databugger.services.PatternService;
+import org.aksw.databugger.tests.results.ResultAnnotation;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
@@ -26,17 +26,16 @@ public class PatternUtils {
                 " ?sparqlPattern a tddo:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
                 "  dcterms:description ?desc ; " +
-                "  tddo:sparqlPattern ?sparql ; " +
+                "  tddo:sparqlWherePattern ?sparql ; " +
                 "  tddo:sparqlPrevalencePattern ?sparqlPrev ; " +
-                "  tddo:selectVariable ?variable . " +
                 "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = DatabuggerUtils.getAllPrefixes() +
-                " SELECT distinct ?parameterURI ?id ?constrain ?constrainPattern WHERE { " +
+                " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
                 " %%PATTERN%%  tddo:parameter ?parameterURI . " +
                 " ?parameterURI a tddo:Parameter . " +
                 " ?parameterURI dcterms:identifier ?id . " +
-                " OPTIONAL {?parameterURI tddo:parameterConstraint ?constrain .}" +
-                " OPTIONAL {?parameterURI tddo:constrainPattern ?constrainPattern .}" +
+                " OPTIONAL {?parameterURI tddo:parameterConstraint ?constraint .}" +
+                " OPTIONAL {?parameterURI tddo:constraintPattern ?constraintPattern .}" +
                 " } ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
@@ -50,7 +49,6 @@ public class PatternUtils {
             String desc = qs.get("desc").toString();
             String sparql = qs.get("sparql").toString();
             String sparqlPrev = qs.get("sparqlPrev").toString();
-            String variable = qs.get("variable").toString();
             List<PatternParameter> parameters = new ArrayList<PatternParameter>();
 
             QueryExecution qeNested = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
@@ -67,16 +65,19 @@ public class PatternUtils {
                     constrainStr = parSol.get("constrain").toString();
                 }
                 String constrainPat = "";
-                if (parSol.contains("constrainPattern")) {
-                    constrainPat = parSol.get("constrainPattern").toString();
+                if (parSol.contains("constraintPattern")) {
+                    constrainPat = parSol.get("constraintPattern").toString();
                 }
 
                 PatternParameterConstraints constrain = PatternParameterConstraints.resolve(constrainStr);
-                parameters.add(new PatternParameter(parameterURI, parameterID, constrain, PatternService.getPattern(constrainPat)));
+                parameters.add(new PatternParameter(parameterURI, parameterID, constrain, constrainPat));
             }
             qeNested.close();
 
-            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, variable, parameters);
+            // Get annotations from TAG URI
+            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
+
+            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
             if (pat.isValid())
                 patterns.add(pat);
             else {

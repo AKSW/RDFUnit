@@ -11,13 +11,13 @@
 
 # dbo:birthDate cannot exists more than once 
 tddt:dbo-CARD-birthDate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/birthDate> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 1 } """ ;
@@ -27,13 +27,13 @@ tddt:dbo-CARD-birthDate
 
 # dbo:latestReleaseDate cannot exists more than once 
 tddt:dbo-CARD-latestreleasedate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/latestReleaseDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/latestReleaseDate> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 1 } """ ;
@@ -43,13 +43,13 @@ tddt:dbo-CARD-latestreleasedate
 
 # dbo:Person/weight (a Person has only one weight in KG)
 tddt:dbo-CARD-personweight
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person/weight> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/Person/weight> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 1 } """ ;
@@ -59,13 +59,13 @@ tddt:dbo-CARD-personweight
 
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages) 
 tddt:dbo-CARD-rdfslabelforeachlanguage
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 20 } """ ;
@@ -75,14 +75,14 @@ tddt:dbo-CARD-rdfslabelforeachlanguage
 
 # dbo:deathDate after dbo:birthDate
 tddt:dbo-COMP-birthdeatdate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:references <http://dbpedia.org/ontology/deathDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/birthDate> ?v1 .
 				 ?s <http://dbpedia.org/ontology/deathDate> ?v2 .
                                  FILTER (?v1 > ?v2) } """ ;
@@ -93,14 +93,14 @@ tddt:dbo-COMP-birthdeatdate
 
 # dbo:demolitionDate after dbo:buildingStartDate
 tddt:dbo-COMP-demolitionbuildingstartdate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/demolitionDate> ;
       tddo:references <http://dbpedia.org/ontology/buildingStartDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/demolitionDate> ?v1 .
 				 ?s <http://dbpedia.org/ontology/buildingStartDate> ?v2 .
                                  FILTER (?v1 < ?v2) } """ ;
@@ -111,14 +111,14 @@ tddt:dbo-COMP-demolitionbuildingstartdate
 				 
 # dbo:latestReleaseDate after dbo:releaseDate
 tddt:dbo-COMP-releaselatestreleasedate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/latestReleaseDate> ;
       tddo:references <http://dbpedia.org/ontology/releaseDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/latestReleaseDate> ?v1 .
 				 ?s <http://dbpedia.org/ontology/releaseDate> ?v2 .
                                  FILTER (?v1 < ?v2) } """ ;
@@ -129,14 +129,14 @@ tddt:dbo-COMP-releaselatestreleasedate
 
 # Different countries having the same capital
 tddt:dbo-INVFUNC-countriessamecapital
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/capital> ;
       tddo:references <http://dbpedia.org/ontology/Country> ;
       tddo:source <http://dbpedia.org> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s1 <http://dbpedia.org/ontology/capital> ?v1 . 
                                  ?s2 <http://dbpedia.org/ontology/capital> ?v1 . 
                                  ?s1 a <http://dbpedia.org/ontology/Country> . 
@@ -149,14 +149,14 @@ tddt:dbo-INVFUNC-countriessamecapital
                                  
 # Two dbo:Persons with the same dbo:spouse                                 
 tddt:dbo-INVFUNC-spouseperson
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/spouse> ;
       tddo:references <http://dbpedia.org/ontology/Person> ; 
       tddo:source <http://dbpedia.org> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s1 <http://dbpedia.org/ontology/spouse> ?v1 . 
                                  ?s2 <http://dbpedia.org/ontology/spouse> ?v1 . 
                                  ?s1 a <http://dbpedia.org/ontology/Person> . 
@@ -167,14 +167,14 @@ tddt:dbo-INVFUNC-spouseperson
 
 # height of a dbo:Person between 0.4 and 2.5 meter
 tddt:dbo-LITRAN-rangeheightperson
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://dbpedia.org/ontology/height> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://dbpedia.org/ontology/Person> .
                                  ?s <http://dbpedia.org/ontology/height> ?v1 .
                                  FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5)) } """ ;
@@ -183,13 +183,13 @@ tddt:dbo-LITRAN-rangeheightperson
 
 # weight of a dbo:Person is between 1 and 375 KG        
 tddt:dbo-LITRAN-rangeweightperson
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person/weight> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/Person/weight> ?v1 .
                                  FILTER (!(xsd:double(?v1) >= 1 && xsd:double(?v1) <= 375)) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -198,13 +198,13 @@ tddt:dbo-LITRAN-rangeweightperson
                                  
 # dbo:isbn format
 tddt:dbo-MATCH-isbnformat
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/isbn> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/isbn> ?v1 .
                                  FILTER (! regex(str(?v1), "^([iIsSbBnN 0-9-])*$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -213,13 +213,13 @@ tddt:dbo-MATCH-isbnformat
                                  
 # dbo:iso6393Code format
 tddt:dbo-MATCH-iso6393codeformat
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/iso6393Code> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/iso6393Code> ?v1 .
                                  FILTER (! (regex(str(?v), "[a-z]{3}"))) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -228,13 +228,13 @@ tddt:dbo-MATCH-iso6393codeformat
                                  
 # dbo:postalCode format
 tddt:dbo-MATCH-postalcodeformat
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/postalCode> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/postalCode> ?v1 .
                                  FILTER (! (regex(str(?v),"^[0-9]{5}$"))) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -243,14 +243,14 @@ tddt:dbo-MATCH-postalcodeformat
                                  
 # Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate                                 
 tddt:dbo-PROPDEP-activeYearsEndStartDate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/activeYearsEndDate> ;
       tddo:references <http://dbpedia.org/ontology/activeYearsStartDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/activeYearsEndDate> ?v1 .
                                  FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/activeYearsStartDate> ?v2} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -258,14 +258,14 @@ tddt:dbo-PROPDEP-activeYearsEndStartDate
 
 # Resource has dbo:deatDate but no dbo:birthDate                                 
 tddt:dbo-PROPDEP-deathdatebirthdate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:references <http://dbpedia.org/ontology/deathDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/deathDate> ?v1 .
                                  FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v2} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -274,14 +274,14 @@ tddt:dbo-PROPDEP-deathdatebirthdate
                                  
 # Resource has dbo:dissolved but is not of type dbo:SoccerClub
 tddt:dbo-RDFSDOMAIN-dissolvedsoccerclub
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSDOMAIN ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/SoccerClub> ;
       tddo:references <http://dbpedia.org/ontology/dissolved> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/dissolved> ?v1 .
                                  FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/SoccerClub>} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -290,14 +290,14 @@ tddt:dbo-RDFSDOMAIN-dissolvedsoccerclub
                                  
 # Resource cannot have a foaf property if it is not an owl:Thing
 tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSDOMAIN ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://xmlns.com/foaf/0.1/name> ;
       tddo:references <http://www.w3.org/2002/07/owl#Thing> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://xmlns.com/foaf/0.1/name> ?v1 .
                                  FILTER NOT EXISTS {?s a <http://www.w3.org/2002/07/owl#Thing>} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -306,14 +306,14 @@ tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
                                  
 # The dbo:dean of an EducationaInstitution must be a dbo:Person
 tddt:dbo-RDFSRANGE-deanperson
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/dean> ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/dean> ?v1 .
                                  FILTER NOT EXISTS {?v1 a <http://dbpedia.org/ontology/Person>} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -322,14 +322,14 @@ tddt:dbo-RDFSRANGE-deanperson
                                  
 # The dbo:birthPlace must be a dbo:Place
 tddt:dbo-RDFSRANGE-placebirthplace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/birthPlace> ;
       tddo:references <http://dbpedia.org/ontology/Place> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/birthPlace> ?v1 .
                                  FILTER NOT EXISTS {?v1 a <http://dbpedia.org/ontology/Place>} } """ ;
       tddo:sparqlPrevalenc """ SELECT (count(?s) AS ?total) WHERE {
@@ -338,14 +338,14 @@ tddt:dbo-RDFSRANGE-placebirthplace
                                  
 # The dbo:spouse must be a dbo:Person
 tddt:dbo-RDFSRANGE-spouseperson
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/spouse> ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/spouse> ?v1 .
                                  FILTER NOT EXISTS {?v1 a <http://dbpedia.org/ontology/Person>} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -354,14 +354,14 @@ tddt:dbo-RDFSRANGE-spouseperson
                                  
 # The dbo:university must be a dbo:EducationalInstitution
 tddt:dbo-RDFSRANGE-universityeducationalinstitution
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSRANGE ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/university> ;
       tddo:references <http://dbpedia.org/ontology/EducationalInstitution> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/university> ?v1 .
                                  FILTER NOT EXISTS {?v1 a <http://dbpedia.org/ontology/EducationalInstitution>} } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -370,14 +370,14 @@ tddt:dbo-RDFSRANGE-universityeducationalinstitution
                                  
 # dbo:Person without a dbo:birthDate
 tddt:dbo-TYPRODEP-personwithoutbirthdate
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://dbpedia.org/ontology/birthDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://dbpedia.org/ontology/Person> .
                                  FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v1 } } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -386,14 +386,14 @@ tddt:dbo-TYPRODEP-personwithoutbirthdate
                                  
 # dbo:Person without foaf:depiction
 tddt:dbo-TYPRODEP-personwithoutdepiction
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://dbpedia.org/ontology/Person> ;
       tddo:references <http://xmlns.com/foaf/0.1/depiction> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://dbpedia.org/ontology/Person> .
                                  FILTER NOT EXISTS {?s <http://xmlns.com/foaf/0.1/depiction> ?v1 } } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {

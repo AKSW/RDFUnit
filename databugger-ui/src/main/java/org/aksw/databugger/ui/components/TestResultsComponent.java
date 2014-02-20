@@ -1,6 +1,5 @@
 package org.aksw.databugger.ui.components;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -8,19 +7,23 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.*;
 import org.aksw.databugger.sources.DatasetSource;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.tests.TestExecutor;
-import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
+import org.aksw.databugger.tests.executors.TestExecutorMonitor;
+import org.aksw.databugger.tests.results.AggregatedTestCaseResult;
+import org.aksw.databugger.tests.results.TestCaseResult;
 
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
  * Description
  * Created: 11/20/13 5:20 PM
  */
-public class TestResultsComponent extends VerticalLayout implements TestExecutor.TestExecutorMonitor {
+public class TestResultsComponent extends VerticalLayout implements TestExecutorMonitor {
 
-    private Table resultsTable = new Table("Test Results");
+    private final Table resultsTable = new Table("Test Results");
     private Source source = null;
 
     public TestResultsComponent() {
@@ -54,25 +57,25 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void testingStarted(final Source source, final long numberOfTests) {
+    public void testingStarted(final Source source, final TestSuite testSuite) {
         this.source = source;
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 resultsTable.setVisible(true);
-                resultsTable.setPageLength((int) Math.min(15, numberOfTests));
+                resultsTable.setPageLength((int) Math.min(15, testSuite.size()));
 
             }
         });
     }
 
     @Override
-    public void singleTestStarted(final UnitTest test) {
+    public void singleTestStarted(final TestCase test) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 Label testLabel = new Label(test.getTestURI());
-                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ")+ "\n  </pre>" );
+                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ") + "\n  </pre>");
                 resultsTable.addItem(new Object[]{
                         "R", testLabel, new Label(""), ""}, test);
 
@@ -84,12 +87,18 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void singleTestExecuted(final UnitTest test, final String uri, final long errors, final long prevalence) {
+    public void singleTestExecuted(final TestCase test, final List<TestCaseResult> results) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
                 Item item = resultsTable.getItem(test);
                 // Access a property in the item
+                long errors = 0, prevalence = 0;
+                TestCaseResult result = results.get(0);
+                if (result != null && result instanceof AggregatedTestCaseResult) {
+                    errors = ((AggregatedTestCaseResult) result).getErrorCount();
+                    prevalence = ((AggregatedTestCaseResult) result).getPrevalenceCount();
+                }
 
                 Property<String> statusProperty =
                         item.getItemProperty("S");
@@ -100,15 +109,14 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                     Property<AbstractComponent> errorsProperty =
                             item.getItemProperty("Errors");
                     errorsProperty.setValue(new Label("-"));
-                }
-                else {
+                } else {
                     if (source instanceof DatasetSource) {
                         String endpoint = ((DatasetSource) source).getSparqlEndpoint();
                         String graph = ((DatasetSource) source).getSparqlGraph();
                         String query = test.getSparqlQuery() + " LIMIT 10";
                         try {
-                            String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph,"UTF-8") + "&query=" + URLEncoder.encode(query,"UTF-8");
-                            Link link = new Link(""+errors, new ExternalResource(url));
+                            String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph, "UTF-8") + "&query=" + URLEncoder.encode(query, "UTF-8");
+                            Link link = new Link("" + errors, new ExternalResource(url));
                             link.setTargetName("_blank");
                             Property<AbstractComponent> errorsProperty =
                                     item.getItemProperty("Errors");

@@ -5,15 +5,16 @@ import com.vaadin.server.VaadinSession;
 import org.aksw.databugger.Databugger;
 import org.aksw.databugger.DatabuggerConfiguration;
 import org.aksw.databugger.Utils.DatabuggerUtils;
-import org.aksw.databugger.tests.TestExecutor;
-import org.aksw.databugger.tests.TestGeneratorExecutor;
-import org.aksw.databugger.tests.UnitTest;
+import org.aksw.databugger.enums.TestCaseExecutionType;
+import org.aksw.databugger.io.TripleFileReader;
 import org.aksw.databugger.io.TripleReader;
-import org.aksw.databugger.io.TripleReaderFactory;
+import org.aksw.databugger.tests.TestCase;
+import org.aksw.databugger.tests.TestSuite;
+import org.aksw.databugger.tests.executors.TestExecutor;
+import org.aksw.databugger.tests.executors.TestGeneratorExecutor;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -39,12 +40,11 @@ public class DatabuggerUISession extends VaadinSession {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
 
-        TestExecutor testExecutor = new TestExecutor();
+        TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.aggregatedTestCaseResult);
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
 
-        UnitTestList testList = new UnitTestList();
-        testList.tests = new ArrayList<UnitTest>();
-        VaadinSession.getCurrent().setAttribute(UnitTestList.class, testList);
+        TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
+        VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
         //Fill the service schema
         DatabuggerUtils.fillSchemaServiceFromLOV();
@@ -60,8 +60,8 @@ public class DatabuggerUISession extends VaadinSession {
         try {
             DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
-            TripleReader patternReader = TripleReaderFactory.createTripleFileReader(getBaseDir() + "patterns.ttl");
-            TripleReader testGeneratorReader = TripleReaderFactory.createTripleFileReader(getBaseDir() + "testGenerators.ttl");
+            TripleReader patternReader = new TripleFileReader(getBaseDir() + "patterns.ttl");
+            TripleReader testGeneratorReader = new TripleFileReader(getBaseDir() + "testGenerators.ttl");
             getDatabugger().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO
@@ -84,8 +84,12 @@ public class DatabuggerUISession extends VaadinSession {
         return VaadinSession.getCurrent().getAttribute(TestExecutor.class);
     }
 
-    public static List<UnitTest> getTests() {
-        return VaadinSession.getCurrent().getAttribute(UnitTestList.class).tests;
+    public static TestSuite getTestSuite() {
+        return VaadinSession.getCurrent().getAttribute(TestSuite.class);
+    }
+
+    public static void setTestSuite(TestSuite testSuite) {
+        VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
     }
 
     public static void setDatabuggerConfiguration(DatabuggerConfiguration configuration) {
@@ -94,12 +98,5 @@ public class DatabuggerUISession extends VaadinSession {
 
     public static DatabuggerConfiguration getDatabuggerConfiguration() {
         return VaadinSession.getCurrent().getAttribute(DatabuggerConfiguration.class);
-    }
-
-    static class UnitTestList {
-        List<UnitTest> tests;
-
-        public UnitTestList() {
-        }
     }
 }

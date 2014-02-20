@@ -8,10 +8,10 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.aksw.databugger.io.TripleDereferenceReader;
 import org.aksw.databugger.services.SchemaService;
 import org.aksw.databugger.sources.SchemaSource;
 import org.aksw.databugger.sources.Source;
-import org.aksw.databugger.io.TripleDereferenceReader;
 import org.vaadin.tokenfield.TokenField;
 
 import java.util.*;

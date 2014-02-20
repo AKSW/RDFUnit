@@ -15,9 +15,10 @@ import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
- * Description
+ * Describes an arbitary datatest source TODO make this abstract and create an EndpointSource and a DumpSource
  * Created: 9/16/13 1:54 PM
  */
+
 public class DatasetSource extends Source {
 
     private final String sparqlEndpoint;
@@ -36,7 +37,7 @@ public class DatasetSource extends Source {
     }
 
     public DatasetSource(DatasetSource source) {
-        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraph(),source.getReferencesSchemata());
+        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraph(), source.getReferencesSchemata());
     }
 
     @Override

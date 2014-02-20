@@ -23,7 +23,7 @@ import java.util.Map;
  * Created: 9/24/13 11:25 AM
  */
 public class DatabuggerUtils {
-    private static Logger log = LoggerFactory.getLogger(DatabuggerUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(DatabuggerUtils.class);
 
     public static String getAllPrefixes() {
         return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
@@ -32,6 +32,7 @@ public class DatabuggerUtils {
                 " PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
                 " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
                 " PREFIX dc: <http://purl.org/dc/elements/1.1/> \n" +
+                " PREFIX rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> \n" +
                 " PREFIX tddo: <http://databugger.aksw.org/ns/core#> \n" +
                 " PREFIX tddp: <http://databugger.aksw.org/data/patterns#> \n" +
                 " PREFIX tddt: <http://databugger.aksw.org/data/tests#> \n" +
@@ -146,18 +147,5 @@ public class DatabuggerUtils {
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
-    }
-
-    public static void writeModelToFile(Model model, String filetype, File file, boolean createParentFolders) throws FileNotFoundException {
-        if (createParentFolders) {
-            File parentF = file.getParentFile();
-            if (!parentF.exists())
-                file.getParentFile().mkdirs();
-        }
-        model.write(new FileOutputStream(file), filetype);
-    }
-
-    public static void writeModelToFile(Model model, String filetype, String filename, boolean createParentFolders) throws FileNotFoundException {
-        writeModelToFile(model, filetype, new File(filename), createParentFolders);
     }
 }

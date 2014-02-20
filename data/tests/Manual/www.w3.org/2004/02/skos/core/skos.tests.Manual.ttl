@@ -14,13 +14,13 @@
 
 # multiple languages in prefLabel (en)
 tddt:skos-CARD-singleEnPrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """SELECT DISTINCT ?s WHERE {
                                                   ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
                                                   BIND ( lang(?c) AS ?l )
                                                   FILTER (isLiteral (?c) && lang(?c) = 'en')
@@ -30,13 +30,13 @@ tddt:skos-CARD-singleEnPrefLabel
 
 # multiple languages in prefLabel (es)
 tddt:skos-CARD-singleEsPrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """SELECT DISTINCT ?s WHERE {
                                                   ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
                                                   BIND ( lang(?c) AS ?l )
                                                   FILTER (isLiteral (?c) && lang(?c) = 'es')
@@ -47,13 +47,13 @@ tddt:skos-CARD-singleEsPrefLabel
 
 # multiple languages in prefLabel (fr)
 tddt:skos-CARD-singleFrPrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """SELECT DISTINCT ?s WHERE {
                                                   ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
                                                   BIND ( lang(?c) AS ?l )
                                                   FILTER (isLiteral (?c) && lang(?c) = 'fr')
@@ -64,13 +64,13 @@ tddt:skos-CARD-singleFrPrefLabel
 
 # multiple languages in prefLabel (de)
 tddt:skos-CARD-singleDePrefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:ONELANG ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """SELECT DISTINCT ?s WHERE {
                                                   ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?c
                                                   BIND ( lang(?c) AS ?l )
                                                   FILTER (isLiteral (?c) && lang(?c) = 'de')
@@ -82,14 +82,14 @@ tddt:skos-CARD-singleDePrefLabel
 # Missing  rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
 # TODO not according to pattern (2 filters)
 tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
@@ -100,14 +100,14 @@ tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
 # Missing rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#Concept>
 # TODO not according to pattern (2 filters)
 tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#Concept> ;
       tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://www.w3.org/2004/02/skos/core#Concept> .
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
                                  FILTER NOT EXISTS {?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
@@ -119,13 +119,13 @@ tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
 # AmbiguousprefLabelvalues
 # skos:prefLabel cannot exists more than once 
 tddt:skos-CARD-prefLabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:CARD ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 1 } """ ;
@@ -135,14 +135,14 @@ tddt:skos-CARD-prefLabel
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
 tddt:skos-OWLDISJP-skosaltpreflabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -151,14 +151,14 @@ tddt:skos-OWLDISJP-skosaltpreflabel
 
 # skos:prefLabel is not a skos:hiddenLabel
 tddt:skos-OWLDISJP-skoshiddenpreflabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -167,14 +167,14 @@ tddt:skos-OWLDISJP-skoshiddenpreflabel
                                  
 # skos:altLabel is not a skos:hiddenLabel
 tddt:skos-OWLDISJP-skosalthiddenlabel
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -185,14 +185,14 @@ tddt:skos-OWLDISJP-skosalthiddenlabel
 # Disjoint Semantic Relations
 # skos:related is not a skos:broaderTransitive
 tddt:skos-OWLDISJP-skosrelatedbroadertransitive
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#related> ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;	
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#related> ?v1 .
                                  ?s <http://www.w3.org/2004/02/skos/core#broaderTransitive> ?v1 } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -204,13 +204,13 @@ tddt:skos-OWLDISJP-skosrelatedbroadertransitive
 # Extra Whitespace
 # skos:altLabel whitespace
 tddt:skos-MATCH-altlabelwhitespace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#altLabel> ?v1 .
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -218,13 +218,13 @@ tddt:skos-MATCH-altlabelwhitespace
 
 # skos:prefLabel whitespace
 tddt:skos-MATCH-preflabelwhitespace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 .
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -232,13 +232,13 @@ tddt:skos-MATCH-preflabelwhitespace
                                 
 # skos:hiddenLabel whitespace
 tddt:skos-MATCH-hiddenlabelwhitespace
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2004/02/skos/core#hiddenLabel> ?v1 .
                                  FILTER ( regex(str(?v1), "^\\s+|\\s+$")) } """ ;
       tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
@@ -246,13 +246,13 @@ tddt:skos-MATCH-hiddenlabelwhitespace
 
 # skos:broader and skos:narrower should be disjoint
 tddt:skos-OWLDISJP-broaderDisjNarrower
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#broader> ;
       tddo:source <http://id.loc.gov> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                            ?s <http://www.w3.org/2004/02/skos/core#broader> ?v .
                            ?s <http://www.w3.org/2004/02/skos/core#narrower> ?v .} """ ;
       tddo:sparqlPrevalence
@@ -260,13 +260,13 @@ tddt:skos-OWLDISJP-broaderDisjNarrower
 
 # skos:broader and skos:related should be disjoint
 tddt:skos-OWLDISJP-broaderDisjRelated
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#related> ;
       tddo:source <http://id.loc.gov> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                            ?s <http://www.w3.org/2004/02/skos/core#broader> ?v .
                            ?s <http://www.w3.org/2004/02/skos/core#related> ?v .} """ ;
       tddo:sparqlPrevalence
@@ -275,13 +275,13 @@ tddt:skos-OWLDISJP-broaderDisjRelated
 
 # skos:narrower and skos:related should be disjoint
 tddt:skos-OWLDISJP-narrowerDisjRelated
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#related> ;
       tddo:source <http://id.loc.gov> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                            ?s <http://www.w3.org/2004/02/skos/core#narrower> ?v .
                            ?s <http://www.w3.org/2004/02/skos/core#related> ?v .} """ ;
       tddo:sparqlPrevalence
@@ -290,13 +290,13 @@ tddt:skos-OWLDISJP-narrowerDisjRelated
 
 # skos:exactMatch and skos:broadMatch should be disjoint
 tddt:skos-OWLDISJP-exactMatchDisjbroadMatch
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#broadMatch> ;
       tddo:source <http://id.loc.gov> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                            ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v .
                            ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v .} """ ;
       tddo:sparqlPrevalence
@@ -305,13 +305,13 @@ tddt:skos-OWLDISJP-exactMatchDisjbroadMatch
 
 # skos:exactMatch and skos:relatedMatch should be disjoint
 tddt:skos-OWLDISJP-exactMatchDisjrelatedMatch
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
       tddo:source <http://id.loc.gov> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                            ?s <http://www.w3.org/2004/02/skos/core#exactMatch> ?v .
                            ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v .} """ ;
       tddo:sparqlPrevalence
@@ -320,13 +320,13 @@ tddt:skos-OWLDISJP-exactMatchDisjrelatedMatch
 
 # skos:broadMatch and skos:relatedMatch should be disjoint
 tddt:skos-OWLDISJP-broadMatchDisjrelatedMatch
-      a       tddo:Test ;
+      a       tddo:TestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLDISJP ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2004/02/skos/core#broadMatch> , <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
       tddo:source <http://id.loc.gov> ;
-      tddo:sparql """ SELECT DISTINCT ?s WHERE {
+      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                            ?s <http://www.w3.org/2004/02/skos/core#broadMatch> ?v .
                            ?s <http://www.w3.org/2004/02/skos/core#relatedMatch> ?v .} """ ;
       tddo:sparqlPrevalence

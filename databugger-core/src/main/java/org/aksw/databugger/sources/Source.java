@@ -6,7 +6,6 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 

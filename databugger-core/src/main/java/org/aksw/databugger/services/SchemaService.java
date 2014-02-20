@@ -27,7 +27,7 @@ public class SchemaService {
     }
 
     public static SchemaSource getSource(String id) {
-        return getSource(null,id);
+        return getSource(null, id);
     }
 
     public static SchemaSource getSource(String baseFolder, String id) {
@@ -40,8 +40,7 @@ public class SchemaService {
                 return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0], split[1]);
             else
                 return SourceFactory.createSchemaSourceDereference(id, split[0], split[1]);
-        }
-        else {
+        } else {
             if (baseFolder != null)
                 return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0]);
             else

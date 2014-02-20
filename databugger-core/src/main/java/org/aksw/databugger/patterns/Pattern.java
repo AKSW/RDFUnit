@@ -1,27 +1,29 @@
 package org.aksw.databugger.patterns;
 
+import org.aksw.databugger.tests.results.ResultAnnotation;
+
 import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
- * Class that holds a sparqlPattern definition
+ * Class that holds a sparqlWherePattern definition
  * Created: 9/16/13 1:14 PM
  */
 public class Pattern {
     private final String id;
     private final String description;
-    private final String sparqlPattern;
+    private final String sparqlWherePattern;
     private final String sparqlPatternPrevalence;
-    private final String selectVariable;
     private final List<PatternParameter> parameters;
+    private final List<ResultAnnotation> annotations;
 
-    public Pattern(String id, String description, String sparqlPattern, String sparqlPatternPrevalence, String selectVariable, List<PatternParameter> parameters) {
+    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, List<PatternParameter> parameters, List<ResultAnnotation> annotations) {
         this.id = id;
         this.description = description;
-        this.sparqlPattern = sparqlPattern;
+        this.sparqlWherePattern = sparqlWherePattern;
         this.sparqlPatternPrevalence = sparqlPatternPrevalence;
-        this.selectVariable = selectVariable;
         this.parameters = parameters;
+        this.annotations = annotations;
     }
 
     public boolean isValid() {
@@ -29,32 +31,11 @@ public class Pattern {
             return false;
         //check if defined parameters exist is sparql
         for (PatternParameter p : getParameters()) {
-            if (getSparqlPattern().indexOf("%%" + p.getId() + "%%") == -1)
+            if (!getSparqlWherePattern().contains("%%" + p.getId() + "%%"))
                 return false;
         }
         // TODO search if we need more parameters
         return true;
-    }
-
-    // TODO assumes ordered bindings / parameters might not do like this in the end
-    public String instantiateSparqlPattern(List<String> bindings) throws Exception {
-        if (bindings.size() != getParameters().size())
-            throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings, getSparqlPattern());
-    }
-
-    public String instantiateSparqlPatternPrevalence(List<String> bindings) throws Exception {
-        if (bindings.size() != getParameters().size())
-            throw new Exception("Bindings different in number than parameters");
-        return instantiateBindings(bindings, getSparqlPatternPrevalence());
-    }
-
-    private String instantiateBindings(List<String> bindings, String query) {
-        String sparql = query;
-        for (int i = 0; i < bindings.size(); i++) {
-            sparql = sparql.replace("%%" + getParameters().get(i).getId() + "%%", bindings.get(i));
-        }
-        return sparql;
     }
 
     /*
@@ -73,19 +54,27 @@ public class Pattern {
         return description;
     }
 
-    public String getSparqlPattern() {
-        return sparqlPattern;
+    public String getSparqlWherePattern() {
+        return sparqlWherePattern;
     }
 
     public String getSparqlPatternPrevalence() {
         return sparqlPatternPrevalence;
     }
 
-    public String getSelectVariable() {
-        return selectVariable;
-    }
-
     public List<PatternParameter> getParameters() {
         return parameters;
+    }
+
+    public PatternParameter getParameter(String parameterURI) {
+        for (PatternParameter parameter : parameters) {
+            if (parameter.getURI().equals(parameterURI))
+                return parameter;
+        }
+        return null;
+    }
+
+    public List<ResultAnnotation> getAnnotations() {
+        return annotations;
     }
 }
