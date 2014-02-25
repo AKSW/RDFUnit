@@ -509,7 +509,7 @@ tddp:MATCH a tddo:Pattern ;
     dcterms:description """Literal in not in a desired pattern"""@en ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% ?value .
-                                    FILTER (%%OP%% regex(str(?value), %%REGEX%%)) .
+                                    FILTER (%%OP%% regex(str(?value), '%%REGEX%%')) .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
