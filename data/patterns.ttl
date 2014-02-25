@@ -706,10 +706,10 @@ tddp:ONELANG a tddo:Pattern ;
     tddo:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c .
                                     BIND ( lang(?c) AS ?l ) .
-                                    FILTER (isLiteral (?c) && lang(?c) = %%V1%%) .
+                                    FILTER (isLiteral (?c) && lang(?c) = '%%V1%%') .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } GROUP BY ?resource ?message
-                                HAVING COUNT (?l) > 1 """ ;
+                                HAVING ( COUNT (?l) > 1 ) """ ;
     tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
     tddo:parameter tddp:ONELANG-P1 ;
