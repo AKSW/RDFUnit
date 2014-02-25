@@ -104,7 +104,9 @@ public class TestUtils {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
-            tests.add(instantiateSingleManualTestFromModel(qef, testURI));
+            ManualTestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
+            if (tc != null)
+                tests.add(tc);
         }
 
         // Get all pattern based tests
@@ -119,13 +121,15 @@ public class TestUtils {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
-            tests.add(instantiateSinglePatternTestFromModel(qef, testURI));
+            PatternBasedTestCase tc = instantiateSinglePatternTestFromModel(qef, testURI);
+            if (tc != null)
+                tests.add(tc);
         }
 
         return tests;
     }
 
-    public static TestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
+    public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
