@@ -223,6 +223,10 @@ public class TestUtils {
                 String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String patternURI = qs.get("basedOnPattern").toString();
                 Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getPrefix("tddp"), ""));
+                if (pattern == null) {
+                    log.error("Pattern does not exists for test: " + testURI);
+                    return null;
+                }
 
                 List<String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 List<Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
