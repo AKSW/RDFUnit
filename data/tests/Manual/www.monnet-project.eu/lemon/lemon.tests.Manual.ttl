@@ -12,6 +12,7 @@
 
 
 # A lemon:LexicalEntry needs at least one lemon:canonicalForm.
+# TODO use TYPRODEP pattern
 tddt:lemon-entryWithoutCanonicalForm
       a tddo:ManualTestCase ;
       tddo:appliesTo tddo:Schema ;
@@ -29,6 +30,7 @@ tddt:lemon-entryWithoutCanonicalForm
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
 
 # A lemon:LexicalEntry should have an rdfs:label
+# TODO use TYPRODEP pattern
 tddt:lemon-entryWithoutLabel
       a tddo:ManualTestCase ;
       tddo:appliesTo tddo:Schema ;
@@ -46,6 +48,7 @@ tddt:lemon-entryWithoutLabel
                                  ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
 
 # A lemon:LexicalEntry should have exactly one lemon:language.
+# TODO use TYPRODEP (exists) & CARDT (exactly once) patterns
 tddt:lemon-entryExactlyOneLanguage
       a tddo:ManualTestCase ;
       tddo:appliesTo tddo:Schema ;
@@ -95,6 +98,7 @@ tddt:lemon-lexicalSenseReferenceCount
 
 
 # Narrower should not be symmetric
+# TODO use OWLSYMMETRICPROP pattern
 tddt:lemon-narrowerNotSymmetric
       a tddo:ManualTestCase ;
       tddo:appliesTo tddo:Schema ;
@@ -112,6 +116,7 @@ tddt:lemon-narrowerNotSymmetric
               " " .
 
 # Broader should not be symmetric
+# TODO use OWLSYMMETRICPROP pattern
 tddt:lemon-broaderNotSymmetric
       a tddo:ManualTestCase ;
       tddo:appliesTo tddo:Schema ;
@@ -146,6 +151,7 @@ tddt:lemon-narrowerNoBroaderInverse
                                  ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower . } """ .
 
 # A lemon:component should have at least one lemon:element.
+# TODO use TYPRODEP pattern
 tddt:lemon-componentNoElement
       a tddo:ManualTestCase ;
       tddo:appliesTo tddo:Schema ;
