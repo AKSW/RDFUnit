@@ -1,5 +1,6 @@
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 @prefix tddg:    <http://databugger.aksw.org/data/generators#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
@@ -13,44 +14,105 @@
 
 # geo:lat must be in the range [-90,90]
 tddt:dbo-LITRAN-rangegeolatitude
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-      tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 .
-                                 FILTER (! (?v1 >= -90 && ?v1 <= 90) ) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 . } """ .
+    a       tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:LITRAN ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "[]" ;
+                tddo:parameter tddp:LITRAN-T1
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+                tddo:parameter tddp:LITRAN-P1
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "!" ;
+                tddo:parameter tddp:LITRAN-NOP
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "-90" ;
+                tddo:parameter tddp:LITRAN-valueMin
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "90" ;
+                tddo:parameter tddp:LITRAN-valueMax
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "'geo:lat must be in the range -90 to 90'" ;
+                tddo:parameter tddp:LITRAN-MESSAGE
+              ] ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+    tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    tddo:testCaseLogLevel
+            rlog:Error .
+
 
 # geo:long must be in the range [-180,180]
 tddt:dbo-LITRAN-rangegeolongtitude
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-      tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 .
-                                 FILTER (! (?v1 >= -180 && ?v1 <= 180) ) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 . } """ .
+    a       tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:LITRAN ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "[]" ;
+                tddo:parameter tddp:LITRAN-T1
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+                tddo:parameter tddp:LITRAN-P1
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "!" ;
+                tddo:parameter tddp:LITRAN-NOP
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "-180" ;
+                tddo:parameter tddp:LITRAN-valueMin
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "180" ;
+                tddo:parameter tddp:LITRAN-valueMax
+              ] ;
+    tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "'geo:lat must be in the range -180 to 180'" ;
+                tddo:parameter tddp:LITRAN-MESSAGE
+              ] ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+    tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    tddo:testCaseLogLevel
+            rlog:Error .
 
 
 # geo:geometry should be a soft inverseFunctional property
 tddt:dbo-INVFUNC-uniquegeometry
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:INVFUNC ;
+      tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+                tddo:parameter tddp:INVFUNC-P1
+              ] ;
+      tddo:binding
+              [ a       tddo:Binding ;
+                tddo:bindingValue "'Resources with the exact same coordinates should be the same'" ;
+                tddo:parameter tddp:INVFUNC-MESSAGE
+              ] ;
       tddo:generated tddo:ManuallyGenerated ;
       tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
       tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?v1 WHERE {
-                       ?a <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 .
-                       ?b <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 .
-                       FILTER (?a != ?b)
-                     } """ ;
-      tddo:sparqlPrevalence """ SELECT (count( DISTINCT ?v1) AS ?total) WHERE { ?a <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ?v1 . } """ .
+      tddo:testCaseLogLevel
+              rlog:Warn .
