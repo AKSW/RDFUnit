@@ -1,5 +1,6 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 @prefix tddg: <http://databugger.aksw.org/data/generators#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -9,208 +10,319 @@
 @prefix tddt: <http://databugger.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
-# rdfs:label should be the same as foaf:name
-tddt:dbpedia-org-COMP-rdfslabelfoafname
-      a tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:COMP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:references <http://xmlns.com/foaf/0.1/name> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
-				 ?s <http://xmlns.com/foaf/0.1/name> ?v2 .
-                                 FILTER (?v1 != ?v2) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
-				 ?s <http://xmlns.com/foaf/0.1/name> ?v2 . } """ .
-				 
-				 
 # Wrong character casing in yago uri's
 tddt:dbpedia-org-MATCH-yagocharactercasing
-      a tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?t1 .
-                                 FILTER (regex(str(?t), "^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$")) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?t1 . } """ .
-                                 
-                                 
-# Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
-tddt:dbpedia-org-PROPDEP-dateofbirthbirthdate
-      a tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:PROPDEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/birthDate> ;
-      tddo:references <http://dbpedia.org/property/dateOfBirth>  ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/property/dateOfBirth> ?v1 .
-                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v2} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:MATCH ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+            tddo:parameter tddp:MATCH-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue " " ;
+            tddo:parameter tddp:MATCH-OP
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue """^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$""" ;
+            tddo:parameter tddp:MATCH-REGEX
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Wrong capitalization in yago class'" ;
+            tddo:parameter tddp:MATCH-MESSAGE
+        ] ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:testCaseLogLevel
+              rlog:Warn .
 
+# Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
+tddt:dbpedia-org-manual-dateofbirthbirthdate
+    a tddo:ManualTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/ontology/birthDate> ;
+    tddo:references <http://dbpedia.org/property/dateOfBirth>  ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:sparqlWhere """ {
+                                 ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 .
+                                 FILTER NOT EXISTS {?resource <http://dbpedia.org/ontology/birthDate> ?v2}
+                                 BIND ('A dbp:birthDate exists and not a dbo:dateOfBirth, possible extraction error or missing mapping' AS ?message)} """ ;
+    tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ ;
+    tddo:testCaseLogLevel
+              rlog:Warn .
 
 # Resource is in birthday category but has no dbo:birthDate
 tddt:dbpedia-org-PVT-birthcategorywithoutbirthdate
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/resource/Category:1907_births> ;
-      tddo:references <http://purl.org/dc/terms/subject> ;
-      tddo:references <http://dbpedia.org/ontology/birthDate> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:1907_births> .
-                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v1 } } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:1907_births> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:PVT ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/resource/Category:1907_births> ;
+    tddo:references <http://purl.org/dc/terms/subject> ;
+    tddo:references <http://dbpedia.org/ontology/birthDate> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
+            tddo:parameter tddp:PVT-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/resource/Category:1907_births> ;
+            tddo:parameter tddp:PVT-V1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+            tddo:parameter tddp:PVT-P2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource in dbr:1907_births category but without dbo:birthDate'" ;
+            tddo:parameter tddp:PVT-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Error .
+
 
                                  
 # Resource has a geo location template but no coordinates
 tddt:dbpedia-org-PVT-geotemplatecoordinates
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
-      tddo:references <http://www.georss.org/georss/point> ;
-      tddo:references <http://dbpedia.org/resource/Template:Geographic_location> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Geographic_location> .
-                                 FILTER NOT EXISTS {?s <http://www.georss.org/georss/point> ?v1 } } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Geographic_location> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:PVT ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+    tddo:references <http://www.georss.org/georss/point> ;
+    tddo:references <http://dbpedia.org/resource/Template:Geographic_location> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+            tddo:parameter tddp:PVT-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/resource/Template:Geographic_location> ;
+            tddo:parameter tddp:PVT-V1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://www.georss.org/georss/point> ;
+            tddo:parameter tddp:PVT-P2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'A Wikipedia article with Template:Geographic_location but without extracted coordinates'" ;
+            tddo:parameter tddp:PVT-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Error .
 
 
 # Resource in cities category but not of the type dbo:City                                 
 tddt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:RDFSDOMAIN ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://purl.org/dc/terms/subject> ;
-      tddo:references <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
-      tddo:references <http://dbpedia.org/ontology/City> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Capitals_in_Africa> .
-                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/City>} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Capitals_in_Africa> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:RDFSDOMAIN ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://purl.org/dc/terms/subject> ;
+    tddo:references <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
+    tddo:references <http://dbpedia.org/ontology/City> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
+            tddo:parameter tddp:RDFSDOMAIN-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
+            tddo:parameter tddp:RDFSDOMAIN-V1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/City> ;
+            tddo:parameter tddp:RDFSDOMAIN-T1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'A resource in Category:Capitals_in_Africa but not of type dbo:City'" ;
+            tddo:parameter tddp:RDFSDOMAIN-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Error .
+
 
                                  
-# Wikipedia articles with a missing file                                
+# Wikipedia articles with a missing file
 tddt:dbpedia-org-TRIPLE-articlesmissingfile
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://purl.org/dc/terms/subject> ;
-      tddo:references <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Articles_with_missing_files> . } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Articles_with_missing_files> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:TRIPLE ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://purl.org/dc/terms/subject> ;
+    tddo:references <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
+            tddo:parameter tddp:TRIPLE-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
+            tddo:parameter tddp:TRIPLE-V1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource in Category:Articles_with_missing_files'" ;
+            tddo:parameter tddp:TRIPLE-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Warn .
 
                                  
-# Wikipedia articles with an inconsistent citation format                                
+# Wikipedia articles with an inconsistent citation format
 tddt:dbpedia-org-TRIPLE-inconsistantcitation
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
-      tddo:references <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Inconsistent_citations> . } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/property/wikiPageUsesTemplate> <http://dbpedia.org/resource/Template:Inconsistent_citations> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:TRIPLE ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+    tddo:references <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+            tddo:parameter tddp:TRIPLE-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
+            tddo:parameter tddp:TRIPLE-V1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource uses Template:Inconsistent_citations'" ;
+            tddo:parameter tddp:TRIPLE-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Warn .
 
                                  
-# Wikipedia articles that are possibly copy-pasted                               
+# Wikipedia articles that are possibly copy-pasted
 tddt:dbpedia-org-TRIPLE-possiblecutpastemoves
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://purl.org/dc/terms/subject> ;
-      tddo:references <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> . } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:TRIPLE ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://purl.org/dc/terms/subject> ;
+    tddo:references <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
+            tddo:parameter tddp:TRIPLE-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
+            tddo:parameter tddp:TRIPLE-V1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource in Category:Possible_cut-and-paste_moves'" ;
+            tddo:parameter tddp:TRIPLE-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Warn .
+
 
 # Resource has coordinates but is not a place                              
 tddt:dbpedia-org-TYPDEP-coordinatesandnotplace
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPDEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Place> ;
-      tddo:references <http://www.opengis.net/gml/_Feature> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://www.opengis.net/gml/_Feature> .
-                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/Place>} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://www.opengis.net/gml/_Feature> . } """ .
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:TYPDEP ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/ontology/Place> ;
+    tddo:references <http://www.opengis.net/gml/_Feature> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://www.opengis.net/gml/_Feature> ;
+            tddo:parameter tddp:TYPDEP-T1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/Place> ;
+            tddo:parameter tddp:TYPDEP-T2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource has coordinates but is not a dbo:Place'" ;
+            tddo:parameter tddp:TYPDEP-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Warn .
+
+# Resource has coordinates but is not a place
+tddt:dbpedia-org-TYPDEP-placenocoordinates
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:TYPDEP ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/ontology/Place> ;
+    tddo:references <http://www.opengis.net/gml/_Feature> ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/Place> ;
+            tddo:parameter tddp:TYPDEP-T1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://www.opengis.net/gml/_Feature> ;
+            tddo:parameter tddp:TYPDEP-T2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource is a dbo:Place but has no '" ;
+            tddo:parameter tddp:TYPDEP-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Warn .
 
 # Resource is a foaf:Person but not a dbo:Person                                 
 tddt:dbpedia-org-TYPDEP-foafdbpediaperson
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPDEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Person> ;
-      tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://xmlns.com/foaf/0.1/Person> .
-                                 FILTER NOT EXISTS {?s a <http://dbpedia.org/ontology/Person>} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://xmlns.com/foaf/0.1/Person> . } """ .
-
-                                 
-# Place without latitude
-tddt:dbpedia-org-TYPRODEP-placewithoutlatitude
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Place> ;
-      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat>  ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Place> .
-                                 FILTER NOT EXISTS {?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?v1 } } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Place> . } """ .
-
-# Place without longitude
-tddt:dbpedia-org-TYPRODEP-placewithoutlongitude
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Dataset ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Place> ;
-      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long>  ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Place> .
-                                 FILTER NOT EXISTS {?s <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?v1 } } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Place> . } """ .
-                                 
+    a     tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Dataset ;
+    tddo:basedOnPattern tddp:TYPDEP ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/ontology/Person> ;
+    tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
+    tddo:source <http://dbpedia.org> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://xmlns.com/foaf/0.1/Person> ;
+            tddo:parameter tddp:TYPDEP-T1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/Person> ;
+            tddo:parameter tddp:TYPDEP-T2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'Resource is a foaf:Person but not a dbo:Person (externaly defined datasets) '" ;
+            tddo:parameter tddp:TYPDEP-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Warn .
