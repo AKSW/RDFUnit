@@ -14,13 +14,13 @@
 
     <modules>
         <!--<module></module> -->
-        <module>databugger-core</module>
-        <module>databugger-ui</module>
+        <module>rdfunit-core</module>
+        <module>rdfunit-ui</module>
     </modules>
 
 
     <scm>
-        <connection>scm:git:git@github.com:AKSW/Databugger.git</connection>
+        <connection>scm:git:git@github.com:AKSW/RDFUnit.git</connection>
         <!-- developerConnection></developerConnection -->
         <tag>HEAD</tag>
     </scm>

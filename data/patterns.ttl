@@ -1,6 +1,6 @@
-@prefix tddp: <http://databugger.aksw.org/data/patterns#> .
-@prefix tddo: <http://databugger.aksw.org/ns/core#> .
-@prefix tddg: <http://databugger.aksw.org/data/generators#> .
+@prefix tddp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix tddo: <http://rdfunit.aksw.org/ns/core#> .
+@prefix tddg: <http://rdfunit.aksw.org/data/generators#> .
 
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -340,6 +340,47 @@ tddp:INVFUNC-P1 a tddo:Parameter ;
     tddo:parameterConstraint tddo:Property .
 
 tddp:INVFUNC-MESSAGE a tddo:Parameter ;
+    dcterms:identifier "MESSAGE" ;
+    tddo:parameterConstraint tddo:None .
+
+
+################################################################################
+#### unique value constraint of inverse functional properties  (on a Class)
+################################################################################
+
+tddp:INVFUNCT a tddo:Pattern ;
+    dcterms:identifier "INVFUNCT" ;
+    dcterms:description """ Unique value constraint of inverse functional properties (constraint on a class) """@en ;
+    tddo:sparqlWherePattern """ {   {
+                                        ?a %%P1%% ?resource ;
+                                           a %%T1%% .
+                                        ?b %%P1%% ?resource ;
+                                           a %%T1%% .
+                                    } UNION {
+                                        ?a %%P1%% ?resource ;
+                                            rdfs:subClassOf+ %%T1%% .
+                                        ?b %%P1%% ?resource ;
+                                            rdfs:subClassOf+ %%T1%% .
+                                    }
+                                    FILTER (?a != ?b)
+									BIND ( %%MESSAGE%% AS ?message)
+                                } """ ;
+    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { {?a %%P1%% ?resource ; a %%T1%% }
+                                       UNION {?a %%P1%% ?resource ; rdfs:subClassOf+ %%T1%% .} }""" ;
+    tddo:parameter tddp:INVFUNCT-P1 ;
+    tddo:parameter tddp:INVFUNCT-T1 ;
+    tddo:parameter tddp:INVFUNCT-MESSAGE .
+
+tddp:INVFUNCT-P1 a tddo:Parameter ;
+    dcterms:identifier "P1" ;
+    tddo:parameterConstraint tddo:Property .
+
+tddp:INVFUNCT-T1 a tddo:Parameter ;
+    dcterms:identifier "T1" ;
+    tddo:parameterConstraint tddo:Class .
+
+tddp:INVFUNCT-MESSAGE a tddo:Parameter ;
     dcterms:identifier "MESSAGE" ;
     tddo:parameterConstraint tddo:None .
 

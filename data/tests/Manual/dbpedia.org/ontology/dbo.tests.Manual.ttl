@@ -1,17 +1,18 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix tddg: <http://databugger.aksw.org/data/generators#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix tddg: <http://rdfunit.aksw.org/data/generators#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo: <http://databugger.aksw.org/ns/core#> .
-@prefix tddp: <http://databugger.aksw.org/data/patterns#> .
-@prefix tddt: <http://databugger.aksw.org/data/tests#> .
+@prefix tddo: <http://rdfunit.aksw.org/ns/core#> .
+@prefix tddp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix tddt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
 tddt:dbo-CARD-rdfslabelforeachlanguage
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:OWLCARD ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -27,61 +28,104 @@ tddt:dbo-CARD-rdfslabelforeachlanguage
 
 # dbo:deathDate after dbo:birthDate
 tddt:dbo-COMP-birthdeatdate
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:COMP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/birthDate> ;
-      tddo:references <http://dbpedia.org/ontology/deathDate> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/birthDate> ?v1 .
-				 ?s <http://dbpedia.org/ontology/deathDate> ?v2 .
-                                 FILTER (?v1 > ?v2) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/birthDate> ?v1 .
-				 ?s <http://dbpedia.org/ontology/deathDate> ?v2 . } """ .
+    a       tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:COMP ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/ontology/birthDate> ;
+    tddo:references <http://dbpedia.org/ontology/deathDate> ;
+    tddo:source <http://dbpedia.org/ontology/> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+            tddo:parameter tddp:COMP-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/deathDate> ;
+            tddo:parameter tddp:COMP-P2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue ">" ;
+            tddo:parameter tddp:COMP-OP
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'A dbp:birthDate cannot be after a dbo:deathDate'" ;
+            tddo:parameter tddp:COMP-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Error .
 
 
 # dbo:demolitionDate after dbo:buildingStartDate
 tddt:dbo-COMP-demolitionbuildingstartdate
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:COMP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/demolitionDate> ;
-      tddo:references <http://dbpedia.org/ontology/buildingStartDate> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/demolitionDate> ?v1 .
-				 ?s <http://dbpedia.org/ontology/buildingStartDate> ?v2 .
-                                 FILTER (?v1 < ?v2) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/demolitionDate> ?v1 .
-				 ?s <http://dbpedia.org/ontology/buildingStartDate> ?v2 . } """ .
-				 
+    a       tddo:PatternBasedTestCase ;
+    tddo:appliesTo tddo:Schema ;
+    tddo:basedOnPattern tddp:COMP ;
+    tddo:generated tddo:ManuallyGenerated ;
+    tddo:references <http://dbpedia.org/ontology/buildingStartDate>, <http://dbpedia.org/ontology/demolitionDate> ;
+    tddo:source <http://dbpedia.org/ontology/> ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/buildingStartDate> ;
+            tddo:parameter tddp:COMP-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/demolitionDate> ;
+            tddo:parameter tddp:COMP-P2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue ">" ;
+            tddo:parameter tddp:COMP-OP
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'A dbp:buildingStartDate cannot be after a dbo:demolitionDate'" ;
+            tddo:parameter tddp:COMP-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Error .
+
 				 
 # dbo:latestReleaseDate after dbo:releaseDate
 tddt:dbo-COMP-releaselatestreleasedate
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:COMP ;
       tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/latestReleaseDate> ;
-      tddo:references <http://dbpedia.org/ontology/releaseDate> ;
+      tddo:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
       tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/latestReleaseDate> ?v1 .
-				 ?s <http://dbpedia.org/ontology/releaseDate> ?v2 .
-                                 FILTER (?v1 < ?v2) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/latestReleaseDate> ?v1 .
-				 ?s <http://dbpedia.org/ontology/releaseDate> ?v2 . } """ .
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
+            tddo:parameter tddp:COMP-P1
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
+            tddo:parameter tddp:COMP-P2
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue ">" ;
+            tddo:parameter tddp:COMP-OP
+        ] ;
+    tddo:binding
+        [ a     tddo:Binding ;
+            tddo:bindingValue "'A dbp:releaseDate cannot be after a dbo:latestReleaseDate'" ;
+            tddo:parameter tddp:COMP-MESSAGE
+        ] ;
+    tddo:testCaseLogLevel
+                  rlog:Error .
 
 
 # Different countries having the same capital
 tddt:dbo-INVFUNC-countriessamecapital
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -99,27 +143,9 @@ tddt:dbo-INVFUNC-countriessamecapital
                                  ?s1 a <http://dbpedia.org/ontology/Country> . } """ .
 
                                  
-# Two dbo:Persons with the same dbo:spouse                                 
-tddt:dbo-INVFUNC-spouseperson
-      a       tddo:TestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/spouse> ;
-      tddo:references <http://dbpedia.org/ontology/Person> ; 
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s1 <http://dbpedia.org/ontology/spouse> ?v1 . 
-                                 ?s2 <http://dbpedia.org/ontology/spouse> ?v1 . 
-                                 ?s1 a <http://dbpedia.org/ontology/Person> . 
-                                 ?s2 a <http://dbpedia.org/ontology/Person> . 
-                                 FILTER (?s1 != ?s2 } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?v1) AS ?total) WHERE {
-                                 ?s1 <http://dbpedia.org/ontology/spouse> ?v1 . } """ .
-
 # height of a dbo:Person between 0.4 and 2.5 meter
 tddt:dbo-LITRAN-rangeheightperson
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -135,7 +161,7 @@ tddt:dbo-LITRAN-rangeheightperson
 
 # weight of a dbo:Person is between 1 and 375 KG        
 tddt:dbo-LITRAN-rangeweightperson
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:LITRAN ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -150,7 +176,7 @@ tddt:dbo-LITRAN-rangeweightperson
                                  
 # dbo:isbn format
 tddt:dbo-MATCH-isbnformat
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -165,7 +191,7 @@ tddt:dbo-MATCH-isbnformat
                                  
 # dbo:iso6393Code format
 tddt:dbo-MATCH-iso6393codeformat
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -180,7 +206,7 @@ tddt:dbo-MATCH-iso6393codeformat
                                  
 # dbo:postalCode format
 tddt:dbo-MATCH-postalcodeformat
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:MATCH ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -195,7 +221,7 @@ tddt:dbo-MATCH-postalcodeformat
                                  
 # Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate                                 
 tddt:dbo-PROPDEP-activeYearsEndStartDate
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -210,7 +236,7 @@ tddt:dbo-PROPDEP-activeYearsEndStartDate
 
 # Resource has dbo:deatDate but no dbo:birthDate                                 
 tddt:dbo-PROPDEP-deathdatebirthdate
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:PROPDEP ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -226,7 +252,7 @@ tddt:dbo-PROPDEP-deathdatebirthdate
                                  
 # Resource cannot have a foaf property if it is not an owl:Thing
 tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:RDFSDOMAIN ;
       tddo:generated tddo:ManuallyGenerated ;
@@ -241,7 +267,7 @@ tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
 
 # dbo:Person without a dbo:birthDate
 tddt:dbo-TYPRODEP-personwithoutbirthdate
-      a       tddo:TestCase ;
+      a       tddo:PatternBasedTestCase ;
       tddo:appliesTo tddo:Schema ;
       tddo:basedOnPattern tddp:TYPRODEP ;
       tddo:generated tddo:ManuallyGenerated ;

@@ -1,13 +1,13 @@
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
-@prefix tddg:    <http://databugger.aksw.org/data/generators#> .
+@prefix tddg:    <http://rdfunit.aksw.org/data/generators#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo:    <http://databugger.aksw.org/ns/core#> .
-@prefix tddp:    <http://databugger.aksw.org/data/patterns#> .
-@prefix tddt:    <http://databugger.aksw.org/data/tests#> .
+@prefix tddo:    <http://rdfunit.aksw.org/ns/core#> .
+@prefix tddp:    <http://rdfunit.aksw.org/data/patterns#> .
+@prefix tddt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 
 # TODO Check this one (http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf)
