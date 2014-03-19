@@ -4,8 +4,8 @@ import com.vaadin.data.Property;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.rdfunit.DatabuggerConfiguration;
-import org.aksw.rdfunit.DatabuggerConfigurationFactory;
+import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -16,7 +16,7 @@ import org.aksw.rdfunit.tests.executors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.rdfunit.ui.DatabuggerUISession;
+import org.aksw.rdfunit.ui.RDFUnitUISession;
 import org.aksw.rdfunit.ui.components.SchemaSelectorComponent;
 import org.aksw.rdfunit.ui.components.TestGenerationComponent;
 import org.aksw.rdfunit.ui.components.TestResultsComponent;
@@ -62,16 +62,16 @@ public class EndointTestTab extends VerticalLayout {
         File f = VaadinSession.getCurrent().getService().getBaseDirectory();
         String baseDir = f.getAbsolutePath() + "/data/";
 
-        DatabuggerConfiguration dbpediaConf = DatabuggerConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
-        DatabuggerConfiguration dbpediaLConf = DatabuggerConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
-        DatabuggerConfiguration dbpediaNLConf = DatabuggerConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
-        DatabuggerConfiguration linkedChemistry = new DatabuggerConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", "http://linkedchemistry.info/chembl/", "cheminf,cito");
-        DatabuggerConfiguration uriBurner = new DatabuggerConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", "", "foaf,skos,geo,dcterms,prov");
-        DatabuggerConfiguration bbcNature = new DatabuggerConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://www.bbc.co.uk/nature/", "dcterms,po,wo,wlo,foaf");
-        DatabuggerConfiguration musicBrainz = new DatabuggerConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://www.bbc.co.uk/nature/", "ov,mo,foaf");
-        DatabuggerConfiguration umls = new DatabuggerConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://linkedlifedata.com/resource/umls", "dcterms,skos,owl");
-        DatabuggerConfiguration umbel = new DatabuggerConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://umbel.org", "vann,skos,owl");
-        DatabuggerConfiguration datasw = new DatabuggerConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://data.semanticweb.org", "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf");
+        RDFUnitConfiguration dbpediaConf = RDFunitConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
+        RDFUnitConfiguration dbpediaLConf = RDFunitConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
+        RDFUnitConfiguration dbpediaNLConf = RDFunitConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
+        RDFUnitConfiguration linkedChemistry = new RDFUnitConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", "http://linkedchemistry.info/chembl/", "cheminf,cito");
+        RDFUnitConfiguration uriBurner = new RDFUnitConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", "", "foaf,skos,geo,dcterms,prov");
+        RDFUnitConfiguration bbcNature = new RDFUnitConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://www.bbc.co.uk/nature/", "dcterms,po,wo,wlo,foaf");
+        RDFUnitConfiguration musicBrainz = new RDFUnitConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://www.bbc.co.uk/nature/", "ov,mo,foaf");
+        RDFUnitConfiguration umls = new RDFUnitConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://linkedlifedata.com/resource/umls", "dcterms,skos,owl");
+        RDFUnitConfiguration umbel = new RDFUnitConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://umbel.org", "vann,skos,owl");
+        RDFUnitConfiguration datasw = new RDFUnitConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", "http://data.semanticweb.org", "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf");
 
 
         examplesSelect.addItem(uriBurner);
@@ -198,10 +198,10 @@ public class EndointTestTab extends VerticalLayout {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
                 Property property = valueChangeEvent.getProperty();
-                DatabuggerConfiguration configuration = (DatabuggerConfiguration) property.getValue();
+                RDFUnitConfiguration configuration = (RDFUnitConfiguration) property.getValue();
                 if (configuration != null) {
                     setExampleConfiguration(configuration);
-                    DatabuggerUISession.setDatabuggerConfiguration(configuration);
+                    RDFUnitUISession.setDatabuggerConfiguration(configuration);
                 }
             }
         });
@@ -220,19 +220,19 @@ public class EndointTestTab extends VerticalLayout {
             public void run() {
 
                 createConfigurationFromUser();
-                if (DatabuggerUISession.getDatabuggerConfiguration() != null) {
-                    Source dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
+                if (RDFUnitUISession.getDatabuggerConfiguration() != null) {
+                    Source dataset = RDFUnitUISession.getDatabuggerConfiguration().getDatasetSource();
 
-                    DatabuggerUISession.initDatabugger();
-                    DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
+                    RDFUnitUISession.initDatabugger();
+                    RDFUnitUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
-                    DatabuggerUISession.setTestSuite(
-                            DatabuggerUISession.getTestGeneratorExecutor().generateTestSuite(
-                                    DatabuggerUISession.getBaseDir() + "tests/",
+                    RDFUnitUISession.setTestSuite(
+                            RDFUnitUISession.getTestGeneratorExecutor().generateTestSuite(
+                                    RDFUnitUISession.getBaseDir() + "tests/",
                                     dataset,
-                                    DatabuggerUISession.getDatabugger().getAutoGenerators()));
+                                    RDFUnitUISession.getDatabugger().getAutoGenerators()));
 
-                    if (DatabuggerUISession.getTestSuite().size() != 0) {
+                    if (RDFUnitUISession.getTestSuite().size() != 0) {
                         UI.getCurrent().access(new Runnable() {
                             @Override
                             public void run() {
@@ -265,7 +265,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        DatabuggerUISession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutorMonitor() {
+        RDFUnitUISession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutorMonitor() {
             private long count = 0;
             private long total = 0;
             private long tests = 0;
@@ -321,7 +321,7 @@ public class EndointTestTab extends VerticalLayout {
         generateTestsCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                DatabuggerUISession.getTestGeneratorExecutor().cancel();
+                RDFUnitUISession.getTestGeneratorExecutor().cancel();
             }
         });
 
@@ -331,18 +331,18 @@ public class EndointTestTab extends VerticalLayout {
             public void run() {
 
                 //TODO make this cleaner
-                if (DatabuggerUISession.getDatabuggerConfiguration() != null) {
-                    Source dataset = DatabuggerUISession.getDatabuggerConfiguration().getDatasetSource();
+                if (RDFUnitUISession.getDatabuggerConfiguration() != null) {
+                    Source dataset = RDFUnitUISession.getDatabuggerConfiguration().getDatasetSource();
 
-                    DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
-                    String resultsFile = DatabuggerUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
+                    RDFUnitUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
+                    String resultsFile = RDFUnitUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
                     //TODO refactor this, do not use cache here
                     File f = new File(resultsFile);
                     try {
                         f.delete();
                     } catch (Exception e) {
                     }
-                    DatabuggerUISession.getTestExecutor().execute(dataset, DatabuggerUISession.getTestSuite(), 3);
+                    RDFUnitUISession.getTestExecutor().execute(dataset, RDFUnitUISession.getTestSuite(), 3);
                 }
 
             }
@@ -359,7 +359,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        DatabuggerUISession.getTestExecutor().addTestExecutorMonitor(new TestExecutorMonitor() {
+        RDFUnitUISession.getTestExecutor().addTestExecutorMonitor(new TestExecutorMonitor() {
             private long count = 0;
             private long totalErrors = 0;
             private long failTest = 0;
@@ -445,7 +445,7 @@ public class EndointTestTab extends VerticalLayout {
         startTestingCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                DatabuggerUISession.getTestExecutor().cancel();
+                RDFUnitUISession.getTestExecutor().cancel();
             }
         });
 
@@ -471,11 +471,11 @@ public class EndointTestTab extends VerticalLayout {
     }
 
     private void createConfigurationFromUser() {
-        DatabuggerUISession.setDatabuggerConfiguration(
-                new DatabuggerConfiguration(endpointField.getValue().replace("/sparql", ""), endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections()));
+        RDFUnitUISession.setDatabuggerConfiguration(
+                new RDFUnitConfiguration(endpointField.getValue().replace("/sparql", ""), endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections()));
     }
 
-    private void setExampleConfiguration(DatabuggerConfiguration configuration) {
+    private void setExampleConfiguration(RDFUnitConfiguration configuration) {
         if (!(endpointField.getValue().isEmpty() || graphField.getValue().isEmpty() || schemaSelectorWidget.getSelections().isEmpty())) {
             //TODO confirm dialog for clear
             clearConfigurations();

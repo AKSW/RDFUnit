@@ -21,7 +21,7 @@ public class PatternUtils {
     public static List<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
-        String sparqlSelectPatterns = DatabuggerUtils.getAllPrefixes() +
+        String sparqlSelectPatterns = RDFUnitUtils.getAllPrefixes() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
                 " ?sparqlPattern a ruto:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
@@ -29,7 +29,7 @@ public class PatternUtils {
                 "  ruto:sparqlWherePattern ?sparql ; " +
                 "  ruto:sparqlPrevalencePattern ?sparqlPrev ; " +
                 "} ORDER BY ?sparqlPattern";
-        String sparqlSelectParameters = DatabuggerUtils.getAllPrefixes() +
+        String sparqlSelectParameters = RDFUnitUtils.getAllPrefixes() +
                 " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
                 " %%PATTERN%%  ruto:parameter ?parameterURI . " +
                 " ?parameterURI a ruto:Parameter . " +

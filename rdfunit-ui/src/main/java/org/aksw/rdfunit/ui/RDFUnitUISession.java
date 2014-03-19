@@ -3,8 +3,8 @@ package org.aksw.rdfunit.ui;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import org.aksw.rdfunit.Databugger;
-import org.aksw.rdfunit.DatabuggerConfiguration;
-import org.aksw.rdfunit.Utils.DatabuggerUtils;
+import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.TripleFileReader;
 import org.aksw.rdfunit.io.TripleReader;
@@ -22,10 +22,10 @@ import java.util.ArrayList;
  * TODO refactor
  * Created: 11/15/13 9:52 AM
  */
-public class DatabuggerUISession extends VaadinSession {
+public class RDFUnitUISession extends VaadinSession {
 
 
-    public DatabuggerUISession(VaadinService service) {
+    public RDFUnitUISession(VaadinService service) {
         super(service);
     }
 
@@ -47,8 +47,8 @@ public class DatabuggerUISession extends VaadinSession {
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
         //Fill the service schema
-        DatabuggerUtils.fillSchemaServiceFromLOV();
-        DatabuggerUtils.fillSchemaServiceFromFile(getBaseDir() + "schemaDecl.csv");
+        RDFUnitUtils.fillSchemaServiceFromLOV();
+        RDFUnitUtils.fillSchemaServiceFromFile(getBaseDir() + "schemaDecl.csv");
     }
 
     private static String _getBaseDir() {
@@ -58,7 +58,7 @@ public class DatabuggerUISession extends VaadinSession {
 
     public static void initDatabugger() {
         try {
-            DatabuggerUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
+            RDFUnitUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
             TripleReader patternReader = new TripleFileReader(getBaseDir() + "patterns.ttl");
             TripleReader testGeneratorReader = new TripleFileReader(getBaseDir() + "testGenerators.ttl");
@@ -92,11 +92,11 @@ public class DatabuggerUISession extends VaadinSession {
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
     }
 
-    public static void setDatabuggerConfiguration(DatabuggerConfiguration configuration) {
-        VaadinSession.getCurrent().setAttribute(DatabuggerConfiguration.class, configuration);
+    public static void setDatabuggerConfiguration(RDFUnitConfiguration configuration) {
+        VaadinSession.getCurrent().setAttribute(RDFUnitConfiguration.class, configuration);
     }
 
-    public static DatabuggerConfiguration getDatabuggerConfiguration() {
-        return VaadinSession.getCurrent().getAttribute(DatabuggerConfiguration.class);
+    public static RDFUnitConfiguration getDatabuggerConfiguration() {
+        return VaadinSession.getCurrent().getAttribute(RDFUnitConfiguration.class);
     }
 }

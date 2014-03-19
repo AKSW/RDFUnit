@@ -39,7 +39,7 @@ public class TestUtils {
     public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-        String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
+        String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                 " ?generator " +
                 "    a ruto:TestGenerator ; " +
@@ -94,7 +94,7 @@ public class TestUtils {
 
         // Get all manual tests
 
-        String manualTestsSelectSparql = DatabuggerUtils.getAllPrefixes() +
+        String manualTestsSelectSparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
                 " ?testURI a ruto:ManualTestCase }";
 
@@ -111,7 +111,7 @@ public class TestUtils {
 
         // Get all pattern based tests
 
-        String patternTestsSelectSparql = DatabuggerUtils.getAllPrefixes() +
+        String patternTestsSelectSparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
                 " ?testURI a ruto:PatternBasedTestCase } ";
 
@@ -131,7 +131,7 @@ public class TestUtils {
 
     public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
 
-        String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
+        String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    ruto:appliesTo        ?appliesTo ;" +
@@ -198,7 +198,7 @@ public class TestUtils {
 
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
 
-        String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
+        String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    ruto:appliesTo      ?appliesTo ;" +
@@ -284,7 +284,7 @@ public class TestUtils {
 
         List<String> references = new ArrayList<String>();
 
-        String sparqlReferencesSelect = DatabuggerUtils.getAllPrefixes() +
+        String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?references WHERE { " +
                 " <" + testURI + "> ruto:references ?references . }";
 
@@ -308,7 +308,7 @@ public class TestUtils {
 
         List<Binding> bindings = new ArrayList<Binding>();
 
-        String sparqlReferencesSelect = DatabuggerUtils.getAllPrefixes() +
+        String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
                 " <" + testURI + "> ruto:binding ?binding ." +
                 " ?binding ruto:bindingValue ?value ;" +

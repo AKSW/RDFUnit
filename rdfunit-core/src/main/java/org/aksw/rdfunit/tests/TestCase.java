@@ -8,7 +8,7 @@ import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
-import org.aksw.rdfunit.Utils.DatabuggerUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseException;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlQuery() {
-        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getSparql());
+        return QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getSparql());
     }
 
     public String getSparqlAsCount() {
@@ -66,7 +66,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlAsCountQuery() {
-        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getSparqlAsCount());
+        return QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getSparqlAsCount());
     }
 
     public String getSparqlAsAsk() {
@@ -104,7 +104,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlPrevalenceQuery() {
-        return QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getSparqlPrevalence());
+        return QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getSparqlPrevalence());
     }
 
     public String getTestURI() {
@@ -143,9 +143,9 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     private void validateSPARQL(String sparql, String type) throws TestCaseException {
         try {
-            Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + sparql);
+            Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + sparql);
         } catch (QueryParseException e) {
-            throw new TestCaseException("QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + DatabuggerUtils.getAllPrefixes() + sparql);
+            throw new TestCaseException("QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + RDFUnitUtils.getAllPrefixes() + sparql);
         }
     }
 

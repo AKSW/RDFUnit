@@ -15,7 +15,7 @@ import java.util.List;
  * Holds a configuration for a complete test
  * Created: 11/15/13 11:50 AM
  */
-public class DatabuggerConfiguration {
+public class RDFUnitConfiguration {
 
     private final String prefix;
     private final String uri;
@@ -27,7 +27,7 @@ public class DatabuggerConfiguration {
     private final List<SchemaSource> sources;
 
 
-    public DatabuggerConfiguration(String prefix, String uri, String endpoint, String graphs, List<SchemaSource> sources) {
+    public RDFUnitConfiguration(String prefix, String uri, String endpoint, String graphs, List<SchemaSource> sources) {
         this.prefix = prefix;
         this.uri = uri;
         this.endpoint = endpoint;
@@ -35,15 +35,15 @@ public class DatabuggerConfiguration {
         this.sources = sources;
     }
 
-    public DatabuggerConfiguration(String uri, String endpoint, String graphs, List<SchemaSource> sources) {
+    public RDFUnitConfiguration(String uri, String endpoint, String graphs, List<SchemaSource> sources) {
         this(CacheUtils.getAutoPrefixForURI(uri), uri, endpoint, graphs, sources);
     }
 
-    public DatabuggerConfiguration(String uri, String endpoint, String graphs, String[] sourcePrefixes) {
+    public RDFUnitConfiguration(String uri, String endpoint, String graphs, String[] sourcePrefixes) {
         this(uri, endpoint, graphs, SchemaService.getSourceList(null, Arrays.asList(sourcePrefixes)));
     }
 
-    public DatabuggerConfiguration(String uri, String endpoint, String graphs, String sourcePrefixes) {
+    public RDFUnitConfiguration(String uri, String endpoint, String graphs, String sourcePrefixes) {
         this(uri, endpoint, graphs, sourcePrefixes.split(","));
     }
 

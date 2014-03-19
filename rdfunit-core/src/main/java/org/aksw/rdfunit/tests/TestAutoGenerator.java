@@ -3,7 +3,7 @@ package org.aksw.rdfunit.tests;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.core.Var;
-import org.aksw.rdfunit.Utils.DatabuggerUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
@@ -52,9 +52,9 @@ public class TestAutoGenerator {
             return false;
         }
         try {
-            q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getQuery());
+            q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getQuery());
         } catch (Exception e) {
-            log.error(getURI() + " Cannot parse query:\n" + DatabuggerUtils.getAllPrefixes() + getQuery());
+            log.error(getURI() + " Cannot parse query:\n" + RDFUnitUtils.getAllPrefixes() + getQuery());
             e.printStackTrace();
             return false;
         }
@@ -72,7 +72,7 @@ public class TestAutoGenerator {
     public List<TestCase> generate(Source source) {
         List<TestCase> tests = new ArrayList<TestCase>();
 
-        Query q = QueryFactory.create(DatabuggerUtils.getAllPrefixes() + getQuery());
+        Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
         ResultSet rs = qe.execSelect();
 

@@ -19,7 +19,7 @@ import java.util.List;
 public class SparqlUtils {
     static public List<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
         List<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
-        String sparql = DatabuggerUtils.getAllPrefixes() +
+        String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
                 " <" + uri + "> ruto:resultAnnotation ?annotation . " +
                 " ?annotation a ruto:ResultAnnotation ; " +

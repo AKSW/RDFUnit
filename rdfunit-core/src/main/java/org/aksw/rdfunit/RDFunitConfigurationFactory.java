@@ -12,8 +12,8 @@ import java.util.List;
  * Creates DatabuggerConfigurations
  * Created: 11/15/13 12:15 PM
  */
-public class DatabuggerConfigurationFactory {
-    public static DatabuggerConfiguration createDBpediaConfiguration(String baseFolder) {
+public class RDFunitConfigurationFactory {
+    public static RDFUnitConfiguration createDBpediaConfiguration(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
@@ -22,28 +22,28 @@ public class DatabuggerConfigurationFactory {
         //Enriched Schema (cached in folder)
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "dbo", "http://dbpedia.org"));
 
-        return new DatabuggerConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
+        return new RDFUnitConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
     }
 
-    public static DatabuggerConfiguration createDBpediaConfigurationSimple(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaConfigurationSimple(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
-        return new DatabuggerConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
+        return new RDFUnitConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", "http://dbpedia.org", sources);
     }
 
-    public static DatabuggerConfiguration createDBpediaLiveConfigurationSimple(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaLiveConfigurationSimple(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
-        return new DatabuggerConfiguration("live.dbpedia.org", "http://live.dbpedia.org", "http://live.dbpedia.org/sparql", "http://dbpedia.org", sources);
+        return new RDFUnitConfiguration("live.dbpedia.org", "http://live.dbpedia.org", "http://live.dbpedia.org/sparql", "http://dbpedia.org", sources);
     }
 
-    public static DatabuggerConfiguration createDatosBneEsDataset(String baseFolder) {
+    public static RDFUnitConfiguration createDatosBneEsDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
@@ -51,10 +51,10 @@ public class DatabuggerConfigurationFactory {
 
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "datos", "http://datos.bne.es"));
 
-        return new DatabuggerConfiguration("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", "http://datos.bne.es", sources);
+        return new RDFUnitConfiguration("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", "http://datos.bne.es", sources);
     }
 
-    public static DatabuggerConfiguration createLCSHDataset(String baseFolder) {
+    public static RDFUnitConfiguration createLCSHDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
@@ -62,11 +62,11 @@ public class DatabuggerConfigurationFactory {
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "loc", "http://id.loc.gov"));
 
 
-        return new DatabuggerConfiguration("id.loc.gov", "http://id.loc.gov", "http://localhost:8891/sparql", "http://id.loc.gov", sources);
+        return new RDFUnitConfiguration("id.loc.gov", "http://id.loc.gov", "http://localhost:8891/sparql", "http://id.loc.gov", sources);
     }
 
 
-    public static DatabuggerConfiguration createDBpediaNLDataset(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaNLDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
@@ -75,25 +75,25 @@ public class DatabuggerConfigurationFactory {
         //Enriched Schema (cached in folder)
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "dbo", "http://nl.dbpedia.org"));
 
-        return new DatabuggerConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
+        return new RDFUnitConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
     }
 
-    public static DatabuggerConfiguration createDBpediaNLDatasetSimple(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaNLDatasetSimple(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
-        return new DatabuggerConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
+        return new RDFUnitConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", "http://nl.dbpedia.org", sources);
     }
 
-    public static DatabuggerConfiguration createLGDDataset(String baseFolder) {
+    public static RDFUnitConfiguration createLGDDataset(String baseFolder) {
 
         List<SchemaSource> sources = SchemaService.getSourceList(baseFolder, Arrays.asList(
                 "ngeo", "spatial", "lgdm", "lgdo", "dcterms", "gsp", /*"rdf",
                 "rdfs",*/ "owl", "geo", "skos", "foaf"));
 
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "lgd", "http://linkedgeodata.org"));
-        return new DatabuggerConfiguration("linkedgeodata.org", "http://linkedgeodata.org", "http://localhost:8891/sparql", "http://linkedgeodata.org", sources);
+        return new RDFUnitConfiguration("linkedgeodata.org", "http://linkedgeodata.org", "http://localhost:8891/sparql", "http://linkedgeodata.org", sources);
     }
 }

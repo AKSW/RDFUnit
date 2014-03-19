@@ -7,7 +7,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.Utils.DatabuggerUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
@@ -128,16 +128,16 @@ public class Main {
         /* </cliStuff> */
 
 
-        if (!DatabuggerUtils.fileExists(dataFolder)) {
+        if (!RDFUnitUtils.fileExists(dataFolder)) {
             log.error("Path : " + dataFolder + " does not exists, use -f argument");
             System.exit(1);
         }
 
 
-        DatabuggerUtils.fillPrefixService(dataFolder + "prefixes.ttl");
+        RDFUnitUtils.fillPrefixService(dataFolder + "prefixes.ttl");
 
-        DatabuggerUtils.fillSchemaServiceFromLOV();
-        DatabuggerUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
+        RDFUnitUtils.fillSchemaServiceFromLOV();
+        RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
 
         TripleReader patternReader = new TripleFileReader(dataFolder + "patterns.ttl");
@@ -170,7 +170,7 @@ public class Main {
             sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedDatasetPrefix, datasetUri));
 
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        DatabuggerConfiguration testContext = new DatabuggerConfiguration(datasetUri,
+        RDFUnitConfiguration testContext = new RDFUnitConfiguration(datasetUri,
                 endpointUriStr, graphUriStrs, sources);
 
         final Source dataset = testContext.getDatasetSource();

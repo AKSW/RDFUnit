@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.coverage;
 
 import com.hp.hpl.jena.query.*;
-import org.aksw.rdfunit.Utils.DatabuggerUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class TestCoverageEvaluator {
     private final List<String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "LITRAN");
     private final List<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
-    private final String sparql = DatabuggerUtils.getAllPrefixes() +
+    private final String sparql = RDFUnitUtils.getAllPrefixes() +
             " SELECT distinct ?reference WHERE {\n" +
             "   ?t a  ruto:TestCase ; \n" +
             "      ruto:basedOnPattern ?pattern ; \n" +

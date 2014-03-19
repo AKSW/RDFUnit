@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import org.aksw.rdfunit.Utils.DatabuggerUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PrefixService;
@@ -42,7 +42,7 @@ public class PatternBasedTestCase extends TestCase {
         resource
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "PatternBasedTestCase"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("rutp") + pattern.getId()))
-                .addProperty(RDFS.comment, "SPARQL Query: \n" + DatabuggerUtils.getAllPrefixes() + getSparql() + "\n Pprevalence SPARQL Query :\n" + getSparqlPrevalence());
+                .addProperty(RDFS.comment, "SPARQL Query: \n" + RDFUnitUtils.getAllPrefixes() + getSparql() + "\n Pprevalence SPARQL Query :\n" + getSparqlPrevalence());
 
 
         for (Binding binding : bindings) {
