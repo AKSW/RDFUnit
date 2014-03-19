@@ -1,9 +1,9 @@
-Databugger
+RDFUnit
 ==========
 
-This repository contains the *Databugger* -- a tool for test-driven quality evaluation of Linked Data quality.
+This repository contains the *RDFUnit* -- a tool for test-driven quality evaluation of Linked Data quality.
 Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in our [submission](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf) for World Wide Web Conference 2014.
-The results of this work are available [here](https://github.com/AKSW/Databugger/tree/master/data/archive/WWW_2014) . 
+The results of this work are available [here](https://github.com/AKSW/RDFUnit/tree/master/data/archive/WWW_2014) .
 This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
 After having instantiated such patterns for a concrete dataset possible errors of the corresponding kind can be detected. An example would be the following pattern:
 
@@ -22,7 +22,7 @@ SELECT ?s WHERE {
 ```
 referring to the case where an individual died before it was born.
 
-The Databugger tool provides a vocabulary to define such pattern instantiations called *data quality test cases*.
+The RDFUnit tool provides a vocabulary to define such pattern instantiations called *data quality test cases*.
 Apart from manual instantiations some of the test patterns can also be instantiated automatically.
 These test cases are then specific to a given schema and can be re-used.
 For now we support the following axioms: 
@@ -54,8 +54,8 @@ To run a data quality assessment of a certain SPARQL endpoint the following step
 
 To do so, you first have to clone this repository and install the software using the Maven 3 build tool as follows:
 ```console
-$ git clone https://github.com/AKSW/Databugger.git
-$ cd Databugger/
+$ git clone https://github.com/AKSW/RDFUnit.git
+$ cd RDFUnit/
 $ mvn clean install
 
 # argument help
@@ -104,8 +104,8 @@ At the moment you can store your manually generated queries in the respective `M
 
 ### Get/create data quality test cases for schemas
 
-Databugger already resolves all schema prefixes with the LOV dataset and can automatically download and generate tests for all 361 LOV vocabularies.
-If your vocabulary you want to use is not there you can place it in the DatabuggerUtils.fillSchemaService() accordingly.
+RDFUnit already resolves all schema prefixes with the LOV dataset and can automatically download and generate tests for all 361 LOV vocabularies.
+If your vocabulary you want to use is not there you can place it in the RDFUnitUtils.fillSchemaService() accordingly.
 
 ### 3) Enrich the schema of the considered dataset
 

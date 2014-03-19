@@ -9,7 +9,7 @@
     </parent>
     <artifactId>rdfunit-ui</artifactId>
     <packaging>war</packaging>
-    <name>Databugger - UI</name>
+    <name>RDFUnit - UI</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

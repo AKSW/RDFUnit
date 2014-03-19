@@ -1,4 +1,4 @@
-Databugger -UI
+RDFUnit -UI
 ==========
 
 In order to deploy the ui in java server just run the following command from the root folder

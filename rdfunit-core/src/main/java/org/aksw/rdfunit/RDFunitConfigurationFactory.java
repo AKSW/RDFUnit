@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
- * Creates DatabuggerConfigurations
+ * Creates RDFUnitConfigurations
  * Created: 11/15/13 12:15 PM
  */
 public class RDFunitConfigurationFactory {

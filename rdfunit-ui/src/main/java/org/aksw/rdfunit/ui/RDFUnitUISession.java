@@ -56,19 +56,19 @@ public class RDFUnitUISession extends VaadinSession {
         return f.getAbsolutePath() + "/data/";
     }
 
-    public static void initDatabugger() {
+    public static void initRDFUnit() {
         try {
             RDFUnitUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
             TripleReader patternReader = new TripleFileReader(getBaseDir() + "patterns.ttl");
             TripleReader testGeneratorReader = new TripleFileReader(getBaseDir() + "testGenerators.ttl");
-            getDatabugger().initPatternsAndGenerators(patternReader, testGeneratorReader);
+            getRDFUnit().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO
         }
     }
 
-    public static RDFUnit getDatabugger() {
+    public static RDFUnit getRDFUnit() {
         return VaadinSession.getCurrent().getAttribute(RDFUnit.class);
     }
 
@@ -92,11 +92,11 @@ public class RDFUnitUISession extends VaadinSession {
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
     }
 
-    public static void setDatabuggerConfiguration(RDFUnitConfiguration configuration) {
+    public static void setRDFUnitConfiguration(RDFUnitConfiguration configuration) {
         VaadinSession.getCurrent().setAttribute(RDFUnitConfiguration.class, configuration);
     }
 
-    public static RDFUnitConfiguration getDatabuggerConfiguration() {
+    public static RDFUnitConfiguration getRDFUnitConfiguration() {
         return VaadinSession.getCurrent().getAttribute(RDFUnitConfiguration.class);
     }
 }

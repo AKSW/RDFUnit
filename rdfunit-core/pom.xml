@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>rdfunit-core</artifactId>
-    <name>Databugger - Core</name>
+    <name>RDFUnit - Core</name>
 
     <dependencies>
 

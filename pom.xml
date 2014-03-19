@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
     <version>0.3</version>
     <name>Data Debugger - Parent</name>
-    <url>http://github.org/AKSW/Databugger</url>
+    <url>http://github.org/AKSW/RDFUnit</url>
 
     <modules>
         <!--<module></module> -->

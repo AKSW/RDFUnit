@@ -87,13 +87,13 @@ public class RDFUnitUI extends UI {
         headerLayout.setHeight("80px");
         headerLayout.setId("header");
 
-        VerticalLayout databuggerLogo = new VerticalLayout();
-        databuggerLogo.setStyleName("logo");
-        databuggerLogo.addComponent(new Label("<h1>RDFUnit</h1>", ContentMode.HTML));
-        databuggerLogo.addComponent(new Label("<span>A Data Debugging Framework</span>", ContentMode.HTML));
+        VerticalLayout rdfunitLogo = new VerticalLayout();
+        rdfunitLogo.setStyleName("logo");
+        rdfunitLogo.addComponent(new Label("<h1>RDFUnit</h1>", ContentMode.HTML));
+        rdfunitLogo.addComponent(new Label("<span>A Data Debugging Framework</span>", ContentMode.HTML));
 
 
-        headerLayout.addComponent(databuggerLogo);
+        headerLayout.addComponent(rdfunitLogo);
 
         Link aksw = new Link("",
                 new ExternalResource("http://aksw.org/"));
