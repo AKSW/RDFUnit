@@ -1,9 +1,9 @@
-Package: databugger
+Package: rdfunit
 Version: [[version]]
 Section: misc
 Priority: optional
 Architecture: all
-Homepage: http://aksw.org/Projects/Databugger.html
+Homepage: http://aksw.org/Projects/RDFUnit.html
 Depends: openjdk-6-jre | sun-java6-jre
 Maintainer: Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.des>
 Description: a tool for test-driven quality evaluation of Linked Data quality

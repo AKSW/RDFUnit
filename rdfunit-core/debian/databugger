@@ -1,17 +1,17 @@
 #!/usr/bin/perl
 if ( "-f" ~~ @argv ){
-	system ("java", "-jar", "/etc/share/java/databugger/*.jar", @argv);
+	system ("java", "-jar", "/etc/share/java/rdfunit/*.jar", @argv);
 	print("a");
 } else {
 	push (@argv, "-f");
 	push (@argv, "~/.databugger");
 	if (! (-d "$ENV{HOME}/.databugger")){
-		print("Creating databugger dir under ~/.databugger\n");
+		print("Creating databugger dir under ~/.rdfunit\n");
 		$ok=mkdir("$ENV{HOME}/databugger",0777);
 		print "$!\n" if ($ok == 0);
-		print ("Copying data to ~/.databugger\n");
-		system("cp","-r","/etc/share/java/databugger/data/","$ENV{HOME}/.databugger/");
+		print ("Copying data to ~/.rdfunit\n");
+		system("cp","-r","/etc/share/java/rdfunit/data/","$ENV{HOME}/.databugger/");
 	}
-	system ("java", "-jar", "/etc/share/java/databugger/databugger-core.jar", @argv);
+	system ("java", "-jar", "/etc/share/java/rdfunit/rdfunit-core.jar", @argv);
 
 }
