@@ -15,7 +15,7 @@
 
     <http://purl.org/vocab/vann/preferredNamespacePrefix> "ruto" ;
     <http://purl.org/vocab/vann/preferredNamespaceUri> "http://rdfunit.aksw.org/ns/core#" ;
-    <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/Databugger/commits/master/ns> ;
+    <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/RDFUnit/commits/master/ns> ;
 
     owl:versionInfo "0.3" ;
 
@@ -38,12 +38,12 @@
 #	dc:description <diagram url> .
 
     rdfs:comment
-        """The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+        """The RDFUnit ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
     dc:description
-        """The Databugger ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+        """The RDFUnit ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
-    rdfs:seeAlso <http://aksw.org/Projects/Databugger.html> .
+    rdfs:seeAlso <http://aksw.org/Projects/RDFUnit.html> .
 
 
 #################################################################
