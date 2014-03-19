@@ -8,10 +8,10 @@
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 @prefix prov: <http://www.w3.org/ns/prov#>.
 
-@prefix tddp: <http://rdfunit.aksw.org/data/patterns#> .
-@prefix tddo: <http://rdfunit.aksw.org/ns/core#> .
-@prefix tddg: <http://rdfunit.aksw.org/data/generators#> .
-@prefix tddt: <http://rdfunit.aksw.org/data/tests#> .
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 
 
 

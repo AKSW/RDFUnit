@@ -41,10 +41,10 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         return super.serialize(model, sourceURI)
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "AggregatedTestResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultCount"),
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "AggregatedTestResult"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "resultCount"),
                         ResourceFactory.createTypedLiteral("" + errorCount, XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultPrevalence"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "resultPrevalence"),
                         ResourceFactory.createTypedLiteral("" + prevalenceCount, XSDDatatype.XSDnonNegativeInteger));
     }
 

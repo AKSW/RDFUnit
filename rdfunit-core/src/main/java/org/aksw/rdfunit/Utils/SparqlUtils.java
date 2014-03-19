@@ -21,10 +21,10 @@ public class SparqlUtils {
         List<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
         String sparql = DatabuggerUtils.getAllPrefixes() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
-                " <" + uri + "> tddo:resultAnnotation ?annotation . " +
-                " ?annotation a tddo:ResultAnnotation ; " +
-                "   tddo:annotationProperty ?annotationProperty ; " +
-                "   tddo:annotationValue ?annotationValue . } ";
+                " <" + uri + "> ruto:resultAnnotation ?annotation . " +
+                " ?annotation a ruto:ResultAnnotation ; " +
+                "   ruto:annotationProperty ?annotationProperty ; " +
+                "   ruto:annotationValue ?annotationValue . } ";
 
         QueryExecution qe = null;
 

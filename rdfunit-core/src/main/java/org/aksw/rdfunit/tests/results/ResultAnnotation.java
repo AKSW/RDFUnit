@@ -25,9 +25,9 @@ public class ResultAnnotation {
 
     public Resource serializeAsTestCase(Model model) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "ResultAnnotation"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "annotationProperty"), model.createResource(annotationProperty))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "annotationValue"), annotationValue);
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "ResultAnnotation"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "annotationProperty"), model.createResource(annotationProperty))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "annotationValue"), annotationValue);
     }
 
     public String getAnnotationProperty() {

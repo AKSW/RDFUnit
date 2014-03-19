@@ -31,10 +31,10 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         Resource resource = super.serialize(model, sourceURI)
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "ExtendedTestCaseResult"));
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "ExtendedTestCaseResult"));
 
         for (ResultAnnotation annotation : resultAnnotations) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "resultAnnotation"), annotation.serializeAsTestCase(model));
+            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "resultAnnotation"), annotation.serializeAsTestCase(model));
         }
 
         return resource;

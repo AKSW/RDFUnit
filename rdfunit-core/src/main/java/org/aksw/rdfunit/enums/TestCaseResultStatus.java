@@ -17,7 +17,7 @@ public enum TestCaseResultStatus {
 
     public String getUri() {
         // TODO make prefix configurable
-        return PrefixService.getPrefix("tddo") + "ResultStatus" + name();
+        return PrefixService.getPrefix("ruto") + "ResultStatus" + name();
     }
 
     @Override
@@ -27,7 +27,7 @@ public enum TestCaseResultStatus {
 
     public static TestCaseResultStatus resolve(String value) {
 
-        String s = value.replace(PrefixService.getPrefix("tddo") + "ResultStatus", "");
+        String s = value.replace(PrefixService.getPrefix("ruto") + "ResultStatus", "");
         if (s.equals("Success")) {
             return Success;
         } else if (s.equals("Fail")) {

@@ -1,157 +1,157 @@
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
-@prefix tddg:    <http://rdfunit.aksw.org/data/generators#> .
+@prefix rutg:    <http://rdfunit.aksw.org/data/generators#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo:    <http://rdfunit.aksw.org/ns/core#> .
-@prefix tddp:    <http://rdfunit.aksw.org/data/patterns#> .
-@prefix tddt:    <http://rdfunit.aksw.org/data/tests#> .
+@prefix ruto:    <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 
 # TODO Check this one (http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf)
 # Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
 
 # multiple languages in prefLabel (en)
-tddt:skos-ONELANG-singleEnPrefLabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:ONELANG ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:ONELANG-P1
+rutt:skos-ONELANG-singleEnPrefLabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:ONELANG ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:ONELANG-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "en" ;
-                tddo:parameter tddp:ONELANG-V1
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "en" ;
+                ruto:parameter rutp:ONELANG-V1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel should have one value for English'" ;
-                tddo:parameter tddp:ONELANG-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel should have one value for English'" ;
+                ruto:parameter rutp:ONELANG-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # multiple languages in prefLabel (es)
-tddt:skos-ONELANG-singleEsPrefLabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:ONELANG ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:ONELANG-P1
+rutt:skos-ONELANG-singleEsPrefLabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:ONELANG ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:ONELANG-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "es" ;
-                tddo:parameter tddp:ONELANG-V1
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "es" ;
+                ruto:parameter rutp:ONELANG-V1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel should have one value for Spanish'" ;
-                tddo:parameter tddp:ONELANG-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel should have one value for Spanish'" ;
+                ruto:parameter rutp:ONELANG-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 # multiple languages in prefLabel (fr)
-tddt:skos-ONELANG-singleFrPrefLabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:ONELANG ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:ONELANG-P1
+rutt:skos-ONELANG-singleFrPrefLabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:ONELANG ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:ONELANG-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "fr" ;
-                tddo:parameter tddp:ONELANG-V1
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "fr" ;
+                ruto:parameter rutp:ONELANG-V1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel should have one value for French'" ;
-                tddo:parameter tddp:ONELANG-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel should have one value for French'" ;
+                ruto:parameter rutp:ONELANG-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # multiple languages in prefLabel (de)
-tddt:skos-ONELANG-singleDePrefLabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:ONELANG ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:ONELANG-P1
+rutt:skos-ONELANG-singleDePrefLabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:ONELANG ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:ONELANG-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "de" ;
-                tddo:parameter tddp:ONELANG-V1
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "de" ;
+                ruto:parameter rutp:ONELANG-V1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel should have one value for German'" ;
-                tddo:parameter tddp:ONELANG-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel should have one value for German'" ;
+                ruto:parameter rutp:ONELANG-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing  rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
-tddt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
-      a       tddo:ManualTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#ConceptScheme>, <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel rlog:WARN ;
-      tddo:sparqlWhere """ {
+rutt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
+      a       ruto:ManualTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#ConceptScheme>, <http://www.w3.org/2000/01/rdf-schema#label> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel rlog:WARN ;
+      ruto:sparqlWhere """ {
                                  ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
                                  FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
                                  FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }
                                  BIND ('A skos:ConceptScheme should contain one of skos:label or skos:prefLabel' AS ?message)} """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ .
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#Concept>
 # TODO not according to pattern (2 filters)
-tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
-      a       tddo:ManualTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel rlog:WARN ;
-      tddo:sparqlWhere """ {
+rutt:skos-TYPRODEP-ConseptWithoutRdfslabel
+      a       ruto:ManualTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#label> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel rlog:WARN ;
+      ruto:sparqlWhere """ {
                                  ?resource a <http://www.w3.org/2004/02/skos/core#Concept> .
                                  FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
                                  FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
                                  
 # Loose Concepts
@@ -159,142 +159,142 @@ tddt:skos-TYPRODEP-ConseptWithoutRdfslabel
 # AmbiguousprefLabelvalues
 
 # skos:prefLabel cannot exists more than once 
-tddt:skos-CARD-prefLabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLCARD ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:OWLCARD-P1
+rutt:skos-CARD-prefLabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLCARD ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:OWLCARD-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue ">" ;
-                tddo:parameter tddp:OWLCARD-OP
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue ">" ;
+                ruto:parameter rutp:OWLCARD-OP
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "1" ;
-                tddo:parameter tddp:OWLCARD-V1
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "1" ;
+                ruto:parameter rutp:OWLCARD-V1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel should exist once for every resource'" ;
-                tddo:parameter tddp:OWLCARD-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel should exist once for every resource'" ;
+                ruto:parameter rutp:OWLCARD-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
-tddt:skos-OWLDISJP-skosaltpreflabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-skosaltpreflabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#altLabel> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#altLabel> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel and skos:altLabel should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel and skos:altLabel should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> , <http://www.w3.org/2004/02/skos/core#altLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> , <http://www.w3.org/2004/02/skos/core#altLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 # skos:prefLabel is not a skos:hiddenLabel
-tddt:skos-OWLDISJP-skoshiddenpreflabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-skoshiddenpreflabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel and skos:hiddenLabel should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel and skos:hiddenLabel should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> , <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> , <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
                                  
 # skos:altLabel is not a skos:hiddenLabel
-tddt:skos-OWLDISJP-skosalthiddenlabel
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#altLabel> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-skosalthiddenlabel
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#altLabel> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:altLabel and skos:hiddenLabel should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:altLabel and skos:hiddenLabel should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> , <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#altLabel> , <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
                          
 # Disjoint Semantic Relations
 # skos:related is not a skos:broaderTransitive
-tddt:skos-OWLDISJP-skosrelatedbroadertransitive
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#related> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-skosrelatedbroadertransitive
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#related> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:related and skos:broaderTransitive should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:related and skos:broaderTransitive should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#related> , <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#related> , <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
@@ -302,257 +302,257 @@ tddt:skos-OWLDISJP-skosrelatedbroadertransitive
 
 # Extra Whitespace
 # skos:altLabel whitespace
-tddt:skos-MATCH-altlabelwhitespace
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#altLabel> ;
-                tddo:parameter tddp:MATCH-P1
+rutt:skos-MATCH-altlabelwhitespace
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:MATCH ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#altLabel> ;
+                ruto:parameter rutp:MATCH-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue " " ;
-                tddo:parameter tddp:MATCH-OP
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue " " ;
+                ruto:parameter rutp:MATCH-OP
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue """^\\\\s*$""" ;
-                tddo:parameter tddp:MATCH-REGEX
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue """^\\\\s*$""" ;
+                ruto:parameter rutp:MATCH-REGEX
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:altLabel should not be empty'" ;
-                tddo:parameter tddp:MATCH-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:altLabel should not be empty'" ;
+                ruto:parameter rutp:MATCH-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:prefLabel whitespace
-tddt:skos-MATCH-preflabelwhitespace
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                tddo:parameter tddp:MATCH-P1
+rutt:skos-MATCH-preflabelwhitespace
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:MATCH ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+                ruto:parameter rutp:MATCH-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue " " ;
-                tddo:parameter tddp:MATCH-OP
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue " " ;
+                ruto:parameter rutp:MATCH-OP
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue """^\\\\s*$""" ;
-                tddo:parameter tddp:MATCH-REGEX
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue """^\\\\s*$""" ;
+                ruto:parameter rutp:MATCH-REGEX
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:prefLabel should not be empty'" ;
-                tddo:parameter tddp:MATCH-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:prefLabel should not be empty'" ;
+                ruto:parameter rutp:MATCH-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:hiddenLabel whitespace
-tddt:skos-MATCH-hiddenlabelwhitespace
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-                tddo:parameter tddp:MATCH-P1
+rutt:skos-MATCH-hiddenlabelwhitespace
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:MATCH ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+                ruto:parameter rutp:MATCH-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue " " ;
-                tddo:parameter tddp:MATCH-OP
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue " " ;
+                ruto:parameter rutp:MATCH-OP
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue """^\\\\s*$""" ;
-                tddo:parameter tddp:MATCH-REGEX
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue """^\\\\s*$""" ;
+                ruto:parameter rutp:MATCH-REGEX
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:hiddenLabel should not be empty'" ;
-                tddo:parameter tddp:MATCH-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:hiddenLabel should not be empty'" ;
+                ruto:parameter rutp:MATCH-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:broader and skos:narrower should be disjoint
-tddt:skos-OWLDISJP-broaderDisjNarrower
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#broader> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-broaderDisjNarrower
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#broader> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#narrower> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#narrower> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:broader and skos:narrower should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:broader and skos:narrower should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#narrower> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#narrower> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:broader and skos:related should be disjoint
-tddt:skos-OWLDISJP-broaderDisjRelated
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#broader> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-broaderDisjRelated
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#broader> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#related> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#related> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:broader and skos:related should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:broader and skos:related should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#related> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#related> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 # skos:narrower and skos:related should be disjoint
-tddt:skos-OWLDISJP-narrowerDisjRelated
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#narrower> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-narrowerDisjRelated
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#narrower> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#related> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#related> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:narrower and skos:related should be disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:narrower and skos:related should be disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#related> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#related> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:exactMatch and skos:broadMatch should be disjoint
-tddt:skos-OWLDISJP-exactMatchDisjbroadMatch
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#exactMatch> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-exactMatchDisjbroadMatch
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#exactMatch> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#broadMatch> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#broadMatch> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:exactMatch and skos:broadMatch are disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:exactMatch and skos:broadMatch are disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#broadMatch> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#broadMatch> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:exactMatch and skos:relatedMatch should be disjoint
-tddt:skos-OWLDISJP-exactMatchDisjrelatedMatch
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#exactMatch> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-exactMatchDisjrelatedMatch
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#exactMatch> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:exactMatch and skos:relatedMatch are disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:exactMatch and skos:relatedMatch are disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> , <http://www.w3.org/2004/02/skos/core#exactMatch> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#relatedMatch> , <http://www.w3.org/2004/02/skos/core#exactMatch> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .
 
 
 # skos:broadMatch and skos:relatedMatch should be disjoint
-tddt:skos-OWLDISJP-broadMatchDisjrelatedMatch
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLDISJP ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#broadMatch> ;
-                tddo:parameter tddp:OWLDISJP-P1
+rutt:skos-OWLDISJP-broadMatchDisjrelatedMatch
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLDISJP ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#broadMatch> ;
+                ruto:parameter rutp:OWLDISJP-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
-                tddo:parameter tddp:OWLDISJP-P2
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2004/02/skos/core#relatedMatch> ;
+                ruto:parameter rutp:OWLDISJP-P2
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'skos:broadMatch and skos:relatedMatch are disjoint'" ;
-                tddo:parameter tddp:OWLDISJP-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'skos:broadMatch and skos:relatedMatch are disjoint'" ;
+                ruto:parameter rutp:OWLDISJP-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2004/02/skos/core#relatedMatch> , <http://www.w3.org/2004/02/skos/core#broadMAtch> ;
-      tddo:source <http://www.w3.org/2004/02/skos/core#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2004/02/skos/core#relatedMatch> , <http://www.w3.org/2004/02/skos/core#broadMAtch> ;
+      ruto:source <http://www.w3.org/2004/02/skos/core#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .

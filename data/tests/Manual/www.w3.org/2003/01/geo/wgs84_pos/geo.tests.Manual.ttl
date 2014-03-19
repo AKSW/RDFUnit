@@ -1,118 +1,118 @@
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
-@prefix tddg:    <http://rdfunit.aksw.org/data/generators#> .
+@prefix rutg:    <http://rdfunit.aksw.org/data/generators#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo:    <http://rdfunit.aksw.org/ns/core#> .
-@prefix tddp:    <http://rdfunit.aksw.org/data/patterns#> .
-@prefix tddt:    <http://rdfunit.aksw.org/data/tests#> .
+@prefix ruto:    <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 
 
 
 # geo:lat must be in the range [-90,90]
-tddt:dbo-LITRAN-rangegeolatitude
-    a       tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Schema ;
-    tddo:basedOnPattern tddp:LITRAN ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "[]" ;
-                tddo:parameter tddp:LITRAN-T1
+rutt:dbo-LITRAN-rangegeolatitude
+    a       ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Schema ;
+    ruto:basedOnPattern rutp:LITRAN ;
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "[]" ;
+                ruto:parameter rutp:LITRAN-T1
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-                tddo:parameter tddp:LITRAN-P1
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+                ruto:parameter rutp:LITRAN-P1
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "!" ;
-                tddo:parameter tddp:LITRAN-NOP
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "!" ;
+                ruto:parameter rutp:LITRAN-NOP
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "-90" ;
-                tddo:parameter tddp:LITRAN-valueMin
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "-90" ;
+                ruto:parameter rutp:LITRAN-valueMin
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "90" ;
-                tddo:parameter tddp:LITRAN-valueMax
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "90" ;
+                ruto:parameter rutp:LITRAN-valueMax
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'geo:lat must be in the range -90 to 90'" ;
-                tddo:parameter tddp:LITRAN-MESSAGE
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'geo:lat must be in the range -90 to 90'" ;
+                ruto:parameter rutp:LITRAN-MESSAGE
               ] ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-    tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-    tddo:testCaseLogLevel
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+    ruto:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    ruto:testCaseLogLevel
             rlog:Error .
 
 
 # geo:long must be in the range [-180,180]
-tddt:dbo-LITRAN-rangegeolongtitude
-    a       tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Schema ;
-    tddo:basedOnPattern tddp:LITRAN ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "[]" ;
-                tddo:parameter tddp:LITRAN-T1
+rutt:dbo-LITRAN-rangegeolongtitude
+    a       ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Schema ;
+    ruto:basedOnPattern rutp:LITRAN ;
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "[]" ;
+                ruto:parameter rutp:LITRAN-T1
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-                tddo:parameter tddp:LITRAN-P1
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+                ruto:parameter rutp:LITRAN-P1
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "!" ;
-                tddo:parameter tddp:LITRAN-NOP
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "!" ;
+                ruto:parameter rutp:LITRAN-NOP
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "-180" ;
-                tddo:parameter tddp:LITRAN-valueMin
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "-180" ;
+                ruto:parameter rutp:LITRAN-valueMin
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "180" ;
-                tddo:parameter tddp:LITRAN-valueMax
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "180" ;
+                ruto:parameter rutp:LITRAN-valueMax
               ] ;
-    tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'geo:lat must be in the range -180 to 180'" ;
-                tddo:parameter tddp:LITRAN-MESSAGE
+    ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'geo:lat must be in the range -180 to 180'" ;
+                ruto:parameter rutp:LITRAN-MESSAGE
               ] ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-    tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-    tddo:testCaseLogLevel
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+    ruto:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    ruto:testCaseLogLevel
             rlog:Error .
 
 
 # geo:geometry should be a soft inverseFunctional property
-tddt:dbo-INVFUNC-uniquegeometry
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:INVFUNC ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
-                tddo:parameter tddp:INVFUNC-P1
+rutt:dbo-INVFUNC-uniquegeometry
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:INVFUNC ;
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+                ruto:parameter rutp:INVFUNC-P1
               ] ;
-      tddo:binding
-              [ a       tddo:Binding ;
-                tddo:bindingValue "'Resources with the exact same coordinates should be the same'" ;
-                tddo:parameter tddp:INVFUNC-MESSAGE
+      ruto:binding
+              [ a       ruto:Binding ;
+                ruto:bindingValue "'Resources with the exact same coordinates should be the same'" ;
+                ruto:parameter rutp:INVFUNC-MESSAGE
               ] ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
-      tddo:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-      tddo:testCaseLogLevel
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+      ruto:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+      ruto:testCaseLogLevel
               rlog:Warn .

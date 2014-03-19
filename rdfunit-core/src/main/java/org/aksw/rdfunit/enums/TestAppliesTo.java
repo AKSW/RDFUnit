@@ -31,7 +31,7 @@ public enum TestAppliesTo {
 
     public String getUri() {
         // TODO make prefix configurable
-        return PrefixService.getPrefix("tddo") + name();
+        return PrefixService.getPrefix("ruto") + name();
     }
 
     @Override
@@ -41,7 +41,7 @@ public enum TestAppliesTo {
 
     public static TestAppliesTo resolve(String value) {
 
-        String s = value.replace(PrefixService.getPrefix("tddo"), "");
+        String s = value.replace(PrefixService.getPrefix("ruto"), "");
         if (s.equals("Schema")) {
             return Schema;
         } else if (s.equals("EnrichedSchema")) {

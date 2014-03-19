@@ -40,13 +40,13 @@ public class PatternBasedTestCase extends TestCase {
         Resource resource = super.serialize(model);
 
         resource
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "PatternBasedTestCase"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("tddp") + pattern.getId()))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "PatternBasedTestCase"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "basedOnPattern"), model.createResource(PrefixService.getPrefix("rutp") + pattern.getId()))
                 .addProperty(RDFS.comment, "SPARQL Query: \n" + DatabuggerUtils.getAllPrefixes() + getSparql() + "\n Pprevalence SPARQL Query :\n" + getSparqlPrevalence());
 
 
         for (Binding binding : bindings) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "binding"), binding.writeToModel(model));
+            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "binding"), binding.writeToModel(model));
         }
 
         return resource;

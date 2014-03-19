@@ -1,6 +1,6 @@
-@prefix tddp: <http://rdfunit.aksw.org/data/patterns#> .
-@prefix tddo: <http://rdfunit.aksw.org/ns/core#> .
-@prefix tddg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
 
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -10,10 +10,10 @@
 #### rdfs:range pattern
 ##########################################
 
-tddp:RDFSRANGE a tddo:Pattern ;
+rutp:RDFSRANGE a ruto:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain."""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?s %%P1%% ?resource.
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?T1 .
@@ -22,72 +22,72 @@ tddp:RDFSRANGE a tddo:Pattern ;
                                         ?resource rdf:type %%T1%%  }
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
-    tddo:parameter tddp:RDFSRANGE-P1 ;
-    tddo:parameter tddp:RDFSRANGE-T1 ;
-    tddo:parameter tddp:RDFSRANGE-MESSAGE ;
-#    tddo:resultAnnotation [
-#        a tddo:ResultAnnotation ;
-#        tddo:annotationProperty <http://xxxx> ;
-#        tddo:annotationValue <http://YYYY>
+    ruto:parameter rutp:RDFSRANGE-P1 ;
+    ruto:parameter rutp:RDFSRANGE-T1 ;
+    ruto:parameter rutp:RDFSRANGE-MESSAGE ;
+#    ruto:resultAnnotation [
+#        a ruto:ResultAnnotation ;
+#        ruto:annotationProperty <http://xxxx> ;
+#        ruto:annotationValue <http://YYYY>
 #    ];
     .
 
 
-tddp:RDFSRANGE-P1 a tddo:Parameter ;
+rutp:RDFSRANGE-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:RDFSRANGE-T1 a tddo:Parameter ;
+rutp:RDFSRANGE-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:RDFSRANGE-MESSAGE a tddo:Parameter ;
+rutp:RDFSRANGE-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### rdfs:range (datatype) pattern
 ##########################################
 
-tddp:RDFSRANGED a tddo:Pattern ;
+rutp:RDFSRANGED a ruto:Pattern ;
     dcterms:identifier "RDFSRANGED" ;
     dcterms:description """Emulates the rdfs:range (datatype) constrain."""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
                                     FILTER (DATATYPE(?c) != %%D1%%)
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
-    tddo:parameter tddp:RDFSRANGED-P1 ;
-    tddo:parameter tddp:RDFSRANGED-D1 ;
-    tddo:parameter tddp:RDFSRANGED-MESSAGE .
+    ruto:parameter rutp:RDFSRANGED-P1 ;
+    ruto:parameter rutp:RDFSRANGED-D1 ;
+    ruto:parameter rutp:RDFSRANGED-MESSAGE .
 
 
-tddp:RDFSRANGED-P1 a tddo:Parameter ;
+rutp:RDFSRANGED-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:RDFSRANGED-D1 a tddo:Parameter ;
+rutp:RDFSRANGED-D1 a ruto:Parameter ;
     dcterms:identifier "D1" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
-tddp:RDFSRANGED-MESSAGE a tddo:Parameter ;
+rutp:RDFSRANGED-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### rdfs:domain pattern
 ##########################################
 
-tddp:RDFSDOMAIN a tddo:Pattern ;
+rutp:RDFSDOMAIN a ruto:Pattern ;
     dcterms:identifier "RDFSDOMAIN" ;
     dcterms:description """Emulates the rdfs:domain constrain. It can be extended by using specific values in V1"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?T1 .
@@ -96,135 +96,135 @@ tddp:RDFSDOMAIN a tddo:Pattern ;
                                         ?resource rdf:type %%T1%%  }
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
-    tddo:parameter tddp:RDFSDOMAIN-P1 ;
-    tddo:parameter tddp:RDFSDOMAIN-V1 ;
-    tddo:parameter tddp:RDFSDOMAIN-T1 ;
-    tddo:parameter tddp:RDFSDOMAIN-MESSAGE .
+    ruto:parameter rutp:RDFSDOMAIN-P1 ;
+    ruto:parameter rutp:RDFSDOMAIN-V1 ;
+    ruto:parameter rutp:RDFSDOMAIN-T1 ;
+    ruto:parameter rutp:RDFSDOMAIN-MESSAGE .
 
-tddp:RDFSDOMAIN-P1 a tddo:Parameter ;
+rutp:RDFSDOMAIN-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:RDFSDOMAIN-V1 a tddo:Parameter ;
+rutp:RDFSDOMAIN-V1 a ruto:Parameter ;
     dcterms:identifier "V1" .
 
-tddp:RDFSDOMAIN-T1 a tddo:Parameter ;
+rutp:RDFSDOMAIN-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:RDFSDOMAIN-MESSAGE a tddo:Parameter ;
+rutp:RDFSDOMAIN-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### owl:disjointClass pattern  (#TODO fix transitive)
 ##########################################
 
-tddp:OWLDISJC a tddo:Pattern ;
+rutp:OWLDISJC a ruto:Pattern ;
     dcterms:identifier "OWLDISJC" ;
     dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource rdf:type %%T1%% .
                                     ?resource rdf:type %%T2%% .
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """  """ ;
-    tddo:parameter tddp:OWLDISJC-T1 ;
-    tddo:parameter tddp:OWLDISJC-T2 ;
-    tddo:parameter tddp:OWLDISJC-MESSAGE .
+    ruto:sparqlPrevalencePattern """  """ ;
+    ruto:parameter rutp:OWLDISJC-T1 ;
+    ruto:parameter rutp:OWLDISJC-T2 ;
+    ruto:parameter rutp:OWLDISJC-MESSAGE .
 
-tddp:OWLDISJC-T1 a tddo:Parameter ;
+rutp:OWLDISJC-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:OWLDISJC-T2 a tddo:Parameter ;
+rutp:OWLDISJC-T2 a ruto:Parameter ;
     dcterms:identifier "T2" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:OWLDISJC-MESSAGE a tddo:Parameter ;
+rutp:OWLDISJC-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### owl:propertyDisjointWith pattern
 ##########################################
 
-tddp:OWLDISJP a tddo:Pattern ;
+rutp:OWLDISJP a ruto:Pattern ;
     dcterms:identifier "OWLDISJP" ;
     dcterms:description """Emulates the owl:disjointProperty constrain"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?v .
                                     ?resource %%P2%% ?v .
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """  """ ;
-    tddo:parameter tddp:OWLDISJP-P1 ;
-    tddo:parameter tddp:OWLDISJP-P2 ;
-    tddo:parameter tddp:OWLDISJP-MESSAGE .
+    ruto:sparqlPrevalencePattern """  """ ;
+    ruto:parameter rutp:OWLDISJP-P1 ;
+    ruto:parameter rutp:OWLDISJP-P2 ;
+    ruto:parameter rutp:OWLDISJP-MESSAGE .
 
-tddp:OWLDISJP-P1 a tddo:Parameter ;
+rutp:OWLDISJP-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLDISJP-P2 a tddo:Parameter ;
+rutp:OWLDISJP-P2 a ruto:Parameter ;
     dcterms:identifier "P2" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLDISJP-MESSAGE a tddo:Parameter ;
+rutp:OWLDISJP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### owl cardinality constrains pattern
 ##########################################
 
-tddp:OWLCARD a tddo:Pattern ;
+rutp:OWLCARD a ruto:Pattern ;
     dcterms:identifier "OWLCARD" ;
     dcterms:description """Emulates the owl:cardinality constrain without a Class constraint"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } GROUP BY ?resource ?message
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
-    tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c. }""" ;
-    tddo:parameter tddp:OWLCARD-P1 ;
-    tddo:parameter tddp:OWLCARD-OP ;
-    tddo:parameter tddp:OWLCARD-V1 ;
-    tddo:parameter tddp:OWLCARD-MESSAGE .
+    ruto:parameter rutp:OWLCARD-P1 ;
+    ruto:parameter rutp:OWLCARD-OP ;
+    ruto:parameter rutp:OWLCARD-V1 ;
+    ruto:parameter rutp:OWLCARD-MESSAGE .
 
-tddp:OWLCARD-P1 a tddo:Parameter ;
+rutp:OWLCARD-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLCARD-OP a tddo:Parameter ;
+rutp:OWLCARD-OP a ruto:Parameter ;
     dcterms:identifier "OP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constraintPattern """<|<=|>|>=|=|!=""" .
+    ruto:parameterConstraint ruto:Operator ;
+    ruto:constraintPattern """<|<=|>|>=|=|!=""" .
 
-tddp:OWLCARD-V1 a tddo:Parameter ;
+rutp:OWLCARD-V1 a ruto:Parameter ;
     dcterms:identifier "V1" ;
-    tddo:parameterConstraint tddo:None ;
-    tddo:constraintPattern """[0-9]*""" .
+    ruto:parameterConstraint ruto:None ;
+    ruto:constraintPattern """[0-9]*""" .
 
-tddp:OWLCARD-MESSAGE a tddo:Parameter ;
+rutp:OWLCARD-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### owl cardinality constrains pattern on Class
 ##########################################
 
-tddp:OWLCARDT a tddo:Pattern ;
+rutp:OWLCARDT a ruto:Pattern ;
     dcterms:identifier "OWLCARDT" ;
     dcterms:description """Emulates the owl:cardinality constrain on a Class"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
 									{
                                     	?resource rdf:type %%T1%%.
                                     	?resource %%P1%% ?c.
@@ -236,7 +236,7 @@ tddp:OWLCARDT a tddo:Pattern ;
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } GROUP BY ?resource ?message
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
-    tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
+    ruto:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
                                     	?resource rdf:type %%T1%%.
                                     	?resource %%P1%% ?c.
 									} UNION {
@@ -244,43 +244,43 @@ tddp:OWLCARDT a tddo:Pattern ;
 										?t1 rdfs:subClassOf+ %%T1%%.
                                     	?resource %%P1%% ?c.
 									} }""" ;
-    tddo:parameter tddp:OWLCARDT-T1 ;
-    tddo:parameter tddp:OWLCARDT-P1 ;
-    tddo:parameter tddp:OWLCARDT-OP ;
-    tddo:parameter tddp:OWLCARDT-V1 ;
-    tddo:parameter tddp:OWLCARDT-MESSAGE .
+    ruto:parameter rutp:OWLCARDT-T1 ;
+    ruto:parameter rutp:OWLCARDT-P1 ;
+    ruto:parameter rutp:OWLCARDT-OP ;
+    ruto:parameter rutp:OWLCARDT-V1 ;
+    ruto:parameter rutp:OWLCARDT-MESSAGE .
 
-tddp:OWLCARDT-T1 a tddo:Parameter ;
+rutp:OWLCARDT-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:OWLCARDT-P1 a tddo:Parameter ;
+rutp:OWLCARDT-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLCARDT-OP a tddo:Parameter ;
+rutp:OWLCARDT-OP a ruto:Parameter ;
     dcterms:identifier "OP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constraintPattern """<|<=|>|>=|=|!=""" .
+    ruto:parameterConstraint ruto:Operator ;
+    ruto:constraintPattern """<|<=|>|>=|=|!=""" .
 
-tddp:OWLCARDT-V1 a tddo:Parameter ;
+rutp:OWLCARDT-V1 a ruto:Parameter ;
     dcterms:identifier "V1" ;
-    tddo:parameterConstraint tddo:None ;
-    tddo:constraintPattern """[0-9]*""" .
+    ruto:parameterConstraint ruto:None ;
+    ruto:constraintPattern """[0-9]*""" .
 
-tddp:OWLCARDT-MESSAGE a tddo:Parameter ;
+rutp:OWLCARDT-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ##########################################
 #### Type & Property dependency (equivalent to card > 0)
 ##########################################
 
-tddp:TYPRODEP a tddo:Pattern ;
+rutp:TYPRODEP a ruto:Pattern ;
     dcterms:identifier "TYPRODEP" ;
     dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     {
 										?resource rdf:type %%T1%% .
                                     	FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
@@ -291,67 +291,67 @@ tddp:TYPRODEP a tddo:Pattern ;
 									}
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { {?resource rdf:type %%T1%% .}
 									 		UNION { ?resource rdf:type ?t1 . 
 											?t1 rdfs:subClassOf+ %%T1%% .} } """ ;
-    tddo:parameter tddp:TYPRODEP-T1 ;
-    tddo:parameter tddp:TYPRODEP-NOT ;
-    tddo:parameter tddp:TYPRODEP-P1 ;
-    tddo:parameter tddp:TYPRODEP-MESSAGE .
+    ruto:parameter rutp:TYPRODEP-T1 ;
+    ruto:parameter rutp:TYPRODEP-NOT ;
+    ruto:parameter rutp:TYPRODEP-P1 ;
+    ruto:parameter rutp:TYPRODEP-MESSAGE .
 
-tddp:TYPRODEP-T1 a tddo:Parameter ;
+rutp:TYPRODEP-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:TYPRODEP-NOT a tddo:Parameter ;
+rutp:TYPRODEP-NOT a ruto:Parameter ;
     dcterms:identifier "NOT" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constraintPattern """NOT|""" .
+    ruto:parameterConstraint ruto:Operator ;
+    ruto:constraintPattern """NOT|""" .
 
-tddp:TYPRODEP-P1 a tddo:Parameter ;
+rutp:TYPRODEP-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:TYPRODEP-MESSAGE a tddo:Parameter ;
+rutp:TYPRODEP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 ################################################################################
 #### unique value constraint of inverse functional properties
 ################################################################################
 
-tddp:INVFUNC a tddo:Pattern ;
+rutp:INVFUNC a ruto:Pattern ;
     dcterms:identifier "INVFUNC" ;
     dcterms:description """ Unique value constraint of inverse functional properties """@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?a %%P1%% ?resource .
                                     ?b %%P1%% ?resource .
                                     FILTER (?a != ?b)
 									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?a %%P1%% ?resource . }""" ;
-    tddo:parameter tddp:INVFUNC-P1 ;
-    tddo:parameter tddp:INVFUNC-MESSAGE .
+    ruto:parameter rutp:INVFUNC-P1 ;
+    ruto:parameter rutp:INVFUNC-MESSAGE .
 
-tddp:INVFUNC-P1 a tddo:Parameter ;
+rutp:INVFUNC-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:INVFUNC-MESSAGE a tddo:Parameter ;
+rutp:INVFUNC-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
 #### unique value constraint of inverse functional properties  (on a Class)
 ################################################################################
 
-tddp:INVFUNCT a tddo:Pattern ;
+rutp:INVFUNCT a ruto:Pattern ;
     dcterms:identifier "INVFUNCT" ;
     dcterms:description """ Unique value constraint of inverse functional properties (constraint on a class) """@en ;
-    tddo:sparqlWherePattern """ {   {
+    ruto:sparqlWherePattern """ {   {
                                         ?a %%P1%% ?resource ;
                                            a %%T1%% .
                                         ?b %%P1%% ?resource ;
@@ -365,24 +365,24 @@ tddp:INVFUNCT a tddo:Pattern ;
                                     FILTER (?a != ?b)
 									BIND ( %%MESSAGE%% AS ?message)
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { {?a %%P1%% ?resource ; a %%T1%% }
                                        UNION {?a %%P1%% ?resource ; rdfs:subClassOf+ %%T1%% .} }""" ;
-    tddo:parameter tddp:INVFUNCT-P1 ;
-    tddo:parameter tddp:INVFUNCT-T1 ;
-    tddo:parameter tddp:INVFUNCT-MESSAGE .
+    ruto:parameter rutp:INVFUNCT-P1 ;
+    ruto:parameter rutp:INVFUNCT-T1 ;
+    ruto:parameter rutp:INVFUNCT-MESSAGE .
 
-tddp:INVFUNCT-P1 a tddo:Parameter ;
+rutp:INVFUNCT-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:INVFUNCT-T1 a tddo:Parameter ;
+rutp:INVFUNCT-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:INVFUNCT-MESSAGE a tddo:Parameter ;
+rutp:INVFUNCT-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -391,26 +391,26 @@ tddp:INVFUNCT-MESSAGE a tddo:Parameter ;
 #### ex:alice dbo:spouse ex:bernd .
 ################################################################################
 
-tddp:OWLSYMMETRICPROP a tddo:Pattern ;
+rutp:OWLSYMMETRICPROP a ruto:Pattern ;
     dcterms:identifier "OWLSYMMETRICPROP" ;
     dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?r1  %%P1%% ?resource .
                                     FILTER NOT EXISTS {?resource %%P1%% ?r1} .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?r1 %%P1%% ?resource . }""" ;
-    tddo:parameter tddp:OWLSYMMETRICPROP-P1 ;
-    tddo:parameter tddp:OWLSYMMETRICPROP-MESSAGE .
+    ruto:parameter rutp:OWLSYMMETRICPROP-P1 ;
+    ruto:parameter rutp:OWLSYMMETRICPROP-MESSAGE .
 
-tddp:OWLSYMMETRICPROP-P1 a tddo:Parameter ;
+rutp:OWLSYMMETRICPROP-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLSYMMETRICPROP-MESSAGE a tddo:Parameter ;
+rutp:OWLSYMMETRICPROP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -419,26 +419,26 @@ tddp:OWLSYMMETRICPROP-MESSAGE a tddo:Parameter ;
 #### ex:alice dbo:child bernd .
 ################################################################################
 
-tddp:OWLASYMMETRICPROP a tddo:Pattern ;
+rutp:OWLASYMMETRICPROP a ruto:Pattern ;
     dcterms:identifier "OWLASYMMETRICPROP" ;
     dcterms:description """ Given a property that is asymmetric, this pattern finds cases where it is nonetheless used as symmetric property """@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?resource .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""";
-    tddo:parameter tddp:OWLASYMMETRICPROP-P1 ;
-    tddo:parameter tddp:OWLASYMMETRICPROP-MESSAGE .
+    ruto:parameter rutp:OWLASYMMETRICPROP-P1 ;
+    ruto:parameter rutp:OWLASYMMETRICPROP-MESSAGE .
 
-tddp:OWLASYMMETRICPROP-P1 a tddo:Parameter ;
+rutp:OWLASYMMETRICPROP-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLASYMMETRICPROP-MESSAGE a tddo:Parameter ;
+rutp:OWLASYMMETRICPROP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -449,28 +449,28 @@ tddp:OWLASYMMETRICPROP-MESSAGE a tddo:Parameter ;
 #### ex:alic dbo:family ex:charly is missing
 ################################################################################
 
-tddp:OWLTRANSPROP a tddo:Pattern ;
+rutp:OWLTRANSPROP a ruto:Pattern ;
     dcterms:identifier "OWLTRANSPROP" ;
     dcterms:description """ Given a transitive property, this pattern finds missing statements containing the consequent transitive entailments """@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?r3 .
                                     FILTER NOT EXISTS {?resource %%P1%% ?r3} .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 }""" ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""" ;
-    tddo:parameter tddp:OWLTRANSPROP-P1 ;
-    tddo:parameter tddp:OWLTRANSPROP-MESSAGE ;
+    ruto:parameter rutp:OWLTRANSPROP-P1 ;
+    ruto:parameter rutp:OWLTRANSPROP-MESSAGE ;
     .
 
-tddp:OWLTRANSPROP-P1 a tddo:Parameter ;
+rutp:OWLTRANSPROP-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLTRANSPROP-MESSAGE a tddo:Parameter ;
+rutp:OWLTRANSPROP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -478,25 +478,25 @@ tddp:OWLTRANSPROP-MESSAGE a tddo:Parameter ;
 #### ex:sth p ex:sth . 
 ################################################################################
 
-tddp:OWLIRREFLEXIVE a tddo:Pattern ;
+rutp:OWLIRREFLEXIVE a ruto:Pattern ;
     dcterms:identifier "OWLIRREFLEXIVE" ;
     dcterms:description """ Given an irreflexive property, this pattern find violating statement that nontheless use this property reflexively """@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?resource .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?o .}""" ;
-    tddo:parameter tddp:OWLIRREFLEXIVE-P1 ;
-    tddo:parameter tddp:OWLIRREFLEXIVE-MESSAGE .
+    ruto:parameter rutp:OWLIRREFLEXIVE-P1 ;
+    ruto:parameter rutp:OWLIRREFLEXIVE-MESSAGE .
 
-tddp:OWLIRREFLEXIVE-P1 a tddo:Parameter ;
+rutp:OWLIRREFLEXIVE-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:OWLIRREFLEXIVE-MESSAGE a tddo:Parameter ;
+rutp:OWLIRREFLEXIVE-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -504,40 +504,40 @@ tddp:OWLIRREFLEXIVE-MESSAGE a tddo:Parameter ;
 #### Comparison between two literal values in a resource
 ################################################################################
 
-tddp:COMP a tddo:Pattern ;
+rutp:COMP a ruto:Pattern ;
     dcterms:identifier "COMP" ;
     dcterms:description """Comparison between two literal values in a resource"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?beforeVal .
                                     ?resource %%P2%% ?afterVal .
                                     FILTER ( ?beforeVal %%OP%% ?afterVal )
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                         ?resource %%P1%% ?beforeVal .
                                         ?resource %%P2%% ?afterVal .
                                      }""" ;
-    tddo:parameter tddp:COMP-P1 ;
-    tddo:parameter tddp:COMP-P2 ;
-    tddo:parameter tddp:COMP-OP ;
-    tddo:parameter tddp:COMP-MESSAGE .
+    ruto:parameter rutp:COMP-P1 ;
+    ruto:parameter rutp:COMP-P2 ;
+    ruto:parameter rutp:COMP-OP ;
+    ruto:parameter rutp:COMP-MESSAGE .
 
-tddp:COMP-P1 a tddo:Parameter ;
+rutp:COMP-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:COMP-P2 a tddo:Parameter ;
+rutp:COMP-P2 a ruto:Parameter ;
     dcterms:identifier "P2" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:COMP-OP a tddo:Parameter ;
+rutp:COMP-OP a ruto:Parameter ;
     dcterms:identifier "OP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constraintPattern """<|<=|>|>=|=|!=""" .
+    ruto:parameterConstraint ruto:Operator ;
+    ruto:constraintPattern """<|<=|>|>=|=|!=""" .
 
-tddp:COMP-MESSAGE a tddo:Parameter ;
+rutp:COMP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -545,37 +545,37 @@ tddp:COMP-MESSAGE a tddo:Parameter ;
 #### Literal in not in a desired pattern
 ################################################################################
 
-tddp:MATCH a tddo:Pattern ;
+rutp:MATCH a ruto:Pattern ;
     dcterms:identifier "MATCH" ;
     dcterms:description """Literal in not in a desired pattern"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?value .
                                     FILTER (%%OP%% regex(str(?value), '%%REGEX%%')) .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?value . }""" ;
-    tddo:parameter tddp:MATCH-P1 ;
-    tddo:parameter tddp:MATCH-OP ;
-    tddo:parameter tddp:MATCH-REGEX ;
-    tddo:parameter tddp:MATCH-MESSAGE .
+    ruto:parameter rutp:MATCH-P1 ;
+    ruto:parameter rutp:MATCH-OP ;
+    ruto:parameter rutp:MATCH-REGEX ;
+    ruto:parameter rutp:MATCH-MESSAGE .
 
-tddp:MATCH-P1 a tddo:Parameter ;
+rutp:MATCH-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:MATCH-OP a tddo:Parameter ;
+rutp:MATCH-OP a ruto:Parameter ;
     dcterms:identifier "OP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constraintPattern """!|""" .
+    ruto:parameterConstraint ruto:Operator ;
+    ruto:constraintPattern """!|""" .
 
-tddp:MATCH-REGEX a tddo:Parameter ;
+rutp:MATCH-REGEX a ruto:Parameter ;
     dcterms:identifier "REGEX" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
-tddp:MATCH-MESSAGE a tddo:Parameter ;
+rutp:MATCH-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -583,53 +583,53 @@ tddp:MATCH-MESSAGE a tddo:Parameter ;
 #### Literal in specific range
 ################################################################################
 
-tddp:LITRAN a tddo:Pattern ;
+rutp:LITRAN a ruto:Pattern ;
     dcterms:identifier "LITRAN" ;
     dcterms:description """Literal in specific range"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource a      %%T1%% .
                                     ?resource %%P1%% ?value .
                                     FILTER( %%NOP%% ( ?value > %%valueMin%% &&
                                                       ?value < %%valueMax%% )) .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 }""" ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                         ?resource a      %%T1%% .
                                         ?resource %%P1%% ?value .
                                      }""" ;
-    tddo:parameter tddp:LITRAN-T1 ;
-    tddo:parameter tddp:LITRAN-P1 ;
-    tddo:parameter tddp:LITRAN-NOP ;
-    tddo:parameter tddp:LITRAN-valueMin ;
-    tddo:parameter tddp:LITRAN-valueMax ;
-    tddo:parameter tddp:LITRAN-MESSAGE .
+    ruto:parameter rutp:LITRAN-T1 ;
+    ruto:parameter rutp:LITRAN-P1 ;
+    ruto:parameter rutp:LITRAN-NOP ;
+    ruto:parameter rutp:LITRAN-valueMin ;
+    ruto:parameter rutp:LITRAN-valueMax ;
+    ruto:parameter rutp:LITRAN-MESSAGE .
 
-tddp:LITRAN-T1 a tddo:Parameter ;
+rutp:LITRAN-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:LITRAN-P1 a tddo:Parameter ;
+rutp:LITRAN-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:LITRAN-NOP a tddo:Parameter ;
+rutp:LITRAN-NOP a ruto:Parameter ;
     dcterms:identifier "NOP" ;
-    tddo:parameterConstraint tddo:Operator ;
-    tddo:constraintPattern "!|" .
+    ruto:parameterConstraint ruto:Operator ;
+    ruto:constraintPattern "!|" .
 
-tddp:LITRAN-valueMin a tddo:Parameter ;
+rutp:LITRAN-valueMin a ruto:Parameter ;
     dcterms:identifier "valueMin" ;
-    tddo:parameterConstraint tddo:None ;
-    tddo:constraintPattern """[0-9]*\\.[0-9]*""" .
+    ruto:parameterConstraint ruto:None ;
+    ruto:constraintPattern """[0-9]*\\.[0-9]*""" .
 
-tddp:LITRAN-valueMax a tddo:Parameter ;
+rutp:LITRAN-valueMax a ruto:Parameter ;
     dcterms:identifier "valueMax" ;
-    tddo:parameterConstraint tddo:None ;
-    tddo:constraintPattern """[0-9]*\\.[0-9]*""" .
+    ruto:parameterConstraint ruto:None ;
+    ruto:constraintPattern """[0-9]*\\.[0-9]*""" .
 
-tddp:LITRAN-MESSAGE a tddo:Parameter ;
+rutp:LITRAN-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 
@@ -638,32 +638,32 @@ tddp:LITRAN-MESSAGE a tddo:Parameter ;
 #### Resource is of type A and not of type B
 ################################################################################
 
-tddp:TYPDEP a tddo:Pattern ;
+rutp:TYPDEP a ruto:Pattern ;
     dcterms:identifier "TYPDEP" ;
     dcterms:description """Resource is of type A and not of type B"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource rdf:type %%T1%% .
                                     FILTER NOT EXISTS {?resource rdf:type %%T2%%}
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
       
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource rdf:type %%T1%% . }""" ;
-    tddo:parameter tddp:TYPDEP-T1 ;
-    tddo:parameter tddp:TYPDEP-T2 ;
-    tddo:parameter tddp:TYPDEP-MESSAGE .
+    ruto:parameter rutp:TYPDEP-T1 ;
+    ruto:parameter rutp:TYPDEP-T2 ;
+    ruto:parameter rutp:TYPDEP-MESSAGE .
 
-tddp:TYPDEP-T1 a tddo:Parameter ;
+rutp:TYPDEP-T1 a ruto:Parameter ;
     dcterms:identifier "T1" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:TYPDEP-T2 a tddo:Parameter ;
+rutp:TYPDEP-T2 a ruto:Parameter ;
     dcterms:identifier "T2" ;
-    tddo:parameterConstraint tddo:Class .
+    ruto:parameterConstraint ruto:Class .
 
-tddp:TYPDEP-MESSAGE a tddo:Parameter ;
+rutp:TYPDEP-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -672,36 +672,36 @@ tddp:TYPDEP-MESSAGE a tddo:Parameter ;
 #### propertyB
 ################################################################################
 
-tddp:PVT a tddo:Pattern ;
+rutp:PVT a ruto:Pattern ;
     dcterms:identifier "PVT" ;
     dcterms:description """Resources with a propertyA having valueA should contain a triple with propertyB"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {?resource %%P2%% ?p}
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% %%V1%% }""" ;
-    tddo:parameter tddp:PVT-P1 ;
-    tddo:parameter tddp:PVT-V1 ;
-    tddo:parameter tddp:PVT-P2 ;
-    tddo:parameter tddp:PVT-MESSAGE .
+    ruto:parameter rutp:PVT-P1 ;
+    ruto:parameter rutp:PVT-V1 ;
+    ruto:parameter rutp:PVT-P2 ;
+    ruto:parameter rutp:PVT-MESSAGE .
 
-tddp:PVT-P1 a tddo:Parameter ;
+rutp:PVT-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:PVT-V1 a tddo:Parameter ;
+rutp:PVT-V1 a ruto:Parameter ;
     dcterms:identifier "V1" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
-tddp:PVT-P2 a tddo:Parameter ;
+rutp:PVT-P2 a ruto:Parameter ;
     dcterms:identifier "P2" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:PVT-MESSAGE a tddo:Parameter ;
+rutp:PVT-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -709,30 +709,30 @@ tddp:PVT-MESSAGE a tddo:Parameter ;
 #### Resource has ValueA for PropertyB
 ################################################################################
 
-tddp:TRIPLE a tddo:Pattern ;
+rutp:TRIPLE a ruto:Pattern ;
     dcterms:identifier "TRIPLE" ;
     dcterms:description """Resource has ValueA for PropertyB"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%% .
 									BIND ( %%MESSAGE%% AS ?message) . 
                                 } """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?value . }""" ;
-    tddo:parameter tddp:TRIPLE-P1 ;
-    tddo:parameter tddp:TRIPLE-V1 ;
-    tddo:parameter tddp:TRIPLE-MESSAGE .
+    ruto:parameter rutp:TRIPLE-P1 ;
+    ruto:parameter rutp:TRIPLE-V1 ;
+    ruto:parameter rutp:TRIPLE-MESSAGE .
 
-tddp:TRIPLE-P1 a tddo:Parameter ;
+rutp:TRIPLE-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:TRIPLE-V1 a tddo:Parameter ;
+rutp:TRIPLE-V1 a ruto:Parameter ;
     dcterms:identifier "V1" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
-tddp:TRIPLE-MESSAGE a tddo:Parameter ;
+rutp:TRIPLE-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
 
 ################################################################################
@@ -741,31 +741,31 @@ tddp:TRIPLE-MESSAGE a tddo:Parameter ;
 #### (e.g. more than one foaf:name in english)
 ################################################################################
 
-tddp:ONELANG a tddo:Pattern ;
+rutp:ONELANG a ruto:Pattern ;
     dcterms:identifier "ONELANG" ;
     dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
-    tddo:sparqlWherePattern """ {
+    ruto:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c .
                                     BIND ( lang(?c) AS ?l ) .
                                     FILTER (isLiteral (?c) && lang(?c) = '%%V1%%') .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } GROUP BY ?resource ?message
                                 HAVING ( COUNT (?l) > 1 ) """ ;
-    tddo:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+    ruto:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
-    tddo:parameter tddp:ONELANG-P1 ;
-    tddo:parameter tddp:ONELANG-V1 ;
-    tddo:parameter tddp:ONELANG-MESSAGE .
+    ruto:parameter rutp:ONELANG-P1 ;
+    ruto:parameter rutp:ONELANG-V1 ;
+    ruto:parameter rutp:ONELANG-MESSAGE .
 
-tddp:ONELANG-P1 a tddo:Parameter ;
+rutp:ONELANG-P1 a ruto:Parameter ;
     dcterms:identifier "P1" ;
-    tddo:parameterConstraint tddo:Property .
+    ruto:parameterConstraint ruto:Property .
 
-tddp:ONELANG-V1 a tddo:Parameter ;
+rutp:ONELANG-V1 a ruto:Parameter ;
     dcterms:identifier "V1" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 
-tddp:ONELANG-MESSAGE a tddo:Parameter ;
+rutp:ONELANG-MESSAGE a ruto:Parameter ;
     dcterms:identifier "MESSAGE" ;
-    tddo:parameterConstraint tddo:None .
+    ruto:parameterConstraint ruto:None .
 

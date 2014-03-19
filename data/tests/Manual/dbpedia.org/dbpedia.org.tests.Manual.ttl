@@ -1,328 +1,328 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
-@prefix tddg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo: <http://rdfunit.aksw.org/ns/core#> .
-@prefix tddp: <http://rdfunit.aksw.org/data/patterns#> .
-@prefix tddt: <http://rdfunit.aksw.org/data/tests#> .
+@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 # Wrong character casing in yago uri's
-tddt:dbpedia-org-MATCH-yagocharactercasing
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:MATCH ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
-            tddo:parameter tddp:MATCH-P1
+rutt:dbpedia-org-MATCH-yagocharactercasing
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:MATCH ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+            ruto:parameter rutp:MATCH-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue " " ;
-            tddo:parameter tddp:MATCH-OP
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue " " ;
+            ruto:parameter rutp:MATCH-OP
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue """^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$""" ;
-            tddo:parameter tddp:MATCH-REGEX
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue """^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$""" ;
+            ruto:parameter rutp:MATCH-REGEX
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Wrong capitalization in yago class'" ;
-            tddo:parameter tddp:MATCH-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Wrong capitalization in yago class'" ;
+            ruto:parameter rutp:MATCH-MESSAGE
         ] ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:testCaseLogLevel
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:testCaseLogLevel
               rlog:Warn .
 
 # Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
-tddt:dbpedia-org-manual-dateofbirthbirthdate
-    a tddo:ManualTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/ontology/birthDate> ;
-    tddo:references <http://dbpedia.org/property/dateOfBirth>  ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:sparqlWhere """ {
+rutt:dbpedia-org-manual-dateofbirthbirthdate
+    a ruto:ManualTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/ontology/birthDate> ;
+    ruto:references <http://dbpedia.org/property/dateOfBirth>  ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:sparqlWhere """ {
                                  ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 .
                                  FILTER NOT EXISTS {?resource <http://dbpedia.org/ontology/birthDate> ?v2}
                                  BIND ('A dbp:birthDate exists and not a dbo:dateOfBirth, possible extraction error or missing mapping' AS ?message)} """ ;
-    tddo:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    ruto:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
               rlog:Warn .
 
 # Resource is in birthday category but has no dbo:birthDate
-tddt:dbpedia-org-PVT-birthcategorywithoutbirthdate
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:PVT ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/resource/Category:1907_births> ;
-    tddo:references <http://purl.org/dc/terms/subject> ;
-    tddo:references <http://dbpedia.org/ontology/birthDate> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
-            tddo:parameter tddp:PVT-P1
+rutt:dbpedia-org-PVT-birthcategorywithoutbirthdate
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:PVT ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/resource/Category:1907_births> ;
+    ruto:references <http://purl.org/dc/terms/subject> ;
+    ruto:references <http://dbpedia.org/ontology/birthDate> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://purl.org/dc/terms/subject> ;
+            ruto:parameter rutp:PVT-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/resource/Category:1907_births> ;
-            tddo:parameter tddp:PVT-V1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/resource/Category:1907_births> ;
+            ruto:parameter rutp:PVT-V1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/birthDate> ;
-            tddo:parameter tddp:PVT-P2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+            ruto:parameter rutp:PVT-P2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource in dbr:1907_births category but without dbo:birthDate'" ;
-            tddo:parameter tddp:PVT-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource in dbr:1907_births category but without dbo:birthDate'" ;
+            ruto:parameter rutp:PVT-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Error .
 
 
                                  
 # Resource has a geo location template but no coordinates
-tddt:dbpedia-org-PVT-geotemplatecoordinates
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:PVT ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
-    tddo:references <http://www.georss.org/georss/point> ;
-    tddo:references <http://dbpedia.org/resource/Template:Geographic_location> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/property/wikiPageUsesTemplate> ;
-            tddo:parameter tddp:PVT-P1
+rutt:dbpedia-org-PVT-geotemplatecoordinates
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:PVT ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+    ruto:references <http://www.georss.org/georss/point> ;
+    ruto:references <http://dbpedia.org/resource/Template:Geographic_location> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+            ruto:parameter rutp:PVT-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/resource/Template:Geographic_location> ;
-            tddo:parameter tddp:PVT-V1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/resource/Template:Geographic_location> ;
+            ruto:parameter rutp:PVT-V1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://www.georss.org/georss/point> ;
-            tddo:parameter tddp:PVT-P2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://www.georss.org/georss/point> ;
+            ruto:parameter rutp:PVT-P2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'A Wikipedia article with Template:Geographic_location but without extracted coordinates'" ;
-            tddo:parameter tddp:PVT-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'A Wikipedia article with Template:Geographic_location but without extracted coordinates'" ;
+            ruto:parameter rutp:PVT-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Error .
 
 
 # Resource in cities category but not of the type dbo:City                                 
-tddt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:RDFSDOMAIN ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://purl.org/dc/terms/subject> ;
-    tddo:references <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
-    tddo:references <http://dbpedia.org/ontology/City> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
-            tddo:parameter tddp:RDFSDOMAIN-P1
+rutt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:RDFSDOMAIN ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://purl.org/dc/terms/subject> ;
+    ruto:references <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
+    ruto:references <http://dbpedia.org/ontology/City> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://purl.org/dc/terms/subject> ;
+            ruto:parameter rutp:RDFSDOMAIN-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
-            tddo:parameter tddp:RDFSDOMAIN-V1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/resource/Category:Capitals_in_Africa> ;
+            ruto:parameter rutp:RDFSDOMAIN-V1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/City> ;
-            tddo:parameter tddp:RDFSDOMAIN-T1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/City> ;
+            ruto:parameter rutp:RDFSDOMAIN-T1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'A resource in Category:Capitals_in_Africa but not of type dbo:City'" ;
-            tddo:parameter tddp:RDFSDOMAIN-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'A resource in Category:Capitals_in_Africa but not of type dbo:City'" ;
+            ruto:parameter rutp:RDFSDOMAIN-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Error .
 
 
                                  
 # Wikipedia articles with a missing file
-tddt:dbpedia-org-TRIPLE-articlesmissingfile
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:TRIPLE ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://purl.org/dc/terms/subject> ;
-    tddo:references <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
-            tddo:parameter tddp:TRIPLE-P1
+rutt:dbpedia-org-TRIPLE-articlesmissingfile
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:TRIPLE ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://purl.org/dc/terms/subject> ;
+    ruto:references <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://purl.org/dc/terms/subject> ;
+            ruto:parameter rutp:TRIPLE-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
-            tddo:parameter tddp:TRIPLE-V1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
+            ruto:parameter rutp:TRIPLE-V1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource in Category:Articles_with_missing_files'" ;
-            tddo:parameter tddp:TRIPLE-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource in Category:Articles_with_missing_files'" ;
+            ruto:parameter rutp:TRIPLE-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Warn .
 
                                  
 # Wikipedia articles with an inconsistent citation format
-tddt:dbpedia-org-TRIPLE-inconsistantcitation
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:TRIPLE ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
-    tddo:references <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/property/wikiPageUsesTemplate> ;
-            tddo:parameter tddp:TRIPLE-P1
+rutt:dbpedia-org-TRIPLE-inconsistantcitation
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:TRIPLE ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+    ruto:references <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/property/wikiPageUsesTemplate> ;
+            ruto:parameter rutp:TRIPLE-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
-            tddo:parameter tddp:TRIPLE-V1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
+            ruto:parameter rutp:TRIPLE-V1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource uses Template:Inconsistent_citations'" ;
-            tddo:parameter tddp:TRIPLE-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource uses Template:Inconsistent_citations'" ;
+            ruto:parameter rutp:TRIPLE-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Warn .
 
                                  
 # Wikipedia articles that are possibly copy-pasted
-tddt:dbpedia-org-TRIPLE-possiblecutpastemoves
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:TRIPLE ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://purl.org/dc/terms/subject> ;
-    tddo:references <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://purl.org/dc/terms/subject> ;
-            tddo:parameter tddp:TRIPLE-P1
+rutt:dbpedia-org-TRIPLE-possiblecutpastemoves
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:TRIPLE ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://purl.org/dc/terms/subject> ;
+    ruto:references <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://purl.org/dc/terms/subject> ;
+            ruto:parameter rutp:TRIPLE-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
-            tddo:parameter tddp:TRIPLE-V1
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
+            ruto:parameter rutp:TRIPLE-V1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource in Category:Possible_cut-and-paste_moves'" ;
-            tddo:parameter tddp:TRIPLE-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource in Category:Possible_cut-and-paste_moves'" ;
+            ruto:parameter rutp:TRIPLE-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Warn .
 
 
 # Resource has coordinates but is not a place                              
-tddt:dbpedia-org-TYPDEP-coordinatesandnotplace
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:TYPDEP ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/ontology/Place> ;
-    tddo:references <http://www.opengis.net/gml/_Feature> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://www.opengis.net/gml/_Feature> ;
-            tddo:parameter tddp:TYPDEP-T1
+rutt:dbpedia-org-TYPDEP-coordinatesandnotplace
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:TYPDEP ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/ontology/Place> ;
+    ruto:references <http://www.opengis.net/gml/_Feature> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://www.opengis.net/gml/_Feature> ;
+            ruto:parameter rutp:TYPDEP-T1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/Place> ;
-            tddo:parameter tddp:TYPDEP-T2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/Place> ;
+            ruto:parameter rutp:TYPDEP-T2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource has coordinates but is not a dbo:Place'" ;
-            tddo:parameter tddp:TYPDEP-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource has coordinates but is not a dbo:Place'" ;
+            ruto:parameter rutp:TYPDEP-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Warn .
 
 # Resource has coordinates but is not a place
-tddt:dbpedia-org-TYPDEP-placenocoordinates
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:TYPDEP ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/ontology/Place> ;
-    tddo:references <http://www.opengis.net/gml/_Feature> ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/Place> ;
-            tddo:parameter tddp:TYPDEP-T1
+rutt:dbpedia-org-TYPDEP-placenocoordinates
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:TYPDEP ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/ontology/Place> ;
+    ruto:references <http://www.opengis.net/gml/_Feature> ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/Place> ;
+            ruto:parameter rutp:TYPDEP-T1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://www.opengis.net/gml/_Feature> ;
-            tddo:parameter tddp:TYPDEP-T2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://www.opengis.net/gml/_Feature> ;
+            ruto:parameter rutp:TYPDEP-T2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource is a dbo:Place but has no '" ;
-            tddo:parameter tddp:TYPDEP-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource is a dbo:Place but has no '" ;
+            ruto:parameter rutp:TYPDEP-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Warn .
 
 # Resource is a foaf:Person but not a dbo:Person                                 
-tddt:dbpedia-org-TYPDEP-foafdbpediaperson
-    a     tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Dataset ;
-    tddo:basedOnPattern tddp:TYPDEP ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/ontology/Person> ;
-    tddo:references <http://xmlns.com/foaf/0.1/Person>  ;
-    tddo:source <http://dbpedia.org> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://xmlns.com/foaf/0.1/Person> ;
-            tddo:parameter tddp:TYPDEP-T1
+rutt:dbpedia-org-TYPDEP-foafdbpediaperson
+    a     ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Dataset ;
+    ruto:basedOnPattern rutp:TYPDEP ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/ontology/Person> ;
+    ruto:references <http://xmlns.com/foaf/0.1/Person>  ;
+    ruto:source <http://dbpedia.org> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://xmlns.com/foaf/0.1/Person> ;
+            ruto:parameter rutp:TYPDEP-T1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/Person> ;
-            tddo:parameter tddp:TYPDEP-T2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/Person> ;
+            ruto:parameter rutp:TYPDEP-T2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'Resource is a foaf:Person but not a dbo:Person (externaly defined datasets) '" ;
-            tddo:parameter tddp:TYPDEP-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'Resource is a foaf:Person but not a dbo:Person (externaly defined datasets) '" ;
+            ruto:parameter rutp:TYPDEP-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Warn .

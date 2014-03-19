@@ -276,26 +276,26 @@ public class Main {
                 Resource testSuiteResource = testSuite.serialize(model);
 
                 model.createResource(executionUUID)
-                        .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("tddo") + "TestExecution"))
+                        .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "TestExecution"))
                         .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Activity"))
                         .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "used"), testSuiteResource)
                         .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
                                 ResourceFactory.createTypedLiteral("" + startTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
                         .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),
                                 ResourceFactory.createTypedLiteral("" + endTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "source"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "source"),
                                 model.createResource(testedDataset.getUri()))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsRun"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testsRun"),
                                 ResourceFactory.createTypedLiteral("" + totalTests, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsSuceedded"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testsSuceedded"),
                                 ResourceFactory.createTypedLiteral("" + success, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsFailed"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testsFailed"),
                                 ResourceFactory.createTypedLiteral("" + fail, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsTimeout"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testsTimeout"),
                                 ResourceFactory.createTypedLiteral("" + timeout, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "testsError"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testsError"),
                                 ResourceFactory.createTypedLiteral("" + error, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("tddo"), "totalIndividualErrors"),
+                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "totalIndividualErrors"),
                                 ResourceFactory.createTypedLiteral("" + totalErrors, XSDDatatype.XSDnonNegativeInteger));
 
                 log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);

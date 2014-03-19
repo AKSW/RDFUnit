@@ -42,10 +42,10 @@ public class TestUtils {
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                 " ?generator " +
-                "    a tddo:TestGenerator ; " +
+                "    a ruto:TestGenerator ; " +
                 "    dcterms:description ?desc ; " +
-                "    tddo:sparqlGenerator ?query ; " +
-                "    tddo:basedOnPattern ?pattern . " +
+                "    ruto:sparqlGenerator ?query ; " +
+                "    ruto:basedOnPattern ?pattern . " +
                 " ?pattern dcterms:identifier ?patternID ." +
                 "} ";
 
@@ -96,7 +96,7 @@ public class TestUtils {
 
         String manualTestsSelectSparql = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a tddo:ManualTestCase }";
+                " ?testURI a ruto:ManualTestCase }";
 
         QueryExecution qe = qef.createQueryExecution(manualTestsSelectSparql);
         ResultSet results = qe.execSelect();
@@ -113,7 +113,7 @@ public class TestUtils {
 
         String patternTestsSelectSparql = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a tddo:PatternBasedTestCase } ";
+                " ?testURI a ruto:PatternBasedTestCase } ";
 
         qe = qef.createQueryExecution(patternTestsSelectSparql);
         results = qe.execSelect();
@@ -134,13 +134,13 @@ public class TestUtils {
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
-                "    tddo:appliesTo        ?appliesTo ;" +
-                "    tddo:generated        ?generated ;" +
-                "    tddo:source           ?source ;" +
-                "    tddo:testCaseLogLevel ?testCaseLogLevel ;" +
-                "    tddo:sparqlWhere      ?sparqlWhere ;" +
-                "    tddo:sparqlPrevalence ?sparqlPrevalence ." +
-                " OPTIONAL {<" + testURI + ">  tddo:testGenerator ?testGenerator .}" +
+                "    ruto:appliesTo        ?appliesTo ;" +
+                "    ruto:generated        ?generated ;" +
+                "    ruto:source           ?source ;" +
+                "    ruto:testCaseLogLevel ?testCaseLogLevel ;" +
+                "    ruto:sparqlWhere      ?sparqlWhere ;" +
+                "    ruto:sparqlPrevalence ?sparqlPrevalence ." +
+                " OPTIONAL {<" + testURI + ">  ruto:testGenerator ?testGenerator .}" +
                 "} ";
         QueryExecution qe = null;
         try {
@@ -201,12 +201,12 @@ public class TestUtils {
         String sparqlSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
-                "    tddo:appliesTo      ?appliesTo ;" +
-                "    tddo:generated      ?generated ;" +
-                "    tddo:source         ?source ;" +
-                "    tddo:testCaseLogLevel ?testCaseLogLevel ;" +
-                "    tddo:basedOnPattern ?basedOnPattern ;" +
-                " OPTIONAL {<" + testURI + ">  tddo:testGenerator ?testGenerator .}" +
+                "    ruto:appliesTo      ?appliesTo ;" +
+                "    ruto:generated      ?generated ;" +
+                "    ruto:source         ?source ;" +
+                "    ruto:testCaseLogLevel ?testCaseLogLevel ;" +
+                "    ruto:basedOnPattern ?basedOnPattern ;" +
+                " OPTIONAL {<" + testURI + ">  ruto:testGenerator ?testGenerator .}" +
                 "} ";
 
         QueryExecution qe = null;
@@ -222,7 +222,7 @@ public class TestUtils {
                 String source = qs.get("source").toString();
                 String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String patternURI = qs.get("basedOnPattern").toString();
-                Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getPrefix("tddp"), ""));
+                Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getPrefix("rutp"), ""));
                 if (pattern == null) {
                     log.error("Pattern does not exists for test: " + testURI);
                     return null;
@@ -286,7 +286,7 @@ public class TestUtils {
 
         String sparqlReferencesSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?references WHERE { " +
-                " <" + testURI + "> tddo:references ?references . }";
+                " <" + testURI + "> ruto:references ?references . }";
 
         QueryExecution qe = null;
         try {
@@ -310,9 +310,9 @@ public class TestUtils {
 
         String sparqlReferencesSelect = DatabuggerUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
-                " <" + testURI + "> tddo:binding ?binding ." +
-                " ?binding tddo:bindingValue ?value ;" +
-                "          tddo:parameter ?parameter }";
+                " <" + testURI + "> ruto:binding ?binding ." +
+                " ?binding ruto:bindingValue ?value ;" +
+                "          ruto:parameter ?parameter }";
 
         QueryExecution qe = null;
         try {
@@ -345,7 +345,7 @@ public class TestUtils {
     }
 
     public static String generateTestURI(String sourcePrefix, Pattern pattern, List<Binding> bindings, String generatorURI) {
-        String testURI = PrefixService.getPrefix("tddt") + sourcePrefix + "-" + pattern.getId() + "-";
+        String testURI = PrefixService.getPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         String string2hash = generatorURI;
         for (Binding binding : bindings)
             string2hash += binding.getValue();

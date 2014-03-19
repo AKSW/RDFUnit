@@ -1,282 +1,282 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
-@prefix tddg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tddo: <http://rdfunit.aksw.org/ns/core#> .
-@prefix tddp: <http://rdfunit.aksw.org/data/patterns#> .
-@prefix tddt: <http://rdfunit.aksw.org/data/tests#> .
+@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
-tddt:dbo-CARD-rdfslabelforeachlanguage
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:OWLCARD ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-CARD-rdfslabelforeachlanguage
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:OWLCARD ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 20 } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 . } """ .
 
 
 # dbo:deathDate after dbo:birthDate
-tddt:dbo-COMP-birthdeatdate
-    a       tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Schema ;
-    tddo:basedOnPattern tddp:COMP ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/ontology/birthDate> ;
-    tddo:references <http://dbpedia.org/ontology/deathDate> ;
-    tddo:source <http://dbpedia.org/ontology/> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/birthDate> ;
-            tddo:parameter tddp:COMP-P1
+rutt:dbo-COMP-birthdeatdate
+    a       ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Schema ;
+    ruto:basedOnPattern rutp:COMP ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/ontology/birthDate> ;
+    ruto:references <http://dbpedia.org/ontology/deathDate> ;
+    ruto:source <http://dbpedia.org/ontology/> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+            ruto:parameter rutp:COMP-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/deathDate> ;
-            tddo:parameter tddp:COMP-P2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/deathDate> ;
+            ruto:parameter rutp:COMP-P2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue ">" ;
-            tddo:parameter tddp:COMP-OP
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue ">" ;
+            ruto:parameter rutp:COMP-OP
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'A dbp:birthDate cannot be after a dbo:deathDate'" ;
-            tddo:parameter tddp:COMP-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'A dbp:birthDate cannot be after a dbo:deathDate'" ;
+            ruto:parameter rutp:COMP-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Error .
 
 
 # dbo:demolitionDate after dbo:buildingStartDate
-tddt:dbo-COMP-demolitionbuildingstartdate
-    a       tddo:PatternBasedTestCase ;
-    tddo:appliesTo tddo:Schema ;
-    tddo:basedOnPattern tddp:COMP ;
-    tddo:generated tddo:ManuallyGenerated ;
-    tddo:references <http://dbpedia.org/ontology/buildingStartDate>, <http://dbpedia.org/ontology/demolitionDate> ;
-    tddo:source <http://dbpedia.org/ontology/> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/buildingStartDate> ;
-            tddo:parameter tddp:COMP-P1
+rutt:dbo-COMP-demolitionbuildingstartdate
+    a       ruto:PatternBasedTestCase ;
+    ruto:appliesTo ruto:Schema ;
+    ruto:basedOnPattern rutp:COMP ;
+    ruto:generated ruto:ManuallyGenerated ;
+    ruto:references <http://dbpedia.org/ontology/buildingStartDate>, <http://dbpedia.org/ontology/demolitionDate> ;
+    ruto:source <http://dbpedia.org/ontology/> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/buildingStartDate> ;
+            ruto:parameter rutp:COMP-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/demolitionDate> ;
-            tddo:parameter tddp:COMP-P2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/demolitionDate> ;
+            ruto:parameter rutp:COMP-P2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue ">" ;
-            tddo:parameter tddp:COMP-OP
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue ">" ;
+            ruto:parameter rutp:COMP-OP
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'A dbp:buildingStartDate cannot be after a dbo:demolitionDate'" ;
-            tddo:parameter tddp:COMP-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'A dbp:buildingStartDate cannot be after a dbo:demolitionDate'" ;
+            ruto:parameter rutp:COMP-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Error .
 
 				 
 # dbo:latestReleaseDate after dbo:releaseDate
-tddt:dbo-COMP-releaselatestreleasedate
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:COMP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
-            tddo:parameter tddp:COMP-P1
+rutt:dbo-COMP-releaselatestreleasedate
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:COMP ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
+            ruto:parameter rutp:COMP-P1
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
-            tddo:parameter tddp:COMP-P2
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
+            ruto:parameter rutp:COMP-P2
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue ">" ;
-            tddo:parameter tddp:COMP-OP
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue ">" ;
+            ruto:parameter rutp:COMP-OP
         ] ;
-    tddo:binding
-        [ a     tddo:Binding ;
-            tddo:bindingValue "'A dbp:releaseDate cannot be after a dbo:latestReleaseDate'" ;
-            tddo:parameter tddp:COMP-MESSAGE
+    ruto:binding
+        [ a     ruto:Binding ;
+            ruto:bindingValue "'A dbp:releaseDate cannot be after a dbo:latestReleaseDate'" ;
+            ruto:parameter rutp:COMP-MESSAGE
         ] ;
-    tddo:testCaseLogLevel
+    ruto:testCaseLogLevel
                   rlog:Error .
 
 
 # Different countries having the same capital
-tddt:dbo-INVFUNC-countriessamecapital
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/capital> ;
-      tddo:references <http://dbpedia.org/ontology/Country> ;
-      tddo:source <http://dbpedia.org> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-INVFUNC-countriessamecapital
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:TYPRODEP ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/capital> ;
+      ruto:references <http://dbpedia.org/ontology/Country> ;
+      ruto:source <http://dbpedia.org> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s1 <http://dbpedia.org/ontology/capital> ?v1 . 
                                  ?s2 <http://dbpedia.org/ontology/capital> ?v1 . 
                                  ?s1 a <http://dbpedia.org/ontology/Country> . 
                                  ?s2 a <http://dbpedia.org/ontology/Country> . 
                                  FILTER (?s1 != ?s2 } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?v1) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?v1) AS ?total) WHERE {
                                  ?s1 <http://dbpedia.org/ontology/capital> ?v1 . 
                                  ?s1 a <http://dbpedia.org/ontology/Country> . } """ .
 
                                  
 # height of a dbo:Person between 0.4 and 2.5 meter
-tddt:dbo-LITRAN-rangeheightperson
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Person> ;
-      tddo:references <http://dbpedia.org/ontology/height> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-LITRAN-rangeheightperson
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:LITRAN ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/Person> ;
+      ruto:references <http://dbpedia.org/ontology/height> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://dbpedia.org/ontology/Person> .
                                  ?s <http://dbpedia.org/ontology/height> ?v1 .
                                  FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5)) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/height> ?v1 . } """ .
 
 # weight of a dbo:Person is between 1 and 375 KG        
-tddt:dbo-LITRAN-rangeweightperson
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:LITRAN ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Person/weight> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-LITRAN-rangeweightperson
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:LITRAN ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/Person/weight> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/Person/weight> ?v1 .
                                  FILTER (!(xsd:double(?v1) >= 1 && xsd:double(?v1) <= 375)) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/Person/weight> ?v1 . } """ .
 
                                  
 # dbo:isbn format
-tddt:dbo-MATCH-isbnformat
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/isbn> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-MATCH-isbnformat
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:MATCH ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/isbn> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/isbn> ?v1 .
                                  FILTER (! regex(str(?v1), "^([iIsSbBnN 0-9-])*$")) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/isbn> ?v1 . } """ .
 
                                  
 # dbo:iso6393Code format
-tddt:dbo-MATCH-iso6393codeformat
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/iso6393Code> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-MATCH-iso6393codeformat
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:MATCH ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/iso6393Code> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/iso6393Code> ?v1 .
                                  FILTER (! (regex(str(?v), "[a-z]{3}"))) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/iso6393Code> ?v1 . } """ .
                                  
                                  
 # dbo:postalCode format
-tddt:dbo-MATCH-postalcodeformat
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:MATCH ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/postalCode> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-MATCH-postalcodeformat
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:MATCH ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/postalCode> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/postalCode> ?v1 .
                                  FILTER (! (regex(str(?v),"^[0-9]{5}$"))) } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/postalCode> ?v1 . } """ .
 
                                  
 # Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate                                 
-tddt:dbo-PROPDEP-activeYearsEndStartDate
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:PROPDEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/activeYearsEndDate> ;
-      tddo:references <http://dbpedia.org/ontology/activeYearsStartDate> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-PROPDEP-activeYearsEndStartDate
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:PROPDEP ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/activeYearsEndDate> ;
+      ruto:references <http://dbpedia.org/ontology/activeYearsStartDate> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/activeYearsEndDate> ?v1 .
                                  FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/activeYearsStartDate> ?v2} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/activeYearsEndDate> ?v1 . } """ .
 
 # Resource has dbo:deatDate but no dbo:birthDate                                 
-tddt:dbo-PROPDEP-deathdatebirthdate
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:PROPDEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/birthDate> ;
-      tddo:references <http://dbpedia.org/ontology/deathDate> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-PROPDEP-deathdatebirthdate
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:PROPDEP ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/birthDate> ;
+      ruto:references <http://dbpedia.org/ontology/deathDate> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://dbpedia.org/ontology/deathDate> ?v1 .
                                  FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v2} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://dbpedia.org/ontology/deathDate> ?v1 . } """ .
                                  
                                  
 # Resource cannot have a foaf property if it is not an owl:Thing
-tddt:dbo-RDFSDOMAIN-foafpropertyowlthing
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:RDFSDOMAIN ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://xmlns.com/foaf/0.1/name> ;
-      tddo:references <http://www.w3.org/2002/07/owl#Thing> ;
-      tddo:source <http://dbpedia.org/ontology/> ;
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:RDFSDOMAIN ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://xmlns.com/foaf/0.1/name> ;
+      ruto:references <http://www.w3.org/2002/07/owl#Thing> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://xmlns.com/foaf/0.1/name> ?v1 .
                                  FILTER NOT EXISTS {?s a <http://www.w3.org/2002/07/owl#Thing>} } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://xmlns.com/foaf/0.1/name> ?v1 . } """ .
 
 # dbo:Person without a dbo:birthDate
-tddt:dbo-TYPRODEP-personwithoutbirthdate
-      a       tddo:PatternBasedTestCase ;
-      tddo:appliesTo tddo:Schema ;
-      tddo:basedOnPattern tddp:TYPRODEP ;
-      tddo:generated tddo:ManuallyGenerated ;
-      tddo:references <http://dbpedia.org/ontology/Person> ;
-      tddo:references <http://dbpedia.org/ontology/birthDate> ;
-      tddo:source <http://dbpedia.org/ontology/> ;	
-      tddo:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+rutt:dbo-TYPRODEP-personwithoutbirthdate
+      a       ruto:PatternBasedTestCase ;
+      ruto:appliesTo ruto:Schema ;
+      ruto:basedOnPattern rutp:TYPRODEP ;
+      ruto:generated ruto:ManuallyGenerated ;
+      ruto:references <http://dbpedia.org/ontology/Person> ;
+      ruto:references <http://dbpedia.org/ontology/birthDate> ;
+      ruto:source <http://dbpedia.org/ontology/> ;
+      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s a <http://dbpedia.org/ontology/Person> .
                                  FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v1 } } """ ;
-      tddo:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s a <http://dbpedia.org/ontology/Person> . } """ .
 

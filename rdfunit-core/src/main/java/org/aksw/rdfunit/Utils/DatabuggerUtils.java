@@ -33,10 +33,10 @@ public class DatabuggerUtils {
                 " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
                 " PREFIX dc: <http://purl.org/dc/elements/1.1/> \n" +
                 " PREFIX rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> \n" +
-                " PREFIX tddo: <http://rdfunit.aksw.org/ns/core#> \n" +
-                " PREFIX tddp: <http://rdfunit.aksw.org/data/patterns#> \n" +
-                " PREFIX tddt: <http://rdfunit.aksw.org/data/tests#> \n" +
-                " PREFIX tddg: <http://rdfunit.aksw.org/data/generators#> \n"
+                " PREFIX ruto: <http://rdfunit.aksw.org/ns/core#> \n" +
+                " PREFIX rutp: <http://rdfunit.aksw.org/data/patterns#> \n" +
+                " PREFIX rutt: <http://rdfunit.aksw.org/data/tests#> \n" +
+                " PREFIX rutg: <http://rdfunit.aksw.org/data/generators#> \n"
                 ;
     }
 
