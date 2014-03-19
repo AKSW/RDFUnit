@@ -2,7 +2,7 @@ package org.aksw.rdfunit.ui;
 
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
-import org.aksw.rdfunit.Databugger;
+import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
@@ -31,8 +31,8 @@ public class RDFUnitUISession extends VaadinSession {
 
     public static void init() {
 
-        Databugger databugger = new Databugger();
-        VaadinSession.getCurrent().setAttribute(Databugger.class, databugger);
+        RDFUnit rdfunit = new RDFUnit();
+        VaadinSession.getCurrent().setAttribute(RDFUnit.class, rdfunit);
 
         String baseDir = _getBaseDir();
         VaadinSession.getCurrent().setAttribute(String.class, baseDir);
@@ -68,8 +68,8 @@ public class RDFUnitUISession extends VaadinSession {
         }
     }
 
-    public static Databugger getDatabugger() {
-        return VaadinSession.getCurrent().getAttribute(Databugger.class);
+    public static RDFUnit getDatabugger() {
+        return VaadinSession.getCurrent().getAttribute(RDFUnit.class);
     }
 
     public static String getBaseDir() {

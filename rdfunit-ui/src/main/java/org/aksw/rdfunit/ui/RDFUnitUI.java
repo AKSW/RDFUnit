@@ -89,7 +89,7 @@ public class RDFUnitUI extends UI {
 
         VerticalLayout databuggerLogo = new VerticalLayout();
         databuggerLogo.setStyleName("logo");
-        databuggerLogo.addComponent(new Label("<h1>Databugger</h1>", ContentMode.HTML));
+        databuggerLogo.addComponent(new Label("<h1>RDFUnit</h1>", ContentMode.HTML));
         databuggerLogo.addComponent(new Label("<span>A Data Debugging Framework</span>", ContentMode.HTML));
 
 
@@ -114,7 +114,7 @@ public class RDFUnitUI extends UI {
     private void initLayoutFooter() {
         layoutFooter.setHeight("40px");
         layoutFooter.addStyleName("v-link");
-        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://aksw.org/Projects/Databugger\">Databugger</a>", ContentMode.HTML));
+        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://aksw.org/Projects/RDFUnit\">RDFUnit</a>", ContentMode.HTML));
     }
 
 }

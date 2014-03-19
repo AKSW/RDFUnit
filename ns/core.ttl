@@ -38,10 +38,10 @@
 #	dc:description <diagram url> .
 
     rdfs:comment
-        """The RDFUnit ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
     dc:description
-        """The RDFUnit ontology describes concepts used in Databugger, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
     rdfs:seeAlso <http://aksw.org/Projects/RDFUnit.html> .
 

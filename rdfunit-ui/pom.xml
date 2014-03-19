@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>databugger-parent</artifactId>
-        <groupId>org.aksw.databugger</groupId>
+        <artifactId>rdfunit-parent</artifactId>
+        <groupId>org.aksw.rdfunit</groupId>
         <version>0.3</version>
     </parent>
-    <artifactId>databugger-ui</artifactId>
+    <artifactId>rdfunit-ui</artifactId>
     <packaging>war</packaging>
     <name>Databugger - UI</name>
 
@@ -103,8 +103,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.aksw.databugger</groupId>
-            <artifactId>databugger-core</artifactId>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
@@ -231,7 +231,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/databugger-ui-${project.version}/data</outputDirectory>
+                            <outputDirectory>${basedir}/target/rdfunit-ui-${project.version}/data</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>../data</directory>

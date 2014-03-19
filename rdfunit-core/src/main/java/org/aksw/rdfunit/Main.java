@@ -54,7 +54,7 @@ public class Main {
         cliOptions.addOption("d", "dataset-uri", true,
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
-                "the endpoint to run the tests on (If no endpoint is provided Databugger will try to dereference the dataset-uri)");
+                "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
@@ -142,9 +142,9 @@ public class Main {
 
         TripleReader patternReader = new TripleFileReader(dataFolder + "patterns.ttl");
         TripleReader testGeneratorReader = new TripleFileReader(dataFolder + "testAutoGenerators.ttl");
-        Databugger databugger = new Databugger();
+        RDFUnit rdfunit = new RDFUnit();
         try {
-            databugger.initPatternsAndGenerators(patternReader, testGeneratorReader);
+            rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (TripleReaderException e) {
             log.error("Cannot read patterns and/or pattern generators");
             System.exit(1);
@@ -177,7 +177,7 @@ public class Main {
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(useTestCache, useManualTestCases);
-        TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, databugger.getAutoGenerators());
+        TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, rdfunit.getAutoGenerators());
 
 
         TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {

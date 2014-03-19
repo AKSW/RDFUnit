@@ -23,15 +23,15 @@ import java.util.List;
  * Main Class
  * Created: 9/20/13 5:59 PM
  */
-public class Databugger {
+public class RDFUnit {
 
 
-    private static Logger log = LoggerFactory.getLogger(Databugger.class);
+    private static Logger log = LoggerFactory.getLogger(RDFUnit.class);
     private QueryExecutionFactory patternQueryFactory;
     private List<Pattern> patterns = new ArrayList<Pattern>();
     private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
-    public Databugger() {
+    public RDFUnit() {
     }
 
     public void initPatternsAndGenerators(TripleReader patterReader, TripleReader testGeneratorReader) throws TripleReaderException {

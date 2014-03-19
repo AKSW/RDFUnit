@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>databugger-parent</artifactId>
-        <groupId>org.aksw.databugger</groupId>
+        <artifactId>rdfunit-parent</artifactId>
+        <groupId>org.aksw.rdfunit</groupId>
         <version>0.3</version>
     </parent>
 
-    <artifactId>databugger-core</artifactId>
+    <artifactId>rdfunit-core</artifactId>
     <name>Databugger - Core</name>
 
     <dependencies>
@@ -47,7 +47,7 @@
             <id>debpackage</id>
 
             <build>
-                <finalName>databugger-core</finalName>
+                <finalName>rdfunit-core</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -94,19 +94,19 @@
                                     <goal>jdeb</goal>
                                 </goals>
                                 <configuration>
-                                    <deb>${basedir}/target/databugger-core-${project.version}.deb</deb>
+                                    <deb>${basedir}/target/rdfunit-core-${project.version}.deb</deb>
                                     <controlDir>${basedir}/debian</controlDir>
                                     <dataSet>
                                         <data>
-                                            <src>${basedir}/target/databugger-core.jar</src>
+                                            <src>${basedir}/target/rdfunit-core.jar</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/etc/share/java/databugger</prefix>
+                                                <prefix>/etc/share/java/rdfunit</prefix>
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${project.basedir}/debian/databugger</src>
+                                            <src>${project.basedir}/debian/rdfunit</src>
                                             <type>file</type>
 
                                             <mapper>
@@ -123,7 +123,7 @@
                                             <mapper>
                                                 <type>perm</type>
                                                 <filemode>777</filemode>
-                                                <prefix>/etc/share/java/databugger/data</prefix>
+                                                <prefix>/etc/share/java/rdfunit/data</prefix>
                                             </mapper>
                                         </data>
                                     </dataSet>

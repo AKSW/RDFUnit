@@ -59,13 +59,13 @@ $ cd Databugger/
 $ mvn clean install
 
 # argument help
-$ bin/databugger -h
+$ bin/rdfunit -h
 
 # Simple call
-$ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...>
+$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...>
 
 # with use of enriched ontnology
-$ bin/databugger -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
+$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
 ```
 
 To brief the options, you need to provide:
@@ -83,13 +83,13 @@ Future versions of the tool will work directly with a SPARQL endpoint.
 
 An example call with already defined manual and enriched test cases is:
 ```console
-$ bin/databugger -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -p dbo
+$ bin/rdfunit -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -p dbo
 ```
 
 ### Data folder structure
 
 the data folder consists of the following folders:
-* `ontology` holds the databugger ontology
+* `ontology` holds the rdfunit ontology
 * `results` stores the results of the evaluation in RDF
 * `tests` stores the test cases along with a cache of the schema source in turtle
     * `Schema` holds the automatically generated test cases are stored
