@@ -122,7 +122,7 @@ rutt:skos-ONELANG-singleDePrefLabel
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing  rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
-rutt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
+rutt:skos-ConseptSchemeWithoutRdfslabel
       a       ruto:ManualTestCase ;
       ruto:appliesTo ruto:Schema ;
       ruto:generated ruto:ManuallyGenerated ;
@@ -140,7 +140,7 @@ rutt:skos-TYPRODEP-ConseptSchemeWithoutRdfslabel
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#Concept>
 # TODO not according to pattern (2 filters)
-rutt:skos-TYPRODEP-ConseptWithoutRdfslabel
+rutt:skos-ConseptWithoutRdfslabel
       a       ruto:ManualTestCase ;
       ruto:appliesTo ruto:Schema ;
       ruto:generated ruto:ManuallyGenerated ;
