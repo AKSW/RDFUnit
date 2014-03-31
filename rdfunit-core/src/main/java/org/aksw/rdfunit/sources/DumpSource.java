@@ -6,6 +6,9 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.io.TripleDereferenceReader;
+import org.aksw.rdfunit.io.TripleReader;
+import org.aksw.rdfunit.io.TripleReaderFactory;
 
 import java.util.List;
 
@@ -19,12 +22,27 @@ import java.util.List;
  */
 public class DumpSource extends Source {
 
+    private final TripleReader dumpReader;
+
     public DumpSource(String prefix, String uri) {
-        this(prefix, uri, null);
+        this(prefix, uri, new TripleDereferenceReader(uri), null);
+    }
+
+    public DumpSource(String prefix, String uri, String location) {
+        this(prefix, uri, new TripleDereferenceReader(location), null);
+    }
+
+    public DumpSource(String prefix, String uri, TripleReader dumpReader) {
+        this(prefix, uri, dumpReader, null);
     }
 
     public DumpSource(String prefix, String uri, List<SchemaSource> schemata) {
+        this(prefix, uri, new TripleDereferenceReader(uri), schemata);
+    }
+
+    public DumpSource(String prefix, String uri, TripleReader dumpReader, List<SchemaSource> schemata) {
         super(prefix, uri);
+        this.dumpReader = dumpReader;
         if (schemata != null)
             addReferencesSchemata(schemata);
     }
@@ -39,7 +57,7 @@ public class DumpSource extends Source {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         try {
             // Read & load the URI
-            model.read(getUri());
+            dumpReader.read(model);
             //Load all the related ontologies as well (for more consistent querying
             for (Source src : getReferencesSchemata()) {
                 QueryExecutionFactory qef = src.getExecutionFactory();
