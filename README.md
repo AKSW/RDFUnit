@@ -2,9 +2,9 @@ RDFUnit
 ==========
 
 This repository contains the *RDFUnit* -- a tool for test-driven quality evaluation of Linked Data quality.
-Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in our [submission](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf) for World Wide Web Conference 2014.
-The results of this work are available [here](https://github.com/AKSW/RDFUnit/tree/master/data/archive/WWW_2014) .
-This methodology defines 16 data quality test patterns which are SPARQL query templates expressing certain common error conditions.
+Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in the following publications: [methodology (WWW2014)](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf), [demo paper (WWW2014)](http://svn.aksw.org/papers/2014/WWW_Databugger_demo/public.pdf) and [ontology definition (ESWC2014)](http://svn.aksw.org/papers/2014/ESWC_NLP_Cleansing/public.pdf).
+The results of the methodology paper are available [here](https://github.com/AKSW/RDFUnit/tree/master/data/archive/WWW_2014) .
+This methodology defines a set of data quality test patterns which are SPARQL query templates expressing certain common error conditions.
 After having instantiated such patterns for a concrete dataset possible errors of the corresponding kind can be detected. An example would be the following pattern:
 
 ```
@@ -22,7 +22,7 @@ SELECT ?s WHERE {
 ```
 referring to the case where an individual died before it was born.
 
-The RDFUnit tool provides a vocabulary to define such pattern instantiations called *data quality test cases*.
+The RDFUnit tool provides a [vocabulary](http://rdfunit.aksw.org/ns#) to define such pattern instantiations called *data quality test cases*.
 Apart from manual instantiations some of the test patterns can also be instantiated automatically.
 These test cases are then specific to a given schema and can be re-used.
 For now we support the following axioms: 
@@ -61,11 +61,17 @@ $ mvn clean install
 # argument help
 $ bin/rdfunit -h
 
-# Simple call
+# Simple call (SPARQL)
 $ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...>
 
 # with use of enriched ontnology
 $ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
+
+# Simple call (Dereferencing)
+$ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>
+
+# Simple call (Dereferencing when you want to keep the manual tests for a dataset)
+$ bin/rdfunit -d <dataset-uri> -U <source-URI> -s <schema1,schema2,schema3,...>
 ```
 
 To brief the options, you need to provide:
