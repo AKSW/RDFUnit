@@ -61,7 +61,7 @@ public class RDFUnitUISession extends VaadinSession {
             RDFUnitUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
 
             TripleReader patternReader = new TripleFileReader(getBaseDir() + "patterns.ttl");
-            TripleReader testGeneratorReader = new TripleFileReader(getBaseDir() + "testGenerators.ttl");
+            TripleReader testGeneratorReader = new TripleFileReader(getBaseDir() + "testAutoGenerators.ttl");
             getRDFUnit().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO
