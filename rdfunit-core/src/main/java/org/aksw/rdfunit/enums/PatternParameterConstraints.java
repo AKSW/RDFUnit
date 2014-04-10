@@ -36,7 +36,7 @@ public enum PatternParameterConstraints {
 
     public String getUri() {
         // TODO make prefix configurable
-        return PrefixService.getPrefix("ruto") + name();
+        return PrefixService.getPrefix("rut") + name();
     }
 
     @Override
@@ -46,7 +46,7 @@ public enum PatternParameterConstraints {
 
     public static PatternParameterConstraints resolve(String value) {
 
-        String s = value.replace(PrefixService.getPrefix("ruto"), "");
+        String s = value.replace(PrefixService.getPrefix("rut"), "");
         if (s.equals("Resource")) {
             return Resource;
         } else if (s.equals("Property")) {

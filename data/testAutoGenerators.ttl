@@ -1,5 +1,5 @@
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
-@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
 @prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -10,9 +10,9 @@
 ##########################################
 
 # Class range
-rutg:RDFSRANGEC a ruto:TestGenerator ;
+rutg:RDFSRANGEC a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ select distinct ?P1 ?T1 ?MESSAGE where {
+    rut:sparqlGenerator """ select distinct ?P1 ?T1 ?MESSAGE where {
                               {
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
@@ -32,17 +32,17 @@ rutg:RDFSRANGEC a ruto:TestGenerator ;
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
                                        (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )}
                               BIND (concat("'", str(?P1)," does not have rdfs:range: ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:RDFSRANGE ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:RDFSRANGE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # Datatype range
-rutg:RDFSRANGED a ruto:TestGenerator ;
+rutg:RDFSRANGED a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ select distinct ?P1 ?D1 ?MESSAGE where {
+    rut:sparqlGenerator """ select distinct ?P1 ?D1 ?MESSAGE where {
                               {
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
@@ -56,11 +56,11 @@ rutg:RDFSRANGED a ruto:TestGenerator ;
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                          (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
                               BIND (concat("'", str(?P1)," does not have datatype: ", str(?D1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:RDFSRANGED ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:RDFSRANGED ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 
@@ -68,20 +68,20 @@ rutg:RDFSRANGED a ruto:TestGenerator ;
 #### rdfs:domain pattern
 ##########################################
 
-rutg:RDFSDOMAIN a ruto:TestGenerator ;
+rutg:RDFSDOMAIN a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?T1 ?MESSAGE where {
+    rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?T1 ?MESSAGE where {
                              ?P1 rdfs:domain ?T1 .
                              BIND (concat("'", str(?P1)," does not have rdfs:domain: ", str(?T1), "'") AS ?MESSAGE)
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
-    ruto:basedOnPattern rutp:RDFSDOMAIN ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:RDFSDOMAIN ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 
@@ -89,54 +89,54 @@ rutg:RDFSDOMAIN a ruto:TestGenerator ;
 #### owl:disjointClass pattern (1) (without reverse relations)
 ##########################################
 
-rutg:OWLDISJC1 a ruto:TestGenerator ;
+rutg:OWLDISJC1 a rut:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
                              ?T1 owl:disjointWith ?T2 .
                              FILTER NOT EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE) } """ ;
-    ruto:basedOnPattern rutp:OWLDISJC ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLDISJC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 ##########################################
 #### owl:disjointClass pattern (2) (filter out reverse relations)
 ##########################################
 
-rutg:OWLDISJC2 a ruto:TestGenerator ;
+rutg:OWLDISJC2 a rut:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
                              ?T1 owl:disjointWith ?T2 .
                              FILTER EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              FILTER (str(?T1) < str(?T2) ).
                              BIND ( concat("'Class ", str(?T1)," is owl:disjointWith with ", str(?T2), "'") AS ?MESSAGE) } """ ;
-    ruto:basedOnPattern rutp:OWLDISJC ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLDISJC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 ##########################################
 #### owl:AllDisjointClasses pattern
 ##########################################
 
-rutg:OWLALLDISJC a ruto:TestGenerator ;
+rutg:OWLALLDISJC a rut:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
                              ?r rdf:type    owl:AllDisjointClasses ;
                                 owl:members ?T1 ;
                                 owl:members ?T2 .
                              FILTER (str(?T1) < str(?T2) ).
                              BIND ( concat("'Class ", str(?T1)," is owl:members of an owl:AllDisjointClasses with ", str(?T2), "'") AS ?MESSAGE) } """ ;
-    ruto:basedOnPattern rutp:OWLDISJC ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLDISJC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 
@@ -144,16 +144,16 @@ rutg:OWLALLDISJC a ruto:TestGenerator ;
 #### owl:propertyDisjointWith pattern
 ##########################################
 
-rutg:OWLDISJP a ruto:TestGenerator ;
+rutg:OWLDISJP a rut:TestGenerator ;
     dcterms:description """Generate all owl:propertyDisjointWith constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 ?MESSAGE WHERE {
                              ?P1 owl:propertyDisjointWith ?P2 . 
 							 BIND ( concat("'Property ", str(?P1)," is owl:propertyDisjointWith with ",str(?P2), "'") AS ?MESSAGE) } """ ;
-    ruto:basedOnPattern rutp:OWLDISJP ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLDISJP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
 
     .
 
@@ -162,16 +162,16 @@ rutg:OWLDISJP a ruto:TestGenerator ;
 #### owl:complementOf pattern
 ##########################################
 
-rutg:OWLCOMPL a ruto:TestGenerator ;
+rutg:OWLCOMPL a rut:TestGenerator ;
     dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?MESSAGE WHERE {
                              ?T1 owl:complementOf ?T2 . 
 							 BIND ( concat("'", str(?T1)," is owl:complementOf with ", str(?T2), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:OWLDISJC ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLDISJC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 ##########################################
@@ -179,161 +179,161 @@ rutg:OWLCOMPL a ruto:TestGenerator ;
 ##########################################
 
 # owl:cardinality number > 0 (count restriction if exists)
-rutg:OWLCARD a ruto:TestGenerator ;
+rutg:OWLCARD a rut:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) (str(?v)  as ?V1) ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) (str(?v)  as ?V1) ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction ;
                                 owl:onProperty ?P1 ;
                                 owl:cardinality ?v .
                              FILTER (?v > 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:OWLCARDT ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # owl:cardinality number > 0 (exists in db)
-rutg:OWLCARDEX a ruto:TestGenerator ;
+rutg:OWLCARDEX a rut:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
 							 ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
                              FILTER (?v > 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:TYPRODEP ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # owl:cardinality number = 0 (must not exist)
-rutg:OWLCARD0 a ruto:TestGenerator ;
+rutg:OWLCARD0 a rut:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality is 0"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1) ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1) ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
                              FILTER (?v = 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:TRIPLE ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:TRIPLE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # owl:minCardinality number > 0 (count restriction if exists)
-rutg:OWLCARD-MIN a ruto:TestGenerator ;
+rutg:OWLCARD-MIN a rut:TestGenerator ;
     dcterms:description """Generates owl:minCardinality constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<=' as ?OP) (str(?v)  as ?V1) ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<=' as ?OP) (str(?v)  as ?V1) ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v . 
 							 BIND ( concat("'Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:OWLCARDT ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # owl:minCardinality number > 0 (exists in db)
-rutg:OWLCARDEX-MIN a ruto:TestGenerator ;
+rutg:OWLCARDEX-MIN a rut:TestGenerator ;
     dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v .
                              FILTER (?v > 0) .
 							 BIND ( concat("'Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:TYPRODEP ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # owl:manCardinality number > 0 (count restriction if exists)
-rutg:OWLCGARD-MAX a ruto:TestGenerator ;
+rutg:OWLCGARD-MAX a rut:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
                              FILTER (?v > 0) . 
 							 BIND ( concat("'Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE) .} """ ;
-    ruto:basedOnPattern rutp:OWLCARDT ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 # owl:maxCardinality number = 0 (must not exist)
-rutg:OWLCARD-MAX0 a ruto:TestGenerator ;
+rutg:OWLCARD-MAX0 a rut:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?T1 ('' as ?NOT) ?P1 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('' as ?NOT) ?P1 ?MESSAGE WHERE {
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
                              FILTER (?v = 0) . 
 							 BIND ( concat("'Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1), "'") AS ?MESSAGE)} """ ;
-    ruto:basedOnPattern rutp:TYPRODEP ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 ##########################################
 #### owl functional property constrains generators
 ##########################################
 
-rutg:OWLFUNC a ruto:TestGenerator ;
+rutg:OWLFUNC a rut:TestGenerator ;
     dcterms:description """ Generates owl:FunctionalProperty constrains. IF the property exists we ensure it exists only once"""@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) ?MESSAGE WHERE {
 							 { 
 							   ?P1 rdf:type owl:FunctionalProperty .
 							 } UNION {
-                               ?P1 rdfs:subClassOf+ owl:FunctionalProperty .
+                               ?P1 rdfs:subPropertyOf+ owl:FunctionalProperty .
 							 }  
 							 BIND ( concat("'", str(?P1)," is an owl:FunctionalProperty and should occur at most once in a resource'") AS ?MESSAGE) }""" ;
-    ruto:basedOnPattern rutp:OWLCARD ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLCARD ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 ################################################################################
 ### owl inverse functional property constraints generator
 ################################################################################
 
-rutg:OWLINVFUNC a ruto:TestGenerator ;
+rutg:OWLINVFUNC a rut:TestGenerator ;
     dcterms:description """ Generates owl:InverseFunctionalProperty constraints. If such a property exists we ensure that resources are assigned only once via this property """@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
                              { 
 							   ?P1 rdf:type owl:InverseFunctionalProperty .
 							 } UNION {
-                               ?P1 rdfs:subClassOf+ owl:InverseFunctionalProperty .
+                               ?P1 rdfs:subPropertyOf+ owl:InverseFunctionalProperty .
 							 }  
 							 BIND ( concat("'", str(?P1)," is an owl:InverseFunctionalProperty and should be unique'") AS ?MESSAGE) }""" ;
-    ruto:basedOnPattern rutp:INVFUNC ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:INVFUNC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 
@@ -341,32 +341,32 @@ rutg:OWLINVFUNC a ruto:TestGenerator ;
 #### owl symmetric property constraints generator
 ################################################################################
 
-# rutg:OWLSYMMETRICPROP a ruto:TestGenerator ;
+# rutg:OWLSYMMETRICPROP a rut:TestGenerator ;
 #    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
-#    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
+#    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
 #                                ?P1 a owl:SymmetricProperty .
 #                              }""" ;
-#    ruto:basedOnPattern rutp:OWLSYMMETRICPROP .
+#    rut:basedOnPattern rutp:OWLSYMMETRICPROP .
 
 
 ################################################################################
 #### owl asymmetric property constraints generator
 ################################################################################
 
-rutg:OWLASYMMETRICPROP a ruto:TestGenerator ;
+rutg:OWLASYMMETRICPROP a rut:TestGenerator ;
     dcterms:description """ Generates owl:AsymmetricProperty constraints. Given a statement with an asymmetric property we ensure that no inverse statements with the same property exist in the dataset """@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
                              { 
 							   ?P1 rdf:type owl:AsymmetricProperty .
 							 } UNION {
-                               ?P1 rdfs:subClassOf+ owl:AsymmetricProperty .
+                               ?P1 rdfs:subPropertyOf+ owl:AsymmetricProperty .
 							 }   
 							 BIND ( concat("'", str(?P1)," is an owl:AsymmetricProperty and should be used as an owl:SymetricProperty'") AS ?MESSAGE) } """ ;
-    ruto:basedOnPattern rutp:OWLASYMMETRICPROP ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLASYMMETRICPROP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 
@@ -374,32 +374,32 @@ rutg:OWLASYMMETRICPROP a ruto:TestGenerator ;
 #### owl transitive property constraints generator
 ################################################################################
 
-# rutg:OWLTRANSPROP a ruto:TestGenerator ;
+# rutg:OWLTRANSPROP a rut:TestGenerator ;
 #    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
-#    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
+#    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
 #                                ?P1 a owl:TransitiveProperty .
 #                              }""" ;
-#    ruto:basedOnPattern rutp:OWLTRANSPROP .
+#    rut:basedOnPattern rutp:OWLTRANSPROP .
 
 
 ################################################################################
 #### owl irreflexive property constrains generator
 ################################################################################
 
-rutg:OWLIRREFLEXIVE a ruto:TestGenerator ;
+rutg:OWLIRREFLEXIVE a rut:TestGenerator ;
     dcterms:description """ Generates owl:IrreflexiveProperty constraints. Given an irreflexive property we ensure that it is not used reflexively """@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
                              { 
 							   ?P1 rdf:type owl:IrreflexiveProperty .
 							 } UNION {
-                               ?P1 rdfs:subClassOf+ owl:IrreflexiveProperty .
+                               ?P1 rdfs:subPropertyOf+ owl:IrreflexiveProperty .
 							 }    
 							 BIND ( concat("'", str(?P1)," is an owl:IrreflexiveProperty and a subject must not be the the object'") AS ?MESSAGE) }""" ;
-    ruto:basedOnPattern rutp:OWLIRREFLEXIVE ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Error] ;
+    rut:basedOnPattern rutp:OWLIRREFLEXIVE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Error] ;
     .
 
 
@@ -407,20 +407,20 @@ rutg:OWLIRREFLEXIVE a ruto:TestGenerator ;
 #### owl DeprecatedProperty warning
 ################################################################################
 
-rutg:OWLDEPRECATEDP a ruto:TestGenerator ;
+rutg:OWLDEPRECATEDP a rut:TestGenerator ;
     dcterms:description """ Generates owl:DeprecatedProperty warnings. """@en ;
-    ruto:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1'  as ?V1) ?MESSAGE WHERE {
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1'  as ?V1) ?MESSAGE WHERE {
                              {
 							   ?P1 rdf:type owl:DeprecatedProperty .
 							 } UNION {
-                               ?P1 rdfs:subClassOf+ owl:DeprecatedProperty .
+                               ?P1 rdfs:subPropertyOf+ owl:DeprecatedProperty .
 							 }
 							 BIND ( concat("'", str(?P1)," is an owl:DeprecatedProperty and should not be used anymore'") AS ?MESSAGE) }""" ;
-    ruto:basedOnPattern rutp:TRIPLE ;
-    ruto:resultAnnotation [
-        a ruto:ResultAnnotation ;
-        ruto:annotationProperty rlog:level ;
-        ruto:annotationValue rlog:Warn] ;
+    rut:basedOnPattern rutp:TRIPLE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Warn] ;
     .
 
 # TODO owl:DeprecatedClass (needs a new transitive type pattern)

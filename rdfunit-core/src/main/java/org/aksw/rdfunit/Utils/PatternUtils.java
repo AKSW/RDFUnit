@@ -23,19 +23,19 @@ public class PatternUtils {
 
         String sparqlSelectPatterns = RDFUnitUtils.getAllPrefixes() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
-                " ?sparqlPattern a ruto:Pattern ; " +
+                " ?sparqlPattern a rut:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
                 "  dcterms:description ?desc ; " +
-                "  ruto:sparqlWherePattern ?sparql ; " +
-                "  ruto:sparqlPrevalencePattern ?sparqlPrev ; " +
+                "  rut:sparqlWherePattern ?sparql ; " +
+                "  rut:sparqlPrevalencePattern ?sparqlPrev ; " +
                 "} ORDER BY ?sparqlPattern";
         String sparqlSelectParameters = RDFUnitUtils.getAllPrefixes() +
                 " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
-                " %%PATTERN%%  ruto:parameter ?parameterURI . " +
-                " ?parameterURI a ruto:Parameter . " +
+                " %%PATTERN%%  rut:parameter ?parameterURI . " +
+                " ?parameterURI a rut:Parameter . " +
                 " ?parameterURI dcterms:identifier ?id . " +
-                " OPTIONAL {?parameterURI ruto:parameterConstraint ?constraint .}" +
-                " OPTIONAL {?parameterURI ruto:constraintPattern ?constraintPattern .}" +
+                " OPTIONAL {?parameterURI rut:parameterConstraint ?constraint .}" +
+                " OPTIONAL {?parameterURI rut:constraintPattern ?constraintPattern .}" +
                 " } ";
 
         QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);

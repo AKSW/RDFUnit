@@ -9,7 +9,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#>.
 
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
-@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
 @prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
 @prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 

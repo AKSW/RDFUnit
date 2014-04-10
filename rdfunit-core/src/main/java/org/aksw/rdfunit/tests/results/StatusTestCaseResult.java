@@ -24,10 +24,10 @@ public class StatusTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "StatusTestCaseResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "resultStatus"), model.createResource(getStatus().getUri()))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "StatusTestCaseResult"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testCase"), model.createResource(getTestCase().getTestURI()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()));
     }
 
     public TestCaseResultStatus getStatus() {

@@ -43,18 +43,18 @@ public class TestCaseAnnotation {
 
     public Resource serialize(Resource resource, Model model) {
         resource
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "generated"), model.createResource(getGenerated().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testGenerator"), model.createResource(getAutoGeneratorURI()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "appliesTo"), model.createResource(getAppliesTo().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "source"), model.createResource(getSourceUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "testCaseLogLevel"), model.createResource(getTestCaseLogLevel()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "generated"), model.createResource(getGenerated().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testGenerator"), model.createResource(getAutoGeneratorURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "appliesTo"), model.createResource(getAppliesTo().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "source"), model.createResource(getSourceUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCaseLogLevel"), model.createResource(getTestCaseLogLevel()));
 
         for (String r : getReferences()) {
-            resource.addProperty(model.createProperty(PrefixService.getPrefix("ruto") + "references"), ResourceFactory.createResource(r));
+            resource.addProperty(model.createProperty(PrefixService.getPrefix("rut") + "references"), ResourceFactory.createResource(r));
         }
 
         for (ResultAnnotation annotation : getResultAnnotations()) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "resultAnnotation"), annotation.serializeAsTestCase(model));
+            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "resultAnnotation"), annotation.serializeAsTestCase(model));
         }
 
         return resource;

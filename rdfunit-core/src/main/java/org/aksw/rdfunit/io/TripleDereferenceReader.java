@@ -19,6 +19,7 @@ public class TripleDereferenceReader extends TripleReader {
     @Override
     public void read(Model model) throws TripleReaderException {
         try {
+            //TODO check for relative file names and convert to absolute paths
             model.read(uri);
         } catch (Exception e) {
             throw new TripleReaderException(e.getMessage());

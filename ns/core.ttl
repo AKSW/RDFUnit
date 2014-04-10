@@ -4,7 +4,7 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix spin: <http://spinrdf.org/spin#> .
@@ -13,7 +13,7 @@
 <http://rdfunit.aksw.org/ns/core#>
     a owl:Ontology ;
 
-    <http://purl.org/vocab/vann/preferredNamespacePrefix> "ruto" ;
+    <http://purl.org/vocab/vann/preferredNamespacePrefix> "rut" ;
     <http://purl.org/vocab/vann/preferredNamespaceUri> "http://rdfunit.aksw.org/ns/core#" ;
     <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/RDFUnit/commits/master/ns> ;
 
@@ -50,7 +50,7 @@
 # Patterns
 #################################################################
 
-ruto:Pattern
+rut:Pattern
     a owl:Class ;
     rdfs:label "Pattern"@en ;
 #    rdfs:comment "TODO"@en ;
@@ -61,40 +61,40 @@ ruto:Pattern
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:sparqlWherePattern;
+        owl:onProperty rut:sparqlWherePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:sparqlPrevalencePattern;
+        owl:onProperty rut:sparqlPrevalencePattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:parameter;
+        owl:onProperty rut:parameter;
         owl:minCardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:sparqlWherePattern
+rut:sparqlWherePattern
     a owl:DatatypeProperty ;
     rdfs:label "sparqlWherePattern"@en ;
     rdfs:comment "The WHERE part of sparql pattern  query with placeholders (%%XYZ%%) for parameters"@en ;
-    rdfs:domain ruto:Pattern ;
+    rdfs:domain rut:Pattern ;
     rdfs:range xsd:string .
 
-ruto:sparqlPrevalencePattern
+rut:sparqlPrevalencePattern
     a owl:DatatypeProperty ;
     rdfs:label "sparqlPrevalencePattern"@en ;
     rdfs:comment "A pattern sparql prevalence query, reuses the pattern parameters, maybe not all of them. The prevalence query may be empty"@en ;
-    rdfs:domain ruto:Pattern ;
+    rdfs:domain rut:Pattern ;
     rdfs:range xsd:string .
 
-ruto:parameter
+rut:parameter
     a owl:ObjectProperty ;
     rdfs:label "parameter"@en ;
     rdfs:comment "links a Pattern with a list of pattern parameters"@en ;
-    rdfs:range ruto:Parameter .
+    rdfs:range rut:Parameter .
 
 
 #################################################################
@@ -102,7 +102,7 @@ ruto:parameter
 #################################################################
 
 
-ruto:Parameter
+rut:Parameter
     a owl:Class ;
     rdfs:label "Parameter"@en ;
 #    rdfs:comment "TODO"@en ;
@@ -113,29 +113,29 @@ ruto:Parameter
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:parameterConstraint ;
+        owl:onProperty rut:parameterConstraint ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:constraintPattern ;
+        owl:onProperty rut:constraintPattern ;
         owl:maxCardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:parameterConstraint
+rut:parameterConstraint
     a owl:ObjectProperty ;
     rdfs:label "parameterConstraint"@en ;
-    rdfs:domain ruto:Parameter ;
-    rdfs:range ruto:ParameterConstraint .
+    rdfs:domain rut:Parameter ;
+    rdfs:range rut:ParameterConstraint .
 
-ruto:constraintPattern
+rut:constraintPattern
     a owl:DatatypeProperty ;
     rdfs:label "constraintPattern"@en ;
-    rdfs:domain ruto:Parameter ;
+    rdfs:domain rut:Parameter ;
     rdfs:range xsd:string .
 
-ruto:ParameterConstraint
+rut:ParameterConstraint
     a owl:Class ;
     rdfs:label "ParameterConstraint"@en ;
 #    rdfs:comment "TODO"@en ;
@@ -145,96 +145,96 @@ ruto:ParameterConstraint
 # Generators
 #################################################################
 
-ruto:TestGenerator
+rut:TestGenerator
     a owl:Class ;
     rdfs:label "TestGenerator"@en ;
 #    rdfs:comment "TODO"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:sparqlGenerator;
+        owl:onProperty rut:sparqlGenerator;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:basedOnPattern;
+        owl:onProperty rut:basedOnPattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:sparqlGenerator
+rut:sparqlGenerator
     a owl:DatatypeProperty ;
     rdfs:label "sparqlGenerator"@en ;
     rdfs:comment "A SPARQL query used to instantiate test cases based on patterns"@en ;
-    rdfs:domain ruto:TestGenerator ;
+    rdfs:domain rut:TestGenerator ;
     rdfs:range xsd:string .
 
-ruto:basedOnPattern
+rut:basedOnPattern
     a owl:ObjectProperty ;
     rdfs:label "basedOnPattern"@en ;
     rdfs:comment "basedOnPattern contains the Data Quality Test Pattern that is instantiated in the described Test."@en ;
-    rdfs:range ruto:Pattern .
+    rdfs:range rut:Pattern .
 
 
 #################################################################
 # Tests / TestCase
 #################################################################
 
-ruto:TestCase
+rut:TestCase
     a owl:Class ;
     rdfs:label "TestCase"@en ;
     rdfs:comment "A superclass of TestCases. Defines properties all test cases can have but concrete implementation occurs on subclasses."@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:appliesTo;
+        owl:onProperty rut:appliesTo;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:generated;
+        owl:onProperty rut:generated;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:source;
+        owl:onProperty rut:source;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:references;
+        owl:onProperty rut:references;
         owl:minCardinality "1"^^xsd:nonNegativeInteger
     ];
     .
 
-ruto:appliesTo
+rut:appliesTo
     a owl:ObjectProperty ;
     rdfs:label "appliesTo"@en ;
     rdfs:comment "applies to describes the ontology used for terms in the Test."@en ;
-    rdfs:domain ruto:TestCase ;
-    rdfs:range ruto:TestAppliesTo .
+    rdfs:domain rut:TestCase ;
+    rdfs:range rut:TestAppliesTo .
 
-ruto:generated
+rut:generated
     a owl:ObjectProperty ;
     rdfs:label "generated"@en ;
     rdfs:comment "generated specifies the way the test was constructed."@en ;
-    rdfs:domain ruto:TestCase ;
-    rdfs:range ruto:TestGenerationType .
+    rdfs:domain rut:TestCase ;
+    rdfs:range rut:TestGenerationType .
 
-ruto:references
+rut:references
     a owl:ObjectProperty ;
     rdfs:label "references"@en ;
     rdfs:comment "references specifies the Classes and Properties involved in the described test case."@en ;
-    rdfs:domain ruto:TestCase .
+    rdfs:domain rut:TestCase .
 
-ruto:source
+rut:source
     a owl:ObjectProperty ;
     rdfs:label "source"@en ;
     rdfs:comment "source is a URI that points to a general Source, which can be a schema, a dataset or an application"@en .
 
-ruto:testCaseLogLevel
+rut:testCaseLogLevel
     a owl:ObjectProperty ;
     rdfs:label "testCaseLogLevel"@en ;
     rdfs:comment "the rlog:Level this case is associated with."@en ;
-    rdfs:domain ruto:TestCase ;
+    rdfs:domain rut:TestCase ;
     rdfs:range rlog:Level ;
     .
 
@@ -243,97 +243,97 @@ ruto:testCaseLogLevel
 # Tests / PatternBasedTestCase
 ################################################################
 
-ruto:PatternBasedTestCase
+rut:PatternBasedTestCase
     a owl:Class ;
-    rdfs:subClassOf ruto:TestCase ;
+    rdfs:subClassOf rut:TestCase ;
     rdfs:label "PatternBasedTestCase"@en ;
     rdfs:comment "A test case that is based on a Pattern"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:basedOnPattern;
+        owl:onProperty rut:basedOnPattern;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:binding;
+        owl:onProperty rut:binding;
         owl:minCardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:binding
+rut:binding
     a owl:ObjectProperty ;
     rdfs:label "binding"@en ;
     rdfs:comment "defines a binding between a pattern parameter and a value"@en ;
-    rdfs:domain ruto:PatternBasedTestCase ;
-    rdfs:range ruto:Binding .
+    rdfs:domain rut:PatternBasedTestCase ;
+    rdfs:range rut:Binding .
 
 
 #################################################################
 # Tests / Binding
 #################################################################
 
-ruto:Binding
+rut:Binding
     a owl:Class ;
     rdfs:label "Binding"@en ;
     rdfs:comment "A binding between a pattern parameter and a value"@en  ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:parameter ;
+        owl:onProperty rut:parameter ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:bindingValue;
+        owl:onProperty rut:bindingValue;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:bindingValue
+rut:bindingValue
     a rdf:Property ;
     rdfs:label "bindingValue"@en ;
     rdfs:comment "the value of a Binding"@en ;
-    rdfs:domain ruto:Binding .
+    rdfs:domain rut:Binding .
 
 
 #################################################################
 # Tests / ManualTestCase
 #################################################################
 
-ruto:ManualTestCase
+rut:ManualTestCase
     a owl:Class ;
-    rdfs:subClassOf ruto:TestCase ;
+    rdfs:subClassOf rut:TestCase ;
     rdfs:label "ManualTestCase"@en ;
     rdfs:comment "A test case where the SPARQL is defined manually"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:sparqlWhere ;
+        owl:onProperty rut:sparqlWhere ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:sparqlPrevalence;
+        owl:onProperty rut:sparqlPrevalence;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:sparqlWhere
+rut:sparqlWhere
     a owl:DatatypeProperty ;
     rdfs:label "sparqlWhere"@en ;
     rdfs:comment
         """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and use the following variables: ?resource, ?message.
         ?resource is URI the constraint violation occurs in and ?message is a logging message."""@en ;
-    rdfs:domain ruto:ManualTestCase ;
+    rdfs:domain rut:ManualTestCase ;
     rdfs:range xsd:string .
 
-ruto:sparqlPrevalence
+rut:sparqlPrevalence
     a owl:DatatypeProperty ;
     rdfs:label "sparqlPrevalence"@en ;
     rdfs:comment "A SPARQL query for prevalence"@en ;
-    rdfs:domain ruto:ManualTestCase ;
+    rdfs:domain rut:ManualTestCase ;
     rdfs:range xsd:string .
 
 
-ruto:TestGenerationType
+rut:TestGenerationType
     a owl:Class ;
     rdfs:label "TestGenerationType"@en ;
 #    rdfs:comment "TODO"@en ;
@@ -342,7 +342,7 @@ ruto:TestGenerationType
 
 #################################################################
 
-ruto:TestAppliesTo
+rut:TestAppliesTo
     a owl:Class ;
     rdfs:label "TestAppliesTo"@en ;
 #    rdfs:comment "TODO"@en ;
@@ -352,7 +352,7 @@ ruto:TestAppliesTo
 # Test Suite
 #################################################################
 
-ruto:TestSuite
+rut:TestSuite
     a owl:Class ;
     rdfs:label "TestSuite"@en ;
     rdfs:comment "A list of test cases. Use prov:hadMember for test case listing"@en ;
@@ -364,53 +364,53 @@ ruto:TestSuite
     ] ;
     .
 
-ruto:testSuite
+rut:testSuite
     a owl:ObjectProperty ;
     rdfs:label "testSuite"@en ;
     rdfs:comment "links an ontology to TestSuite for validating data adhering to that ontology"@en;
     rdfs:domain owl:Ontology ;
-    rdfs:range ruto:TestSuite .
+    rdfs:range rut:TestSuite .
 
 
 #################################################################
 # Test Case Dependencies
 #################################################################
 
-ruto:TestCaseDependency
+rut:TestCaseDependency
     a owl:Class ;
     rdfs:label "TestCaseDependency"@en ;
     rdfs:comment "defines a dependency between two test cases"@en ;
     .
 
-ruto:dependencyFrom
+rut:dependencyFrom
     a owl:ObjectProperty ;
     rdfs:label "dependencyFrom"@en ;
     rdfs:comment "the test case we depends upon"@en ;
-    rdfs:domain ruto:TestCaseDependency ;
-    rdfs:range ruto:TestCase ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range rut:TestCase ;
     .
 
-ruto:dependencyTo
+rut:dependencyTo
     a owl:ObjectProperty ;
     rdfs:label "dependencyTo"@en ;
     rdfs:comment "the test case that depends on another test case"@en ;
-    rdfs:domain ruto:TestCaseDependency ;
-    rdfs:range ruto:TestCase ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range rut:TestCase ;
     .
 
-ruto:dependencyCondition
+rut:dependencyCondition
     a owl:ObjectProperty ;
     rdfs:label "dependencyCondition"@en ;
-    rdfs:comment "the ruto:ResultStatus of the dependencyFrom result condition that triggers this dependency"@en ;
-    rdfs:domain ruto:TestCaseDependency ;
-    rdfs:range ruto:ResultStatus ;
+    rdfs:comment "the rut:ResultStatus of the dependencyFrom result condition that triggers this dependency"@en ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range rut:ResultStatus ;
     .
 
-ruto:dependencyExecute
+rut:dependencyExecute
     a owl:DatatypeProperty ;
     rdfs:label "dependencyExecute"@en ;
     rdfs:comment "'true' executes the dependecnyTo TestCase while false does not"@en ;
-    rdfs:domain ruto:TestCaseDependency ;
+    rdfs:domain rut:TestCaseDependency ;
     rdfs:range xsd:boolean ;
     .
 
@@ -418,7 +418,7 @@ ruto:dependencyExecute
 # Test Execution
 #################################################################
 
-ruto:TestExecution
+rut:TestExecution
     a owl:Class ;
     rdfs:label "TestExecution"@en ;
     rdfs:comment "Holds the results of a TestSuite execution against a dataset"@en ;
@@ -435,44 +435,44 @@ ruto:TestExecution
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:source ;
+        owl:onProperty rut:source ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:testsRun
+rut:testsRun
     a owl:DatatypeProperty ;
     rdfs:label "testsRun"@en ;
     rdfs:comment "Total tests run in a TestExecution"@en ;
-    rdfs:domain ruto:TestExecution ;
+    rdfs:domain rut:TestExecution ;
     rdfs:range xsd:nonNegativeInteger.
 
-ruto:testsSucceeded
+rut:testsSucceeded
     a owl:DatatypeProperty ;
     rdfs:label "testsSucceeded"@en ;
     rdfs:comment "Total tests that succedded in a TestExecution"@en ;
-    rdfs:domain ruto:TestExecution ;
+    rdfs:domain rut:TestExecution ;
     rdfs:range xsd:nonNegativeInteger.
 
-ruto:testsFailed
+rut:testsFailed
     a owl:DatatypeProperty ;
     rdfs:label "testsFailed"@en ;
     rdfs:comment "Total tests that failed in a TestExecution"@en ;
-    rdfs:domain ruto:TestExecution ;
+    rdfs:domain rut:TestExecution ;
     rdfs:range xsd:nonNegativeInteger.
 
-ruto:testsTimeout
+rut:testsTimeout
     a owl:DatatypeProperty ;
     rdfs:label "testsTimeout"@en ;
     rdfs:comment "Total tests that timeout in a TestExecution"@en ;
-    rdfs:domain ruto:TestExecution ;
+    rdfs:domain rut:TestExecution ;
     rdfs:range xsd:nonNegativeInteger.
 
-ruto:testsError
+rut:testsError
     a owl:DatatypeProperty ;
     rdfs:label "testsError"@en ;
     rdfs:comment "Total tests that raised an error in a TestExecution"@en ;
-    rdfs:domain ruto:TestExecution ;
+    rdfs:domain rut:TestExecution ;
     rdfs:range xsd:nonNegativeInteger.
 
 
@@ -480,10 +480,10 @@ ruto:testsError
 # Test Execution Results
 #################################################################
 
-ruto:TestCaseResult
+rut:TestCaseResult
     a owl:Class ;
     rdfs:label "TestCaseResult"@en ;
-    rdfs:comment "A class that holds a single result of a test execution. Each test case links to the TestCase (ruto:testCase) it was originated from and a TestExecution (prov:wasGeneratedBy)"@en ;
+    rdfs:comment "A class that holds a single result of a test execution. Each test case links to the TestCase (rut:testCase) it was originated from and a TestExecution (prov:wasGeneratedBy)"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
         owl:onProperty prov:wasGeneratedBy ;
@@ -491,81 +491,81 @@ ruto:TestCaseResult
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:testCase ;
+        owl:onProperty rut:testCase ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:testCase
+rut:testCase
     a owl:ObjectProperty ;
     rdfs:label "testCase"@en ;
     rdfs:comment "points to a test case" ;
-    rdfs:range ruto:TestCase .
+    rdfs:range rut:TestCase .
 
 #################################################################
 
-ruto:StatusTestCaseResult
+rut:StatusTestCaseResult
     a owl:Class ;
-	rdfs:subClassOf ruto:TestCaseResult ;
+	rdfs:subClassOf rut:TestCaseResult ;
     rdfs:label "StatusTestCaseResult"@en ;
     rdfs:comment "A class that holds the status of a single test execution"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:resultStatus ;
+        owl:onProperty rut:resultStatus ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:resultStatus
+rut:resultStatus
     a owl:ObjectProperty ;
     rdfs:label "resultStatus"@en ;
     rdfs:comment "holds the result type. One of Success, Fail, Timeout, Error"@en ;
-    rdfs:range ruto:ResultStatus .
+    rdfs:range rut:ResultStatus .
 
-ruto:ResultStatus
+rut:ResultStatus
 	a owl:Class ;
 	rdfs:label "ResultStatus"@en ;
 	rdfs:comment "TestCaseResult type"@en .
 
 #################################################################
 
-ruto:AggregatedTestCaseResult
+rut:AggregatedTestCaseResult
 	a owl:Class ;
-	rdfs:subClassOf ruto:StatusTestCaseResult ;
+	rdfs:subClassOf rut:StatusTestCaseResult ;
     rdfs:label "AggregatedTestCaseResult"@en ;
     rdfs:comment "A class that holds the aggregated results of a single test execution"@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:resultCount ;
+        owl:onProperty rut:resultCount ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
-        owl:onProperty ruto:resultPrevalence ;
+        owl:onProperty rut:resultPrevalence ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
 
-ruto:resultCount
+rut:resultCount
     a owl:DatatypeProperty ;
     rdfs:label "resultCount"@en ;
     rdfs:comment "The error results of a test execution. -1 means there was a timeout and -2 an error."@en ;
-    rdfs:domain ruto:Result ;
+    rdfs:domain rut:Result ;
     rdfs:range xsd:integer .
 
-ruto:resultPrevalence
+rut:resultPrevalence
     a owl:DatatypeProperty ;
     rdfs:label "resultPrevalence"@en ;
     rdfs:comment "The prevalence result of a test execution. -1 means there was a timeout and -2 an error."@en ;
-    rdfs:domain ruto:Result ;
+    rdfs:domain rut:Result ;
     rdfs:range xsd:integer .
 
 #################################################################
 
-ruto:RLOGTestCaseResult
+rut:RLOGTestCaseResult
     a owl:Class ;
     rdfs:subClassOf rlog:Entry ;
-	rdfs:subClassOf ruto:TestCaseResult ;
+	rdfs:subClassOf rut:TestCaseResult ;
     rdfs:label "RLOGTestCaseResult"@en ;
 #    rdfs:comment "TODO"@en .
     rdfs:subClassOf [
@@ -587,10 +587,10 @@ ruto:RLOGTestCaseResult
 
 #################################################################
 
-ruto:ExtendedTestCaseResult
+rut:ExtendedTestCaseResult
     a owl:Class ;
     rdfs:subClassOf spin:ConstraintViolation ;
-	rdfs:subClassOf ruto:RLOGTestCaseResult ;
+	rdfs:subClassOf rut:RLOGTestCaseResult ;
     rdfs:label "ExtendedTestCaseResult"@en ;
 #    rdfs:comment "TODO"@en .
     rdfs:subClassOf [
@@ -600,62 +600,62 @@ ruto:ExtendedTestCaseResult
     ] ;
     .
 
-ruto:errorPropertyContext
+rut:errorPropertyContext
     a owl:ObjectProperty ;
     rdfs:label "errorPropertyContext"@en ;
     rdfs:comment "Here we attach properties from the resource to provide the error context (i.e. the death date when the error is in the birth date)."@en ;
-    rdfs:domain ruto:ExtendedTestCaseResult ;
+    rdfs:domain rut:ExtendedTestCaseResult ;
     rdfs:range rdf:Property .
 
-ruto:errorClassification
+rut:errorClassification
     a owl:ObjectProperty ;
     rdfs:subPropertyOf dcterms:subject ;
     rdfs:label "errorClassification"@en ;
     rdfs:comment "This property is used to annotate an error with a classification. This classification is meant to be of higher level"@en ;
-    rdfs:domain ruto:ExtendedTestCaseResult .
+    rdfs:domain rut:ExtendedTestCaseResult .
 
-ruto:errorSource
+rut:errorSource
     a owl:ObjectProperty ;
     rdfs:subPropertyOf dcterms:subject ;
     rdfs:label "errorSource"@en ;
     rdfs:comment "With this property we point to the error source (if known beforehand)"@en ;
-    rdfs:domain ruto:ExtendedTestCaseResult .
+    rdfs:domain rut:ExtendedTestCaseResult .
 
-ruto:errorType
+rut:errorType
     a owl:ObjectProperty ;
     rdfs:subPropertyOf dcterms:subject ;
     rdfs:label "errorType"@en ;
     rdfs:comment "We denote the exact problem of the error"@en ;
-    rdfs:domain ruto:ExtendedTestCaseResult .
+    rdfs:domain rut:ExtendedTestCaseResult .
 
 
 #################################################################
 # ResultAnnotation
 #################################################################
 
-ruto:ResultAnnotation
+rut:ResultAnnotation
     a owl:Class ;
     rdfs:label "ResultAnnotation"@en ;
     rdfs:comment "Used to further annotate an ExtendedTestCaseResult."@en.
 
-ruto:annotationProperty
+rut:annotationProperty
     a owl:ObjectProperty ;
     rdfs:label "annotationProperty"@en ;
 #   rdfs:comment "TODO"@en ;
-    rdfs:domain ruto:ResultAnnotation;
+    rdfs:domain rut:ResultAnnotation;
     rdfs:range rdf:Property .
     
-ruto:annotationValue
+rut:annotationValue
     a rdf:Property ;
     rdfs:label "annotationValue"@en ;
 #   rdfs:comment "TODO"@en ;
-    rdfs:domain ruto:ResultAnnotation .
+    rdfs:domain rut:ResultAnnotation .
 
-ruto:resultAnnotation
+rut:resultAnnotation
     a owl:ObjectProperty ;
     rdfs:label "resultAnnotation"@en ;
 #    rdfs:comment "TODO"@en ;
-    rdfs:range ruto:ResultAnnotation .
+    rdfs:range rut:ResultAnnotation .
 
 
 #################################################################
@@ -664,102 +664,102 @@ ruto:resultAnnotation
 
 # Parameter Constraint Instances
 
-ruto:None
-    a ruto:ParameterConstraint ,
+rut:None
+    a rut:ParameterConstraint ,
       owl:NamedIndividual ;
     rdfs:label "None"@en ;
     rdfs:comment "The parameter can be anything, even a free variable (?var)"@en .
 
-ruto:Operator
-    a ruto:ParameterConstraint ,
+rut:Operator
+    a rut:ParameterConstraint ,
       owl:NamedIndividual ;
     rdfs:label "Operator"@en ;
     rdfs:comment "The parameter can be an operator."@en .
 
-ruto:Resource
-    a ruto:ParameterConstraint ,
+rut:Resource
+    a rut:ParameterConstraint ,
       owl:NamedIndividual ;
     rdfs:label "Resource"@en ;
     rdfs:comment "The pattern can be a resource."@en .
 
-ruto:Property
-    a ruto:ParameterConstraint ,
+rut:Property
+    a rut:ParameterConstraint ,
       owl:NamedIndividual ;
     rdfs:label "Property"@en ;
     rdfs:comment "The parameter is restricted to a property."@en .
 
-ruto:Class
-    a ruto:ParameterConstraint ,
+rut:Class
+    a rut:ParameterConstraint ,
       owl:NamedIndividual ;
     rdfs:label "Class"@en ;
     rdfs:comment "The parameter is restricted to a Class."@en .
 
 # Test Applies To Instances
 
-ruto:Schema
-    a ruto:TestAppliesTo ,
+rut:Schema
+    a rut:TestAppliesTo ,
         owl:NamedIndividual ;
     rdfs:label "Schema"@en ;
 #    rdfs:comment "TODO"@en ;
 	.
 
-ruto:Dataset
-    a ruto:TestAppliesTo ,
+rut:Dataset
+    a rut:TestAppliesTo ,
         owl:NamedIndividual ;
     rdfs:label "Dataset"@en ;
     rdfs:comment "Dataset: When the tests applies to a dataset only (i.e. a SPARQL Endpoint)"@en .
 
-ruto:EnrichedSchema
-    a ruto:TestAppliesTo ,
+rut:EnrichedSchema
+    a rut:TestAppliesTo ,
         owl:NamedIndividual ;
     rdfs:label "EnrichedSchema"@en ;
     rdfs:comment "EnrichedSchema: When the tests applies to an ontology / vocabulary enriched with external (semi-)automatic approaches"@en .
 
-ruto:Application
-    a ruto:TestAppliesTo ,
+rut:Application
+    a rut:TestAppliesTo ,
         owl:NamedIndividual ;
     rdfs:label "Application"@en ;
     rdfs:comment "Application: When the tests are specific to an application only"@en .
 
 # Generation Type Instances
 
-ruto:ManuallyGenerated
-    a ruto:TestGenerationType ,
+rut:ManuallyGenerated
+    a rut:TestGenerationType ,
         owl:NamedIndividual ;
     rdfs:label "ManuallyGenerated"@en ;
     rdfs:comment "ManuallyGenerated: This test was created manually"@en .
 
-ruto:AutoGenerated
-    a ruto:TestGenerationType ,
+rut:AutoGenerated
+    a rut:TestGenerationType ,
         owl:NamedIndividual ;
     rdfs:label "AutoGenerated"@en ;
     rdfs:comment "AutoGenerated: This test was created automatically"@en .
 
 # Result Status
 
-ruto:ResultStatusSuccess
-	a ruto:ResultStatus ,
+rut:ResultStatusSuccess
+	a rut:ResultStatus ,
       owl:NamedIndividual ;
 	rdfs:label "ResultStatusSuccess"@en ;
 #    rdfs:comment "TODO"@en ;
     .
 
-ruto:ResultStatusFail
-	a ruto:ResultStatus ,
+rut:ResultStatusFail
+	a rut:ResultStatus ,
       owl:NamedIndividual ;
 	rdfs:label "ResultStatusFail"@en ;
 #    rdfs:comment "TODO"@en ;
     .
       
-ruto:ResultStatusTimeout
-	a ruto:ResultStatus ,
+rut:ResultStatusTimeout
+	a rut:ResultStatus ,
       owl:NamedIndividual ;
 	rdfs:label "ResultStatusTimeout"@en ;
 #    rdfs:comment "TODO"@en ;
     .
       
-ruto:ResultStatusError
-	a ruto:ResultStatus ,
+rut:ResultStatusError
+	a rut:ResultStatus ,
       owl:NamedIndividual ;
 	rdfs:label "ResultStatusError"@en ;
 #    rdfs:comment "TODO"@en ;

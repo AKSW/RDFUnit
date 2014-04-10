@@ -42,10 +42,10 @@ public class TestUtils {
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                 " ?generator " +
-                "    a ruto:TestGenerator ; " +
+                "    a rut:TestGenerator ; " +
                 "    dcterms:description ?desc ; " +
-                "    ruto:sparqlGenerator ?query ; " +
-                "    ruto:basedOnPattern ?pattern . " +
+                "    rut:sparqlGenerator ?query ; " +
+                "    rut:basedOnPattern ?pattern . " +
                 " ?pattern dcterms:identifier ?patternID ." +
                 "} ";
 
@@ -96,7 +96,7 @@ public class TestUtils {
 
         String manualTestsSelectSparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a ruto:ManualTestCase }";
+                " ?testURI a rut:ManualTestCase }";
 
         QueryExecution qe = qef.createQueryExecution(manualTestsSelectSparql);
         ResultSet results = qe.execSelect();
@@ -113,7 +113,7 @@ public class TestUtils {
 
         String patternTestsSelectSparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a ruto:PatternBasedTestCase } ";
+                " ?testURI a rut:PatternBasedTestCase } ";
 
         qe = qef.createQueryExecution(patternTestsSelectSparql);
         results = qe.execSelect();
@@ -134,13 +134,13 @@ public class TestUtils {
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
-                "    ruto:appliesTo        ?appliesTo ;" +
-                "    ruto:generated        ?generated ;" +
-                "    ruto:source           ?source ;" +
-                "    ruto:testCaseLogLevel ?testCaseLogLevel ;" +
-                "    ruto:sparqlWhere      ?sparqlWhere ;" +
-                "    ruto:sparqlPrevalence ?sparqlPrevalence ." +
-                " OPTIONAL {<" + testURI + ">  ruto:testGenerator ?testGenerator .}" +
+                "    rut:appliesTo        ?appliesTo ;" +
+                "    rut:generated        ?generated ;" +
+                "    rut:source           ?source ;" +
+                "    rut:testCaseLogLevel ?testCaseLogLevel ;" +
+                "    rut:sparqlWhere      ?sparqlWhere ;" +
+                "    rut:sparqlPrevalence ?sparqlPrevalence ." +
+                " OPTIONAL {<" + testURI + ">  rut:testGenerator ?testGenerator .}" +
                 "} ";
         QueryExecution qe = null;
         try {
@@ -201,12 +201,12 @@ public class TestUtils {
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
-                "    ruto:appliesTo      ?appliesTo ;" +
-                "    ruto:generated      ?generated ;" +
-                "    ruto:source         ?source ;" +
-                "    ruto:testCaseLogLevel ?testCaseLogLevel ;" +
-                "    ruto:basedOnPattern ?basedOnPattern ;" +
-                " OPTIONAL {<" + testURI + ">  ruto:testGenerator ?testGenerator .}" +
+                "    rut:appliesTo      ?appliesTo ;" +
+                "    rut:generated      ?generated ;" +
+                "    rut:source         ?source ;" +
+                "    rut:testCaseLogLevel ?testCaseLogLevel ;" +
+                "    rut:basedOnPattern ?basedOnPattern ;" +
+                " OPTIONAL {<" + testURI + ">  rut:testGenerator ?testGenerator .}" +
                 "} ";
 
         QueryExecution qe = null;
@@ -286,7 +286,7 @@ public class TestUtils {
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?references WHERE { " +
-                " <" + testURI + "> ruto:references ?references . }";
+                " <" + testURI + "> rut:references ?references . }";
 
         QueryExecution qe = null;
         try {
@@ -310,9 +310,9 @@ public class TestUtils {
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
-                " <" + testURI + "> ruto:binding ?binding ." +
-                " ?binding ruto:bindingValue ?value ;" +
-                "          ruto:parameter ?parameter }";
+                " <" + testURI + "> rut:binding ?binding ." +
+                " ?binding rut:bindingValue ?value ;" +
+                "          rut:parameter ?parameter }";
 
         QueryExecution qe = null;
         try {

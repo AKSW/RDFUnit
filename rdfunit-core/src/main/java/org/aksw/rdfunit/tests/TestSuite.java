@@ -36,7 +36,7 @@ public class TestSuite {
 
     public Resource serialize(Model model) {
         Resource resource = model.createResource(JenaUUID.generate().asString())
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "TestSuite"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "TestSuite"))
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Collection"));
 
         for (TestCase tc : testCases) {

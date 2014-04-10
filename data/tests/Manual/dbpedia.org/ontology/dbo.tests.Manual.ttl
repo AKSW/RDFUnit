@@ -5,278 +5,446 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
 rutt:dbo-CARD-rdfslabelforeachlanguage
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:OWLCARD ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+      a       rut:TestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:OWLCARD ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+      rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
                                  GROUP BY ?s
                                  HAVING count(?v1) > 20 } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
+      rut:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
                                  ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 . } """ .
 
 
 # dbo:deathDate after dbo:birthDate
 rutt:dbo-COMP-birthdeatdate
-    a       ruto:PatternBasedTestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:COMP ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://dbpedia.org/ontology/birthDate> ;
-    ruto:references <http://dbpedia.org/ontology/deathDate> ;
-    ruto:source <http://dbpedia.org/ontology/> ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue <http://dbpedia.org/ontology/birthDate> ;
-            ruto:parameter rutp:COMP-P1
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:COMP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/birthDate> ;
+    rut:references <http://dbpedia.org/ontology/deathDate> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+            rut:parameter rutp:COMP-P1
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue <http://dbpedia.org/ontology/deathDate> ;
-            ruto:parameter rutp:COMP-P2
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/deathDate> ;
+            rut:parameter rutp:COMP-P2
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue ">" ;
-            ruto:parameter rutp:COMP-OP
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue ">" ;
+            rut:parameter rutp:COMP-OP
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue "'A dbp:birthDate cannot be after a dbo:deathDate'" ;
-            ruto:parameter rutp:COMP-MESSAGE
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "'A dbp:birthDate cannot be after a dbo:deathDate'" ;
+            rut:parameter rutp:COMP-MESSAGE
         ] ;
-    ruto:testCaseLogLevel
+    rut:testCaseLogLevel
                   rlog:Error .
 
 
 # dbo:demolitionDate after dbo:buildingStartDate
 rutt:dbo-COMP-demolitionbuildingstartdate
-    a       ruto:PatternBasedTestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:COMP ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://dbpedia.org/ontology/buildingStartDate>, <http://dbpedia.org/ontology/demolitionDate> ;
-    ruto:source <http://dbpedia.org/ontology/> ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue <http://dbpedia.org/ontology/buildingStartDate> ;
-            ruto:parameter rutp:COMP-P1
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:COMP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/buildingStartDate>, <http://dbpedia.org/ontology/demolitionDate> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/buildingStartDate> ;
+            rut:parameter rutp:COMP-P1
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue <http://dbpedia.org/ontology/demolitionDate> ;
-            ruto:parameter rutp:COMP-P2
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/demolitionDate> ;
+            rut:parameter rutp:COMP-P2
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue ">" ;
-            ruto:parameter rutp:COMP-OP
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue ">" ;
+            rut:parameter rutp:COMP-OP
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue "'A dbp:buildingStartDate cannot be after a dbo:demolitionDate'" ;
-            ruto:parameter rutp:COMP-MESSAGE
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "'A dbp:buildingStartDate cannot be after a dbo:demolitionDate'" ;
+            rut:parameter rutp:COMP-MESSAGE
         ] ;
-    ruto:testCaseLogLevel
+    rut:testCaseLogLevel
                   rlog:Error .
 
-				 
+
 # dbo:latestReleaseDate after dbo:releaseDate
 rutt:dbo-COMP-releaselatestreleasedate
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:COMP ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
-            ruto:parameter rutp:COMP-P1
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:COMP ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
+            rut:parameter rutp:COMP-P1
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
-            ruto:parameter rutp:COMP-P2
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
+            rut:parameter rutp:COMP-P2
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue ">" ;
-            ruto:parameter rutp:COMP-OP
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue ">" ;
+            rut:parameter rutp:COMP-OP
         ] ;
-    ruto:binding
-        [ a     ruto:Binding ;
-            ruto:bindingValue "'A dbp:releaseDate cannot be after a dbo:latestReleaseDate'" ;
-            ruto:parameter rutp:COMP-MESSAGE
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "'A dbp:releaseDate cannot be after a dbo:latestReleaseDate'" ;
+            rut:parameter rutp:COMP-MESSAGE
         ] ;
-    ruto:testCaseLogLevel
+    rut:testCaseLogLevel
                   rlog:Error .
 
 
 # Different countries having the same capital
 rutt:dbo-INVFUNC-countriessamecapital
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:TYPRODEP ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/capital> ;
-      ruto:references <http://dbpedia.org/ontology/Country> ;
-      ruto:source <http://dbpedia.org> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s1 <http://dbpedia.org/ontology/capital> ?v1 . 
-                                 ?s2 <http://dbpedia.org/ontology/capital> ?v1 . 
-                                 ?s1 a <http://dbpedia.org/ontology/Country> . 
-                                 ?s2 a <http://dbpedia.org/ontology/Country> . 
-                                 FILTER (?s1 != ?s2 } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?v1) AS ?total) WHERE {
-                                 ?s1 <http://dbpedia.org/ontology/capital> ?v1 . 
-                                 ?s1 a <http://dbpedia.org/ontology/Country> . } """ .
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:INVFUNCT ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/capital> ;
+      rut:references <http://dbpedia.org/ontology/Country> ;
+      rut:source <http://dbpedia.org> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/capital> ;
+            rut:parameter rutp:INVFUNCT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/Country> ;
+            rut:parameter rutp:INVFUNCT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "'Two different dbo:Country(s) should not have the same dbo:capital'" ;
+            rut:parameter rutp:INVFUNCT-MESSAGE
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:Error ;
+    .
 
-                                 
+
 # height of a dbo:Person between 0.4 and 2.5 meter
 rutt:dbo-LITRAN-rangeheightperson
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:LITRAN ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/Person> ;
-      ruto:references <http://dbpedia.org/ontology/height> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Person> .
-                                 ?s <http://dbpedia.org/ontology/height> ?v1 .
-                                 FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5)) } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/height> ?v1 . } """ .
+      a       rut:ManualTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/Person> ;
+      rut:references <http://dbpedia.org/ontology/height> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+      rut:sparqlWhere """  {
+                                 {
+                                    ?resource a <http://dbpedia.org/ontology/Person> .
+                                    ?resource <http://dbpedia.org/ontology/height> ?v1 .
+                                 }  UNION {
+                                    ?resource a ?class .
+                                    ?class rdfs:subClassOf+ <http://dbpedia.org/ontology/Person> .
+                                    ?resource <http://dbpedia.org/ontology/height> ?v1 .
+                                 }
+                                 FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5))
+                                 BIND ( 'A dbo:Person should have a height between 0.4 and 2.5 meters' AS ?message)} """ ;
+      rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://dbpedia.org/ontology/height> ?v1 . } """ ;
+    rut:testCaseLogLevel
+            rlog:Warn .
 
-# weight of a dbo:Person is between 1 and 375 KG        
+# weight of a dbo:Person is between 1 and 375 KG
 rutt:dbo-LITRAN-rangeweightperson
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:LITRAN ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/Person/weight> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/Person/weight> ?v1 .
-                                 FILTER (!(xsd:double(?v1) >= 1 && xsd:double(?v1) <= 375)) } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/Person/weight> ?v1 . } """ .
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/Person/weight> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+      rut:basedOnPattern rutp:LITRAN ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue "[]" ;
+                      rut:parameter rutp:LITRAN-T1
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue <http://dbpedia.org/ontology/Person/weight> ;
+                      rut:parameter rutp:LITRAN-P1
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue "!" ;
+                      rut:parameter rutp:LITRAN-NOP
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue "1" ;
+                      rut:parameter rutp:LITRAN-valueMin
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue "375" ;
+                      rut:parameter rutp:LITRAN-valueMax
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue "'The weight of a person should be between 1 and 375 Kg in ordinary cases'" ;
+                      rut:parameter rutp:LITRAN-MESSAGE
+                    ] ;
+    rut:testCaseLogLevel
+            rlog:Warn .
 
-                                 
+
 # dbo:isbn format
 rutt:dbo-MATCH-isbnformat
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:MATCH ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/isbn> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/isbn> ?v1 .
-                                 FILTER (! regex(str(?v1), "^([iIsSbBnN 0-9-])*$")) } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/isbn> ?v1 . } """ .
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:MATCH ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/isbn> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+      rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue <http://dbpedia.org/ontology/iso6393Code> ;
+                      rut:parameter rutp:MATCH-P1
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue " ! " ;
+                      rut:parameter rutp:MATCH-OP
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue """^([iIsSbBnN 0-9-])*$""" ;
+                      rut:parameter rutp:MATCH-REGEX
+                    ] ;
+          rut:binding
+                    [ a       rut:Binding ;
+                      rut:bindingValue "'dbo:isbn looks invalid'" ;
+                      rut:parameter rutp:MATCH-MESSAGE
+                    ] ;
+          rut:testCaseLogLevel
+                    rlog:Warn ;
+          .
 
-                                 
+
 # dbo:iso6393Code format
 rutt:dbo-MATCH-iso6393codeformat
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:MATCH ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/iso6393Code> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/iso6393Code> ?v1 .
-                                 FILTER (! (regex(str(?v), "[a-z]{3}"))) } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/iso6393Code> ?v1 . } """ .
-                                 
-                                 
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:MATCH ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/iso6393Code> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:basedOnPattern rutp:MATCH ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://dbpedia.org/ontology/iso6393Code> ;
+                rut:parameter rutp:MATCH-P1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue " ! " ;
+                rut:parameter rutp:MATCH-OP
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue """^[a-z]{3}$""" ;
+                rut:parameter rutp:MATCH-REGEX
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'dbo:iso6393Code should be a 3 letter code'" ;
+                rut:parameter rutp:MATCH-MESSAGE
+              ] ;
+    rut:testCaseLogLevel
+              rlog:Error ;
+    .
+
+
 # dbo:postalCode format
 rutt:dbo-MATCH-postalcodeformat
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:MATCH ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/postalCode> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/postalCode> ?v1 .
-                                 FILTER (! (regex(str(?v),"^[0-9]{5}$"))) } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/postalCode> ?v1 . } """ .
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:MATCH ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/postalCode> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://dbpedia.org/ontology/postalCode> ;
+                rut:parameter rutp:MATCH-P1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue " ! " ;
+                rut:parameter rutp:MATCH-OP
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue """^[0-9]{5}$""" ;
+                rut:parameter rutp:MATCH-REGEX
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'dbo:postalCode looks invalid'" ;
+                rut:parameter rutp:MATCH-MESSAGE
+              ] ;
+    rut:testCaseLogLevel
+              rlog:Warn ;
+    .
 
-                                 
-# Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate                                 
-rutt:dbo-PROPDEP-activeYearsEndStartDate
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:PROPDEP ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/activeYearsEndDate> ;
-      ruto:references <http://dbpedia.org/ontology/activeYearsStartDate> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/activeYearsEndDate> ?v1 .
-                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/activeYearsStartDate> ?v2} } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/activeYearsEndDate> ?v1 . } """ .
 
-# Resource has dbo:deatDate but no dbo:birthDate                                 
-rutt:dbo-PROPDEP-deathdatebirthdate
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:PROPDEP ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/birthDate> ;
-      ruto:references <http://dbpedia.org/ontology/deathDate> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://dbpedia.org/ontology/deathDate> ?v1 .
-                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v2} } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://dbpedia.org/ontology/deathDate> ?v1 . } """ .
-                                 
-                                 
+# Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate
+rutt:dbo-PVT-activeYearsEndStartDate
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:PVT ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/activeYearsEndDate> ;
+      rut:references <http://dbpedia.org/ontology/activeYearsStartDate> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/activeYearsEndDate> ;
+            rut:parameter rutp:PVT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue " ?v1  " ;
+            rut:parameter rutp:PVT-V1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/activeYearsStartDate> ;
+            rut:parameter rutp:PVT-P2
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "'A resource with dbo:activeYearsEndDate should also have dbo:activeYearsStartDate'" ;
+            rut:parameter rutp:PVT-MESSAGE
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:Warn .
+
+# Resource has dbo:deatDate but no dbo:birthDate
+rutt:dbo-PVT-deathdatebirthdate
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:PVT ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/birthDate> ;
+      rut:references <http://dbpedia.org/ontology/deathDate> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/deathDate> ;
+            rut:parameter rutp:PVT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue " ?v1  " ;
+            rut:parameter rutp:PVT-V1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+            rut:parameter rutp:PVT-P2
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "'A resource with dbo:deathDate should also have dbo:birthDate'" ;
+            rut:parameter rutp:PVT-MESSAGE
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:Warn .
+
+
 # Resource cannot have a foaf property if it is not an owl:Thing
 rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:RDFSDOMAIN ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://xmlns.com/foaf/0.1/name> ;
-      ruto:references <http://www.w3.org/2002/07/owl#Thing> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://xmlns.com/foaf/0.1/name> ?v1 .
-                                 FILTER NOT EXISTS {?s a <http://www.w3.org/2002/07/owl#Thing>} } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://xmlns.com/foaf/0.1/name> ?v1 . } """ .
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:RDFSDOMAIN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2002/07/owl#Thing> ;
+                rut:parameter rutp:RDFSDOMAIN-T1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'foaf:name does not have owl:Thing as rdfs:domain (error in imported dataset)'" ;
+                rut:parameter rutp:RDFSDOMAIN-MESSAGE
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "?v1" ;
+                rut:parameter rutp:RDFSDOMAIN-V1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://xmlns.com/foaf/0.1/name> ;
+                rut:parameter rutp:RDFSDOMAIN-P1
+              ] ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://xmlns.com/foaf/0.1/name> ;
+    rut:references <http://www.w3.org/2002/07/owl#Thing> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:testCaseLogLevel
+              rlog:Error ;
+    .
 
 # dbo:Person without a dbo:birthDate
 rutt:dbo-TYPRODEP-personwithoutbirthdate
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:TYPRODEP ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://dbpedia.org/ontology/Person> ;
-      ruto:references <http://dbpedia.org/ontology/birthDate> ;
-      ruto:source <http://dbpedia.org/ontology/> ;
-      ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Person> .
-                                 FILTER NOT EXISTS {?s <http://dbpedia.org/ontology/birthDate> ?v1 } } """ ;
-      ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s a <http://dbpedia.org/ontology/Person> . } """ .
-
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:TYPRODEP ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://dbpedia.org/ontology/Person> ;
+      rut:references <http://dbpedia.org/ontology/birthDate> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue " NOT " ;
+                rut:parameter rutp:TYPRODEP-NOT
+              ] ;
+      rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'A dbo:Person should have a dbo:birthDate'" ;
+                rut:parameter rutp:TYPRODEP-MESSAGE
+              ] ;
+      rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://dbpedia.org/ontology/Person> ;
+                rut:parameter rutp:TYPRODEP-T1
+              ] ;
+      rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+                rut:parameter rutp:TYPRODEP-P1
+              ] ;
+    rut:testCaseLogLevel
+            rlog:Error ;
+    .

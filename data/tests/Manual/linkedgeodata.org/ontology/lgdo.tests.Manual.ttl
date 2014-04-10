@@ -4,7 +4,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix ruto: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -13,101 +13,101 @@
 # a dump for the whole world is considered here
 #
 # rutt:lgd-MATCH-postal_code
-#     a ruto:TestCase ;
-#     ruto:appliesTo ruto:Schema ;
-#     ruto:basedOnPattern rutp:MATCH ;
-#     ruto:generated ruto:ManuallyGenerated ;
-#     ruto:references lgdo:postal_code ;
-#     ruto:source <http://linkedgeodata.org/ontology/> ;
-#     ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+#     a rut:TestCase ;
+#     rut:appliesTo rut:Schema ;
+#     rut:basedOnPattern rutp:MATCH ;
+#     rut:generated rut:ManuallyGenerated ;
+#     rut:references lgdo:postal_code ;
+#     rut:source <http://linkedgeodata.org/ontology/> ;
+#     rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
 #                         ?s lgdo:postal_code ?value .
 #                         FILTER (! regex(str(?value), "^^[0-9]{5}$$"))
 #                     } """
-#     ruto:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE { ?s lgdo:postal_code ?value . } """ .
+#     rut:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE { ?s lgdo:postal_code ?value . } """ .
 
 # all cases where phone area numbers do not start with a zero or a + sign
 rutt:lgd-MATCH-telephone_area_code
-    a ruto:TestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:MATCH ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ;
-    ruto:source <http://linkedgeodata.org/ontology/> ;
-    ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+    a rut:TestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:MATCH ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ;
+    rut:source <http://linkedgeodata.org/ontology/> ;
+    rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                         ?s <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ?v .
                         FILTER( !regex(str(?v), "^(0|\\+)"))
                     } """ ;
-    ruto:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE {
                                   ?s <http://linkedgeodata.org/ontology/openGeoDB:telephone_area_code> ?v .
                               } """ .
 
 # all cases where phone numbers contain any characters
 rutt:lgd-MATCH-phone
-    a ruto:TestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:MATCH ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://xmlns.com/foaf/0.1/phone> ;
-    ruto:source <http://linkedgeodata.org/ontology/> ;
-    ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+    a rut:TestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:MATCH ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://xmlns.com/foaf/0.1/phone> ;
+    rut:source <http://linkedgeodata.org/ontology/> ;
+    rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                         ?s <http://xmlns.com/foaf/0.1/phone> ?v .
                         FILTER( regex(str(?v), "[A-Za-z]"))
                     } """ ;
-    ruto:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE {
                                   ?s <http://xmlns.com/foaf/0.1/phone> ?v .
                               } """ .
 
 # all cases where the speed limit is not within (0, 300]
 rutt:lgd-LITRAN-maxspeed
-    a ruto:TestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:LITRAN ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://linkedgeodata.org/ontology/maxspeed> ;
-    ruto:source <http://linkedgeodata.org/ontology/> ;
-    ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+    a rut:TestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:LITRAN ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://linkedgeodata.org/ontology/maxspeed> ;
+    rut:source <http://linkedgeodata.org/ontology/> ;
+    rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                         ?s <http://linkedgeodata.org/ontology/maxspeed> ?v.
                         FILTER(!(xsd:int(?v)>0 && xsd:int(?v)<300))
                     } """ ;
-    ruto:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/maxspeed> ?v. } """ .
+    rut:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/maxspeed> ?v. } """ .
 
 
 # all cases where a resource has a property lgdo:start but no lgdo:end
 rutt:lgd-PROPDEP-start_end
-    a ruto:TestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:PROPDEP ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://linkedgeodata.org/ontology/start> ;
-    ruto:references <http://linkedgeodata.org/ontology/end> ;
-    ruto:source <http://linkedgeodata.org/ontology/> ;
-    ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE {
+    a rut:TestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:PROPDEP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://linkedgeodata.org/ontology/start> ;
+    rut:references <http://linkedgeodata.org/ontology/end> ;
+    rut:source <http://linkedgeodata.org/ontology/> ;
+    rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
                     ?s <http://linkedgeodata.org/ontology/start> ?v1 .
                     FILTER NOT EXISTS {?s <http://linkedgeodata.org/ontology/end> ?p}
                 } """ ;
-    ruto:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/start> ?v . } """ .
+    rut:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/start> ?v . } """ .
 
 
 # all resources that have a lgdo:fixme property
 rutt:lgd-TRIPLE-fixme
-    a ruto:TestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:TRIPLE ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://linkedgeodata.org/ontology/fixme> ;
-    ruto:source <http://linkedgeodata.org/ontology/> ;
-    ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ ;
-    ruto:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ .
+    a rut:TestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:TRIPLE ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://linkedgeodata.org/ontology/fixme> ;
+    rut:source <http://linkedgeodata.org/ontology/> ;
+    rut:sparqlWhere """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ ;
+    rut:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/fixme> ?v . } """ .
 
 
 # all resources that have a lgdo:todo property
 rutt:lgd-TRIPLE-todo
-    a ruto:TestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:TRIPLE ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://linkedgeodata.org/ontology/todo> ;
-    ruto:source <http://linkedgeodata.org/ontology/> ;
-    ruto:sparqlWhere """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ ;
-    ruto:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ .
+    a rut:TestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:TRIPLE ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://linkedgeodata.org/ontology/todo> ;
+    rut:source <http://linkedgeodata.org/ontology/> ;
+    rut:sparqlWhere """ SELECT DISTINCT ?s WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ ;
+    rut:sparqlPrevalence """ SELECT (count(DISTINCT ?s) AS ?total) WHERE { ?s <http://linkedgeodata.org/ontology/todo> ?v . } """ .
 

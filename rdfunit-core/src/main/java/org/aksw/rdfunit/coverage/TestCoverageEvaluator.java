@@ -35,9 +35,9 @@ public class TestCoverageEvaluator {
     private final List<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
     private final String sparql = RDFUnitUtils.getAllPrefixes() +
             " SELECT distinct ?reference WHERE {\n" +
-            "   ?t a  ruto:TestCase ; \n" +
-            "      ruto:basedOnPattern ?pattern ; \n" +
-            "      ruto:references ?reference .\n" +
+            "   ?t a  rut:TestCase ; \n" +
+            "      rut:basedOnPattern ?pattern ; \n" +
+            "      rut:references ?reference .\n" +
             "   VALUES ( ?pattern )  { %%PATTERNS%%} }";
 
     private String generateInClause(List<String> patterns) {

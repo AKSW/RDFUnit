@@ -5,7 +5,7 @@
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix ruto:    <http://rdfunit.aksw.org/ns/core#> .
+@prefix rut:    <http://rdfunit.aksw.org/ns/core#> .
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
@@ -14,105 +14,105 @@
 
 # geo:lat must be in the range [-90,90]
 rutt:dbo-LITRAN-rangegeolatitude
-    a       ruto:PatternBasedTestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:LITRAN ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "[]" ;
-                ruto:parameter rutp:LITRAN-T1
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:LITRAN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "[]" ;
+                rut:parameter rutp:LITRAN-T1
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-                ruto:parameter rutp:LITRAN-P1
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+                rut:parameter rutp:LITRAN-P1
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "!" ;
-                ruto:parameter rutp:LITRAN-NOP
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "!" ;
+                rut:parameter rutp:LITRAN-NOP
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "-90" ;
-                ruto:parameter rutp:LITRAN-valueMin
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "-90" ;
+                rut:parameter rutp:LITRAN-valueMin
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "90" ;
-                ruto:parameter rutp:LITRAN-valueMax
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "90" ;
+                rut:parameter rutp:LITRAN-valueMax
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "'geo:lat must be in the range -90 to 90'" ;
-                ruto:parameter rutp:LITRAN-MESSAGE
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'geo:lat must be in the range -90 to 90'" ;
+                rut:parameter rutp:LITRAN-MESSAGE
               ] ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
-    ruto:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-    ruto:testCaseLogLevel
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+    rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    rut:testCaseLogLevel
             rlog:Error .
 
 
 # geo:long must be in the range [-180,180]
 rutt:dbo-LITRAN-rangegeolongtitude
-    a       ruto:PatternBasedTestCase ;
-    ruto:appliesTo ruto:Schema ;
-    ruto:basedOnPattern rutp:LITRAN ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "[]" ;
-                ruto:parameter rutp:LITRAN-T1
+    a       rut:PatternBasedTestCase ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:LITRAN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "[]" ;
+                rut:parameter rutp:LITRAN-T1
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-                ruto:parameter rutp:LITRAN-P1
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+                rut:parameter rutp:LITRAN-P1
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "!" ;
-                ruto:parameter rutp:LITRAN-NOP
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "!" ;
+                rut:parameter rutp:LITRAN-NOP
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "-180" ;
-                ruto:parameter rutp:LITRAN-valueMin
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "-180" ;
+                rut:parameter rutp:LITRAN-valueMin
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "180" ;
-                ruto:parameter rutp:LITRAN-valueMax
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "180" ;
+                rut:parameter rutp:LITRAN-valueMax
               ] ;
-    ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "'geo:lat must be in the range -180 to 180'" ;
-                ruto:parameter rutp:LITRAN-MESSAGE
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'geo:lat must be in the range -180 to 180'" ;
+                rut:parameter rutp:LITRAN-MESSAGE
               ] ;
-    ruto:generated ruto:ManuallyGenerated ;
-    ruto:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
-    ruto:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-    ruto:testCaseLogLevel
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+    rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    rut:testCaseLogLevel
             rlog:Error .
 
 
 # geo:geometry should be a soft inverseFunctional property
 rutt:dbo-INVFUNC-uniquegeometry
-      a       ruto:PatternBasedTestCase ;
-      ruto:appliesTo ruto:Schema ;
-      ruto:basedOnPattern rutp:INVFUNC ;
-      ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
-                ruto:parameter rutp:INVFUNC-P1
+      a       rut:PatternBasedTestCase ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:INVFUNC ;
+      rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+                rut:parameter rutp:INVFUNC-P1
               ] ;
-      ruto:binding
-              [ a       ruto:Binding ;
-                ruto:bindingValue "'Resources with the exact same coordinates should be the same'" ;
-                ruto:parameter rutp:INVFUNC-MESSAGE
+      rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "'Resources with the exact same coordinates should be the same'" ;
+                rut:parameter rutp:INVFUNC-MESSAGE
               ] ;
-      ruto:generated ruto:ManuallyGenerated ;
-      ruto:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
-      ruto:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-      ruto:testCaseLogLevel
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+      rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+      rut:testCaseLogLevel
               rlog:Warn .

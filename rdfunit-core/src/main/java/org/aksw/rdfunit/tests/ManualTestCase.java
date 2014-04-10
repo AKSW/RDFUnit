@@ -29,9 +29,9 @@ public class ManualTestCase extends TestCase {
         Resource resource = super.serialize(model);
 
         resource
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("ruto") + "ManualTestCase"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "sparqlWhere"), getSparqlWhere())
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("ruto"), "sparqlPrevalence"), getSparqlPrevalence());
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "ManualTestCase"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "sparqlWhere"), getSparqlWhere())
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "sparqlPrevalence"), getSparqlPrevalence());
 
         return resource;
     }

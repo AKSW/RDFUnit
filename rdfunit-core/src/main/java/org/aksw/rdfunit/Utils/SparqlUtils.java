@@ -21,10 +21,10 @@ public class SparqlUtils {
         List<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
         String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
-                " <" + uri + "> ruto:resultAnnotation ?annotation . " +
-                " ?annotation a ruto:ResultAnnotation ; " +
-                "   ruto:annotationProperty ?annotationProperty ; " +
-                "   ruto:annotationValue ?annotationValue . } ";
+                " <" + uri + "> rut:resultAnnotation ?annotation . " +
+                " ?annotation a rut:ResultAnnotation ; " +
+                "   rut:annotationProperty ?annotationProperty ; " +
+                "   rut:annotationValue ?annotationValue . } ";
 
         QueryExecution qe = null;
 
