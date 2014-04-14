@@ -63,7 +63,7 @@ public class Main {
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
         cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
-        cliOptions.addOption("rl", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
+        cliOptions.addOption("l", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit'");
 
@@ -97,13 +97,30 @@ public class Main {
             formatter.printHelp("rdfunit", cliOptions);
             System.exit(1);
         }
+        if (commandLine.hasOption("e") && commandLine.hasOption("u")) {
+            System.out.println("\nError: You have to select either an Endpoint or a Dump URI.");
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("rdfunit", cliOptions);
+            System.exit(1);
+        }
 
+        //Dataset URI, important & required (used to associate manual dataset test cases)
         String datasetUri = commandLine.getOptionValue("d");
         if (datasetUri.endsWith("/"))
             datasetUri = datasetUri.substring(0, datasetUri.length() - 1);
+
+        // Dump location for dump dereferencing (defaults to dataset uri)
+        String dumpLocation = commandLine.getOptionValue("u");
+        if (dumpLocation == null || dumpLocation.isEmpty())
+            dumpLocation = datasetUri;
+
+        //Endpoint initialization
         String endpointUriStr = commandLine.getOptionValue("e");
         java.util.Collection<String> graphUriStrs = getUriStrs(commandLine.getOptionValue("g", ""));
+
+        //Get schema list
         java.util.Collection<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
+
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         String testFolder = dataFolder + "tests/";
@@ -111,8 +128,8 @@ public class Main {
         boolean useManualTestCases = !commandLine.hasOption("nmt"); //Use only automatic tests
 
         TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
-        if (commandLine.hasOption("rl")) {
-            String rl = commandLine.getOptionValue("rl", "aggregate");
+        if (commandLine.hasOption("l")) {
+            String rl = commandLine.getOptionValue("l", "aggregate");
             if (rl.equals("status"))
                 resultLevel = TestCaseExecutionType.statusTestCaseResult;
             else if (rl.equals("aggregate"))
@@ -171,15 +188,21 @@ public class Main {
             sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedDatasetPrefix, datasetUri));
 
         // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        RDFUnitConfiguration testContext = new RDFUnitConfiguration(datasetUri,
+        RDFUnitConfiguration testContext = null;
+        if (endpointUriStr == null || endpointUriStr.isEmpty()) {
+            testContext = new RDFUnitConfiguration(datasetUri, dumpLocation, sources);
+        }
+        else {
+            testContext = new RDFUnitConfiguration(datasetUri,
                 endpointUriStr, graphUriStrs, sources);
+        }
 
         final Source dataset = testContext.getDatasetSource();
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(useTestCache, useManualTestCases);
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, rdfunit.getAutoGenerators());
-
+        final TestCaseExecutionType resulLevelInner = resultLevel;
 
         TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
 
@@ -200,10 +223,11 @@ public class Main {
 
             final String executionUUID = JenaUUID.generate().asString();
 
+
             @Override
             public void testingStarted(Source dataset, TestSuite testSuite) {
                 testedDataset = dataset;
-                resultWriter = new TripleFileWriter("../data/results/" + dataset.getPrefix() + ".results.ttl");
+                resultWriter = new TripleFileWriter("../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString() + ".ttl");
                 model = ModelFactory.createDefaultModel();
                 model.setNsPrefixes(PrefixService.getPrefixMap());
                 counter = success = fail = timeout = error = totalErrors = 0;

@@ -8,6 +8,10 @@ import java.util.ArrayList;
  * Created: 11/14/13 9:01 AM
  */
 public class TripleReaderFactory {
+    public static TripleReader createFileOrDereferenceTripleReader(String filenameOrUri) {
+        return createFileOrDereferenceTripleReader(filenameOrUri, filenameOrUri);
+    }
+
     public static TripleReader createFileOrDereferenceTripleReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
         java.util.Collection<TripleReader> readers = new ArrayList<TripleReader>();

@@ -1,6 +1,7 @@
 package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.io.TripleReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;
@@ -60,14 +61,14 @@ public class RDFUnitConfiguration {
         this.sources = sources;
     }
 
-    public RDFUnitConfiguration(String prefix, String uri, java.util.Collection<SchemaSource> sources) {
-        this(prefix, uri, uri, sources);
+    public RDFUnitConfiguration(String uri, String location, java.util.Collection<SchemaSource> sources) {
+        this(CacheUtils.getAutoPrefixForURI(uri), uri, location, sources);
     }
 
     // TODO change it back to Dateset after refactoring of Sources
     public Source getDatasetSource() {
         if ((endpoint == null || endpoint.equals("")) && (graphs == null || graphs.isEmpty())) {
-            return new DumpSource(prefix, uri, sources);
+            return new DumpSource(prefix, uri, TripleReaderFactory.createFileOrDereferenceTripleReader(dereferenceUri), sources);
         } else {
             return new DatasetSource(prefix, uri, endpoint, graphs, sources);
         }
