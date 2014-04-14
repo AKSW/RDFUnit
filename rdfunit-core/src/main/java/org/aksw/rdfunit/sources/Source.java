@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.sources;
 
 
-import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +20,7 @@ public abstract class Source implements Comparable<Source> {
 
     private final String prefix;
     private final String uri;
-    private final java.util.Collection <SchemaSource> referencesSchemata;
+    private final java.util.Collection<SchemaSource> referencesSchemata;
 
     private QueryExecutionFactory queryFactory;
 
@@ -54,11 +54,11 @@ public abstract class Source implements Comparable<Source> {
         return queryFactory;
     }
 
-    public java.util.Collection <SchemaSource> getReferencesSchemata() {
+    public java.util.Collection<SchemaSource> getReferencesSchemata() {
         return referencesSchemata;
     }
 
-    public void addReferencesSchemata(java.util.Collection <SchemaSource> schemata) {
+    public void addReferencesSchemata(java.util.Collection<SchemaSource> schemata) {
         this.referencesSchemata.addAll(schemata);
     }
 

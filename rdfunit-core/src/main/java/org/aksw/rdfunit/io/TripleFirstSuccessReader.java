@@ -10,9 +10,9 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  */
 public class TripleFirstSuccessReader extends TripleReader {
 
-    private final java.util.Collection <TripleReader> readers;
+    private final java.util.Collection<TripleReader> readers;
 
-    public TripleFirstSuccessReader(java.util.Collection <TripleReader> readers) {
+    public TripleFirstSuccessReader(java.util.Collection<TripleReader> readers) {
         this.readers = readers;
     }
 

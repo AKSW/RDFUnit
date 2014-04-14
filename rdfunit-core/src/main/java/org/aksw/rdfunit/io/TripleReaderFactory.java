@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TripleReaderFactory {
     public static TripleReader createFileOrDereferenceTripleReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
-        java.util.Collection <TripleReader> readers = new ArrayList<TripleReader>();
+        java.util.Collection<TripleReader> readers = new ArrayList<TripleReader>();
         readers.add(new TripleFileReader(filename));
         readers.add(new TripleDereferenceReader(uri));
 

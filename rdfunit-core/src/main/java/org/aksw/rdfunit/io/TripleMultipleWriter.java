@@ -9,9 +9,9 @@ import org.aksw.rdfunit.exceptions.TripleWriterException;
  * Created: 11/14/13 1:13 PM
  */
 public class TripleMultipleWriter extends TripleWriter {
-    private final java.util.Collection <TripleWriter> writers;
+    private final java.util.Collection<TripleWriter> writers;
 
-    public TripleMultipleWriter(java.util.Collection <TripleWriter> writers) {
+    public TripleMultipleWriter(java.util.Collection<TripleWriter> writers) {
         this.writers = writers;
     }
 

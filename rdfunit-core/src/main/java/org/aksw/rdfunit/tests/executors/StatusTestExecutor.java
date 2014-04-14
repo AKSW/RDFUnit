@@ -5,7 +5,6 @@ import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 
-
 /**
  * User: Dimitris Kontokostas
  * Executes results for StatusTestCaseResult sets
@@ -13,7 +12,7 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
  */
 public class StatusTestExecutor extends TestExecutor {
     @Override
-    protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
         return null;
     }
 }

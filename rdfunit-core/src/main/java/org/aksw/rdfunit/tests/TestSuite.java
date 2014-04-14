@@ -13,17 +13,17 @@ import org.aksw.rdfunit.services.PrefixService;
  * Created: 1/6/14 8:33 AM
  */
 public class TestSuite {
-    private final java.util.Collection <TestCase> testCases;
+    private final java.util.Collection<TestCase> testCases;
 
-    public TestSuite(java.util.Collection <TestCase> testCases) {
+    public TestSuite(java.util.Collection<TestCase> testCases) {
         this.testCases = testCases;
     }
 
-    public java.util.Collection <TestCase> getTestCases() {
+    public java.util.Collection<TestCase> getTestCases() {
         return testCases;
     }
 
-    public void setTestCases(java.util.Collection <TestCase> testCases) {
+    public void setTestCases(java.util.Collection<TestCase> testCases) {
         this.testCases.clear();
         this.testCases.addAll(testCases);
     }

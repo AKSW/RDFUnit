@@ -22,10 +22,8 @@ import org.slf4j.LoggerFactory;
 public abstract class TestCase implements Comparable<TestCase> {
     protected Logger log = LoggerFactory.getLogger(TestCase.class);
 
-    protected final String testURI;
-
-
-    protected final TestCaseAnnotation annotation;
+    private final String testURI;
+    private final TestCaseAnnotation annotation;
 
     public TestCase(String testURI, TestCaseAnnotation annotation) throws TestCaseException {
         this.testURI = testURI;
@@ -97,7 +95,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         return annotation.getTestCaseLogLevel();
     }
 
-    public java.util.Collection <ResultAnnotation> getResultAnnotations() {
+    public java.util.Collection<ResultAnnotation> getResultAnnotations() {
         return annotation.getResultAnnotations();
     }
 
@@ -117,7 +115,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         if (!getSparqlPrevalence().trim().equals("")) // Prevalence in not always defined
             validateSPARQL(getSparqlPrevalence(), "prevalence");
 
-        java.util.Collection <String> vars = getSparqlQuery().getResultVars();
+        java.util.Collection<String> vars = getSparqlQuery().getResultVars();
         // check for Resource & message
         boolean hasResource = false;
         boolean hasMessage = false;

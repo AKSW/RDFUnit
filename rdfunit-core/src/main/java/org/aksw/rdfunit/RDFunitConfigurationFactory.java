@@ -15,7 +15,7 @@ public class RDFunitConfigurationFactory {
     public static RDFUnitConfiguration createDBpediaConfiguration(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov", "owl"));
 
         //Enriched Schema (cached in folder)
@@ -27,7 +27,7 @@ public class RDFunitConfigurationFactory {
     public static RDFUnitConfiguration createDBpediaConfigurationSimple(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         return new RDFUnitConfiguration("dbpedia.org", "http://dbpedia.org", "http://dbpedia.org/sparql", Arrays.asList("http://dbpedia.org"), sources);
@@ -36,7 +36,7 @@ public class RDFunitConfigurationFactory {
     public static RDFUnitConfiguration createDBpediaLiveConfigurationSimple(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         return new RDFUnitConfiguration("live.dbpedia.org", "http://live.dbpedia.org", "http://live.dbpedia.org/sparql", Arrays.asList("http://dbpedia.org"), sources);
@@ -45,18 +45,18 @@ public class RDFunitConfigurationFactory {
     public static RDFUnitConfiguration createDatosBneEsDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "frbrer", "isbd", "dcterms", "skos"));
 
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "datos", "http://datos.bne.es"));
 
-        return new RDFUnitConfiguration("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", Arrays.asList("http://datos.bne.es"),  sources);
+        return new RDFUnitConfiguration("datos.bne.es", "http://datos.bne.es", "http://localhost:8890/sparql", Arrays.asList("http://datos.bne.es"), sources);
     }
 
     public static RDFUnitConfiguration createLCSHDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs", "owl",*/ "foaf", "dcterms", "skos", "mads", "mrel", "premis"));
         sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(baseFolder, "loc", "http://id.loc.gov"));
 
@@ -68,7 +68,7 @@ public class RDFunitConfigurationFactory {
     public static RDFUnitConfiguration createDBpediaNLDataset(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         //Enriched Schema (cached in folder)
@@ -80,7 +80,7 @@ public class RDFunitConfigurationFactory {
     public static RDFUnitConfiguration createDBpediaNLDatasetSimple(String baseFolder) {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder,
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder,
                 Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov"));
 
         return new RDFUnitConfiguration("nl.dbpedia.org", "http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", Arrays.asList("http://nl.dbpedia.org"), sources);
@@ -88,7 +88,7 @@ public class RDFunitConfigurationFactory {
 
     public static RDFUnitConfiguration createLGDDataset(String baseFolder) {
 
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(baseFolder, Arrays.asList(
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(baseFolder, Arrays.asList(
                 "ngeo", "spatial", "lgdm", "lgdo", "dcterms", "gsp", /*"rdf",
                 "rdfs",*/ "owl", "geo", "skos", "foaf"));
 

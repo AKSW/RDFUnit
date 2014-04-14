@@ -2,12 +2,12 @@ package org.aksw.rdfunit.tests.executors;
 
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.Arrays;
 
@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class AggregatedTestExecutor extends TestExecutor {
 
     @Override
-    protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
         int total = -1, prevalence = -1;
 
         try {

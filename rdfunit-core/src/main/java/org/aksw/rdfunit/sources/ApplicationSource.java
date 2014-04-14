@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.sources;
 
-import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.enums.TestAppliesTo;
 
 /**
  * User: Dimitris Kontokostas

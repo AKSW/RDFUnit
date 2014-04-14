@@ -8,7 +8,6 @@ import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.tests.TestCase;
 
 
-
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -16,7 +15,7 @@ import org.aksw.rdfunit.tests.TestCase;
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
-    private final java.util.Collection <ResultAnnotation> resultAnnotations;
+    private final java.util.Collection<ResultAnnotation> resultAnnotations;
 
     public ExtendedTestCaseResult(TestCase testCase, String resource, String message, String logLevel) {
         super(testCase, resource, message, logLevel);

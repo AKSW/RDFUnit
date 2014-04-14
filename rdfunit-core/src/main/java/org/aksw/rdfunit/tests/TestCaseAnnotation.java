@@ -20,14 +20,14 @@ public class TestCaseAnnotation {
     private final String autoGeneratorURI;
     private final TestAppliesTo appliesTo;
     private final String sourceUri;
-    private final java.util.Collection <String> references;
+    private final java.util.Collection<String> references;
     private final String testCaseLogLevel;
-    private final java.util.Collection <ResultAnnotation> resultAnnotations;
+    private final java.util.Collection<ResultAnnotation> resultAnnotations;
     //cache for access
     private final String annotationMessage;
 
 
-    public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, java.util.Collection <String> references, String testCaseLogLevel, java.util.Collection <ResultAnnotation> resultAnnotations) {
+    public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, java.util.Collection<String> references, String testCaseLogLevel, java.util.Collection<ResultAnnotation> resultAnnotations) {
         this.generated = generated;
         this.autoGeneratorURI = autoGeneratorURI;
         this.appliesTo = appliesTo;
@@ -75,7 +75,7 @@ public class TestCaseAnnotation {
         return sourceUri;
     }
 
-    public java.util.Collection <String> getReferences() {
+    public java.util.Collection<String> getReferences() {
         return references;
     }
 
@@ -122,7 +122,7 @@ public class TestCaseAnnotation {
         return testCaseLogLevel;
     }
 
-    public java.util.Collection <ResultAnnotation> getResultAnnotations() {
+    public java.util.Collection<ResultAnnotation> getResultAnnotations() {
         return resultAnnotations;
     }
 }

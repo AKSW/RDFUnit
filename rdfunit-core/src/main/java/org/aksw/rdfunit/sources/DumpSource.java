@@ -3,12 +3,11 @@ package org.aksw.rdfunit.sources;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.TripleDereferenceReader;
 import org.aksw.rdfunit.io.TripleReader;
-import org.aksw.rdfunit.io.TripleReaderFactory;
 
 /**
  * User: Dimitris Kontokostas
@@ -34,11 +33,11 @@ public class DumpSource extends Source {
         this(prefix, uri, dumpReader, null);
     }
 
-    public DumpSource(String prefix, String uri, java.util.Collection <SchemaSource> schemata) {
+    public DumpSource(String prefix, String uri, java.util.Collection<SchemaSource> schemata) {
         this(prefix, uri, new TripleDereferenceReader(uri), schemata);
     }
 
-    public DumpSource(String prefix, String uri, TripleReader dumpReader, java.util.Collection <SchemaSource> schemata) {
+    public DumpSource(String prefix, String uri, TripleReader dumpReader, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
         if (schemata != null)
@@ -59,7 +58,7 @@ public class DumpSource extends Source {
             //Load all the related ontologies as well (for more consistent querying
             for (Source src : getReferencesSchemata()) {
                 QueryExecutionFactory qef = src.getExecutionFactory();
-                if (qef instanceof QueryExecutionFactoryModel ) {
+                if (qef instanceof QueryExecutionFactoryModel) {
                     model.add(((QueryExecutionFactoryModel) qef).getModel());
                 }
             }

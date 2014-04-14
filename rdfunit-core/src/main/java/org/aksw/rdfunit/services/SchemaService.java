@@ -47,8 +47,8 @@ public class SchemaService {
         }
     }
 
-    public static java.util.Collection <SchemaSource> getSourceList(String baseFolder, java.util.Collection <String> ids) {
-        java.util.Collection <SchemaSource> sources = new ArrayList<SchemaSource>();
+    public static java.util.Collection<SchemaSource> getSourceList(String baseFolder, java.util.Collection<String> ids) {
+        java.util.Collection<SchemaSource> sources = new ArrayList<SchemaSource>();
         for (String id : ids) {
             SchemaSource src = getSource(baseFolder, id.trim());
             if (src != null)
@@ -57,8 +57,8 @@ public class SchemaService {
         return sources;
     }
 
-    public static java.util.Collection <SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) {
-        java.util.Collection <String> prefixes = new ArrayList<String>();
+    public static java.util.Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) {
+        java.util.Collection<String> prefixes = new ArrayList<String>();
         prefixes.addAll(schemata.keySet());
 
         if (fileCache)

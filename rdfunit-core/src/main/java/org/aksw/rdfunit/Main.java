@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
@@ -30,7 +31,6 @@ import org.aksw.rdfunit.tests.executors.TestGeneratorExecutor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.apache.commons.cli.*;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
@@ -69,8 +69,8 @@ public class Main {
 
     }
 
-    private static java.util.Collection <String> getUriStrs(String parameterStr) {
-        java.util.Collection <String> uriStrs = new ArrayList<String>();
+    private static java.util.Collection<String> getUriStrs(String parameterStr) {
+        java.util.Collection<String> uriStrs = new ArrayList<String>();
         if (parameterStr == null) return uriStrs;
 
         for (String uriStr : parameterStr.split(",")) {
@@ -102,8 +102,8 @@ public class Main {
         if (datasetUri.endsWith("/"))
             datasetUri = datasetUri.substring(0, datasetUri.length() - 1);
         String endpointUriStr = commandLine.getOptionValue("e");
-        java.util.Collection <String> graphUriStrs = getUriStrs(commandLine.getOptionValue("g", ""));
-        java.util.Collection <String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
+        java.util.Collection<String> graphUriStrs = getUriStrs(commandLine.getOptionValue("g", ""));
+        java.util.Collection<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         String testFolder = dataFolder + "tests/";
@@ -163,7 +163,7 @@ public class Main {
         // */
 
         /* <cliStuff> */
-        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(testFolder, schemaUriStrs);
+        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(testFolder, schemaUriStrs);
 
 
         //Enriched Schema (cached in folder)
@@ -198,7 +198,7 @@ public class Main {
             long startTimeMillis = 0;
             long endTimeMillis = 0;
 
-            String executionUUID = JenaUUID.generate().asString();
+            final String executionUUID = JenaUUID.generate().asString();
 
             @Override
             public void testingStarted(Source dataset, TestSuite testSuite) {
@@ -220,7 +220,7 @@ public class Main {
             }
 
             @Override
-            public void singleTestExecuted(TestCase test, java.util.Collection <TestCaseResult> results) {
+            public void singleTestExecuted(TestCase test, java.util.Collection<TestCaseResult> results) {
 
                 // in case we have 1 result but is not status
                 boolean statusResult = false;

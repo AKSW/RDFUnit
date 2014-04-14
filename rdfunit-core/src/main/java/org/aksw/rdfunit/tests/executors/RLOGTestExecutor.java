@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class RLOGTestExecutor extends TestExecutor {
 
     @Override
-    protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
 
-        java.util.Collection <TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
+        java.util.Collection<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
 
         QueryExecution qe = null;
         try {

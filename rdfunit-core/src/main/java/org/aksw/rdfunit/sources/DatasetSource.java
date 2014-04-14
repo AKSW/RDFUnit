@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.sources;
 
-import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
@@ -10,6 +9,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
+import org.aksw.rdfunit.enums.TestAppliesTo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,13 +23,13 @@ import java.util.Collection;
 public class DatasetSource extends Source {
 
     private final String sparqlEndpoint;
-    private final java.util.Collection <String> sparqlGraph;
+    private final java.util.Collection<String> sparqlGraph;
 
     public DatasetSource(String prefix, String uri) {
         this(prefix, uri, uri, new ArrayList<String>(), null);
     }
 
-    public DatasetSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection <String> sparqlGraph, java.util.Collection <SchemaSource> schemata) {
+    public DatasetSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = new ArrayList<String>(sparqlGraph);
@@ -51,10 +51,10 @@ public class DatasetSource extends Source {
 
         QueryExecutionFactory qef;
         // if empty
-        if (getSparqlGraphs() == null || getSparqlGraphs().isEmpty() )
+        if (getSparqlGraphs() == null || getSparqlGraphs().isEmpty())
             qef = new QueryExecutionFactoryHttp(getSparqlEndpoint());
         else
-         qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraphs());
+            qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraphs());
 
 
         // Add delay in order to be nice to the remote server (delay in milli seconds)
@@ -88,13 +88,7 @@ public class DatasetSource extends Source {
         return sparqlEndpoint;
     }
 
-    public Collection <String> getSparqlGraphs() {
+    public Collection<String> getSparqlGraphs() {
         return sparqlGraph;
-    }
-
-    public String getFirstSparqlGraph() {
-        for (String graph : getSparqlGraphs())
-            return graph;
-        return "";
     }
 }

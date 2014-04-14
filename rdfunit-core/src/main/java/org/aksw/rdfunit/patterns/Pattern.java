@@ -12,10 +12,10 @@ public class Pattern {
     private final String description;
     private final String sparqlWherePattern;
     private final String sparqlPatternPrevalence;
-    private final java.util.Collection <PatternParameter> parameters;
-    private final java.util.Collection <ResultAnnotation> annotations;
+    private final java.util.Collection<PatternParameter> parameters;
+    private final java.util.Collection<ResultAnnotation> annotations;
 
-    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, java.util.Collection <PatternParameter> parameters, java.util.Collection <ResultAnnotation> annotations) {
+    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, java.util.Collection<PatternParameter> parameters, java.util.Collection<ResultAnnotation> annotations) {
         this.id = id;
         this.description = description;
         this.sparqlWherePattern = sparqlWherePattern;
@@ -60,7 +60,7 @@ public class Pattern {
         return sparqlPatternPrevalence;
     }
 
-    public java.util.Collection <PatternParameter> getParameters() {
+    public java.util.Collection<PatternParameter> getParameters() {
         return parameters;
     }
 
@@ -72,7 +72,7 @@ public class Pattern {
         return null;
     }
 
-    public java.util.Collection <ResultAnnotation> getAnnotations() {
+    public java.util.Collection<ResultAnnotation> getAnnotations() {
         return annotations;
     }
 }

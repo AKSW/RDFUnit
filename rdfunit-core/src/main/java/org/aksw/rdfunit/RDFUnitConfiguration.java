@@ -22,14 +22,14 @@ public class RDFUnitConfiguration {
     private final String endpoint;
 
     // multiple graphs separated with '|'
-    private final java.util.Collection <String> graphs;
+    private final java.util.Collection<String> graphs;
 
     private final String dereferenceUri;
 
-    private final java.util.Collection <SchemaSource> sources;
+    private final java.util.Collection<SchemaSource> sources;
 
     /* For Endpoint source */
-    public RDFUnitConfiguration(String prefix, String uri, String endpoint, java.util.Collection <String> graphs, java.util.Collection <SchemaSource> sources) {
+    public RDFUnitConfiguration(String prefix, String uri, String endpoint, java.util.Collection<String> graphs, java.util.Collection<SchemaSource> sources) {
         this.prefix = prefix;
         this.uri = uri;
         this.endpoint = endpoint;
@@ -38,20 +38,20 @@ public class RDFUnitConfiguration {
         this.sources = sources;
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection <String> graphs, String[] sourcePrefixes) {
+    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection<String> graphs, String[] sourcePrefixes) {
         this(uri, endpoint, graphs, SchemaService.getSourceList(null, Arrays.asList(sourcePrefixes)));
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection <String> graphs, String sourcePrefixes) {
+    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection<String> graphs, String sourcePrefixes) {
         this(uri, endpoint, graphs, sourcePrefixes.split(","));
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection <String> graphs, java.util.Collection <SchemaSource> sources) {
+    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection<String> graphs, java.util.Collection<SchemaSource> sources) {
         this(CacheUtils.getAutoPrefixForURI(uri), uri, endpoint, graphs, sources);
     }
 
     /* For dereference source */
-    public RDFUnitConfiguration(String prefix, String uri, String dereferenceUri, java.util.Collection <SchemaSource> sources) {
+    public RDFUnitConfiguration(String prefix, String uri, String dereferenceUri, java.util.Collection<SchemaSource> sources) {
         this.prefix = prefix;
         this.uri = uri;
         this.endpoint = null;
@@ -60,16 +60,15 @@ public class RDFUnitConfiguration {
         this.sources = sources;
     }
 
-    public RDFUnitConfiguration(String prefix, String uri, java.util.Collection <SchemaSource> sources) {
-        this(prefix,uri, uri, sources);
+    public RDFUnitConfiguration(String prefix, String uri, java.util.Collection<SchemaSource> sources) {
+        this(prefix, uri, uri, sources);
     }
 
     // TODO change it back to Dateset after refactoring of Sources
     public Source getDatasetSource() {
-        if ((endpoint == null || endpoint.equals("")) && (graphs == null || graphs.equals(""))) {
+        if ((endpoint == null || endpoint.equals("")) && (graphs == null || graphs.isEmpty())) {
             return new DumpSource(prefix, uri, sources);
-        }
-        else {
+        } else {
             return new DatasetSource(prefix, uri, endpoint, graphs, sources);
         }
     }

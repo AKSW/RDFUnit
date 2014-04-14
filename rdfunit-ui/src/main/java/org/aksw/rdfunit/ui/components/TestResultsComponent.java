@@ -113,7 +113,8 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                     if (source instanceof DatasetSource) {
                         String endpoint = ((DatasetSource) source).getSparqlEndpoint();
                         //TODO check default graph uri when array
-                        String graph = ((DatasetSource) source).getFirstSparqlGraph();
+                        java.util.Collection <String> graphs = ((DatasetSource) source).getSparqlGraphs();
+                        String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
                         String query = test.getSparqlQuery() + " LIMIT 10";
                         try {
                             String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph, "UTF-8") + "&query=" + URLEncoder.encode(query, "UTF-8");

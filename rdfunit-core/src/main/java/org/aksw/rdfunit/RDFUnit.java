@@ -2,6 +2,8 @@ package org.aksw.rdfunit;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.PatternUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
@@ -10,8 +12,6 @@ import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +27,8 @@ public class RDFUnit {
 
     private static Logger log = LoggerFactory.getLogger(RDFUnit.class);
     private QueryExecutionFactory patternQueryFactory;
-    private java.util.Collection <Pattern> patterns = new ArrayList<Pattern>();
-    private java.util.Collection <TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
+    private java.util.Collection<Pattern> patterns = new ArrayList<Pattern>();
+    private java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
     public RDFUnit() {
     }
@@ -53,11 +53,11 @@ public class RDFUnit {
         this.autoGenerators = getAutoGenerators();
     }
 
-    public java.util.Collection <Pattern> getPatterns() {
+    public java.util.Collection<Pattern> getPatterns() {
         return PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
     }
 
-    public java.util.Collection <TestAutoGenerator> getAutoGenerators() {
+    public java.util.Collection<TestAutoGenerator> getAutoGenerators() {
         return TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 

@@ -7,6 +7,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
@@ -20,8 +22,6 @@ import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.*;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +36,8 @@ import java.util.ArrayList;
 public class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
 
-    public static java.util.Collection <TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
-        java.util.Collection <TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
+    public static java.util.Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
+        java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
@@ -61,7 +61,7 @@ public class TestUtils {
             String patternID = qs.get("patternID").toString();
 
             // Get annotations from TAG URI
-            java.util.Collection <ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
+            java.util.Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
 
             TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid())
@@ -77,8 +77,8 @@ public class TestUtils {
 
     }
 
-    public static java.util.Collection <TestCase> instantiateTestsFromAG(java.util.Collection <TestAutoGenerator> autoGenerators, Source source) {
-        java.util.Collection <TestCase> tests = new ArrayList<TestCase>();
+    public static java.util.Collection<TestCase> instantiateTestsFromAG(java.util.Collection<TestAutoGenerator> autoGenerators, Source source) {
+        java.util.Collection<TestCase> tests = new ArrayList<TestCase>();
 
         for (TestAutoGenerator tag : autoGenerators) {
             tests.addAll(tag.generate(source));
@@ -88,8 +88,8 @@ public class TestUtils {
 
     }
 
-    public static java.util.Collection <TestCase> instantiateTestsFromModel(Model model) {
-        java.util.Collection <TestCase> tests = new ArrayList<TestCase>();
+    public static java.util.Collection<TestCase> instantiateTestsFromModel(Model model) {
+        java.util.Collection<TestCase> tests = new ArrayList<TestCase>();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         // Get all manual tests
@@ -156,13 +156,13 @@ public class TestUtils {
                 String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String sparqlWhere = qs.get("sparqlWhere").toString();
                 String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
-                java.util.Collection <String> referencesLst = getReferencesFromTestCase(qef, testURI);
+                java.util.Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 String testGenerator = "";
                 if (qs.contains("testGenerator"))
                     testGenerator = qs.get("testGenerator").toString();
 
                 // Get annotations from Test URI
-                java.util.Collection <ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
+                java.util.Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
 
                 TestCaseAnnotation annotation =
                         new TestCaseAnnotation(
@@ -228,14 +228,14 @@ public class TestUtils {
                     return null;
                 }
 
-                java.util.Collection <String> referencesLst = getReferencesFromTestCase(qef, testURI);
-                java.util.Collection <Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
+                java.util.Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
+                java.util.Collection<Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
                 String testGenerator = "";
                 if (qs.contains("testGenerator"))
                     testGenerator = qs.get("testGenerator").toString();
 
                 // Get annotations from Test URI
-                java.util.Collection <ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
+                java.util.Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
 
                 TestCaseAnnotation annotation =
                         new TestCaseAnnotation(
@@ -268,7 +268,7 @@ public class TestUtils {
         return null;
     }
 
-    public static void writeTestsToFile(java.util.Collection <TestCase> tests, TripleWriter testCache) {
+    public static void writeTestsToFile(java.util.Collection<TestCase> tests, TripleWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests)
             t.serialize(model);
@@ -280,9 +280,9 @@ public class TestUtils {
         }
     }
 
-    public static java.util.Collection <String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
+    public static java.util.Collection<String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
 
-        java.util.Collection <String> references = new ArrayList<String>();
+        java.util.Collection<String> references = new ArrayList<String>();
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?references WHERE { " +
@@ -304,9 +304,9 @@ public class TestUtils {
         return references;
     }
 
-    public static java.util.Collection <Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
+    public static java.util.Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
 
-        java.util.Collection <Binding> bindings = new ArrayList<Binding>();
+        java.util.Collection<Binding> bindings = new ArrayList<Binding>();
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
@@ -344,7 +344,7 @@ public class TestUtils {
         return bindings;
     }
 
-    public static String generateTestURI(String sourcePrefix, Pattern pattern, java.util.Collection <Binding> bindings, String generatorURI) {
+    public static String generateTestURI(String sourcePrefix, Pattern pattern, java.util.Collection<Binding> bindings, String generatorURI) {
         String testURI = PrefixService.getPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         String string2hash = generatorURI;
         for (Binding binding : bindings)
