@@ -62,10 +62,10 @@ $ mvn clean install
 $ bin/rdfunit -h
 
 # Simple call (SPARQL)
-$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...>
+$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1,graph2,...>  -s <schema1,schema2,schema3,...>
 
 # with use of enriched ontnology
-$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1|graph2|...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
+$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1,graph2,...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
 
 # Simple call (Dereferencing)
 $ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>

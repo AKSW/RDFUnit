@@ -7,8 +7,8 @@ import org.aksw.rdfunit.sources.DumpSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -22,29 +22,46 @@ public class RDFUnitConfiguration {
     private final String endpoint;
 
     // multiple graphs separated with '|'
-    private final String graphs;
+    private final java.util.Collection <String> graphs;
 
-    private final List<SchemaSource> sources;
+    private final String dereferenceUri;
 
+    private final java.util.Collection <SchemaSource> sources;
 
-    public RDFUnitConfiguration(String prefix, String uri, String endpoint, String graphs, List<SchemaSource> sources) {
+    /* For Endpoint source */
+    public RDFUnitConfiguration(String prefix, String uri, String endpoint, java.util.Collection <String> graphs, java.util.Collection <SchemaSource> sources) {
         this.prefix = prefix;
         this.uri = uri;
         this.endpoint = endpoint;
         this.graphs = graphs;
+        this.dereferenceUri = null;
         this.sources = sources;
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, String graphs, List<SchemaSource> sources) {
-        this(CacheUtils.getAutoPrefixForURI(uri), uri, endpoint, graphs, sources);
-    }
-
-    public RDFUnitConfiguration(String uri, String endpoint, String graphs, String[] sourcePrefixes) {
+    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection <String> graphs, String[] sourcePrefixes) {
         this(uri, endpoint, graphs, SchemaService.getSourceList(null, Arrays.asList(sourcePrefixes)));
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, String graphs, String sourcePrefixes) {
+    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection <String> graphs, String sourcePrefixes) {
         this(uri, endpoint, graphs, sourcePrefixes.split(","));
+    }
+
+    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection <String> graphs, java.util.Collection <SchemaSource> sources) {
+        this(CacheUtils.getAutoPrefixForURI(uri), uri, endpoint, graphs, sources);
+    }
+
+    /* For dereference source */
+    public RDFUnitConfiguration(String prefix, String uri, String dereferenceUri, java.util.Collection <SchemaSource> sources) {
+        this.prefix = prefix;
+        this.uri = uri;
+        this.endpoint = null;
+        this.graphs = new ArrayList<String>();
+        this.dereferenceUri = dereferenceUri;
+        this.sources = sources;
+    }
+
+    public RDFUnitConfiguration(String prefix, String uri, java.util.Collection <SchemaSource> sources) {
+        this(prefix,uri, uri, sources);
     }
 
     // TODO change it back to Dateset after refactoring of Sources

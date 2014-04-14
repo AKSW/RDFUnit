@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -36,8 +36,8 @@ import java.util.List;
 public class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
 
-    public static List<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
-        List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
+    public static java.util.Collection <TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
+        java.util.Collection <TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
@@ -61,7 +61,7 @@ public class TestUtils {
             String patternID = qs.get("patternID").toString();
 
             // Get annotations from TAG URI
-            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
+            java.util.Collection <ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
 
             TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid())
@@ -77,8 +77,8 @@ public class TestUtils {
 
     }
 
-    public static List<TestCase> instantiateTestsFromAG(List<TestAutoGenerator> autoGenerators, Source source) {
-        List<TestCase> tests = new ArrayList<TestCase>();
+    public static java.util.Collection <TestCase> instantiateTestsFromAG(java.util.Collection <TestAutoGenerator> autoGenerators, Source source) {
+        java.util.Collection <TestCase> tests = new ArrayList<TestCase>();
 
         for (TestAutoGenerator tag : autoGenerators) {
             tests.addAll(tag.generate(source));
@@ -88,8 +88,8 @@ public class TestUtils {
 
     }
 
-    public static List<TestCase> instantiateTestsFromModel(Model model) {
-        List<TestCase> tests = new ArrayList<TestCase>();
+    public static java.util.Collection <TestCase> instantiateTestsFromModel(Model model) {
+        java.util.Collection <TestCase> tests = new ArrayList<TestCase>();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         // Get all manual tests
@@ -156,13 +156,13 @@ public class TestUtils {
                 String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String sparqlWhere = qs.get("sparqlWhere").toString();
                 String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
-                List<String> referencesLst = getReferencesFromTestCase(qef, testURI);
+                java.util.Collection <String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 String testGenerator = "";
                 if (qs.contains("testGenerator"))
                     testGenerator = qs.get("testGenerator").toString();
 
                 // Get annotations from Test URI
-                List<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
+                java.util.Collection <ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
 
                 TestCaseAnnotation annotation =
                         new TestCaseAnnotation(
@@ -228,14 +228,14 @@ public class TestUtils {
                     return null;
                 }
 
-                List<String> referencesLst = getReferencesFromTestCase(qef, testURI);
-                List<Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
+                java.util.Collection <String> referencesLst = getReferencesFromTestCase(qef, testURI);
+                java.util.Collection <Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
                 String testGenerator = "";
                 if (qs.contains("testGenerator"))
                     testGenerator = qs.get("testGenerator").toString();
 
                 // Get annotations from Test URI
-                List<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
+                java.util.Collection <ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
 
                 TestCaseAnnotation annotation =
                         new TestCaseAnnotation(
@@ -268,7 +268,7 @@ public class TestUtils {
         return null;
     }
 
-    public static void writeTestsToFile(List<TestCase> tests, TripleWriter testCache) {
+    public static void writeTestsToFile(java.util.Collection <TestCase> tests, TripleWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests)
             t.serialize(model);
@@ -280,9 +280,9 @@ public class TestUtils {
         }
     }
 
-    public static List<String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
+    public static java.util.Collection <String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
 
-        List<String> references = new ArrayList<String>();
+        java.util.Collection <String> references = new ArrayList<String>();
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?references WHERE { " +
@@ -304,9 +304,9 @@ public class TestUtils {
         return references;
     }
 
-    public static List<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
+    public static java.util.Collection <Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
 
-        List<Binding> bindings = new ArrayList<Binding>();
+        java.util.Collection <Binding> bindings = new ArrayList<Binding>();
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
@@ -344,7 +344,7 @@ public class TestUtils {
         return bindings;
     }
 
-    public static String generateTestURI(String sourcePrefix, Pattern pattern, List<Binding> bindings, String generatorURI) {
+    public static String generateTestURI(String sourcePrefix, Pattern pattern, java.util.Collection <Binding> bindings, String generatorURI) {
         String testURI = PrefixService.getPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         String string2hash = generatorURI;
         for (Binding binding : bindings)

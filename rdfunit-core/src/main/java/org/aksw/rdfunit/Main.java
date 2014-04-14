@@ -37,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -56,6 +55,7 @@ public class Main {
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
+        cliOptions.addOption("u", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
@@ -69,12 +69,13 @@ public class Main {
 
     }
 
-    private static List<String> getUriStrs(String parameterStr) {
-        List<String> uriStrs = new ArrayList<String>();
+    private static java.util.Collection <String> getUriStrs(String parameterStr) {
+        java.util.Collection <String> uriStrs = new ArrayList<String>();
         if (parameterStr == null) return uriStrs;
 
         for (String uriStr : parameterStr.split(",")) {
-            uriStrs.add(uriStr.trim());
+            if (!uriStr.trim().isEmpty())
+                uriStrs.add(uriStr.trim());
         }
 
         return uriStrs;
@@ -101,8 +102,8 @@ public class Main {
         if (datasetUri.endsWith("/"))
             datasetUri = datasetUri.substring(0, datasetUri.length() - 1);
         String endpointUriStr = commandLine.getOptionValue("e");
-        String graphUriStrs = commandLine.getOptionValue("g", "");
-        List<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
+        java.util.Collection <String> graphUriStrs = getUriStrs(commandLine.getOptionValue("g", ""));
+        java.util.Collection <String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         String dataFolder = commandLine.getOptionValue("f", "../data/");
         String testFolder = dataFolder + "tests/";
@@ -162,7 +163,7 @@ public class Main {
         // */
 
         /* <cliStuff> */
-        List<SchemaSource> sources = SchemaService.getSourceList(testFolder, schemaUriStrs);
+        java.util.Collection <SchemaSource> sources = SchemaService.getSourceList(testFolder, schemaUriStrs);
 
 
         //Enriched Schema (cached in folder)
@@ -219,14 +220,17 @@ public class Main {
             }
 
             @Override
-            public void singleTestExecuted(TestCase test, List<TestCaseResult> results) {
+            public void singleTestExecuted(TestCase test, java.util.Collection <TestCaseResult> results) {
 
                 // in case we have 1 result but is not status
                 boolean statusResult = false;
 
                 if (results.size() == 1) {
 
-                    TestCaseResult result = results.get(0);
+                    //Get item
+                    TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
+                    assert (result != null);
+
                     result.serialize(model, executionUUID);
 
                     if (result instanceof StatusTestCaseResult) {

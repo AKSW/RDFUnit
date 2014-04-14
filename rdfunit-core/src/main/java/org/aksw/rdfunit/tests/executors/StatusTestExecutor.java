@@ -4,7 +4,7 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class StatusTestExecutor extends TestExecutor {
     @Override
-    protected List<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
         return null;
     }
 }

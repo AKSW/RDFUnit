@@ -21,18 +21,18 @@ public class TestCoverageEvaluator {
     private static final Logger log = LoggerFactory.getLogger(TestCoverageEvaluator.class);
 
 
-    private final List<String> fDomPatterns = Arrays.asList("RDFSDOMAIN", "OWLDISJP",
+    private final java.util.Collection <String> fDomPatterns = Arrays.asList("RDFSDOMAIN", "OWLDISJP",
             "TYPRODEP", "OWLSYMMETRICPROP", "OWLASYMMETRICPROP",
             "OWLTRANSPROP", "COMP", "LITRAN", "TYPDEP", "PVT");
-    private final List<String> fRangPatterns = Arrays.asList("RDFSRANGE", "OWLDISJP",
+    private final java.util.Collection <String> fRangPatterns = Arrays.asList("RDFSRANGE", "OWLDISJP",
             "OWLCARD", "INVFUNC", "OWLSYMMETRICPROP", "OWLASYMMETRICPROP",
             "OWLTRANSPROP", "COMP", "MATCH", "LITRAN", "ONELANG");
-    private final List<String> fDepPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
+    private final java.util.Collection <String> fDepPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "COMP", "LITRAN", "PVT");
-    private final List<String> fCardPatterns = Arrays.asList("OWLCARD", "ONELANG");
-    private final List<String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
+    private final java.util.Collection <String> fCardPatterns = Arrays.asList("OWLCARD", "ONELANG");
+    private final java.util.Collection <String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "LITRAN");
-    private final List<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
+    private final java.util.Collection <String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
     private final String sparql = RDFUnitUtils.getAllPrefixes() +
             " SELECT distinct ?reference WHERE {\n" +
             "   ?t a  rut:TestCase ; \n" +
@@ -40,7 +40,7 @@ public class TestCoverageEvaluator {
             "      rut:references ?reference .\n" +
             "   VALUES ( ?pattern )  { %%PATTERNS%%} }";
 
-    private String generateInClause(List<String> patterns) {
+    private String generateInClause(java.util.Collection <String> patterns) {
         StringBuilder inClause = new StringBuilder("");
         //int count = 0;
         for (String s : patterns) {
@@ -97,7 +97,7 @@ public class TestCoverageEvaluator {
     public void calculateCoverage(QueryExecutionFactory model, Map<String, Long> propertyCount, long totalProperties, Map<String, Long> classCount, long totalClasses) {
 
         String sparqlQuery = "";
-        List<String> references;
+        java.util.Collection <String> references;
 
         // Fdomain Coverage metric
         references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fDomPatterns)));
@@ -130,7 +130,7 @@ public class TestCoverageEvaluator {
         log.info("fCDep Coverage: " + fCDep);
     }
 
-    private double getCoverage(List<String> references, Map<String, Long> referencesCount, long totalReferences) {
+    private double getCoverage(java.util.Collection <String> references, Map<String, Long> referencesCount, long totalReferences) {
         double coverage = 0;
 
         for (String reference : references) {
@@ -143,9 +143,9 @@ public class TestCoverageEvaluator {
         return coverage;
     }
 
-    private List<String> getReferenceSet(QueryExecutionFactory model, String query) {
+    private java.util.Collection <String> getReferenceSet(QueryExecutionFactory model, String query) {
 
-        List<String> references = new ArrayList<String>();
+        java.util.Collection <String> references = new ArrayList<String>();
         Query q = QueryFactory.create(query);
         QueryExecution qe = model.createQueryExecution(q);
         ResultSet rs = qe.execSelect();

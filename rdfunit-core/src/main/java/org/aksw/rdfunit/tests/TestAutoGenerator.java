@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -31,9 +30,9 @@ public class TestAutoGenerator {
     private final String description;
     private final String query;
     private final Pattern pattern;
-    private final List<ResultAnnotation> annotations;
+    private final java.util.Collection <ResultAnnotation> annotations;
 
-    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, List<ResultAnnotation> annotations) {
+    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, java.util.Collection <ResultAnnotation> annotations) {
         this.URI = uri;
         this.description = description;
         this.query = query;
@@ -59,7 +58,7 @@ public class TestAutoGenerator {
             return false;
         }
 
-        List<Var> sv = q.getProjectVars();
+        java.util.Collection <Var> sv = q.getProjectVars();
         if (sv.size() != pattern.getParameters().size()) {
             log.error(getURI() + " Select variables are different than Pattern parameters");
             return false;
@@ -69,8 +68,8 @@ public class TestAutoGenerator {
         return true;
     }
 
-    public List<TestCase> generate(Source source) {
-        List<TestCase> tests = new ArrayList<TestCase>();
+    public java.util.Collection <TestCase> generate(Source source) {
+        java.util.Collection <TestCase> tests = new ArrayList<TestCase>();
 
         Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
@@ -79,8 +78,8 @@ public class TestAutoGenerator {
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
 
-            List<Binding> bindings = new ArrayList<Binding>();
-            List<String> references = new ArrayList<String>();
+            java.util.Collection <Binding> bindings = new ArrayList<Binding>();
+            java.util.Collection <String> references = new ArrayList<String>();
 
             for (PatternParameter p : pattern.getParameters()) {
                 if (row.contains(p.getId())) {
@@ -144,7 +143,7 @@ public class TestAutoGenerator {
         return pattern;
     }
 
-    public List<ResultAnnotation> getAnnotations() {
+    public java.util.Collection <ResultAnnotation> getAnnotations() {
         return annotations;
     }
 }

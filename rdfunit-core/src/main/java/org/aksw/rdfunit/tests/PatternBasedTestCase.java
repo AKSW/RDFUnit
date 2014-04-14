@@ -10,8 +10,6 @@ import org.aksw.rdfunit.exceptions.TestCaseException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PrefixService;
 
-import java.util.List;
-
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -20,9 +18,9 @@ import java.util.List;
 public class PatternBasedTestCase extends TestCase {
 
     private final Pattern pattern;
-    private final List<Binding> bindings;
+    private final java.util.Collection <Binding> bindings;
 
-    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, List<Binding> bindings) throws TestCaseException {
+    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, java.util.Collection <Binding> bindings) throws TestCaseException {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
@@ -62,7 +60,7 @@ public class PatternBasedTestCase extends TestCase {
         return instantiateBindings(bindings, pattern.getSparqlPatternPrevalence());
     }
 
-    private String instantiateBindings(List<Binding> bindings, String query) {
+    private String instantiateBindings(java.util.Collection <Binding> bindings, String query) {
         String sparql = query;
         for (Binding b : bindings) {
             sparql = sparql.replace("%%" + b.getParameterId() + "%%", b.getValue());

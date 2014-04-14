@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -11,7 +10,7 @@ import java.util.List;
 public class TripleReaderFactory {
     public static TripleReader createFileOrDereferenceTripleReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
-        List<TripleReader> readers = new ArrayList<TripleReader>();
+        java.util.Collection <TripleReader> readers = new ArrayList<TripleReader>();
         readers.add(new TripleFileReader(filename));
         readers.add(new TripleDereferenceReader(uri));
 

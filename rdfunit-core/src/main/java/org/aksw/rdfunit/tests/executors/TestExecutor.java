@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Takes a dataset source and executes the test queries against the endpoint
@@ -20,7 +19,7 @@ public abstract class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
     private boolean isCanceled = false;
 
-    private final List<TestExecutorMonitor> progressMonitors = new ArrayList<TestExecutorMonitor>();
+    private final java.util.Collection <TestExecutorMonitor> progressMonitors = new ArrayList<TestExecutorMonitor>();
 
     public TestExecutor() {
 
@@ -30,7 +29,7 @@ public abstract class TestExecutor {
         isCanceled = true;
     }
 
-    abstract protected List<TestCaseResult> executeSingleTest(Source source, TestCase testCase);
+    abstract protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase);
 
     public static TestExecutor initExecutorFactory(TestCaseExecutionType executionType) {
         switch (executionType) {
@@ -64,7 +63,7 @@ public abstract class TestExecutor {
                 monitor.singleTestStarted(testCase);
             }
 
-            List<TestCaseResult> results = executeSingleTest(source, testCase);
+            java.util.Collection <TestCaseResult> results = executeSingleTest(source, testCase);
 
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {

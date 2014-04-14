@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -28,8 +27,8 @@ public class RDFUnit {
 
     private static Logger log = LoggerFactory.getLogger(RDFUnit.class);
     private QueryExecutionFactory patternQueryFactory;
-    private List<Pattern> patterns = new ArrayList<Pattern>();
-    private List<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
+    private java.util.Collection <Pattern> patterns = new ArrayList<Pattern>();
+    private java.util.Collection <TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 
     public RDFUnit() {
     }
@@ -54,11 +53,11 @@ public class RDFUnit {
         this.autoGenerators = getAutoGenerators();
     }
 
-    public List<Pattern> getPatterns() {
+    public java.util.Collection <Pattern> getPatterns() {
         return PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
     }
 
-    public List<TestAutoGenerator> getAutoGenerators() {
+    public java.util.Collection <TestAutoGenerator> getAutoGenerators() {
         return TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 

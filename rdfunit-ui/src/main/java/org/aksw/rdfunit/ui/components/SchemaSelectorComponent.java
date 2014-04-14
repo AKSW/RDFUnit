@@ -203,8 +203,8 @@ public class SchemaSelectorComponent extends VerticalLayout {
         BeanItemContainer<SchemaSource> container = new BeanItemContainer<SchemaSource>(
                 SchemaSource.class);
 
-        List<SchemaSource> sources = SchemaService.getSourceListAll(false, null);
-        Collections.sort(sources);
+        java.util.Collection <SchemaSource> sources = SchemaService.getSourceListAll(false, null);
+        //Collections.sort(sources);
 
         for (SchemaSource s : sources)
             container.addBean(s);
@@ -264,8 +264,8 @@ public class SchemaSelectorComponent extends VerticalLayout {
         }
     }
 
-    public List<SchemaSource> getSelections() {
-        List<SchemaSource> sources = new ArrayList<SchemaSource>();
+    public java.util.Collection <SchemaSource> getSelections() {
+        java.util.Collection <SchemaSource> sources = new ArrayList<SchemaSource>();
 
         Object selectedSources = tokenField.getValue();
 
@@ -278,7 +278,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
         return sources;
     }
 
-    public void setSelections(List<SchemaSource> sources) {
+    public void setSelections(java.util.Collection <SchemaSource> sources) {
         clearSelections();
         for (SchemaSource s : sources)
             tokenField.addToken(s);

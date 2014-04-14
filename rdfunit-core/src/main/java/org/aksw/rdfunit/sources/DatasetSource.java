@@ -11,7 +11,8 @@ import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * User: Dimitris Kontokostas
@@ -22,22 +23,22 @@ import java.util.List;
 public class DatasetSource extends Source {
 
     private final String sparqlEndpoint;
-    private final String sparqlGraph;
+    private final java.util.Collection <String> sparqlGraph;
 
     public DatasetSource(String prefix, String uri) {
-        this(prefix, uri, uri, "", null);
+        this(prefix, uri, uri, new ArrayList<String>(), null);
     }
 
-    public DatasetSource(String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata) {
+    public DatasetSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection <String> sparqlGraph, java.util.Collection <SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
-        this.sparqlGraph = sparqlGraph;
+        this.sparqlGraph = new ArrayList<String>(sparqlGraph);
         if (schemata != null)
             addReferencesSchemata(schemata);
     }
 
     public DatasetSource(DatasetSource source) {
-        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraph(), source.getReferencesSchemata());
+        this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraphs(), source.getReferencesSchemata());
     }
 
     @Override
@@ -48,8 +49,13 @@ public class DatasetSource extends Source {
     @Override
     protected QueryExecutionFactory initQueryFactory() {
 
-        // Create a query execution over DBpedia
-        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraph());
+        QueryExecutionFactory qef;
+        // if empty
+        if (getSparqlGraphs() == null || getSparqlGraphs().isEmpty() )
+            qef = new QueryExecutionFactoryHttp(getSparqlEndpoint());
+        else
+         qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraphs());
+
 
         // Add delay in order to be nice to the remote server (delay in milli seconds)
         qef = new QueryExecutionFactoryDelay(qef, 7000);
@@ -82,7 +88,13 @@ public class DatasetSource extends Source {
         return sparqlEndpoint;
     }
 
-    public String getSparqlGraph() {
+    public Collection <String> getSparqlGraphs() {
         return sparqlGraph;
+    }
+
+    public String getFirstSparqlGraph() {
+        for (String graph : getSparqlGraphs())
+            return graph;
+        return "";
     }
 }

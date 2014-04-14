@@ -10,8 +10,6 @@ import org.aksw.rdfunit.io.TripleDereferenceReader;
 import org.aksw.rdfunit.io.TripleReader;
 import org.aksw.rdfunit.io.TripleReaderFactory;
 
-import java.util.List;
-
 /**
  * User: Dimitris Kontokostas
  * Defines a source based on an RDF Dump
@@ -36,11 +34,11 @@ public class DumpSource extends Source {
         this(prefix, uri, dumpReader, null);
     }
 
-    public DumpSource(String prefix, String uri, List<SchemaSource> schemata) {
+    public DumpSource(String prefix, String uri, java.util.Collection <SchemaSource> schemata) {
         this(prefix, uri, new TripleDereferenceReader(uri), schemata);
     }
 
-    public DumpSource(String prefix, String uri, TripleReader dumpReader, List<SchemaSource> schemata) {
+    public DumpSource(String prefix, String uri, TripleReader dumpReader, java.util.Collection <SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
         if (schemata != null)

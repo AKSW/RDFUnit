@@ -14,8 +14,6 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -99,7 +97,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         return annotation.getTestCaseLogLevel();
     }
 
-    public List<ResultAnnotation> getResultAnnotations() {
+    public java.util.Collection <ResultAnnotation> getResultAnnotations() {
         return annotation.getResultAnnotations();
     }
 
@@ -119,7 +117,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         if (!getSparqlPrevalence().trim().equals("")) // Prevalence in not always defined
             validateSPARQL(getSparqlPrevalence(), "prevalence");
 
-        List<String> vars = getSparqlQuery().getResultVars();
+        java.util.Collection <String> vars = getSparqlQuery().getResultVars();
         // check for Resource & message
         boolean hasResource = false;
         boolean hasMessage = false;

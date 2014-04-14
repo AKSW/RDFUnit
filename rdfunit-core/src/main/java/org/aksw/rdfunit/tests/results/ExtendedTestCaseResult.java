@@ -7,7 +7,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.tests.TestCase;
 
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
-    private final List<ResultAnnotation> resultAnnotations;
+    private final java.util.Collection <ResultAnnotation> resultAnnotations;
 
     public ExtendedTestCaseResult(TestCase testCase, String resource, String message, String logLevel) {
         super(testCase, resource, message, logLevel);

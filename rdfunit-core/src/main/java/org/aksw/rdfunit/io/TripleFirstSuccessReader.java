@@ -3,8 +3,6 @@ package org.aksw.rdfunit.io;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 
-import java.util.List;
-
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -12,9 +10,9 @@ import java.util.List;
  */
 public class TripleFirstSuccessReader extends TripleReader {
 
-    private final List<TripleReader> readers;
+    private final java.util.Collection <TripleReader> readers;
 
-    public TripleFirstSuccessReader(List<TripleReader> readers) {
+    public TripleFirstSuccessReader(java.util.Collection <TripleReader> readers) {
         this.readers = readers;
     }
 

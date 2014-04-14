@@ -9,7 +9,7 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -17,8 +17,8 @@ import java.util.List;
  * Created: 1/24/14 6:08 PM
  */
 public class SparqlUtils {
-    static public List<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
-        List<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
+    static public java.util.Collection <ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
+        java.util.Collection <ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
         String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
                 " <" + uri + "> rut:resultAnnotation ?annotation . " +

@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -88,8 +89,8 @@ public class RDFUnitUtils {
     }
 
     public static void fillSchemaServiceFromLOV() {
-        List<Source> sources = new ArrayList<Source>();
-        Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", "", null);
+        java.util.Collection <Source> sources = new ArrayList<Source>();
+        Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
 
         QueryExecution qe = null;
         int count = 0;
@@ -158,5 +159,11 @@ public class RDFUnitUtils {
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
+    }
+
+    public static <T> T getFirstItemInCollection(java.util.Collection<T> collection) {
+        for (T item: collection)
+            return item;
+        return null;
     }
 }

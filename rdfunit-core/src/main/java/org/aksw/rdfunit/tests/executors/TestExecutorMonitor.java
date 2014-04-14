@@ -5,7 +5,7 @@ import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -26,7 +26,7 @@ public interface TestExecutorMonitor {
     /*
     * Called when a single test is executed
     * */
-    void singleTestExecuted(final TestCase test, final List<TestCaseResult> results);
+    void singleTestExecuted(final TestCase test, final java.util.Collection <TestCaseResult> results);
 
     /*
     * Called when testing ends

@@ -9,7 +9,7 @@ import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -19,9 +19,9 @@ import java.util.List;
 public class RLOGTestExecutor extends TestExecutor {
 
     @Override
-    protected List<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
 
-        List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
+        java.util.Collection <TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
 
         QueryExecution qe = null;
         try {

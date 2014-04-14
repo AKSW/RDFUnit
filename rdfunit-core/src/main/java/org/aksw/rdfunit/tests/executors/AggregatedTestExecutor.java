@@ -10,7 +10,6 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * User: Dimitris Kontokostas
@@ -20,7 +19,7 @@ import java.util.List;
 public class AggregatedTestExecutor extends TestExecutor {
 
     @Override
-    protected List<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection <TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
         int total = -1, prevalence = -1;
 
         try {

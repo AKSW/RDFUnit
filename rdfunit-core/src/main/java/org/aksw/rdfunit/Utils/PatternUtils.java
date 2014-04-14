@@ -10,7 +10,7 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * User: Dimitris Kontokostas
@@ -18,8 +18,8 @@ import java.util.List;
  * Created: 9/23/13 11:09 AM
  */
 public class PatternUtils {
-    public static List<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
-        List<Pattern> patterns = new ArrayList<Pattern>();
+    public static java.util.Collection <Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
+        java.util.Collection <Pattern> patterns = new ArrayList<Pattern>();
 
         String sparqlSelectPatterns = RDFUnitUtils.getAllPrefixes() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
@@ -49,7 +49,7 @@ public class PatternUtils {
             String desc = qs.get("desc").toString();
             String sparql = qs.get("sparql").toString();
             String sparqlPrev = qs.get("sparqlPrev").toString();
-            List<PatternParameter> parameters = new ArrayList<PatternParameter>();
+            java.util.Collection <PatternParameter> parameters = new ArrayList<PatternParameter>();
 
             QueryExecution qeNested = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
             ResultSet resultsNested = qeNested.execSelect();
@@ -75,7 +75,7 @@ public class PatternUtils {
             qeNested.close();
 
             // Get annotations from TAG URI
-            List<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
+            java.util.Collection <ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
 
             Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
             if (pat.isValid())

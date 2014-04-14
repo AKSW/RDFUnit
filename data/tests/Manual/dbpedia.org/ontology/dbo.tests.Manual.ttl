@@ -238,7 +238,7 @@ rutt:dbo-MATCH-isbnformat
                     ] ;
           rut:binding
                     [ a       rut:Binding ;
-                      rut:bindingValue """^([iIsSbBnN 0-9-])*$""" ;
+                      rut:bindingValue """^([iIsSbBnNxX 0-9-])+$""" ;
                       rut:parameter rutp:MATCH-REGEX
                     ] ;
           rut:binding
