@@ -29,3 +29,4 @@ nerd,http://nerd.eurecom.fr/ontology#,http://nerd.eurecom.fr/ontology/nerd-v0.5.
 itsrdf,http://www.w3.org/2005/11/its/rdf#,http://www.w3.org/2005/11/its/rdf-content/its-rdf.rdf
 olia,http://purl.org/olia
 nif,http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#,https://raw.github.com/NLP2RDF/ontologies/master/nif-core/nif-core.ttl
+dataid,https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl
