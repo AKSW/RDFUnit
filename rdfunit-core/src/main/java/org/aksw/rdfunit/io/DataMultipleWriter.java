@@ -8,17 +8,17 @@ import org.aksw.rdfunit.exceptions.TripleWriterException;
  * Description
  * Created: 11/14/13 1:13 PM
  */
-public class TripleMultipleWriter extends TripleWriter {
-    private final java.util.Collection<TripleWriter> writers;
+public class DataMultipleWriter extends DataWriter {
+    private final java.util.Collection<DataWriter> writers;
 
-    public TripleMultipleWriter(java.util.Collection<TripleWriter> writers) {
+    public DataMultipleWriter(java.util.Collection<DataWriter> writers) {
         this.writers = writers;
     }
 
     @Override
     public void write(Model model) throws TripleWriterException {
         //TODO check for early exceptions
-        for (TripleWriter w : writers) {
+        for (DataWriter w : writers) {
             w.write(model);
         }
     }

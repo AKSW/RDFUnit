@@ -4,8 +4,8 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.TripleFileReader;
-import org.aksw.rdfunit.io.TripleFileWriter;
+import org.aksw.rdfunit.io.RDFFileReader;
+import org.aksw.rdfunit.io.RDFFileWriter;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
@@ -96,7 +96,7 @@ public class TestGeneratorExecutor {
             if (!loadFromCache)
                 cachedTestsLocation = ""; // non existing path
             java.util.Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                    new TripleFileReader(cachedTestsLocation).read());
+                    new RDFFileReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
             log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
@@ -104,7 +104,7 @@ public class TestGeneratorExecutor {
             // cannot read from file  / generate
             java.util.Collection<TestCase> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
             tests.addAll(testsAuto);
-            TestUtils.writeTestsToFile(testsAuto, new TripleFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
+            TestUtils.writeTestsToFile(testsAuto, new RDFFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
             log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
         }
 
@@ -123,7 +123,7 @@ public class TestGeneratorExecutor {
         }
         try {
             java.util.Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    new TripleFileReader(CacheUtils.getSourceManualTestFile(testFolder, s)).read());
+                    new RDFFileReader(CacheUtils.getSourceManualTestFile(testFolder, s)).read());
             tests.addAll(testsManuals);
             log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
         } catch (TripleReaderException e) {

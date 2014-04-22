@@ -10,20 +10,20 @@ import java.io.StringWriter;
  * Writes a model to a string (for display in screen / web page)
  * Created: 11/14/13 5:12 PM
  */
-public class TripleStringWriter extends TripleWriter {
+public class RDFStringWriter extends DataWriter {
 
     private final StringBuilder str;
     private final String format;
 
-    public TripleStringWriter() {
+    public RDFStringWriter() {
         this(new StringBuilder(), "TURTLE");
     }
 
-    public TripleStringWriter(StringBuilder str) {
+    public RDFStringWriter(StringBuilder str) {
         this(str, "TURTLE");
     }
 
-    public TripleStringWriter(StringBuilder str, String format) {
+    public RDFStringWriter(StringBuilder str, String format) {
         this.str = str;
         this.format = format;
     }

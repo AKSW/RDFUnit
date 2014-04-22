@@ -9,13 +9,13 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  * TODO implement
  * Created: 11/14/13 8:58 AM
  */
-public class TripleSPARQLReader extends TripleReader {
+public class SPARQLReader extends DataReader {
 
     private final String endpoint;
     private final String graph;
     private final String sparqlQuery;
 
-    public TripleSPARQLReader(String endpoint, String graph, String sparqlQuery) {
+    public SPARQLReader(String endpoint, String graph, String sparqlQuery) {
         this.endpoint = endpoint;
         this.graph = graph;
         this.sparqlQuery = sparqlQuery;

@@ -11,16 +11,16 @@ import java.io.FileInputStream;
  * Description
  * Created: 11/14/13 8:37 AM
  */
-public class TripleFileReader extends TripleReader {
+public class RDFFileReader extends DataReader {
     private final String filename;
     private final String format;
 
-    public TripleFileReader(String filename) {
+    public RDFFileReader(String filename) {
         this.filename = filename;
         this.format = "TURTLE";
     }
 
-    public TripleFileReader(String filename, String format) {
+    public RDFFileReader(String filename, String format) {
         this.filename = filename;
         this.format = format;
     }

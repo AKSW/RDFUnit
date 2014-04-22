@@ -7,6 +7,7 @@ foaf,http://xmlns.com/foaf/0.1/
 dcterms,http://purl.org/dc/terms/
 dc,http://purl.org/dc/elements/1.1/
 skos,http://www.w3.org/2004/02/skos/core#
+prov,http://www.w3.org/ns/prov#
 georss,http://www.georss.org/georss/
 geo,http://www.w3.org/2003/01/geo/wgs84_pos#
 frbrer,http://iflastandards.info/ns/fr/frbr/frbrer/

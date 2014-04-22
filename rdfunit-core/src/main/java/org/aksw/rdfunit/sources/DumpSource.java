@@ -6,8 +6,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.TripleDereferenceReader;
-import org.aksw.rdfunit.io.TripleReader;
+import org.aksw.rdfunit.io.RDFDereferenceReader;
+import org.aksw.rdfunit.io.DataReader;
 
 /**
  * User: Dimitris Kontokostas
@@ -19,25 +19,25 @@ import org.aksw.rdfunit.io.TripleReader;
  */
 public class DumpSource extends Source {
 
-    private final TripleReader dumpReader;
+    private final DataReader dumpReader;
 
     public DumpSource(String prefix, String uri) {
-        this(prefix, uri, new TripleDereferenceReader(uri), null);
+        this(prefix, uri, new RDFDereferenceReader(uri), null);
     }
 
     public DumpSource(String prefix, String uri, String location) {
-        this(prefix, uri, new TripleDereferenceReader(location), null);
+        this(prefix, uri, new RDFDereferenceReader(location), null);
     }
 
-    public DumpSource(String prefix, String uri, TripleReader dumpReader) {
+    public DumpSource(String prefix, String uri, DataReader dumpReader) {
         this(prefix, uri, dumpReader, null);
     }
 
     public DumpSource(String prefix, String uri, java.util.Collection<SchemaSource> schemata) {
-        this(prefix, uri, new TripleDereferenceReader(uri), schemata);
+        this(prefix, uri, new RDFDereferenceReader(uri), schemata);
     }
 
-    public DumpSource(String prefix, String uri, TripleReader dumpReader, java.util.Collection<SchemaSource> schemata) {
+    public DumpSource(String prefix, String uri, DataReader dumpReader, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
         if (schemata != null)

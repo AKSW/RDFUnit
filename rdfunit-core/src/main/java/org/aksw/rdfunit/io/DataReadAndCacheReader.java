@@ -6,14 +6,14 @@ import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
  * User: Dimitris Kontokostas
- * reades from a TripleReader and caches result
+ * reades from a DataReader and caches result
  * Created: 11/14/13 1:09 PM
  */
-public class TripleReadAndCacheReader extends TripleReader {
-    private final TripleReader reader;
-    private final TripleWriter writer;
+public class DataReadAndCacheReader extends DataReader {
+    private final DataReader reader;
+    private final DataWriter writer;
 
-    public TripleReadAndCacheReader(TripleReader reader, TripleWriter writer) {
+    public DataReadAndCacheReader(DataReader reader, DataWriter writer) {
         this.reader = reader;
         this.writer = writer;
     }

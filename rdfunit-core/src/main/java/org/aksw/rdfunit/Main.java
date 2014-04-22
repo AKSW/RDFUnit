@@ -14,10 +14,10 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.io.TripleFileReader;
-import org.aksw.rdfunit.io.TripleFileWriter;
-import org.aksw.rdfunit.io.TripleReader;
-import org.aksw.rdfunit.io.TripleWriter;
+import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.DataWriter;
+import org.aksw.rdfunit.io.RDFFileReader;
+import org.aksw.rdfunit.io.RDFFileWriter;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -158,8 +158,8 @@ public class Main {
         RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
 
-        TripleReader patternReader = new TripleFileReader(dataFolder + "patterns.ttl");
-        TripleReader testGeneratorReader = new TripleFileReader(dataFolder + "testAutoGenerators.ttl");
+        DataReader patternReader = new RDFFileReader(dataFolder + "patterns.ttl");
+        DataReader testGeneratorReader = new RDFFileReader(dataFolder + "testAutoGenerators.ttl");
         RDFUnit rdfunit = new RDFUnit();
         try {
             rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);
@@ -206,7 +206,7 @@ public class Main {
 
         TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
 
-            TripleWriter resultWriter;
+            DataWriter resultWriter;
             Source testedDataset;
             TestSuite testSuite;
             Model model;
@@ -227,7 +227,7 @@ public class Main {
             @Override
             public void testingStarted(Source dataset, TestSuite testSuite) {
                 testedDataset = dataset;
-                resultWriter = new TripleFileWriter("../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString() + ".ttl");
+                resultWriter = new RDFFileWriter("../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString() + ".ttl");
                 model = ModelFactory.createDefaultModel();
                 model.setNsPrefixes(PrefixService.getPrefixMap());
                 counter = success = fail = timeout = error = totalErrors = 0;
