@@ -14,10 +14,7 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.io.DataReader;
-import org.aksw.rdfunit.io.DataWriter;
-import org.aksw.rdfunit.io.RDFFileReader;
-import org.aksw.rdfunit.io.RDFFileWriter;
+import org.aksw.rdfunit.io.*;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -37,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * User: Dimitris Kontokostas
@@ -227,7 +225,12 @@ public class Main {
             @Override
             public void testingStarted(Source dataset, TestSuite testSuite) {
                 testedDataset = dataset;
-                resultWriter = new RDFFileWriter("../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString() + ".ttl");
+
+                String filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
+                DataWriter rdf  = new RDFFileWriter(    filename + ".ttl");
+                DataWriter html = HTMLResultsWriter.create(resulLevelInner, filename + ".html");
+                resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
+
                 model = ModelFactory.createDefaultModel();
                 model.setNsPrefixes(PrefixService.getPrefixMap());
                 counter = success = fail = timeout = error = totalErrors = 0;
@@ -288,13 +291,13 @@ public class Main {
                 }
 
                 // cache intermediate results
-                if (counter % 10 == 0) {
-                    try {
-                        resultWriter.write(model);
-                    } catch (TripleWriterException e) {
-                        log.error("Cannot write tests: " + e.getMessage());
-                    }
-                }
+                //if (counter % 10 == 0) {
+                //    try {
+                //        resultWriter.write(model);
+                //    } catch (TripleWriterException e) {
+                //        log.error("Cannot write tests: " + e.getMessage());
+                //    }
+                //}
             }
 
             @Override

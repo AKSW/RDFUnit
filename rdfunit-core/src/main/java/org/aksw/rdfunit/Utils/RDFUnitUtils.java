@@ -32,6 +32,7 @@ public class RDFUnitUtils {
                 " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
                 " PREFIX dc: <http://purl.org/dc/elements/1.1/> \n" +
                 " PREFIX rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> \n" +
+                " PREFIX prov: <http://www.w3.org/ns/prov#> \n" +
                 " PREFIX rut: <http://rdfunit.aksw.org/ns/core#> \n" +
                 " PREFIX rutp: <http://rdfunit.aksw.org/data/patterns#> \n" +
                 " PREFIX rutt: <http://rdfunit.aksw.org/data/tests#> \n" +
