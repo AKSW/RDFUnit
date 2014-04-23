@@ -19,7 +19,8 @@ public class DataMultipleWriter extends DataWriter {
     public void write(Model model) throws TripleWriterException {
         //TODO check for early exceptions
         for (DataWriter w : writers) {
-            w.write(model);
+            if (w != null)
+                w.write(model);
         }
     }
 }
