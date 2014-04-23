@@ -40,7 +40,7 @@ public class SparqlUtils {
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (qe != null)
                 qe.close();
@@ -49,13 +49,27 @@ public class SparqlUtils {
         return annotations;
     }
 
+    public static boolean checkAskQuery(QueryExecutionFactory qef, String askQuery) {
+        QueryExecution qe = null;
+
+        try {
+            qe = qef.createQueryExecution(askQuery);
+            return qe.execAsk();
+        } catch (Exception e) {
+
+        } finally {
+            if (qe != null)
+                qe.close();
+        }
+        return false;
+    }
+
     public static boolean checkStatusForTimeout(QueryExceptionHTTP e) {
         int httpCode = e.getResponseCode();
 
         // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
         if (httpCode == 408 || httpCode == 504 || httpCode == 524)
             return true;
-        else
-            return false;
+        return false;
     }
 }
