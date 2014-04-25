@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.services;
 
+import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 
@@ -31,8 +33,11 @@ public class SchemaService {
 
     public static SchemaSource getSource(String baseFolder, String id) {
         String sourceUriURL = schemata.get(id);
-        if (sourceUriURL == null)
-            return null;
+        if (sourceUriURL == null) {
+            // If not a prefix try to dereference it
+            return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(id), id);
+        }
+
         String[] split = sourceUriURL.split("\t");
         if (split.length == 2) {
             if (baseFolder != null)
