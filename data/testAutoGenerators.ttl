@@ -9,9 +9,9 @@
 #### rdfs:range pattern
 ##########################################
 
-# Class range
+# Class range wrongly defined
 rutg:RDFSRANGEC a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ?T1 ?MESSAGE where {
                               {
                               ?P1 rdfs:range ?T1 .
@@ -31,12 +31,42 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
                                        (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )}
-                              BIND (concat("'", str(?P1)," does not have rdfs:range: ", str(?T1), "'") AS ?MESSAGE)} """ ;
+                              BIND (concat("'", str(?P1)," does not have correct rdfs:range: ", str(?T1), "'") AS ?MESSAGE)} """ ;
     rut:basedOnPattern rutp:RDFSRANGE ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:Error] ;
+    .
+
+# Class range missing
+rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is missing)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ?MESSAGE where {
+                              {
+                              ?P1 rdfs:range ?T1 .
+                              ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
+                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
+                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )
+                              } UNION {
+                              ?P1 rdfs:range ?T1 .
+                              ?T1 rdf:type <http://www.w3.org/2002/07/owl#Class> .
+                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
+                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
+                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )}
+                              BIND (concat("'", str(?P1)," does not have defined rdfs:range: ", str(?T1), "'") AS ?MESSAGE)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGE-MISS ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Warn] ;
     .
 
 # Datatype range

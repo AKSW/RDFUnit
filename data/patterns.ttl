@@ -6,14 +6,16 @@
 
 
 ##########################################
-#### rdfs:range pattern
+#### rdfs:range pattern (exists but wrong)
 ##########################################
 
 rutp:RDFSRANGE a rut:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
-    dcterms:description """Emulates the rdfs:range constrain."""@en ;
+    dcterms:description """Emulates the rdfs:range constrain and checks when range is wrongly defined"""@en ;
     rut:sparqlWherePattern """ {
                                     ?s %%P1%% ?resource.
+                                    FILTER EXISTS {
+                                        ?resource rdf:type ?anyClass . }
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?T1 .
                                         ?T1 rdfs:subClassOf+ %%T1%% . }
@@ -43,6 +45,39 @@ rutp:RDFSRANGE-T1 a rut:Parameter ;
     rut:parameterConstraint rut:Class .
 
 rutp:RDFSRANGE-MESSAGE a rut:Parameter ;
+    dcterms:identifier "MESSAGE" ;
+    rut:parameterConstraint rut:None .
+
+##########################################
+#### rdfs:range pattern (not defined in the dataset)
+##########################################
+
+rutp:RDFSRANGE-MISS a rut:Pattern ;
+    dcterms:identifier "RDFSRANGE-MISS" ;
+    dcterms:description """Emulates the rdfs:range constrain and checks if the range is not defined withing the dataset"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?s %%P1%% ?resource.
+                                    FILTER NOT EXISTS {
+                                        ?resource rdf:type ?anyClass . }
+									BIND ( %%MESSAGE%% AS ?message)
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?s %%P1%% ?resource .} """ ;
+    rut:parameter rutp:RDFSRANGE-MISS-P1 ;
+    rut:parameter rutp:RDFSRANGE-MISS-MESSAGE ;
+#    rut:resultAnnotation [
+#        a rut:ResultAnnotation ;
+#        rut:annotationProperty <http://xxxx> ;
+#        rut:annotationValue <http://YYYY>
+#    ];
+    .
+
+
+rutp:RDFSRANGE-MISS-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:RDFSRANGE-MISS-MESSAGE a rut:Parameter ;
     dcterms:identifier "MESSAGE" ;
     rut:parameterConstraint rut:None .
 
