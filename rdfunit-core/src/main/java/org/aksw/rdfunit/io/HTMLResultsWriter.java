@@ -32,8 +32,10 @@ public abstract class HTMLResultsWriter extends DataWriter {
 
     public static HTMLResultsWriter create(TestCaseExecutionType type, String filename) {
         switch (type) {
-            //case statusTestCaseResult:
-            //case aggregatedTestCaseResult:
+            case statusTestCaseResult:
+                return new HTMLResultsStatusWriter(filename);
+            case aggregatedTestCaseResult:
+                return new HTMLResultsAggregateWriter(filename);
             case rlogTestCaseResult:
                 return new HTMLResultsRlogWriter(filename);
             //case extendedTestCaseResult:
@@ -47,7 +49,6 @@ public abstract class HTMLResultsWriter extends DataWriter {
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);
 
-        File file = new File("path/to/file.txt");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 
@@ -119,10 +120,11 @@ public abstract class HTMLResultsWriter extends DataWriter {
     private StringBuffer getTestExecutionResults(QueryExecutionFactory qef, String testExecution) {
         StringBuffer results = new StringBuffer();
         results.append("<h2>Results</h2>");
-        results.append("<table>");
+        results.append("<table><thead>");
         results.append(getResultsHeader());
+        results.append("</thead><tbody>");
         results.append(getResultsList(qef,testExecution));
-        results.append("</table>");
+        results.append("</tbody></table>");
         return results;
     }
 }
