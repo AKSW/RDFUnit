@@ -68,8 +68,6 @@ public class SparqlUtils {
         int httpCode = e.getResponseCode();
 
         // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-        if (httpCode == 408 || httpCode == 504 || httpCode == 524)
-            return true;
-        return false;
+        return httpCode == 408 || httpCode == 504 || httpCode == 524;
     }
 }

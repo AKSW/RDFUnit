@@ -5,7 +5,6 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.services.PrefixService;
 
 /**
