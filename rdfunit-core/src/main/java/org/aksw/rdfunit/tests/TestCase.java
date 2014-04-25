@@ -58,7 +58,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public String getSparqlAsCount() {
-        return " SELECT (count( ?resource ) AS ?total ) WHERE " + getSparqlWhere();
+        return " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE " + getSparqlWhere();
     }
 
     public Query getSparqlAsCountQuery() {
