@@ -429,12 +429,12 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
     dcterms:identifier "OWLSYMMETRICPROP" ;
     dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
     rut:sparqlWherePattern """ {
-                                    ?r1  %%P1%% ?resource .
-                                    FILTER NOT EXISTS {?resource %%P1%% ?r1} .
+                                    ?resource  %%P1%% ?r1 .
+                                    FILTER NOT EXISTS {?r1 %%P1%% ?resource } .
 									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
-    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?r1 %%P1%% ?resource . }""" ;
+    rut:sparqlPrevalencePattern """ SELECT (count( *) AS ?total)
+                                     WHERE { ?r1 %%P1%% ?r2 . }""" ;
     rut:parameter rutp:OWLSYMMETRICPROP-P1 ;
     rut:parameter rutp:OWLSYMMETRICPROP-MESSAGE .
 

@@ -371,12 +371,21 @@ rutg:OWLINVFUNC a rut:TestGenerator ;
 #### owl symmetric property constraints generator
 ################################################################################
 
-# rutg:OWLSYMMETRICPROP a rut:TestGenerator ;
-#    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
-#    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
-#                                ?P1 a owl:SymmetricProperty .
-#                              }""" ;
-#    rut:basedOnPattern rutp:OWLSYMMETRICPROP .
+rutg:OWLSYMMETRICPROP a rut:TestGenerator ;
+    dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?MESSAGE WHERE {
+                              {
+                                ?P1 rdf:type owl:SymmetricProperty .
+                              } UNION {
+                                ?P1 rdfs:subPropertyOf+ owl:SymmetricProperty .
+                              }
+                              BIND ( concat("'", str(?P1)," is an owl:SymmetricProperty and the reverse relationship should exist'") AS ?MESSAGE) } """ ;
+    rut:basedOnPattern rutp:OWLSYMMETRICPROP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:Notice] ;
+    .
 
 
 ################################################################################
