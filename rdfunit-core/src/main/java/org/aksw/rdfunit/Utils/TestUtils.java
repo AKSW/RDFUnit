@@ -202,7 +202,7 @@ public class TestUtils {
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
-                " SELECT DISTINCT description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
+                " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    dcterms:description ?description ;" +
                 "    rut:appliesTo      ?appliesTo ;" +
