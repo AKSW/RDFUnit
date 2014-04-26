@@ -185,6 +185,11 @@ rut:TestCase
     rdfs:comment "A superclass of TestCases. Defines properties all test cases can have but concrete implementation occurs on subclasses."@en ;
     rdfs:subClassOf [
         rdf:type owl:Restriction;
+        owl:onProperty dcterms:description;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
         owl:onProperty rut:appliesTo;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;

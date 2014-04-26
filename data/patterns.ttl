@@ -21,13 +21,11 @@ rutp:RDFSRANGE a rut:Pattern ;
                                         ?T1 rdfs:subClassOf+ %%T1%% . }
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type %%T1%%  }
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
     rut:parameter rutp:RDFSRANGE-P1 ;
     rut:parameter rutp:RDFSRANGE-T1 ;
-    rut:parameter rutp:RDFSRANGE-MESSAGE ;
 #    rut:resultAnnotation [
 #        a rut:ResultAnnotation ;
 #        rut:annotationProperty <http://xxxx> ;
@@ -44,10 +42,6 @@ rutp:RDFSRANGE-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
     rut:parameterConstraint rut:Class .
 
-rutp:RDFSRANGE-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 ##########################################
 #### rdfs:range pattern (not defined in the dataset)
 ##########################################
@@ -59,12 +53,10 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
                                     ?s %%P1%% ?resource.
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?anyClass . }
-									BIND ( %%MESSAGE%% AS ?message)
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
     rut:parameter rutp:RDFSRANGE-MISS-P1 ;
-    rut:parameter rutp:RDFSRANGE-MISS-MESSAGE ;
 #    rut:resultAnnotation [
 #        a rut:ResultAnnotation ;
 #        rut:annotationProperty <http://xxxx> ;
@@ -77,11 +69,6 @@ rutp:RDFSRANGE-MISS-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
 
-rutp:RDFSRANGE-MISS-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
-
 ##########################################
 #### rdfs:range (datatype) pattern
 ##########################################
@@ -92,13 +79,12 @@ rutp:RDFSRANGED a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
                                     FILTER (DATATYPE(?c) != %%D1%%)
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
     rut:parameter rutp:RDFSRANGED-P1 ;
     rut:parameter rutp:RDFSRANGED-D1 ;
-    rut:parameter rutp:RDFSRANGED-MESSAGE .
+    .
 
 
 rutp:RDFSRANGED-P1 a rut:Parameter ;
@@ -108,11 +94,6 @@ rutp:RDFSRANGED-P1 a rut:Parameter ;
 rutp:RDFSRANGED-D1 a rut:Parameter ;
     dcterms:identifier "D1" ;
     rut:parameterConstraint rut:None .
-
-rutp:RDFSRANGED-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ##########################################
 #### rdfs:domain pattern
@@ -128,30 +109,25 @@ rutp:RDFSDOMAIN a rut:Pattern ;
                                         ?T1 rdfs:subClassOf+ %%T1%% . }
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type %%T1%%  }
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
     rut:parameter rutp:RDFSDOMAIN-P1 ;
     rut:parameter rutp:RDFSDOMAIN-V1 ;
     rut:parameter rutp:RDFSDOMAIN-T1 ;
-    rut:parameter rutp:RDFSDOMAIN-MESSAGE .
+    .
 
 rutp:RDFSDOMAIN-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
 
 rutp:RDFSDOMAIN-V1 a rut:Parameter ;
-    dcterms:identifier "V1" .
+    dcterms:identifier "V1" ;
+    rut:parameterConstraint rut:None .
 
 rutp:RDFSDOMAIN-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
     rut:parameterConstraint rut:Class .
-
-rutp:RDFSDOMAIN-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ##########################################
 #### owl:disjointClass pattern  (#TODO fix transitive)
@@ -163,12 +139,11 @@ rutp:OWLDISJC a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type %%T1%% .
                                     ?resource rdf:type %%T2%% .
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJC-T1 ;
     rut:parameter rutp:OWLDISJC-T2 ;
-    rut:parameter rutp:OWLDISJC-MESSAGE .
+    .
 
 rutp:OWLDISJC-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
@@ -177,11 +152,6 @@ rutp:OWLDISJC-T1 a rut:Parameter ;
 rutp:OWLDISJC-T2 a rut:Parameter ;
     dcterms:identifier "T2" ;
     rut:parameterConstraint rut:Class .
-
-rutp:OWLDISJC-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ##########################################
 #### owl:propertyDisjointWith pattern
@@ -193,12 +163,11 @@ rutp:OWLDISJP a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?v .
                                     ?resource %%P2%% ?v .
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJP-P1 ;
     rut:parameter rutp:OWLDISJP-P2 ;
-    rut:parameter rutp:OWLDISJP-MESSAGE .
+    .
 
 rutp:OWLDISJP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -207,11 +176,6 @@ rutp:OWLDISJP-P1 a rut:Parameter ;
 rutp:OWLDISJP-P2 a rut:Parameter ;
     dcterms:identifier "P2" ;
     rut:parameterConstraint rut:Property .
-
-rutp:OWLDISJP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ##########################################
 #### owl cardinality constrains pattern
@@ -222,15 +186,14 @@ rutp:OWLCARD a rut:Pattern ;
     dcterms:description """Emulates the owl:cardinality constrain without a Class constraint"""@en ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
-									BIND ( %%MESSAGE%% AS ?message) 
-                                } GROUP BY ?resource ?message
+                                } GROUP BY ?resource
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c. }""" ;
     rut:parameter rutp:OWLCARD-P1 ;
     rut:parameter rutp:OWLCARD-OP ;
     rut:parameter rutp:OWLCARD-V1 ;
-    rut:parameter rutp:OWLCARD-MESSAGE .
+    .
 
 rutp:OWLCARD-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -245,11 +208,6 @@ rutp:OWLCARD-V1 a rut:Parameter ;
     dcterms:identifier "V1" ;
     rut:parameterConstraint rut:None ;
     rut:constraintPattern """[0-9]*""" .
-
-rutp:OWLCARD-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ##########################################
 #### owl cardinality constrains pattern on Class
@@ -267,8 +225,7 @@ rutp:OWLCARDT a rut:Pattern ;
 										?t1 rdfs:subClassOf+ %%T1%%.
                                     	?resource %%P1%% ?c.
 									}
-									BIND ( %%MESSAGE%% AS ?message) 
-                                } GROUP BY ?resource ?message
+                                } GROUP BY ?resource
                                 HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
                                     	?resource rdf:type %%T1%%.
@@ -282,7 +239,7 @@ rutp:OWLCARDT a rut:Pattern ;
     rut:parameter rutp:OWLCARDT-P1 ;
     rut:parameter rutp:OWLCARDT-OP ;
     rut:parameter rutp:OWLCARDT-V1 ;
-    rut:parameter rutp:OWLCARDT-MESSAGE .
+    .
 
 rutp:OWLCARDT-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
@@ -302,11 +259,6 @@ rutp:OWLCARDT-V1 a rut:Parameter ;
     rut:parameterConstraint rut:None ;
     rut:constraintPattern """[0-9]*""" .
 
-rutp:OWLCARDT-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
-
 ##########################################
 #### Type & Property dependency (equivalent to card > 0)
 ##########################################
@@ -323,7 +275,6 @@ rutp:TYPRODEP a rut:Pattern ;
 										?t1 rdfs:subClassOf+ %%T1%%
 										FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
 									}
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { {?resource rdf:type %%T1%% .}
@@ -332,7 +283,7 @@ rutp:TYPRODEP a rut:Pattern ;
     rut:parameter rutp:TYPRODEP-T1 ;
     rut:parameter rutp:TYPRODEP-NOT ;
     rut:parameter rutp:TYPRODEP-P1 ;
-    rut:parameter rutp:TYPRODEP-MESSAGE .
+    .
 
 rutp:TYPRODEP-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
@@ -347,10 +298,6 @@ rutp:TYPRODEP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
 
-rutp:TYPRODEP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 ################################################################################
 #### unique value constraint of inverse functional properties
 ################################################################################
@@ -362,21 +309,15 @@ rutp:INVFUNC a rut:Pattern ;
                                     ?a %%P1%% ?resource .
                                     ?b %%P1%% ?resource .
                                     FILTER (?a != ?b)
-									BIND ( %%MESSAGE%% AS ?message) 
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?a %%P1%% ?resource . }""" ;
     rut:parameter rutp:INVFUNC-P1 ;
-    rut:parameter rutp:INVFUNC-MESSAGE .
+    .
 
 rutp:INVFUNC-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
-
-rutp:INVFUNC-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### unique value constraint of inverse functional properties  (on a Class)
@@ -397,14 +338,13 @@ rutp:INVFUNCT a rut:Pattern ;
                                             rdfs:subClassOf+ %%T1%% .
                                     }
                                     FILTER (?a != ?b)
-									BIND ( %%MESSAGE%% AS ?message)
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { {?a %%P1%% ?resource ; a %%T1%% }
                                        UNION {?a %%P1%% ?resource ; rdfs:subClassOf+ %%T1%% .} }""" ;
     rut:parameter rutp:INVFUNCT-P1 ;
     rut:parameter rutp:INVFUNCT-T1 ;
-    rut:parameter rutp:INVFUNCT-MESSAGE .
+    .
 
 rutp:INVFUNCT-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -413,11 +353,6 @@ rutp:INVFUNCT-P1 a rut:Parameter ;
 rutp:INVFUNCT-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
     rut:parameterConstraint rut:Class .
-
-rutp:INVFUNCT-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### symmetric properties involved in only one axiom (only 'one-way'), e.g.
@@ -431,21 +366,15 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource  %%P1%% ?r1 .
                                     FILTER NOT EXISTS {?r1 %%P1%% ?resource } .
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( *) AS ?total)
                                      WHERE { ?r1 %%P1%% ?r2 . }""" ;
     rut:parameter rutp:OWLSYMMETRICPROP-P1 ;
-    rut:parameter rutp:OWLSYMMETRICPROP-MESSAGE .
+    .
 
 rutp:OWLSYMMETRICPROP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
-
-rutp:OWLSYMMETRICPROP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### a property that is asymmetric is used as symmetric property, as in
@@ -459,21 +388,15 @@ rutp:OWLASYMMETRICPROP a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?resource .
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""";
     rut:parameter rutp:OWLASYMMETRICPROP-P1 ;
-    rut:parameter rutp:OWLASYMMETRICPROP-MESSAGE .
+    .
 
 rutp:OWLASYMMETRICPROP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
-
-rutp:OWLASYMMETRICPROP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### in a dataset a transitive property is used for statements like
@@ -490,22 +413,15 @@ rutp:OWLTRANSPROP a rut:Pattern ;
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?r3 .
                                     FILTER NOT EXISTS {?resource %%P1%% ?r3} .
-									BIND ( %%MESSAGE%% AS ?message) .
                                 }""" ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""" ;
     rut:parameter rutp:OWLTRANSPROP-P1 ;
-    rut:parameter rutp:OWLTRANSPROP-MESSAGE ;
     .
 
 rutp:OWLTRANSPROP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
-
-rutp:OWLTRANSPROP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### Given an irreflexive property p there should not be any triples like
@@ -517,21 +433,15 @@ rutp:OWLIRREFLEXIVE a rut:Pattern ;
     dcterms:description """ Given an irreflexive property, this pattern find violating statement that nontheless use this property reflexively """@en ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?resource .
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?o .}""" ;
     rut:parameter rutp:OWLIRREFLEXIVE-P1 ;
-    rut:parameter rutp:OWLIRREFLEXIVE-MESSAGE .
+    .
 
 rutp:OWLIRREFLEXIVE-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
-
-rutp:OWLIRREFLEXIVE-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### COMP
@@ -545,7 +455,6 @@ rutp:COMP a rut:Pattern ;
                                     ?resource %%P1%% ?beforeVal .
                                     ?resource %%P2%% ?afterVal .
                                     FILTER ( ?beforeVal %%OP%% ?afterVal )
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                         ?resource %%P1%% ?beforeVal .
@@ -554,7 +463,7 @@ rutp:COMP a rut:Pattern ;
     rut:parameter rutp:COMP-P1 ;
     rut:parameter rutp:COMP-P2 ;
     rut:parameter rutp:COMP-OP ;
-    rut:parameter rutp:COMP-MESSAGE .
+    .
 
 rutp:COMP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -569,11 +478,6 @@ rutp:COMP-OP a rut:Parameter ;
     rut:parameterConstraint rut:Operator ;
     rut:constraintPattern """<|<=|>|>=|=|!=""" .
 
-rutp:COMP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
-
 ################################################################################
 #### MATCH
 #### Literal in not in a desired pattern
@@ -585,14 +489,13 @@ rutp:MATCH a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?value .
                                     FILTER (%%OP%% regex(str(?value), '%%REGEX%%')) .
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?value . }""" ;
     rut:parameter rutp:MATCH-P1 ;
     rut:parameter rutp:MATCH-OP ;
     rut:parameter rutp:MATCH-REGEX ;
-    rut:parameter rutp:MATCH-MESSAGE .
+    .
 
 rutp:MATCH-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -607,11 +510,6 @@ rutp:MATCH-REGEX a rut:Parameter ;
     dcterms:identifier "REGEX" ;
     rut:parameterConstraint rut:None .
 
-rutp:MATCH-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
-
 ################################################################################
 #### LITRAN
 #### Literal in specific range
@@ -625,7 +523,6 @@ rutp:LITRAN a rut:Pattern ;
                                     ?resource %%P1%% ?value .
                                     FILTER( %%NOP%% ( ?value > %%valueMin%% &&
                                                       ?value < %%valueMax%% )) .
-									BIND ( %%MESSAGE%% AS ?message) .
                                 }""" ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                         ?resource a      %%T1%% .
@@ -636,7 +533,7 @@ rutp:LITRAN a rut:Pattern ;
     rut:parameter rutp:LITRAN-NOP ;
     rut:parameter rutp:LITRAN-valueMin ;
     rut:parameter rutp:LITRAN-valueMax ;
-    rut:parameter rutp:LITRAN-MESSAGE .
+    .
 
 rutp:LITRAN-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
@@ -661,12 +558,6 @@ rutp:LITRAN-valueMax a rut:Parameter ;
     rut:parameterConstraint rut:None ;
     rut:constraintPattern """[0-9]*\\.[0-9]*""" .
 
-rutp:LITRAN-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
-
-
 ################################################################################
 #### TYPDEP
 #### Resource is of type A and not of type B
@@ -678,14 +569,13 @@ rutp:TYPDEP a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type %%T1%% .
                                     FILTER NOT EXISTS {?resource rdf:type %%T2%%}
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
       
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource rdf:type %%T1%% . }""" ;
     rut:parameter rutp:TYPDEP-T1 ;
     rut:parameter rutp:TYPDEP-T2 ;
-    rut:parameter rutp:TYPDEP-MESSAGE .
+    .
 
 rutp:TYPDEP-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
@@ -694,11 +584,6 @@ rutp:TYPDEP-T1 a rut:Parameter ;
 rutp:TYPDEP-T2 a rut:Parameter ;
     dcterms:identifier "T2" ;
     rut:parameterConstraint rut:Class .
-
-rutp:TYPDEP-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### PVT
@@ -712,14 +597,13 @@ rutp:PVT a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {?resource %%P2%% ?p}
-									BIND ( %%MESSAGE%% AS ?message) .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% %%V1%% }""" ;
     rut:parameter rutp:PVT-P1 ;
     rut:parameter rutp:PVT-V1 ;
     rut:parameter rutp:PVT-P2 ;
-    rut:parameter rutp:PVT-MESSAGE .
+    .
 
 rutp:PVT-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -733,11 +617,6 @@ rutp:PVT-P2 a rut:Parameter ;
     dcterms:identifier "P2" ;
     rut:parameterConstraint rut:Property .
 
-rutp:PVT-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
-
 ################################################################################
 #### TRIPLE
 #### Resource has ValueA for PropertyB
@@ -748,13 +627,12 @@ rutp:TRIPLE a rut:Pattern ;
     dcterms:description """Resource has ValueA for PropertyB"""@en ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%% .
-									BIND ( %%MESSAGE%% AS ?message) . 
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?value . }""" ;
     rut:parameter rutp:TRIPLE-P1 ;
     rut:parameter rutp:TRIPLE-V1 ;
-    rut:parameter rutp:TRIPLE-MESSAGE .
+    .
 
 rutp:TRIPLE-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -763,11 +641,6 @@ rutp:TRIPLE-P1 a rut:Parameter ;
 rutp:TRIPLE-V1 a rut:Parameter ;
     dcterms:identifier "V1" ;
     rut:parameterConstraint rut:None .
-
-rutp:TRIPLE-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
-
 
 ################################################################################
 #### ONELANG
@@ -782,14 +655,12 @@ rutp:ONELANG a rut:Pattern ;
                                     ?resource %%P1%% ?c .
                                     BIND ( lang(?c) AS ?l ) .
                                     FILTER (isLiteral (?c) && lang(?c) = '%%V1%%') .
-									BIND ( %%MESSAGE%% AS ?message) .
-                                } GROUP BY ?resource ?message
+                                } GROUP BY ?resource
                                 HAVING ( COUNT (?l) > 1 ) """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
     rut:parameter rutp:ONELANG-P1 ;
-    rut:parameter rutp:ONELANG-V1 ;
-    rut:parameter rutp:ONELANG-MESSAGE .
+    rut:parameter rutp:ONELANG-V1 .
 
 rutp:ONELANG-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -799,7 +670,4 @@ rutp:ONELANG-V1 a rut:Parameter ;
     dcterms:identifier "V1" ;
     rut:parameterConstraint rut:None .
 
-rutp:ONELANG-MESSAGE a rut:Parameter ;
-    dcterms:identifier "MESSAGE" ;
-    rut:parameterConstraint rut:None .
 

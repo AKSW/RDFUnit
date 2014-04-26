@@ -132,8 +132,9 @@ public class TestUtils {
     public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
+                " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
+                "    dcterms:description  ?description ;" +
                 "    rut:appliesTo        ?appliesTo ;" +
                 "    rut:generated        ?generated ;" +
                 "    rut:source           ?source ;" +
@@ -150,6 +151,7 @@ public class TestUtils {
             if (results.hasNext()) {
                 QuerySolution qs = results.next();
 
+                String description = qs.get("description").toString();
                 String appliesTo = qs.get("appliesTo").toString();
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
@@ -171,6 +173,7 @@ public class TestUtils {
                                 TestAppliesTo.resolve(appliesTo),
                                 source,
                                 referencesLst,
+                                description,
                                 testCaseLogLevel,
                                 resultAnnotations);
 
@@ -199,8 +202,9 @@ public class TestUtils {
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
 
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
+                " SELECT DISTINCT description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
+                "    dcterms:description ?description ;" +
                 "    rut:appliesTo      ?appliesTo ;" +
                 "    rut:generated      ?generated ;" +
                 "    rut:source         ?source ;" +
@@ -217,6 +221,7 @@ public class TestUtils {
             if (results.hasNext()) {
                 QuerySolution qs = results.next();
 
+                String description = qs.get("description").toString();
                 String appliesTo = qs.get("appliesTo").toString();
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
@@ -244,6 +249,7 @@ public class TestUtils {
                                 TestAppliesTo.resolve(appliesTo),
                                 source,
                                 referencesLst,
+                                description,
                                 testCaseLogLevel,
                                 resultAnnotations);
 

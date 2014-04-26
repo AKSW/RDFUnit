@@ -50,7 +50,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public String getSparql() {
-        return " SELECT DISTINCT ?resource ?message WHERE " + getSparqlWhere();
+        return " SELECT DISTINCT ?resource WHERE " + getSparqlWhere();
     }
 
     public Query getSparqlQuery() {
@@ -88,7 +88,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public String getResultMessage() {
-        return annotation.getAnnotationMessage();
+        return annotation.getDescription();
     }
 
     public String getLogLevel() {
@@ -118,19 +118,17 @@ public abstract class TestCase implements Comparable<TestCase> {
         java.util.Collection<String> vars = getSparqlQuery().getResultVars();
         // check for Resource & message
         boolean hasResource = false;
-        boolean hasMessage = false;
         for (String v : vars) {
             if (v.equals("resource"))
                 hasResource = true;
-            if (v.equals("message"))
-                hasMessage = true;
+
         }
         if (!hasResource)
             throw new TestCaseException("?resource is not included in SELECT for Test: " + testURI);
 
         // Message is allowed to exist either in SELECT or as a result annotation
-        if (!hasMessage && annotation.getAnnotationMessage().equals(""))
-            throw new TestCaseException("No message included in TestCase neither in SELECT nor as ResultAnnotation for Test: " + testURI);
+        if (annotation.getDescription().equals(""))
+            throw new TestCaseException("No test case dcterms:description message included in TestCase: " + testURI);
 
         if (getLogLevel() == null || getLogLevel().equals("")) {
             throw new TestCaseException("No log level included for Test: " + testURI);
