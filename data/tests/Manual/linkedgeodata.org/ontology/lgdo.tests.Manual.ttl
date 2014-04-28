@@ -9,6 +9,8 @@
 @prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
+## TODO adapt all test cases for the new schema
+
 # not applicable in general since there are too much different formats and
 # a dump for the whole world is considered here
 #

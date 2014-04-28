@@ -13,6 +13,7 @@
 # Wrong character casing in yago uri's
 rutt:dbpedia-org-MATCH-yagocharactercasing
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Wrong capitalization in yago class" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:MATCH ;
     rut:binding
@@ -30,11 +31,6 @@ rutt:dbpedia-org-MATCH-yagocharactercasing
             rut:bindingValue """^http://dbpedia.org/class/yago/.[a-z][A-Z][A-Z].$""" ;
             rut:parameter rutp:MATCH-REGEX
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Wrong capitalization in yago class'" ;
-            rut:parameter rutp:MATCH-MESSAGE
-        ] ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
     rut:source <http://dbpedia.org> ;
@@ -44,6 +40,7 @@ rutt:dbpedia-org-MATCH-yagocharactercasing
 # Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
 rutt:dbpedia-org-manual-dateofbirthbirthdate
     a rut:ManualTestCase ;
+    dcterms:description "A dbp:birthDate exists and not a dbo:dateOfBirth, possible extraction error or missing mapping" ;
     rut:appliesTo rut:Dataset ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://dbpedia.org/ontology/birthDate> ;
@@ -51,8 +48,7 @@ rutt:dbpedia-org-manual-dateofbirthbirthdate
     rut:source <http://dbpedia.org> ;
     rut:sparqlWhere """ {
                                  ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 .
-                                 FILTER NOT EXISTS {?resource <http://dbpedia.org/ontology/birthDate> ?v2}
-                                 BIND ('A dbp:birthDate exists and not a dbo:dateOfBirth, possible extraction error or missing mapping' AS ?message)} """ ;
+                                 FILTER NOT EXISTS {?resource <http://dbpedia.org/ontology/birthDate> ?v2}} """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ ;
     rut:testCaseLogLevel
@@ -61,6 +57,7 @@ rutt:dbpedia-org-manual-dateofbirthbirthdate
 # Resource is in birthday category but has no dbo:birthDate
 rutt:dbpedia-org-PVT-birthcategorywithoutbirthdate
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource in dbr:1907_births category but without dbo:birthDate" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:PVT ;
     rut:generated rut:ManuallyGenerated ;
@@ -83,11 +80,6 @@ rutt:dbpedia-org-PVT-birthcategorywithoutbirthdate
             rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
             rut:parameter rutp:PVT-P2
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource in dbr:1907_births category but without dbo:birthDate'" ;
-            rut:parameter rutp:PVT-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error .
 
@@ -96,6 +88,7 @@ rutt:dbpedia-org-PVT-birthcategorywithoutbirthdate
 # Resource has a geo location template but no coordinates
 rutt:dbpedia-org-PVT-geotemplatecoordinates
     a     rut:PatternBasedTestCase ;
+    dcterms:description "A Wikipedia article with Template:Geographic_location but without extracted coordinates" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:PVT ;
     rut:generated rut:ManuallyGenerated ;
@@ -118,11 +111,6 @@ rutt:dbpedia-org-PVT-geotemplatecoordinates
             rut:bindingValue <http://www.georss.org/georss/point> ;
             rut:parameter rutp:PVT-P2
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A Wikipedia article with Template:Geographic_location but without extracted coordinates'" ;
-            rut:parameter rutp:PVT-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error .
 
@@ -130,6 +118,7 @@ rutt:dbpedia-org-PVT-geotemplatecoordinates
 # Resource in cities category but not of the type dbo:City                                 
 rutt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
     a     rut:PatternBasedTestCase ;
+    dcterms:description "A resource in Category:Capitals_in_Africa but not of type dbo:City" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:RDFSDOMAIN ;
     rut:generated rut:ManuallyGenerated ;
@@ -152,11 +141,6 @@ rutt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
             rut:bindingValue <http://dbpedia.org/ontology/City> ;
             rut:parameter rutp:RDFSDOMAIN-T1
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A resource in Category:Capitals_in_Africa but not of type dbo:City'" ;
-            rut:parameter rutp:RDFSDOMAIN-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error .
 
@@ -165,6 +149,7 @@ rutt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
 # Wikipedia articles with a missing file
 rutt:dbpedia-org-TRIPLE-articlesmissingfile
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource in Category:Articles_with_missing_files" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:TRIPLE ;
     rut:generated rut:ManuallyGenerated ;
@@ -181,11 +166,6 @@ rutt:dbpedia-org-TRIPLE-articlesmissingfile
             rut:bindingValue <http://dbpedia.org/resource/Category:Articles_with_missing_files> ;
             rut:parameter rutp:TRIPLE-V1
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource in Category:Articles_with_missing_files'" ;
-            rut:parameter rutp:TRIPLE-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
 
@@ -193,6 +173,7 @@ rutt:dbpedia-org-TRIPLE-articlesmissingfile
 # Wikipedia articles with an inconsistent citation format
 rutt:dbpedia-org-TRIPLE-inconsistantcitation
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource uses Template:Inconsistent_citations" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:TRIPLE ;
     rut:generated rut:ManuallyGenerated ;
@@ -209,11 +190,6 @@ rutt:dbpedia-org-TRIPLE-inconsistantcitation
             rut:bindingValue <http://dbpedia.org/resource/Template:Inconsistent_citations> ;
             rut:parameter rutp:TRIPLE-V1
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource uses Template:Inconsistent_citations'" ;
-            rut:parameter rutp:TRIPLE-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
 
@@ -221,6 +197,7 @@ rutt:dbpedia-org-TRIPLE-inconsistantcitation
 # Wikipedia articles that are possibly copy-pasted
 rutt:dbpedia-org-TRIPLE-possiblecutpastemoves
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource in Category:Possible_cut-and-paste_moves" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:TRIPLE ;
     rut:generated rut:ManuallyGenerated ;
@@ -237,11 +214,6 @@ rutt:dbpedia-org-TRIPLE-possiblecutpastemoves
             rut:bindingValue <http://dbpedia.org/resource/Category:Possible_cut-and-paste_moves> ;
             rut:parameter rutp:TRIPLE-V1
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource in Category:Possible_cut-and-paste_moves'" ;
-            rut:parameter rutp:TRIPLE-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
 
@@ -249,6 +221,7 @@ rutt:dbpedia-org-TRIPLE-possiblecutpastemoves
 # Resource has coordinates but is not a place                              
 rutt:dbpedia-org-TYPDEP-coordinatesandnotplace
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource has coordinates but is not a dbo:Place" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:TYPDEP ;
     rut:generated rut:ManuallyGenerated ;
@@ -264,11 +237,6 @@ rutt:dbpedia-org-TYPDEP-coordinatesandnotplace
         [ a     rut:Binding ;
             rut:bindingValue <http://dbpedia.org/ontology/Place> ;
             rut:parameter rutp:TYPDEP-T2
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource has coordinates but is not a dbo:Place'" ;
-            rut:parameter rutp:TYPDEP-MESSAGE
         ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
@@ -276,6 +244,7 @@ rutt:dbpedia-org-TYPDEP-coordinatesandnotplace
 # Resource has coordinates but is not a place
 rutt:dbpedia-org-TYPDEP-placenocoordinates
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource is a dbo:Place but has no coordinates" ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:TYPDEP ;
     rut:generated rut:ManuallyGenerated ;
@@ -292,17 +261,13 @@ rutt:dbpedia-org-TYPDEP-placenocoordinates
             rut:bindingValue <http://www.opengis.net/gml/_Feature> ;
             rut:parameter rutp:TYPDEP-T2
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource is a dbo:Place but has no '" ;
-            rut:parameter rutp:TYPDEP-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
 
 # Resource is a foaf:Person but not a dbo:Person                                 
 rutt:dbpedia-org-TYPDEP-foafdbpediaperson
     a     rut:PatternBasedTestCase ;
+    dcterms:description "Resource is a foaf:Person but not a dbo:Person (externaly defined datasets) " ;
     rut:appliesTo rut:Dataset ;
     rut:basedOnPattern rutp:TYPDEP ;
     rut:generated rut:ManuallyGenerated ;
@@ -318,11 +283,6 @@ rutt:dbpedia-org-TYPDEP-foafdbpediaperson
         [ a     rut:Binding ;
             rut:bindingValue <http://dbpedia.org/ontology/Person> ;
             rut:parameter rutp:TYPDEP-T2
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Resource is a foaf:Person but not a dbo:Person (externaly defined datasets) '" ;
-            rut:parameter rutp:TYPDEP-MESSAGE
         ] ;
     rut:testCaseLogLevel
                   rlog:Warn .

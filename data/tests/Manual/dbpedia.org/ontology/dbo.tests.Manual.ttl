@@ -13,6 +13,7 @@
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
 rutt:dbo-CARD-rdfslabelforeachlanguage
       a       rut:TestCase ;
+      dcterms:description "TODO" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:OWLCARD ;
       rut:generated rut:ManuallyGenerated ;
@@ -29,6 +30,7 @@ rutt:dbo-CARD-rdfslabelforeachlanguage
 # dbo:deathDate after dbo:birthDate
 rutt:dbo-COMP-birthdeatdate
     a       rut:PatternBasedTestCase ;
+    dcterms:description "A dbp:birthDate cannot be after a dbo:deathDate" ;
     rut:appliesTo rut:Schema ;
     rut:basedOnPattern rutp:COMP ;
     rut:generated rut:ManuallyGenerated ;
@@ -50,11 +52,6 @@ rutt:dbo-COMP-birthdeatdate
             rut:bindingValue ">" ;
             rut:parameter rutp:COMP-OP
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A dbp:birthDate cannot be after a dbo:deathDate'" ;
-            rut:parameter rutp:COMP-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error .
 
@@ -62,6 +59,7 @@ rutt:dbo-COMP-birthdeatdate
 # dbo:demolitionDate after dbo:buildingStartDate
 rutt:dbo-COMP-demolitionbuildingstartdate
     a       rut:PatternBasedTestCase ;
+    dcterms:description "A dbp:buildingStartDate cannot be after a dbo:demolitionDate" ;
     rut:appliesTo rut:Schema ;
     rut:basedOnPattern rutp:COMP ;
     rut:generated rut:ManuallyGenerated ;
@@ -82,11 +80,6 @@ rutt:dbo-COMP-demolitionbuildingstartdate
             rut:bindingValue ">" ;
             rut:parameter rutp:COMP-OP
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A dbp:buildingStartDate cannot be after a dbo:demolitionDate'" ;
-            rut:parameter rutp:COMP-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error .
 
@@ -94,6 +87,7 @@ rutt:dbo-COMP-demolitionbuildingstartdate
 # dbo:latestReleaseDate after dbo:releaseDate
 rutt:dbo-COMP-releaselatestreleasedate
       a       rut:PatternBasedTestCase ;
+      dcterms:description "A dbp:releaseDate cannot be after a dbo:latestReleaseDate" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:COMP ;
       rut:generated rut:ManuallyGenerated ;
@@ -114,11 +108,6 @@ rutt:dbo-COMP-releaselatestreleasedate
             rut:bindingValue ">" ;
             rut:parameter rutp:COMP-OP
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A dbp:releaseDate cannot be after a dbo:latestReleaseDate'" ;
-            rut:parameter rutp:COMP-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error .
 
@@ -126,6 +115,7 @@ rutt:dbo-COMP-releaselatestreleasedate
 # Different countries having the same capital
 rutt:dbo-INVFUNC-countriessamecapital
       a       rut:PatternBasedTestCase ;
+      dcterms:description "Two different dbo:Country(s) should not have the same dbo:capital" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:INVFUNCT ;
       rut:generated rut:ManuallyGenerated ;
@@ -142,11 +132,6 @@ rutt:dbo-INVFUNC-countriessamecapital
             rut:bindingValue <http://dbpedia.org/ontology/Country> ;
             rut:parameter rutp:INVFUNCT-T1
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'Two different dbo:Country(s) should not have the same dbo:capital'" ;
-            rut:parameter rutp:INVFUNCT-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Error ;
     .
@@ -155,6 +140,7 @@ rutt:dbo-INVFUNC-countriessamecapital
 # height of a dbo:Person between 0.4 and 2.5 meter
 rutt:dbo-LITRAN-rangeheightperson
       a       rut:ManualTestCase ;
+      dcterms:description "A dbo:Person should have a height between 0.4 and 2.5 meters" ;
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://dbpedia.org/ontology/Person> ;
@@ -169,8 +155,7 @@ rutt:dbo-LITRAN-rangeheightperson
                                     ?class rdfs:subClassOf+ <http://dbpedia.org/ontology/Person> .
                                     ?resource <http://dbpedia.org/ontology/height> ?v1 .
                                  }
-                                 FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5))
-                                 BIND ( 'A dbo:Person should have a height between 0.4 and 2.5 meters' AS ?message)} """ ;
+                                 FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5))} """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/ontology/height> ?v1 . } """ ;
     rut:testCaseLogLevel
@@ -179,6 +164,7 @@ rutt:dbo-LITRAN-rangeheightperson
 # weight of a dbo:Person is between 1 and 375 KG
 rutt:dbo-LITRAN-rangeweightperson
       a       rut:PatternBasedTestCase ;
+      dcterms:description "The weight of a person should be between 1 and 375 Kg in ordinary cases" ;
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://dbpedia.org/ontology/Person/weight> ;
@@ -209,11 +195,6 @@ rutt:dbo-LITRAN-rangeweightperson
                       rut:bindingValue "375" ;
                       rut:parameter rutp:LITRAN-valueMax
                     ] ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue "'The weight of a person should be between 1 and 375 Kg in ordinary cases'" ;
-                      rut:parameter rutp:LITRAN-MESSAGE
-                    ] ;
     rut:testCaseLogLevel
             rlog:Warn .
 
@@ -221,6 +202,7 @@ rutt:dbo-LITRAN-rangeweightperson
 # dbo:isbn format
 rutt:dbo-MATCH-isbnformat
       a       rut:PatternBasedTestCase ;
+      dcterms:description "dbo:isbn looks invalid" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:MATCH ;
       rut:generated rut:ManuallyGenerated ;
@@ -241,11 +223,6 @@ rutt:dbo-MATCH-isbnformat
                       rut:bindingValue """^([iIsSbBnNxX 0-9-])+$""" ;
                       rut:parameter rutp:MATCH-REGEX
                     ] ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue "'dbo:isbn looks invalid'" ;
-                      rut:parameter rutp:MATCH-MESSAGE
-                    ] ;
           rut:testCaseLogLevel
                     rlog:Warn ;
           .
@@ -254,6 +231,7 @@ rutt:dbo-MATCH-isbnformat
 # dbo:iso6393Code format
 rutt:dbo-MATCH-iso6393codeformat
     a       rut:PatternBasedTestCase ;
+    dcterms:description "dbo:iso6393Code should be a 3 letter code" ;
     rut:appliesTo rut:Schema ;
     rut:basedOnPattern rutp:MATCH ;
     rut:generated rut:ManuallyGenerated ;
@@ -275,11 +253,6 @@ rutt:dbo-MATCH-iso6393codeformat
                 rut:bindingValue """^[a-z]{3}$""" ;
                 rut:parameter rutp:MATCH-REGEX
               ] ;
-    rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "'dbo:iso6393Code should be a 3 letter code'" ;
-                rut:parameter rutp:MATCH-MESSAGE
-              ] ;
     rut:testCaseLogLevel
               rlog:Error ;
     .
@@ -288,6 +261,7 @@ rutt:dbo-MATCH-iso6393codeformat
 # dbo:postalCode format
 rutt:dbo-MATCH-postalcodeformat
     a       rut:PatternBasedTestCase ;
+    dcterms:description "dbo:postalCode looks invalid" ;
     rut:appliesTo rut:Schema ;
     rut:basedOnPattern rutp:MATCH ;
     rut:generated rut:ManuallyGenerated ;
@@ -308,11 +282,6 @@ rutt:dbo-MATCH-postalcodeformat
                 rut:bindingValue """^[0-9]{5}$""" ;
                 rut:parameter rutp:MATCH-REGEX
               ] ;
-    rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "'dbo:postalCode looks invalid'" ;
-                rut:parameter rutp:MATCH-MESSAGE
-              ] ;
     rut:testCaseLogLevel
               rlog:Warn ;
     .
@@ -321,6 +290,7 @@ rutt:dbo-MATCH-postalcodeformat
 # Resource has dbo:activeYearsEndDate but not dbo:activeYearsStartDate
 rutt:dbo-PVT-activeYearsEndStartDate
       a       rut:PatternBasedTestCase ;
+      dcterms:description "A resource with dbo:activeYearsEndDate should also have dbo:activeYearsStartDate" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:PVT ;
       rut:generated rut:ManuallyGenerated ;
@@ -342,17 +312,13 @@ rut:binding
             rut:bindingValue <http://dbpedia.org/ontology/activeYearsStartDate> ;
             rut:parameter rutp:PVT-P2
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A resource with dbo:activeYearsEndDate should also have dbo:activeYearsStartDate'" ;
-            rut:parameter rutp:PVT-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
 
 # Resource has dbo:deatDate but no dbo:birthDate
 rutt:dbo-PVT-deathdatebirthdate
       a       rut:PatternBasedTestCase ;
+      dcterms:description "A resource with dbo:deathDate should also have dbo:birthDate" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:PVT ;
       rut:generated rut:ManuallyGenerated ;
@@ -374,11 +340,6 @@ rutt:dbo-PVT-deathdatebirthdate
             rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
             rut:parameter rutp:PVT-P2
         ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "'A resource with dbo:deathDate should also have dbo:birthDate'" ;
-            rut:parameter rutp:PVT-MESSAGE
-        ] ;
     rut:testCaseLogLevel
                   rlog:Warn .
 
@@ -386,17 +347,13 @@ rutt:dbo-PVT-deathdatebirthdate
 # Resource cannot have a foaf property if it is not an owl:Thing
 rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
     a       rut:PatternBasedTestCase ;
+    dcterms:description "foaf:name does not have owl:Thing as rdfs:domain (error in imported dataset)" ;
     rut:appliesTo rut:Schema ;
     rut:basedOnPattern rutp:RDFSDOMAIN ;
     rut:binding
               [ a       rut:Binding ;
                 rut:bindingValue <http://www.w3.org/2002/07/owl#Thing> ;
                 rut:parameter rutp:RDFSDOMAIN-T1
-              ] ;
-    rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "'foaf:name does not have owl:Thing as rdfs:domain (error in imported dataset)'" ;
-                rut:parameter rutp:RDFSDOMAIN-MESSAGE
               ] ;
     rut:binding
               [ a       rut:Binding ;
@@ -419,6 +376,7 @@ rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
 # dbo:Person without a dbo:birthDate
 rutt:dbo-TYPRODEP-personwithoutbirthdate
       a       rut:PatternBasedTestCase ;
+      dcterms:description "A dbo:Person should have a dbo:birthDate" ;
       rut:appliesTo rut:Schema ;
       rut:basedOnPattern rutp:TYPRODEP ;
       rut:generated rut:ManuallyGenerated ;
@@ -429,11 +387,6 @@ rutt:dbo-TYPRODEP-personwithoutbirthdate
               [ a       rut:Binding ;
                 rut:bindingValue " NOT " ;
                 rut:parameter rutp:TYPRODEP-NOT
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "'A dbo:Person should have a dbo:birthDate'" ;
-                rut:parameter rutp:TYPRODEP-MESSAGE
               ] ;
       rut:binding
               [ a       rut:Binding ;
