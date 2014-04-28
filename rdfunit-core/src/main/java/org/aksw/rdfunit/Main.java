@@ -282,6 +282,13 @@ public class Main {
                         }
                     }
                 }
+                else { // rlog or extended results
+                    error += results.size();
+                    if (results.size() == 0)
+                        success++;
+                    else
+                        fail++;
+                }
 
                 if (!statusResult) {
                     // TODO RLOG+ results
