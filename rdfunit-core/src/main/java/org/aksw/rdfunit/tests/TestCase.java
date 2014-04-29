@@ -9,7 +9,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.exceptions.TestCaseException;
+import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     private final String testURI;
     private final TestCaseAnnotation annotation;
 
-    public TestCase(String testURI, TestCaseAnnotation annotation) throws TestCaseException {
+    public TestCase(String testURI, TestCaseAnnotation annotation) throws TestCaseInstantiationException {
         this.testURI = testURI;
         this.annotation = annotation;
         // Validate on subclasses
@@ -107,7 +107,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         return testURI;
     }
 
-    public void validateQueries() throws TestCaseException {
+    public void validateQueries() throws TestCaseInstantiationException {
         validateSPARQL(getSparql(), "SPARQL");
         validateSPARQL(getSparqlAsCount(), "SPARQL Count");
         validateSPARQL(getSparqlAsAsk(), "ASK");
@@ -124,22 +124,22 @@ public abstract class TestCase implements Comparable<TestCase> {
 
         }
         if (!hasResource)
-            throw new TestCaseException("?resource is not included in SELECT for Test: " + testURI);
+            throw new TestCaseInstantiationException("?resource is not included in SELECT for Test: " + testURI);
 
         // Message is allowed to exist either in SELECT or as a result annotation
         if (annotation.getDescription().equals(""))
-            throw new TestCaseException("No test case dcterms:description message included in TestCase: " + testURI);
+            throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testURI);
 
         if (getLogLevel() == null || getLogLevel().equals("")) {
-            throw new TestCaseException("No log level included for Test: " + testURI);
+            throw new TestCaseInstantiationException("No log level included for Test: " + testURI);
         }
     }
 
-    private void validateSPARQL(String sparql, String type) throws TestCaseException {
+    private void validateSPARQL(String sparql, String type) throws TestCaseInstantiationException {
         try {
             Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + sparql);
         } catch (QueryParseException e) {
-            throw new TestCaseException("QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + RDFUnitUtils.getAllPrefixes() + sparql);
+            throw new TestCaseInstantiationException("QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + RDFUnitUtils.getAllPrefixes() + sparql);
         }
     }
 

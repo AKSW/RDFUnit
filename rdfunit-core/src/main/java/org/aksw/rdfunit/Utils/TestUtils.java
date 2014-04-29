@@ -12,7 +12,7 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
-import org.aksw.rdfunit.exceptions.TestCaseException;
+import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.DataWriter;
 import org.aksw.rdfunit.patterns.Pattern;
@@ -184,7 +184,7 @@ public class TestUtils {
                             sparqlWhere,
                             sparqlPrevalence);
             }
-        } catch (TestCaseException e) {
+        } catch (TestCaseInstantiationException e) {
             log.error(e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
@@ -260,7 +260,7 @@ public class TestUtils {
                             pattern,
                             bindings);
             }
-        } catch (TestCaseException e) {
+        } catch (TestCaseInstantiationException e) {
             log.error(e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {

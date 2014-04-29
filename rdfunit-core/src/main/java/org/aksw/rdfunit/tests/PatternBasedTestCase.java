@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.exceptions.TestCaseException;
+import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PrefixService;
 
@@ -20,14 +20,14 @@ public class PatternBasedTestCase extends TestCase {
     private final Pattern pattern;
     private final java.util.Collection<Binding> bindings;
 
-    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, java.util.Collection<Binding> bindings) throws TestCaseException {
+    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, java.util.Collection<Binding> bindings) throws TestCaseInstantiationException {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
 
         // validate
         if (bindings.size() != pattern.getParameters().size()) {
-            throw new TestCaseException("Non valid bindings in TestCase: " + testURI);
+            throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
         }
         validateQueries();
     }

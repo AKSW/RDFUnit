@@ -4,7 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.exceptions.TestCaseException;
+import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixService;
 
 /**
@@ -16,7 +16,7 @@ public class ManualTestCase extends TestCase {
     private final String sparqlWhere;
     private final String sparqlPrevalence;
 
-    public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) throws TestCaseException {
+    public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) throws TestCaseInstantiationException {
         super(testURI, annotation);
         this.sparqlWhere = sparqlWhere;
         this.sparqlPrevalence = sparqlPrevalence;

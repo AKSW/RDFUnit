@@ -7,7 +7,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
-import org.aksw.rdfunit.exceptions.TestCaseException;
+import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.sources.Source;
@@ -130,7 +130,7 @@ public class TestAutoGenerator {
                         bindings
                 );
                 tests.add(tc);
-            } catch (TestCaseException e) {
+            } catch (TestCaseInstantiationException e) {
                 log.error(e.getMessage());
                 e.printStackTrace();
             }
