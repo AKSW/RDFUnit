@@ -4,6 +4,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
+import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 public class AggregatedTestExecutor extends TestExecutor {
 
     @Override
-    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException{
         int total = -1, prevalence = -1;
 
         try {
@@ -49,6 +50,7 @@ public class AggregatedTestExecutor extends TestExecutor {
             // else total will be 0 anyway
             total = 0;
 
+        // No need to throw exception here, class supports status
         return Arrays.<TestCaseResult>asList(new AggregatedTestCaseResult(testCase, total, prevalence));
     }
 

@@ -7,6 +7,7 @@ import com.vaadin.ui.*;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -396,7 +397,7 @@ public class EndointTestTab extends VerticalLayout {
             }
 
             @Override
-            public void singleTestExecuted(final TestCase test, final java.util.Collection <TestCaseResult> results) {
+            public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection <TestCaseResult> results) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {

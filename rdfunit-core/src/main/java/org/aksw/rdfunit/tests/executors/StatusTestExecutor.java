@@ -4,6 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
@@ -19,7 +20,7 @@ import java.util.Arrays;
  */
 public class StatusTestExecutor extends TestExecutor {
     @Override
-    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) {
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException{
 
         TestCaseResultStatus status = TestCaseResultStatus.Error;
         QueryExecution qe = null;
@@ -34,6 +35,7 @@ public class StatusTestExecutor extends TestExecutor {
                 status = TestCaseResultStatus.Success;
 
         } catch (QueryExceptionHTTP e) {
+            // No need to throw exception here, class supports status
             if (SparqlUtils.checkStatusForTimeout(e))
                 status = TestCaseResultStatus.Timeout;
 

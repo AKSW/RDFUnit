@@ -247,7 +247,20 @@ public class Main {
             }
 
             @Override
-            public void singleTestExecuted(TestCase test, java.util.Collection<TestCaseResult> results) {
+            public void singleTestExecuted(TestCase test, TestCaseResultStatus status, java.util.Collection<TestCaseResult> results) {
+
+                if (status.equals(TestCaseResultStatus.Error))
+                    error++;
+                if (status.equals(TestCaseResultStatus.Timeout))
+                    timeout++;
+                if (status.equals(TestCaseResultStatus.Success))
+                    success++;
+                if (status.equals(TestCaseResultStatus.Fail))
+                    fail++;
+
+                for (TestCaseResult result : results) {
+                    result.serialize(model, executionUUID);
+                }
 
                 // in case we have 1 result but is not status
                 boolean statusResult = false;
@@ -258,22 +271,12 @@ public class Main {
                     TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
                     assert (result != null);
 
-                    result.serialize(model, executionUUID);
-
                     if (result instanceof StatusTestCaseResult) {
                         statusResult = true;
 
                         log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
-                        TestCaseResultStatus status = ((StatusTestCaseResult) result).getStatus();
 
-                        if (status.equals(TestCaseResultStatus.Error))
-                            error++;
-                        if (status.equals(TestCaseResultStatus.Timeout))
-                            timeout++;
-                        if (status.equals(TestCaseResultStatus.Success))
-                            success++;
-                        if (status.equals(TestCaseResultStatus.Fail))
-                            fail++;
+
 
                         if (result instanceof AggregatedTestCaseResult) {
                             long errorCount = ((AggregatedTestCaseResult) result).getErrorCount();
@@ -282,19 +285,11 @@ public class Main {
                         }
                     }
                 }
-                else { // rlog or extended results
-                    error += results.size();
-                    if (results.size() == 0)
-                        success++;
-                    else
-                        fail++;
-                }
 
                 if (!statusResult) {
                     // TODO RLOG+ results
-                    for (TestCaseResult result : results) {
-                        result.serialize(model, executionUUID);
-                    }
+                    totalErrors += results.size();
+
                 }
 
                 // cache intermediate results

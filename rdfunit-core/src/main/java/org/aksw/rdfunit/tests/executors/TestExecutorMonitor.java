@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
+import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -25,7 +26,7 @@ public interface TestExecutorMonitor {
     /*
     * Called when a single test is executed
     * */
-    void singleTestExecuted(final TestCase test, final java.util.Collection<TestCaseResult> results);
+    void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results);
 
     /*
     * Called when testing ends
