@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.io;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
@@ -16,7 +17,7 @@ public class DataMultipleWriter extends DataWriter {
     }
 
     @Override
-    public void write(Model model) throws TripleWriterException {
+    public void write(QueryExecutionFactory model) throws TripleWriterException {
         //TODO check for early exceptions
         for (DataWriter w : writers) {
             if (w != null)

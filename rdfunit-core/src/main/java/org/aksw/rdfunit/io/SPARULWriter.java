@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.io;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 /**
  * User: Dimitris Kontokostas
@@ -9,7 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  */
 public class SPARULWriter extends DataWriter {
     @Override
-    public void write(Model model) {
+    public void write(QueryExecutionFactory qef) {
         //TODO implement
     }
 }

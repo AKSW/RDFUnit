@@ -1,7 +1,11 @@
 package org.aksw.rdfunit.io;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
+import org.aksw.rdfunit.services.PrefixService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,7 +40,7 @@ public class RDFFileWriter extends DataWriter {
     }
 
     @Override
-    public void write(Model model) throws TripleWriterException {
+    public void write(QueryExecutionFactory qef) throws TripleWriterException {
         try {
             File file = new File(filename);
 
@@ -51,6 +55,8 @@ public class RDFFileWriter extends DataWriter {
                 if (parentF != null && !parentF.exists())
                     file.getParentFile().mkdirs();
             }
+            Model model = SparqlUtils.getModelFromQueryFactory(qef);
+            model.setNsPrefixes(PrefixService.getPrefixMap());
             model.write(new FileOutputStream(file), filetype);
 
         } catch (Exception e) {

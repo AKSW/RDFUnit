@@ -45,8 +45,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
     }
 
     @Override
-    public void write(Model model) {
-        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
+    public void write(QueryExecutionFactory qef) {
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);
 
         try {
