@@ -34,8 +34,8 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>2.10.0-22</jena-sparql-api-version>
-        <org-apache-jena-version>2.10.0</org-apache-jena-version>
+        <jena-sparql-api-version>2.11.1-44</jena-sparql-api-version>
+        <org-apache-jena-version>2.11.1</org-apache-jena-version>
     </properties>
 
     <dependencyManagement>
@@ -43,6 +43,18 @@
             <dependency>
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-core</artifactId>
+                <version>${jena-sparql-api-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.jena-sparql-api</groupId>
+                <artifactId>jena-sparql-api-cache-h2</artifactId>
+                <version>${jena-sparql-api-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.jena-sparql-api</groupId>
+                <artifactId>jena-sparql-api-resources</artifactId>
                 <version>${jena-sparql-api-version}</version>
             </dependency>
 
@@ -129,6 +141,11 @@
                 <!-- </filesets> -->
                 <!-- </configuration> -->
                 <!-- </plugin> -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
