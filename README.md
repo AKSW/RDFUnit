@@ -45,11 +45,11 @@ and we plan to extend them over time.
 
 To run a data quality assessment of a certain SPARQL endpoint the following steps have to be done:
 
-1. (optional improvement) Get/Create manual data quality test cases for the used schemas 
-2. (optional improvement) Get/create manual data quality test cases for the evaluated dataset 
-3. (optional improvement) Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. 
-   The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) 
-4. (automatic) RDFUnit automatically instantiates test cases for the given schemas used in the evaluation 
+1. (automatic) RDFUnit automatically instantiates test cases for the given schemas used in the evaluation
+2. (optional improvement) Get/Create manual data quality test cases for the used schemas
+3. (optional improvement) Get/create manual data quality test cases for the evaluated dataset
+4. (optional improvement) Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation.
+   The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.)
 5. Run the actual assessment based on the test cases created in the previous step
 
 To do so, you first have to clone this repository and install the software using the Maven 3 build tool as follows:
