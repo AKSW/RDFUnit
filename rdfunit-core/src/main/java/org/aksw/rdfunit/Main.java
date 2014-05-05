@@ -53,15 +53,17 @@ public class Main {
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
-        cliOptions.addOption("u", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
+        cliOptions.addOption("U", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
-                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)");
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
+        );
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
         cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
-        cliOptions.addOption("l", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
+        cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
+        cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit'");
 
@@ -89,17 +91,12 @@ public class Main {
 
         if (commandLine.hasOption("h") || !commandLine.hasOption("d")) {
             if (!commandLine.hasOption("h"))
-                System.out.println("\nError: Required arguments are missing.");
-
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("rdfunit", cliOptions);
-            System.exit(1);
+                displayHelpAndExit("Error: Required arguments are missing.");
+            else
+                displayHelpAndExit();
         }
         if (commandLine.hasOption("e") && commandLine.hasOption("u")) {
-            System.out.println("\nError: You have to select either an Endpoint or a Dump URI.");
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("rdfunit", cliOptions);
-            System.exit(1);
+            displayHelpAndExit("Error: You have to select either an Endpoint or a Dump URI.");
         }
 
         //Dataset URI, important & required (used to associate manual dataset test cases)
@@ -126,7 +123,7 @@ public class Main {
         boolean useManualTestCases = !commandLine.hasOption("nmt"); //Use only automatic tests
 
         TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
-        if (commandLine.hasOption("l")) {
+        if (commandLine.hasOption("r")) {
             String rl = commandLine.getOptionValue("l", "aggregate");
             if (rl.equals("status"))
                 resultLevel = TestCaseExecutionType.statusTestCaseResult;
@@ -138,6 +135,10 @@ public class Main {
                 resultLevel = TestCaseExecutionType.extendedTestCaseResult;
             else
                 log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
+        }
+
+        if (commandLine.hasOption("l")) {
+            displayHelpAndExit("Option -l was changed to -r, -l is reserved for --logging-level (notice, warn, error)");
         }
 
         boolean calculateCoverage = commandLine.hasOption("c");
@@ -189,10 +190,9 @@ public class Main {
         RDFUnitConfiguration testContext = null;
         if (endpointUriStr == null || endpointUriStr.isEmpty()) {
             testContext = new RDFUnitConfiguration(datasetUri, dumpLocation, sources);
-        }
-        else {
+        } else {
             testContext = new RDFUnitConfiguration(datasetUri,
-                endpointUriStr, graphUriStrs, sources);
+                    endpointUriStr, graphUriStrs, sources);
         }
 
         final Source dataset = testContext.getDatasetSource();
@@ -228,7 +228,7 @@ public class Main {
                 testedDataset = dataset;
 
                 filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
-                DataWriter rdf  = new RDFFileWriter(    filename + ".ttl");
+                DataWriter rdf = new RDFFileWriter(filename + ".ttl");
                 DataWriter html = HTMLResultsWriter.create(resulLevelInner, filename + ".html");
                 resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
 
@@ -276,7 +276,6 @@ public class Main {
                         statusResult = true;
 
                         log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
-
 
 
                         if (result instanceof AggregatedTestCaseResult) {
@@ -366,5 +365,16 @@ public class Main {
             TestCoverageEvaluator tce = new TestCoverageEvaluator();
             tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix() + ".property.count", dataset.getPrefix() + ".class.count");
         }
+    }
+
+    private static void displayHelpAndExit(String errorMessage) {
+        log.error(errorMessage);
+        displayHelpAndExit();
+    }
+
+    private static void displayHelpAndExit() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("rdfunit", cliOptions);
+        System.exit(1);
     }
 }
