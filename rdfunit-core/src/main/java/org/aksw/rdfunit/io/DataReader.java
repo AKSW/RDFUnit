@@ -15,9 +15,13 @@ public abstract class DataReader {
     * reads and returns a new jena Model
     * */
     public Model read() throws TripleReaderException {
-        Model model = ModelFactory.createDefaultModel();
-        read(model);
-        return model;
+		try{
+			Model model = ModelFactory.createDefaultModel();
+			read(model);
+			return model;
+		}catch(Exception e){
+			throw new TripleReaderException(e);
+		}
     }
 
     /*
