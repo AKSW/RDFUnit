@@ -204,6 +204,7 @@ public class Main {
 
         TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
 
+            String filename;
             DataWriter resultWriter;
             Source testedDataset;
             TestSuite testSuite;
@@ -226,7 +227,7 @@ public class Main {
             public void testingStarted(Source dataset, TestSuite testSuite) {
                 testedDataset = dataset;
 
-                String filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
+                filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
                 DataWriter rdf  = new RDFFileWriter(    filename + ".ttl");
                 DataWriter html = HTMLResultsWriter.create(resulLevelInner, filename + ".html");
                 resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
@@ -332,6 +333,7 @@ public class Main {
                                 ResourceFactory.createTypedLiteral("" + totalErrors, XSDDatatype.XSDnonNegativeInteger));
 
                 log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
+                log.info("Results stored in: " + filename + " ttl / html");
                 try {
                     resultWriter.write(model);
                 } catch (TripleWriterException e) {
