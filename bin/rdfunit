@@ -19,6 +19,5 @@ MVN="mvn"
 #fi
 
 cd rdfunit-core/
-$MVN -q install -Dmaven.test.skip=true
-$MVN exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
+$MVN compile exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
 cd - > /dev/null
