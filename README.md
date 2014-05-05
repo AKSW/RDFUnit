@@ -45,12 +45,12 @@ and we plan to extend them over time.
 
 To run a data quality assessment of a certain SPARQL endpoint the following steps have to be done:
 
-1. Get/Create manual data quality test cases for the used schemas (optional)
-2. Get/create manual data quality test cases for the evaluated dataset (optional)
-3. Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. 
-   The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) (optional)
-4. Get/Create automatically instantiated test cases for the schemas used inthe evaluation (automatic)
-5. Run the actual assessment based on the tests created
+1. (optional improvement) Get/Create manual data quality test cases for the used schemas 
+2. (optional improvement) Get/create manual data quality test cases for the evaluated dataset 
+3. (optional improvement) Enrich the schema of the considered dataset (This is just in case a light-weight ontology/schema is used that defines only a few schema/ontology constraints that could be used for pattern instantiation. 
+   The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.) 
+4. (automatic) RDFUnit automatically instantiates test cases for the given schemas used in the evaluation 
+5. Run the actual assessment based on the test cases created in the previous step
 
 To do so, you first have to clone this repository and install the software using the Maven 3 build tool as follows:
 ```console
@@ -74,16 +74,15 @@ $ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>
 $ bin/rdfunit -d <dataset-uri> -U <source-URI> -s <schema1,schema2,schema3,...>
 ```
 
-To brief the options, you need to provide:
+Description of the options, you need to provide:
 - of the *dataset* with the general *URI* `http://dbpedia.org`
-- the *SPARQL endpoint* `http://dbpedia.org/sparql`
-- referring to the *graph* `http://dbpedia.org`
+- the SPARQL *endpoint* URL `http://dbpedia.org/sparql`
+- referring to the *graphs* `http://dbpedia.org`
 - that uses the *schemas* `owl`, `dbo`, `foaf`, `dcterms`, `dc`, `skos`, `geo`, `prov`
 - with the *enriched schema prefix* `dbo`
 
 
-
-Note that all schemas are resolved using the LOV dataset and are downloaded automatically.
+Note that all schemas are resolved using the [LOV dataset](http://lov.okfn.org) and are downloaded automatically.
 The framework automatically loads all associated tests (manual, automatic and enriched) that are defined (See next section) and at the moment uses files to store/retrieve them.
 Future versions of the tool will work directly with a SPARQL endpoint.
 
