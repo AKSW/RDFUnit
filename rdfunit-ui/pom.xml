@@ -235,6 +235,13 @@
                             <resources>
                                 <resource>
                                     <directory>../data</directory>
+                                    <includes>
+                                        <include>patterns.ttl</include>
+                                        <include>prefixes.ttl</include>
+                                        <include>schemaDecl.csv</include>
+                                        <include>testAutoGenerators.ttl</include>
+                                        <include>tests/Manual/**</include>
+                                    </includes>
                                 </resource>
                             </resources>
                             <overwrite>true</overwrite>
