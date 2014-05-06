@@ -11,6 +11,7 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
+import org.aksw.rdfunit.tests.executors.monitors.TestGeneratorExecutorMonitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

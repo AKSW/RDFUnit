@@ -8,7 +8,7 @@ import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
-import org.aksw.rdfunit.tests.executors.TestGeneratorExecutorMonitor;
+import org.aksw.rdfunit.tests.executors.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.ui.RDFUnitUISession;
 
 import java.io.File;

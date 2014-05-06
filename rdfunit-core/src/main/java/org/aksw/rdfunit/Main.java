@@ -23,7 +23,7 @@ import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
-import org.aksw.rdfunit.tests.executors.TestExecutorMonitor;
+import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.TestGeneratorExecutor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;

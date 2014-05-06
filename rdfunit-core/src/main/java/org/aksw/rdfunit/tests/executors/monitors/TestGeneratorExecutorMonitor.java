@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests.executors;
+package org.aksw.rdfunit.tests.executors.monitors;
 
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
