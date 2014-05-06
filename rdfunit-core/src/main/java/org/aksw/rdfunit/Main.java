@@ -23,6 +23,7 @@ import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.TestGeneratorExecutor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
@@ -124,7 +125,7 @@ public class Main {
 
         TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
         if (commandLine.hasOption("r")) {
-            String rl = commandLine.getOptionValue("l", "aggregate");
+            String rl = commandLine.getOptionValue("r", "aggregate");
             if (rl.equals("status"))
                 resultLevel = TestCaseExecutionType.statusTestCaseResult;
             else if (rl.equals("aggregate"))
@@ -202,156 +203,29 @@ public class Main {
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, rdfunit.getAutoGenerators());
         final TestCaseExecutionType resulLevelInner = resultLevel;
 
-        TestExecutorMonitor testExecutorMonitor = new TestExecutorMonitor() {
-
-            String filename;
-            DataWriter resultWriter;
-            Source testedDataset;
-            TestSuite testSuite;
-            Model model;
-            long counter = 0;
-            long totalTests = 0;
-            long success = 0;
-            long fail = 0;
-            long timeout = 0;
-            long error = 0;
-            long totalErrors = 0;
-
-            long startTimeMillis = 0;
-            long endTimeMillis = 0;
-
-            final String executionUUID = JenaUUID.generate().asString();
-
-
-            @Override
-            public void testingStarted(Source dataset, TestSuite testSuite) {
-                testedDataset = dataset;
-
-                filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
-                DataWriter rdf = new RDFFileWriter(filename + ".ttl");
-                DataWriter html = HTMLResultsWriter.create(resulLevelInner, filename + ".html");
-                resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
-
-                model = ModelFactory.createDefaultModel();
-                model.setNsPrefixes(PrefixService.getPrefixMap());
-                counter = success = fail = timeout = error = totalErrors = 0;
-                totalTests = testSuite.size();
-                this.testSuite = testSuite;
-
-                log.info("Testing " + testedDataset.getUri());
-            }
-
-            @Override
-            public void singleTestStarted(TestCase test) {
-                counter++;
-                startTimeMillis = System.currentTimeMillis();
-            }
-
-            @Override
-            public void singleTestExecuted(TestCase test, TestCaseResultStatus status, java.util.Collection<TestCaseResult> results) {
-
-                if (status.equals(TestCaseResultStatus.Error))
-                    error++;
-                if (status.equals(TestCaseResultStatus.Timeout))
-                    timeout++;
-                if (status.equals(TestCaseResultStatus.Success))
-                    success++;
-                if (status.equals(TestCaseResultStatus.Fail))
-                    fail++;
-
-                for (TestCaseResult result : results) {
-                    result.serialize(model, executionUUID);
-                }
-
-                // in case we have 1 result but is not status
-                boolean statusResult = false;
-
-                if (results.size() == 1) {
-
-                    //Get item
-                    TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
-                    assert (result != null);
-
-                    if (result instanceof StatusTestCaseResult) {
-                        statusResult = true;
-
-                        log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
-
-
-                        if (result instanceof AggregatedTestCaseResult) {
-                            long errorCount = ((AggregatedTestCaseResult) result).getErrorCount();
-                            if (errorCount > 0)
-                                totalErrors += ((AggregatedTestCaseResult) result).getErrorCount();
-                        }
-                    }
-                }
-
-                if (!statusResult) {
-                    // TODO RLOG+ results
-                    totalErrors += results.size();
-
-                }
-
-                // cache intermediate results
-                //if (counter % 10 == 0) {
-                //    try {
-                //        resultWriter.write(model);
-                //    } catch (TripleWriterException e) {
-                //        log.error("Cannot write tests: " + e.getMessage());
-                //    }
-                //}
-            }
-
-            @Override
-            public void testingFinished() {
-                endTimeMillis = System.currentTimeMillis();
-
-                Resource testSuiteResource = testSuite.serialize(model);
-
-                model.createResource(executionUUID)
-                        .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "TestExecution"))
-                        .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Activity"))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "used"), testSuiteResource)
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
-                                ResourceFactory.createTypedLiteral("" + startTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),
-                                ResourceFactory.createTypedLiteral("" + endTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "source"),
-                                model.createResource(testedDataset.getUri()))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsRun"),
-                                ResourceFactory.createTypedLiteral("" + totalTests, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsSuceedded"),
-                                ResourceFactory.createTypedLiteral("" + success, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsFailed"),
-                                ResourceFactory.createTypedLiteral("" + fail, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsTimeout"),
-                                ResourceFactory.createTypedLiteral("" + timeout, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsError"),
-                                ResourceFactory.createTypedLiteral("" + error, XSDDatatype.XSDnonNegativeInteger))
-                        .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "totalIndividualErrors"),
-                                ResourceFactory.createTypedLiteral("" + totalErrors, XSDDatatype.XSDnonNegativeInteger));
-
-                log.info("Results stored in: " + filename + " ttl / html");
-                log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
-
-                try {
-                    resultWriter.write(model);
-                } catch (TripleWriterException e) {
-                    log.error("Cannot write tests to file: " + e.getMessage());
-                }
-            }
-        };
-
         TestExecutor testExecutor = TestExecutor.initExecutorFactory(resultLevel);
         if (testExecutor == null) {
             log.error("Cannot initialize test executor. Exiting");
             System.exit(1);
         }
+        SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
-
 
         // warning, caches intermediate results
         testExecutor.execute(dataset, testSuite, 0);
+
+        // Write results to DataWriter (ttl & html)
+        try {
+            String filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
+            DataWriter rdf = new RDFFileWriter(filename + ".ttl");
+            DataWriter html = HTMLResultsWriter.create(resulLevelInner, filename + ".html");
+            DataWriter resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
+
+            resultWriter.write(testExecutorMonitor.getModel());
+            log.info("Results stored in: " + filename + " ttl / html");
+        } catch (TripleWriterException e) {
+            log.error("Cannot write tests to file: " + e.getMessage());
+        }
 
 
         // Calculate coverage
