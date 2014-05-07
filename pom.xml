@@ -27,9 +27,9 @@
 
     <properties>
         <!-- Project Settings -->
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <java.version>1.6</java.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <java.version>1.7</java.version>
         <java.version.javadoc>http://java.sun.com/javase/7/docs/api/</java.version.javadoc>
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
