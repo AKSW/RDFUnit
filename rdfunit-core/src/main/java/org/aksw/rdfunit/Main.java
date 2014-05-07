@@ -1,17 +1,11 @@
 package org.aksw.rdfunit;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.*;
@@ -24,11 +18,7 @@ import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
-import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.TestGeneratorExecutor;
-import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.apache.commons.cli.*;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
@@ -150,9 +140,6 @@ public class Main {
             log.error("Path : " + dataFolder + " does not exists, use -f argument");
             System.exit(1);
         }
-
-
-        RDFUnitUtils.fillPrefixService(dataFolder + "prefixes.ttl");
 
         RDFUnitUtils.fillSchemaServiceFromLOV();
         RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");

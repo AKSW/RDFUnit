@@ -139,22 +139,6 @@ public class RDFUnitUtils {
         log.info("Loaded " + count + " schema declarations from LOV SPARQL Endpoint");
     }
 
-    public static void fillPrefixService(String filename) {
-
-        Model prefixModel = ModelFactory.createDefaultModel();
-        try {
-            prefixModel.read(new FileInputStream(filename), null, "TURTLE");
-        } catch (Exception e) {
-            // TODO handle exception
-        }
-
-        // Update Prefix Service
-        Map<String, String> prf = prefixModel.getNsPrefixMap();
-        for (String id : prf.keySet()) {
-            PrefixService.addPrefix(id, prf.get(id));
-        }
-    }
-
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
