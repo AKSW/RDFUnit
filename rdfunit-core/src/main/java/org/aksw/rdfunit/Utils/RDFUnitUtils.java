@@ -5,6 +5,8 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFFileReader;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
@@ -142,6 +144,14 @@ public class RDFUnitUtils {
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
+    }
+
+    public static DataReader getPatternsFromResource() {
+        return new RDFFileReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/patterns.ttl"));
+    }
+
+    public static DataReader getAutoGeneratorsFromResource() {
+        return new RDFFileReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/testAutoGenerators.ttl"));
     }
 
     public static <T> T getFirstItemInCollection(java.util.Collection<T> collection) {

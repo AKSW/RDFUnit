@@ -145,8 +145,16 @@ public class Main {
         RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
 
 
-        DataReader patternReader = new RDFFileReader(dataFolder + "patterns.ttl");
-        DataReader testGeneratorReader = new RDFFileReader(dataFolder + "testAutoGenerators.ttl");
+        // First try to load the modified patterns, if exists, and then try the resource
+        DataReader patternReader_data = new RDFFileReader(dataFolder + "patterns.ttl");
+        DataReader patternReader_resource = RDFUnitUtils.getPatternsFromResource();
+        DataReader patternReader = new DataFirstSuccessReader(Arrays.asList(patternReader_data, patternReader_resource));
+
+        // Similar to patterns
+        DataReader testGeneratorReader_data = new RDFFileReader(dataFolder + "testAutoGenerators.ttl");
+        DataReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsFromResource();
+        DataReader testGeneratorReader = new DataFirstSuccessReader(Arrays.asList(testGeneratorReader_data, testGeneratorReader_resource));
+
         RDFUnit rdfunit = new RDFUnit();
         try {
             rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);
