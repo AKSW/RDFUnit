@@ -14,6 +14,7 @@ import java.util.Arrays;
 /**
  * User: Dimitris Kontokostas
  * Holds a configuration for a complete test
+ * TODO: Need to adapt the constructors they are too confusing
  * Created: 11/15/13 11:50 AM
  */
 public class RDFUnitConfiguration {

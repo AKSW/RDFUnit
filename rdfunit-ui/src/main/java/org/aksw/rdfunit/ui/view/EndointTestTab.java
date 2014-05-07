@@ -473,8 +473,9 @@ public class EndointTestTab extends VerticalLayout {
     }
 
     private void createConfigurationFromUser() {
+
         RDFUnitUISession.setRDFUnitConfiguration(
-                new RDFUnitConfiguration(endpointField.getValue().replace("/sparql", ""), endpointField.getValue(), graphField.getValue(), schemaSelectorWidget.getSelections()));
+                new RDFUnitConfiguration(endpointField.getValue().replace("/sparql", ""), endpointField.getValue(), Arrays.asList(graphField.getValue()), schemaSelectorWidget.getSelections()));
     }
 
     private void setExampleConfiguration(RDFUnitConfiguration configuration) {
