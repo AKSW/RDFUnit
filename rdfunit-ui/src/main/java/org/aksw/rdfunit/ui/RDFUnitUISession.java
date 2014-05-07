@@ -58,10 +58,8 @@ public class RDFUnitUISession extends VaadinSession {
 
     public static void initRDFUnit() {
         try {
-            RDFUnitUtils.fillPrefixService(getBaseDir() + "prefixes.ttl");
-
-            DataReader patternReader = new RDFFileReader(getBaseDir() + "patterns.ttl");
-            DataReader testGeneratorReader = new RDFFileReader(getBaseDir() + "testAutoGenerators.ttl");
+            DataReader patternReader = RDFUnitUtils.getPatternsFromResource();
+            DataReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
             getRDFUnit().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO

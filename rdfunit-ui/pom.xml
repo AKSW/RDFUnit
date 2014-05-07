@@ -133,8 +133,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
@@ -236,10 +236,7 @@
                                 <resource>
                                     <directory>../data</directory>
                                     <includes>
-                                        <include>patterns.ttl</include>
-                                        <include>prefixes.ttl</include>
                                         <include>schemaDecl.csv</include>
-                                        <include>testAutoGenerators.ttl</include>
                                         <include>tests/Manual/**</include>
                                     </includes>
                                 </resource>
