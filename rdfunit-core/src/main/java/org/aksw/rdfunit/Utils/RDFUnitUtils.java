@@ -76,13 +76,10 @@ public class RDFUnitUtils {
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                System.exit(1);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                System.exit(1);
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                System.exit(1);
             }
 
             log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
