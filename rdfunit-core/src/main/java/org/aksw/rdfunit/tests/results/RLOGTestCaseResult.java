@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.results;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -30,11 +31,14 @@ public class RLOGTestCaseResult extends TestCaseResult {
     public Resource serialize(Model model, String sourceURI) {
         return model.createResource()
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "RLOGTestCaseResult"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rlog") + "Entry"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "resource"), model.createResource(getResource()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "message"), getMessage())
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "level"), model.createResource(getLogLevel()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
+                ;
     }
 
     public String getResource() {

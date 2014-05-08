@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
+import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -25,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * User: Dimitris Kontokostas
@@ -49,10 +51,8 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     private long error = 0;
     private long totalErrors = 0;
 
-    private long startTimeMillis = 0;
-    private long endTimeMillis = 0;
-
-
+    XSDDateTime startTime;
+    XSDDateTime endTime;
 
     public SimpleTestExecutorMonitor() {
         this(ModelFactory.createDefaultModel());
@@ -81,7 +81,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     @Override
     public void singleTestStarted(TestCase test) {
         counter++;
-        startTimeMillis = System.currentTimeMillis();
+        startTime = new XSDDateTime(Calendar.getInstance());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     @Override
     public void testingFinished() {
-        endTimeMillis = System.currentTimeMillis();
+        endTime = new XSDDateTime(Calendar.getInstance());
 
         Resource testSuiteResource = testSuite.serialize(getModel());
 
@@ -141,9 +141,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .addProperty(RDF.type, getModel().createResource(PrefixService.getPrefix("prov") + "Activity"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "used"), testSuiteResource)
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
-                        ResourceFactory.createTypedLiteral("" + startTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
+                        ResourceFactory.createTypedLiteral("" + startTime, XSDDatatype.XSDdateTime))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),
-                        ResourceFactory.createTypedLiteral("" + endTimeMillis, XSDDatatype.XSDdateTime)) //TODO convert to datetime
+                        ResourceFactory.createTypedLiteral("" + endTime, XSDDatatype.XSDdateTime))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "source"),
                         getModel().createResource(testedDataset.getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsRun"),

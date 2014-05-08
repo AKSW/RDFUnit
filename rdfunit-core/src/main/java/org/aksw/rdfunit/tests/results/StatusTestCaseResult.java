@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.results;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -27,7 +28,9 @@ public class StatusTestCaseResult extends TestCaseResult {
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "StatusTestCaseResult"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()));
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
+                ;
     }
 
     public TestCaseResultStatus getStatus() {
