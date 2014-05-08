@@ -72,9 +72,13 @@ public abstract class HTMLResultsWriter extends DataWriter {
 
     private StringBuffer getHeader() {
         StringBuffer header = new StringBuffer();
-        header.append("<!DOCTYPE html><html><head>");
-        header.append("<link href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\" rel=\"stylesheet\">");
-        header.append("</head><body>");
+        header.append("<!DOCTYPE html><html><head>\n");
+        header.append("<link href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\" rel=\"stylesheet\">\n" +
+                "<link href=\"http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/css/theme.default.css\" rel=\"stylesheet\">\n" +
+                "<script type=\"text/javascript\" src=\"http://code.jquery.com/jquery-1.11.0.min.js\"></script>\n" +
+                "<script type=\"text/javascript\" src=\"http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/jquery.tablesorter.min.js\"></script>\n" +
+                "<script> $(function() {$(\"#myTable\").tablesorter();});</script>");
+        header.append("</head><body>\n");
         return header;
     }
 
@@ -119,7 +123,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
     private StringBuffer getTestExecutionResults(QueryExecutionFactory qef, String testExecution) {
         StringBuffer results = new StringBuffer();
         results.append("<h2>Results</h2>");
-        results.append("<table><thead>");
+        results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default\"><thead>");
         results.append(getResultsHeader());
         results.append("</thead><tbody>");
         results.append(getResultsList(qef,testExecution));
