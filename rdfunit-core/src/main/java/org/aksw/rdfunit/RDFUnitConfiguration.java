@@ -69,7 +69,7 @@ public class RDFUnitConfiguration {
     // TODO change it back to Dateset after refactoring of Sources
     public Source getDatasetSource() {
         if ((endpoint == null || endpoint.equals(""))) {
-            return new DumpSource(prefix, uri, DataReaderFactory.createFileOrDereferenceTripleReader(dereferenceUri), sources);
+            return new DumpSource(prefix, uri, DataReaderFactory.createFileOrDereferenceReader(dereferenceUri), sources);
         } else {
             return new DatasetSource(prefix, uri, endpoint, graphs, sources);
         }

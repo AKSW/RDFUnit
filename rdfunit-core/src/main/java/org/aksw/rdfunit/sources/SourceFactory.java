@@ -19,7 +19,7 @@ public class SourceFactory {
 
     public static SchemaSource createSchemaSourceFromCache(String baseFolder, String prefix, String uri, String schema) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.Schema, prefix, uri);
-        DataReader reader = DataReaderFactory.createFileOrDereferenceTripleReader(cacheFile, schema);
+        DataReader reader = DataReaderFactory.createFileOrDereferenceReader(cacheFile, schema);
         return new SchemaSource(prefix, uri, schema, reader);
     }
 
@@ -34,7 +34,7 @@ public class SourceFactory {
 
     public static SchemaSource createEnrichedSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.EnrichedSchema, prefix, uri);
-        DataReader reader = DataReaderFactory.createFileOrDereferenceTripleReader(cacheFile, uri);
+        DataReader reader = DataReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
         return new EnrichedSchemaSource(prefix, uri, reader);
     }
 }

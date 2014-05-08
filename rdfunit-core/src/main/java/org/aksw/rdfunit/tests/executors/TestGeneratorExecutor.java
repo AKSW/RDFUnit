@@ -125,7 +125,7 @@ public class TestGeneratorExecutor {
         }
         try {
             java.util.Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    DataReaderFactory.createFileOrResourceTripleReader(
+                    DataReaderFactory.createFileOrResourceReader(
                             CacheUtils.getSourceManualTestFile(testFolder, s),                 // check for local directory first
                             CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", s)  // otherwise check if it exists in resources
                     ).read());

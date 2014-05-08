@@ -1,9 +1,7 @@
 package org.aksw.rdfunit.io;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * User: Dimitris Kontokostas
@@ -11,11 +9,11 @@ import java.util.Collections;
  * Created: 11/14/13 9:01 AM
  */
 public class DataReaderFactory {
-    public static DataReader createFileOrDereferenceTripleReader(String filenameOrUri) {
-        return createFileOrDereferenceTripleReader(filenameOrUri, filenameOrUri);
+    public static DataReader createFileOrDereferenceReader(String filenameOrUri) {
+        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
     }
 
-    public static DataReader createFileOrDereferenceTripleReader(String filename, String uri) {
+    public static DataReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
         java.util.Collection<DataReader> readers = new ArrayList<DataReader>();
         readers.add(new RDFFileReader(filename));
@@ -27,7 +25,7 @@ public class DataReaderFactory {
 
     }
 
-    public static DataReader createFileOrResourceTripleReader(String filename, String resource) {
+    public static DataReader createFileOrResourceReader(String filename, String resource) {
         Collection<DataReader> readers = new ArrayList<>();
         readers.add(new RDFFileReader(filename));
         readers.add(new RDFFileReader(DataReaderFactory.class.getResourceAsStream(resource)));
