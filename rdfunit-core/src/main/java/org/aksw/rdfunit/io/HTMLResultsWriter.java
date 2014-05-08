@@ -1,14 +1,19 @@
 package org.aksw.rdfunit.io;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.TestSuite;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,7 +61,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
             for (String te: testExecutionURIs){
                 writer.append(getTestExecutionStats(qef, te));
                 writer.append(getTestExecutionResults(qef, te));
-                break; // For now print only one (this is the case at the moment)
+               // break; // For now print only one (this is the case at the moment)
             }
 
             writer.append(getFooter());
@@ -116,7 +121,83 @@ public abstract class HTMLResultsWriter extends DataWriter {
     private StringBuffer getTestExecutionStats(QueryExecutionFactory qef, String testExecution) {
         StringBuffer stats = new StringBuffer();
         stats.append("<h1>TestExecution: " + testExecution + "</h1>");
+        //TODO for some reason, using the "testExecution" URI does not work :/
+        String sparql =
+                RDFUnitUtils.getAllPrefixes() +
+                        " SELECT ?s ?p ?o WHERE { ?s ?p ?o ; a rut:TestExecution . } ";
+        QueryExecution qe = null;
 
+        String source = "";
+        String testsRun = "0";
+        String testsSuceedded = "0";
+        String testsFailed = "0";
+        String testsError = "0";
+        String testsTimeout = "0";
+        String totalIndividualErrors = "0";
+        String endedAtTime = "";
+        String startedAtTime = "";
+        String used = "";
+
+        try {
+            qe = qef.createQueryExecution(sparql);
+            ResultSet results = qe.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution qs = results.next();
+                String s = qs.get("s").toString();
+                String property = qs.get("p").toString();
+                RDFNode n = qs.get("o");
+                String object =  n.toString();
+                if (n.isLiteral())
+                    object = n.asLiteral().getValue().toString();
+                switch (property) {
+                    case "http://rdfunit.aksw.org/ns/core#source":
+                        source = object;
+                        break;
+                    case "http://rdfunit.aksw.org/ns/core#testsRun":
+                        testsRun = object;
+                        break;
+                    case "http://rdfunit.aksw.org/ns/core#testsSuceedded":
+                        testsSuceedded = object;
+                        break;
+                    case "http://rdfunit.aksw.org/ns/core#testsFailed":
+                        testsFailed = object;
+                        break;
+                    case "http://rdfunit.aksw.org/ns/core#testsError":
+                        testsError = object;
+                        break;
+                    case "http://rdfunit.aksw.org/ns/core#testsTimeout":
+                        testsTimeout = object;
+                        break;
+                    case "http://rdfunit.aksw.org/ns/core#totalIndividualErrors":
+                        totalIndividualErrors = object;
+                        break;
+                    case "http://www.w3.org/ns/prov#endedAtTime":
+                        endedAtTime = object;
+                        break;
+                    case "http://www.w3.org/ns/prov#startedAtTime":
+                        startedAtTime = object;
+                        break;
+                    case "http://www.w3.org/ns/prov#used":
+                        used = object;
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (qe != null)
+                qe.close();
+        }
+
+        stats.append("<ul>");
+        stats.append("<li>Dataset: " + source + "</li>");
+        stats.append("<li>Test suite: " + used + "</li>");
+        stats.append("<li>Test execution started: " + startedAtTime + " / ended:" + endedAtTime +  "</li>");
+        stats.append("<li>Total test cases: " + testsRun + " / succeeded: " + testsSuceedded +  "</li>");
+        stats.append("<li>Failed: " + testsFailed + " / Timeout: " + testsTimeout + " / Error: " + testsError + "</li>");
+        stats.append("<li>Violation instances: " + totalIndividualErrors + "</li>");
+        stats.append("</ul>");
         return stats;
     }
 
