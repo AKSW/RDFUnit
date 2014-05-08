@@ -1,0 +1,1 @@
+Here we bundle only Manual test cases at the moment (and predefined schemas)
