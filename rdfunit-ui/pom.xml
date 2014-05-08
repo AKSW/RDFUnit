@@ -46,6 +46,14 @@
     </pluginRepositories>
     <dependencies>
         <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-resources</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
             <version>${vaadin.version}</version>
@@ -102,11 +110,7 @@
             <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-core</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>

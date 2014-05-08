@@ -15,6 +15,7 @@
     <modules>
         <!--<module></module> -->
         <module>rdfunit-core</module>
+        <module>rdfunit-resources</module>
         <module>rdfunit-ui</module>
     </modules>
 
@@ -40,6 +41,19 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-resources</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-core</artifactId>
