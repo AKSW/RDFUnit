@@ -222,33 +222,20 @@
                  </configuration>
                  -->
             </plugin>
-            <!-- This plugin copies the configuration in the war file for deployment -->
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <!-- here the phase you need -->
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/rdfunit-ui-${project.version}/data</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>../data</directory>
-                                    <includes>
-                                        <include>schemaDecl.csv</include>
-                                        <include>tests/Manual/**</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/webapp/data/</directory>
+                            <includes>
+                                <include>**/**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
