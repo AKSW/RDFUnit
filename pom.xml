@@ -8,7 +8,7 @@
     <artifactId>rdfunit-parent</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.6-SNAPSHOT</version>
+    <version>0.6</version>
     <name>Data Debugger - Parent</name>
     <url>http://github.org/AKSW/RDFUnit</url>
 
@@ -38,6 +38,15 @@
         <jena-sparql-api-version>2.11.1-44</jena-sparql-api-version>
         <org-apache-jena-version>2.11.1</org-apache-jena-version>
     </properties>
+
+
+    <!--Global Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -107,6 +116,14 @@
                 <version>1.7.6</version>
                 <type>jar</type>
                 <scope>compile</scope>
+            </dependency>
+
+            <!--Junits-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
@@ -191,6 +208,7 @@
 
         </pluginManagement>
     </build>
+
 
     <distributionManagement>
         <repository>
