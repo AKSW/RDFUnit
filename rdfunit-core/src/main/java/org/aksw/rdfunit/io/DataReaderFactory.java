@@ -1,6 +1,9 @@
 package org.aksw.rdfunit.io;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * User: Dimitris Kontokostas
@@ -22,5 +25,13 @@ public class DataReaderFactory {
         DataWriter w = new RDFFileWriter(filename, true);
         return new DataReadAndCacheReader(r, w);
 
+    }
+
+    public static DataReader createFileOrResourceTripleReader(String filename, String resource) {
+        Collection<DataReader> readers = new ArrayList<>();
+        readers.add(new RDFFileReader(filename));
+        readers.add(new RDFFileReader(DataReaderFactory.class.getResourceAsStream(resource)));
+
+        return new DataFirstSuccessReader(readers);
     }
 }
