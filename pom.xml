@@ -19,11 +19,23 @@
         <module>rdfunit-ui</module>
     </modules>
 
+    <issueManagement>
+        <url>https://github.com/AKSW/RDFUnit/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:AKSW/RDFUnit.git</connection>
-        <!-- developerConnection></developerConnection -->
-        <tag>HEAD</tag>
+        <url>https://github.com/AKSW/RDFUnit</url>
+        <connection>scm:git:git://github.com/AKSW/RDFUnit.git</connection>
+        <developerConnection>scm:git:git@github.com:AKSW/RDFUnit.git</developerConnection>
     </scm>
 
     <properties>
