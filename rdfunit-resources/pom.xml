@@ -35,6 +35,12 @@
                                         <include>tests/Manual/**</include>
                                     </includes>
                                 </resource>
+                                <resource>
+                                    <directory>../</directory>
+                                    <includes>
+                                        <include>ns/core.ttl</include>
+                                    </includes>
+                                </resource>
                             </resources>
                             <overwrite>true</overwrite>
                         </configuration>
