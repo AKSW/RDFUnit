@@ -31,7 +31,7 @@ public class CacheUtils {
     }
 
     public static String getAutoPrefixForURI(String uri) {
-        return uri.replace("http://", "").replaceAll("[?\"'\\/<>*|:#,&]", "_");
+        return uri.replace("http://", "").replace("https://", "").replaceAll("[?\"'\\/<>*|:#,&]", "_");
     }
 
     public static String getSourceAutoTestFile(String testFolder, Source source) {
