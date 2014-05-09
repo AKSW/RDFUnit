@@ -182,7 +182,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.3</version>
                     <configuration>
-                        <goals>clean install deploy</goals>
+                        <!--goals>clean install deploy</goals-->
                     </configuration>
                 </plugin>
                 <plugin>
