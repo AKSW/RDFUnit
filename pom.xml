@@ -36,6 +36,7 @@
         <url>https://github.com/AKSW/RDFUnit</url>
         <connection>scm:git:git://github.com/AKSW/RDFUnit.git</connection>
         <developerConnection>scm:git:git@github.com:AKSW/RDFUnit.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
