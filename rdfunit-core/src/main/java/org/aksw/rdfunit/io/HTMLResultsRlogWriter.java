@@ -29,7 +29,7 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
         String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?level ?message ?resource ?testcase WHERE {" +
@@ -53,8 +53,23 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                 String message = qs.get("message").toString();
                 String resource = qs.get("resource").toString();
                 String testcase = qs.get("testcase").toString();
+
+                String levelShort = level.replace(PrefixService.getPrefix("rlog"),"");
+                String rowClass = "";
+                switch (levelShort) {
+                    case "Warn":
+                        rowClass = "warning";
+                        break;
+                    case "Error":
+                        rowClass = "danger";
+                        break;
+                    case "Notice":
+                        rowClass = "info";
+                        break;
+                }
                 String row = String.format(template,
-                        level.replace(PrefixService.getPrefix("rlog"),"rlog:"),
+                        rowClass,
+                        "<a href=\"" + level + "\">" +levelShort + "</a>",
                         message,
                         resource,resource, // <a href=%s>%s</a>
                         testcase.replace(PrefixService.getPrefix("rutt"),"rutt:"));

@@ -128,12 +128,12 @@ public abstract class HTMLResultsWriter extends DataWriter {
         QueryExecution qe = null;
 
         String source = "";
-        String testsRun = "0";
-        String testsSuceedded = "0";
-        String testsFailed = "0";
-        String testsError = "0";
-        String testsTimeout = "0";
-        String totalIndividualErrors = "0";
+        String testsRun = "-";
+        String testsSuceedded = "-";
+        String testsFailed = "-";
+        String testsError = "-";
+        String testsTimeout = "-";
+        String totalIndividualErrors = "-";
         String endedAtTime = "";
         String startedAtTime = "";
         String used = "";
@@ -204,7 +204,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
     private StringBuffer getTestExecutionResults(QueryExecutionFactory qef, String testExecution) {
         StringBuffer results = new StringBuffer();
         results.append("<h2>Results</h2>");
-        results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default\"><thead>");
+        results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\"><thead>");
         results.append(getResultsHeader());
         results.append("</thead><tbody>");
         results.append(getResultsList(qef,testExecution));

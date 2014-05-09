@@ -26,7 +26,7 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr><td>%s</td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td></tr>";
 
         String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?resultStatus ?testcase WHERE {" +
@@ -50,8 +50,13 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
                 String testcase = qs.get("testcase").toString();
                 //String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 //String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
+
+                String statusShort = resultStatus.replace(PrefixService.getPrefix("rut")+"ResultStatus","");
+                String rowClass = getStatusClass(statusShort);
+
                 String row = String.format(template,
-                        resultStatus.replace(PrefixService.getPrefix("rut"),"rut:"),
+                        rowClass,
+                        "<a href=\"" + resultStatus + "\">" +statusShort + "</a>",
                         testcase.replace(PrefixService.getPrefix("rutt"),"rutt:")
                         //resultCount,
                         //resultPrevalence
@@ -67,5 +72,20 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
         }
 
         return results;
+    }
+
+    protected String getStatusClass(String status) {
+
+        switch (status) {
+            case "Success":
+                return "success";
+            case "Fail":
+                return "danger";
+            case "Timeout":
+                return "warning";
+            case "Error":
+                return "warning";
+        }
+        return "";
     }
 }

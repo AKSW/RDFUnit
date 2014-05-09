@@ -12,7 +12,7 @@ import org.aksw.rdfunit.services.PrefixService;
  * Description
  * Created: 4/23/14 8:55 AM
  */
-public class HTMLResultsAggregateWriter extends HTMLResultsWriter {
+public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
 
     public HTMLResultsAggregateWriter(String filename) {
         super(filename);
@@ -26,7 +26,7 @@ public class HTMLResultsAggregateWriter extends HTMLResultsWriter {
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
 
         String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?resultStatus ?testcase ?resultCount ?resultPrevalence WHERE {" +
@@ -50,8 +50,13 @@ public class HTMLResultsAggregateWriter extends HTMLResultsWriter {
                 String testcase = qs.get("testcase").toString();
                 String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
+
+                String statusShort = resultStatus.replace(PrefixService.getPrefix("rut")+"ResultStatus","");
+                String rowClass = getStatusClass(statusShort);
+
                 String row = String.format(template,
-                        resultStatus.replace(PrefixService.getPrefix("rut"),"rut:"),
+                        rowClass,
+                        "<a href=\"" + resultStatus + "\">" +statusShort + "</a>",
                         testcase.replace(PrefixService.getPrefix("rutt"),"rutt:"),
                         resultCount,
                         resultPrevalence);
