@@ -120,7 +120,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
 
     private StringBuffer getTestExecutionStats(QueryExecutionFactory qef, String testExecution) {
         StringBuffer stats = new StringBuffer();
-        stats.append("<h1>TestExecution: " + testExecution + "</h1>");
+        stats.append("<h2>TestExecution: " + testExecution + "</h2>");
         //TODO for some reason, using the "testExecution" URI does not work :/
         String sparql =
                 RDFUnitUtils.getAllPrefixes() +
@@ -190,20 +190,23 @@ public abstract class HTMLResultsWriter extends DataWriter {
                 qe.close();
         }
 
-        stats.append("<ul>");
-        stats.append("<li>Dataset: " + source + "</li>");
-        stats.append("<li>Test suite: " + used + "</li>");
-        stats.append("<li>Test execution started: " + startedAtTime + " / ended:" + endedAtTime +  "</li>");
-        stats.append("<li>Total test cases: " + testsRun + " / succeeded: " + testsSuceedded +  "</li>");
-        stats.append("<li>Failed: " + testsFailed + " / Timeout: " + testsTimeout + " / Error: " + testsError + "</li>");
-        stats.append("<li>Violation instances: " + totalIndividualErrors + "</li>");
-        stats.append("</ul>");
+        stats.append("<dl class=\"dl-horizontal\">");
+        stats.append("<dt>Dataset</dt><dd> " + source + "</dd>");
+        stats.append("<dt>Test suite</dt><dd>" + used + "</dd>");
+        stats.append("<dt>Test execution started</dt><dd> " + startedAtTime +  "</dd>");
+        stats.append("<dt>-ended</dt><dd> " + endedAtTime +  "</dd>");
+        stats.append("<dt>Total test cases</dt><dd> " + testsRun +  "</dd>");
+        stats.append("<dt>Succeeded</dt><dd> " + testsSuceedded +  "</dd>");
+        stats.append("<dt>Failed</dt><dd> " + testsFailed + "</dd>");
+        stats.append("<dt>Timeout / Error </dt><dd> T:" + testsTimeout + " / E: " + testsError + "</dd>");
+        stats.append("<dt>Violation instances</dt><dd> " + totalIndividualErrors + "</dd>");
+        stats.append("</dl>");
         return stats;
     }
 
     private StringBuffer getTestExecutionResults(QueryExecutionFactory qef, String testExecution) {
         StringBuffer results = new StringBuffer();
-        results.append("<h2>Results</h2>");
+        results.append("<h3>Results</h3>");
         results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\"><thead>");
         results.append(getResultsHeader());
         results.append("</thead><tbody>");
