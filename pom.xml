@@ -197,6 +197,7 @@
                     <configuration>
                         <useReleaseProfile>false</useReleaseProfile>
                         <goals>install</goals> <!--skip deploy-->
+                        <tagNameFormat>v@{project.version}</tagNameFormat>
                     </configuration>
                 </plugin>
                 <plugin>
