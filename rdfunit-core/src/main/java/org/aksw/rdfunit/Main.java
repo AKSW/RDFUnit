@@ -56,7 +56,8 @@ public class Main {
         cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
         cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
-        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit'");
+        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit). " +
+                "If none exists, bundled versions will be loaded.'");
 
     }
 
