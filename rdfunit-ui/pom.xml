@@ -151,6 +151,12 @@
                         <fileset>
                             <directory>src/main/webapp/VAADIN/widgetsets</directory>
                         </fileset>
+                        <fileset>
+                            <directory>${basedir}/src/main/webapp/data/</directory>
+                            <includes>
+                                <include>**/**</include>
+                            </includes>
+                        </fileset>
                     </filesets>
                 </configuration>
             </plugin>
@@ -221,21 +227,6 @@
                  </webApp>
                  </configuration>
                  -->
-            </plugin>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
-
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${basedir}/src/main/webapp/data/</directory>
-                            <includes>
-                                <include>**/**</include>
-                            </includes>
-                        </fileset>
-                    </filesets>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
