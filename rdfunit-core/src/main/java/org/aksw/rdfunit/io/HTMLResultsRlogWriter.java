@@ -3,12 +3,9 @@ package org.aksw.rdfunit.io;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.services.PrefixService;
-import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 /**
  * User: Dimitris Kontokostas
@@ -54,7 +51,7 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                 String resource = qs.get("resource").toString();
                 String testcase = qs.get("testcase").toString();
 
-                String levelShort = level.replace(PrefixService.getPrefix("rlog"),"");
+                String levelShort = level.replace(PrefixService.getPrefix("rlog"), "");
                 String rowClass = "";
                 switch (levelShort) {
                     case "Warn":
@@ -69,10 +66,10 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                 }
                 String row = String.format(template,
                         rowClass,
-                        "<a href=\"" + level + "\">" +levelShort + "</a>",
+                        "<a href=\"" + level + "\">" + levelShort + "</a>",
                         message,
-                        resource,resource, // <a href=%s>%s</a>
-                        testcase.replace(PrefixService.getPrefix("rutt"),"rutt:"));
+                        resource, resource, // <a href=%s>%s</a>
+                        testcase.replace(PrefixService.getPrefix("rutt"), "rutt:"));
                 results.append(row);
             }
 

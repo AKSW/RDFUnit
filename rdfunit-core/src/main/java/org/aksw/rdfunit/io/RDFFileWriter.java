@@ -2,7 +2,6 @@ package org.aksw.rdfunit.io;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.services.PrefixService;

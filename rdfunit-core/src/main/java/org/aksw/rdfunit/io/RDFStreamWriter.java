@@ -6,7 +6,9 @@ import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.services.PrefixService;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * User: Dimitris Kontokostas

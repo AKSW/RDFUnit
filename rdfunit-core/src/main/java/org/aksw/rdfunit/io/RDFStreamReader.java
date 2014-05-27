@@ -17,7 +17,7 @@ public class RDFStreamReader extends DataReader {
     private final String format;
 
     public RDFStreamReader(String filename) {
-        this(getInputStreamFromFilename(filename),"TURTLE");
+        this(getInputStreamFromFilename(filename), "TURTLE");
     }
 
     public RDFStreamReader(InputStream inputStream) {
@@ -25,7 +25,7 @@ public class RDFStreamReader extends DataReader {
     }
 
     public RDFStreamReader(String filename, String format) {
-        this(getInputStreamFromFilename(filename),format);
+        this(getInputStreamFromFilename(filename), format);
     }
 
     public RDFStreamReader(InputStream inputStream, String format) {

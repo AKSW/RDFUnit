@@ -23,13 +23,13 @@ public class RDFDereferenceReader extends DataReader {
             //TODO check for relative file names and convert to absolute paths
             model.read(uri);
 
-        // Not found
-        } catch(NotFoundException e) {
+            // Not found
+        } catch (NotFoundException e) {
             throw new TripleReaderException("'" + uri + "' not found", e);
         }
-		
-		//org.apache.jena.riot.RiotException -> if wrong format, i.e. turtle instead of RDF/XML
-        
+
+        //org.apache.jena.riot.RiotException -> if wrong format, i.e. turtle instead of RDF/XML
+
         catch (Exception e) {
             throw new TripleReaderException(e);
         }

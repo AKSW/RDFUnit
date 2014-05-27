@@ -14,5 +14,6 @@ public abstract class DataWriter {
     public void write(Model model) throws TripleWriterException {
         write(new QueryExecutionFactoryModel(model));
     }
+
     public abstract void write(QueryExecutionFactory qef) throws TripleWriterException;
 }

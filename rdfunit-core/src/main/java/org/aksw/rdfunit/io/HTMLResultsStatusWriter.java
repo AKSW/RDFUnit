@@ -51,16 +51,16 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
                 //String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 //String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
 
-                String statusShort = resultStatus.replace(PrefixService.getPrefix("rut")+"ResultStatus","");
+                String statusShort = resultStatus.replace(PrefixService.getPrefix("rut") + "ResultStatus", "");
                 String rowClass = getStatusClass(statusShort);
 
                 String row = String.format(template,
                         rowClass,
-                        "<a href=\"" + resultStatus + "\">" +statusShort + "</a>",
-                        testcase.replace(PrefixService.getPrefix("rutt"),"rutt:")
+                        "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
+                        testcase.replace(PrefixService.getPrefix("rutt"), "rutt:")
                         //resultCount,
                         //resultPrevalence
-                        );
+                );
                 results.append(row);
             }
 
