@@ -105,8 +105,8 @@ rutt:lemon-narrowerNotSymmetric
       rut:source <http://www.monnet-project.eu/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
-                           ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower .
-                           ?narrower <http://www.monnet-project.eu/lemon#narrower> ?resource .
+                           ?resource <http://www.monnet-project.eu/lemon#narrower>+ ?narrower .
+                           ?narrower <http://www.monnet-project.eu/lemon#narrower>+ ?resource .
                           } """ ;
       rut:sparqlPrevalence
               " " .
@@ -122,8 +122,8 @@ rutt:lemon-broaderNotSymmetric
       rut:source <http://www.monnet-project.eu/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
-                           ?resource <http://www.monnet-project.eu/lemon#broader> ?broader .
-                           ?broader <http://www.monnet-project.eu/lemon#broader> ?resource .
+                           ?resource <http://www.monnet-project.eu/lemon#broader>+ ?broader .
+                           ?broader <http://www.monnet-project.eu/lemon#broader>+ ?resource .
                           } """ ;
       rut:sparqlPrevalence
               " " .
