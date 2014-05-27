@@ -1,21 +1,16 @@
 package org.aksw.rdfunit.io;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.services.PrefixService;
-import org.aksw.rdfunit.sources.Source;
-import org.aksw.rdfunit.tests.TestSuite;
+import org.aksw.rdfunit.exceptions.TripleWriterException;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -51,17 +46,17 @@ public abstract class HTMLResultsWriter extends DataWriter {
     }
 
     @Override
-    public void write(QueryExecutionFactory qef) {
+    public void write(QueryExecutionFactory qef) throws TripleWriterException {
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);
 
         try {
             // TODO not efficient StringBuilder.toString().getBytes()
             outputStream.write(getHeader().toString().getBytes());
 
-            for (String te: testExecutionURIs){
+            for (String te : testExecutionURIs) {
                 outputStream.write(getTestExecutionStats(qef, te).toString().getBytes());
                 outputStream.write(getTestExecutionResults(qef, te).toString().getBytes());
-               // break; // For now print only one (this is the case at the moment)
+                // break; // For now print only one (this is the case at the moment)
             }
 
             outputStream.write(getFooter().toString().getBytes());
@@ -69,10 +64,12 @@ public abstract class HTMLResultsWriter extends DataWriter {
 
         } catch (IOException e) {
             e.printStackTrace();
+            throw new TripleWriterException("Cannot write HTML", e);
         }
     }
 
     protected abstract StringBuffer getResultsHeader();
+
     protected abstract StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI);
 
     private StringBuffer getHeader() {
@@ -95,7 +92,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
         ArrayList<String> executionURIs = new ArrayList<String>();
         String sparql =
                 RDFUnitUtils.getAllPrefixes() +
-                " SELECT DISTINCT ?testExecution WHERE { ?testExecution a rut:TestExecution } ";
+                        " SELECT DISTINCT ?testExecution WHERE { ?testExecution a rut:TestExecution } ";
 
         QueryExecution qe = null;
 
@@ -147,7 +144,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
                 String s = qs.get("s").toString();
                 String property = qs.get("p").toString();
                 RDFNode n = qs.get("o");
-                String object =  n.toString();
+                String object = n.toString();
                 if (n.isLiteral())
                     object = n.asLiteral().getValue().toString();
                 switch (property) {
@@ -193,10 +190,10 @@ public abstract class HTMLResultsWriter extends DataWriter {
         stats.append("<dl class=\"dl-horizontal\">");
         stats.append("<dt>Dataset</dt><dd> " + source + "</dd>");
         stats.append("<dt>Test suite</dt><dd>" + used + "</dd>");
-        stats.append("<dt>Test execution started</dt><dd> " + startedAtTime +  "</dd>");
-        stats.append("<dt>-ended</dt><dd> " + endedAtTime +  "</dd>");
-        stats.append("<dt>Total test cases</dt><dd> " + testsRun +  "</dd>");
-        stats.append("<dt>Succeeded</dt><dd> " + testsSuceedded +  "</dd>");
+        stats.append("<dt>Test execution started</dt><dd> " + startedAtTime + "</dd>");
+        stats.append("<dt>-ended</dt><dd> " + endedAtTime + "</dd>");
+        stats.append("<dt>Total test cases</dt><dd> " + testsRun + "</dd>");
+        stats.append("<dt>Succeeded</dt><dd> " + testsSuceedded + "</dd>");
         stats.append("<dt>Failed</dt><dd> " + testsFailed + "</dd>");
         stats.append("<dt>Timeout / Error </dt><dd> T:" + testsTimeout + " / E: " + testsError + "</dd>");
         stats.append("<dt>Violation instances</dt><dd> " + totalIndividualErrors + "</dd>");
@@ -210,7 +207,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
         results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\"><thead>");
         results.append(getResultsHeader());
         results.append("</thead><tbody>");
-        results.append(getResultsList(qef,testExecution));
+        results.append(getResultsList(qef, testExecution));
         results.append("</tbody></table>");
         return results;
     }
