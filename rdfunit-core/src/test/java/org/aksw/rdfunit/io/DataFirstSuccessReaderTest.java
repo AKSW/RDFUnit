@@ -19,7 +19,7 @@ public class DataFirstSuccessReaderTest {
             fail("Should have raised a TripleReaderException");
         } catch (TripleReaderException e) { }
 
-        dataReaders.add(new RDFFileReader(""));
+        dataReaders.add(new RDFStreamReader(""));
 
         reader = new DataFirstSuccessReader(dataReaders);
         try {
@@ -27,7 +27,7 @@ public class DataFirstSuccessReaderTest {
             fail("Should have raised a TripleReaderException");
         } catch (TripleReaderException e) { }
 
-        dataReaders.add(new RDFFileReader(DataFirstSuccessReaderTest.class.getResourceAsStream("/data/empty.ttl")));
+        dataReaders.add(new RDFStreamReader(DataFirstSuccessReaderTest.class.getResourceAsStream("/data/empty.ttl")));
 
         reader = new DataFirstSuccessReader(dataReaders);
         try {

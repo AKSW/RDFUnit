@@ -3,11 +3,8 @@ package org.aksw.rdfunit.Utils;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.DataReader;
-import org.aksw.rdfunit.io.RDFFileReader;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.Source;
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -144,11 +140,11 @@ public class RDFUnitUtils {
     }
 
     public static DataReader getPatternsFromResource() {
-        return new RDFFileReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/patterns.ttl"));
+        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/patterns.ttl"));
     }
 
     public static DataReader getAutoGeneratorsFromResource() {
-        return new RDFFileReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/testAutoGenerators.ttl"));
+        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/testAutoGenerators.ttl"));
     }
 
     public static <T> T getFirstItemInCollection(java.util.Collection<T> collection) {

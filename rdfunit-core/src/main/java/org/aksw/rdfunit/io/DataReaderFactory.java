@@ -16,7 +16,7 @@ public class DataReaderFactory {
     public static DataReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
         java.util.Collection<DataReader> readers = new ArrayList<DataReader>();
-        readers.add(new RDFFileReader(filename));
+        readers.add(new RDFStreamReader(filename));
         readers.add(new RDFDereferenceReader(uri));
 
         DataReader r = new DataFirstSuccessReader(readers);
@@ -27,8 +27,8 @@ public class DataReaderFactory {
 
     public static DataReader createFileOrResourceReader(String filename, String resource) {
         Collection<DataReader> readers = new ArrayList<>();
-        readers.add(new RDFFileReader(filename));
-        readers.add(new RDFFileReader(DataReaderFactory.class.getResourceAsStream(resource)));
+        readers.add(new RDFStreamReader(filename));
+        readers.add(new RDFStreamReader(DataReaderFactory.class.getResourceAsStream(resource)));
 
         return new DataFirstSuccessReader(readers);
     }

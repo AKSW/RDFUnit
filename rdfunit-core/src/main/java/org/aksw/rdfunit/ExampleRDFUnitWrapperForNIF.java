@@ -44,7 +44,7 @@ public class ExampleRDFUnitWrapperForNIF {
 
                     // Reader the nif ontology either from a resource or, if it fails, dereference it from the URI
                     Collection<DataReader> nifReaderList = new ArrayList<>();
-                    nifReaderList.add(new RDFFileReader(ExampleRDFUnitWrapperForNIF.class.getResourceAsStream("org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl")));
+                    nifReaderList.add(new RDFStreamReader(ExampleRDFUnitWrapperForNIF.class.getResourceAsStream("org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl")));
                     nifReaderList.add(new RDFDereferenceReader(nifOntologyURI));
 
                     nifOntologyReader = new DataFirstSuccessReader(nifReaderList);
@@ -52,7 +52,7 @@ public class ExampleRDFUnitWrapperForNIF {
                     Source nifSchema = new SchemaSource("nif", nifOntologyURI, nifOntologyReader);
 
                     // Set up the manual nif test cases (from resource)
-                    DataReader manualTestCaseReader = new RDFFileReader(
+                    DataReader manualTestCaseReader = new RDFStreamReader(
                             ExampleRDFUnitWrapperForNIF.class.getResourceAsStream(
                                     CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", nifSchema)));
 

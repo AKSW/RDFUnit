@@ -15,10 +15,7 @@ import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -28,11 +25,15 @@ import java.util.Collection;
  * Created: 11/14/13 1:04 PM
  */
 public abstract class HTMLResultsWriter extends DataWriter {
-    private final String filename;
+    private final OutputStream outputStream;
 
+
+    public HTMLResultsWriter(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
 
     public HTMLResultsWriter(String filename) {
-        this.filename = filename;
+        this.outputStream = RDFStreamWriter.getOutputStreamFromFilename(filename);
     }
 
     public static HTMLResultsWriter create(TestCaseExecutionType type, String filename) {
@@ -54,18 +55,17 @@ public abstract class HTMLResultsWriter extends DataWriter {
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);
 
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-
-            writer.append(getHeader());
+            // TODO not efficient StringBuilder.toString().getBytes()
+            outputStream.write(getHeader().toString().getBytes());
 
             for (String te: testExecutionURIs){
-                writer.append(getTestExecutionStats(qef, te));
-                writer.append(getTestExecutionResults(qef, te));
+                outputStream.write(getTestExecutionStats(qef, te).toString().getBytes());
+                outputStream.write(getTestExecutionResults(qef, te).toString().getBytes());
                // break; // For now print only one (this is the case at the moment)
             }
 
-            writer.append(getFooter());
-            writer.close();
+            outputStream.write(getFooter().toString().getBytes());
+            outputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();

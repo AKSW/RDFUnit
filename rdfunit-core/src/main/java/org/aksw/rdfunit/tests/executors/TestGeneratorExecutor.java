@@ -5,7 +5,7 @@ import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.DataReaderFactory;
-import org.aksw.rdfunit.io.RDFFileReader;
+import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.io.RDFFileWriter;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
@@ -98,7 +98,7 @@ public class TestGeneratorExecutor {
             if (!loadFromCache)
                 cachedTestsLocation = ""; // non existing path
             java.util.Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                    new RDFFileReader(cachedTestsLocation).read());
+                    new RDFStreamReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
             log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
