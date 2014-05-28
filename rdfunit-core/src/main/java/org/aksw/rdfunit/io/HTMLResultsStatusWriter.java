@@ -7,6 +7,8 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.services.PrefixService;
 
+import java.io.OutputStream;
+
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -16,6 +18,10 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
 
     public HTMLResultsStatusWriter(String filename) {
         super(filename);
+    }
+
+    public HTMLResultsStatusWriter(OutputStream outputStream) {
+        super(outputStream);
     }
 
     @Override

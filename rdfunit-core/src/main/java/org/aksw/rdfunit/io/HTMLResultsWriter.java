@@ -45,6 +45,20 @@ public abstract class HTMLResultsWriter extends DataWriter {
         }
     }
 
+    public static HTMLResultsWriter create(TestCaseExecutionType type, OutputStream outputStream) {
+        switch (type) {
+            case statusTestCaseResult:
+                return new HTMLResultsStatusWriter(outputStream);
+            case aggregatedTestCaseResult:
+                return new HTMLResultsAggregateWriter(outputStream);
+            case rlogTestCaseResult:
+                return new HTMLResultsRlogWriter(outputStream);
+            //case extendedTestCaseResult:
+            default:
+                return null;
+        }
+    }
+
     @Override
     public void write(QueryExecutionFactory qef) throws TripleWriterException {
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);

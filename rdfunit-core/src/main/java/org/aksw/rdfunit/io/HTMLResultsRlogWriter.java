@@ -7,6 +7,8 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.services.PrefixService;
 
+import java.io.OutputStream;
+
 /**
  * User: Dimitris Kontokostas
  * Description
@@ -16,6 +18,10 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
 
     public HTMLResultsRlogWriter(String filename) {
         super(filename);
+    }
+
+    public HTMLResultsRlogWriter(OutputStream outputStream) {
+        super(outputStream);
     }
 
     @Override
