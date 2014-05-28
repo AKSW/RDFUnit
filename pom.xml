@@ -6,7 +6,7 @@
     <artifactId>rdfunit-parent</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.6.2</version>
+    <version>0.6.3-SNAPSHOT</version>
     <name>Data Debugger - Parent</name>
     <url>http://github.org/AKSW/RDFUnit</url>
 
@@ -34,7 +34,7 @@
         <url>https://github.com/AKSW/RDFUnit</url>
         <connection>scm:git:git://github.com/AKSW/RDFUnit.git</connection>
         <developerConnection>scm:git:git@github.com:AKSW/RDFUnit.git</developerConnection>
-        <tag>v0.6.2</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
