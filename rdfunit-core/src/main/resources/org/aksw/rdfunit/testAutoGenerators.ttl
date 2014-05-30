@@ -17,6 +17,7 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
                               FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
@@ -26,6 +27,7 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2002/07/owl#Class> .
                               FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
@@ -47,6 +49,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> .
                               FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
@@ -56,6 +59,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
                               ?P1 rdfs:range ?T1 .
                               ?T1 rdf:type <http://www.w3.org/2002/07/owl#Class> .
                               FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                       (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                        (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
@@ -104,6 +108,7 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
                              ?P1 rdfs:domain ?T1 .
                              BIND (concat(str(?P1)," does not have rdfs:domain: ", str(?T1)) AS ?DESCRIPTION)
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                      (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
                                       (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
