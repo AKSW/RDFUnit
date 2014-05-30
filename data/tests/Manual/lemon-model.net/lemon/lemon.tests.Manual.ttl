@@ -18,15 +18,15 @@ rutt:lemon-entryWithoutCanonicalForm
       dcterms:description "A lemon:LexicalEntry needs exactly one lemon:canonicalForm property";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#LexicalEntry>;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
-                           ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
-                           FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#canonicalForm> ?v1 .})
+                           ?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> .
+                           FILTER (NOT EXISTS {?resource <http://lemon-model.net/lemon#canonicalForm> ?v1 .})
                             } """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
+                                 ?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> . } """ .
 
 # A lemon:LexicalEntry should have an rdfs:label
 # TODO use TYPRODEP pattern
@@ -35,15 +35,15 @@ rutt:lemon-entryWithoutLabel
       dcterms:description "Resource has no rdfs:label";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#LexicalEntry>;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:INFO ;
       rut:sparqlWhere """ {
-                           ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
+                           ?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> .
                            FILTER (NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .})
                             } """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
+                                 ?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> . } """ .
 
 # A lemon:LexicalEntry should have exactly one lemon:language.
 # TODO use TYPRODEP (exists) & CARDT (exactly once) patterns
@@ -52,22 +52,22 @@ rutt:lemon-entryExactlyOneLanguage
       dcterms:description "Resource has no lemon:language property";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#LexicalEntry>;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#LexicalEntry>;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:INFO ;
       rut:sparqlWhere """ {
-                           		{?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
-                           			FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#language> ?lang .})
+                           		{?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> .
+                           			FILTER (NOT EXISTS {?resource <http://lemon-model.net/lemon#language> ?lang .})
                            		}UNION{
-								 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> .
-								 ?resource <http://www.monnet-project.eu/lemon#language> ?lang1 .
-								 ?resource <http://www.monnet-project.eu/lemon#language> ?lang2 .
+								 ?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> .
+								 ?resource <http://lemon-model.net/lemon#language> ?lang1 .
+								 ?resource <http://lemon-model.net/lemon#language> ?lang2 .
                            			FILTER (?lang1!=?lang2)
 								}
                            		# README
                             } """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalEntry> . } """ .
+                                 ?resource rdf:type <http://lemon-model.net/lemon#LexicalEntry> . } """ .
 
 # A lemon:LexicalSense either needs a subsense or exactly one reference
 rutt:lemon-lexicalSenseReferenceCount
@@ -75,22 +75,22 @@ rutt:lemon-lexicalSenseReferenceCount
       dcterms:description "A lemon:LexicalSense either needs a subsense or exactly one reference";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#LexicalSense>;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#LexicalSense>;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
-                           		{?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> .
-                           			FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#subsense> ?sub .})
-                                    FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#reference> ?ref .})
+                           		{?resource rdf:type <http://lemon-model.net/lemon#LexicalSense> .
+                           			FILTER (NOT EXISTS {?resource <http://lemon-model.net/lemon#subsense> ?sub .})
+                                    FILTER (NOT EXISTS {?resource <http://lemon-model.net/lemon#reference> ?ref .})
                            		}UNION{
-								 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> .
-								 ?resource <http://www.monnet-project.eu/lemon#reference> ?ref1 .
-								 ?resource <http://www.monnet-project.eu/lemon#reference> ?ref2 .
+								 ?resource rdf:type <http://lemon-model.net/lemon#LexicalSense> .
+								 ?resource <http://lemon-model.net/lemon#reference> ?ref1 .
+								 ?resource <http://lemon-model.net/lemon#reference> ?ref2 .
                            			FILTER (?ref1!=?ref2)
 								}
                             } """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#LexicalSense> . } """ .
+                                 ?resource rdf:type <http://lemon-model.net/lemon#LexicalSense> . } """ .
 
 
 
@@ -101,12 +101,12 @@ rutt:lemon-narrowerNotSymmetric
       dcterms:description "Resource is a broader sense from narrower and the relation can not be symmetric";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#narrower> ;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#narrower> ;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
-                           ?resource <http://www.monnet-project.eu/lemon#narrower>+ ?narrower .
-                           ?narrower <http://www.monnet-project.eu/lemon#narrower>+ ?resource .
+                           ?resource <http://lemon-model.net/lemon#narrower>+ ?narrower .
+                           ?narrower <http://lemon-model.net/lemon#narrower>+ ?resource .
                           } """ ;
       rut:sparqlPrevalence
               " " .
@@ -118,12 +118,12 @@ rutt:lemon-broaderNotSymmetric
       dcterms:description "Resource is a narrower sense than a broader and the relation can not be symmetric";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#broader> ;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#broader> ;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
-                           ?resource <http://www.monnet-project.eu/lemon#broader>+ ?broader .
-                           ?broader <http://www.monnet-project.eu/lemon#broader>+ ?resource .
+                           ?resource <http://lemon-model.net/lemon#broader>+ ?broader .
+                           ?broader <http://lemon-model.net/lemon#broader>+ ?resource .
                           } """ ;
       rut:sparqlPrevalence
               " " .
@@ -134,15 +134,15 @@ rutt:lemon-narrowerNoBroaderInverse
       dcterms:description "Resource is a broader sense than a narrower, so there should be an inverse lemon:broader property";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#broader> ;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#broader> ;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:INFO ;
       rut:sparqlWhere """ {
-                           ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower .
-                           FILTER (NOT EXISTS {?narrower <http://www.monnet-project.eu/lemon#broader> ?resource .})
+                           ?resource <http://lemon-model.net/lemon#narrower> ?narrower .
+                           FILTER (NOT EXISTS {?narrower <http://lemon-model.net/lemon#broader> ?resource .})
                             } """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource <http://www.monnet-project.eu/lemon#narrower> ?narrower . } """ .
+                                 ?resource <http://lemon-model.net/lemon#narrower> ?narrower . } """ .
 
 # A lemon:component should have at least one lemon:element.
 # TODO use TYPRODEP pattern
@@ -151,15 +151,15 @@ rutt:lemon-componentNoElement
       dcterms:description "A lemon:Component needs a lemon:element property";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.monnet-project.eu/lemon#Component> , <http://www.monnet-project.eu/lemon#element> ;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:references <http://lemon-model.net/lemon#Component> , <http://lemon-model.net/lemon#element> ;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:WARN ;
       rut:sparqlWhere """ {
-                           ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> .
-                           FILTER (NOT EXISTS {?resource <http://www.monnet-project.eu/lemon#element> ?v1 .})
+                           ?resource rdf:type <http://lemon-model.net/lemon#Component> .
+                           FILTER (NOT EXISTS {?resource <http://lemon-model.net/lemon#element> ?v1 .})
                             } """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource rdf:type <http://www.monnet-project.eu/lemon#Component> . } """ .
+                                 ?resource rdf:type <http://lemon-model.net/lemon#Component> . } """ .
 
 #Language property value should not have a language tag itself
 rutt:lemon-languageTagOnLanguageProperty
@@ -168,7 +168,7 @@ rutt:lemon-languageTagOnLanguageProperty
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://www.lemon-model.net/lemon#language> ;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
                            ?resource <http://www.lemon-model.net/lemon#language> ?v1 .
@@ -184,7 +184,7 @@ rutt:lemon-languageTagOnRuleProperty
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://www.lemon-model.net/lemon#rule> ;
-      rut:source <http://www.monnet-project.eu/lemon#> ;
+      rut:source <http://lemon-model.net/lemon#> ;
       rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
                            ?resource <http://www.lemon-model.net/lemon#rule> ?v1 .
