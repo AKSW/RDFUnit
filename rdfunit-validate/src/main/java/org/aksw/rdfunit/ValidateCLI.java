@@ -32,8 +32,8 @@ import java.util.Arrays;
  * Description
  * Created: 11/19/13 10:49 AM
  */
-public class Main {
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
+public class ValidateCLI {
+    private static final Logger log = LoggerFactory.getLogger(ValidateCLI.class);
 
     private static final Options cliOptions = new Options();
 

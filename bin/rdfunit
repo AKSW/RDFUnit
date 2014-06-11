@@ -8,7 +8,7 @@
 # bin/rdfunit -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -p dbo -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
 #
 
-MAIN_CLS="org.aksw.rdfunit.Main"
+MAIN_CLS="org.aksw.rdfunit.ValidateCLI"
 MVN="mvn"
 
 # TODO use the jar for faster execution

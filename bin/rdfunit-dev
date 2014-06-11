@@ -2,5 +2,5 @@
 
 # builds core dependencies before execution
 
-mvn -q -pl rdfunit-core install -Dmaven.test.skip=true
+mvn install -pl rdfunit-validate -Dmaven.test.skip=true -q
 bin/rdfunit "$*"
