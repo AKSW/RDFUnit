@@ -10,11 +10,6 @@ import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.io.DataMultipleWriter;
-import org.aksw.rdfunit.io.DataWriter;
-import org.aksw.rdfunit.io.HTMLResultsWriter;
-import org.aksw.rdfunit.io.RDFFileWriter;
 import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
@@ -25,7 +20,6 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -36,6 +30,7 @@ import java.util.Calendar;
 public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleTestExecutorMonitor.class);
+    private final boolean loggingEnabled;
 
     final private Model model;
     final String executionUUID;
@@ -55,11 +50,20 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     XSDDateTime endTime;
 
     public SimpleTestExecutorMonitor() {
-        this(ModelFactory.createDefaultModel());
+        this(ModelFactory.createDefaultModel(), true);
+    }
+
+    public SimpleTestExecutorMonitor(boolean loggingEnabled) {
+        this(ModelFactory.createDefaultModel(), loggingEnabled);
     }
 
     public SimpleTestExecutorMonitor(Model model) {
+        this(model, true);
+    }
+
+    public SimpleTestExecutorMonitor(Model model, boolean loggingEnabled) {
         this.model = model;
+        this.loggingEnabled = loggingEnabled;
         model.setNsPrefixes(PrefixService.getPrefixMap());
         executionUUID = JenaUUID.generate().asString();
     }
@@ -74,8 +78,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         // init counters
         counter = success = fail = timeout = error = totalErrors = 0;
 
-
-        log.info("Testing " + testedDataset.getUri());
+        if (loggingEnabled) {
+            log.info("Testing " + testedDataset.getUri());
+        }
     }
 
     @Override
@@ -112,7 +117,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
             if (result instanceof StatusTestCaseResult) {
                 statusResult = true;
 
-                log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
+                if (loggingEnabled) {
+                    log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
+                }
 
 
                 if (result instanceof AggregatedTestCaseResult) {
@@ -159,7 +166,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "totalIndividualErrors"),
                         ResourceFactory.createTypedLiteral("" + totalErrors, XSDDatatype.XSDnonNegativeInteger));
 
-        log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
+        if (loggingEnabled) {
+            log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
+        }
     }
 
     public Model getModel() {
