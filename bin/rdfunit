@@ -18,6 +18,6 @@ MVN="mvn"
 #          cp /tmp/docu.html "$doc"".html"
 #fi
 
-cd rdfunit-core/
+cd rdfunit-validate/
 $MVN compile exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
 cd - > /dev/null

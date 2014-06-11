@@ -14,6 +14,7 @@
         <!--<module></module> -->
         <module>rdfunit-core</module>
         <module>rdfunit-resources</module>
+        <module>rdfunit-validate</module>
         <module>rdfunit-ui</module>
     </modules>
 
