@@ -6,5 +6,6 @@
 *.settings
 .idea
 target
+pom.xml.releaseBackup
 dependency-reduced-pom.xml
 
