@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
-import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -15,12 +14,11 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Calendar;
 
 /**
  * User: Dimitris Kontokostas
@@ -39,15 +37,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     private TestSuite testSuite;
 
     private long counter = 0;
-    private long totalTests = 0;
-    private long success = 0;
-    private long fail = 0;
-    private long timeout = 0;
-    private long error = 0;
-    private long totalErrors = 0;
-
-    XSDDateTime startTime;
-    XSDDateTime endTime;
+    private DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
     public SimpleTestExecutorMonitor() {
         this(ModelFactory.createDefaultModel(), true);
@@ -73,13 +63,14 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     public void testingStarted(Source dataset, TestSuite testSuite) {
         testedDataset = dataset;
         this.testSuite = testSuite;
-        totalTests = testSuite.size();
 
         // init counters
-        counter = success = fail = timeout = error = totalErrors = 0;
+        counter = 0;
+        overviewResults.reset();
 
         // Set testing start time
-        startTime = new XSDDateTime(Calendar.getInstance());
+        overviewResults.setStartTime();
+        overviewResults.setTotalTests(testSuite.size());
 
         if (loggingEnabled) {
             log.info("Testing " + testedDataset.getUri());
@@ -94,14 +85,18 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     @Override
     public void singleTestExecuted(TestCase test, TestCaseResultStatus status, java.util.Collection<TestCaseResult> results) {
 
-        if (status.equals(TestCaseResultStatus.Error))
-            error++;
-        if (status.equals(TestCaseResultStatus.Timeout))
-            timeout++;
-        if (status.equals(TestCaseResultStatus.Success))
-            success++;
-        if (status.equals(TestCaseResultStatus.Fail))
-            fail++;
+        if (status.equals(TestCaseResultStatus.Error)) {
+            overviewResults.increaseErrorTests();
+        }
+        if (status.equals(TestCaseResultStatus.Timeout)) {
+            overviewResults.increaseTimeoutTests();
+        }
+        if (status.equals(TestCaseResultStatus.Success)) {
+            overviewResults.increaseSuccessfullTests();
+        }
+        if (status.equals(TestCaseResultStatus.Fail)) {
+            overviewResults.increaseFailedTests();
+        }
 
         for (TestCaseResult result : results) {
             result.serialize(getModel(), executionUUID);
@@ -120,21 +115,25 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 statusResult = true;
 
                 if (loggingEnabled) {
-                    log.info("Test " + counter + "/" + totalTests + " returned " + result.toString());
+                    log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result.toString());
                 }
 
 
                 if (result instanceof AggregatedTestCaseResult) {
                     long errorCount = ((AggregatedTestCaseResult) result).getErrorCount();
-                    if (errorCount > 0)
-                        totalErrors += ((AggregatedTestCaseResult) result).getErrorCount();
+                    if (errorCount > 0) {
+                        long individualErrors = ((AggregatedTestCaseResult) result).getErrorCount();
+                        overviewResults.increaseIndividualErrors(individualErrors);
+                    }
+
                 }
             }
         }
 
         if (!statusResult) {
             // TODO RLOG+ results
-            totalErrors += results.size();
+            long individualErrors = results.size();
+            overviewResults.increaseIndividualErrors(individualErrors);
 
         }
     }
@@ -142,7 +141,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     @Override
     public void testingFinished() {
         // Set testing end time
-        endTime = new XSDDateTime(Calendar.getInstance());
+        overviewResults.setEndTime();
 
         Resource testSuiteResource = testSuite.serialize(getModel());
 
@@ -151,26 +150,30 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .addProperty(RDF.type, getModel().createResource(PrefixService.getPrefix("prov") + "Activity"))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "used"), testSuiteResource)
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
-                        ResourceFactory.createTypedLiteral("" + startTime, XSDDatatype.XSDdateTime))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getStartTime(), XSDDatatype.XSDdateTime))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),
-                        ResourceFactory.createTypedLiteral("" + endTime, XSDDatatype.XSDdateTime))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getEndTime(), XSDDatatype.XSDdateTime))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "source"),
                         getModel().createResource(testedDataset.getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsRun"),
-                        ResourceFactory.createTypedLiteral("" + totalTests, XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getTotalTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsSuceedded"),
-                        ResourceFactory.createTypedLiteral("" + success, XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getSuccessfullTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsFailed"),
-                        ResourceFactory.createTypedLiteral("" + fail, XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getFailedTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsTimeout"),
-                        ResourceFactory.createTypedLiteral("" + timeout, XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getTimeoutTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsError"),
-                        ResourceFactory.createTypedLiteral("" + error, XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "totalIndividualErrors"),
-                        ResourceFactory.createTypedLiteral("" + totalErrors, XSDDatatype.XSDnonNegativeInteger));
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger));
 
         if (loggingEnabled) {
-            log.info("Tests run: " + totalTests + ", Failed: " + fail + ", Timeout: " + timeout + ", Error: " + error + ". Individual Errors: " + totalErrors);
+            log.info("Tests run: " + overviewResults.getTotalTests() +
+                    ", Failed: " + overviewResults.getFailedTests() +
+                    ", Timeout: " + overviewResults.getTimeoutTests() +
+                    ", Error: " + overviewResults.getErrorTests() +
+                    ". Individual Errors: " + overviewResults.getIndividualErrors());
         }
     }
 
