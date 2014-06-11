@@ -30,6 +30,8 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     private static final Logger log = LoggerFactory.getLogger(SimpleTestExecutorMonitor.class);
     private final boolean loggingEnabled;
 
+    private final DatasetOverviewResults overviewResults = new DatasetOverviewResults();
+
     final private Model model;
     final String executionUUID;
 
@@ -37,7 +39,6 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     private TestSuite testSuite;
 
     private long counter = 0;
-    private DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
     public SimpleTestExecutorMonitor() {
         this(ModelFactory.createDefaultModel(), true);
@@ -179,5 +180,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     public Model getModel() {
         return model;
+    }
+
+    public DatasetOverviewResults getOverviewResults() {
+        return overviewResults;
     }
 }
