@@ -78,6 +78,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         // init counters
         counter = success = fail = timeout = error = totalErrors = 0;
 
+        // Set testing start time
+        startTime = new XSDDateTime(Calendar.getInstance());
+
         if (loggingEnabled) {
             log.info("Testing " + testedDataset.getUri());
         }
@@ -86,7 +89,6 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     @Override
     public void singleTestStarted(TestCase test) {
         counter++;
-        startTime = new XSDDateTime(Calendar.getInstance());
     }
 
     @Override
@@ -139,6 +141,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     @Override
     public void testingFinished() {
+        // Set testing end time
         endTime = new XSDDateTime(Calendar.getInstance());
 
         Resource testSuiteResource = testSuite.serialize(getModel());
