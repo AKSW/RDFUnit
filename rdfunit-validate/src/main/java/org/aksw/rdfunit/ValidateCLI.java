@@ -10,10 +10,7 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.*;
 import org.aksw.rdfunit.services.PrefixService;
-import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
-import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -26,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * User: Dimitris Kontokostas
@@ -61,17 +59,6 @@ public class ValidateCLI {
 
     }
 
-    private static java.util.Collection<String> getUriStrs(String parameterStr) {
-        java.util.Collection<String> uriStrs = new ArrayList<String>();
-        if (parameterStr == null) return uriStrs;
-
-        for (String uriStr : parameterStr.split(",")) {
-            if (!uriStr.trim().isEmpty())
-                uriStrs.add(uriStr.trim());
-        }
-
-        return uriStrs;
-    }
 
     public static void main(String[] args) throws Exception {
 
@@ -91,68 +78,25 @@ public class ValidateCLI {
             displayHelpAndExit("Error: You have to select either an Endpoint or a Dump URI.");
         }
 
-        //Dataset URI, important & required (used to associate manual dataset test cases)
-        String datasetUri = commandLine.getOptionValue("d");
-        if (datasetUri.endsWith("/"))
-            datasetUri = datasetUri.substring(0, datasetUri.length() - 1);
-
-        // Dump location for dump dereferencing (defaults to dataset uri)
-        String dumpLocation = commandLine.getOptionValue("u");
-        if (dumpLocation == null || dumpLocation.isEmpty())
-            dumpLocation = datasetUri;
-
-        //Endpoint initialization
-        String endpointUriStr = commandLine.getOptionValue("e");
-        java.util.Collection<String> graphUriStrs = getUriStrs(commandLine.getOptionValue("g", ""));
-
-        //Get schema list
-        java.util.Collection<String> schemaUriStrs = getUriStrs(commandLine.getOptionValue("s"));
-
-        String enrichedDatasetPrefix = commandLine.getOptionValue("p");
-        String dataFolder = commandLine.getOptionValue("f", "../data/");
-        String testFolder = dataFolder + "tests/";
-        boolean useTestCache = !commandLine.hasOption("ntc"); // for automatically generated test cases
-        boolean useManualTestCases = !commandLine.hasOption("nmt"); //Use only automatic tests
-
-        TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
-        if (commandLine.hasOption("r")) {
-            String rl = commandLine.getOptionValue("r", "aggregate");
-            if (rl.equals("status"))
-                resultLevel = TestCaseExecutionType.statusTestCaseResult;
-            else if (rl.equals("aggregate"))
-                resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
-            else if (rl.equals("rlog"))
-                resultLevel = TestCaseExecutionType.rlogTestCaseResult;
-            else if (rl.equals("extended"))
-                resultLevel = TestCaseExecutionType.extendedTestCaseResult;
-            else
-                log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
-        }
-
-        if (commandLine.hasOption("l")) {
-            displayHelpAndExit("Option -l was changed to -r, -l is reserved for --logging-level (notice, warn, error)");
-        }
-
-        boolean calculateCoverage = commandLine.hasOption("c");
-        /* </cliStuff> */
+        RDFUnitConfiguration configuration = getConfigurationFromArguments(commandLine);
 
 
-        if (!RDFUnitUtils.fileExists(dataFolder)) {
-            log.error("Path : " + dataFolder + " does not exists, use -f argument");
+        if (!RDFUnitUtils.fileExists(configuration.getDataFolder())) {
+            log.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
             System.exit(1);
         }
 
         RDFUnitUtils.fillSchemaServiceFromLOV();
-        RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
+        RDFUnitUtils.fillSchemaServiceFromFile(configuration.getDataFolder() + "schemaDecl.csv");
 
 
         // First try to load the modified patterns, if exists, and then try the resource
-        DataReader patternReader_data = new RDFStreamReader(dataFolder + "patterns.ttl");
+        DataReader patternReader_data = new RDFStreamReader(configuration.getDataFolder() + "patterns.ttl");
         DataReader patternReader_resource = RDFUnitUtils.getPatternsFromResource();
         DataReader patternReader = new DataFirstSuccessReader(Arrays.asList(patternReader_data, patternReader_resource));
 
         // Similar to patterns
-        DataReader testGeneratorReader_data = new RDFStreamReader(dataFolder + "testAutoGenerators.ttl");
+        DataReader testGeneratorReader_data = new RDFStreamReader(configuration.getDataFolder() + "testAutoGenerators.ttl");
         DataReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsFromResource();
         DataReader testGeneratorReader = new DataFirstSuccessReader(Arrays.asList(testGeneratorReader_data, testGeneratorReader_resource));
 
@@ -175,31 +119,15 @@ public class ValidateCLI {
         }
         // */
 
-        /* <cliStuff> */
-        java.util.Collection<SchemaSource> sources = SchemaService.getSourceList(testFolder, schemaUriStrs);
 
-
-        //Enriched Schema (cached in folder)
-        if (enrichedDatasetPrefix != null)
-            sources.add(SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedDatasetPrefix, datasetUri));
-
-        // String prefix, String uri, String sparqlEndpoint, String sparqlGraph, List<SchemaSource> schemata
-        RDFUnitConfiguration testContext = null;
-        if (endpointUriStr == null || endpointUriStr.isEmpty()) {
-            testContext = new RDFUnitConfiguration(datasetUri, dumpLocation, sources);
-        } else {
-            testContext = new RDFUnitConfiguration(datasetUri,
-                    endpointUriStr, graphUriStrs, sources);
-        }
-
-        final Source dataset = testContext.getDatasetSource();
+        final Source dataset = configuration.getTestSource();
         /* </cliStuff> */
 
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(useTestCache, useManualTestCases);
-        TestSuite testSuite = testGeneratorExecutor.generateTestSuite(testFolder, dataset, rdfunit.getAutoGenerators());
-        final TestCaseExecutionType resulLevelInner = resultLevel;
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
+        TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
+        final TestCaseExecutionType resulLevelInner = configuration.getResultLevelReporting();
 
-        TestExecutor testExecutor = TestExecutor.initExecutorFactory(resultLevel);
+        TestExecutor testExecutor = TestExecutor.initExecutorFactory(configuration.getResultLevelReporting());
         if (testExecutor == null) {
             log.error("Cannot initialize test executor. Exiting");
             System.exit(1);
@@ -225,7 +153,7 @@ public class ValidateCLI {
 
 
         // Calculate coverage
-        if (calculateCoverage) {
+        if (configuration.isCalculateCoverageEnabled()) {
             Model m = ModelFactory.createDefaultModel();
             m.setNsPrefixes(PrefixService.getPrefixMap());
             for (TestCase ut : testSuite.getTestCases()) {
@@ -235,6 +163,84 @@ public class ValidateCLI {
             TestCoverageEvaluator tce = new TestCoverageEvaluator();
             tce.calculateCoverage(new QueryExecutionFactoryModel(m), dataset.getPrefix() + ".property.count", dataset.getPrefix() + ".class.count");
         }
+    }
+
+    private static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) {
+        RDFUnitConfiguration configuration = null;
+
+        String dataFolder = commandLine.getOptionValue("f", "../data/");
+
+        //Dataset URI, important & required (used to associate manual dataset test cases)
+        String datasetURI = commandLine.getOptionValue("d");
+        if (datasetURI.endsWith("/"))
+            datasetURI = datasetURI.substring(0, datasetURI.length() - 1);
+
+        configuration = new RDFUnitConfiguration(datasetURI, dataFolder);
+
+
+        // Dump location for dump dereferencing (defaults to dataset uri)
+        String dumpLocation = commandLine.getOptionValue("u");
+        if (dumpLocation == null || dumpLocation.isEmpty())
+            dumpLocation = datasetURI;
+
+        //Endpoint initialization
+        String endpointURI = commandLine.getOptionValue("e");
+        Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
+        configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
+
+        //Get schema list
+        Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("s"));
+        configuration.setSchemataFromPrefixes(schemaUriPrefixes);
+
+        //Get enriched schema
+        String enrichedDatasetPrefix = commandLine.getOptionValue("p");
+        configuration.setEnrichedSchema(enrichedDatasetPrefix);
+
+        TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
+        if (commandLine.hasOption("r")) {
+            String rl = commandLine.getOptionValue("r", "aggregate");
+            if (rl.equals("status"))
+                resultLevel = TestCaseExecutionType.statusTestCaseResult;
+            else if (rl.equals("aggregate"))
+                resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
+            else if (rl.equals("rlog"))
+                resultLevel = TestCaseExecutionType.rlogTestCaseResult;
+            else if (rl.equals("extended"))
+                resultLevel = TestCaseExecutionType.extendedTestCaseResult;
+            else
+                log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
+        }
+        configuration.setResultLevelReporting(resultLevel);
+
+        if (commandLine.hasOption("l")) {
+            displayHelpAndExit("Option -l was changed to -r, -l is reserved for --logging-level (notice, warn, error)");
+        }
+
+        // for automatically generated test cases
+        boolean testCacheEnabled = !commandLine.hasOption("ntc");
+        configuration.setTestCacheEnabled(testCacheEnabled);
+
+        //Use only automatic tests
+        boolean manualTestsEnabled = !commandLine.hasOption("nmt");
+        configuration.setManualTestsEnabled(manualTestsEnabled);
+
+
+        boolean calculateCoverage = commandLine.hasOption("c");
+        configuration.setCalculateCoverageEnabled(calculateCoverage);
+
+        return configuration;
+    }
+
+    private static Collection<String> getUriStrs(String parameterStr) {
+        Collection<String> uriStrs = new ArrayList<String>();
+        if (parameterStr == null) return uriStrs;
+
+        for (String uriStr : parameterStr.split(",")) {
+            if (!uriStr.trim().isEmpty())
+                uriStrs.add(uriStr.trim());
+        }
+
+        return uriStrs;
     }
 
     private static void displayHelpAndExit(String errorMessage) {

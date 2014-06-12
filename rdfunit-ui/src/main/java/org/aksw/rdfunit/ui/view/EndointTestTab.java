@@ -5,7 +5,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.RDFunitConfigurationFactory;
+import org.aksw.rdfunit.ui.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -67,13 +67,13 @@ public class EndointTestTab extends VerticalLayout {
         RDFUnitConfiguration dbpediaConf = RDFunitConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
         RDFUnitConfiguration dbpediaLConf = RDFunitConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
         RDFUnitConfiguration dbpediaNLConf = RDFunitConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
-        RDFUnitConfiguration linkedChemistry = new RDFUnitConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito");
-        RDFUnitConfiguration uriBurner = new RDFUnitConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", new ArrayList<String>(), "foaf,skos,geo,dcterms,prov");
-        RDFUnitConfiguration bbcNature = new RDFUnitConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "dcterms,po,wo,wlo,foaf");
-        RDFUnitConfiguration musicBrainz = new RDFUnitConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "ov,mo,foaf");
-        RDFUnitConfiguration umls = new RDFUnitConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://linkedlifedata.com/resource/umls"), "dcterms,skos,owl");
-        RDFUnitConfiguration umbel = new RDFUnitConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://umbel.org"), "vann,skos,owl");
-        RDFUnitConfiguration datasw = new RDFUnitConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql",Arrays.asList( "http://data.semanticweb.org"), "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf");
+        RDFUnitConfiguration linkedChemistry = RDFunitConfigurationFactory.createConfiguration("http://linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito", baseDir);
+        RDFUnitConfiguration uriBurner = RDFunitConfigurationFactory.createConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", new ArrayList<String>(), "foaf,skos,geo,dcterms,prov", baseDir);
+        RDFUnitConfiguration bbcNature = RDFunitConfigurationFactory.createConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "dcterms,po,wo,wlo,foaf", baseDir);
+        RDFUnitConfiguration musicBrainz = RDFunitConfigurationFactory.createConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "ov,mo,foaf", baseDir);
+        RDFUnitConfiguration umls = RDFunitConfigurationFactory.createConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://linkedlifedata.com/resource/umls"), "dcterms,skos,owl", baseDir);
+        RDFUnitConfiguration umbel = RDFunitConfigurationFactory.createConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://umbel.org"), "vann,skos,owl", baseDir);
+        RDFUnitConfiguration datasw = RDFunitConfigurationFactory.createConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql",Arrays.asList( "http://data.semanticweb.org"), "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf", baseDir);
 
 
         examplesSelect.addItem(uriBurner);
@@ -223,7 +223,7 @@ public class EndointTestTab extends VerticalLayout {
 
                 createConfigurationFromUser();
                 if (RDFUnitUISession.getRDFUnitConfiguration() != null) {
-                    Source dataset = RDFUnitUISession.getRDFUnitConfiguration().getDatasetSource();
+                    Source dataset = RDFUnitUISession.getRDFUnitConfiguration().getTestSource();
 
                     RDFUnitUISession.initRDFUnit();
                     RDFUnitUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
@@ -334,7 +334,7 @@ public class EndointTestTab extends VerticalLayout {
 
                 //TODO make this cleaner
                 if (RDFUnitUISession.getRDFUnitConfiguration() != null) {
-                    Source dataset = RDFUnitUISession.getRDFUnitConfiguration().getDatasetSource();
+                    Source dataset = RDFUnitUISession.getRDFUnitConfiguration().getTestSource();
 
                     RDFUnitUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
                     String resultsFile = RDFUnitUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
@@ -474,8 +474,13 @@ public class EndointTestTab extends VerticalLayout {
 
     private void createConfigurationFromUser() {
 
-        RDFUnitUISession.setRDFUnitConfiguration(
-                new RDFUnitConfiguration(endpointField.getValue().replace("/sparql", ""), endpointField.getValue(), Arrays.asList(graphField.getValue()), schemaSelectorWidget.getSelections()));
+        String datasetURI = endpointField.getValue().replace("/sparql", "");
+
+        RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, RDFUnitUISession.getBaseDir());
+        configuration.setEndpointConfiguration(endpointField.getValue(),Arrays.asList(graphField.getValue()));
+        configuration.setSchemata(schemaSelectorWidget.getSelections());
+
+        RDFUnitUISession.setRDFUnitConfiguration( configuration);
     }
 
     private void setExampleConfiguration(RDFUnitConfiguration configuration) {
@@ -484,7 +489,7 @@ public class EndointTestTab extends VerticalLayout {
             clearConfigurations();
         }
 
-        Source dataset = configuration.getDatasetSource();
+        Source dataset = configuration.getTestSource();
         if (dataset instanceof DatasetSource) {
             endpointField.setValue(((DatasetSource) dataset).getSparqlEndpoint());
             java.util.Collection<String> graphs = ((DatasetSource) dataset).getSparqlGraphs();

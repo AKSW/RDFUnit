@@ -1,77 +1,181 @@
 package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.io.DataReaderFactory;
+import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.DatasetSource;
-import org.aksw.rdfunit.sources.DumpSource;
-import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * User: Dimitris Kontokostas
  * Holds a configuration for a complete test
- * TODO: Need to adapt the constructors they are too confusing
+ * TODO: Got too big, maybe break it down a bit
  * Created: 11/15/13 11:50 AM
  */
 public class RDFUnitConfiguration {
 
-    private final String prefix;
-    private final String uri;
-    private final String endpoint;
+    /* Main Dataset URI (also used for loading dataset tests) */
+    private final String datasetURI;
+    private String prefix = null;
 
-    // multiple graphs separated with '|'
-    private final java.util.Collection<String> graphs;
+    /* folder where we store tests / configuration.  */
+    private final String dataFolder;
+    private final String testFolder;
 
-    private final String dereferenceUri;
+    /* SPARQL endpoint configuration */
+    private String endpointURI = null;
+    private Collection<String> endpointGraphs = null;
+    private long endpointDelayinMS = 7000; // delay between queries
+    private long endpointCacheTTL = 7l * 24l * 60l * 60l * 1000l; // cache time to live
+    private long endpointPagination = 900; // default pagination behind the schenes
 
-    private final java.util.Collection<SchemaSource> sources;
+    /* Dereference testing (if different from datasetURI) */
+    private String dereferenceURI = null;
 
-    /* For Endpoint source */
-    public RDFUnitConfiguration(String prefix, String uri, String endpoint, java.util.Collection<String> graphs, java.util.Collection<SchemaSource> sources) {
-        this.prefix = prefix;
-        this.uri = uri;
-        this.endpoint = endpoint;
-        this.graphs = graphs;
-        this.dereferenceUri = null;
-        this.sources = sources;
+    /* list of schemas for testing a dataset */
+    private Collection<SchemaSource> schemas = null;
+
+    private EnrichedSchemaSource enrichedSchema = null;
+
+    /* use the cache for loading tests (do not regenerate if already exists) */
+    private boolean testCacheEnabled = true;
+
+    /* if set to false it will generate only schema based test cases */
+    private boolean manualTestsEnabled = true;
+
+    /* Execution type */
+    private TestCaseExecutionType resultLevelReporting = TestCaseExecutionType.aggregatedTestCaseResult;
+
+    /*  */
+    private boolean calculateCoverageEnabled = false;
+
+    public RDFUnitConfiguration(String datasetURI, String dataFolder){
+        this(datasetURI, dataFolder, dataFolder + "tests/");
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection<String> graphs, String[] sourcePrefixes) {
-        this(uri, endpoint, graphs, SchemaService.getSourceList(null, Arrays.asList(sourcePrefixes)));
+    public RDFUnitConfiguration(String datasetURI, String dataFolder, String testFolder){
+        this.datasetURI = datasetURI;
+        this.dataFolder = dataFolder;
+        this.testFolder = testFolder;
+
+        prefix = CacheUtils.getAutoPrefixForURI(datasetURI); // default prefix
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection<String> graphs, String sourcePrefixes) {
-        this(uri, endpoint, graphs, sourcePrefixes.split(","));
+    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
+        setEndpointConfiguration(endpointURI, endpointGraphs, this.endpointDelayinMS, this.endpointCacheTTL, this.endpointPagination);
     }
 
-    public RDFUnitConfiguration(String uri, String endpoint, java.util.Collection<String> graphs, java.util.Collection<SchemaSource> sources) {
-        this(CacheUtils.getAutoPrefixForURI(uri), uri, endpoint, graphs, sources);
+    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination) {
+        this.endpointURI = endpointURI;
+        this.endpointGraphs = new ArrayList<String>();
+        this.endpointGraphs.addAll(endpointGraphs);
+        this.endpointDelayinMS = endpointDelayinMS;
+        this.endpointCacheTTL = endpointCacheTTL;
+        this.endpointPagination = endpointPagination;
     }
 
-    /* For dereference source */
-    public RDFUnitConfiguration(String prefix, String uri, String dereferenceUri, java.util.Collection<SchemaSource> sources) {
-        this.prefix = prefix;
-        this.uri = uri;
-        this.endpoint = null;
-        this.graphs = new ArrayList<String>();
-        this.dereferenceUri = dereferenceUri;
-        this.sources = sources;
+    public void setDefereferenceConfiguration() {
+        // Defaults to dataset URI if no custom specified
+        setDefereferenceConfiguration(datasetURI);
     }
 
-    public RDFUnitConfiguration(String uri, String location, java.util.Collection<SchemaSource> sources) {
-        this(CacheUtils.getAutoPrefixForURI(uri), uri, location, sources);
+    public void setDefereferenceConfiguration(String dereferenceURI) {
+        this.dereferenceURI = dereferenceURI;
     }
 
-    // TODO change it back to Dateset after refactoring of Sources
-    public Source getDatasetSource() {
-        if ((endpoint == null || endpoint.equals(""))) {
-            return new DumpSource(prefix, uri, DataReaderFactory.createFileOrDereferenceReader(dereferenceUri), sources);
-        } else {
-            return new DatasetSource(prefix, uri, endpoint, graphs, sources);
+    public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) {
+        this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
+    }
+    public void setSchemata(Collection<SchemaSource> schemata) {
+        this.schemas = new ArrayList<>();
+        this.schemas.addAll(schemata);
+    }
+
+    public void setEnrichedSchema(String enrichedSchemaPrefix) {
+        if (enrichedSchemaPrefix != null && !enrichedSchemaPrefix.isEmpty()) {
+            enrichedSchema = SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedSchemaPrefix, datasetURI);
         }
+    }
+
+    public Collection<SchemaSource> getAllSchemata(){
+        Collection<SchemaSource> allSchemas = new ArrayList<>();
+        if (this.schemas != null) {
+            allSchemas.addAll(this.schemas);
+        }
+        if (this.enrichedSchema != null) {
+            allSchemas.add(this.enrichedSchema);
+        }
+
+        return allSchemas;
+    }
+
+    public Source getTestSource() {
+
+        if (dereferenceURI != null && !dereferenceURI.isEmpty()) {
+            // return a DumpSource
+            return new DumpSource(
+                    CacheUtils.getAutoPrefixForURI(dereferenceURI),
+                    datasetURI,
+                    getAllSchemata());
+        } else {
+            // return a SPARQL Endpoint source
+            return new DatasetSource(
+                    CacheUtils.getAutoPrefixForURI(datasetURI),
+                    datasetURI,
+                    endpointURI,
+                    endpointGraphs,
+                    getAllSchemata());
+
+        }
+    }
+
+    public boolean isTestCacheEnabled() {
+        return testCacheEnabled;
+    }
+
+    public void setTestCacheEnabled(boolean testCacheEnabled) {
+        this.testCacheEnabled = testCacheEnabled;
+    }
+
+    public boolean isManualTestsEnabled() {
+        return manualTestsEnabled;
+    }
+
+    public void setManualTestsEnabled(boolean manualTestsEnabled) {
+        this.manualTestsEnabled = manualTestsEnabled;
+    }
+
+    public TestCaseExecutionType getResultLevelReporting() {
+        return resultLevelReporting;
+    }
+
+    public void setResultLevelReporting(TestCaseExecutionType resultLevelReporting) {
+        this.resultLevelReporting = resultLevelReporting;
+    }
+
+    public boolean isCalculateCoverageEnabled() {
+        return calculateCoverageEnabled;
+    }
+
+    public void setCalculateCoverageEnabled(boolean calculateCoverageEnabled) {
+        this.calculateCoverageEnabled = calculateCoverageEnabled;
+    }
+
+    public String getDataFolder() {
+        return dataFolder;
+    }
+
+    public String getTestFolder() {
+        return testFolder;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 }

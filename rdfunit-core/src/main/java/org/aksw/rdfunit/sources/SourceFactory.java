@@ -32,7 +32,7 @@ public class SourceFactory {
         return new SchemaSource(prefix, uri, schema, reader);
     }
 
-    public static SchemaSource createEnrichedSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
+    public static EnrichedSchemaSource createEnrichedSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.EnrichedSchema, prefix, uri);
         DataReader reader = DataReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
         return new EnrichedSchemaSource(prefix, uri, reader);
