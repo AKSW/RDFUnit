@@ -87,7 +87,7 @@ public class ValidateCLI {
             else
                 displayHelpAndExit();
         }
-        if (commandLine.hasOption("e") && commandLine.hasOption("u")) {
+        if (commandLine.hasOption("e") && commandLine.hasOption("U")) {
             displayHelpAndExit("Error: You have to select either an Endpoint or a Dump URI.");
         }
 
