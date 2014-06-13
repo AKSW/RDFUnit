@@ -35,7 +35,10 @@ public class SchemaService {
         String sourceUriURL = schemata.get(id);
         if (sourceUriURL == null) {
             // If not a prefix try to dereference it
-            return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(id), id);
+            if (id.contains("/") || id.contains("\\"))
+                return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(id), id);
+            else
+                return null;
         }
 
         String[] split = sourceUriURL.split("\t");
