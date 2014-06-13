@@ -45,7 +45,12 @@ public class RDFUnitUtils {
         if (additionalCSV != null && !additionalCSV.isEmpty()) {
             BufferedReader in = null;
             try {
-                in = new BufferedReader(new InputStreamReader(new FileInputStream(additionalCSV), "UTF-8"));
+                try {
+                    in = new BufferedReader(new InputStreamReader(new FileInputStream(additionalCSV), "UTF-8"));
+                } catch (FileNotFoundException e) {
+                    // try from resources
+                    in = new BufferedReader(new InputStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv")));
+                }
 
                 String line = null;
 
@@ -71,8 +76,6 @@ public class RDFUnitUtils {
                     }
                 }
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            } catch (FileNotFoundException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
