@@ -40,21 +40,30 @@ public class RDFUnitUtils {
 
     public static void fillSchemaServiceFromFile(String additionalCSV) {
 
+        try {
+            InputStream inputStream = new FileInputStream(additionalCSV);
+            fillSchemaServiceFromFile(inputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void fillSchemaServiceFromFile(InputStream additionalCSV) {
+
         int count = 0;
 
-        if (additionalCSV != null && !additionalCSV.isEmpty()) {
+        if (additionalCSV != null) {
             BufferedReader in = null;
+
             try {
-                try {
-                    in = new BufferedReader(new InputStreamReader(new FileInputStream(additionalCSV), "UTF-8"));
-                } catch (FileNotFoundException e) {
-                    // try from resources
-                    in = new BufferedReader(new InputStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv")));
-                }
+                in = new BufferedReader(new InputStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                return;
+            }
 
-                String line = null;
+            String line = null;
 
-
+            try {
                 while ((line = in.readLine()) != null) {
                     // skip comments & empty lines
                     if (line.startsWith("#") || line.trim().isEmpty())
@@ -75,8 +84,7 @@ public class RDFUnitUtils {
                             count--;
                     }
                 }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
