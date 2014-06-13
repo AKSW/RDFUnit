@@ -62,8 +62,6 @@ public class ValidateCLI {
 
     public static void main(String[] args) throws Exception {
 
-        PropertyConfigurator.configure("log4j.properties");
-
         /* <cliStuff> */
         CommandLineParser cliParser = new GnuParser();
         CommandLine commandLine = cliParser.parse(cliOptions, args);
