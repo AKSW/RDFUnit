@@ -32,7 +32,7 @@ public class RDFUnitConfiguration {
     private long endpointPagination = 900; // default pagination behind the schenes
 
     /* Dereference testing (if different from datasetURI) */
-    private String dereferenceURI = null;
+    private String customDereferenceURI = null;
 
     /* list of schemas for testing a dataset */
     private Collection<SchemaSource> schemas = null;
@@ -76,13 +76,8 @@ public class RDFUnitConfiguration {
         this.endpointPagination = endpointPagination;
     }
 
-    public void setDefereferenceConfiguration() {
-        // Defaults to dataset URI if no custom specified
-        setDefereferenceConfiguration(datasetURI);
-    }
-
-    public void setDefereferenceConfiguration(String dereferenceURI) {
-        this.dereferenceURI = dereferenceURI;
+    public void setCustomDereferenceURI(String customDereferenceURI) {
+        this.customDereferenceURI = customDereferenceURI;
     }
 
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) {
@@ -113,10 +108,10 @@ public class RDFUnitConfiguration {
 
     public Source getTestSource() {
 
-        if (dereferenceURI != null && !dereferenceURI.isEmpty()) {
+        if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
             // return a DumpSource
             return new DumpSource(
-                    CacheUtils.getAutoPrefixForURI(dereferenceURI),
+                    CacheUtils.getAutoPrefixForURI(customDereferenceURI),
                     datasetURI,
                     getAllSchemata());
         } else {
@@ -177,5 +172,25 @@ public class RDFUnitConfiguration {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public String getDatasetURI() {
+        return datasetURI;
+    }
+
+    public String getEndpointURI() {
+        return endpointURI;
+    }
+
+    public Collection<String> getEndpointGraphs() {
+        return endpointGraphs;
+    }
+
+    public String getCustomDereferenceURI() {
+        return customDereferenceURI;
+    }
+
+    public EnrichedSchemaSource getEnrichedSchema() {
+        return enrichedSchema;
     }
 }

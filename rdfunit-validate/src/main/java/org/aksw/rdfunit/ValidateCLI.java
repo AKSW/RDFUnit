@@ -14,10 +14,9 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
-import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.TestGeneratorExecutor;
+import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.apache.commons.cli.*;
-import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,31 +32,7 @@ import java.util.Collection;
 public class ValidateCLI {
     private static final Logger log = LoggerFactory.getLogger(ValidateCLI.class);
 
-    private static final Options cliOptions = new Options();
-
-    static {
-        cliOptions.addOption("h", "help", false, "show this help message");
-        cliOptions.addOption("d", "dataset-uri", true,
-                "the URI of the dataset (required)");
-        cliOptions.addOption("e", "endpoint", true,
-                "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
-        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
-        cliOptions.addOption("U", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
-        cliOptions.addOption("s", "schemas", true,
-                "the schemas used in the chosen graph " +
-                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
-        );
-        cliOptions.addOption("p", "enriched-prefix", true,
-                "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
-        cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
-        cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
-        cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
-        cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
-        cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
-        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit). " +
-                "If none exists, bundled versions will be loaded.'");
-
-    }
+    private static final Options cliOptions = generateCLIOptions();
 
 
     public static void main(String[] args) throws Exception {
@@ -163,7 +138,34 @@ public class ValidateCLI {
         }
     }
 
-    private static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) {
+    protected static Options generateCLIOptions() {
+        Options cliOptions = new Options();
+
+        cliOptions.addOption("h", "help", false, "show this help message");
+        cliOptions.addOption("d", "dataset-uri", true,
+                "the URI of the dataset (required)");
+        cliOptions.addOption("e", "endpoint", true,
+                "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
+        cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
+        cliOptions.addOption("U", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
+        cliOptions.addOption("s", "schemas", true,
+                "the schemas used in the chosen graph " +
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
+        );
+        cliOptions.addOption("p", "enriched-prefix", true,
+                "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
+        cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
+        cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
+        cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
+        cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
+        cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
+        cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit). " +
+                "If none exists, bundled versions will be loaded.'");
+
+        return cliOptions;
+    }
+
+    protected static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) {
         RDFUnitConfiguration configuration = null;
 
         String dataFolder = commandLine.getOptionValue("f", "../data/");
@@ -177,9 +179,10 @@ public class ValidateCLI {
 
 
         // Dump location for dump dereferencing (defaults to dataset uri)
-        String dumpLocation = commandLine.getOptionValue("u");
-        if (dumpLocation == null || dumpLocation.isEmpty())
-            dumpLocation = datasetURI;
+        String customDereferenceURI = commandLine.getOptionValue("U");
+        if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
+            configuration.setCustomDereferenceURI(customDereferenceURI);
+        }
 
         //Endpoint initialization
         String endpointURI = commandLine.getOptionValue("e");
