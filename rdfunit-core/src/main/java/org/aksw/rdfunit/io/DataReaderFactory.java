@@ -32,4 +32,22 @@ public class DataReaderFactory {
 
         return new DataFirstSuccessReader(readers);
     }
+
+    /**
+     * Generates a Dereference reader. This can be either a remote url, a local file or a resource
+     * @param uri
+     * @return a DataFirstSuccessReader that tries to resolve 1) remote 2) local 3) resources
+     */
+    public static DataReader createDereferenceReader(String uri) {
+        Collection<DataReader> readers = new ArrayList<>();
+        if (uri.contains("://")) {
+            readers.add(new RDFDereferenceReader(uri));
+        }
+        else {
+            readers.add(new RDFStreamReader(uri));
+            readers.add(new RDFStreamReader(DataReaderFactory.class.getResourceAsStream(uri)));
+        }
+
+        return new DataFirstSuccessReader(readers);
+    }
 }

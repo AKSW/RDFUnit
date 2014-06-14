@@ -108,13 +108,7 @@ public class RDFUnitConfiguration {
 
     public Source getTestSource() {
 
-        if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
-            // return a DumpSource
-            return new DumpSource(
-                    CacheUtils.getAutoPrefixForURI(customDereferenceURI),
-                    datasetURI,
-                    getAllSchemata());
-        } else {
+        if (endpointURI != null && !endpointURI.isEmpty()) {
             // return a SPARQL Endpoint source
             return new DatasetSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
@@ -123,6 +117,17 @@ public class RDFUnitConfiguration {
                     endpointGraphs,
                     getAllSchemata());
 
+        } else {
+            String tmp_customDereferenceURI = datasetURI;
+            // return a DumpSource
+            if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
+                tmp_customDereferenceURI = customDereferenceURI;
+            }
+            return new DumpSource(
+                        CacheUtils.getAutoPrefixForURI(datasetURI),
+                        datasetURI,
+                        tmp_customDereferenceURI,
+                        getAllSchemata());
         }
     }
 

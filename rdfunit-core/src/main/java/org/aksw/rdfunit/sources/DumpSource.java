@@ -6,6 +6,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
+import org.aksw.rdfunit.io.DataReaderFactory;
 import org.aksw.rdfunit.io.RDFDereferenceReader;
 import org.aksw.rdfunit.io.DataReader;
 
@@ -26,15 +27,11 @@ public class DumpSource extends Source {
     }
 
     public DumpSource(String prefix, String uri, String location) {
-        this(prefix, uri, new RDFDereferenceReader(location), null);
+        this(prefix, uri, location, null);
     }
 
-    public DumpSource(String prefix, String uri, DataReader dumpReader) {
-        this(prefix, uri, dumpReader, null);
-    }
-
-    public DumpSource(String prefix, String uri, java.util.Collection<SchemaSource> schemata) {
-        this(prefix, uri, new RDFDereferenceReader(uri), schemata);
+    public DumpSource(String prefix, String uri, String location, java.util.Collection<SchemaSource> schemata) {
+        this(prefix, uri, DataReaderFactory.createDereferenceReader(location), schemata);
     }
 
     public DumpSource(String prefix, String uri, DataReader dumpReader, java.util.Collection<SchemaSource> schemata) {
