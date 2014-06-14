@@ -36,15 +36,15 @@ public class ValidateUtils {
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
-        cliOptions.addOption("U", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
+        cliOptions.addOption("u", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
         );
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
-        cliOptions.addOption("ntc", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
-        cliOptions.addOption("nmt", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
+        cliOptions.addOption("C", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
+        cliOptions.addOption("M", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
         cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
         cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
@@ -54,7 +54,20 @@ public class ValidateUtils {
         return cliOptions;
     }
 
-    public static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) {
+    public static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) throws ParameterException {
+
+        if ( !commandLine.hasOption("d") || !commandLine.hasOption("s")) {
+            throw new ParameterException("Error: Required arguments are missing.");
+
+        }
+        if (commandLine.hasOption("e") && commandLine.hasOption("u")) {
+            throw new ParameterException("Error: You have to select either an Endpoint or a Dump URI.");
+        }
+
+        if (commandLine.hasOption("l")) {
+            throw new ParameterException("Option -l was changed to -r, -l is reserved for --logging-level (notice, warn, error)");
+        }
+
         RDFUnitConfiguration configuration = null;
 
         String dataFolder = commandLine.getOptionValue("f", "../data/");
@@ -68,7 +81,7 @@ public class ValidateUtils {
 
 
         // Dump location for dump dereferencing (defaults to dataset uri)
-        String customDereferenceURI = commandLine.getOptionValue("U");
+        String customDereferenceURI = commandLine.getOptionValue("u");
         if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
             configuration.setCustomDereferenceURI(customDereferenceURI);
         }
@@ -104,11 +117,11 @@ public class ValidateUtils {
 
 
         // for automatically generated test cases
-        boolean testCacheEnabled = !commandLine.hasOption("ntc");
+        boolean testCacheEnabled = !commandLine.hasOption("C");
         configuration.setTestCacheEnabled(testCacheEnabled);
 
         //Use only automatic tests
-        boolean manualTestsEnabled = !commandLine.hasOption("nmt");
+        boolean manualTestsEnabled = !commandLine.hasOption("M");
         configuration.setManualTestsEnabled(manualTestsEnabled);
 
 

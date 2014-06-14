@@ -38,27 +38,30 @@ public class ValidateCLI {
 
         CommandLine commandLine = ValidateUtils.parseArguments(args);
 
-        if (commandLine.hasOption("h") || !commandLine.hasOption("d")) {
-            if (!commandLine.hasOption("h"))
-                displayHelpAndExit("Error: Required arguments are missing.");
-            else
-                displayHelpAndExit();
-        }
-        if (commandLine.hasOption("e") && commandLine.hasOption("U")) {
-            displayHelpAndExit("Error: You have to select either an Endpoint or a Dump URI.");
-        }
-
-        if (commandLine.hasOption("l")) {
-            displayHelpAndExit("Option -l was changed to -r, -l is reserved for --logging-level (notice, warn, error)");
+        if (commandLine.hasOption("h")) {
+            displayHelpAndExit();
         }
 
 
+        String dataFolder = commandLine.getOptionValue("f", "../data/");
         RDFUnitUtils.fillSchemaServiceFromLOV();
         //TODO hack until we fix this, configuration tries to laod schemas so they must be initialized before
-        RDFUnitUtils.fillSchemaServiceFromFile("../data/" + "schemaDecl.csv");
+        RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
         //RDFUnitUtils.fillSchemaServiceFromFile(configuration.getDataFolder() + "schemaDecl.csv");
 
-        RDFUnitConfiguration configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
+        RDFUnitConfiguration configuration = null;
+        try {
+            configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
+        } catch (ParameterException e) {
+            String message = e.getMessage();
+            if (message != null) {
+                displayHelpAndExit(message);
+            }
+            else {
+                displayHelpAndExit();
+            }
+        }
+        assert (configuration != null);
 
         if (!RDFUnitUtils.fileExists(configuration.getDataFolder())) {
             log.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
@@ -79,8 +82,7 @@ public class ValidateCLI {
         try {
             rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (TripleReaderException e) {
-            log.error("Cannot read patterns and/or pattern generators");
-            System.exit(1);
+            displayHelpAndExit("Cannot read patterns and/or pattern generators");
         }
          /*
         // Generates all tests from LOV
@@ -100,12 +102,11 @@ public class ValidateCLI {
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
-        final TestCaseExecutionType resulLevelInner = configuration.getResultLevelReporting();
+
 
         TestExecutor testExecutor = TestExecutor.initExecutorFactory(configuration.getResultLevelReporting());
         if (testExecutor == null) {
-            log.error("Cannot initialize test executor. Exiting");
-            System.exit(1);
+            displayHelpAndExit("Cannot initialize test executor. Exiting");
         }
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
@@ -115,9 +116,9 @@ public class ValidateCLI {
 
         // Write results to DataWriter (ttl & html)
         try {
-            String filename = "../data/results/" + dataset.getPrefix() + "." + resulLevelInner.toString();
+            String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getResultLevelReporting().toString();
             DataWriter rdf = new RDFFileWriter(filename + ".ttl");
-            DataWriter html = HTMLResultsWriter.create(resulLevelInner, filename + ".html");
+            DataWriter html = HTMLResultsWriter.create(configuration.getResultLevelReporting(), filename + ".html");
             DataWriter resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
 
             resultWriter.write(testExecutorMonitor.getModel());
