@@ -57,6 +57,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -76,6 +82,18 @@
                 <version>2.7</version>
                 <configuration>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.0.v20140526</version>
+
+                <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <httpConnector>
+                        <port>8787</port>
+                    </httpConnector>
                 </configuration>
             </plugin>
         </plugins>
