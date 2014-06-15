@@ -12,6 +12,8 @@ import java.net.URI;
  */
 public class CacheUtils {
 
+    private CacheUtils() {}
+
     public static String getSchemaSourceCacheFilename(String testFolder, TestAppliesTo schemaType, String prefix, String uri) {
         return testFolder + schemaType.name() + "/" + getCacheFolderForURI(uri) + prefix + ".cache." + schemaType.name() + ".ttl";
     }

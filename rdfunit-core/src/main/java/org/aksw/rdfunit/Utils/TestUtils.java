@@ -36,6 +36,8 @@ import java.util.ArrayList;
 public class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
 
+    private TestUtils() {}
+
     public static java.util.Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
 

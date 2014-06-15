@@ -19,6 +19,9 @@ import java.util.ArrayList;
  * Created: 1/24/14 6:08 PM
  */
 public class SparqlUtils {
+
+    private SparqlUtils() {}
+
     static public java.util.Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
         java.util.Collection<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
         String sparql = RDFUnitUtils.getAllPrefixes() +

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 public class RDFUnitUtils {
     private static final Logger log = LoggerFactory.getLogger(RDFUnitUtils.class);
 
+    private RDFUnitUtils() {}
+
     public static String getAllPrefixes() {
         return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +

@@ -13,6 +13,8 @@ import org.aksw.rdfunit.io.RDFDereferenceReader;
  */
 public class SourceFactory {
 
+    private SourceFactory() {}
+
     public static SchemaSource createSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
         return createSchemaSourceFromCache(baseFolder, prefix, uri, uri);
     }

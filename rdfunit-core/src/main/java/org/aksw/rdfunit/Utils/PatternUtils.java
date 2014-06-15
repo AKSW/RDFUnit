@@ -18,6 +18,9 @@ import java.util.ArrayList;
  * Created: 9/23/13 11:09 AM
  */
 public class PatternUtils {
+
+    private PatternUtils() {}
+
     public static java.util.Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
         java.util.Collection<Pattern> patterns = new ArrayList<Pattern>();
 

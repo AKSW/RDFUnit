@@ -9,6 +9,9 @@ import java.util.Collection;
  * Created: 11/14/13 9:01 AM
  */
 public class DataReaderFactory {
+
+    private DataReaderFactory() {}
+
     public static DataReader createFileOrDereferenceReader(String filenameOrUri) {
         return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
     }
