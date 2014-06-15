@@ -19,7 +19,8 @@ import java.util.ArrayList;
  */
 public final class PatternUtils {
 
-    private PatternUtils() {}
+    private PatternUtils() {
+    }
 
     public static java.util.Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
         java.util.Collection<Pattern> patterns = new ArrayList<Pattern>();
@@ -83,8 +84,7 @@ public final class PatternUtils {
             Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
             if (pat.isValid()) {
                 patterns.add(pat);
-            }
-            else {
+            } else {
                 //TODO logger
                 System.err.println("Pattern not valid: " + pat.getId());
                 System.exit(-1);

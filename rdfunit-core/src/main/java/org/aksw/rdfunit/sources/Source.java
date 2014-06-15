@@ -67,8 +67,7 @@ public abstract class Source implements Comparable<Source> {
     public int compareTo(Source o) {
         if (this.getPrefix().equals(o.getPrefix()) && this.getUri().equals(o.getUri())) {
             return 0;
-        }
-        else {
+        } else {
             return this.getPrefix().compareTo(o.getPrefix());
         }
     }

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 public final class RDFUnitUtils {
     private static final Logger log = LoggerFactory.getLogger(RDFUnitUtils.class);
 
-    private RDFUnitUtils() {}
+    private RDFUnitUtils() {
+    }
 
     public static String getAllPrefixes() {
         return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
@@ -49,6 +50,7 @@ public final class RDFUnitUtils {
             log.error("File " + additionalCSV + " not fount!", e);
         }
     }
+
     public static void fillSchemaServiceFromFile(InputStream additionalCSV) {
 
         int count = 0;

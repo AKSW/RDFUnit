@@ -56,7 +56,7 @@ public class ValidateUtils {
 
     public static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) throws ParameterException {
 
-        if ( !commandLine.hasOption("d") || !commandLine.hasOption("s")) {
+        if (!commandLine.hasOption("d") || !commandLine.hasOption("s")) {
             throw new ParameterException("Error: Required arguments are missing.");
 
         }

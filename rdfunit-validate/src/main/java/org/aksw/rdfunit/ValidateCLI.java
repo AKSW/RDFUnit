@@ -13,9 +13,10 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
-import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
-import org.apache.commons.cli.*;
+import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.HelpFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,6 @@ import java.util.Arrays;
  */
 public class ValidateCLI {
     private static final Logger log = LoggerFactory.getLogger(ValidateCLI.class);
-
 
 
     public static void main(String[] args) throws Exception {
@@ -53,8 +53,7 @@ public class ValidateCLI {
             String message = e.getMessage();
             if (message != null) {
                 displayHelpAndExit(message);
-            }
-            else {
+            } else {
                 displayHelpAndExit();
             }
         }

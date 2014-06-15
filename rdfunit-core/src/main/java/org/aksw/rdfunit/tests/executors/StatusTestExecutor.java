@@ -20,7 +20,7 @@ import java.util.Arrays;
  */
 public class StatusTestExecutor extends TestExecutor {
     @Override
-    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException{
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 
         TestCaseResultStatus status = TestCaseResultStatus.Error;
         QueryExecution qe = null;
@@ -31,8 +31,7 @@ public class StatusTestExecutor extends TestExecutor {
 
             if (fail) {
                 status = TestCaseResultStatus.Fail;
-            }
-            else {
+            } else {
                 status = TestCaseResultStatus.Success;
             }
 

@@ -29,8 +29,7 @@ public class DataFirstSuccessReader extends DataReader {
                 message += "\n";
                 if (e.getMessage() != null) {
                     message += e.getMessage();
-                }
-                else {
+                } else {
                     message += e.toString();
                 }
             }

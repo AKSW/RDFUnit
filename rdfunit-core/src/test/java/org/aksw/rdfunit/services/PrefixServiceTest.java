@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PrefixServiceTest {
 
@@ -21,13 +21,13 @@ public class PrefixServiceTest {
         }
         // Update Prefix Service
         Map<String, String> prefixes = prefixModel.getNsPrefixMap();
-        for (String id: prefixes.keySet()) {
+        for (String id : prefixes.keySet()) {
             // All entries should match
             String uri = PrefixService.getPrefix(id);
             assertEquals("All prefixed should be initialized", uri, prefixes.get(id));
         }
 
         // The size should be the same
-        assertEquals("mismatch in size of prefixes", prefixes.size(),PrefixService.getPrefixList().size());
+        assertEquals("mismatch in size of prefixes", prefixes.size(), PrefixService.getPrefixList().size());
     }
 }

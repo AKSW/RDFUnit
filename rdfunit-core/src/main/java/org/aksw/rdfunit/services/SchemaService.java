@@ -37,8 +37,7 @@ public final class SchemaService {
             // If not a prefix try to dereference it
             if (id.contains("/") || id.contains("\\")) {
                 return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(id), id);
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -47,15 +46,13 @@ public final class SchemaService {
         if (split.length == 2) {
             if (baseFolder != null) {
                 return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0], split[1]);
-            }
-            else {
+            } else {
                 return SourceFactory.createSchemaSourceDereference(id, split[0], split[1]);
             }
         } else {
             if (baseFolder != null) {
                 return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0]);
-            }
-            else {
+            } else {
                 return SourceFactory.createSchemaSourceDereference(id, split[0]);
             }
         }
@@ -78,8 +75,7 @@ public final class SchemaService {
 
         if (fileCache) {
             return getSourceList(baseFolder, prefixes);
-        }
-        else {
+        } else {
             return getSourceList(null, prefixes);
         }
     }

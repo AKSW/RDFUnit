@@ -10,7 +10,8 @@ import java.util.Collection;
  */
 public final class DataReaderFactory {
 
-    private DataReaderFactory() {}
+    private DataReaderFactory() {
+    }
 
     public static DataReader createFileOrDereferenceReader(String filenameOrUri) {
         return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
@@ -38,6 +39,7 @@ public final class DataReaderFactory {
 
     /**
      * Generates a Dereference reader. This can be either a remote url, a local file or a resource
+     *
      * @param uri
      * @return a DataFirstSuccessReader that tries to resolve 1) remote 2) local 3) resources
      */
@@ -45,8 +47,7 @@ public final class DataReaderFactory {
         Collection<DataReader> readers = new ArrayList<>();
         if (uri.contains("://")) {
             readers.add(new RDFDereferenceReader(uri));
-        }
-        else {
+        } else {
             readers.add(new RDFStreamReader(uri));
             readers.add(new RDFStreamReader(DataReaderFactory.class.getResourceAsStream(uri)));
         }

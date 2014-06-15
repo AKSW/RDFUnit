@@ -57,8 +57,8 @@ public class Binding {
             return true;
         }
         if (value.isResource() && pc.equals(PatternParameterConstraints.Resource) ||
-                    pc.equals(PatternParameterConstraints.Property) ||
-                    pc.equals(PatternParameterConstraints.Class)) {
+                pc.equals(PatternParameterConstraints.Property) ||
+                pc.equals(PatternParameterConstraints.Class)) {
             return true;
         }
         if (value.isLiteral() && pc.equals(PatternParameterConstraints.Operator)) {

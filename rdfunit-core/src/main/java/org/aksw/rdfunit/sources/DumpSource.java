@@ -6,9 +6,9 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
+import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.io.DataReaderFactory;
 import org.aksw.rdfunit.io.RDFDereferenceReader;
-import org.aksw.rdfunit.io.DataReader;
 
 /**
  * User: Dimitris Kontokostas

@@ -3,13 +3,10 @@ package org.aksw.rdfunit;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;
-import org.aksw.rdfunit.sources.Source;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Options;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,14 +19,14 @@ public class ValidateUtilsTest {
     public void testGetConfigurationFromArguments() throws Exception {
         Options cliOptions = ValidateUtils.getCliOptions();
 
-        String args ="";
+        String args = "";
         RDFUnitConfiguration configuration = null;
         CommandLine commandLine = null;
         CommandLineParser cliParser = new GnuParser();
 
         // Set two dummy schemas for testing
-        SchemaService.addSchemaDecl("rdfs","http://www.w3.org/2000/01/rdf-schema#");
-        SchemaService.addSchemaDecl("owl","http://www.w3.org/2002/07/owl#");
+        SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
 
         args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -s rdfs,owl -p dbo";
         commandLine = cliParser.parse(cliOptions, args.split(" "));
@@ -76,7 +73,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.isCalculateCoverageEnabled(), true);
 
         // Expect exception for missing -d
-        HashMap<String,String> exceptionsExpected = new HashMap<>();
+        HashMap<String, String> exceptionsExpected = new HashMap<>();
         exceptionsExpected.put(
                 " -s rdf ",
                 "Expected exception for missing -d");
@@ -90,13 +87,14 @@ public class ValidateUtilsTest {
                 " -d http://dbpedia.org -e http://dbpedia.org/sparql -s rdf -l log",
                 "Expected exception for asking unusupported -l");
 
-        for (String arg: exceptionsExpected.keySet()) {
+        for (String arg : exceptionsExpected.keySet()) {
 
             try {
                 commandLine = cliParser.parse(cliOptions, arg.split(" "));
                 configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
                 fail(exceptionsExpected.get(arg));
-            } catch (ParameterException e) {}
+            } catch (ParameterException e) {
+            }
         }
 
 

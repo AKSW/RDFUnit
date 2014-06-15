@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class DataFirstSuccessReaderTest {
 
@@ -17,7 +17,8 @@ public class DataFirstSuccessReaderTest {
         try {
             reader.read();
             fail("Should have raised a TripleReaderException");
-        } catch (TripleReaderException e) { }
+        } catch (TripleReaderException e) {
+        }
 
         dataReaders.add(new RDFStreamReader(""));
 
@@ -25,7 +26,8 @@ public class DataFirstSuccessReaderTest {
         try {
             reader.read();
             fail("Should have raised a TripleReaderException");
-        } catch (TripleReaderException e) { }
+        } catch (TripleReaderException e) {
+        }
 
         dataReaders.add(new RDFStreamReader(DataFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
 

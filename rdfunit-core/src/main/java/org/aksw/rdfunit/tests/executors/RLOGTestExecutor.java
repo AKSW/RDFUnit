@@ -39,8 +39,7 @@ public class RLOGTestExecutor extends TestExecutor {
         } catch (QueryExceptionHTTP e) {
             if (SparqlUtils.checkStatusForTimeout(e)) {
                 throw new TestCaseExecutionException(TestCaseResultStatus.Timeout, e);
-            }
-            else {
+            } else {
                 throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
             }
         } catch (Exception e) {

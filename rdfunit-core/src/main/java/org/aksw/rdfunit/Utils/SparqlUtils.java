@@ -20,7 +20,8 @@ import java.util.ArrayList;
  */
 public final class SparqlUtils {
 
-    private SparqlUtils() {}
+    private SparqlUtils() {
+    }
 
     static public java.util.Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
         java.util.Collection<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
@@ -81,8 +82,7 @@ public final class SparqlUtils {
     public static Model getModelFromQueryFactory(QueryExecutionFactory qef) throws Exception {
         if (qef instanceof QueryExecutionFactoryModel) {
             return ((QueryExecutionFactoryModel) qef).getModel();
-        }
-        else {
+        } else {
             QueryExecution qe = null;
             try {
                 qe = qef.createQueryExecution(" CONSTRUCT ?s ?p ?o WHERE { ?s ?p ?o } ");

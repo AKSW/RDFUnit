@@ -61,8 +61,7 @@ public class DatasetSource extends Source {
         // if empty
         if (getSparqlGraphs() == null || getSparqlGraphs().isEmpty()) {
             qef = new QueryExecutionFactoryHttp(getSparqlEndpoint());
-        }
-        else {
+        } else {
             qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraphs());
         }
 

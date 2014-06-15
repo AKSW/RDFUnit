@@ -7,10 +7,11 @@ package org.aksw.rdfunit;
  */
 public class ParameterException extends Exception {
 
-    public ParameterException(String message){
+    public ParameterException(String message) {
         super(message);
     }
-    public ParameterException(String message, Throwable throwable){
-        super(message,throwable);
+
+    public ParameterException(String message, Throwable throwable) {
+        super(message, throwable);
     }
 }

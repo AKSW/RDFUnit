@@ -36,7 +36,8 @@ import java.util.ArrayList;
 public final class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
 
-    private TestUtils() {}
+    private TestUtils() {
+    }
 
     public static java.util.Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
@@ -68,8 +69,7 @@ public final class TestUtils {
             TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid()) {
                 autoGenerators.add(tag);
-            }
-            else {
+            } else {
                 log.error("AutoGenerator not valid: " + tag.getUri());
                 System.exit(-1);
             }
@@ -371,8 +371,7 @@ public final class TestUtils {
         String md5Hash = TestUtils.getMD5FromString(string2hash);
         if (md5Hash == null) {
             testURI += JenaUUID.generate().asString();
-        }
-        else {
+        } else {
             testURI += md5Hash;
         }
         return testURI;

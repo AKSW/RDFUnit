@@ -51,11 +51,11 @@ public class RDFUnitConfiguration {
     /*  */
     private boolean calculateCoverageEnabled = false;
 
-    public RDFUnitConfiguration(String datasetURI, String dataFolder){
+    public RDFUnitConfiguration(String datasetURI, String dataFolder) {
         this(datasetURI, dataFolder, dataFolder + "tests/");
     }
 
-    public RDFUnitConfiguration(String datasetURI, String dataFolder, String testFolder){
+    public RDFUnitConfiguration(String datasetURI, String dataFolder, String testFolder) {
         this.datasetURI = datasetURI;
         this.dataFolder = dataFolder;
         this.testFolder = testFolder;
@@ -83,6 +83,7 @@ public class RDFUnitConfiguration {
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) {
         this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
     }
+
     public void setSchemata(Collection<SchemaSource> schemata) {
         this.schemas = new ArrayList<>();
         this.schemas.addAll(schemata);
@@ -94,7 +95,7 @@ public class RDFUnitConfiguration {
         }
     }
 
-    public Collection<SchemaSource> getAllSchemata(){
+    public Collection<SchemaSource> getAllSchemata() {
         Collection<SchemaSource> allSchemas = new ArrayList<>();
         if (this.schemas != null) {
             allSchemas.addAll(this.schemas);
@@ -124,10 +125,10 @@ public class RDFUnitConfiguration {
                 tmp_customDereferenceURI = customDereferenceURI;
             }
             return new DumpSource(
-                        CacheUtils.getAutoPrefixForURI(datasetURI),
-                        datasetURI,
-                        tmp_customDereferenceURI,
-                        getAllSchemata());
+                    CacheUtils.getAutoPrefixForURI(datasetURI),
+                    datasetURI,
+                    tmp_customDereferenceURI,
+                    getAllSchemata());
         }
     }
 

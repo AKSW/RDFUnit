@@ -9,8 +9,8 @@ import org.aksw.rdfunit.io.HTMLResultsWriter;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
-import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
+import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
@@ -104,7 +104,6 @@ public class ValidateWS extends HttpServlet {
         }
 
 
-
         final Source dataset = configuration.getTestSource();
         /* </cliStuff> */
 
@@ -141,7 +140,7 @@ public class ValidateWS extends HttpServlet {
         // do nothing.
     }
 
-    private synchronized TestSuite getTestSuite(RDFUnitConfiguration configuration, final Source dataset){
+    private synchronized TestSuite getTestSuite(RDFUnitConfiguration configuration, final Source dataset) {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
         return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
     }
@@ -151,7 +150,7 @@ public class ValidateWS extends HttpServlet {
         PrintWriter printWriter = httpServletResponse.getWriter();
 
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(printWriter, 200, "/validate?", "<pre>", ValidateUtils.getCliOptions(), 0,0,"</pre>");
+        formatter.printHelp(printWriter, 200, "/validate?", "<pre>", ValidateUtils.getCliOptions(), 0, 0, "</pre>");
     }
 
     private void printMessage(HttpServletResponse httpServletResponse, String message) throws IOException {
@@ -163,7 +162,7 @@ public class ValidateWS extends HttpServlet {
         //out.close();
     }
 
-    private static String [] convertArgumentsToStringArray(HttpServletRequest httpServletRequest) {
+    private static String[] convertArgumentsToStringArray(HttpServletRequest httpServletRequest) {
         //twice the size to split key value
         String[] args = new String[httpServletRequest.getParameterMap().size() * 2];
 

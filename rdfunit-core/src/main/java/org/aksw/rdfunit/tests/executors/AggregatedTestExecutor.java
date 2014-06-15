@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class AggregatedTestExecutor extends TestExecutor {
 
     @Override
-    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException{
+    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
         int total = -1, prevalence = -1;
 
         try {
@@ -28,8 +28,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         } catch (QueryExceptionHTTP e) {
             if (SparqlUtils.checkStatusForTimeout(e)) {
                 prevalence = -1;
-            }
-            else {
+            } else {
                 prevalence = -2;
             }
         } catch (Exception e) {
@@ -43,8 +42,7 @@ public class AggregatedTestExecutor extends TestExecutor {
             } catch (QueryExceptionHTTP e) {
                 if (SparqlUtils.checkStatusForTimeout(e)) {
                     total = -1;
-                }
-                else {
+                } else {
                     total = -2;
                 }
             } catch (Exception e) {

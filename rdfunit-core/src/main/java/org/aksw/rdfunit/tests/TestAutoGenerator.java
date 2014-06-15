@@ -107,8 +107,7 @@ public class TestAutoGenerator {
 
             if (row.get("DESCRIPTION") != null) {
                 description = row.get("DESCRIPTION").toString();
-            }
-            else {
+            } else {
                 log.error("No ?DESCRIPTION variable found in AutoGenerator: " + this.getUri());
                 continue;
             }
