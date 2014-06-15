@@ -15,7 +15,7 @@ import java.util.Set;
  * Created: 10/1/13 7:06 PM
  */
 public class PrefixService {
-    final private static HashMap<String, String> prefixes = new HashMap<String, String>();
+    final private static Map<String, String> prefixes = new HashMap<String, String>();
 
 
     private PrefixService() {
@@ -37,7 +37,7 @@ public class PrefixService {
         return getPrefixes();
     }
 
-    public static HashMap<String, String> getPrefixes() {
+    public static Map<String, String> getPrefixes() {
         // initialize prefixes on first run
         if (prefixes.isEmpty())
             synchronized (PrefixService.class) {

@@ -7,6 +7,7 @@ import org.aksw.rdfunit.sources.SourceFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -14,7 +15,7 @@ import java.util.HashMap;
  * Created: 10/2/13 12:24 PM
  */
 public class SchemaService {
-    final private static HashMap<String, String> schemata = new HashMap<String, String>();
+    final private static Map<String, String> schemata = new HashMap<String, String>();
 
     private SchemaService() {
     }

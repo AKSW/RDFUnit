@@ -3,6 +3,7 @@ package org.aksw.rdfunit.services;
 import org.aksw.rdfunit.patterns.Pattern;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Set;
  * Created: 9/20/13 2:52 PM
  */
 public class PatternService {
-    final private static HashMap<String, Pattern> patterns = new HashMap<String, Pattern>();
+    final private static Map<String, Pattern> patterns = new HashMap<String, Pattern>();
 
 
     private PatternService() {
