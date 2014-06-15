@@ -53,16 +53,13 @@ public class Binding {
         PatternParameterConstraints pc = parameter.getConstrain();
         if (pc.equals(PatternParameterConstraints.None))
             return true;
-        if (value.isResource()) {
-            if (pc.equals(PatternParameterConstraints.Resource) ||
+        if (value.isResource() && pc.equals(PatternParameterConstraints.Resource) ||
                     pc.equals(PatternParameterConstraints.Property) ||
-                    pc.equals(PatternParameterConstraints.Class))
-                return true;
+                    pc.equals(PatternParameterConstraints.Class)) {
+            return true;
         }
-        if (value.isLiteral()) {
-            if (pc.equals(PatternParameterConstraints.Operator)) {
-                return true;
-            }
+        if (value.isLiteral() && pc.equals(PatternParameterConstraints.Operator)) {
+            return true;
         }
 
         // TODO check for more
