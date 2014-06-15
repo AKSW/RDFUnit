@@ -43,16 +43,19 @@ public class RDFFileWriter extends DataWriter {
         try {
             File file = new File(filename);
 
-            if (file.exists() && skipIfExists)
+            if (file.exists() && skipIfExists) {
                 return;
+            }
 
-            if (file.exists() && !overwrite)
+            if (file.exists() && !overwrite) {
                 throw new TripleWriterException("File already exists and cannot overwrite");
+            }
 
             if (createParentDirectories) {
                 File parentF = file.getParentFile();
-                if (parentF != null && !parentF.exists())
+                if (parentF != null && !parentF.exists()) {
                     file.getParentFile().mkdirs();
+                }
             }
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
             model.setNsPrefixes(PrefixService.getPrefixMap());

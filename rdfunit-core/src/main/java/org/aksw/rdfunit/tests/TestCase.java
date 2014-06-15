@@ -112,23 +112,27 @@ public abstract class TestCase implements Comparable<TestCase> {
         validateSPARQL(getSparqlAsCount(), "SPARQL Count");
         validateSPARQL(getSparqlAsAsk(), "ASK");
         validateSPARQL(getSparqlAnnotated(), "construct");
-        if (!getSparqlPrevalence().trim().equals("")) // Prevalence in not always defined
+        if (!getSparqlPrevalence().trim().equals("")) { // Prevalence in not always defined
             validateSPARQL(getSparqlPrevalence(), "prevalence");
+        }
 
         java.util.Collection<String> vars = getSparqlQuery().getResultVars();
         // check for Resource & message
         boolean hasResource = false;
         for (String v : vars) {
-            if (v.equals("resource"))
+            if (v.equals("resource")) {
                 hasResource = true;
+            }
 
         }
-        if (!hasResource)
+        if (!hasResource) {
             throw new TestCaseInstantiationException("?resource is not included in SELECT for Test: " + testURI);
+        }
 
         // Message is allowed to exist either in SELECT or as a result annotation
-        if (annotation.getDescription().equals(""))
+        if (annotation.getDescription().equals("")) {
             throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testURI);
+        }
 
         if (getLogLevel() == null || getLogLevel().equals("")) {
             throw new TestCaseInstantiationException("No log level included for Test: " + testURI);
@@ -137,7 +141,7 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     private void validateSPARQL(String sparql, String type) throws TestCaseInstantiationException {
         try {
-            Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + sparql);
+            QueryFactory.create(RDFUnitUtils.getAllPrefixes() + sparql);
         } catch (QueryParseException e) {
             String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + RDFUnitUtils.getAllPrefixes() + sparql;
             throw new TestCaseInstantiationException(message, e);

@@ -47,8 +47,9 @@ public abstract class TestExecutor {
                 return new RLOGTestExecutor();
             case extendedTestCaseResult:
                 return new ExtendedTestExecutor();
+            default:
+                return null;
         }
-        return null;
     }
 
     public void execute(Source source, TestSuite testSuite, int delay) {
@@ -88,8 +89,9 @@ public abstract class TestExecutor {
                 if (r instanceof StatusTestCaseResult) {
                     status = ((StatusTestCaseResult) r).getStatus();
                 } else {
-                    if (r instanceof RLOGTestCaseResult)
+                    if (r instanceof RLOGTestCaseResult) {
                         status = TestCaseResultStatus.Fail;
+                    }
                 }
             }
 

@@ -93,8 +93,9 @@ public class TestCaseAnnotation {
             }
         }
         if (pointer != null) {
-            if (logLevel == null || logLevel.equals("")) // Get new value only if testCaseLogLevel doesn't exists
+            if (logLevel == null || logLevel.equals("")) {// Get new value only if testCaseLogLevel doesn't exists
                 logLevel = pointer.getAnnotationValue().toString();
+            }
             resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
         }
 

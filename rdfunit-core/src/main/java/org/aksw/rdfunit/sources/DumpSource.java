@@ -37,8 +37,9 @@ public class DumpSource extends Source {
     public DumpSource(String prefix, String uri, DataReader dumpReader, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
-        if (schemata != null)
+        if (schemata != null) {
             addReferencesSchemata(schemata);
+        }
     }
 
     @Override
@@ -61,7 +62,6 @@ public class DumpSource extends Source {
             }
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
-            e.printStackTrace();
         }
         return new QueryExecutionFactoryModel(model);
     }

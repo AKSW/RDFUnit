@@ -70,13 +70,15 @@ public class TestGeneratorExecutor {
             allTests.addAll(generateAutoTestsForSchemaSource(testFolder, s, autoGenerators));
 
             //Find manual tests for schema
-            if (useManualTests)
+            if (useManualTests) {
                 allTests.addAll(generateManualTestsForSource(testFolder, s));
+            }
         }
 
         //Find manual tests for dataset (if not canceled
-        if (!isCanceled && useManualTests)
+        if (!isCanceled && useManualTests) {
             allTests.addAll(generateManualTestsForSource(testFolder, dataset));
+        }
 
         /*notify start of testing */
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -95,8 +97,9 @@ public class TestGeneratorExecutor {
 
         try {
             String cachedTestsLocation = CacheUtils.getSourceAutoTestFile(testFolder, s);
-            if (!loadFromCache)
+            if (!loadFromCache) {
                 cachedTestsLocation = ""; // non existing path
+            }
             java.util.Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
                     new RDFStreamReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);

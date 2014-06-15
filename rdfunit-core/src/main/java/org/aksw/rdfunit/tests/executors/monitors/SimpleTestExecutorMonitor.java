@@ -33,7 +33,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     private final DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
     final private Model model;
-    final String executionUUID;
+    final private String executionUUID;
 
     private Source testedDataset;
     private TestSuite testSuite;

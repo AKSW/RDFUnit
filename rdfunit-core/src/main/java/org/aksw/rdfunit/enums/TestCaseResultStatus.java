@@ -42,14 +42,18 @@ public enum TestCaseResultStatus {
     }
 
     public static TestCaseResultStatus resolve(long value) {
-        if (value == -2)
+        if (value == -2) {
             return Error;
-        if (value == -1)
+        }
+        if (value == -1) {
             return Timeout;
-        if (value == 0)
+        }
+        if (value == 0) {
             return Success;
-        if (value > 0)
+        }
+        if (value > 0) {
             return Fail;
+        }
         return null;
     }
 }

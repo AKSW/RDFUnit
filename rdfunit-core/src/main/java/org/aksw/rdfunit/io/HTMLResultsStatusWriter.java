@@ -73,8 +73,9 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return results;
@@ -91,7 +92,8 @@ public class HTMLResultsStatusWriter extends HTMLResultsWriter {
                 return "warning";
             case "Error":
                 return "warning";
+            default:
+                return "";
         }
-        return "";
     }
 }

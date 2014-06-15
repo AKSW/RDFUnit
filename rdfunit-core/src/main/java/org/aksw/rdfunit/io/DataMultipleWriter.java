@@ -19,8 +19,9 @@ public class DataMultipleWriter extends DataWriter {
     public void write(QueryExecutionFactory model) throws TripleWriterException {
         //TODO check for early exceptions
         for (DataWriter w : writers) {
-            if (w != null)
+            if (w != null) {
                 w.write(model);
+            }
         }
     }
 }

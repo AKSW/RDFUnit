@@ -26,10 +26,12 @@ public class AggregatedTestExecutor extends TestExecutor {
         try {
             prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
         } catch (QueryExceptionHTTP e) {
-            if (SparqlUtils.checkStatusForTimeout(e))
+            if (SparqlUtils.checkStatusForTimeout(e)) {
                 prevalence = -1;
-            else
+            }
+            else {
                 prevalence = -2;
+            }
         } catch (Exception e) {
             prevalence = -2;
         }
@@ -39,16 +41,19 @@ public class AggregatedTestExecutor extends TestExecutor {
             try {
                 total = getCountNumber(source.getExecutionFactory(), testCase.getSparqlAsCountQuery(), "total");
             } catch (QueryExceptionHTTP e) {
-                if (SparqlUtils.checkStatusForTimeout(e))
+                if (SparqlUtils.checkStatusForTimeout(e)) {
                     total = -1;
-                else
+                }
+                else {
                     total = -2;
+                }
             } catch (Exception e) {
                 total = -2;
             }
-        } else
+        } else {
             // else total will be 0 anyway
             total = 0;
+        }
 
         // No need to throw exception here, class supports status
         return Arrays.<TestCaseResult>asList(new AggregatedTestCaseResult(testCase, total, prevalence));
@@ -71,8 +76,9 @@ public class AggregatedTestExecutor extends TestExecutor {
                 result = qs.get(var).asLiteral().getInt();
             }
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return result;

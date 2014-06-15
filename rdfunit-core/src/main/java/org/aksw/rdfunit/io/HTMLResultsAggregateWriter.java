@@ -72,8 +72,9 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return results;

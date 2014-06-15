@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Description
  * Created: 9/24/13 11:25 AM
  */
-public class RDFUnitUtils {
+public final class RDFUnitUtils {
     private static final Logger log = LoggerFactory.getLogger(RDFUnitUtils.class);
 
     private RDFUnitUtils() {}
@@ -46,7 +46,7 @@ public class RDFUnitUtils {
             InputStream inputStream = new FileInputStream(additionalCSV);
             fillSchemaServiceFromFile(inputStream);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.error("File " + additionalCSV + " not fount!", e);
         }
     }
     public static void fillSchemaServiceFromFile(InputStream additionalCSV) {
@@ -59,7 +59,7 @@ public class RDFUnitUtils {
             try {
                 in = new BufferedReader(new InputStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                log.debug("UnsupportedEncodingException: ", e);
                 return;
             }
 
@@ -68,8 +68,9 @@ public class RDFUnitUtils {
             try {
                 while ((line = in.readLine()) != null) {
                     // skip comments & empty lines
-                    if (line.startsWith("#") || line.trim().isEmpty())
+                    if (line.startsWith("#") || line.trim().isEmpty()) {
                         continue;
+                    }
 
                     count++;
 
@@ -96,7 +97,7 @@ public class RDFUnitUtils {
     }
 
     public static void fillSchemaServiceFromLOV() {
-        java.util.Collection<Source> sources = new ArrayList<Source>();
+
         Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
 
         QueryExecution qe = null;
@@ -140,8 +141,9 @@ public class RDFUnitUtils {
         } catch (Exception e) {
             //TODO log error about lov
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         log.info("Loaded " + count + " schema declarations from LOV SPARQL Endpoint");
@@ -162,8 +164,9 @@ public class RDFUnitUtils {
 
     public static <T> T getFirstItemInCollection(java.util.Collection<T> collection) {
         //noinspection LoopStatementThatDoesntLoop
-        for (T item : collection)
+        for (T item : collection) {
             return item;
+        }
         return null;
     }
 }

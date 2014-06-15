@@ -49,8 +49,9 @@ public abstract class Source implements Comparable<Source> {
 
     public QueryExecutionFactory getExecutionFactory() {
         // TODO not thread safe but minor
-        if (queryFactory == null)
+        if (queryFactory == null) {
             queryFactory = initQueryFactory();
+        }
         return queryFactory;
     }
 
@@ -64,10 +65,12 @@ public abstract class Source implements Comparable<Source> {
 
     @Override
     public int compareTo(Source o) {
-        if (this.getPrefix().equals(o.getPrefix()) && this.getUri().equals(o.getUri()))
+        if (this.getPrefix().equals(o.getPrefix()) && this.getUri().equals(o.getUri())) {
             return 0;
-        else
+        }
+        else {
             return this.getPrefix().compareTo(o.getPrefix());
+        }
     }
 
     @Override

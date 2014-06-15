@@ -27,10 +27,12 @@ public class DataFirstSuccessReader extends DataReader {
                 return;
             } catch (TripleReaderException e) {
                 message += "\n";
-                if (e.getMessage() != null)
+                if (e.getMessage() != null) {
                     message += e.getMessage();
-                else
+                }
+                else {
                     message += e.toString();
+                }
             }
         }
 

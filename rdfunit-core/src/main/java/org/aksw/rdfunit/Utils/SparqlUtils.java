@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Description
  * Created: 1/24/14 6:08 PM
  */
-public class SparqlUtils {
+public final class SparqlUtils {
 
     private SparqlUtils() {}
 
@@ -47,8 +47,9 @@ public class SparqlUtils {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return annotations;
@@ -63,8 +64,9 @@ public class SparqlUtils {
         } catch (Exception e) {
 
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
         return false;
     }
@@ -77,8 +79,9 @@ public class SparqlUtils {
     }
 
     public static Model getModelFromQueryFactory(QueryExecutionFactory qef) throws Exception {
-        if (qef instanceof QueryExecutionFactoryModel)
+        if (qef instanceof QueryExecutionFactoryModel) {
             return ((QueryExecutionFactoryModel) qef).getModel();
+        }
         else {
             QueryExecution qe = null;
             try {
@@ -87,8 +90,9 @@ public class SparqlUtils {
             } catch (Exception e) {
                 throw e;
             } finally {
-                if (qe != null)
+                if (qe != null) {
                     qe.close();
+                }
             }
         }
     }

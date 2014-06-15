@@ -24,8 +24,9 @@ public class Binding {
         this.value = value;
 
         //Validate bibding
-        if (!validateType())
+        if (!validateType()) {
             throw new BindingException("Binding is of incorrect constraint type");
+        }
     }
 
     public String getValue() {
@@ -33,8 +34,9 @@ public class Binding {
             // some vocabularies use spaces in uris
             return "<" + value.toString().trim().replace(" ", "") + ">";
 
-        } else
+        } else {
             return value.toString();
+        }
     }
 
     public String getParameterId() {
@@ -44,15 +46,16 @@ public class Binding {
     public Resource writeToModel(Model model) {
         return model.createResource()
                 .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "Binding"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "parameter"), model.createResource(parameter.getURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "parameter"), model.createResource(parameter.getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "bindingValue"), value);
 
     }
 
     private boolean validateType() {
         PatternParameterConstraints pc = parameter.getConstrain();
-        if (pc.equals(PatternParameterConstraints.None))
+        if (pc.equals(PatternParameterConstraints.None)) {
             return true;
+        }
         if (value.isResource() && pc.equals(PatternParameterConstraints.Resource) ||
                     pc.equals(PatternParameterConstraints.Property) ||
                     pc.equals(PatternParameterConstraints.Class)) {
@@ -67,8 +70,9 @@ public class Binding {
     }
 
     private boolean validatePattern() {
-        if (parameter.getConstraintPattern().equals(""))
+        if (parameter.getConstraintPattern().equals("")) {
             return true;
+        }
         // TODO Check the pattern
         return true;
     }

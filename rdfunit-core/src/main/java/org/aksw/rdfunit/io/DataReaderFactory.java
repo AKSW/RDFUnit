@@ -8,7 +8,7 @@ import java.util.Collection;
  * Description
  * Created: 11/14/13 9:01 AM
  */
-public class DataReaderFactory {
+public final class DataReaderFactory {
 
     private DataReaderFactory() {}
 

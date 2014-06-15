@@ -77,7 +77,6 @@ public abstract class HTMLResultsWriter extends DataWriter {
             outputStream.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
             throw new TripleWriterException("Cannot write HTML", e);
         }
     }
@@ -123,8 +122,9 @@ public abstract class HTMLResultsWriter extends DataWriter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
         return executionURIs;
     }
@@ -159,8 +159,9 @@ public abstract class HTMLResultsWriter extends DataWriter {
                 String property = qs.get("p").toString();
                 RDFNode n = qs.get("o");
                 String object = n.toString();
-                if (n.isLiteral())
+                if (n.isLiteral()) {
                     object = n.asLiteral().getValue().toString();
+                }
                 switch (property) {
                     case "http://rdfunit.aksw.org/ns/core#source":
                         source = object;
@@ -192,13 +193,16 @@ public abstract class HTMLResultsWriter extends DataWriter {
                     case "http://www.w3.org/ns/prov#used":
                         used = object;
                         break;
+                    default:
+                        break;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         stats.append("<dl class=\"dl-horizontal\">");

@@ -11,7 +11,7 @@ import org.aksw.rdfunit.io.RDFDereferenceReader;
  * Source factory
  * Created: 10/3/13 6:45 PM
  */
-public class SourceFactory {
+public final class SourceFactory {
 
     private SourceFactory() {}
 

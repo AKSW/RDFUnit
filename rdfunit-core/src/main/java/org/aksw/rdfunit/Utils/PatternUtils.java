@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Description
  * Created: 9/23/13 11:09 AM
  */
-public class PatternUtils {
+public final class PatternUtils {
 
     private PatternUtils() {}
 
@@ -81,8 +81,9 @@ public class PatternUtils {
             java.util.Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
 
             Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
-            if (pat.isValid())
+            if (pat.isValid()) {
                 patterns.add(pat);
+            }
             else {
                 //TODO logger
                 System.err.println("Pattern not valid: " + pat.getId());

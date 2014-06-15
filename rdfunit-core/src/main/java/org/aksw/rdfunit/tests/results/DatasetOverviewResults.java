@@ -29,8 +29,14 @@ public class DatasetOverviewResults {
     * reset all variables
     * */
     public void reset() {
-        successfullTests = failedTests = timeoutTests = errorTests = individualErrors = 0;
-        startTime = endTime = null;
+        successfullTests = 0;
+        failedTests = 0;
+        timeoutTests = 0;
+        errorTests = 0;
+        individualErrors = 0;
+
+        startTime = null;
+        endTime = null;
     }
 
 
@@ -96,6 +102,5 @@ public class DatasetOverviewResults {
 
     public void setEndTime() {
         this.endTime = new XSDDateTime(Calendar.getInstance());
-        ;
     }
 }

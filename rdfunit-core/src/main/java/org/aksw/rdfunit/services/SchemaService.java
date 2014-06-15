@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.services;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 
@@ -14,7 +13,7 @@ import java.util.Map;
  * Description
  * Created: 10/2/13 12:24 PM
  */
-public class SchemaService {
+public final class SchemaService {
     final private static Map<String, String> schemata = new HashMap<String, String>();
 
     private SchemaService() {
@@ -36,23 +35,29 @@ public class SchemaService {
         String sourceUriURL = schemata.get(id);
         if (sourceUriURL == null) {
             // If not a prefix try to dereference it
-            if (id.contains("/") || id.contains("\\"))
+            if (id.contains("/") || id.contains("\\")) {
                 return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(id), id);
-            else
+            }
+            else {
                 return null;
+            }
         }
 
         String[] split = sourceUriURL.split("\t");
         if (split.length == 2) {
-            if (baseFolder != null)
+            if (baseFolder != null) {
                 return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0], split[1]);
-            else
+            }
+            else {
                 return SourceFactory.createSchemaSourceDereference(id, split[0], split[1]);
+            }
         } else {
-            if (baseFolder != null)
+            if (baseFolder != null) {
                 return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0]);
-            else
+            }
+            else {
                 return SourceFactory.createSchemaSourceDereference(id, split[0]);
+            }
         }
     }
 
@@ -60,8 +65,9 @@ public class SchemaService {
         java.util.Collection<SchemaSource> sources = new ArrayList<SchemaSource>();
         for (String id : ids) {
             SchemaSource src = getSource(baseFolder, id.trim());
-            if (src != null)
+            if (src != null) {
                 sources.add(src);
+            }
         }
         return sources;
     }
@@ -70,10 +76,12 @@ public class SchemaService {
         java.util.Collection<String> prefixes = new ArrayList<String>();
         prefixes.addAll(schemata.keySet());
 
-        if (fileCache)
+        if (fileCache) {
             return getSourceList(baseFolder, prefixes);
-        else
+        }
+        else {
             return getSourceList(null, prefixes);
+        }
     }
 }
 

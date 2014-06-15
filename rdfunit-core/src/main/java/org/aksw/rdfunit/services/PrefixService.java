@@ -2,9 +2,7 @@ package org.aksw.rdfunit.services;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.jena_sparql_api.cache.staging.CacheBackendDao;
 
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +12,7 @@ import java.util.Set;
  * Keeps a list of all prefixes used in the project
  * Created: 10/1/13 7:06 PM
  */
-public class PrefixService {
+public final class PrefixService {
     final private static Map<String, String> prefixes = new HashMap<String, String>();
 
 
@@ -39,7 +37,7 @@ public class PrefixService {
 
     public static Map<String, String> getPrefixes() {
         // initialize prefixes on first run
-        if (prefixes.isEmpty())
+        if (prefixes.isEmpty()) {
             synchronized (PrefixService.class) {
                 if (prefixes.isEmpty()) {
                     Model prefixModel = ModelFactory.createDefaultModel();
@@ -51,11 +49,12 @@ public class PrefixService {
 
                     // Update Prefix Service
                     Map<String, String> prf = prefixModel.getNsPrefixMap();
-                    for (String id : prf.keySet()) {
-                        prefixes.put(id, prf.get(id));
+                    for (Map.Entry<String, String> entry : prf.entrySet()) {
+                        prefixes.put(entry.getKey(), entry.getValue());
                     }
                 }
             }
+        }
         return prefixes;
     }
 }

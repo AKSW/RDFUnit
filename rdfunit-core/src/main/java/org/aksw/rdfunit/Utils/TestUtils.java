@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * Various utility test functions for tests
  * Created: 9/24/13 10:59 AM
  */
-public class TestUtils {
+public final class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
 
     private TestUtils() {}
@@ -66,10 +66,11 @@ public class TestUtils {
             java.util.Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
 
             TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
-            if (tag.isValid())
+            if (tag.isValid()) {
                 autoGenerators.add(tag);
+            }
             else {
-                log.error("AutoGenerator not valid: " + tag.getURI());
+                log.error("AutoGenerator not valid: " + tag.getUri());
                 System.exit(-1);
             }
         }
@@ -107,8 +108,9 @@ public class TestUtils {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
             ManualTestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
-            if (tc != null)
+            if (tc != null) {
                 tests.add(tc);
+            }
         }
 
         // Get all pattern based tests
@@ -124,8 +126,9 @@ public class TestUtils {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
             PatternBasedTestCase tc = instantiateSinglePatternTestFromModel(qef, testURI);
-            if (tc != null)
+            if (tc != null) {
                 tests.add(tc);
+            }
         }
 
         return tests;
@@ -162,8 +165,9 @@ public class TestUtils {
                 String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
                 java.util.Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 String testGenerator = "";
-                if (qs.contains("testGenerator"))
+                if (qs.contains("testGenerator")) {
                     testGenerator = qs.get("testGenerator").toString();
+                }
 
                 // Get annotations from Test URI
                 java.util.Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
@@ -179,21 +183,22 @@ public class TestUtils {
                                 testCaseLogLevel,
                                 resultAnnotations);
 
-                if (!results.hasNext())
+                if (!results.hasNext()) {
                     return new ManualTestCase(
                             testURI,
                             annotation,
                             sparqlWhere,
                             sparqlPrevalence);
+                }
             }
         } catch (TestCaseInstantiationException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         log.error("Cannot instantiate test case: " + testURI);
@@ -238,8 +243,9 @@ public class TestUtils {
                 java.util.Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 java.util.Collection<Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
                 String testGenerator = "";
-                if (qs.contains("testGenerator"))
+                if (qs.contains("testGenerator")) {
                     testGenerator = qs.get("testGenerator").toString();
+                }
 
                 // Get annotations from Test URI
                 java.util.Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
@@ -255,21 +261,22 @@ public class TestUtils {
                                 testCaseLogLevel,
                                 resultAnnotations);
 
-                if (!results.hasNext())
+                if (!results.hasNext()) {
                     return new PatternBasedTestCase(
                             testURI,
                             annotation,
                             pattern,
                             bindings);
+                }
             }
         } catch (TestCaseInstantiationException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         log.error("Cannot instantiate test case: " + testURI);
@@ -278,8 +285,9 @@ public class TestUtils {
 
     public static void writeTestsToFile(java.util.Collection<TestCase> tests, DataWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
-        for (TestCase t : tests)
+        for (TestCase t : tests) {
             t.serialize(model);
+        }
         try {
             model.setNsPrefixes(PrefixService.getPrefixMap());
             testCache.write(model);
@@ -306,8 +314,9 @@ public class TestUtils {
                 references.add(qs.get("references").toString());
             }
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
         return references;
     }
@@ -346,8 +355,9 @@ public class TestUtils {
                 }
             }
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
         return bindings;
     }
@@ -355,18 +365,21 @@ public class TestUtils {
     public static String generateTestURI(String sourcePrefix, Pattern pattern, java.util.Collection<Binding> bindings, String generatorURI) {
         String testURI = PrefixService.getPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         String string2hash = generatorURI;
-        for (Binding binding : bindings)
+        for (Binding binding : bindings) {
             string2hash += binding.getValue();
-        String md5Hash = TestUtils.MD5(string2hash);
-        if (md5Hash == null)
+        }
+        String md5Hash = TestUtils.getMD5FromString(string2hash);
+        if (md5Hash == null) {
             testURI += JenaUUID.generate().asString();
-        else
+        }
+        else {
             testURI += md5Hash;
+        }
         return testURI;
     }
 
     // Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
-    public static String MD5(String md5) {
+    public static String getMD5FromString(String md5) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
             byte[] array = md.digest(md5.getBytes());

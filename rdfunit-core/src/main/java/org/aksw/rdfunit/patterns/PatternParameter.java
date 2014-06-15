@@ -8,20 +8,20 @@ import org.aksw.rdfunit.enums.PatternParameterConstraints;
  * Created: 9/20/13 2:47 PM
  */
 public class PatternParameter {
-    private final String URI;
+    private final String uri;
     private final String id;
     private final PatternParameterConstraints constrain;
     private final String constraintPattern;
 
     public PatternParameter(String uri, String id, PatternParameterConstraints constrain, String constraintPattern) {
-        URI = uri;
+        this.uri = uri;
         this.id = id;
         this.constrain = constrain;
         this.constraintPattern = constraintPattern;
     }
 
-    public String getURI() {
-        return URI;
+    public String getUri() {
+        return uri;
     }
 
     public String getId() {

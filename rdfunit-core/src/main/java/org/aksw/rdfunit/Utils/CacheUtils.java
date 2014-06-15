@@ -10,7 +10,7 @@ import java.net.URI;
  * Description
  * Created: 11/14/13 9:17 AM
  */
-public class CacheUtils {
+public final class CacheUtils {
 
     private CacheUtils() {}
 

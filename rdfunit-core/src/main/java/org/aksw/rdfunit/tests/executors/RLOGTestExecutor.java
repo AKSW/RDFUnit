@@ -37,15 +37,18 @@ public class RLOGTestExecutor extends TestExecutor {
 
             }
         } catch (QueryExceptionHTTP e) {
-            if (SparqlUtils.checkStatusForTimeout(e))
+            if (SparqlUtils.checkStatusForTimeout(e)) {
                 throw new TestCaseExecutionException(TestCaseResultStatus.Timeout, e);
-            else
+            }
+            else {
                 throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
+            }
         } catch (Exception e) {
             throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return testCaseResults;
@@ -55,8 +58,9 @@ public class RLOGTestExecutor extends TestExecutor {
     protected TestCaseResult generateSingleResult(QuerySolution qs, TestCase testCase) {
         String resource = qs.get("resource").toString();
         String message = testCase.getResultMessage();
-        if (qs.contains("message"))
+        if (qs.contains("message")) {
             message = qs.get("message").toString();
+        }
         String logLevel = testCase.getLogLevel();
 
         return new RLOGTestCaseResult(testCase, resource, message, logLevel);

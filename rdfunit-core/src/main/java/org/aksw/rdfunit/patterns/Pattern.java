@@ -25,12 +25,14 @@ public class Pattern {
     }
 
     public boolean isValid() {
-        if (getParameters() == null || getParameters().size() == 0)
+        if (getParameters() == null || getParameters().size() == 0) {
             return false;
+        }
         //check if defined parameters exist is sparql
         for (PatternParameter p : getParameters()) {
-            if (!getSparqlWherePattern().contains("%%" + p.getId() + "%%"))
+            if (!getSparqlWherePattern().contains("%%" + p.getId() + "%%")) {
                 return false;
+            }
         }
         // TODO search if we need more parameters
         return true;
@@ -66,8 +68,9 @@ public class Pattern {
 
     public PatternParameter getParameter(String parameterURI) {
         for (PatternParameter parameter : parameters) {
-            if (parameter.getURI().equals(parameterURI))
+            if (parameter.getUri().equals(parameterURI)) {
                 return parameter;
+            }
         }
         return null;
     }

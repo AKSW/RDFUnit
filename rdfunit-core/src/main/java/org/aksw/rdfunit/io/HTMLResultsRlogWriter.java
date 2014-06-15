@@ -69,6 +69,7 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                     case "Notice":
                         rowClass = "info";
                         break;
+                    default:
                 }
                 String row = String.format(template,
                         rowClass,
@@ -82,8 +83,9 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return results;

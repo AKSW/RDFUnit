@@ -11,7 +11,7 @@ import java.util.Set;
  * class that contains instances of all patterns
  * Created: 9/20/13 2:52 PM
  */
-public class PatternService {
+public final class PatternService {
     final private static Map<String, Pattern> patterns = new HashMap<String, Pattern>();
 
 

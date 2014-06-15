@@ -40,8 +40,9 @@ public class DatasetSource extends Source {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = new ArrayList<String>(sparqlGraph);
-        if (schemata != null)
+        if (schemata != null) {
             addReferencesSchemata(schemata);
+        }
     }
 
     public DatasetSource(DatasetSource source) {
@@ -58,10 +59,12 @@ public class DatasetSource extends Source {
 
         QueryExecutionFactory qef;
         // if empty
-        if (getSparqlGraphs() == null || getSparqlGraphs().isEmpty())
+        if (getSparqlGraphs() == null || getSparqlGraphs().isEmpty()) {
             qef = new QueryExecutionFactoryHttp(getSparqlEndpoint());
-        else
+        }
+        else {
             qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraphs());
+        }
 
 
         // Add delay in order to be nice to the remote server (delay in milli seconds)

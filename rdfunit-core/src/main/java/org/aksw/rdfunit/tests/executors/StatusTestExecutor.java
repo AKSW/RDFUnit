@@ -29,19 +29,23 @@ public class StatusTestExecutor extends TestExecutor {
             qe = source.getExecutionFactory().createQueryExecution(testCase.getSparqlAsAskQuery());
             boolean fail = qe.execAsk();
 
-            if (fail)
+            if (fail) {
                 status = TestCaseResultStatus.Fail;
-            else
+            }
+            else {
                 status = TestCaseResultStatus.Success;
+            }
 
         } catch (QueryExceptionHTTP e) {
             // No need to throw exception here, class supports status
-            if (SparqlUtils.checkStatusForTimeout(e))
+            if (SparqlUtils.checkStatusForTimeout(e)) {
                 status = TestCaseResultStatus.Timeout;
+            }
 
         } finally {
-            if (qe != null)
+            if (qe != null) {
                 qe.close();
+            }
         }
 
         return Arrays.<TestCaseResult>asList(new StatusTestCaseResult(testCase, status));
