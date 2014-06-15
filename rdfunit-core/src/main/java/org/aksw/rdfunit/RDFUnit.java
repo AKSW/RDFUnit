@@ -39,7 +39,7 @@ public class RDFUnit {
             patterReader.read(patternModel);
             testGeneratorReader.read(patternModel);
         } catch (TripleReaderException e) {
-            throw new TripleReaderException(e.getMessage());
+            throw new TripleReaderException(e.getMessage(), e);
         }
         patternModel.setNsPrefixes(PrefixService.getPrefixMap());
         this.patternQueryFactory = new QueryExecutionFactoryModel(patternModel);

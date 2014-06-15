@@ -45,7 +45,7 @@ public class RDFStringWriter extends DataWriter {
             model.write(out, format);
             str.append(out.toString());
         } catch (Exception e) {
-            throw new TripleWriterException(e.getMessage());
+            throw new TripleWriterException(e.getMessage(), e);
         }
 
     }

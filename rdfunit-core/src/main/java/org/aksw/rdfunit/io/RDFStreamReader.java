@@ -38,7 +38,7 @@ public class RDFStreamReader extends DataReader {
         try {
             model.read(inputStream, null, format);
         } catch (Exception e) {
-            throw new TripleReaderException(e.getMessage());
+            throw new TripleReaderException(e.getMessage(), e);
         }
 
     }

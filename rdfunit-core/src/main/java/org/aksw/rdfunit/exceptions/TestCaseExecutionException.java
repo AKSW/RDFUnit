@@ -11,7 +11,8 @@ public class TestCaseExecutionException extends Exception {
 
     private final TestCaseResultStatus status;
 
-    public TestCaseExecutionException(TestCaseResultStatus status) {
+    public TestCaseExecutionException(TestCaseResultStatus status, Throwable e) {
+        super(e);
         this.status = status;
     }
 

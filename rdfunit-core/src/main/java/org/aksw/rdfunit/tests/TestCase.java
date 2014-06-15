@@ -139,7 +139,8 @@ public abstract class TestCase implements Comparable<TestCase> {
         try {
             Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + sparql);
         } catch (QueryParseException e) {
-            throw new TestCaseInstantiationException("QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + RDFUnitUtils.getAllPrefixes() + sparql);
+            String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + RDFUnitUtils.getAllPrefixes() + sparql;
+            throw new TestCaseInstantiationException(message, e);
         }
     }
 

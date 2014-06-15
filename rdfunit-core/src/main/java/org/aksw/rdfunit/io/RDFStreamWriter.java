@@ -37,7 +37,7 @@ public class RDFStreamWriter extends DataWriter {
             model.write(outputStream, filetype);
 
         } catch (Exception e) {
-            throw new TripleWriterException("Error writing in OutputStream: " + e.getMessage());
+            throw new TripleWriterException("Error writing in OutputStream: " + e.getMessage(), e);
         }
     }
 
