@@ -10,7 +10,7 @@ import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
-import org.aksw.rdfunit.tests.executors.TestGeneratorExecutor;
+import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 
 import java.io.File;
 import java.util.ArrayList;

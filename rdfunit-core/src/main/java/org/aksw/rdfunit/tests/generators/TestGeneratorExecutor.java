@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests.executors;
+package org.aksw.rdfunit.tests.generators;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
@@ -12,7 +12,7 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
-import org.aksw.rdfunit.tests.executors.monitors.TestGeneratorExecutorMonitor;
+import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
