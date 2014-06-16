@@ -41,7 +41,7 @@ public class RDFStringWriter extends DataWriter {
 
             StringWriter out = new StringWriter();
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
-            model.setNsPrefixes(PrefixService.getPrefixMap());
+            PrefixService.setNSPrefixesInModel(model);
             model.write(out, format);
             str.append(out.toString());
         } catch (Exception e) {

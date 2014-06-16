@@ -289,7 +289,7 @@ public final class TestUtils {
             t.serialize(model);
         }
         try {
-            model.setNsPrefixes(PrefixService.getPrefixMap());
+            PrefixService.setNSPrefixesInModel(model);
             testCache.write(model);
         } catch (TripleWriterException e) {
             log.error("Cannot cache tests: " + e.getMessage());

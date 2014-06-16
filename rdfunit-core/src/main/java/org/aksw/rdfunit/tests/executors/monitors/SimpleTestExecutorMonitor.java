@@ -55,7 +55,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     public SimpleTestExecutorMonitor(Model model, boolean loggingEnabled) {
         this.model = model;
         this.loggingEnabled = loggingEnabled;
-        model.setNsPrefixes(PrefixService.getPrefixMap());
+        PrefixService.setNSPrefixesInModel(model);
         executionUUID = JenaUUID.generate().asString();
     }
 

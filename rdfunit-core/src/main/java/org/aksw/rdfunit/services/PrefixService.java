@@ -11,7 +11,8 @@ import java.util.Set;
 
 /**
  * User: Dimitris Kontokostas
- * Keeps a list of all prefixes used in the project
+ * Keeps a list of all prefixes used in the project.
+ * In addition it is used to generate the SPARQL prefixes for all the queries and set the NS Prefix Map is a Model
  * Created: 10/1/13 7:06 PM
  */
 public final class PrefixService {
@@ -42,8 +43,8 @@ public final class PrefixService {
         return getPrefixes().keySet();
     }
 
-    public static Map<String, String> getPrefixMap() {
-        return getPrefixes();
+    public static void setNSPrefixesInModel(Model model) {
+        model.setNsPrefixes(getPrefixMap());
     }
 
     public static String getSparqlPrefixDecl() {
@@ -64,6 +65,10 @@ public final class PrefixService {
         }
         return sparqlPrefixDecl;
 
+    }
+
+    private static Map<String, String> getPrefixMap() {
+        return getPrefixes();
     }
 
     private static BidiMap<String, String> getPrefixes() {

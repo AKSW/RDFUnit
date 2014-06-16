@@ -58,7 +58,7 @@ public class RDFFileWriter extends DataWriter {
                 }
             }
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
-            model.setNsPrefixes(PrefixService.getPrefixMap());
+            PrefixService.setNSPrefixesInModel(model);
             model.write(new FileOutputStream(file), filetype);
 
         } catch (Exception e) {

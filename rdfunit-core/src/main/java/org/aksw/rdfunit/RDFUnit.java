@@ -41,7 +41,8 @@ public class RDFUnit {
         } catch (TripleReaderException e) {
             throw new TripleReaderException(e.getMessage(), e);
         }
-        patternModel.setNsPrefixes(PrefixService.getPrefixMap());
+
+        PrefixService.setNSPrefixesInModel(patternModel);
         this.patternQueryFactory = new QueryExecutionFactoryModel(patternModel);
         this.patterns = getPatterns();
 

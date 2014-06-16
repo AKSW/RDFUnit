@@ -33,7 +33,7 @@ public class RDFStreamWriter extends DataWriter {
     public void write(QueryExecutionFactory qef) throws TripleWriterException {
         try {
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
-            model.setNsPrefixes(PrefixService.getPrefixMap());
+            PrefixService.setNSPrefixesInModel(model);
             model.write(outputStream, filetype);
 
         } catch (Exception e) {
