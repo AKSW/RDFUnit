@@ -14,6 +14,7 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class RDFUnitWrapperForNIF {
             // Reader the nif ontology either from a resource or, if it fails, dereference it from the URI
             Collection<DataReader> nifReaderList = new ArrayList<>();
             nifReaderList.add(new RDFStreamReader(RDFUnitWrapperForNIF.class.getResourceAsStream("org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl")));
-            nifReaderList.add(new RDFDereferenceReader(nifOntologyURI));
+            nifReaderList.add(DataReaderFactory.createDereferenceReader(nifOntologyURI));
 
             nifOntologyReader = new DataFirstSuccessReader(nifReaderList);
         }
@@ -106,7 +107,7 @@ public class RDFUnitWrapperForNIF {
 
         final boolean enableRDFUnitLogging = false;
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
-        TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.rlogTestCaseResult);
+        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(TestCaseExecutionType.rlogTestCaseResult);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         Source modelSource = new DumpSource(

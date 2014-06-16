@@ -9,6 +9,7 @@ import org.aksw.rdfunit.io.HTMLResultsWriter;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.apache.commons.cli.CommandLine;
@@ -111,7 +112,7 @@ public class ValidateWS extends HttpServlet {
         TestSuite testSuite = getTestSuite(configuration, dataset);
 
 
-        final TestExecutor testExecutor = TestExecutor.initExecutorFactory(configuration.getResultLevelReporting());
+        final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getResultLevelReporting());
         if (testExecutor == null) {
             printMessage(httpServletResponse, "Cannot initialize test executor. Exiting");
             httpServletResponse.getWriter().close();

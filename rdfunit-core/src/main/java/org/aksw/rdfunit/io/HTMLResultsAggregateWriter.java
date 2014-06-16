@@ -34,7 +34,7 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
 
-        String sparql = RDFUnitUtils.getAllPrefixes() +
+        String sparql = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?resultStatus ?testcase ?resultCount ?resultPrevalence WHERE {" +
                 " ?s a rut:AggregatedTestResult ; " +
                 "    rut:resultStatus ?resultStatus ; " +
@@ -57,13 +57,13 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
                 String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
 
-                String statusShort = resultStatus.replace(PrefixService.getPrefix("rut") + "ResultStatus", "");
+                String statusShort = resultStatus.replace(PrefixService.getNSFromPrefix("rut") + "ResultStatus", "");
                 String rowClass = getStatusClass(statusShort);
 
                 String row = String.format(template,
                         rowClass,
                         "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
-                        testcase.replace(PrefixService.getPrefix("rutt"), "rutt:"),
+                        testcase.replace(PrefixService.getNSFromPrefix("rutt"), "rutt:"),
                         resultCount,
                         resultPrevalence);
                 results.append(row);

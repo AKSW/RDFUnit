@@ -25,22 +25,6 @@ public final class RDFUnitUtils {
     private RDFUnitUtils() {
     }
 
-    public static String getAllPrefixes() {
-        return " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
-                " PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
-                " PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
-                " PREFIX dcterms: <http://purl.org/dc/terms/> \n" +
-                " PREFIX dc: <http://purl.org/dc/elements/1.1/> \n" +
-                " PREFIX rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> \n" +
-                " PREFIX prov: <http://www.w3.org/ns/prov#> \n" +
-                " PREFIX rut: <http://rdfunit.aksw.org/ns/core#> \n" +
-                " PREFIX rutp: <http://rdfunit.aksw.org/data/patterns#> \n" +
-                " PREFIX rutt: <http://rdfunit.aksw.org/data/tests#> \n" +
-                " PREFIX rutg: <http://rdfunit.aksw.org/data/generators#> \n"
-                ;
-    }
-
     public static void fillSchemaServiceFromFile(String additionalCSV) {
 
         try {
@@ -59,7 +43,7 @@ public final class RDFUnitUtils {
             BufferedReader in = null;
 
             try {
-                in = new BufferedReader(new InputStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"), "UTF-8"));
+                in = new BufferedReader(new InputStreamReader(additionalCSV, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 log.debug("UnsupportedEncodingException: ", e);
                 return;

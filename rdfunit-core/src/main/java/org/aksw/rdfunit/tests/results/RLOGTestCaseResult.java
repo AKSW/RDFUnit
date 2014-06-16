@@ -30,14 +30,14 @@ public class RLOGTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "RLOGTestCaseResult"))
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rlog") + "Entry"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "resource"), model.createResource(getResource()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "message"), getMessage())
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "level"), model.createResource(getLogLevel()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rlog"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
+                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "RLOGTestCaseResult"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rlog") + "Entry"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rlog"), "resource"), model.createResource(getResource()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rlog"), "message"), getMessage())
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rlog"), "level"), model.createResource(getLogLevel()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rlog"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
                 ;
     }
 

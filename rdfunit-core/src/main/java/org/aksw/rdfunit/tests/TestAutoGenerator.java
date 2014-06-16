@@ -10,6 +10,7 @@ import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
+import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
@@ -51,9 +52,9 @@ public class TestAutoGenerator {
             return false;
         }
         try {
-            q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getQuery());
+            q = QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getQuery());
         } catch (Exception e) {
-            log.error(getUri() + " Cannot parse query:\n" + RDFUnitUtils.getAllPrefixes() + getQuery(), e);
+            log.error(getUri() + " Cannot parse query:\n" + PrefixService.getSparqlPrefixDecl() + getQuery(), e);
             return false;
         }
 
@@ -70,7 +71,7 @@ public class TestAutoGenerator {
     public java.util.Collection<TestCase> generate(Source source) {
         java.util.Collection<TestCase> tests = new ArrayList<>();
 
-        Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getQuery());
+        Query q = QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
         ResultSet rs = qe.execSelect();
 

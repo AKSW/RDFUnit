@@ -25,11 +25,11 @@ public class StatusTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "StatusTestCaseResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
+                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "StatusTestCaseResult"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;
     }
 

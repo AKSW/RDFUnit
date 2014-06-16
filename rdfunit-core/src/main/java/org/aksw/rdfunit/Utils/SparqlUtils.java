@@ -8,6 +8,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public final class SparqlUtils {
 
     static public java.util.Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
         java.util.Collection<ResultAnnotation> annotations = new ArrayList<>();
-        String sparql = RDFUnitUtils.getAllPrefixes() +
+        String sparql = PrefixService.getSparqlPrefixDecl() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
                 " <" + uri + "> rut:resultAnnotation ?annotation . " +
                 " ?annotation a rut:ResultAnnotation ; " +

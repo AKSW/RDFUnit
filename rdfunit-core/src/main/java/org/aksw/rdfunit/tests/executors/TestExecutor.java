@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
@@ -37,20 +36,6 @@ public abstract class TestExecutor {
 
     abstract protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException;
 
-    public static TestExecutor initExecutorFactory(TestCaseExecutionType executionType) {
-        switch (executionType) {
-            case statusTestCaseResult:
-                return new StatusTestExecutor();
-            case aggregatedTestCaseResult:
-                return new AggregatedTestExecutor();
-            case rlogTestCaseResult:
-                return new RLOGTestExecutor();
-            case extendedTestCaseResult:
-                return new ExtendedTestExecutor();
-            default:
-                return null;
-        }
-    }
 
     public void execute(Source source, TestSuite testSuite, int delay) {
         isCanceled = false;

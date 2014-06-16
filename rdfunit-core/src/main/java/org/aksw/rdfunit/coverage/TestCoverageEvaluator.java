@@ -36,7 +36,7 @@ public class TestCoverageEvaluator {
     private final java.util.Collection<String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "LITRAN");
     private final java.util.Collection<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
-    private final String sparql = RDFUnitUtils.getAllPrefixes() +
+    private final String sparql = PrefixService.getSparqlPrefixDecl() +
             " SELECT distinct ?reference WHERE {\n" +
             "   ?t a  rut:TestCase ; \n" +
             "      rut:basedOnPattern ?pattern ; \n" +
@@ -51,7 +51,7 @@ public class TestCoverageEvaluator {
             //    inClause.append(" , ");
             //}
             inClause.append(" ( <")
-                    .append(PrefixService.getPrefix("rutp"))
+                    .append(PrefixService.getNSFromPrefix("rutp"))
                     .append(s)
                     .append("> ) ");
         }

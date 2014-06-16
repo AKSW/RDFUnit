@@ -13,6 +13,7 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.apache.commons.cli.CommandLine;
@@ -100,7 +101,7 @@ public class ValidateCLI {
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
 
 
-        TestExecutor testExecutor = TestExecutor.initExecutorFactory(configuration.getResultLevelReporting());
+        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getResultLevelReporting());
         if (testExecutor == null) {
             displayHelpAndExit("Cannot initialize test executor. Exiting");
         }

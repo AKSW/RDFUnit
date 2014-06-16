@@ -34,11 +34,11 @@ public class TestSuite {
 
     public Resource serialize(Model model) {
         Resource resource = model.createResource(JenaUUID.generate().asString())
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("rut") + "TestSuite"))
-                .addProperty(RDF.type, model.createResource(PrefixService.getPrefix("prov") + "Collection"));
+                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "TestSuite"))
+                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("prov") + "Collection"));
 
         for (TestCase tc : testCases) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "hadMember"), model.createResource(tc.getTestURI()));
+            resource.addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "hadMember"), model.createResource(tc.getTestURI()));
         }
         // TODO check whether to dump the complete test
 

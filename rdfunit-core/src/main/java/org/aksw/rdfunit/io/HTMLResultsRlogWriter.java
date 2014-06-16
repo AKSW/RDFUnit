@@ -34,7 +34,7 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
-        String sparql = RDFUnitUtils.getAllPrefixes() +
+        String sparql = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?level ?message ?resource ?testcase WHERE {" +
                 " ?s a rut:RLOGTestCaseResult ; " +
                 "    rlog:level ?level ;" +
@@ -57,7 +57,7 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                 String resource = qs.get("resource").toString();
                 String testcase = qs.get("testcase").toString();
 
-                String levelShort = level.replace(PrefixService.getPrefix("rlog"), "");
+                String levelShort = level.replace(PrefixService.getNSFromPrefix("rlog"), "");
                 String rowClass = "";
                 switch (levelShort) {
                     case "Warn":
@@ -76,7 +76,7 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                         "<a href=\"" + level + "\">" + levelShort + "</a>",
                         message,
                         resource, resource, // <a href=%s>%s</a>
-                        testcase.replace(PrefixService.getPrefix("rutt"), "rutt:"));
+                        testcase.replace(PrefixService.getNSFromPrefix("rutt"), "rutt:"));
                 results.append(row);
             }
 

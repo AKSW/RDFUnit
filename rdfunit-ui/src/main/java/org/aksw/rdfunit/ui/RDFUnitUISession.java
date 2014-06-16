@@ -10,6 +10,7 @@ import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 
 import java.io.File;
@@ -39,7 +40,7 @@ public class RDFUnitUISession extends VaadinSession {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
 
-        TestExecutor testExecutor = TestExecutor.initExecutorFactory(TestCaseExecutionType.aggregatedTestCaseResult);
+        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(TestCaseExecutionType.aggregatedTestCaseResult);
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
 
         TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());

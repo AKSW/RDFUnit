@@ -147,26 +147,26 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         Resource testSuiteResource = testSuite.serialize(getModel());
 
         getModel().createResource(executionUUID)
-                .addProperty(RDF.type, getModel().createResource(PrefixService.getPrefix("rut") + "TestExecution"))
-                .addProperty(RDF.type, getModel().createResource(PrefixService.getPrefix("prov") + "Activity"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "used"), testSuiteResource)
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "startedAtTime"),
+                .addProperty(RDF.type, getModel().createResource(PrefixService.getNSFromPrefix("rut") + "TestExecution"))
+                .addProperty(RDF.type, getModel().createResource(PrefixService.getNSFromPrefix("prov") + "Activity"))
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "used"), testSuiteResource)
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "startedAtTime"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getStartTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("prov"), "endedAtTime"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "endedAtTime"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getEndTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "source"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "source"),
                         getModel().createResource(testedDataset.getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsRun"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsRun"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getTotalTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsSuceedded"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsSuceedded"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getSuccessfullTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsFailed"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsFailed"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getFailedTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsTimeout"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsTimeout"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getTimeoutTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "testsError"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsError"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getPrefix("rut"), "totalIndividualErrors"),
+                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "totalIndividualErrors"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger));
 
         if (loggingEnabled) {

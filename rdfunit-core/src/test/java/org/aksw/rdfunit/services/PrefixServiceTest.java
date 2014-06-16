@@ -23,7 +23,7 @@ public class PrefixServiceTest {
         Map<String, String> prefixes = prefixModel.getNsPrefixMap();
         for (String id : prefixes.keySet()) {
             // All entries should match
-            String uri = PrefixService.getPrefix(id);
+            String uri = PrefixService.getNSFromPrefix(id);
             assertEquals("All prefixed should be initialized", uri, prefixes.get(id));
         }
 

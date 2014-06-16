@@ -42,7 +42,7 @@ public final class TestUtils {
     public static java.util.Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
 
-        String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
+        String sparqlSelect = PrefixService.getSparqlPrefixDecl() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                 " ?generator " +
                 "    a rut:TestGenerator ; " +
@@ -97,7 +97,7 @@ public final class TestUtils {
 
         // Get all manual tests
 
-        String manualTestsSelectSparql = RDFUnitUtils.getAllPrefixes() +
+        String manualTestsSelectSparql = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?testURI WHERE {" +
                 " ?testURI a rut:ManualTestCase }";
 
@@ -115,7 +115,7 @@ public final class TestUtils {
 
         // Get all pattern based tests
 
-        String patternTestsSelectSparql = RDFUnitUtils.getAllPrefixes() +
+        String patternTestsSelectSparql = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?testURI WHERE {" +
                 " ?testURI a rut:PatternBasedTestCase } ";
 
@@ -136,7 +136,7 @@ public final class TestUtils {
 
     public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
 
-        String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
+        String sparqlSelect = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    dcterms:description  ?description ;" +
@@ -208,7 +208,7 @@ public final class TestUtils {
 
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
 
-        String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
+        String sparqlSelect = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    dcterms:description ?description ;" +
@@ -234,7 +234,7 @@ public final class TestUtils {
                 String source = qs.get("source").toString();
                 String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
                 String patternURI = qs.get("basedOnPattern").toString();
-                Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getPrefix("rutp"), ""));
+                Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixService.getNSFromPrefix("rutp"), ""));
                 if (pattern == null) {
                     log.error("Pattern does not exists for test: " + testURI);
                     return null;
@@ -300,7 +300,7 @@ public final class TestUtils {
 
         java.util.Collection<String> references = new ArrayList<>();
 
-        String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
+        String sparqlReferencesSelect = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?references WHERE { " +
                 " <" + testURI + "> rut:references ?references . }";
 
@@ -325,7 +325,7 @@ public final class TestUtils {
 
         java.util.Collection<Binding> bindings = new ArrayList<>();
 
-        String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
+        String sparqlReferencesSelect = PrefixService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
                 " <" + testURI + "> rut:binding ?binding ." +
                 " ?binding rut:bindingValue ?value ;" +
@@ -363,7 +363,7 @@ public final class TestUtils {
     }
 
     public static String generateTestURI(String sourcePrefix, Pattern pattern, java.util.Collection<Binding> bindings, String generatorURI) {
-        String testURI = PrefixService.getPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
+        String testURI = PrefixService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         String string2hash = generatorURI;
         for (Binding binding : bindings) {
             string2hash += binding.getValue();

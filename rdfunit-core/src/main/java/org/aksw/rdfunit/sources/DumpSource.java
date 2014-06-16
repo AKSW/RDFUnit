@@ -23,7 +23,7 @@ public class DumpSource extends Source {
     private final DataReader dumpReader;
 
     public DumpSource(String prefix, String uri) {
-        this(prefix, uri, new RDFDereferenceReader(uri), null);
+        this(prefix, uri, DataReaderFactory.createDereferenceReader(uri), null);
     }
 
     public DumpSource(String prefix, String uri, String location) {

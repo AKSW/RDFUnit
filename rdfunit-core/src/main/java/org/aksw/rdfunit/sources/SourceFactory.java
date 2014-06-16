@@ -31,7 +31,7 @@ public final class SourceFactory {
     }
 
     public static SchemaSource createSchemaSourceDereference(String prefix, String uri, String schema) {
-        DataReader reader = new RDFDereferenceReader(schema);
+        DataReader reader = DataReaderFactory.createDereferenceReader(schema);
         return new SchemaSource(prefix, uri, schema, reader);
     }
 

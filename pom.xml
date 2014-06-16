@@ -96,10 +96,17 @@
                 <artifactId>jena-arq</artifactId>
                 <version>${org-apache-jena-version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.apache.jena</groupId>
                 <artifactId>jena-core</artifactId>
                 <version>${org-apache-jena-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.0</version>
             </dependency>
 
             <dependency>
@@ -122,7 +129,6 @@
                 <scope>compile</scope>
             </dependency>
 
-            <!--Junits-->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

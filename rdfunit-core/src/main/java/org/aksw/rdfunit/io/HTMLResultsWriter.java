@@ -8,6 +8,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
+import org.aksw.rdfunit.services.PrefixService;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -104,7 +105,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
     private Collection<String> getTestExecutionURI(QueryExecutionFactory qef) {
         ArrayList<String> executionURIs = new ArrayList<>();
         String sparql =
-                RDFUnitUtils.getAllPrefixes() +
+                PrefixService.getSparqlPrefixDecl() +
                         " SELECT DISTINCT ?testExecution WHERE { ?testExecution a rut:TestExecution } ";
 
         QueryExecution qe = null;
@@ -134,7 +135,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
         stats.append("<h2>TestExecution: " + testExecution + "</h2>");
         //TODO for some reason, using the "testExecution" URI does not work :/
         String sparql =
-                RDFUnitUtils.getAllPrefixes() +
+                PrefixService.getSparqlPrefixDecl() +
                         " SELECT ?s ?p ?o WHERE { ?s ?p ?o ; a rut:TestExecution . } ";
         QueryExecution qe = null;
 

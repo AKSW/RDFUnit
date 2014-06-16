@@ -7,6 +7,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
+import org.aksw.rdfunit.services.PrefixService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public final class PatternUtils {
     public static java.util.Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
         java.util.Collection<Pattern> patterns = new ArrayList<>();
 
-        String sparqlSelectPatterns = RDFUnitUtils.getAllPrefixes() +
+        String sparqlSelectPatterns = PrefixService.getSparqlPrefixDecl() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
                 " ?sparqlPattern a rut:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
@@ -33,7 +34,7 @@ public final class PatternUtils {
                 "  rut:sparqlWherePattern ?sparql ; " +
                 "  rut:sparqlPrevalencePattern ?sparqlPrev ; " +
                 "} ORDER BY ?sparqlPattern";
-        String sparqlSelectParameters = RDFUnitUtils.getAllPrefixes() +
+        String sparqlSelectParameters = PrefixService.getSparqlPrefixDecl() +
                 " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
                 " %%PATTERN%%  rut:parameter ?parameterURI . " +
                 " ?parameterURI a rut:Parameter . " +
