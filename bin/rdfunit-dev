@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # builds core dependencies before execution
-
+echo "re-instaling depentant modules"
 mvn install -pl rdfunit-validate -Dmaven.test.skip=true -q
+echo "done"
 bin/rdfunit "$*"

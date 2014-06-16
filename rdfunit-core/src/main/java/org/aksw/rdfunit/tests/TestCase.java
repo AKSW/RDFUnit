@@ -107,6 +107,10 @@ public abstract class TestCase implements Comparable<TestCase> {
         return testURI;
     }
 
+    public String getAbrTestURI() {
+        return testURI.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
+    }
+
     public void validateQueries() throws TestCaseInstantiationException {
         validateSPARQL(getSparql(), "SPARQL");
         validateSPARQL(getSparqlAsCount(), "SPARQL Count");

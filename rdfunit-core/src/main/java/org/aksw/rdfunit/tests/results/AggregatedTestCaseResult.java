@@ -50,6 +50,6 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
 
     @Override
     public String toString() {
-        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + getTestCase().getTestURI();
+        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + getTestCase().getAbrTestURI();
     }
 }
