@@ -1,4 +1,4 @@
-package org.aksw.rdfunit;
+package org.aksw.rdfunit.exceptions;
 
 /**
  * User: Dimitris Kontokostas

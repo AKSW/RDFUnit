@@ -1,6 +1,7 @@
 package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
+import org.aksw.rdfunit.exceptions.ParameterException;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

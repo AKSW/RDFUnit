@@ -1,5 +1,6 @@
 package org.aksw.rdfunit;
 
+import org.aksw.rdfunit.exceptions.ParameterException;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;

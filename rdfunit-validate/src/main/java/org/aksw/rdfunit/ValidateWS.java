@@ -1,6 +1,7 @@
 package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.exceptions.ParameterException;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.DataReader;
