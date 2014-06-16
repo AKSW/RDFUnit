@@ -25,7 +25,7 @@ public abstract class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
     private boolean isCanceled = false;
 
-    private final java.util.Collection<TestExecutorMonitor> progressMonitors = new ArrayList<TestExecutorMonitor>();
+    private final java.util.Collection<TestExecutorMonitor> progressMonitors = new ArrayList<>();
 
     public TestExecutor() {
 
@@ -70,7 +70,7 @@ public abstract class TestExecutor {
                 monitor.singleTestStarted(testCase);
             }
 
-            java.util.Collection<TestCaseResult> results = new ArrayList<TestCaseResult>();
+            java.util.Collection<TestCaseResult> results = new ArrayList<>();
             TestCaseResultStatus status;
 
             try {

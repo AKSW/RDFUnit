@@ -101,6 +101,8 @@
                     <httpConnector>
                         <port>8787</port>
                     </httpConnector>
+                    <stopKey/>
+                    <stopPort/>
                 </configuration>
             </plugin>
         </plugins>

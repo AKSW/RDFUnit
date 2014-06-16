@@ -12,7 +12,7 @@ import java.util.Set;
  * Created: 9/20/13 2:52 PM
  */
 public final class PatternService {
-    final private static Map<String, Pattern> patterns = new HashMap<String, Pattern>();
+    final private static Map<String, Pattern> patterns = new HashMap<>();
 
 
     private PatternService() {

@@ -39,7 +39,7 @@ public class DatasetSource extends Source {
     public DatasetSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
-        this.sparqlGraph = new ArrayList<String>(sparqlGraph);
+        this.sparqlGraph = new ArrayList<>(sparqlGraph);
         if (schemata != null) {
             addReferencesSchemata(schemata);
         }

@@ -13,7 +13,7 @@ import java.util.Set;
  * Created: 10/1/13 7:06 PM
  */
 public final class PrefixService {
-    final private static Map<String, String> prefixes = new HashMap<String, String>();
+    final private static Map<String, String> prefixes = new HashMap<>();
 
 
     private PrefixService() {

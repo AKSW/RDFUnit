@@ -68,7 +68,7 @@ public class TestAutoGenerator {
     }
 
     public java.util.Collection<TestCase> generate(Source source) {
-        java.util.Collection<TestCase> tests = new ArrayList<TestCase>();
+        java.util.Collection<TestCase> tests = new ArrayList<>();
 
         Query q = QueryFactory.create(RDFUnitUtils.getAllPrefixes() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
@@ -77,8 +77,8 @@ public class TestAutoGenerator {
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
 
-            java.util.Collection<Binding> bindings = new ArrayList<Binding>();
-            java.util.Collection<String> references = new ArrayList<String>();
+            java.util.Collection<Binding> bindings = new ArrayList<>();
+            java.util.Collection<String> references = new ArrayList<>();
             String description = "";
 
             for (PatternParameter p : pattern.getParameters()) {

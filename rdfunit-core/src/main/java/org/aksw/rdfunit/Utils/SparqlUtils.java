@@ -24,7 +24,7 @@ public final class SparqlUtils {
     }
 
     static public java.util.Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
-        java.util.Collection<ResultAnnotation> annotations = new ArrayList<ResultAnnotation>();
+        java.util.Collection<ResultAnnotation> annotations = new ArrayList<>();
         String sparql = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
                 " <" + uri + "> rut:resultAnnotation ?annotation . " +

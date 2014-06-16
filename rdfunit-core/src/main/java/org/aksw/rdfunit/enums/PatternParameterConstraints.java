@@ -47,16 +47,17 @@ public enum PatternParameterConstraints {
     public static PatternParameterConstraints resolve(String value) {
 
         String s = value.replace(PrefixService.getPrefix("rut"), "");
-        if (s.equals("Resource")) {
-            return Resource;
-        } else if (s.equals("Property")) {
-            return Property;
-        } else if (s.equals("Class")) {
-            return Class;
-        } else if (s.equals("Operator")) {
-            return Operator;
+        switch (s) {
+            case "Resource":
+                return Resource;
+            case "Property":
+                return Property;
+            case "Class":
+                return Class;
+            case "Operator":
+                return Operator;
+            default:
+                return None;
         }
-
-        return None;
     }
 }

@@ -14,7 +14,7 @@ import java.util.Map;
  * Created: 10/2/13 12:24 PM
  */
 public final class SchemaService {
-    final private static Map<String, String> schemata = new HashMap<String, String>();
+    final private static Map<String, String> schemata = new HashMap<>();
 
     private SchemaService() {
     }
@@ -59,7 +59,7 @@ public final class SchemaService {
     }
 
     public static java.util.Collection<SchemaSource> getSourceList(String baseFolder, java.util.Collection<String> ids) {
-        java.util.Collection<SchemaSource> sources = new ArrayList<SchemaSource>();
+        java.util.Collection<SchemaSource> sources = new ArrayList<>();
         for (String id : ids) {
             SchemaSource src = getSource(baseFolder, id.trim());
             if (src != null) {
@@ -70,7 +70,7 @@ public final class SchemaService {
     }
 
     public static java.util.Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) {
-        java.util.Collection<String> prefixes = new ArrayList<String>();
+        java.util.Collection<String> prefixes = new ArrayList<>();
         prefixes.addAll(schemata.keySet());
 
         if (fileCache) {

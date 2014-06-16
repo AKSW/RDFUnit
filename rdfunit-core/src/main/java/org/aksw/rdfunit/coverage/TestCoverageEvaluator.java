@@ -61,7 +61,7 @@ public class TestCoverageEvaluator {
     public void calculateCoverage(QueryExecutionFactory model, String propertiesFile, String classFile) throws IOException {
 
 
-        Map<String, Long> properties = new HashMap<String, Long>();
+        Map<String, Long> properties = new HashMap<>();
         BufferedReader br = new BufferedReader(new FileReader(propertiesFile));
         String line;
         long propertiesTotal = 0;
@@ -77,7 +77,7 @@ public class TestCoverageEvaluator {
         br.close();
 
 
-        Map<String, Long> classes = new HashMap<String, Long>();
+        Map<String, Long> classes = new HashMap<>();
         br = new BufferedReader(new FileReader(classFile));
 
         long classesTotal = 0;
@@ -148,7 +148,7 @@ public class TestCoverageEvaluator {
 
     private java.util.Collection<String> getReferenceSet(QueryExecutionFactory model, String query) {
 
-        java.util.Collection<String> references = new ArrayList<String>();
+        java.util.Collection<String> references = new ArrayList<>();
         Query q = QueryFactory.create(query);
         QueryExecution qe = model.createQueryExecution(q);
         ResultSet rs = qe.execSelect();

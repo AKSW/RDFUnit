@@ -25,7 +25,7 @@ public class RLOGTestExecutor extends TestExecutor {
     @Override
     protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 
-        java.util.Collection<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
+        java.util.Collection<TestCaseResult> testCaseResults = new ArrayList<>();
 
         QueryExecution qe = null;
         try {

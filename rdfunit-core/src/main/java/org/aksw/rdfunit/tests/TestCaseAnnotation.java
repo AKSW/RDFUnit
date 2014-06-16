@@ -32,7 +32,7 @@ public class TestCaseAnnotation {
         this.sourceUri = sourceUri;
         this.references = references;
         this.description = description;
-        this.resultAnnotations = new ArrayList<ResultAnnotation>();
+        this.resultAnnotations = new ArrayList<>();
         this.resultAnnotations.addAll(resultAnnotations);
         // need to instantiate result annotations first
         this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel);

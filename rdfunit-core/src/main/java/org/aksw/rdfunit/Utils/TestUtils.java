@@ -40,7 +40,7 @@ public final class TestUtils {
     }
 
     public static java.util.Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
-        java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
+        java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
 
         String sparqlSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
@@ -81,7 +81,7 @@ public final class TestUtils {
     }
 
     public static java.util.Collection<TestCase> instantiateTestsFromAG(java.util.Collection<TestAutoGenerator> autoGenerators, Source source) {
-        java.util.Collection<TestCase> tests = new ArrayList<TestCase>();
+        java.util.Collection<TestCase> tests = new ArrayList<>();
 
         for (TestAutoGenerator tag : autoGenerators) {
             tests.addAll(tag.generate(source));
@@ -92,7 +92,7 @@ public final class TestUtils {
     }
 
     public static java.util.Collection<TestCase> instantiateTestsFromModel(Model model) {
-        java.util.Collection<TestCase> tests = new ArrayList<TestCase>();
+        java.util.Collection<TestCase> tests = new ArrayList<>();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
         // Get all manual tests
@@ -298,7 +298,7 @@ public final class TestUtils {
 
     public static java.util.Collection<String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
 
-        java.util.Collection<String> references = new ArrayList<String>();
+        java.util.Collection<String> references = new ArrayList<>();
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?references WHERE { " +
@@ -323,7 +323,7 @@ public final class TestUtils {
 
     public static java.util.Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
 
-        java.util.Collection<Binding> bindings = new ArrayList<Binding>();
+        java.util.Collection<Binding> bindings = new ArrayList<>();
 
         String sparqlReferencesSelect = RDFUnitUtils.getAllPrefixes() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +

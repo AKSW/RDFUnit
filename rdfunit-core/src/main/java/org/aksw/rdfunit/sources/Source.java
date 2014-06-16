@@ -27,7 +27,7 @@ public abstract class Source implements Comparable<Source> {
     public Source(String prefix, String uri) {
         this.prefix = prefix;
         this.uri = uri;
-        this.referencesSchemata = new ArrayList<SchemaSource>();
+        this.referencesSchemata = new ArrayList<>();
     }
 
     public Source(Source source) {

@@ -28,17 +28,18 @@ public enum TestCaseResultStatus {
     public static TestCaseResultStatus resolve(String value) {
 
         String s = value.replace(PrefixService.getPrefix("rut") + "ResultStatus", "");
-        if (s.equals("Success")) {
-            return Success;
-        } else if (s.equals("Fail")) {
-            return Fail;
-        } else if (s.equals("Timeout")) {
-            return Timeout;
-        } else if (s.equals("Error")) {
-            return Error;
+        switch (s) {
+            case "Success":
+                return Success;
+            case "Fail":
+                return Fail;
+            case "Timeout":
+                return Timeout;
+            case "Error":
+                return Error;
+            default:
+                return null;
         }
-
-        return null;
     }
 
     public static TestCaseResultStatus resolve(long value) {

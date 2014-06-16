@@ -102,7 +102,7 @@ public abstract class HTMLResultsWriter extends DataWriter {
     }
 
     private Collection<String> getTestExecutionURI(QueryExecutionFactory qef) {
-        ArrayList<String> executionURIs = new ArrayList<String>();
+        ArrayList<String> executionURIs = new ArrayList<>();
         String sparql =
                 RDFUnitUtils.getAllPrefixes() +
                         " SELECT DISTINCT ?testExecution WHERE { ?testExecution a rut:TestExecution } ";

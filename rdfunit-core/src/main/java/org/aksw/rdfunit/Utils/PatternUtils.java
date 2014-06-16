@@ -23,7 +23,7 @@ public final class PatternUtils {
     }
 
     public static java.util.Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
-        java.util.Collection<Pattern> patterns = new ArrayList<Pattern>();
+        java.util.Collection<Pattern> patterns = new ArrayList<>();
 
         String sparqlSelectPatterns = RDFUnitUtils.getAllPrefixes() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
@@ -53,7 +53,7 @@ public final class PatternUtils {
             String desc = qs.get("desc").toString();
             String sparql = qs.get("sparql").toString();
             String sparqlPrev = qs.get("sparqlPrev").toString();
-            java.util.Collection<PatternParameter> parameters = new ArrayList<PatternParameter>();
+            java.util.Collection<PatternParameter> parameters = new ArrayList<>();
 
             QueryExecution qeNested = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
             ResultSet resultsNested = qeNested.execSelect();

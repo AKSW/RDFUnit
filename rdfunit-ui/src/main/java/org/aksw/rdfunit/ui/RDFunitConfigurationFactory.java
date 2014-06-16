@@ -1,9 +1,6 @@
 package org.aksw.rdfunit.ui;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.SourceFactory;
 
 import java.util.Arrays;
 import java.util.Collection;

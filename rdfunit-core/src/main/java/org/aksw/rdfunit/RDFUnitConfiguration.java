@@ -69,7 +69,7 @@ public class RDFUnitConfiguration {
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination) {
         this.endpointURI = endpointURI;
-        this.endpointGraphs = new ArrayList<String>();
+        this.endpointGraphs = new ArrayList<>();
         this.endpointGraphs.addAll(endpointGraphs);
         this.endpointDelayinMS = endpointDelayinMS;
         this.endpointCacheTTL = endpointCacheTTL;

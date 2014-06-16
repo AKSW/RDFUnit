@@ -27,8 +27,8 @@ public class RDFUnit {
 
     private static Logger log = LoggerFactory.getLogger(RDFUnit.class);
     private QueryExecutionFactory patternQueryFactory;
-    private java.util.Collection<Pattern> patterns = new ArrayList<Pattern>();
-    private java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<TestAutoGenerator>();
+    private java.util.Collection<Pattern> patterns = new ArrayList<>();
+    private java.util.Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
 
     public RDFUnit() {
     }
