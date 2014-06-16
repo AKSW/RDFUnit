@@ -9,7 +9,7 @@ import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -55,7 +55,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     public SimpleTestExecutorMonitor(Model model, boolean loggingEnabled) {
         this.model = model;
         this.loggingEnabled = loggingEnabled;
-        PrefixService.setNSPrefixesInModel(model);
+        PrefixNSService.setNSPrefixesInModel(model);
         executionUUID = JenaUUID.generate().asString();
     }
 
@@ -147,26 +147,26 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         Resource testSuiteResource = testSuite.serialize(getModel());
 
         getModel().createResource(executionUUID)
-                .addProperty(RDF.type, getModel().createResource(PrefixService.getNSFromPrefix("rut") + "TestExecution"))
-                .addProperty(RDF.type, getModel().createResource(PrefixService.getNSFromPrefix("prov") + "Activity"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "used"), testSuiteResource)
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "startedAtTime"),
+                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getNSFromPrefix("rut") + "TestExecution"))
+                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getNSFromPrefix("prov") + "Activity"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "used"), testSuiteResource)
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "startedAtTime"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getStartTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "endedAtTime"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "endedAtTime"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getEndTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "source"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "source"),
                         getModel().createResource(testedDataset.getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsRun"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsRun"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getTotalTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsSuceedded"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsSuceedded"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getSuccessfullTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsFailed"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsFailed"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getFailedTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsTimeout"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsTimeout"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getTimeoutTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testsError"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsError"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "totalIndividualErrors"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "totalIndividualErrors"),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger));
 
         if (loggingEnabled) {

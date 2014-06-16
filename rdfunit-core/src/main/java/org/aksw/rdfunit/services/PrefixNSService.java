@@ -13,7 +13,7 @@ import java.util.Map;
  * In addition it is used to generate the SPARQL prefixNsBidiMap for all the queries and set the NS Prefix Map is a Model
  * Created: 10/1/13 7:06 PM
  */
-public final class PrefixService {
+public final class PrefixNSService {
     /**
      * Bidirectional Map<Prefix, Namespace>
      */
@@ -21,7 +21,7 @@ public final class PrefixService {
 
     private static String sparqlPrefixDecl = null;
 
-    private PrefixService() {
+    private PrefixNSService() {
     }
 
     /* We don't need this atm but if we add it need to deal with concurrency
@@ -50,7 +50,7 @@ public final class PrefixService {
             if (prefixCopy.isEmpty()) {
                 return "";
             } else {
-                synchronized (PrefixService.class) {
+                synchronized (PrefixNSService.class) {
                     if (sparqlPrefixDecl == null) {
                         sparqlPrefixDecl = generateSparqlPrefixes(prefixCopy);
                     }
@@ -68,11 +68,11 @@ public final class PrefixService {
     protected static BidiMap<String, String> getPrefixNsBidiMap() {
         // initialize prefixNsBidiMap on first run
         if (prefixNsBidiMap.isEmpty()) {
-            synchronized (PrefixService.class) {
+            synchronized (PrefixNSService.class) {
                 if (prefixNsBidiMap.isEmpty()) {
                     Model prefixModel = ModelFactory.createDefaultModel();
                     try {
-                        prefixModel.read(PrefixService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl"), null, "TURTLE");
+                        prefixModel.read(PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl"), null, "TURTLE");
                     } catch (Exception e) {
                         throw new RuntimeException("Cannot read refixes.ttl from resources", e);
                     }

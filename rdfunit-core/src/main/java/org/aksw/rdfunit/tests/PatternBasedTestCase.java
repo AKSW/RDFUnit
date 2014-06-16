@@ -5,10 +5,9 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * User: Dimitris Kontokostas
@@ -38,13 +37,13 @@ public class PatternBasedTestCase extends TestCase {
         Resource resource = super.serialize(model);
 
         resource
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "PatternBasedTestCase"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "basedOnPattern"), model.createResource(PrefixService.getNSFromPrefix("rutp") + pattern.getId()))
-                .addProperty(RDFS.comment, "SPARQL Query: \n" + PrefixService.getSparqlPrefixDecl() + getSparql() + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "PatternBasedTestCase"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "basedOnPattern"), model.createResource(PrefixNSService.getNSFromPrefix("rutp") + pattern.getId()))
+                .addProperty(RDFS.comment, "SPARQL Query: \n" + PrefixNSService.getSparqlPrefixDecl() + getSparql() + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
 
 
         for (Binding binding : bindings) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "binding"), binding.writeToModel(model));
+            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "binding"), binding.writeToModel(model));
         }
 
         return resource;

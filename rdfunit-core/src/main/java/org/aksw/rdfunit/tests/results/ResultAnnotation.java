@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * Holds a test case result annotation that will be used when we generate individual results
@@ -25,9 +25,9 @@ public class ResultAnnotation {
 
     public Resource serializeAsTestCase(Model model) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "ResultAnnotation"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "annotationProperty"), model.createResource(annotationProperty))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "annotationValue"), annotationValue);
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "ResultAnnotation"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "annotationProperty"), model.createResource(annotationProperty))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "annotationValue"), annotationValue);
     }
 
     public String getAnnotationProperty() {

@@ -8,9 +8,8 @@ import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlQuery() {
-        return QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getSparql());
+        return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparql());
     }
 
     public String getSparqlAsCount() {
@@ -63,7 +62,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlAsCountQuery() {
-        return QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getSparqlAsCount());
+        return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlAsCount());
     }
 
     public String getSparqlAsAsk() {
@@ -101,7 +100,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlPrevalenceQuery() {
-        return QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getSparqlPrevalence());
+        return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence());
     }
 
     public String getTestURI() {
@@ -142,9 +141,9 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     private void validateSPARQL(String sparql, String type) throws TestCaseInstantiationException {
         try {
-            QueryFactory.create(PrefixService.getSparqlPrefixDecl() + sparql);
+            QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + sparql);
         } catch (QueryParseException e) {
-            String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + PrefixService.getSparqlPrefixDecl() + sparql;
+            String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
             throw new TestCaseInstantiationException(message, e);
         }
     }

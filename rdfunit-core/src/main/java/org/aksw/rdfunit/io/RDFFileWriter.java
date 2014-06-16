@@ -4,7 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,7 +58,7 @@ public class RDFFileWriter extends DataWriter {
                 }
             }
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
-            PrefixService.setNSPrefixesInModel(model);
+            PrefixNSService.setNSPrefixesInModel(model);
             model.write(new FileOutputStream(file), filetype);
 
         } catch (Exception e) {

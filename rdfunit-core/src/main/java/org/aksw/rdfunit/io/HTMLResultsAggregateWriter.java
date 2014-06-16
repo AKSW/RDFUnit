@@ -4,8 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.OutputStream;
 
@@ -34,7 +33,7 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
 
-        String sparql = PrefixService.getSparqlPrefixDecl() +
+        String sparql = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?resultStatus ?testcase ?resultCount ?resultPrevalence WHERE {" +
                 " ?s a rut:AggregatedTestResult ; " +
                 "    rut:resultStatus ?resultStatus ; " +
@@ -57,13 +56,13 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
                 String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
 
-                String statusShort = resultStatus.replace(PrefixService.getNSFromPrefix("rut") + "ResultStatus", "");
+                String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
                 String rowClass = getStatusClass(statusShort);
 
                 String row = String.format(template,
                         rowClass,
                         "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
-                        testcase.replace(PrefixService.getNSFromPrefix("rutt"), "rutt:"),
+                        testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                         resultCount,
                         resultPrevalence);
                 results.append(row);

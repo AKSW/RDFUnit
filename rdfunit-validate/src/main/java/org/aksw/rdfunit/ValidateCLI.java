@@ -8,7 +8,7 @@ import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.*;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -128,7 +128,7 @@ public class ValidateCLI {
         // Calculate coverage
         if (configuration.isCalculateCoverageEnabled()) {
             Model model = ModelFactory.createDefaultModel();
-            PrefixService.setNSPrefixesInModel(model);
+            PrefixNSService.setNSPrefixesInModel(model);
             for (TestCase ut : testSuite.getTestCases()) {
                 model.add(ut.getUnitTestModel());
             }

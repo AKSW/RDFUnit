@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * User: Dimitris Kontokostas
@@ -29,9 +29,9 @@ public class ManualTestCase extends TestCase {
         Resource resource = super.serialize(model);
 
         resource
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "ManualTestCase"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "sparqlWhere"), getSparqlWhere())
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "sparqlPrevalence"), getSparqlPrevalence());
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "ManualTestCase"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "sparqlWhere"), getSparqlWhere())
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "sparqlPrevalence"), getSparqlPrevalence());
 
         return resource;
     }

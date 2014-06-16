@@ -8,7 +8,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.patterns.PatternParameter;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * User: Dimitris Kontokostas
@@ -45,9 +45,9 @@ public class Binding {
 
     public Resource writeToModel(Model model) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "Binding"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "parameter"), model.createResource(parameter.getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "bindingValue"), value);
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "Binding"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "parameter"), model.createResource(parameter.getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "bindingValue"), value);
 
     }
 

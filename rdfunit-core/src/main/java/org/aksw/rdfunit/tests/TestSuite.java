@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * User: Dimitris Kontokostas
@@ -34,11 +34,11 @@ public class TestSuite {
 
     public Resource serialize(Model model) {
         Resource resource = model.createResource(JenaUUID.generate().asString())
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "TestSuite"))
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("prov") + "Collection"));
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "TestSuite"))
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("prov") + "Collection"));
 
         for (TestCase tc : testCases) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "hadMember"), model.createResource(tc.getTestURI()));
+            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "hadMember"), model.createResource(tc.getTestURI()));
         }
         // TODO check whether to dump the complete test
 

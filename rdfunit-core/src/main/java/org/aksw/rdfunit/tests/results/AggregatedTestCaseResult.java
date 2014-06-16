@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
@@ -41,10 +41,10 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         return super.serialize(model, sourceURI)
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "AggregatedTestResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "resultCount"),
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "AggregatedTestResult"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultCount"),
                         ResourceFactory.createTypedLiteral("" + errorCount, XSDDatatype.XSDinteger))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "resultPrevalence"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultPrevalence"),
                         ResourceFactory.createTypedLiteral("" + prevalenceCount, XSDDatatype.XSDinteger));
     }
 

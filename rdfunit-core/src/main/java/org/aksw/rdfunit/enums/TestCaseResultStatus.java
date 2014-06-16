@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.enums;
 
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * User: Dimitris Kontokostas
@@ -17,7 +17,7 @@ public enum TestCaseResultStatus {
 
     public String getUri() {
         // TODO make prefix configurable
-        return PrefixService.getNSFromPrefix("rut") + "ResultStatus" + name();
+        return PrefixNSService.getNSFromPrefix("rut") + "ResultStatus" + name();
     }
 
     @Override
@@ -27,7 +27,7 @@ public enum TestCaseResultStatus {
 
     public static TestCaseResultStatus resolve(String value) {
 
-        String s = value.replace(PrefixService.getNSFromPrefix("rut") + "ResultStatus", "");
+        String s = value.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
         switch (s) {
             case "Success":
                 return Success;

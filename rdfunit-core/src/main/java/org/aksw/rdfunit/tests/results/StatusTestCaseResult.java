@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
@@ -25,11 +25,11 @@ public class StatusTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String sourceURI) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixService.getNSFromPrefix("rut") + "StatusTestCaseResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
-                .addProperty(ResourceFactory.createProperty(PrefixService.getNSFromPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "StatusTestCaseResult"))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;
     }
 

@@ -3,14 +3,13 @@ package org.aksw.rdfunit.tests;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.core.Var;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
@@ -52,9 +51,9 @@ public class TestAutoGenerator {
             return false;
         }
         try {
-            q = QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getQuery());
+            q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getQuery());
         } catch (Exception e) {
-            log.error(getUri() + " Cannot parse query:\n" + PrefixService.getSparqlPrefixDecl() + getQuery(), e);
+            log.error(getUri() + " Cannot parse query:\n" + PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
             return false;
         }
 
@@ -71,7 +70,7 @@ public class TestAutoGenerator {
     public java.util.Collection<TestCase> generate(Source source) {
         java.util.Collection<TestCase> tests = new ArrayList<>();
 
-        Query q = QueryFactory.create(PrefixService.getSparqlPrefixDecl() + getQuery());
+        Query q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
         ResultSet rs = qe.execSelect();
 

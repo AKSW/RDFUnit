@@ -2,8 +2,7 @@ package org.aksw.rdfunit.coverage;
 
 import com.hp.hpl.jena.query.*;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +35,7 @@ public class TestCoverageEvaluator {
     private final java.util.Collection<String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "LITRAN");
     private final java.util.Collection<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
-    private final String sparql = PrefixService.getSparqlPrefixDecl() +
+    private final String sparql = PrefixNSService.getSparqlPrefixDecl() +
             " SELECT distinct ?reference WHERE {\n" +
             "   ?t a  rut:TestCase ; \n" +
             "      rut:basedOnPattern ?pattern ; \n" +
@@ -51,7 +50,7 @@ public class TestCoverageEvaluator {
             //    inClause.append(" , ");
             //}
             inClause.append(" ( <")
-                    .append(PrefixService.getNSFromPrefix("rutp"))
+                    .append(PrefixNSService.getNSFromPrefix("rutp"))
                     .append(s)
                     .append("> ) ");
         }

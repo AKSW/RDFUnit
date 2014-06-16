@@ -10,7 +10,7 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
-import org.aksw.rdfunit.services.PrefixService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class RDFUnit {
             throw new TripleReaderException(e.getMessage(), e);
         }
 
-        PrefixService.setNSPrefixesInModel(patternModel);
+        PrefixNSService.setNSPrefixesInModel(patternModel);
         this.patternQueryFactory = new QueryExecutionFactoryModel(patternModel);
         this.patterns = getPatterns();
 
