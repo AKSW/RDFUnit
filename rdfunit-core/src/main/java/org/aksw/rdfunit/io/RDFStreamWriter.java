@@ -12,7 +12,7 @@ import java.io.OutputStream;
 
 /**
  * User: Dimitris Kontokostas
- * Writes a QEF / Model to an arbitary OutputStream (RDFFileWriter does more logic and provided separate)
+ * Writes a QEF / Model to an arbitrary OutputStream (RDFFileWriter does more logic and provided separate)
  * Created: 5/27/14 5:46 PM
  */
 public class RDFStreamWriter extends DataWriter {

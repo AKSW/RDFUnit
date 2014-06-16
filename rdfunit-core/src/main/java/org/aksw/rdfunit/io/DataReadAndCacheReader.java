@@ -6,7 +6,7 @@ import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
  * User: Dimitris Kontokostas
- * reades from a DataReader and caches result
+ * reads from a DataReader and caches result
  * Created: 11/14/13 1:09 PM
  */
 public class DataReadAndCacheReader extends DataReader {

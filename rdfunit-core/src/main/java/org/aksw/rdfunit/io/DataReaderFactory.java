@@ -40,7 +40,7 @@ public final class DataReaderFactory {
     /**
      * Generates a Dereference reader. This can be either a remote url, a local file or a resource
      *
-     * @param uri
+     * @param uri a uri that can be a remote (http) resource, a local file or a java resource object
      * @return a DataFirstSuccessReader that tries to resolve 1) remote 2) local 3) resources
      */
     public static DataReader createDereferenceReader(String uri) {
