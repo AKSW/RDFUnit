@@ -5,21 +5,19 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * User: Dimitris Kontokostas
- * Keeps a list of all prefixes used in the project.
- * In addition it is used to generate the SPARQL prefixes for all the queries and set the NS Prefix Map is a Model
+ * Keeps a list of all prefixNsBidiMap used in the project.
+ * In addition it is used to generate the SPARQL prefixNsBidiMap for all the queries and set the NS Prefix Map is a Model
  * Created: 10/1/13 7:06 PM
  */
 public final class PrefixService {
     /**
-     * Bidirectional Map to get both values and keys
+     * Bidirectional Map<Prefix, Namespace>
      */
-    final private static BidiMap<String, String> prefixes = new DualHashBidiMap<>();
+    final private static BidiMap<String, String> prefixNsBidiMap = new DualHashBidiMap<>();
 
     private static String sparqlPrefixDecl = null;
 
@@ -28,19 +26,15 @@ public final class PrefixService {
 
     /* We don't need this atm but if we add it need to deal with concurrency
     public static void addPrefix(String prefix, String uri) {
-        getPrefixes().put(prefix, uri);
+        getPrefixNsBidiMap().put(prefix, uri);
     } */
 
     public static String getNSFromPrefix(String id) {
-        return getPrefixes().get(id);
+        return getPrefixNsBidiMap().get(id);
     }
 
     public static String getPrefixFromNS(String namespace) {
-        return getPrefixes().getKey(namespace);
-    }
-
-    public static Set<String> getPrefixList() {
-        return getPrefixes().keySet();
+        return getPrefixNsBidiMap().getKey(namespace);
     }
 
     public static void setNSPrefixesInModel(Model model) {
@@ -48,11 +42,11 @@ public final class PrefixService {
     }
 
     public static String getSparqlPrefixDecl() {
-        // Works only when we init prefixes on startup only
+        // Works only when we init prefixNsBidiMap on startup only
         // If another prefix is added after first generation it will be invalid
         if (sparqlPrefixDecl == null) {
-            // If no prefixes exist return ""
-            Map<String, String> prefixCopy = getPrefixes();
+            // If no prefixNsBidiMap exist return ""
+            Map<String, String> prefixCopy = getPrefixNsBidiMap();
             if (prefixCopy.isEmpty()) {
                 return "";
             } else {
@@ -68,31 +62,31 @@ public final class PrefixService {
     }
 
     private static Map<String, String> getPrefixMap() {
-        return getPrefixes();
+        return getPrefixNsBidiMap();
     }
 
-    private static BidiMap<String, String> getPrefixes() {
-        // initialize prefixes on first run
-        if (prefixes.isEmpty()) {
+    protected static BidiMap<String, String> getPrefixNsBidiMap() {
+        // initialize prefixNsBidiMap on first run
+        if (prefixNsBidiMap.isEmpty()) {
             synchronized (PrefixService.class) {
-                if (prefixes.isEmpty()) {
+                if (prefixNsBidiMap.isEmpty()) {
                     Model prefixModel = ModelFactory.createDefaultModel();
                     try {
                         prefixModel.read(PrefixService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl"), null, "TURTLE");
                     } catch (Exception e) {
-                        // TODO handle exception
+                        throw new RuntimeException("Cannot read refixes.ttl from resources", e);
                     }
 
                     // Update Prefix Service
                     Map<String, String> prf = prefixModel.getNsPrefixMap();
                     for (Map.Entry<String, String> entry : prf.entrySet()) {
                         // Use local filed and NOT accessor method (synchronized)
-                        prefixes.put(entry.getKey(), entry.getValue());
+                        prefixNsBidiMap.put(entry.getKey(), entry.getValue());
                     }
                 }
             }
         }
-        return prefixes;
+        return prefixNsBidiMap;
     }
 
     /**
