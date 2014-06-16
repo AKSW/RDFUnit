@@ -1,0 +1,4 @@
+#
+# Rename this file to testAutoGenerators.ttl in order to override the java resource located in
+# rdfunit-core/src/main/resources/org/aksw/rdfunit/testAutoGenerators.ttl
+#
