@@ -5,11 +5,10 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
-import org.aksw.rdfunit.ui.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.enums.TestGenerationType;
+import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
@@ -20,6 +19,7 @@ import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.ui.RDFUnitUISession;
+import org.aksw.rdfunit.ui.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.ui.components.SchemaSelectorComponent;
 import org.aksw.rdfunit.ui.components.TestGenerationComponent;
 import org.aksw.rdfunit.ui.components.TestResultsComponent;
@@ -402,7 +402,7 @@ public class EndointTestTab extends VerticalLayout {
             }
 
             @Override
-            public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection <TestCaseResult> results) {
+            public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results) {
                 UI.getCurrent().access(new Runnable() {
                     @Override
                     public void run() {
@@ -482,10 +482,10 @@ public class EndointTestTab extends VerticalLayout {
         String datasetURI = endpointField.getValue().replace("/sparql", "");
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, RDFUnitUISession.getBaseDir());
-        configuration.setEndpointConfiguration(endpointField.getValue(),Arrays.asList(graphField.getValue()));
+        configuration.setEndpointConfiguration(endpointField.getValue(), Arrays.asList(graphField.getValue()));
         configuration.setSchemata(schemaSelectorWidget.getSelections());
 
-        RDFUnitUISession.setRDFUnitConfiguration( configuration);
+        RDFUnitUISession.setRDFUnitConfiguration(configuration);
     }
 
     private void setExampleConfiguration(RDFUnitConfiguration configuration) {
@@ -499,8 +499,7 @@ public class EndointTestTab extends VerticalLayout {
             endpointField.setValue(((DatasetSource) dataset).getSparqlEndpoint());
             java.util.Collection<String> graphs = ((DatasetSource) dataset).getSparqlGraphs();
             graphField.setValue(RDFUnitUtils.getFirstItemInCollection(graphs));
-        }
-        else {
+        } else {
             endpointField.setValue("");
             graphField.setValue("");
         }

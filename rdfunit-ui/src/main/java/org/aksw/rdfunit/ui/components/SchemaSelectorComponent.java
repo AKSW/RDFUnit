@@ -13,10 +13,9 @@ import org.aksw.rdfunit.io.RDFDereferenceReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
-import org.vaadin.tokenfield.TokenField;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.tokenfield.TokenField;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -210,7 +209,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
         BeanItemContainer<SchemaSource> container = new BeanItemContainer<SchemaSource>(
                 SchemaSource.class);
 
-        java.util.Collection <SchemaSource> sources = null;
+        java.util.Collection<SchemaSource> sources = null;
         try {
             sources = SchemaService.getSourceListAll(false, null);
         } catch (UndefinedSchemaException e) {
@@ -277,8 +276,8 @@ public class SchemaSelectorComponent extends VerticalLayout {
         }
     }
 
-    public java.util.Collection <SchemaSource> getSelections() {
-        java.util.Collection <SchemaSource> sources = new ArrayList<>();
+    public java.util.Collection<SchemaSource> getSelections() {
+        java.util.Collection<SchemaSource> sources = new ArrayList<>();
 
         Object selectedSources = tokenField.getValue();
 
@@ -291,7 +290,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
         return sources;
     }
 
-    public void setSelections(java.util.Collection <SchemaSource> sources) {
+    public void setSelections(java.util.Collection<SchemaSource> sources) {
         clearSelections();
         for (SchemaSource s : sources)
             tokenField.addToken(s);

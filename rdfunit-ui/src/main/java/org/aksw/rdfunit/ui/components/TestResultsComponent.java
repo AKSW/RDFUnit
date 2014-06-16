@@ -88,7 +88,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
     }
 
     @Override
-    public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection <TestCaseResult> results) {
+    public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results) {
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
@@ -114,7 +114,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                     if (source instanceof DatasetSource) {
                         String endpoint = ((DatasetSource) source).getSparqlEndpoint();
                         //TODO check default graph uri when array
-                        java.util.Collection <String> graphs = ((DatasetSource) source).getSparqlGraphs();
+                        java.util.Collection<String> graphs = ((DatasetSource) source).getSparqlGraphs();
                         String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
                         String query = test.getSparqlQuery() + " LIMIT 10";
                         try {

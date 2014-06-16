@@ -5,10 +5,10 @@
 /* This contains all of your theme. */
 /* If somebody wants to extend the theme she will include this mixin. */
 @mixin rdfunit {
-/* Include all the styles from the runo theme */
+  /* Include all the styles from the runo theme */
   @include runo;
 
-/* Insert your theme rules here */
+  /* Insert your theme rules here */
   #page {
     padding: 10px;
   }
@@ -28,7 +28,7 @@
   #EndointTestTab {
 
     h2 {
-      padding: 5px 0 ;
+      padding: 5px 0;
     }
 
     .v-slot-header {
@@ -38,7 +38,7 @@
       border-bottom: 1px solid;
     }
 
-    #test-configuration{
+    #test-configuration {
 
       .v-slot-examples {
         padding: 0 15px 18px 0;
@@ -55,10 +55,6 @@
 
     }
 
-
-
   }
-
-
 
 }

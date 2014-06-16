@@ -65,8 +65,7 @@ public final class SchemaService {
             SchemaSource src = getSource(baseFolder, id.trim());
             if (src != null) {
                 sources.add(src);
-            }
-            else {
+            } else {
                 throw new UndefinedSchemaException(id);
             }
         }
