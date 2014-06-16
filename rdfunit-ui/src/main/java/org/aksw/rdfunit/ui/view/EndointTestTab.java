@@ -5,6 +5,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.ui.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
@@ -63,39 +64,43 @@ public class EndointTestTab extends VerticalLayout {
         //TODO move this away from here
         File f = VaadinSession.getCurrent().getService().getBaseDirectory();
         String baseDir = f.getAbsolutePath() + "/data/";
+        try {
 
-        RDFUnitConfiguration dbpediaConf = RDFunitConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
-        RDFUnitConfiguration dbpediaLConf = RDFunitConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
-        RDFUnitConfiguration dbpediaNLConf = RDFunitConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
-        RDFUnitConfiguration linkedChemistry = RDFunitConfigurationFactory.createConfiguration("http://linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito", baseDir);
-        RDFUnitConfiguration uriBurner = RDFunitConfigurationFactory.createConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", new ArrayList<String>(), "foaf,skos,geo,dcterms,prov", baseDir);
-        RDFUnitConfiguration bbcNature = RDFunitConfigurationFactory.createConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "dcterms,po,wo,wlo,foaf", baseDir);
-        RDFUnitConfiguration musicBrainz = RDFunitConfigurationFactory.createConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "ov,mo,foaf", baseDir);
-        RDFUnitConfiguration umls = RDFunitConfigurationFactory.createConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://linkedlifedata.com/resource/umls"), "dcterms,skos,owl", baseDir);
-        RDFUnitConfiguration umbel = RDFunitConfigurationFactory.createConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://umbel.org"), "vann,skos,owl", baseDir);
-        RDFUnitConfiguration datasw = RDFunitConfigurationFactory.createConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql",Arrays.asList( "http://data.semanticweb.org"), "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf", baseDir);
+            RDFUnitConfiguration dbpediaConf = RDFunitConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
+            RDFUnitConfiguration dbpediaLConf = RDFunitConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
+            RDFUnitConfiguration dbpediaNLConf = RDFunitConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
+            RDFUnitConfiguration linkedChemistry = RDFunitConfigurationFactory.createConfiguration("http://linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito", baseDir);
+            RDFUnitConfiguration uriBurner = RDFunitConfigurationFactory.createConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", new ArrayList<String>(), "foaf,skos,geo,dcterms,prov", baseDir);
+            RDFUnitConfiguration bbcNature = RDFunitConfigurationFactory.createConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "dcterms,po,wo,wlo,foaf", baseDir);
+            RDFUnitConfiguration musicBrainz = RDFunitConfigurationFactory.createConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "ov,mo,foaf", baseDir);
+            RDFUnitConfiguration umls = RDFunitConfigurationFactory.createConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://linkedlifedata.com/resource/umls"), "dcterms,skos,owl", baseDir);
+            RDFUnitConfiguration umbel = RDFunitConfigurationFactory.createConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://umbel.org"), "vann,skos,owl", baseDir);
+            RDFUnitConfiguration datasw = RDFunitConfigurationFactory.createConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://data.semanticweb.org"), "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf", baseDir);
 
 
-        examplesSelect.addItem(uriBurner);
-        examplesSelect.setItemCaption(uriBurner, "Uri Burner");
-        examplesSelect.addItem(bbcNature);
-        examplesSelect.setItemCaption(bbcNature, "BBC Nature (LOD Cache)");
-        examplesSelect.addItem(musicBrainz);
-        examplesSelect.setItemCaption(musicBrainz, "MusicBrainz (LOD Cache)");
-        examplesSelect.addItem(umls);
-        examplesSelect.setItemCaption(umls, "LinkedLifeData UMLS (LOD Cache)");
-        examplesSelect.addItem(umbel);
-        examplesSelect.setItemCaption(umbel, "umbel (LOD Cache)");
-        examplesSelect.addItem(datasw);
-        examplesSelect.setItemCaption(datasw, "data.semanticweb.org (LOD Cache)");
-        examplesSelect.addItem(linkedChemistry);
-        examplesSelect.setItemCaption(linkedChemistry, "LinkedChemistry");
-        examplesSelect.addItem(dbpediaConf);
-        examplesSelect.setItemCaption(dbpediaConf, "DBpedia");
-        examplesSelect.addItem(dbpediaLConf);
-        examplesSelect.setItemCaption(dbpediaLConf, "DBpedia Live");
-        examplesSelect.addItem(dbpediaNLConf);
-        examplesSelect.setItemCaption(dbpediaNLConf, "DBpedia NL");
+            examplesSelect.addItem(uriBurner);
+            examplesSelect.setItemCaption(uriBurner, "Uri Burner");
+            examplesSelect.addItem(bbcNature);
+            examplesSelect.setItemCaption(bbcNature, "BBC Nature (LOD Cache)");
+            examplesSelect.addItem(musicBrainz);
+            examplesSelect.setItemCaption(musicBrainz, "MusicBrainz (LOD Cache)");
+            examplesSelect.addItem(umls);
+            examplesSelect.setItemCaption(umls, "LinkedLifeData UMLS (LOD Cache)");
+            examplesSelect.addItem(umbel);
+            examplesSelect.setItemCaption(umbel, "umbel (LOD Cache)");
+            examplesSelect.addItem(datasw);
+            examplesSelect.setItemCaption(datasw, "data.semanticweb.org (LOD Cache)");
+            examplesSelect.addItem(linkedChemistry);
+            examplesSelect.setItemCaption(linkedChemistry, "LinkedChemistry");
+            examplesSelect.addItem(dbpediaConf);
+            examplesSelect.setItemCaption(dbpediaConf, "DBpedia");
+            examplesSelect.addItem(dbpediaLConf);
+            examplesSelect.setItemCaption(dbpediaLConf, "DBpedia Live");
+            examplesSelect.addItem(dbpediaNLConf);
+            examplesSelect.setItemCaption(dbpediaNLConf, "DBpedia NL");
+        } catch (UndefinedSchemaException e) {
+            //
+        }
 
 
         initInteractions();

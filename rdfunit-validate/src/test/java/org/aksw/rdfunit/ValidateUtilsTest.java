@@ -1,6 +1,5 @@
 package org.aksw.rdfunit;
 
-import org.aksw.rdfunit.exceptions.ParameterException;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;
@@ -54,21 +53,17 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getAllSchemata().size(), 1);
         assertNull(configuration.getEnrichedSchema());
         assertEquals(configuration.getDataFolder(), "/home/rdfunit/");
+        assertEquals(configuration.getTestFolder(), "/home/rdfunit/tests/");
         assertEquals(configuration.isManualTestsEnabled(), false);
         assertEquals(configuration.isTestCacheEnabled(), true);
         assertEquals(configuration.isCalculateCoverageEnabled(), false);
         assertTrue(configuration.getTestSource() instanceof DumpSource);
 
 
-        // foaf does not exists in service
-        args = " -d http://dbpedia.org -s foaf -f /home/rdfunit/ -C -c";
+        args = " -d http://dbpedia.org -s rdfs -f /home/rdfunit/ -C -c";
         commandLine = cliParser.parse(cliOptions, args.split(" "));
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
-        assertNotNull(configuration.getAllSchemata()); // although empty it shouldn't be null
-        assertEquals(configuration.getAllSchemata().size(), 0);
-        assertEquals(configuration.getDataFolder(), "/home/rdfunit/");
-        assertEquals(configuration.getTestFolder(), "/home/rdfunit/tests/");
         assertEquals(configuration.isManualTestsEnabled(), true);
         assertEquals(configuration.isTestCacheEnabled(), false);
         assertEquals(configuration.isCalculateCoverageEnabled(), true);
@@ -87,6 +82,9 @@ public class ValidateUtilsTest {
         exceptionsExpected.put(
                 " -d http://dbpedia.org -e http://dbpedia.org/sparql -s rdf -l log",
                 "Expected exception for asking unusupported -l");
+        exceptionsExpected.put(
+                " -d http://dbpedia.org -s foaf ",
+                "Expected exception for asking for undefined 'foaf' schema ");
 
         for (String arg : exceptionsExpected.keySet()) {
 

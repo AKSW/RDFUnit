@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.services;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 
@@ -58,18 +59,21 @@ public final class SchemaService {
         }
     }
 
-    public static java.util.Collection<SchemaSource> getSourceList(String baseFolder, java.util.Collection<String> ids) {
+    public static java.util.Collection<SchemaSource> getSourceList(String baseFolder, java.util.Collection<String> ids) throws UndefinedSchemaException {
         java.util.Collection<SchemaSource> sources = new ArrayList<>();
         for (String id : ids) {
             SchemaSource src = getSource(baseFolder, id.trim());
             if (src != null) {
                 sources.add(src);
             }
+            else {
+                throw new UndefinedSchemaException(id);
+            }
         }
         return sources;
     }
 
-    public static java.util.Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) {
+    public static java.util.Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) throws UndefinedSchemaException {
         java.util.Collection<String> prefixes = new ArrayList<>();
         prefixes.addAll(schemata.keySet());
 

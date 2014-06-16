@@ -1,7 +1,7 @@
 package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.exceptions.ParameterException;
+import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,9 +92,13 @@ public class ValidateUtils {
         Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
         configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
 
-        //Get schema list
-        Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("s"));
-        configuration.setSchemataFromPrefixes(schemaUriPrefixes);
+        try {
+            //Get schema list
+            Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("s"));
+            configuration.setSchemataFromPrefixes(schemaUriPrefixes);
+        } catch (UndefinedSchemaException e) {
+            throw new ParameterException(e.getMessage(), e);
+        }
 
         //Get enriched schema
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");

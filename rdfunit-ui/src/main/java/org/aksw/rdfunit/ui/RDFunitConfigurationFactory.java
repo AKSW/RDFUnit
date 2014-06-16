@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.ui;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,11 +14,11 @@ import java.util.Collection;
 public class RDFunitConfigurationFactory {
 
     //new RDFUnitConfiguration("linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito");
-    public static RDFUnitConfiguration createConfiguration(String datasetURI, String endpointURI, Collection<String> endpointGraphs, String schemaPrefixes, String testFolder) {
+    public static RDFUnitConfiguration createConfiguration(String datasetURI, String endpointURI, Collection<String> endpointGraphs, String schemaPrefixes, String testFolder) throws UndefinedSchemaException {
         return createConfiguration(datasetURI, endpointURI, endpointGraphs, Arrays.asList(schemaPrefixes.split(",")), testFolder);
     }
 
-    public static RDFUnitConfiguration createConfiguration(String datasetURI, String endpointURI, Collection<String> endpointGraphs, Collection<String> schemaPrefixes, String testFolder) {
+    public static RDFUnitConfiguration createConfiguration(String datasetURI, String endpointURI, Collection<String> endpointGraphs, Collection<String> schemaPrefixes, String testFolder) throws UndefinedSchemaException {
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, "", testFolder);
         configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
         configuration.setSchemataFromPrefixes(schemaPrefixes);
@@ -26,7 +27,7 @@ public class RDFunitConfigurationFactory {
     }
 
 
-    public static RDFUnitConfiguration createDBpediaConfiguration(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaConfiguration(String baseFolder) throws UndefinedSchemaException {
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration("http://dbpedia.org", "", baseFolder);
 
@@ -39,7 +40,7 @@ public class RDFunitConfigurationFactory {
         return configuration;
     }
 
-    public static RDFUnitConfiguration createDBpediaConfigurationSimple(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaConfigurationSimple(String baseFolder) throws UndefinedSchemaException {
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration("http://dbpedia.org", "", baseFolder);
         configuration.setPrefix("dbpedia.org");
@@ -53,7 +54,7 @@ public class RDFunitConfigurationFactory {
         return configuration;
     }
 
-    public static RDFUnitConfiguration createDBpediaLiveConfigurationSimple(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaLiveConfigurationSimple(String baseFolder) throws UndefinedSchemaException {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         Collection<String> prefixes = Arrays.asList(/*"rdf", "rdfs",*/ "owl", "dbo", "foaf", "dcterms", "dc", "skos", "geo", /*"georss",*/ "prov");
@@ -61,7 +62,7 @@ public class RDFunitConfigurationFactory {
         return createConfiguration("http://live.dbpedia.org", "http://live.dbpedia.org/sparql", Arrays.asList("http://dbpedia.org"), prefixes, baseFolder);
     }
 
-    public static RDFUnitConfiguration createDatosBneEsDataset(String baseFolder) {
+    public static RDFUnitConfiguration createDatosBneEsDataset(String baseFolder) throws UndefinedSchemaException {
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration("http://datos.bne.es", "", baseFolder);
 
@@ -75,7 +76,7 @@ public class RDFunitConfigurationFactory {
         return configuration;
     }
 
-    public static RDFUnitConfiguration createLCSHDataset(String baseFolder) {
+    public static RDFUnitConfiguration createLCSHDataset(String baseFolder) throws UndefinedSchemaException {
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration("http://id.loc.gov", "", baseFolder);
         // vocabularies based on http://stats.lod2.eu/rdfdocs/44
@@ -89,7 +90,7 @@ public class RDFunitConfigurationFactory {
     }
 
 
-    public static RDFUnitConfiguration createDBpediaNLDataset(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaNLDataset(String baseFolder) throws UndefinedSchemaException {
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration("http://nl.dbpedia.org", "", baseFolder);
 
@@ -104,7 +105,7 @@ public class RDFunitConfigurationFactory {
         return configuration;
     }
 
-    public static RDFUnitConfiguration createDBpediaNLDatasetSimple(String baseFolder) {
+    public static RDFUnitConfiguration createDBpediaNLDatasetSimple(String baseFolder) throws UndefinedSchemaException {
 
         // vocabularies based on http://stats.lod2.eu/rdfdocs/1719
         Collection<String> prefixes =
@@ -113,7 +114,7 @@ public class RDFunitConfigurationFactory {
         return createConfiguration("http://nl.dbpedia.org", "http://nl.dbpedia.org/sparql", Arrays.asList("http://nl.dbpedia.org"), prefixes, baseFolder);
     }
 
-    public static RDFUnitConfiguration createLGDDataset(String baseFolder) {
+    public static RDFUnitConfiguration createLGDDataset(String baseFolder) throws UndefinedSchemaException {
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration("http://linkedgeodata.org", "", baseFolder);
 

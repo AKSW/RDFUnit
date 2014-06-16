@@ -2,6 +2,7 @@ package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
+import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 
@@ -80,7 +81,7 @@ public class RDFUnitConfiguration {
         this.customDereferenceURI = customDereferenceURI;
     }
 
-    public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) {
+    public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
         this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
     }
 
