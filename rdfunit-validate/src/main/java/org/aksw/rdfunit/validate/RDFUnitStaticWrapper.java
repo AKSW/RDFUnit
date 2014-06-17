@@ -1,6 +1,7 @@
-package org.aksw.rdfunit;
+package org.aksw.rdfunit.validate;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;

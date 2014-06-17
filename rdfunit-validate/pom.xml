@@ -104,7 +104,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>org.aksw.rdfunit.ValidateCLI</mainClass>
+                                <mainClass>org.aksw.rdfunit.validate.ValidateCLI</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>
@@ -141,7 +141,7 @@
                                     <transformers>
                                         <transformer
                                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <mainClass>org.aksw.rdfunit.ValidateCLI</mainClass>
+                                            <mainClass>org.aksw.rdfunit.validate.ValidateCLI</mainClass>
                                         </transformer>
                                     </transformers>
                                     <filters>

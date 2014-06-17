@@ -1,5 +1,7 @@
-package org.aksw.rdfunit;
+package org.aksw.rdfunit.validate;
 
+import org.aksw.rdfunit.RDFUnit;
+import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;

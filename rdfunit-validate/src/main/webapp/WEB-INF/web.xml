@@ -6,7 +6,7 @@
     <display-name>RDFUnit</display-name>
     <servlet>
         <servlet-name>validator</servlet-name>
-        <servlet-class>org.aksw.rdfunit.ValidateWS</servlet-class>
+        <servlet-class>org.aksw.rdfunit.validate.ValidateWS</servlet-class>
     </servlet>
 
     <servlet-mapping>

@@ -1,4 +1,4 @@
-package org.aksw.rdfunit;
+package org.aksw.rdfunit.validate;
 
 /**
  * User: Dimitris Kontokostas

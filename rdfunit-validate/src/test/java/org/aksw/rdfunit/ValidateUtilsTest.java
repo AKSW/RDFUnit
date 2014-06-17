@@ -3,6 +3,8 @@ package org.aksw.rdfunit;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;
+import org.aksw.rdfunit.validate.ParameterException;
+import org.aksw.rdfunit.validate.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;

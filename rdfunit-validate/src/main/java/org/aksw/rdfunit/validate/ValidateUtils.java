@@ -1,5 +1,6 @@
-package org.aksw.rdfunit;
+package org.aksw.rdfunit.validate;
 
+import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.apache.commons.cli.*;
