@@ -7,7 +7,7 @@
 
     <packaging>pom</packaging>
     <version>0.6.4-SNAPSHOT</version>
-    <name>Data Debugger - Parent</name>
+    <name>RDFUnit - Parent</name>
     <url>http://github.org/AKSW/RDFUnit</url>
 
     <modules>
@@ -37,6 +37,15 @@
         <developerConnection>scm:git:git@github.com:AKSW/RDFUnit.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <developers>
+        <developer>
+            <id>jimkont</id>
+            <name>Dimitris Kontokostas</name>
+            <url>http://aksw.org/DimitrisKontokostas</url>
+            <organizationUrl>http://aksw.org</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <!-- Project Settings -->
