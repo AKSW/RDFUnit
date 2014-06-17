@@ -39,19 +39,13 @@ public enum TestCaseResultStatus {
      */
     public static TestCaseResultStatus resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus", "");
-        switch (s) {
-            case "Success":
-                return Success;
-            case "Fail":
-                return Fail;
-            case "Timeout":
-                return Timeout;
-            case "Error":
-                return Error;
-            default:
-                return null;
+        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus", "");
+        for (TestCaseResultStatus status: values()) {
+            if (qName.equals(status.name())) {
+                return status;
+            }
         }
+        return null;
     }
 
     public static TestCaseResultStatus resolve(long value) {

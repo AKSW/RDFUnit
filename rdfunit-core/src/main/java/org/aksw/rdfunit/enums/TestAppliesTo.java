@@ -53,17 +53,12 @@ public enum TestAppliesTo {
      */
     public static TestAppliesTo resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
-        if (s.equals("Schema")) {
-            return Schema;
-        } else if (s.equals("EnrichedSchema")) {
-            return EnrichedSchema;
-        } else if (s.equals("Dataset")) {
-            return Dataset;
-        } else if (s.equals("Application")) {
-            return Application;
+        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
+        for (TestAppliesTo appliesTo: values()) {
+            if (qName.equals(appliesTo.name())) {
+                return appliesTo;
+            }
         }
-
         return null;
     }
 }

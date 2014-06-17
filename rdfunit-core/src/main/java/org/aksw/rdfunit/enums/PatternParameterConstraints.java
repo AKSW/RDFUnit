@@ -54,22 +54,16 @@ public enum PatternParameterConstraints {
     /**
      * Resolves a full URI/IRI to an enum
      * @param value the URI/IRI we want to resolve
-     * @return the equivalent enum type or null if it cannot resolve
+     * @return the equivalent enum type or @None as default
      */
     public static PatternParameterConstraints resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
-        switch (s) {
-            case "Resource":
-                return Resource;
-            case "Property":
-                return Property;
-            case "Class":
-                return Class;
-            case "Operator":
-                return Operator;
-            default:
-                return None;
+        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
+        for (PatternParameterConstraints constraint: values()) {
+            if (qName.equals(constraint.name())) {
+                return constraint;
+            }
         }
+        return None;
     }
 }

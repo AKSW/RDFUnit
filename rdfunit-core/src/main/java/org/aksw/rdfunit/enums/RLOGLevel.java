@@ -51,7 +51,7 @@ public enum RLOGLevel  {
     ALL;
 
     /**
-     * Holder the prefix to resolve this enum
+     * Holds the prefix to resolve this enum
      */
     private static final String schemaPrefix = "rlog";
 
@@ -74,12 +74,13 @@ public enum RLOGLevel  {
      */
     public static RLOGLevel resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
-        switch (s) {
-            //TODO add all options
-
-            default:
-                return null;
+        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
+        for (RLOGLevel level: values()) {
+            if (qName.equals(level.name())) {
+                return level;
+            }
         }
+        return null;
+
     }
 }
