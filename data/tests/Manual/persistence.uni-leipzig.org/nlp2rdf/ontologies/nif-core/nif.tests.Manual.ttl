@@ -219,7 +219,7 @@ rutt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
-        FILTER ( NOT EXISTS { ?resource a [ owl:subClassOf <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> ] } )
+        FILTER ( NOT EXISTS { ?resource a [ rdfs:subClassOf <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> ] } )
         # previous:
        #       {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
        #         UNION
@@ -243,7 +243,7 @@ rutt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
-        FILTER ( NOT EXISTS { ?resource a [ owl:subClassOf <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> ] } )
+        FILTER ( NOT EXISTS { ?resource a [ rdfs:subClassOf <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> ] } )
     } """ ;
     rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
