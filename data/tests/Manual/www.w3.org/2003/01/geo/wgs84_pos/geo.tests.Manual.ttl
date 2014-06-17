@@ -47,7 +47,7 @@ rutt:dbo-LITRAN-rangegeolatitude
     rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
     rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
     rut:testCaseLogLevel
-            rlog:Error .
+            rlog:ERROR .
 
 
 # geo:long must be in the range [-180,180]
@@ -85,7 +85,7 @@ rutt:dbo-LITRAN-rangegeolongtitude
     rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
     rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
     rut:testCaseLogLevel
-            rlog:Error .
+            rlog:ERROR .
 
 
 # geo:geometry should be a soft inverseFunctional property
@@ -103,4 +103,4 @@ rutt:dbo-INVFUNC-uniquegeometry
     rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
     rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
     rut:testCaseLogLevel
-            rlog:Warn .
+            rlog:WARN .

@@ -53,7 +53,7 @@ rutt:dbo-COMP-birthdeatdate
             rut:parameter rutp:COMP-OP
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error .
+                  rlog:ERROR .
 
 
 # dbo:demolitionDate after dbo:buildingStartDate
@@ -81,7 +81,7 @@ rutt:dbo-COMP-demolitionbuildingstartdate
             rut:parameter rutp:COMP-OP
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error .
+                  rlog:ERROR .
 
 
 # dbo:latestReleaseDate after dbo:releaseDate
@@ -109,7 +109,7 @@ rutt:dbo-COMP-releaselatestreleasedate
             rut:parameter rutp:COMP-OP
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error .
+                  rlog:ERROR .
 
 
 # Different countries having the same capital
@@ -133,7 +133,7 @@ rutt:dbo-INVFUNC-countriessamecapital
             rut:parameter rutp:INVFUNCT-T1
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error ;
+                  rlog:ERROR ;
     .
 
 
@@ -159,7 +159,7 @@ rutt:dbo-LITRAN-rangeheightperson
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/ontology/height> ?v1 . } """ ;
     rut:testCaseLogLevel
-            rlog:Warn .
+            rlog:WARN .
 
 # weight of a dbo:Person is between 1 and 375 KG
 rutt:dbo-LITRAN-rangeweightperson
@@ -196,7 +196,7 @@ rutt:dbo-LITRAN-rangeweightperson
                       rut:parameter rutp:LITRAN-valueMax
                     ] ;
     rut:testCaseLogLevel
-            rlog:Warn .
+            rlog:WARN .
 
 
 # dbo:isbn format
@@ -224,7 +224,7 @@ rutt:dbo-MATCH-isbnformat
                       rut:parameter rutp:MATCH-REGEX
                     ] ;
           rut:testCaseLogLevel
-                    rlog:Warn ;
+                    rlog:WARN ;
           .
 
 
@@ -254,7 +254,7 @@ rutt:dbo-MATCH-iso6393codeformat
                 rut:parameter rutp:MATCH-REGEX
               ] ;
     rut:testCaseLogLevel
-              rlog:Error ;
+              rlog:ERROR ;
     .
 
 
@@ -283,7 +283,7 @@ rutt:dbo-MATCH-postalcodeformat
                 rut:parameter rutp:MATCH-REGEX
               ] ;
     rut:testCaseLogLevel
-              rlog:Warn ;
+              rlog:WARN ;
     .
 
 
@@ -313,7 +313,7 @@ rut:binding
             rut:parameter rutp:PVT-P2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
 # Resource has dbo:deatDate but no dbo:birthDate
 rutt:dbo-PVT-deathdatebirthdate
@@ -341,7 +341,7 @@ rutt:dbo-PVT-deathdatebirthdate
             rut:parameter rutp:PVT-P2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
 
 # Resource cannot have a foaf property if it is not an owl:Thing
@@ -370,7 +370,7 @@ rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
     rut:references <http://www.w3.org/2002/07/owl#Thing> ;
     rut:source <http://dbpedia.org/ontology/> ;
     rut:testCaseLogLevel
-              rlog:Error ;
+              rlog:ERROR ;
     .
 
 # dbo:Person without a dbo:birthDate
@@ -399,5 +399,5 @@ rutt:dbo-TYPRODEP-personwithoutbirthdate
                 rut:parameter rutp:TYPRODEP-P1
               ] ;
     rut:testCaseLogLevel
-            rlog:Error ;
+            rlog:ERROR ;
     .

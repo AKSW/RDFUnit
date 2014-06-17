@@ -35,7 +35,7 @@ rutt:dbpedia-org-MATCH-yagocharactercasing
     rut:references <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
     rut:source <http://dbpedia.org> ;
     rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 # Resource has dbp:dateOfBirth but not dbo:birthDate (possible extraction issue)
 rutt:dbpedia-org-manual-dateofbirthbirthdate
@@ -52,7 +52,7 @@ rutt:dbpedia-org-manual-dateofbirthbirthdate
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ ;
     rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 # Resource is in birthday category but has no dbo:birthDate
 rutt:dbpedia-org-PVT-birthcategorywithoutbirthdate
@@ -81,7 +81,7 @@ rutt:dbpedia-org-PVT-birthcategorywithoutbirthdate
             rut:parameter rutp:PVT-P2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error .
+                  rlog:ERROR .
 
 
                                  
@@ -112,7 +112,7 @@ rutt:dbpedia-org-PVT-geotemplatecoordinates
             rut:parameter rutp:PVT-P2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error .
+                  rlog:ERROR .
 
 
 # Resource in cities category but not of the type dbo:City                                 
@@ -142,7 +142,7 @@ rutt:dbpedia-org-RDFSDOMAIN-capitalsafricaplace
             rut:parameter rutp:RDFSDOMAIN-T1
         ] ;
     rut:testCaseLogLevel
-                  rlog:Error .
+                  rlog:ERROR .
 
 
                                  
@@ -167,7 +167,7 @@ rutt:dbpedia-org-TRIPLE-articlesmissingfile
             rut:parameter rutp:TRIPLE-V1
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
                                  
 # Wikipedia articles with an inconsistent citation format
@@ -191,7 +191,7 @@ rutt:dbpedia-org-TRIPLE-inconsistantcitation
             rut:parameter rutp:TRIPLE-V1
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
                                  
 # Wikipedia articles that are possibly copy-pasted
@@ -215,7 +215,7 @@ rutt:dbpedia-org-TRIPLE-possiblecutpastemoves
             rut:parameter rutp:TRIPLE-V1
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
 
 # Resource has coordinates but is not a place                              
@@ -239,7 +239,7 @@ rutt:dbpedia-org-TYPDEP-coordinatesandnotplace
             rut:parameter rutp:TYPDEP-T2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
 # Resource has coordinates but is not a place
 rutt:dbpedia-org-TYPDEP-placenocoordinates
@@ -262,7 +262,7 @@ rutt:dbpedia-org-TYPDEP-placenocoordinates
             rut:parameter rutp:TYPDEP-T2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .
 
 # Resource is a foaf:Person but not a dbo:Person                                 
 rutt:dbpedia-org-TYPDEP-foafdbpediaperson
@@ -285,4 +285,4 @@ rutt:dbpedia-org-TYPDEP-foafdbpediaperson
             rut:parameter rutp:TYPDEP-T2
         ] ;
     rut:testCaseLogLevel
-                  rlog:Warn .
+                  rlog:WARN .

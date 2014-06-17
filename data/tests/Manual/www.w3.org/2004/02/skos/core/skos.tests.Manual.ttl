@@ -33,7 +33,7 @@ rutt:skos-ONELANG-singleEnPrefLabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # multiple languages in prefLabel (es)
@@ -56,7 +56,7 @@ rutt:skos-ONELANG-singleEsPrefLabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 # multiple languages in prefLabel (fr)
 rutt:skos-ONELANG-singleFrPrefLabel
@@ -78,7 +78,7 @@ rutt:skos-ONELANG-singleFrPrefLabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # multiple languages in prefLabel (de)
@@ -101,7 +101,7 @@ rutt:skos-ONELANG-singleDePrefLabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
@@ -168,7 +168,7 @@ rutt:skos-CARD-prefLabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
@@ -191,7 +191,7 @@ rutt:skos-OWLDISJP-skosaltpreflabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> , <http://www.w3.org/2004/02/skos/core#altLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 # skos:prefLabel is not a skos:hiddenLabel
 rutt:skos-OWLDISJP-skoshiddenpreflabel
@@ -213,7 +213,7 @@ rutt:skos-OWLDISJP-skoshiddenpreflabel
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> , <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
                                  
 # skos:altLabel is not a skos:hiddenLabel
@@ -236,7 +236,7 @@ rutt:skos-OWLDISJP-skosalthiddenlabel
       rut:references <http://www.w3.org/2004/02/skos/core#altLabel> , <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
                          
 # Disjoint Semantic Relations
@@ -260,7 +260,7 @@ rutt:skos-OWLDISJP-skosrelatedbroadertransitive
       rut:references <http://www.w3.org/2004/02/skos/core#related> , <http://www.w3.org/2004/02/skos/core#broaderTransitive> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # Cycles inbroaderHierarchy
@@ -291,7 +291,7 @@ rutt:skos-MATCH-altlabelwhitespace
       rut:references <http://www.w3.org/2004/02/skos/core#altLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:prefLabel whitespace
@@ -319,7 +319,7 @@ rutt:skos-MATCH-preflabelwhitespace
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:hiddenLabel whitespace
@@ -347,7 +347,7 @@ rutt:skos-MATCH-hiddenlabelwhitespace
       rut:references <http://www.w3.org/2004/02/skos/core#hiddenLabel> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:broader and skos:narrower should be disjoint
@@ -370,7 +370,7 @@ rutt:skos-OWLDISJP-broaderDisjNarrower
       rut:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#narrower> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:broader and skos:related should be disjoint
@@ -393,7 +393,7 @@ rutt:skos-OWLDISJP-broaderDisjRelated
       rut:references <http://www.w3.org/2004/02/skos/core#broader> , <http://www.w3.org/2004/02/skos/core#related> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 # skos:narrower and skos:related should be disjoint
 rutt:skos-OWLDISJP-narrowerDisjRelated
@@ -415,7 +415,7 @@ rutt:skos-OWLDISJP-narrowerDisjRelated
       rut:references <http://www.w3.org/2004/02/skos/core#narrower> , <http://www.w3.org/2004/02/skos/core#related> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:exactMatch and skos:broadMatch should be disjoint
@@ -438,7 +438,7 @@ rutt:skos-OWLDISJP-exactMatchDisjbroadMatch
       rut:references <http://www.w3.org/2004/02/skos/core#exactMatch> , <http://www.w3.org/2004/02/skos/core#broadMatch> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:exactMatch and skos:relatedMatch should be disjoint
@@ -461,7 +461,7 @@ rutt:skos-OWLDISJP-exactMatchDisjrelatedMatch
       rut:references <http://www.w3.org/2004/02/skos/core#relatedMatch> , <http://www.w3.org/2004/02/skos/core#exactMatch> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
 
 
 # skos:broadMatch and skos:relatedMatch should be disjoint
@@ -484,4 +484,4 @@ rutt:skos-OWLDISJP-broadMatchDisjrelatedMatch
       rut:references <http://www.w3.org/2004/02/skos/core#relatedMatch> , <http://www.w3.org/2004/02/skos/core#broadMAtch> ;
       rut:source <http://www.w3.org/2004/02/skos/core#> ;
       rut:testCaseLogLevel
-              rlog:Warn .
+              rlog:WARN .
