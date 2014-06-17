@@ -1,7 +1,6 @@
-package org.aksw.rdfunit.examples;
+package org.aksw.rdfunit;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
@@ -23,49 +22,74 @@ import java.util.Collection;
 
 /**
  * User: Dimitris Kontokostas
- * Wraps RDFUnit for NIF
- * We use only the nif test cases and they are initiated on first run
- * Created: 5/6/14 5:35 PM
+ * RDFUnit Wrapper for a single ontology + manual test cases
+ * Created: 6/17/14 8:30 PM
  */
-public class RDFUnitWrapperForNIF {
+public class RDFUnitStaticWrapper {
 
-    private static String nifOntologyURI = "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#";
-
-    // Keep these static and initialize only once on startup / first run
+    private static DataReader ontologyReader = null;
     private static TestSuite testSuite = null;
-    private static DataReader nifOntologyReader = null;
 
-    private RDFUnitWrapperForNIF() {
+    /**
+     * The following variables must be initialized with initWrapper before any validation
+     */
+    private static String ontologyURI = null;
+    private static String ontologyResourceURI = null;
+
+    private RDFUnitStaticWrapper() {
     }
 
-    private static DataReader getNifOntologyReader() {
+    /**
+     * This must be called first in order to initialize the Wrapper. Otherwise it will not work
+     *
+     * @param _ontologyURI         The ontology URI/IRI (for dereferencing)
+     * @param _ontologyResourceURI The resource URI of the ontology (if the ontology is stored in resources) give null if not applicable
+     */
+    public static void initWrapper(String _ontologyURI, String _ontologyResourceURI) {
+        ontologyURI = _ontologyURI;
+        ontologyResourceURI = _ontologyResourceURI;
+    }
+
+    /**
+     * This functions return the ontology reader as @DataReader
+     *
+     * @return a @DataReader
+     */
+    private static DataReader getOntologyReader() {
 
         // No locking here => possible deadock with getTestSuite()
         // even if it's called twice, there is no harm & the overhead is negligible
-        if (nifOntologyReader == null) {
+        if (ontologyReader == null) {
 
-            // Reader the nif ontology either from a resource or, if it fails, dereference it from the URI
+            // Means initWrapper was not called
+            if (ontologyURI == null && ontologyResourceURI == null) {
+                throw new IllegalArgumentException("RDFUnitStaticWrapper was not initialized properly. Call initWrapper() once before any validation. ");
+            }
+
+            // Reader the ontology either from a resource or, if it fails, dereference it from the URI
             Collection<DataReader> nifReaderList = new ArrayList<>();
-            nifReaderList.add(new RDFStreamReader(RDFUnitWrapperForNIF.class.getResourceAsStream("org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl")));
-            nifReaderList.add(DataReaderFactory.createDereferenceReader(nifOntologyURI));
+            if (ontologyResourceURI != null) {
+                nifReaderList.add(new RDFStreamReader(RDFUnitStaticWrapper.class.getResourceAsStream(ontologyResourceURI)));
+            }
+            nifReaderList.add(DataReaderFactory.createDereferenceReader(ontologyURI));
 
-            nifOntologyReader = new DataFirstSuccessReader(nifReaderList);
+            ontologyReader = new DataFirstSuccessReader(nifReaderList);
         }
-        return nifOntologyReader;
+        return ontologyReader;
     }
 
     private static TestSuite getTestSuite() {
         if (testSuite == null) {
-            synchronized (RDFUnitWrapperForNIF.class) {
+            synchronized (RDFUnitStaticWrapper.class) {
                 if (testSuite == null) {
 
 
                     // Initialize the nif Source
-                    Source nifSchema = new SchemaSource("nif", nifOntologyURI, getNifOntologyReader());
+                    Source nifSchema = new SchemaSource("custom", ontologyURI, getOntologyReader());
 
                     // Set up the manual nif test cases (from resource)
                     DataReader manualTestCaseReader = new RDFStreamReader(
-                            RDFUnitWrapperForNIF.class.getResourceAsStream(
+                            RDFUnitStaticWrapper.class.getResourceAsStream(
                                     CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", nifSchema)));
 
                     // Instantiate manual test cases
@@ -104,22 +128,44 @@ public class RDFUnitWrapperForNIF {
     }
 
     public static Model validate(final Model input) {
+        return validate(input, TestCaseExecutionType.rlogTestCaseResult);
+    }
+
+
+    public static Model validate(final Model input, TestCaseExecutionType executionType) {
+        return validate(input, executionType, "custom");
+    }
+
+    public static Model validate(final Model input, String inputURI) {
+        return validate(input, TestCaseExecutionType.rlogTestCaseResult, inputURI);
+    }
+
+    /**
+     * Static method that validates an input model. You MUST call initWrapper once before calling this function
+     *
+     * @param input         the Model we want to validate
+     * @param executionType What type of results we want
+     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
+     * @return a new Model that contains the validation results. The results are according to executionType
+     */
+    public static Model validate(final Model input, TestCaseExecutionType executionType, String inputURI) {
 
         final boolean enableRDFUnitLogging = false;
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
-        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(TestCaseExecutionType.rlogTestCaseResult);
+        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         Source modelSource = new DumpSource(
-                "prefix", // prefix
-                "uri",    //uri
+                "custom", // prefix
+                inputURI,
                 new DataModelReader(input), // the input model as a DataReader
                 Arrays.asList(  // List of associated ontologies (these will be loaded in the testing model)
-                        new SchemaSource("nif", nifOntologyURI, getNifOntologyReader()))
+                        new SchemaSource("custom", ontologyURI, getOntologyReader()))
         );
 
         testExecutor.execute(modelSource, getTestSuite(), 0);
 
         return testExecutorMonitor.getModel();
     }
+
 }
