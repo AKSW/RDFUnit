@@ -8,6 +8,7 @@ import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
@@ -91,7 +92,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         return annotation.getDescription();
     }
 
-    public String getLogLevel() {
+    public RLOGLevel getLogLevel() {
         return annotation.getTestCaseLogLevel();
     }
 
@@ -138,8 +139,8 @@ public abstract class TestCase implements Comparable<TestCase> {
             throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testURI);
         }
 
-        if (getLogLevel() == null || getLogLevel().equals("")) {
-            throw new TestCaseInstantiationException("No log level included for Test: " + testURI);
+        if (getLogLevel() == null) {
+            throw new TestCaseInstantiationException("No (or malformed) log level included for Test: " + testURI);
         }
     }
 

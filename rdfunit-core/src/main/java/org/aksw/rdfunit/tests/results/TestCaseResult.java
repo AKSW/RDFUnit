@@ -21,7 +21,7 @@ public abstract class TestCaseResult {
         this.timestamp = new XSDDateTime(Calendar.getInstance());
     }
 
-    public abstract Resource serialize(Model model, String sourceURI);
+    public abstract Resource serialize(Model model, String testExecutionURI);
 
     public TestCase getTestCase() {
         return testCase;

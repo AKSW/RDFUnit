@@ -3,6 +3,7 @@ package org.aksw.rdfunit.tests;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.services.PrefixNSService;
@@ -22,10 +23,10 @@ public class TestCaseAnnotation {
     private final String sourceUri;
     private final java.util.Collection<String> references;
     private final String description;
-    private final String testCaseLogLevel;
+    private final RLOGLevel testCaseLogLevel;
     private final java.util.Collection<ResultAnnotation> resultAnnotations;
 
-    public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, java.util.Collection<String> references, String description, String testCaseLogLevel, java.util.Collection<ResultAnnotation> resultAnnotations) {
+    public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, java.util.Collection<String> references, String description, RLOGLevel testCaseLogLevel, java.util.Collection<ResultAnnotation> resultAnnotations) {
         this.generated = generated;
         this.autoGeneratorURI = autoGeneratorURI;
         this.appliesTo = appliesTo;
@@ -45,7 +46,7 @@ public class TestCaseAnnotation {
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testGenerator"), model.createResource(getAutoGeneratorURI()))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "appliesTo"), model.createResource(getAppliesTo().getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "source"), model.createResource(getSourceUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCaseLogLevel"), model.createResource(getTestCaseLogLevel()));
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCaseLogLevel"), model.createResource(getTestCaseLogLevel().getUri()));
 
         for (String r : getReferences()) {
             resource.addProperty(model.createProperty(PrefixNSService.getNSFromPrefix("rut") + "references"), ResourceFactory.createResource(r));
@@ -82,9 +83,9 @@ public class TestCaseAnnotation {
     /*
      * Get either testCaseLogLevel or generate it from resultAnnotations (and then remove the annotation)
      * */
-    private String findAnnotationLevel(String testCaseLogLevel) {
+    private RLOGLevel findAnnotationLevel(RLOGLevel testCaseLogLevel) {
 
-        String logLevel = testCaseLogLevel;
+        RLOGLevel logLevel = testCaseLogLevel;
 
         ResultAnnotation pointer = null;
         for (ResultAnnotation annotation : resultAnnotations) {
@@ -93,16 +94,20 @@ public class TestCaseAnnotation {
             }
         }
         if (pointer != null) {
-            if (logLevel == null || logLevel.equals("")) {// Get new value only if testCaseLogLevel doesn't exists
-                logLevel = pointer.getAnnotationValue().toString();
+            if (logLevel == null) {// Get new value only if testCaseLogLevel doesn't exists
+                logLevel = RLOGLevel.resolve(pointer.getAnnotationValue().toString());
             }
             resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
+        }
+
+        if (logLevel == null) {
+            String ff = "";
         }
 
         return logLevel;
     }
 
-    public String getTestCaseLogLevel() {
+    public RLOGLevel getTestCaseLogLevel() {
         return testCaseLogLevel;
     }
 

@@ -123,7 +123,7 @@ public class TestAutoGenerator {
                                 source.getUri(),
                                 references,
                                 description,
-                                "",
+                                null,
                                 annotations),
                         pattern,
                         bindings

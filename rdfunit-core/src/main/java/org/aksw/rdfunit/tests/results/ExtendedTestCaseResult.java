@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
@@ -17,7 +18,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
     private final java.util.Collection<ResultAnnotation> resultAnnotations;
 
-    public ExtendedTestCaseResult(TestCase testCase, String resource, String message, String logLevel) {
+    public ExtendedTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
         super(testCase, resource, message, logLevel);
         this.resultAnnotations = testCase.getResultAnnotations();
     }
@@ -28,8 +29,8 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
     }
 
     @Override
-    public Resource serialize(Model model, String sourceURI) {
-        Resource resource = super.serialize(model, sourceURI)
+    public Resource serialize(Model model, String testExecutionURI) {
+        Resource resource = super.serialize(model, testExecutionURI)
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "ExtendedTestCaseResult"));
 
         for (ResultAnnotation annotation : resultAnnotations) {

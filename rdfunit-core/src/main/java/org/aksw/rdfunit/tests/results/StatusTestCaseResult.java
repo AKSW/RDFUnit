@@ -23,11 +23,11 @@ public class StatusTestCaseResult extends TestCaseResult {
     }
 
     @Override
-    public Resource serialize(Model model, String sourceURI) {
+    public Resource serialize(Model model, String testExecutionURI) {
         return model.createResource()
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "StatusTestCaseResult"))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(sourceURI))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(testExecutionURI))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;

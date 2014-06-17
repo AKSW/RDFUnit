@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
@@ -160,7 +161,7 @@ public final class TestUtils {
                 String appliesTo = qs.get("appliesTo").toString();
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
-                String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
+                RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
                 String sparqlWhere = qs.get("sparqlWhere").toString();
                 String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
                 java.util.Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
@@ -232,7 +233,7 @@ public final class TestUtils {
                 String appliesTo = qs.get("appliesTo").toString();
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
-                String testCaseLogLevel = qs.get("testCaseLogLevel").toString();
+                RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
                 String patternURI = qs.get("basedOnPattern").toString();
                 Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixNSService.getNSFromPrefix("rutp"), ""));
                 if (pattern == null) {

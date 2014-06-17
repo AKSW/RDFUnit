@@ -39,8 +39,8 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
     }
 
     @Override
-    public Resource serialize(Model model, String sourceURI) {
-        return super.serialize(model, sourceURI)
+    public Resource serialize(Model model, String testExecutionURI) {
+        return super.serialize(model, testExecutionURI)
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "AggregatedTestResult"))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultCount"),
                         ResourceFactory.createTypedLiteral("" + errorCount, XSDDatatype.XSDinteger))

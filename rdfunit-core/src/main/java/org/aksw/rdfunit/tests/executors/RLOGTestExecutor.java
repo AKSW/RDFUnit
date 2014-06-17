@@ -5,6 +5,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.Utils.SparqlUtils;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
@@ -60,7 +61,7 @@ public class RLOGTestExecutor extends TestExecutor {
         if (qs.contains("message")) {
             message = qs.get("message").toString();
         }
-        String logLevel = testCase.getLogLevel();
+        RLOGLevel logLevel = testCase.getLogLevel();
 
         return new RLOGTestCaseResult(testCase, resource, message, logLevel);
 
