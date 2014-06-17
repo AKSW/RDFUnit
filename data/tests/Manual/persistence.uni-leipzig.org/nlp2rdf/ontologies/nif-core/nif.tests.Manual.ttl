@@ -13,7 +13,7 @@
 
 rutt:nif-Deprecated-schema
     a       rut:ManualTestCase ;
-    dcterms:description "Using the old vocabulary, a newer version is available at http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#";
+    dcterms:description "You are using the old vocabulary, a newer version is available at http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
@@ -30,7 +30,7 @@ rutt:nif-Deprecated-schema
 
 rutt:nif-isString-only-with-Context
     a       rut:ManualTestCase ;
-    dcterms:description "All nif:Context must have an explicit nif:isString, nif:isString can only occurr with a nif:Context";
+    dcterms:description "All nif:Context must have an explicit nif:isString, nif:isString can only occur with a nif:Context";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> , <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString>;
@@ -94,7 +94,7 @@ rutt:nif-length-of-isString-equal-with-endIndex
 
 rutt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and-end-index
     a       rut:ManualTestCase ;
-    dcterms:description "nif:anchorOf must match the substring of nif:isString calculated with begin and end index";
+    dcterms:description "nif:anchorOf must match the substring of nif:isString calculated with begin and end index: SUBSTR(?isString, ?beginIndex , (?endIndex - ?beginIndex) ) equals ?anchorOf ";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references nif:anchorOf , nif:beginIndex, nif:endIndex ;
@@ -105,8 +105,8 @@ rutt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and
                          		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf> ?anchorOf .
                          		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?beginIndex .
                          		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?endIndex .
-                         		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?referenceString ]  .
-                         		BIND (SUBSTR(?referenceString, ?beginIndex , (?endIndex - ?beginIndex) ) AS ?test ) .
+                         		?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?isString ]  .
+                         		BIND (SUBSTR(?isString, ?beginIndex , (?endIndex - ?beginIndex) ) AS ?test ) .
                          	    FILTER (str(?test) != str(?anchorOf )) .
 
 
@@ -123,15 +123,15 @@ rutt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and
                          	} """ ;
     rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 #not sure, if necessary -> ?s a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String> .
-                                #?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf> ?anchorOf .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf> ?anchorOf .
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?beginIndex .
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?endIndex .
-                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?referenceString ]  . } """ .
+                                ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?isString ]  . } """ .
 
 
 rutt:nif-rdftype-is-misspelled
     a       rut:ManualTestCase ;
-    dcterms:description "rdf:type is misspelled";
+    dcterms:description "rdf:type nif:RFC5147String is misspelled, e.g. RCF5147 or RFC547";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
@@ -154,7 +154,7 @@ rutt:nif-rdftype-is-misspelled
 
 rutt:nif-non-context-CString-must-have-explicit-referenceContext
     a       rut:ManualTestCase ;
-    dcterms:description "all nif:CString and subclasses that aren't contexts must have an explicit referenceContext";
+    dcterms:description "all nif:CString and subclasses that aren't typed as nif:Context must have an explicit property nif:referenceContext";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext ;
@@ -180,38 +180,38 @@ rutt:nif-non-context-CString-must-have-explicit-referenceContext
                             } """ . 
 
 #TODO change to two TYPRODEP cases
-rutt:nif-CString-and-subclasses-MUST-have-beginIndex-and-endIndex
-    a       rut:ManualTestCase ;
-    dcterms:description "all nif:CString and subclasses (i.e. RFC5147String, CStringImpl, OffsetBasedString) MUST have nif:beginIndex and nif:endIndex";
-    rut:appliesTo rut:Schema ;
-    rut:generated rut:ManuallyGenerated ;
-    rut:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext, nif:endIndex ;
-    rut:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
-    rut:testCaseLogLevel rlog:ERROR ;
-    rut:sparqlWhere """ {
-        {
-            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
-            UNION
-            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
-            UNION
-            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
-        }
-        FILTER ( NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o  } 
-              || NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?o  }    )
-    } """ ;
-    rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
-                                {
-                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
-                                    UNION
-                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
-                                    UNION
-                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
-                                }
-                            } """ . 
+#rutt:nif-CString-and-subclasses-MUST-have-beginIndex-and-endIndex
+#    a       rut:ManualTestCase ;
+#    dcterms:description "all nif:CString and subclasses (i.e. RFC5147String, CStringImpl, OffsetBasedString) MUST have nif:beginIndex and nif:endIndex";
+#    rut:appliesTo rut:Schema ;
+#    rut:generated rut:ManuallyGenerated ;
+#    rut:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:referenceContext, nif:endIndex ;
+#    rut:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+#    rut:testCaseLogLevel rlog:ERROR ;
+#    rut:sparqlWhere """ {
+#        {
+#            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+#            UNION
+#            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+#            UNION
+#            {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+#        }
+#        FILTER ( NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?o  } 
+#              || NOT EXISTS {?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?o  }    )
+#    } """ ;
+#    rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+#                               {
+#                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+#                                    UNION
+#                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+#                                    UNION
+#                                    {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+#                               }
+#                            } """ . 
 
 rutt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
     a       rut:ManualTestCase ;
-    dcterms:description "All nif:Context must have rdf:type  of a subclass of nif:CString";
+    dcterms:description "All nif:Context must have rdf:type of a subclass of nif:CString, the context --serving as a reference -- can only be a continuous string.";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references nif:CString, nif:CStringImpl, nif:OffsetBasedString, nif:RFC5147String, nif:beginIndex ;
@@ -219,17 +219,14 @@ rutt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
-        FILTER ( NOT EXISTS {
-            {
-                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
-                UNION
-                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
-                UNION
-                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
-            }
-        })
-
-        # README
+        FILTER ( NOT EXISTS { ?resource a [ owl:subClassOf <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> ] } )
+        # previous:
+       #       {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
+       #         UNION
+       #         {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
+       #         UNION
+       #         {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
+        
     } """ ;
     rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
@@ -246,16 +243,25 @@ rutt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
-        FILTER ( NOT EXISTS {
-            {
-                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
-                UNION
-                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString>}
-                UNION
-                {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String>}
-            }
-        })
+        FILTER ( NOT EXISTS { ?resource a [ owl:subClassOf <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> ] } )
     } """ ;
     rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
                                 ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
+                            } """ . 
+
+
+rutt:nif-CString-is-abstract-it-SHOULD-not-be-serialized
+    a       rut:ManualTestCase ;
+    dcterms:description "nif:CString is an abstract class, it is not recommended to be serialized explicitly. Please only serialize the subclasses, e.g. nif:CStringImpl or nif:RFC5147String and the general nif:String  class.";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references nif:CString ;
+    rut:source <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+        ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString> .
+      
+    } """ ;
+    rut:sparqlPrevalence """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
+                                ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#String> .
                             } """ . 
