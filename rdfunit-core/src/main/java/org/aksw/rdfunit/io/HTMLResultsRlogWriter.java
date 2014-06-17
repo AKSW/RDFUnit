@@ -59,13 +59,13 @@ public class HTMLResultsRlogWriter extends HTMLResultsWriter {
                 String levelShort = level.replace(PrefixNSService.getNSFromPrefix("rlog"), "");
                 String rowClass = "";
                 switch (levelShort) {
-                    case "Warn":
+                    case "WARN":
                         rowClass = "warning";
                         break;
-                    case "Error":
+                    case "ERROR":
                         rowClass = "danger";
                         break;
-                    case "Notice":
+                    case "INFO":
                         rowClass = "info";
                         break;
                     default:

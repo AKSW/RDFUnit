@@ -30,15 +30,12 @@ public class RLOGTestCaseResult extends TestCaseResult {
 
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
-        return model.createResource()
+        return super.serialize(model, testExecutionURI)
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "RLOGTestCaseResult"))
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rlog") + "Entry"))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "resource"), model.createResource(getResource()))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "message"), getMessage())
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "level"), model.createResource(getLogLevel().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(testExecutionURI))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
                 ;
     }
 

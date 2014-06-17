@@ -31,13 +31,14 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td><a href=\"%s\">%s</a></td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>";
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resultStatus ?testcase ?resultCount ?resultPrevalence WHERE {" +
+                " SELECT DISTINCT ?resultStatus ?testcase ?description ?resultCount ?resultPrevalence WHERE {" +
                 " ?s a rut:AggregatedTestResult ; " +
                 "    rut:resultStatus ?resultStatus ; " +
                 "    rut:testCase ?testcase ;" +
+                "    dcterms:description ?description ;" +
                 "    rut:resultCount ?resultCount ; " +
                 "    rut:resultPrevalence ?resultPrevalence ; " +
                 //"    prov:wasGeneratedBy <" + testExecutionURI + "> " +
@@ -53,6 +54,7 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
                 QuerySolution qs = rs.next();
                 String resultStatus = qs.get("resultStatus").toString();
                 String testcase = qs.get("testcase").toString();
+                String description = qs.get("description").toString();
                 String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
 
@@ -61,8 +63,10 @@ public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
 
                 String row = String.format(template,
                         rowClass,
-                        "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
+                        resultStatus,
+                        statusShort,
                         testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
+                        description,
                         resultCount,
                         resultPrevalence);
                 results.append(row);
