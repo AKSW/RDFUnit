@@ -29,9 +29,16 @@ public enum TestAppliesTo {
      */
     Application;
 
+    /**
+     * Holder the prefix to resolve this enum
+     */
+    private static final String schemaPrefix = "rut";
+
+    /**
+     * @return a full URI/IRI as a String
+     */
     public String getUri() {
-        // TODO make prefix configurable
-        return PrefixNSService.getNSFromPrefix("rut") + name();
+        return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
     }
 
     @Override
@@ -39,9 +46,14 @@ public enum TestAppliesTo {
         return getUri();
     }
 
+    /**
+     * Resolves a full URI/IRI to an enum
+     * @param value the URI/IRI we want to resolve
+     * @return the equivalent enum type or null if it cannot resolve
+     */
     public static TestAppliesTo resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix("rut"), "");
+        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
         if (s.equals("Schema")) {
             return Schema;
         } else if (s.equals("EnrichedSchema")) {

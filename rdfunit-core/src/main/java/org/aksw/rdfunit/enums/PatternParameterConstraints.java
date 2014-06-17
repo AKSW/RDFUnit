@@ -34,9 +34,16 @@ public enum PatternParameterConstraints {
      */
     None;
 
+    /**
+     * Holds the prefix to resolve this enum
+     */
+    private static final String schemaPrefix = "rut";
+
+    /**
+     * @return a full URI/IRI as a String
+     */
     public String getUri() {
-        // TODO make prefix configurable
-        return PrefixNSService.getNSFromPrefix("rut") + name();
+        return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
     }
 
     @Override
@@ -44,9 +51,14 @@ public enum PatternParameterConstraints {
         return getUri();
     }
 
+    /**
+     * Resolves a full URI/IRI to an enum
+     * @param value the URI/IRI we want to resolve
+     * @return the equivalent enum type or null if it cannot resolve
+     */
     public static PatternParameterConstraints resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix("rut"), "");
+        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
         switch (s) {
             case "Resource":
                 return Resource;

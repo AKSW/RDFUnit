@@ -15,9 +15,16 @@ public enum TestCaseResultStatus {
     Error,
     Running;
 
+    /**
+     * Holds the prefix to resolve this enum
+     */
+    private static final String schemaPrefix = "rut";
+
+    /**
+     * @return a full URI/IRI as a String
+     */
     public String getUri() {
-        // TODO make prefix configurable
-        return PrefixNSService.getNSFromPrefix("rut") + "ResultStatus" + name();
+        return PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus" + name();
     }
 
     @Override
@@ -25,9 +32,14 @@ public enum TestCaseResultStatus {
         return getUri();
     }
 
+    /**
+     * Resolves a full URI/IRI to an enum
+     * @param value the URI/IRI we want to resolve
+     * @return the equivalent enum type or null if it cannot resolve
+     */
     public static TestCaseResultStatus resolve(String value) {
 
-        String s = value.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
+        String s = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus", "");
         switch (s) {
             case "Success":
                 return Success;
