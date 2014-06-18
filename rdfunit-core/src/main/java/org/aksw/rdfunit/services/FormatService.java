@@ -1,13 +1,9 @@
 package org.aksw.rdfunit.services;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.format.FormatType;
 import org.aksw.rdfunit.io.format.FormatTypeFactory;
-import org.apache.commons.collections4.BidiMap;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -19,7 +15,7 @@ public final class FormatService {
 
 
     private static Collection<FormatType> getFormatTypes() {
-        // initialize prefixNsBidiMap on first run
+        // initialize formatTypes
         if (formatTypes == null) {
             synchronized (FormatService.class) {
                 if (formatTypes == null) {
