@@ -519,6 +519,11 @@ rut:StatusTestCaseResult
         owl:onProperty rut:resultStatus ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty dcterms:description ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
     .
 
 rut:resultStatus
