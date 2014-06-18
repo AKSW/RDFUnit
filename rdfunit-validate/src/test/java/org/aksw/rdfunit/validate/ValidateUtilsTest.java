@@ -1,5 +1,6 @@
-package org.aksw.rdfunit;
+package org.aksw.rdfunit.validate;
 
+import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;

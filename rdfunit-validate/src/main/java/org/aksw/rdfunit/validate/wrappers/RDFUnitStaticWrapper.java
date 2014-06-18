@@ -1,7 +1,8 @@
-package org.aksw.rdfunit.validate;
+package org.aksw.rdfunit.validate.wrappers;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
+import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
@@ -44,6 +45,15 @@ public class RDFUnitStaticWrapper {
      * This must be called first in order to initialize the Wrapper. Otherwise it will not work
      *
      * @param _ontologyURI         The ontology URI/IRI (for dereferencing)
+     */
+    public static void initWrapper(String _ontologyURI) {
+        initWrapper(_ontologyURI, null);
+    }
+
+    /**
+     * This must be called first in order to initialize the Wrapper. Otherwise it will not work
+     *
+     * @param _ontologyURI         The ontology URI/IRI (for dereferencing)
      * @param _ontologyResourceURI The resource URI of the ontology (if the ontology is stored in resources) give null if not applicable
      */
     public static void initWrapper(String _ontologyURI, String _ontologyResourceURI) {
@@ -79,7 +89,7 @@ public class RDFUnitStaticWrapper {
         return ontologyReader;
     }
 
-    private static TestSuite getTestSuite() {
+    public static TestSuite getTestSuite() {
         if (testSuite == null) {
             synchronized (RDFUnitStaticWrapper.class) {
                 if (testSuite == null) {
@@ -133,11 +143,11 @@ public class RDFUnitStaticWrapper {
     }
 
 
-    public static Model validate(final Model input, TestCaseExecutionType executionType) {
+    public static Model validate(final Model input, final TestCaseExecutionType executionType) {
         return validate(input, executionType, "custom");
     }
 
-    public static Model validate(final Model input, String inputURI) {
+    public static Model validate(final Model input, final String inputURI) {
         return validate(input, TestCaseExecutionType.rlogTestCaseResult, inputURI);
     }
 
@@ -149,14 +159,14 @@ public class RDFUnitStaticWrapper {
      * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
      * @return a new Model that contains the validation results. The results are according to executionType
      */
-    public static Model validate(final Model input, TestCaseExecutionType executionType, String inputURI) {
+    public static Model validate(final Model input, final TestCaseExecutionType executionType, final String inputURI) {
 
         final boolean enableRDFUnitLogging = false;
-        SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
-        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
+        final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
+        final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
-        Source modelSource = new DumpSource(
+        final Source modelSource = new DumpSource(
                 "custom", // prefix
                 inputURI,
                 new DataModelReader(input), // the input model as a DataReader
@@ -165,6 +175,27 @@ public class RDFUnitStaticWrapper {
         );
 
         testExecutor.execute(modelSource, getTestSuite(), 0);
+
+        return testExecutorMonitor.getModel();
+    }
+
+    /**
+     * Static method that validates a Source. In this case the Source & TestSuite are provided as argument along with a RDFUnitCOnfiguration object
+     * This function can also serve as standalone
+     *
+     * @param configuration We use this to determine the execution type
+     * @param dataset the dataset source we want to test
+     * @param testSuite the list of test cases we want to test our Source against
+     * @return  a new Model that contains the validation results. The results are according to executionType
+     */
+    public static Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) {
+
+        final boolean enableRDFUnitLogging = false;
+        final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
+
+        final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getResultLevelReporting());
+        testExecutor.addTestExecutorMonitor(testExecutorMonitor);
+        testExecutor.execute(dataset, testSuite, 0);
 
         return testExecutorMonitor.getModel();
     }

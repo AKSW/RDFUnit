@@ -1,8 +1,10 @@
 package org.aksw.rdfunit.validate;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.DataReader;
@@ -14,6 +16,7 @@ import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
+import org.aksw.rdfunit.validate.ws.RDFUnitWebService;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
@@ -21,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,7 +34,7 @@ import java.io.PrintWriter;
  * Validation as a web service
  * Created: 6/13/14 1:50 PM
  */
-public class ValidateWS extends HttpServlet {
+public class ValidateWS extends RDFUnitWebService {
     private static final Logger log = LoggerFactory.getLogger(ValidateWS.class);
 
     private final String dataFolder = "data/";
@@ -53,72 +55,16 @@ public class ValidateWS extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        handleRequestAndRespond(httpServletRequest, httpServletResponse);
+    protected synchronized TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset) {
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
+        return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
     }
 
     @Override
-    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        handleRequestAndRespond(httpServletRequest, httpServletResponse);
-    }
-
-    private void handleRequestAndRespond(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-
-        String[] arguments = convertArgumentsToStringArray(httpServletRequest);
-
-        CommandLine commandLine = null;
-        try {
-            commandLine = ValidateUtils.parseArguments(arguments);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            printMessage(httpServletResponse, "Error");
-            return;
-        }
-
-        if (commandLine.hasOption("h")) {
-            printHelpMessage(httpServletResponse);
-            httpServletResponse.getWriter().close();
-            return;
-        }
-
-        boolean printHelpAndReturn = false;
-
-        RDFUnitConfiguration configuration = null;
-        try {
-            configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
-        } catch (ParameterException e) {
-            String message = e.getMessage();
-            if (message != null) {
-                printMessage(httpServletResponse, message);
-            }
-            printHelpAndReturn = true;
-        }
-        assert (configuration != null);
-
-
-        if (commandLine.hasOption("h")) {
-            printHelpAndReturn = true;
-        }
-
-        if (printHelpAndReturn) {
-            printHelpMessage(httpServletResponse);
-            httpServletResponse.getWriter().close();
-            return;
-        }
-
-
-        final Source dataset = configuration.getTestSource();
-        /* </cliStuff> */
-
-
-        TestSuite testSuite = getTestSuite(configuration, dataset);
-
-
+    protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getResultLevelReporting());
         if (testExecutor == null) {
-            printMessage(httpServletResponse, "Cannot initialize test executor. Exiting");
-            httpServletResponse.getWriter().close();
-            return;
+            throw new TestCaseExecutionException(null, "Cannot initialize test executor. Exiting");
         }
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
@@ -126,43 +72,45 @@ public class ValidateWS extends HttpServlet {
         // warning, caches intermediate results
         testExecutor.execute(dataset, testSuite, 0);
 
-        httpServletResponse.setContentType("text/html");
-        try {
-            DataWriter html = HTMLResultsWriter.create(configuration.getResultLevelReporting(), httpServletResponse.getOutputStream());
-            html.write(testExecutorMonitor.getModel());
-
-        } catch (TripleWriterException e) {
-            log.error("Cannot write tests to file: " + e.getMessage());
-        }
-
-
+        return testExecutorMonitor.getModel();
     }
 
     @Override
-    public void destroy() {
-        // do nothing.
+    protected void writeResults(RDFUnitConfiguration configuration, Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
+        httpServletResponse.setContentType("text/html");
+        DataWriter html = HTMLResultsWriter.create(configuration.getResultLevelReporting(), httpServletResponse.getOutputStream());
+        html.write(model);
     }
 
-    private synchronized TestSuite getTestSuite(RDFUnitConfiguration configuration, final Source dataset) {
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
-        return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
+    @Override
+    protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
+        String[] arguments = convertArgumentsToStringArray(httpServletRequest);
+
+        CommandLine commandLine = null;
+        try {
+            commandLine = ValidateUtils.parseArguments(arguments);
+        } catch (ParseException e) {
+            String errorMEssage = "Error! Not valid parameter input";
+            throw new ParameterException(errorMEssage, e);
+        }
+
+        // TODO: hack to print help message
+        if (commandLine.hasOption("h")) {
+            throw new ParameterException("");
+        }
+
+        RDFUnitConfiguration configuration = null;
+        configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
+
+        return configuration;
     }
 
-    private void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
+    protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setContentType("text/html");
         PrintWriter printWriter = httpServletResponse.getWriter();
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(printWriter, 200, "/validate?", "<pre>", ValidateUtils.getCliOptions(), 0, 0, "</pre>");
-    }
-
-    private void printMessage(HttpServletResponse httpServletResponse, String message) throws IOException {
-        // Set response content type
-        httpServletResponse.setContentType("text/html");
-        // Actual logic goes here.
-        PrintWriter out = httpServletResponse.getWriter();
-        out.println("<pre>" + message + "</pre>");
-        //out.close();
     }
 
     private static String[] convertArgumentsToStringArray(HttpServletRequest httpServletRequest) {
@@ -181,5 +129,11 @@ public class ValidateWS extends HttpServlet {
         }
 
         return args;
+    }
+
+
+    @Override
+    public void destroy() {
+        // do nothing.
     }
 }
