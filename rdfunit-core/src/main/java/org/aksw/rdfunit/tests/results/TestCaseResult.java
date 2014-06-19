@@ -5,6 +5,7 @@ import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
@@ -33,7 +34,7 @@ public abstract class TestCaseResult {
      * @return a @Resource with all the triples for this @TestCaseResult
      */
     public Resource serialize(Model model, String testExecutionURI) {
-        return model.createResource()
+        return model.createResource(JenaUUID.generate().asString())
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "TestCaseResult"))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(testExecutionURI))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
