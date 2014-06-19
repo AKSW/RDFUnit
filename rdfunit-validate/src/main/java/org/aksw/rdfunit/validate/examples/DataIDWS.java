@@ -36,50 +36,29 @@ public class DataIDWS extends RDFUnitWebService {
     @Override
     protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
 
-
-
         String type = httpServletRequest.getParameter("t");
         if (type == null || !(type.equals("text") || type.equals("uri"))) {
             throw new ParameterException("'t' must be one of text or uri");
         }
 
         String source = httpServletRequest.getParameter("s");
-        if (source == null || source.isEmpty()){
+        if (source == null || source.isEmpty()) {
             throw new ParameterException("'s' must be defined and not empty");
         }
 
-        boolean isText = type.equals("text");
-
         String datasetName = source;
-        if (isText) {
+        if (type.equals("text")) {
             datasetName = "custom-text";
-        }
-
-        String inputFormat = "";
-        if (isText) {
-            inputFormat = httpServletRequest.getParameter("i");
-            if (inputFormat == null || inputFormat.isEmpty()) {
-                throw new ParameterException("'i' must be defined when -t = 'text'");
-            }
+            throw new ParameterException("text not supported yet");
         }
 
         String outputFormat = httpServletRequest.getParameter("o");
-        if (outputFormat == null || outputFormat.isEmpty()){
+        if (outputFormat == null || outputFormat.isEmpty()) {
             outputFormat = "html";
         }
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetName, "../data/");
         configuration.setResultLevelReporting(TestCaseExecutionType.rlogTestCaseResult);
-
-        if (isText) {
-            try {
-                configuration.setCustomTextSource(source, inputFormat);
-            } catch (UndefinedSerializationException e) {
-                throw new ParameterException(inputFormat, e);
-            }
-
-        }
-
         try {
             configuration.setOutputFormatTypes(Arrays.asList(outputFormat));
         } catch (UndefinedSerializationException e) {
@@ -102,11 +81,11 @@ public class DataIDWS extends RDFUnitWebService {
     @Override
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         String helpMessage =
-                    "\n -t\ttype: One of 'text|uri'" +
-                    "\n -s\tsource: Depending on -t it can be either a uri or text" +
-                    "\n -i\tInput format (in case of text type):'turtle|ntriples|rdfxml" + //|JSON-LD|RDF/JSON|TriG|NQuads'" +
-                    "\n -o\tOutput format:'html(default)|turtle|jsonld|rdfjson|ntriples|rdfxml|rdfxml-abbrev" + //JSON-LD|RDF/JSON|TriG|NQuads'"
-                "";
+                "\n -t\ttype: One of 'text|uri'" +
+                        "\n -s\tsource: Depending on -t it can be either a uri or text" +
+                        "\n -i\tInput format (in case of text type):'turtle|ntriples|rdfxml" + //|JSON-LD|RDF/JSON|TriG|NQuads'" +
+                        "\n -o\tOutput format:'html(default)|turtle|jsonld|rdfjson|ntriples|rdfxml|rdfxml-abbrev" + //JSON-LD|RDF/JSON|TriG|NQuads'"
+                        "";
 
     }
 }
