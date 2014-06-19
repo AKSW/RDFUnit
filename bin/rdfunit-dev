@@ -2,6 +2,6 @@
 
 # builds core dependencies before execution
 echo "re-instaling depentant modules"
-mvn install -pl rdfunit-validate,rdfunit-core,rdfunit-resources -Dmaven.test.skip=true -q
+mvn clean install -pl rdfunit-validate rdfunit-core rdfunit-resources -Dmaven.test.skip=true -q
 echo "done"
 bin/rdfunit "$*"

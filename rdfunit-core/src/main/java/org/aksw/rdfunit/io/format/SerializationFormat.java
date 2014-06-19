@@ -1,36 +1,33 @@
 package org.aksw.rdfunit.io.format;
 
-import org.aksw.rdfunit.enums.SerializationFormatType;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * User: Dimitris Kontokostas
  * Holds a format description
-
+ * <p/>
  * Created: 6/18/14 4:05 PM
  */
-public class FormatType {
+public class SerializationFormat {
     private final String name;
     private final SerializationFormatType type;
     private final String extension;
     private final String headerType;
     private final Set<String> synonyms;
 
-    public FormatType(String name, SerializationFormatType type, String extension, String headerType) {
+    public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType) {
         this(name, type, extension, headerType, new HashSet<String>());
     }
 
-    public FormatType(String name, SerializationFormatType type, String extension, String headerType, Set<String> synonyms) {
+    public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType, Set<String> synonyms) {
         this.name = name;
         this.type = type;
         this.extension = extension;
         this.headerType = headerType;
         // Convert all to lowercase
         this.synonyms = new HashSet<String>();
-        for (String synonym: synonyms) {
+        for (String synonym : synonyms) {
             this.synonyms.add(synonym.toLowerCase());
         }
     }
@@ -71,9 +68,9 @@ public class FormatType {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FormatType)) return false;
+        if (!(o instanceof SerializationFormat)) return false;
 
-        FormatType that = (FormatType) o;
+        SerializationFormat that = (SerializationFormat) o;
 
         if (!extension.equals(that.extension)) return false;
         if (!type.equals(that.type)) return false;

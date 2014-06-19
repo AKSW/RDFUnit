@@ -9,7 +9,8 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.io.DataWriter;
-import org.aksw.rdfunit.io.HTMLResultsWriter;
+import org.aksw.rdfunit.io.DataWriterFactory;
+import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -77,9 +78,11 @@ public class ValidateWS extends RDFUnitWebService {
 
     @Override
     protected void writeResults(RDFUnitConfiguration configuration, Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
-        httpServletResponse.setContentType("text/html");
-        DataWriter html = HTMLResultsWriter.create(configuration.getResultLevelReporting(), httpServletResponse.getOutputStream());
-        html.write(model);
+        SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
+
+        httpServletResponse.setContentType(serializationFormat.getHeaderType());
+        DataWriter dataWriter = DataWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getResultLevelReporting());
+        dataWriter.write(model);
     }
 
     @Override
@@ -101,6 +104,10 @@ public class ValidateWS extends RDFUnitWebService {
 
         RDFUnitConfiguration configuration = null;
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
+
+        if (configuration.getOutputFormats().size() != 1) {
+            throw new ParameterException("Error! Multiple formats defined");
+        }
 
         return configuration;
     }

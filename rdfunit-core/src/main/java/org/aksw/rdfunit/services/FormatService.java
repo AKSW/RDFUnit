@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.services;
 
-import org.aksw.rdfunit.io.format.FormatType;
-import org.aksw.rdfunit.io.format.FormatTypeFactory;
+import org.aksw.rdfunit.io.format.SerialiazationFormatFactory;
+import org.aksw.rdfunit.io.format.SerializationFormat;
 
 import java.util.Collection;
 
@@ -11,19 +11,19 @@ import java.util.Collection;
  * Created: 6/18/14 7:23 PM
  */
 public final class FormatService {
-    private static Collection<FormatType> formatTypes = null;
+    private static Collection<SerializationFormat> serializationFormats = null;
 
 
-    private static Collection<FormatType> getFormatTypes() {
+    private static Collection<SerializationFormat> getSerializationFormats() {
         // initialize formatTypes
-        if (formatTypes == null) {
+        if (serializationFormats == null) {
             synchronized (FormatService.class) {
-                if (formatTypes == null) {
-                    formatTypes = FormatTypeFactory.getAllFormats();
+                if (serializationFormats == null) {
+                    serializationFormats = SerialiazationFormatFactory.getAllFormats();
                 }
             }
         }
-        return formatTypes;
+        return serializationFormats;
     }
 
     /**
@@ -32,8 +32,8 @@ public final class FormatService {
      * @param name the name of the format (e.g. 'ttl')
      * @return a FormatType that corresponds to the format name or null otherwise
      */
-    public static FormatType getInputFormat(String name) {
-        for (FormatType ft: getFormatTypes()) {
+    public static SerializationFormat getInputFormat(String name) {
+        for (SerializationFormat ft: getSerializationFormats()) {
             if (ft.isAcceptedAsInput(name)) {
                 return ft;
             }
@@ -47,8 +47,8 @@ public final class FormatService {
      * @param name the name of the format (e.g. 'ttl')
      * @return a FormatType that corresponds to the format name or null otherwise
      */
-    public static FormatType getOutputFormat(String name) {
-        for (FormatType ft: getFormatTypes()) {
+    public static SerializationFormat getOutputFormat(String name) {
+        for (SerializationFormat ft: getSerializationFormats()) {
             if (ft.isAcceptedAsOutput(name)) {
                 return ft;
             }

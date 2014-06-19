@@ -26,6 +26,10 @@ public class RDFFileWriter extends DataWriter {
         this(filename, "TURTLE", false, true, true);
     }
 
+    public RDFFileWriter(String filename, String filetype) {
+        this(filename, filetype, false, true, true);
+    }
+
     public RDFFileWriter(String filename, boolean skipIfExists) {
         this(filename, "TURTLE", skipIfExists, true, true);
     }

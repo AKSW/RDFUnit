@@ -4,8 +4,6 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DatasetSource;
 import org.aksw.rdfunit.sources.DumpSource;
-import org.aksw.rdfunit.validate.ParameterException;
-import org.aksw.rdfunit.validate.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -44,10 +42,11 @@ public class ValidateUtilsTest {
         assertNotNull(configuration.getEnrichedSchema());
         assertEquals(configuration.getDataFolder(), "../data/");
         assertEquals(configuration.getTestFolder(), "../data/tests/");
+        assertEquals(configuration.getOutputFormats().size(), 1); // html by default
         assertTrue(configuration.getTestSource() instanceof DatasetSource);
 
 
-        args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M";
+        args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle";
         commandLine = cliParser.parse(cliOptions, args.split(" "));
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
@@ -55,6 +54,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getCustomDereferenceURI(), "http://custom.dbpedia.org");
         assertEquals(configuration.getAllSchemata().size(), 1);
         assertNull(configuration.getEnrichedSchema());
+        assertEquals(configuration.getOutputFormats().size(), 2); // html,turtle
         assertEquals(configuration.getDataFolder(), "/home/rdfunit/");
         assertEquals(configuration.getTestFolder(), "/home/rdfunit/tests/");
         assertEquals(configuration.isManualTestsEnabled(), false);
@@ -88,6 +88,12 @@ public class ValidateUtilsTest {
         exceptionsExpected.put(
                 " -d http://dbpedia.org -s foaf ",
                 "Expected exception for asking for undefined 'foaf' schema ");
+        exceptionsExpected.put(
+                " -d http://dbpedia.org -s rdf -o htmln",
+                "Expected exception for asking for undefined serialization 'htmln'");
+        exceptionsExpected.put(
+                " -d http://dbpedia.org -s rdf -o html,turtle123",
+                "Expected exception for asking for undefined serialization 'turtle123'");
 
         for (String arg : exceptionsExpected.keySet()) {
 

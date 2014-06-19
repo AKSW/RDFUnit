@@ -10,6 +10,7 @@ import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.*;
+import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
@@ -23,6 +24,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -113,15 +115,19 @@ public class ValidateCLI {
         // warning, caches intermediate results
         testExecutor.execute(dataset, testSuite, 0);
 
-        // Write results to DataWriter (ttl & html)
-        try {
-            String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getResultLevelReporting().toString();
-            DataWriter rdf = new RDFFileWriter(filename + ".ttl");
-            DataWriter html = HTMLResultsWriter.create(configuration.getResultLevelReporting(), filename + ".html");
-            DataWriter resultWriter = new DataMultipleWriter(Arrays.asList(rdf, html));
 
+        // Write results to DataWriter ()
+        String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getResultLevelReporting().toString();
+
+        ArrayList<DataWriter> outputWriters = new ArrayList<>();
+        for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
+            outputWriters.add(DataWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getResultLevelReporting()));
+        }
+
+        DataWriter resultWriter = new DataMultipleWriter(outputWriters);
+        try {
             resultWriter.write(testExecutorMonitor.getModel());
-            log.info("Results stored in: " + filename + " ttl / html");
+            log.info("Results stored in: " + filename + ".*");
         } catch (TripleWriterException e) {
             log.error("Cannot write tests to file: " + e.getMessage());
         }

@@ -1,8 +1,12 @@
 package org.aksw.rdfunit;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
+import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
+import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.aksw.rdfunit.services.FormatService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 
@@ -48,6 +52,9 @@ public class RDFUnitConfiguration {
 
     /* Execution type */
     private TestCaseExecutionType resultLevelReporting = TestCaseExecutionType.aggregatedTestCaseResult;
+
+    /* Output format types*/
+    private Collection<SerializationFormat> outputFormats = null;
 
     /*  */
     private boolean calculateCoverageEnabled = false;
@@ -133,6 +140,22 @@ public class RDFUnitConfiguration {
         }
     }
 
+    public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
+        outputFormats = new ArrayList<>();
+        boolean invalidInput = false;
+        for (String name : outputNames) {
+            SerializationFormat serializationFormat = FormatService.getOutputFormat(name);
+            if (serializationFormat != null) {
+                outputFormats.add(serializationFormat);
+            } else {
+                throw new UndefinedSerializationException(name);
+            }
+        }
+        if (outputFormats.isEmpty()) {
+            throw new UndefinedSerializationException("");
+        }
+    }
+
     public boolean isTestCacheEnabled() {
         return testCacheEnabled;
     }
@@ -199,5 +222,13 @@ public class RDFUnitConfiguration {
 
     public EnrichedSchemaSource getEnrichedSchema() {
         return enrichedSchema;
+    }
+
+    public Collection<SerializationFormat> getOutputFormats() {
+        return outputFormats;
+    }
+
+    public SerializationFormat geFirstOutputFormat() {
+        return RDFUnitUtils.getFirstItemInCollection(outputFormats);
     }
 }

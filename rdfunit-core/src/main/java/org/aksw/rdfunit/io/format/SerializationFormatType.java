@@ -1,11 +1,11 @@
-package org.aksw.rdfunit.enums;
+package org.aksw.rdfunit.io.format;
 
 /**
  * User: Dimitris Kontokostas
  * Description
  * Created: 6/18/14 6:50 PM
  */
-public enum SerializationFormatType {
+enum SerializationFormatType {
     /**
      * Only input format
      */

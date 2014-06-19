@@ -5,7 +5,6 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -29,34 +28,6 @@ public abstract class HTMLResultsWriter extends DataWriter {
 
     public HTMLResultsWriter(String filename) {
         this.outputStream = RDFStreamWriter.getOutputStreamFromFilename(filename);
-    }
-
-    public static HTMLResultsWriter create(TestCaseExecutionType type, String filename) {
-        switch (type) {
-            case statusTestCaseResult:
-                return new HTMLResultsStatusWriter(filename);
-            case aggregatedTestCaseResult:
-                return new HTMLResultsAggregateWriter(filename);
-            case rlogTestCaseResult:
-                return new HTMLResultsRlogWriter(filename);
-            //case extendedTestCaseResult:
-            default:
-                return null;
-        }
-    }
-
-    public static HTMLResultsWriter create(TestCaseExecutionType type, OutputStream outputStream) {
-        switch (type) {
-            case statusTestCaseResult:
-                return new HTMLResultsStatusWriter(outputStream);
-            case aggregatedTestCaseResult:
-                return new HTMLResultsAggregateWriter(outputStream);
-            case rlogTestCaseResult:
-                return new HTMLResultsRlogWriter(outputStream);
-            //case extendedTestCaseResult:
-            default:
-                return null;
-        }
     }
 
     @Override

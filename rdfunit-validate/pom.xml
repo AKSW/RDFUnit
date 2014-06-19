@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>rdfunit-parent</artifactId>
@@ -91,8 +92,8 @@
                     <httpConnector>
                         <port>8787</port>
                     </httpConnector>
-                    <stopKey />
-                    <stopPort />
+                    <stopKey/>
+                    <stopPort/>
                 </configuration>
             </plugin>
         </plugins>
@@ -138,7 +139,8 @@
                                 </goals>
                                 <configuration>
                                     <transformers>
-                                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <transformer
+                                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                             <mainClass>org.aksw.rdfunit.validate.ValidateCLI</mainClass>
                                         </transformer>
                                     </transformers>
@@ -175,7 +177,7 @@
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/etc/share/java/rdfunit</prefix>
+                                                <serialization>/etc/share/java/rdfunit</serialization>
                                             </mapper>
                                         </data>
                                         <data>
@@ -185,7 +187,7 @@
                                             <mapper>
                                                 <type>perm</type>
                                                 <filemode>777</filemode>
-                                                <prefix>/usr/bin</prefix>
+                                                <serialization>/usr/bin</serialization>
                                             </mapper>
                                         </data>
 
@@ -196,7 +198,7 @@
                                             <mapper>
                                                 <type>perm</type>
                                                 <filemode>777</filemode>
-                                                <prefix>/etc/share/java/rdfunit/data</prefix>
+                                                <serialization>/etc/share/java/rdfunit/data</serialization>
                                             </mapper>
                                         </data>
                                     </dataSet>

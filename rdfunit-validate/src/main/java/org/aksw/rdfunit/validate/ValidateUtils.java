@@ -3,6 +3,7 @@ package org.aksw.rdfunit.validate;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
+import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class ValidateUtils {
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
         );
-        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), ");
+        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, rdfxml, rdfxml-abbrev");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("C", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
@@ -121,6 +122,15 @@ public class ValidateUtils {
                 log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
         }
         configuration.setResultLevelReporting(resultLevel);
+
+
+        // Get output formats (with HTML as default)
+        Collection<String> outputFormats = getUriStrs(commandLine.getOptionValue("o", "html"));
+        try {
+            configuration.setOutputFormatTypes(outputFormats);
+        } catch (UndefinedSerializationException e) {
+            throw new ParameterException(e.getMessage(), e);
+        }
 
 
         // for automatically generated test cases
