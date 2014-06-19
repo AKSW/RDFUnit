@@ -17,6 +17,8 @@ public class SerialiazationFormatFactory {
         serializationFormats.add(createTurtle());
         serializationFormats.add(createN3());
         serializationFormats.add(createNTriples());
+        serializationFormats.add(createJsonLD());
+        serializationFormats.add(createRDFJson());
         serializationFormats.add(createRDFXMLAbbrevOut());
         serializationFormats.add(createRDFXMLIn());
         serializationFormats.add(createRDFXMLOut());
@@ -57,6 +59,22 @@ public class SerialiazationFormatFactory {
         return new SerializationFormat(
                 "N-TRIPLE", SerializationFormatType.inputAndOutput, "nt", "application/n-triples", currentSynonyms);
 
+    }
+
+    public static SerializationFormat createJsonLD() {
+        // JSON-LD -> input & output
+        HashSet<String> currentSynonyms = new HashSet<>();
+        currentSynonyms.addAll(Arrays.asList("JSON-LD", "JSONLD", "JSON/LD"));
+        return new SerializationFormat(
+                "JSON-LD", SerializationFormatType.inputAndOutput, "jsonld", "application/ld+json", currentSynonyms);
+    }
+
+    public static SerializationFormat createRDFJson() {
+        // RDF/JSON -> input & output
+        HashSet<String> currentSynonyms = new HashSet<>();
+        currentSynonyms.addAll(Arrays.asList("RDF/JSON", "RDF-JSON", "RDFJSON"));
+        return new SerializationFormat(
+                "RDF/JSON", SerializationFormatType.inputAndOutput, "rj", "application/rdf+json", currentSynonyms);
     }
 
     public static SerializationFormat createRDFXMLAbbrevOut() {

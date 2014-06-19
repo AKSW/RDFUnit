@@ -44,7 +44,7 @@ public class ValidateUtils {
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
         );
-        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, rdfxml, rdfxml-abbrev");
+        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("C", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
