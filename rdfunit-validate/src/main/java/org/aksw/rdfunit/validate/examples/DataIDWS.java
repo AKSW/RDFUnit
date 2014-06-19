@@ -45,11 +45,6 @@ public class DataIDWS extends RDFUnitWebService {
     }
 
     @Override
-    protected void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
-
-    }
-
-    @Override
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         String helpMessage =
                     "\n -t\ttype: One of 'text|uri'" +

@@ -4,6 +4,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
+import org.aksw.rdfunit.io.DataWriter;
+import org.aksw.rdfunit.io.DataWriterFactory;
+import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.validate.ParameterException;
@@ -82,6 +85,23 @@ public abstract class RDFUnitWebService extends HttpServlet {
     }
 
     /**
+     * Writes the output of the validation to the HttpServletResponse
+     *
+     * @param configuration       an RDFUnitConfiguration object generated with getConfiguration
+     * @param model               a Model generated with validate()
+     * @param httpServletResponse the HttpServletResponse where we write our output
+     * @throws TripleWriterException
+     * @throws IOException
+     */
+    private final void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
+        SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
+
+        httpServletResponse.setContentType(serializationFormat.getHeaderType());
+        DataWriter dataWriter = DataWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getResultLevelReporting());
+        dataWriter.write(model);
+    }
+
+    /**
      * Creates an RDFUnitConfiguration based on the GET/POST parameters
      *
      * @param httpServletRequest the HttpServletRequest
@@ -94,7 +114,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * Creates a TestSuite based on the RDFUnitConfiguration and the Source to be tested
      *
      * @param configuration an RDFUnitConfiguration object generated with getConfiguration
-     * @param dataset The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
+     * @param dataset       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
      * @return A TestSuite (list of test cases) for running against the tested Source
      */
     abstract protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset);
@@ -103,23 +123,12 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * Executes the validation of a Sourse dataset against a TestSuite based on a RDFUnitConfiguration
      *
      * @param configuration an RDFUnitConfiguration object generated with getConfiguration
-     * @param dataset The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
-     * @param testSuite a TestSuite generated with getTestSuite()
+     * @param dataset       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
+     * @param testSuite     a TestSuite generated with getTestSuite()
      * @return a Model that contains the results of a validation
      * @throws TestCaseExecutionException
      */
     abstract protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException;
-
-    /**
-     * Writes the output of the validation to the HttpServletResponse
-     *
-     * @param configuration an RDFUnitConfiguration object generated with getConfiguration
-     * @param model a Model generated with validate()
-     * @param httpServletResponse the HttpServletResponse where we write our output
-     * @throws TripleWriterException
-     * @throws IOException
-     */
-    abstract protected void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException;
 
     /**
      * Prints a help message with the correct arguments one can use to call the service
@@ -131,8 +140,9 @@ public abstract class RDFUnitWebService extends HttpServlet {
 
     /**
      * Help function that writes a string to the output surrounded with <pre> </pre>
+     *
      * @param httpServletResponse
-     * @param message the message we want to write
+     * @param message             the message we want to write
      * @throws IOException
      */
     protected void printMessage(HttpServletResponse httpServletResponse, String message) throws IOException {

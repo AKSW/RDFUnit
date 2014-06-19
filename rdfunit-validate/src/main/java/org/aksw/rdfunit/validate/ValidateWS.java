@@ -77,15 +77,6 @@ public class ValidateWS extends RDFUnitWebService {
     }
 
     @Override
-    protected void writeResults(RDFUnitConfiguration configuration, Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
-        SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
-
-        httpServletResponse.setContentType(serializationFormat.getHeaderType());
-        DataWriter dataWriter = DataWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getResultLevelReporting());
-        dataWriter.write(model);
-    }
-
-    @Override
     protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
         String[] arguments = convertArgumentsToStringArray(httpServletRequest);
 
