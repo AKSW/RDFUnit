@@ -42,23 +42,42 @@ public class DataIDWS extends RDFUnitWebService {
         }
 
         String source = httpServletRequest.getParameter("s");
-        if (source == null || source.isEmpty()) {
+        if (source == null || source.isEmpty()){
             throw new ParameterException("'s' must be defined and not empty");
         }
 
+        boolean isText = type.equals("text");
+
         String datasetName = source;
-        if (type.equals("text")) {
+        if (isText) {
             datasetName = "custom-text";
-            throw new ParameterException("text not supported yet");
+        }
+
+        String inputFormat = "";
+        if (isText) {
+            inputFormat = httpServletRequest.getParameter("i");
+            if (inputFormat == null || inputFormat.isEmpty()) {
+                throw new ParameterException("'i' must be defined when -t = 'text'");
+            }
         }
 
         String outputFormat = httpServletRequest.getParameter("o");
-        if (outputFormat == null || outputFormat.isEmpty()) {
+        if (outputFormat == null || outputFormat.isEmpty()){
             outputFormat = "html";
         }
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetName, "../data/");
         configuration.setResultLevelReporting(TestCaseExecutionType.rlogTestCaseResult);
+
+        if (isText) {
+            try {
+                configuration.setCustomTextSource(source, inputFormat);
+            } catch (UndefinedSerializationException e) {
+                throw new ParameterException(inputFormat, e);
+            }
+
+        }
+
         try {
             configuration.setOutputFormatTypes(Arrays.asList(outputFormat));
         } catch (UndefinedSerializationException e) {
