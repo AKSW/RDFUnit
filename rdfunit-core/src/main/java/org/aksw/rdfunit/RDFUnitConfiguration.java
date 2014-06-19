@@ -5,11 +5,15 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
+import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.services.FormatService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,6 +42,10 @@ public class RDFUnitConfiguration {
 
     /* Dereference testing (if different from datasetURI) */
     private String customDereferenceURI = null;
+
+    /* Use text directly as a source */
+    private String customTextSource = null;
+    private SerializationFormat customTextFormat = null;
 
     /* list of schemas for testing a dataset */
     private Collection<SchemaSource> schemas = null;
@@ -88,6 +96,18 @@ public class RDFUnitConfiguration {
         this.customDereferenceURI = customDereferenceURI;
     }
 
+    public void setCustomTextSource(String text, String format) throws UndefinedSerializationException {
+        this.customTextSource = text;
+        this.customTextFormat = FormatService.getInputFormat(format);
+        if (this.customTextFormat == null) {
+            throw new UndefinedSerializationException(format);
+        }
+
+        //Clear endpoint / custom dereference
+        this.endpointURI = null;
+        this.customDereferenceURI = null;
+    }
+
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
         this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
     }
@@ -126,18 +146,30 @@ public class RDFUnitConfiguration {
                     endpointGraphs,
                     getAllSchemata());
 
-        } else {
-            String tmp_customDereferenceURI = datasetURI;
-            // return a DumpSource
-            if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
-                tmp_customDereferenceURI = customDereferenceURI;
-            }
+        }
+
+        // Return a text source
+        if (customTextSource != null) {
+            InputStream is = new ByteArrayInputStream(customTextSource.getBytes());
+            DataReader textReader = new RDFStreamReader(is, customTextFormat.getName());
             return new DumpSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,
-                    tmp_customDereferenceURI,
+                    textReader,
                     getAllSchemata());
         }
+
+        // return a DumpSource
+        String tmp_customDereferenceURI = datasetURI;
+
+        if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
+            tmp_customDereferenceURI = customDereferenceURI;
+        }
+        return new DumpSource(
+                CacheUtils.getAutoPrefixForURI(datasetURI),
+                datasetURI,
+                tmp_customDereferenceURI,
+                getAllSchemata());
     }
 
     public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
