@@ -5,9 +5,9 @@ import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import java.util.Calendar;
 
 /**
- * User: Dimitris Kontokostas
- * Holds the overview results for a dataset
- * Created: 6/11/14 7:48 AM
+ * @author Dimitris Kontokostas
+ *         Holds the overview results for a dataset
+ * @since 6/11/14 7:48 AM
  */
 public class DatasetOverviewResults {
 

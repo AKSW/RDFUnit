@@ -3,9 +3,9 @@ package org.aksw.rdfunit.tests.executors;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/16/14 10:44 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/16/14 10:44 AM
  */
 public final class TestExecutorFactory {
 

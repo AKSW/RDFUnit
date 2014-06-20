@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * User: Dimitris Kontokostas
- * This is a placeholder to keep the main content components
- * TODO everything is clattered in here need to separate many things
- * Created: 11/15/13 8:19 AM
+ * @author Dimitris Kontokostas
+ *         This is a placeholder to keep the main content components
+ *         TODO everything is clattered in here need to separate many things
+ * @since 11/15/13 8:19 AM
  */
 
 public class EndointTestTab extends VerticalLayout {

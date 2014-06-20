@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.exceptions;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/14/14 9:30 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/14/14 9:30 AM
  */
 public class UndefinedSchemaException extends Exception {
     private final String prefix;

@@ -18,9 +18,9 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import java.net.URLEncoder;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/20/13 5:20 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/20/13 5:20 PM
  */
 public class TestResultsComponent extends VerticalLayout implements TestExecutorMonitor {
 

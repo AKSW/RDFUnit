@@ -4,9 +4,9 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/3/14 12:23 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/3/14 12:23 PM
  */
 public interface TestGeneratorExecutorMonitor {
     /*

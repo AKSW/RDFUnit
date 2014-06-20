@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 
 /**
- * User: Dimitris Kontokostas
- * Abstract class for a data source. A source can be various things like a dataset, a vocabulary or an application
- * Date: 9/16/13 1:15 PM
+ * @author Dimitris Kontokostas
+ *         Abstract class for a data source. A source can be various things like a dataset, a vocabulary or an application
+ *         Date: 9/16/13 1:15 PM
  */
 
 public abstract class Source implements Comparable<Source> {

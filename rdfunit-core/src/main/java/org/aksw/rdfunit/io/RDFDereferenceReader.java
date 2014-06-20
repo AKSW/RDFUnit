@@ -5,9 +5,9 @@ import com.hp.hpl.jena.shared.NotFoundException;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/14/13 8:48 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/14/13 8:48 AM
  */
 public class RDFDereferenceReader extends DataReader {
 

@@ -4,10 +4,10 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
- * User: Dimitris Kontokostas
- * Reads from a SPARQL Endpoint
- * TODO implement
- * Created: 11/14/13 8:58 AM
+ * @author Dimitris Kontokostas
+ *         Reads from a SPARQL Endpoint
+ *         TODO implement
+ * @since 11/14/13 8:58 AM
  */
 public class SPARQLReader extends DataReader {
 

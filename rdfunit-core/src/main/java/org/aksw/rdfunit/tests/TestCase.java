@@ -16,9 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 9/23/13 6:31 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 9/23/13 6:31 AM
  */
 public abstract class TestCase implements Comparable<TestCase> {
     protected Logger log = LoggerFactory.getLogger(TestCase.class);

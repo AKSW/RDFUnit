@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Holds a configuration for a complete test
- * TODO: Got too big, maybe break it down a bit
- * Created: 11/15/13 11:50 AM
+ * @author Dimitris Kontokostas
+ *         Holds a configuration for a complete test
+ *         TODO: Got too big, maybe break it down a bit
+ * @since 11/15/13 11:50 AM
  */
 public class RDFUnitConfiguration {
 

@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Creates RDFUnitConfigurations
- * Created: 11/15/13 12:15 PM
+ * @author Dimitris Kontokostas
+ *         Creates RDFUnitConfigurations
+ * @since 11/15/13 12:15 PM
  */
 public class RDFunitConfigurationFactory {
 

@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.validate;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/14/14 9:30 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/14/14 9:30 AM
  */
 public class ParameterException extends Exception {
 

@@ -10,7 +10,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.io.DataReaderFactory;
-import org.aksw.rdfunit.io.RDFDereferenceReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
@@ -23,9 +22,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * User: Dimitris Kontokostas
- * provides a schema
- * Created: 11/18/13 11:26 AM
+ * @author Dimitris Kontokostas
+ *         provides a schema
+ * @since 11/18/13 11:26 AM
  */
 public class SchemaSelectorComponent extends VerticalLayout {
     private static Logger log = LoggerFactory.getLogger(SchemaSelectorComponent.class);

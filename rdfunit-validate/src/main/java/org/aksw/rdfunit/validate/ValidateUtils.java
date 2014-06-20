@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/13/14 4:35 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/13/14 4:35 PM
  */
 public class ValidateUtils {
     private static final Logger log = LoggerFactory.getLogger(ValidateUtils.class);

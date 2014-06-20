@@ -14,7 +14,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import javax.servlet.annotation.WebServlet;
 /*
-* User: Dimitris Kontokostas
+* @author Dimitris Kontokostas
 */
 
 @Theme("rdfunit")

@@ -8,10 +8,10 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import java.util.Map;
 
 /**
- * User: Dimitris Kontokostas
- * Keeps a list of all prefixNsBidiMap used in the project.
- * In addition it is used to generate the SPARQL prefixNsBidiMap for all the queries and set the NS Prefix Map is a Model
- * Created: 10/1/13 7:06 PM
+ * @author Dimitris Kontokostas
+ *         Keeps a list of all prefixNsBidiMap used in the project.
+ *         In addition it is used to generate the SPARQL prefixNsBidiMap for all the queries and set the NS Prefix Map is a Model
+ * @since 10/1/13 7:06 PM
  */
 public final class PrefixNSService {
     /**
@@ -92,7 +92,7 @@ public final class PrefixNSService {
     /**
      * We use an external prefix map to avoid concurrency issues
      */
-    private static String generateSparqlPrefixes(Map<String,String> prefixMap) {
+    private static String generateSparqlPrefixes(Map<String, String> prefixMap) {
         StringBuilder sparqlPrefixes = new StringBuilder();
         for (Map.Entry<String, String> entry : prefixMap.entrySet()) {
             sparqlPrefixes.append(" PREFIX " + entry.getKey() + ": <" + entry.getValue() + "> \n");

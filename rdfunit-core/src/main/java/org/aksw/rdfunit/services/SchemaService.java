@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 10/2/13 12:24 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 10/2/13 12:24 PM
  */
 public final class SchemaService {
     final private static Map<String, String> schemata = new HashMap<>();

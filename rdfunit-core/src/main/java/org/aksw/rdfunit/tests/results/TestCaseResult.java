@@ -13,9 +13,9 @@ import org.aksw.rdfunit.tests.TestCase;
 import java.util.Calendar;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/2/14 3:44 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/2/14 3:44 PM
  */
 public abstract class TestCaseResult {
     private final TestCase testCase;
@@ -29,7 +29,7 @@ public abstract class TestCaseResult {
     /**
      * Serializes a @TestCaseResult in a model. Subclasses should call super.serialize() and add all additional triples
      *
-     * @param model The @Model we want to write to
+     * @param model            The @Model we want to write to
      * @param testExecutionURI The test execution URI for the current execution
      * @return a @Resource with all the triples for this @TestCaseResult
      */

@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 
 /**
- * User: Dimitris Kontokostas
- * Executes results for RLOGTestCaseResult sets
- * Created: 2/2/14 4:25 PM
+ * @author Dimitris Kontokostas
+ *         Executes results for RLOGTestCaseResult sets
+ * @since 2/2/14 4:25 PM
  */
 public class RLOGTestExecutor extends TestExecutor {
 

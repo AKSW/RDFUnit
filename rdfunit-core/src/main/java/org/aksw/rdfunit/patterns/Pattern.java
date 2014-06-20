@@ -3,9 +3,9 @@ package org.aksw.rdfunit.patterns;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 /**
- * User: Dimitris Kontokostas
- * Class that holds a sparqlWherePattern definition
- * Created: 9/16/13 1:14 PM
+ * @author Dimitris Kontokostas
+ *         Class that holds a sparqlWherePattern definition
+ * @since 9/16/13 1:14 PM
  */
 public class Pattern {
     private final String id;

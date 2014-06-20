@@ -12,9 +12,9 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import java.util.ArrayList;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/3/14 3:40 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/3/14 3:40 PM
  */
 public class TestCaseAnnotation {
     private final TestGenerationType generated;

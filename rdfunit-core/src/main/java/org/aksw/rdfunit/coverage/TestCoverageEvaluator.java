@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: Dimitris Kontokostas
- * Calculates test coverage based on www paper
- * Created: 10/8/13 9:06 PM
+ * @author Dimitris Kontokostas
+ *         Calculates test coverage based on www paper
+ * @since 10/8/13 9:06 PM
  */
 public class TestCoverageEvaluator {
     private static final Logger log = LoggerFactory.getLogger(TestCoverageEvaluator.class);

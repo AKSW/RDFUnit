@@ -7,9 +7,9 @@ import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 /**
- * User: Dimitris Kontokostas
- * Executes results for ExtendedTestCaseResult sets
- * Created: 2/2/14 6:13 PM
+ * @author Dimitris Kontokostas
+ *         Executes results for ExtendedTestCaseResult sets
+ * @since 2/2/14 6:13 PM
  */
 public class ExtendedTestExecutor extends RLOGTestExecutor {
 

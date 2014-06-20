@@ -4,9 +4,9 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/14/13 1:13 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/14/13 1:13 PM
  */
 public class DataMultipleWriter extends DataWriter {
     private final java.util.Collection<DataWriter> writers;

@@ -3,9 +3,9 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Describes a test case status result
- * Created: 9/25/13 9:05 AM
+ * @author Dimitris Kontokostas
+ *         Describes a test case status result
+ * @since 9/25/13 9:05 AM
  */
 public enum TestCaseResultStatus {
 
@@ -34,13 +34,14 @@ public enum TestCaseResultStatus {
 
     /**
      * Resolves a full URI/IRI to an enum
+     *
      * @param value the URI/IRI we want to resolve
      * @return the equivalent enum type or null if it cannot resolve
      */
     public static TestCaseResultStatus resolve(String value) {
 
         String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus", "");
-        for (TestCaseResultStatus status: values()) {
+        for (TestCaseResultStatus status : values()) {
             if (qName.equals(status.name())) {
                 return status;
             }

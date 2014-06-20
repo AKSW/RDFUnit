@@ -9,9 +9,9 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 4/23/14 8:55 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 4/23/14 8:55 AM
  */
 public class HTMLResultsAggregateWriter extends HTMLResultsStatusWriter {
 

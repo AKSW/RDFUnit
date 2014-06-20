@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
- * User: Dimitris Kontokostas
- * Main Class
- * Created: 9/20/13 5:59 PM
+ * @author Dimitris Kontokostas
+ *         Main Class
+ * @since 9/20/13 5:59 PM
  */
 public class RDFUnit {
 

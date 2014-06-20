@@ -5,9 +5,9 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
 /**
- * User: Dimitris Kontokostas
- * displayes general information about the tool
- * Created: 11/15/13 7:41 PM
+ * @author Dimitris Kontokostas
+ *         displayes general information about the tool
+ * @since 11/15/13 7:41 PM
  */
 public class IntroTab extends VerticalLayout {
 

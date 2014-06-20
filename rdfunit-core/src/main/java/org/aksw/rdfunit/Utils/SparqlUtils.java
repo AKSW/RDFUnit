@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/24/14 6:08 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/24/14 6:08 PM
  */
 public final class SparqlUtils {
 

@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
- * User: Dimitris Kontokostas
- * Takes a sparqlPattern and a SPARQL query and based on the data
- * returned from that query we generate test cases
- * Created: 9/20/13 2:48 PM
+ * @author Dimitris Kontokostas
+ *         Takes a sparqlPattern and a SPARQL query and based on the data
+ *         returned from that query we generate test cases
+ * @since 9/20/13 2:48 PM
  */
 public class TestAutoGenerator {
     private static final Logger log = LoggerFactory.getLogger(TestAutoGenerator.class);

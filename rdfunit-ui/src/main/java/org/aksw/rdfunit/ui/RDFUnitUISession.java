@@ -17,10 +17,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * User: Dimitris Kontokostas
- * Keeps user session variables
- * TODO refactor
- * Created: 11/15/13 9:52 AM
+ * @author Dimitris Kontokostas
+ *         Keeps user session variables
+ *         TODO refactor
+ * @since 11/15/13 9:52 AM
  */
 public class RDFUnitUISession extends VaadinSession {
 

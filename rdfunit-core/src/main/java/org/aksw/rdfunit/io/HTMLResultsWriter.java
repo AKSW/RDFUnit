@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Writes results in HTML format
- * Created: 11/14/13 1:04 PM
+ * @author Dimitris Kontokostas
+ *         Writes results in HTML format
+ * @since 11/14/13 1:04 PM
  */
 public abstract class HTMLResultsWriter extends DataWriter {
     private final OutputStream outputStream;

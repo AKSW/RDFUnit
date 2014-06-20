@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.io.format;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/18/14 6:50 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/18/14 6:50 PM
  */
 enum SerializationFormatType {
     /**

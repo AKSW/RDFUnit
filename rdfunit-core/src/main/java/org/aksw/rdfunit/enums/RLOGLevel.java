@@ -3,12 +3,12 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Defines all available log levels
- * Copied from NLP2RDF (https://github.com/NLP2RDF/software/blob/master/java-maven/core/jena/src/main/java/org/nlp2rdf/core/vocab/RLOGIndividuals.java)
- * Created: 6/17/14 9:49 AM
+ * @author Dimitris Kontokostas
+ *         Defines all available log levels
+ *         Copied from NLP2RDF (https://github.com/NLP2RDF/software/blob/master/java-maven/core/jena/src/main/java/org/nlp2rdf/core/vocab/RLOGIndividuals.java)
+ * @since 6/17/14 9:49 AM
  */
-public enum RLOGLevel  {
+public enum RLOGLevel {
 
     /**
      * ERROR -> The ERROR level designates error events that might still allow the application to continue running.
@@ -69,13 +69,14 @@ public enum RLOGLevel  {
 
     /**
      * Resolves a full URI/IRI to an enum
+     *
      * @param value the URI/IRI we want to resolve
      * @return the equivalent enum type or null if it cannot resolve
      */
     public static RLOGLevel resolve(String value) {
 
         String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
-        for (RLOGLevel level: values()) {
+        for (RLOGLevel level : values()) {
             if (qName.equals(level.name())) {
                 return level;
             }

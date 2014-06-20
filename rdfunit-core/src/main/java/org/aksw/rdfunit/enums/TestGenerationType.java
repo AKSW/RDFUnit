@@ -3,9 +3,9 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Describes the test generation methods
- * Created: 9/25/13 9:05 AM
+ * @author Dimitris Kontokostas
+ *         Describes the test generation methods
+ * @since 9/25/13 9:05 AM
  */
 public enum TestGenerationType {
 
@@ -45,7 +45,7 @@ public enum TestGenerationType {
     public static TestGenerationType resolve(String value) {
 
         String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
-        for (TestGenerationType type: values()) {
+        for (TestGenerationType type : values()) {
             if (qName.equals(type.name())) {
                 return type;
             }

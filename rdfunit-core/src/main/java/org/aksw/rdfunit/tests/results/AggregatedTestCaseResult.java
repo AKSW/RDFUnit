@@ -10,9 +10,9 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/2/14 3:44 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/2/14 3:44 PM
  */
 public class AggregatedTestCaseResult extends StatusTestCaseResult {
     private final long errorCount;

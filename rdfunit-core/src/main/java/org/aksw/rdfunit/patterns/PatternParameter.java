@@ -3,9 +3,9 @@ package org.aksw.rdfunit.patterns;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 
 /**
- * User: Dimitris Kontokostas
- * Defines a patter parameter
- * Created: 9/20/13 2:47 PM
+ * @author Dimitris Kontokostas
+ *         Defines a patter parameter
+ * @since 9/20/13 2:47 PM
  */
 public class PatternParameter {
     private final String uri;

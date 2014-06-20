@@ -13,9 +13,9 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import java.util.Arrays;
 
 /**
- * User: Dimitris Kontokostas
- * Executes results for AggregatedTestCaseResult sets
- * Created: 2/2/14 4:05 PM
+ * @author Dimitris Kontokostas
+ *         Executes results for AggregatedTestCaseResult sets
+ * @since 2/2/14 4:05 PM
  */
 public class AggregatedTestExecutor extends TestExecutor {
 

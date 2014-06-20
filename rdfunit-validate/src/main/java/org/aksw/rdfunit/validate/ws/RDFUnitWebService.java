@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * User: Dimitris Kontokostas
- * A super class that can serve as an easy validation service based on RDFUnit
- * Created: 6/18/14 8:52 AM
+ * @author Dimitris Kontokostas
+ *         A super class that can serve as an easy validation service based on RDFUnit
+ * @since 6/18/14 8:52 AM
  */
 public abstract class RDFUnitWebService extends HttpServlet {
 

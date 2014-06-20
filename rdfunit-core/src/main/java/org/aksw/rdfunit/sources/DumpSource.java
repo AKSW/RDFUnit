@@ -8,15 +8,14 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.io.DataReaderFactory;
-import org.aksw.rdfunit.io.RDFDereferenceReader;
 
 /**
- * User: Dimitris Kontokostas
- * Defines a source based on an RDF Dump
- * This can be any type of dump (ttl, nt, rdfa, rdf, etc)
- * This has to be more sophisticated in the end (e.g. read zippped files) but there is always time to improve ;)
- * TODO refactor sources and make this a subclass of DatasetSource
- * Created: 2/6/14 9:32 AM
+ * @author Dimitris Kontokostas
+ *         Defines a source based on an RDF Dump
+ *         This can be any type of dump (ttl, nt, rdfa, rdf, etc)
+ *         This has to be more sophisticated in the end (e.g. read zippped files) but there is always time to improve ;)
+ *         TODO refactor sources and make this a subclass of DatasetSource
+ * @since 2/6/14 9:32 AM
  */
 public class DumpSource extends Source {
 

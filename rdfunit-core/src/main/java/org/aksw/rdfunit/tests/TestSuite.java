@@ -8,9 +8,9 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/6/14 8:33 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/6/14 8:33 AM
  */
 public class TestSuite {
     private final java.util.Collection<TestCase> testCases;

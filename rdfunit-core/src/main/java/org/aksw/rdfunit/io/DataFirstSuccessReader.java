@@ -4,9 +4,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/14/13 8:51 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/14/13 8:51 AM
  */
 public class DataFirstSuccessReader extends DataReader {
 

@@ -8,9 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
- * User: Dimitris Kontokostas
- * Reads a model from an InputStream (or a filename)
- * Created: 11/14/13 8:37 AM
+ * @author Dimitris Kontokostas
+ *         Reads a model from an InputStream (or a filename)
+ * @since 11/14/13 8:37 AM
  */
 public class RDFStreamReader extends DataReader {
     private final InputStream inputStream;

@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * User: Dimitris Kontokostas
- * Validation as a web service
- * Created: 6/13/14 1:50 PM
+ * @author Dimitris Kontokostas
+ *         Validation as a web service
+ * @since 6/13/14 1:50 PM
  */
 public class ValidateWS extends RDFUnitWebService {
     private static final Logger log = LoggerFactory.getLogger(ValidateWS.class);

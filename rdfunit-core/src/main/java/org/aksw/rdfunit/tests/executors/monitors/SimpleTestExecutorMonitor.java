@@ -21,9 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * User: Dimitris Kontokostas
- * A simple test executor monitor. This is used in the CLI version
- * Created: 5/6/14 2:49 PM
+ * @author Dimitris Kontokostas
+ *         A simple test executor monitor. This is used in the CLI version
+ * @since 5/6/14 2:49 PM
  */
 public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 

@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Describes an arbitary datatest source TODO make this abstract and create an EndpointSource and a DumpSource
- * Created: 9/16/13 1:54 PM
+ * @author Dimitris Kontokostas
+ *         Describes an arbitary datatest source TODO make this abstract and create an EndpointSource and a DumpSource
+ * @since 9/16/13 1:54 PM
  */
 
 public class DatasetSource extends Source {

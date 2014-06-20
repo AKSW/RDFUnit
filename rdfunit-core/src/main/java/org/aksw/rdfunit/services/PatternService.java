@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * User: Dimitris Kontokostas
- * class that contains instances of all patterns
- * Created: 9/20/13 2:52 PM
+ * @author Dimitris Kontokostas
+ *         class that contains instances of all patterns
+ * @since 9/20/13 2:52 PM
  */
 public final class PatternService {
     final private static Map<String, Pattern> patterns = new HashMap<>();

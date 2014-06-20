@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.tests.results;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -10,9 +9,9 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/6/14 3:26 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/6/14 3:26 PM
  */
 public class StatusTestCaseResult extends TestCaseResult {
     private final TestCaseResultStatus status;

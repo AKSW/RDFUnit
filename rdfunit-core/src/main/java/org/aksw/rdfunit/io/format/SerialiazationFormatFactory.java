@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/18/14 4:27 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/18/14 4:27 PM
  */
 public class SerialiazationFormatFactory {
     public static Collection<SerializationFormat> getAllFormats() {

@@ -14,9 +14,9 @@ import java.util.Arrays;
 
 
 /**
- * User: Dimitris Kontokostas
- * Executes results for StatusTestCaseResult sets
- * Created: 2/2/14 3:49 PM
+ * @author Dimitris Kontokostas
+ *         Executes results for StatusTestCaseResult sets
+ * @since 2/2/14 3:49 PM
  */
 public class StatusTestExecutor extends TestExecutor {
     @Override

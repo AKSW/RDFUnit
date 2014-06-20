@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/19/13 10:49 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/19/13 10:49 AM
  */
 public class ValidateCLI {
     private static final Logger log = LoggerFactory.getLogger(ValidateCLI.class);

@@ -7,9 +7,9 @@ import org.aksw.rdfunit.services.FormatService;
 import java.io.OutputStream;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 6/19/14 9:20 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 6/19/14 9:20 AM
  */
 public final class DataWriterFactory {
     protected DataWriterFactory() {

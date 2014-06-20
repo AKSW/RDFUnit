@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.enums;
 
 /**
- * User: Dimitris Kontokostas
- * Defines the different types of results / execution we support
- * Created: 2/2/14 3:37 PM
+ * @author Dimitris Kontokostas
+ *         Defines the different types of results / execution we support
+ * @since 2/2/14 3:37 PM
  */
 public enum TestCaseExecutionType {
     /**

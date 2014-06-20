@@ -4,9 +4,9 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 9/16/13 1:57 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 9/16/13 1:57 PM
  */
 public class ApplicationSource extends Source {
 

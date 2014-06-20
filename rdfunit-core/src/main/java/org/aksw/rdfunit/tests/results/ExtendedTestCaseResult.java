@@ -10,9 +10,9 @@ import org.aksw.rdfunit.tests.TestCase;
 
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 2/2/14 3:57 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 2/2/14 3:57 PM
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 

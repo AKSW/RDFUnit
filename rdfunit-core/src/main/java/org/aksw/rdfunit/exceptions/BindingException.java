@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.exceptions;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/5/14 2:27 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/5/14 2:27 PM
  */
 public class BindingException extends Exception {
 

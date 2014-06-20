@@ -10,9 +10,9 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.DataReader;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 9/16/13 1:51 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 9/16/13 1:51 PM
  */
 public class SchemaSource extends Source {
 

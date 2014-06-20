@@ -5,9 +5,9 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
- * User: Dimitris Kontokostas
- * reads from a DataReader and caches result
- * Created: 11/14/13 1:09 PM
+ * @author Dimitris Kontokostas
+ *         reads from a DataReader and caches result
+ * @since 11/14/13 1:09 PM
  */
 public class DataReadAndCacheReader extends DataReader {
     private final DataReader reader;

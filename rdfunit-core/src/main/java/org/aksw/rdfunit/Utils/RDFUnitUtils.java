@@ -15,9 +15,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 9/24/13 11:25 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 9/24/13 11:25 AM
  */
 public final class RDFUnitUtils {
     private static final Logger log = LoggerFactory.getLogger(RDFUnitUtils.class);

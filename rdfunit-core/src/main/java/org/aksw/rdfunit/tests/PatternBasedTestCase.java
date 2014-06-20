@@ -10,9 +10,9 @@ import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/3/14 3:49 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/3/14 3:49 PM
  */
 public class PatternBasedTestCase extends TestCase {
 

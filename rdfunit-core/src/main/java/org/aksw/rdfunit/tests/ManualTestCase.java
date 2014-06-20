@@ -8,9 +8,9 @@ import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 1/3/14 3:57 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 1/3/14 3:57 PM
  */
 public class ManualTestCase extends TestCase {
     private final String sparqlWhere;

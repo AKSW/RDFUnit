@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/14/13 9:01 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/14/13 9:01 AM
  */
 public final class DataReaderFactory {
 

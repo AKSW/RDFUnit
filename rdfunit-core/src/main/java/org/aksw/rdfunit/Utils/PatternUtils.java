@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 9/23/13 11:09 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 9/23/13 11:09 AM
  */
 public final class PatternUtils {
 

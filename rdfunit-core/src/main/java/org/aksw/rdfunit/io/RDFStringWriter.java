@@ -9,9 +9,9 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.StringWriter;
 
 /**
- * User: Dimitris Kontokostas
- * Writes a model to a string (for display in screen / web page)
- * Created: 11/14/13 5:12 PM
+ * @author Dimitris Kontokostas
+ *         Writes a model to a string (for display in screen / web page)
+ * @since 11/14/13 5:12 PM
  */
 public class RDFStringWriter extends DataWriter {
 

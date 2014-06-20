@@ -10,9 +10,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 /**
- * User: Dimitris Kontokostas
- * Writes a Model to a file
- * Created: 11/14/13 1:01 PM
+ * @author Dimitris Kontokostas
+ *         Writes a Model to a file
+ * @since 11/14/13 1:01 PM
  */
 public class RDFFileWriter extends DataWriter {
     private final String filename;

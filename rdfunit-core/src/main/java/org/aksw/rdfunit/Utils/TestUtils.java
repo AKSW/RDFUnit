@@ -30,9 +30,9 @@ import java.util.ArrayList;
 
 
 /**
- * User: Dimitris Kontokostas
- * Various utility test functions for tests
- * Created: 9/24/13 10:59 AM
+ * @author Dimitris Kontokostas
+ *         Various utility test functions for tests
+ * @since 9/24/13 10:59 AM
  */
 public final class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);

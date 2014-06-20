@@ -4,9 +4,9 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.DataReader;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 9/16/13 1:53 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 9/16/13 1:53 PM
  */
 public class EnrichedSchemaSource extends SchemaSource {
 

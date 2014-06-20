@@ -4,12 +4,11 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.io.DataReaderFactory;
-import org.aksw.rdfunit.io.RDFDereferenceReader;
 
 /**
- * User: Dimitris Kontokostas
- * Source factory
- * Created: 10/3/13 6:45 PM
+ * @author Dimitris Kontokostas
+ *         Source factory
+ * @since 10/3/13 6:45 PM
  */
 public final class SourceFactory {
 

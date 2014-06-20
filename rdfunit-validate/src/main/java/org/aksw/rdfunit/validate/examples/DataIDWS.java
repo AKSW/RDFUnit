@@ -18,9 +18,9 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * User: Dimitris Kontokostas
- * a DataID Validator
- * Created: 6/18/14 10:13 AM
+ * @author Dimitris Kontokostas
+ *         a DataID Validator
+ * @since 6/18/14 10:13 AM
  */
 public class DataIDWS extends RDFUnitWebService {
 
@@ -38,7 +38,7 @@ public class DataIDWS extends RDFUnitWebService {
         }
 
         String source = httpServletRequest.getParameter("s");
-        if (source == null || source.isEmpty()){
+        if (source == null || source.isEmpty()) {
             throw new ParameterException("'s' must be defined and not empty");
         }
 
@@ -58,7 +58,7 @@ public class DataIDWS extends RDFUnitWebService {
         }
 
         String outputFormat = httpServletRequest.getParameter("o");
-        if (outputFormat == null || outputFormat.isEmpty()){
+        if (outputFormat == null || outputFormat.isEmpty()) {
             outputFormat = "html";
         }
 

@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * User: Dimitris Kontokostas
- * Holds a format description
- * <p/>
- * Created: 6/18/14 4:05 PM
+ * @author Dimitris Kontokostas
+ *         Holds a format description
+ *         <p/>
+ * @since 6/18/14 4:05 PM
  */
 public class SerializationFormat {
     private final String name;

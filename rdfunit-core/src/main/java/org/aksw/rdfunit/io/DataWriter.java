@@ -6,9 +6,9 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
- * User: Dimitris Kontokostas
- * Triple writer superclass (could be an interface)
- * Created: 11/14/13 12:59 PM
+ * @author Dimitris Kontokostas
+ *         Triple writer superclass (could be an interface)
+ * @since 11/14/13 12:59 PM
  */
 public abstract class DataWriter {
     public void write(Model model) throws TripleWriterException {

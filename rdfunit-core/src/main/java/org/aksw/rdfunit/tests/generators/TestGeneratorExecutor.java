@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 
 /**
- * User: Dimitris Kontokostas
- * handles test generation form a schema or a cache
- * Created: 11/20/13 7:31 PM
+ * @author Dimitris Kontokostas
+ *         handles test generation form a schema or a cache
+ * @since 11/20/13 7:31 PM
  */
 public class TestGeneratorExecutor {
     private static final Logger log = LoggerFactory.getLogger(TestGeneratorExecutor.class);

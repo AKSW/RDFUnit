@@ -11,9 +11,9 @@ import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Holds a parameter binding between a pattern parameter and a test instance
- * Created: 9/30/13 8:28 AM
+ * @author Dimitris Kontokostas
+ *         Holds a parameter binding between a pattern parameter and a test instance
+ * @since 9/30/13 8:28 AM
  */
 public class Binding {
     private final PatternParameter parameter;

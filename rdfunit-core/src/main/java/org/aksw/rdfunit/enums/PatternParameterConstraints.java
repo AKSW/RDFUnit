@@ -3,9 +3,9 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * User: Dimitris Kontokostas
- * Enumerates the different parameter constrains
- * Created: 9/25/13 10:35 AM
+ * @author Dimitris Kontokostas
+ *         Enumerates the different parameter constrains
+ * @since 9/25/13 10:35 AM
  */
 public enum PatternParameterConstraints {
 
@@ -53,13 +53,14 @@ public enum PatternParameterConstraints {
 
     /**
      * Resolves a full URI/IRI to an enum
+     *
      * @param value the URI/IRI we want to resolve
      * @return the equivalent enum type or @None as default
      */
     public static PatternParameterConstraints resolve(String value) {
 
         String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
-        for (PatternParameterConstraints constraint: values()) {
+        for (PatternParameterConstraints constraint : values()) {
             if (qName.equals(constraint.name())) {
                 return constraint;
             }

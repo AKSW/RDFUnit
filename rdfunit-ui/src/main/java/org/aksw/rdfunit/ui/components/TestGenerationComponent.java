@@ -15,9 +15,9 @@ import org.aksw.rdfunit.ui.RDFUnitUISession;
 import java.io.File;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/20/13 5:20 PM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/20/13 5:20 PM
  */
 public class TestGenerationComponent extends VerticalLayout implements TestGeneratorExecutorMonitor {
 

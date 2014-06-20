@@ -2,7 +2,6 @@ package org.aksw.rdfunit.validate.wrappers;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
@@ -23,9 +22,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * RDFUnit Wrapper for a single ontology + manual test cases
- * Created: 6/17/14 8:30 PM
+ * @author Dimitris Kontokostas
+ *         RDFUnit Wrapper for a single ontology + manual test cases
+ * @since 6/17/14 8:30 PM
  */
 public class RDFUnitStaticWrapper {
 
@@ -44,7 +43,7 @@ public class RDFUnitStaticWrapper {
     /**
      * This must be called first in order to initialize the Wrapper. Otherwise it will not work
      *
-     * @param _ontologyURI         The ontology URI/IRI (for dereferencing)
+     * @param _ontologyURI The ontology URI/IRI (for dereferencing)
      */
     public static void initWrapper(String _ontologyURI) {
         initWrapper(_ontologyURI, null);
@@ -184,9 +183,9 @@ public class RDFUnitStaticWrapper {
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
-     * @param dataset the dataset source we want to test
-     * @param testSuite the list of test cases we want to test our Source against
-     * @return  a new Model that contains the validation results. The results are according to executionType
+     * @param dataset               the dataset source we want to test
+     * @param testSuite             the list of test cases we want to test our Source against
+     * @return a new Model that contains the validation results. The results are according to executionType
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final Source dataset, final TestSuite testSuite) {
 

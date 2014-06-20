@@ -6,9 +6,9 @@ import org.aksw.rdfunit.io.format.SerializationFormat;
 import java.util.Collection;
 
 /**
- * User: Dimitris Kontokostas
- * Static service that contains all the supported formats for input/output
- * Created: 6/18/14 7:23 PM
+ * @author Dimitris Kontokostas
+ *         Static service that contains all the supported formats for input/output
+ * @since 6/18/14 7:23 PM
  */
 public final class FormatService {
     private static Collection<SerializationFormat> serializationFormats = null;
@@ -33,7 +33,7 @@ public final class FormatService {
      * @return a FormatType that corresponds to the format name or null otherwise
      */
     public static SerializationFormat getInputFormat(String name) {
-        for (SerializationFormat ft: getSerializationFormats()) {
+        for (SerializationFormat ft : getSerializationFormats()) {
             if (ft.isAcceptedAsInput(name)) {
                 return ft;
             }
@@ -48,7 +48,7 @@ public final class FormatService {
      * @return a FormatType that corresponds to the format name or null otherwise
      */
     public static SerializationFormat getOutputFormat(String name) {
-        for (SerializationFormat ft: getSerializationFormats()) {
+        for (SerializationFormat ft : getSerializationFormats()) {
             if (ft.isAcceptedAsOutput(name)) {
                 return ft;
             }

@@ -6,9 +6,9 @@ import org.aksw.rdfunit.sources.Source;
 import java.net.URI;
 
 /**
- * User: Dimitris Kontokostas
- * Description
- * Created: 11/14/13 9:17 AM
+ * @author Dimitris Kontokostas
+ *         Description
+ * @since 11/14/13 9:17 AM
  */
 public final class CacheUtils {
 
