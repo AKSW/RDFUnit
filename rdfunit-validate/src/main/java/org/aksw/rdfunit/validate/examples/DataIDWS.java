@@ -2,11 +2,8 @@ package org.aksw.rdfunit.validate.examples;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * User: Dimitris Kontokostas
@@ -67,7 +63,7 @@ public class DataIDWS extends RDFUnitWebService {
         }
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetName, "../data/");
-        configuration.setResultLevelReporting(TestCaseExecutionType.rlogTestCaseResult);
+        configuration.setTestCaseExecutionType(TestCaseExecutionType.rlogTestCaseResult);
 
         if (isText) {
             try {
@@ -94,7 +90,7 @@ public class DataIDWS extends RDFUnitWebService {
 
     @Override
     protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException {
-        return RDFUnitStaticWrapper.validate(configuration, dataset, testSuite);
+        return RDFUnitStaticWrapper.validate(configuration.getTestCaseExecutionType(), dataset, testSuite);
     }
 
     @Override

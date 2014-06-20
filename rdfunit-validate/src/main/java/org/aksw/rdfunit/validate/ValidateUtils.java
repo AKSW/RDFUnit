@@ -121,7 +121,7 @@ public class ValidateUtils {
             else
                 log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
         }
-        configuration.setResultLevelReporting(resultLevel);
+        configuration.setTestCaseExecutionType(resultLevel);
 
 
         // Get output formats (with HTML as default)

@@ -59,7 +59,7 @@ public class RDFUnitConfiguration {
     private boolean manualTestsEnabled = true;
 
     /* Execution type */
-    private TestCaseExecutionType resultLevelReporting = TestCaseExecutionType.aggregatedTestCaseResult;
+    private TestCaseExecutionType testCaseExecutionType = TestCaseExecutionType.aggregatedTestCaseResult;
 
     /* Output format types*/
     private Collection<SerializationFormat> outputFormats = null;
@@ -204,12 +204,12 @@ public class RDFUnitConfiguration {
         this.manualTestsEnabled = manualTestsEnabled;
     }
 
-    public TestCaseExecutionType getResultLevelReporting() {
-        return resultLevelReporting;
+    public TestCaseExecutionType getTestCaseExecutionType() {
+        return testCaseExecutionType;
     }
 
-    public void setResultLevelReporting(TestCaseExecutionType resultLevelReporting) {
-        this.resultLevelReporting = resultLevelReporting;
+    public void setTestCaseExecutionType(TestCaseExecutionType testCaseExecutionType) {
+        this.testCaseExecutionType = testCaseExecutionType;
     }
 
     public boolean isCalculateCoverageEnabled() {

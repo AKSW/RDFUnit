@@ -105,7 +105,7 @@ public class ValidateCLI {
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
 
 
-        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getResultLevelReporting());
+        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
         if (testExecutor == null) {
             displayHelpAndExit("Cannot initialize test executor. Exiting");
         }
@@ -117,11 +117,11 @@ public class ValidateCLI {
 
 
         // Write results to DataWriter ()
-        String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getResultLevelReporting().toString();
+        String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
 
         ArrayList<DataWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
-            outputWriters.add(DataWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getResultLevelReporting()));
+            outputWriters.add(DataWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getTestCaseExecutionType()));
         }
 
         DataWriter resultWriter = new DataMultipleWriter(outputWriters);

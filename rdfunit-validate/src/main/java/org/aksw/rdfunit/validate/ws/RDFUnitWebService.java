@@ -97,7 +97,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());
-        DataWriter dataWriter = DataWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getResultLevelReporting());
+        DataWriter dataWriter = DataWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getTestCaseExecutionType());
         dataWriter.write(model);
     }
 
