@@ -11,6 +11,10 @@ import java.util.HashSet;
  * @since 6/18/14 4:27 PM
  */
 public class SerialiazationFormatFactory {
+
+    /**
+     * Returns a list with all the defined serialization formats
+     */
     public static Collection<SerializationFormat> getAllFormats() {
         ArrayList<SerializationFormat> serializationFormats = new ArrayList<>();
 
@@ -27,6 +31,10 @@ public class SerialiazationFormatFactory {
         return serializationFormats;
     }
 
+
+    /**
+     * @return an HTML format as output only
+     */
     public static SerializationFormat createHTML() {
         // HTML -> only output
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -36,6 +44,9 @@ public class SerialiazationFormatFactory {
 
     }
 
+    /**
+     * @return a new TURTLE format for input/output
+     */
     public static SerializationFormat createTurtle() {
         // Turtle -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -45,6 +56,9 @@ public class SerialiazationFormatFactory {
 
     }
 
+    /**
+     * @return a new N3 format for input/output
+     */
     public static SerializationFormat createN3() {
         // N3 -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -52,6 +66,9 @@ public class SerialiazationFormatFactory {
                 "N3", SerializationFormatType.inputAndOutput, "n3", "rdf+n3", currentSynonyms);
     }
 
+    /**
+     * @return a new NTRIPLES format for input/output
+     */
     public static SerializationFormat createNTriples() {
         // ntriples -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -61,6 +78,9 @@ public class SerialiazationFormatFactory {
 
     }
 
+    /**
+     * @return a new JSON-LD format for input/output
+     */
     public static SerializationFormat createJsonLD() {
         // JSON-LD -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -69,6 +89,9 @@ public class SerialiazationFormatFactory {
                 "JSON-LD", SerializationFormatType.inputAndOutput, "jsonld", "application/ld+json", currentSynonyms);
     }
 
+    /**
+     * @return a new RDF/JSON format for input/output
+     */
     public static SerializationFormat createRDFJson() {
         // RDF/JSON -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -77,6 +100,9 @@ public class SerialiazationFormatFactory {
                 "RDF/JSON", SerializationFormatType.inputAndOutput, "rj", "application/rdf+json", currentSynonyms);
     }
 
+    /**
+     * @return a new XML/RDF-ABBREV format for output only
+     */
     public static SerializationFormat createRDFXMLAbbrevOut() {
         // RDF/XML-ABBREV -> output only
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -85,6 +111,9 @@ public class SerialiazationFormatFactory {
                 "RDF/XML-ABBREV", SerializationFormatType.output, "rdf", "application/rdf+xml", currentSynonyms);
     }
 
+    /**
+     * @return a new XML/RDF format for output only
+     */
     public static SerializationFormat createRDFXMLOut() {
         // RDF/XML -> output (split it to disambiguate abbrev)
         HashSet<String> currentSynonyms = new HashSet<>();
@@ -94,6 +123,9 @@ public class SerialiazationFormatFactory {
 
     }
 
+    /**
+     * @return a new XML/RDF format for input only
+     */
     public static SerializationFormat createRDFXMLIn() {
         // RDF/XML -> input
         HashSet<String> currentSynonyms = new HashSet<>();

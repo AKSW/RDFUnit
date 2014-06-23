@@ -4,22 +4,57 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Holds a format serialization description
+ *
  * @author Dimitris Kontokostas
- *         Holds a format description
- *         <p/>
- * @since 6/18/14 4:05 PM
+ * @since 6 /18/14 4:05 PM
  */
 public class SerializationFormat {
+    /**
+     * The "official" name for the format e.g. "TURTLE"
+     */
     private final String name;
+
+    /**
+     * Accorting to {@code SerializationFormatType} this can be an
+     * input / output or input & output serialization format
+     */
     private final SerializationFormatType type;
+
+    /**
+     * The default extension e.g. "ttl" for turtle
+     */
     private final String extension;
+
+    /**
+     * Mimetype for this format e.g. "text/turtle" for turtle
+     */
     private final String headerType;
+
+    /**
+     * A list of synonyms to make format parsing easier
+     * for NTRIPLES format it can be NTRIPLES, NTRIPLE, NT, NT-RIPLES, NT-RIPLE,
+     * Case does not matter here!
+     *
+     */
     private final Set<String> synonyms;
 
+    /**
+     * Constructor
+     */
     public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType) {
         this(name, type, extension, headerType, new HashSet<String>());
     }
 
+    /**
+     * Constructor
+     *
+     * @param name the name
+     * @param type the type
+     * @param extension the extension
+     * @param headerType the header type
+     * @param synonyms the synonyms
+     */
     public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType, Set<String> synonyms) {
         this.name = name;
         this.type = type;
@@ -32,6 +67,12 @@ public class SerializationFormat {
         }
     }
 
+    /**
+     * Checks if this format is an input format (or input & output) and matches one of the synonyms
+     *
+     * @param format the format e.g. "nt"
+     * @return the boolean true if the format matches or false if it doesn't
+     */
     public boolean isAcceptedAsInput(String format) {
         if (type.equals(SerializationFormatType.output))
             return false;
@@ -39,6 +80,12 @@ public class SerializationFormat {
         return containsFormatName(format);
     }
 
+    /**
+     * Checks if this format is an output format (or input & output) and matches one of the synonyms
+     *
+     * @param format the format e.g. "nt"
+     * @return the boolean true if the format matches or false if it doesn't
+     */
     public boolean isAcceptedAsOutput(String format) {
         if (type.equals(SerializationFormatType.input))
             return false;
@@ -46,6 +93,9 @@ public class SerializationFormat {
         return containsFormatName(format);
     }
 
+    /**
+     * Helper function that matches only the synonyms
+     */
     private boolean containsFormatName(String format) {
         if (name.equalsIgnoreCase(format))
             return true;
@@ -53,14 +103,29 @@ public class SerializationFormat {
         return synonyms.contains(format.toLowerCase());
     }
 
+    /**
+     * Gets the default serialization name.
+     *
+     * @return the serialization name. e.g. TURTLE
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the serialization extension.
+     *
+     * @return the extension
+     */
     public String getExtension() {
         return extension;
     }
 
+    /**
+     * Gets the serialization mimetype
+     *
+     * @return the header type
+     */
     public String getHeaderType() {
         return headerType;
     }
