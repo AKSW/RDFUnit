@@ -155,7 +155,7 @@ rutt:dbo-LITRAN-rangeheightperson
                                     ?class rdfs:subClassOf+ <http://dbpedia.org/ontology/Person> .
                                     ?resource <http://dbpedia.org/ontology/height> ?v1 .
                                  }
-                                 FILTER ( !(xsd:double(?v1) < 0.4 || xsd:double(?v1) > 2.5))} """ ;
+                                 FILTER ( !(xsd:double(?v1) < 44 || xsd:double(?v1) > 250))} """ ;
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/ontology/height> ?v1 . } """ ;
     rut:testCaseLogLevel
