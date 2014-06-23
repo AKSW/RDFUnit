@@ -63,6 +63,8 @@ public abstract class TestExecutor {
                 results = executeSingleTest(source, testCase);
             } catch (TestCaseExecutionException e) {
                 status = e.getStatus();
+            } catch (Exception e) {
+                throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
             }
 
             if (results.size() == 0) {

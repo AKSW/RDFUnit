@@ -31,8 +31,6 @@ public class AggregatedTestExecutor extends TestExecutor {
             } else {
                 prevalence = -2;
             }
-        } catch (Exception e) {
-            prevalence = -2;
         }
 
         if (prevalence != 0) {
@@ -45,8 +43,6 @@ public class AggregatedTestExecutor extends TestExecutor {
                 } else {
                     total = -2;
                 }
-            } catch (Exception e) {
-                total = -2;
             }
         } else {
             // else total will be 0 anyway
