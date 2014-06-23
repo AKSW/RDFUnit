@@ -16,28 +16,55 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
- * Takes a dataset source and executes the test queries against the endpoint
- * Description
+ * Takes a dataset source and executes the test queries against the endpoint.
  *
- * @since 9/30/13 11:11 AM
+ * @author Dimitris Kontokostas
+ * @since 9 /30/13 11:11 AM
  */
 public abstract class TestExecutor {
     private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
-    private boolean isCanceled = false;
+    /**
+     * Used in {@code cancel()} to stop the current execution
+     */
+    private volatile boolean isCanceled = false;
 
+    /**
+     * Collection of subscribers in the current test execution
+     */
     private final java.util.Collection<TestExecutorMonitor> progressMonitors = new ArrayList<>();
 
+    /**
+     * Instantiates a new Test executor.
+     */
     public TestExecutor() {
 
     }
 
+    /**
+     * Cancel the current execution. After the current query that is executed, the test execution is halted
+     */
     public void cancel() {
         isCanceled = true;
     }
 
+    /**
+     * Executes single test.
+     *
+     * @param source the source
+     * @param testCase the test case
+     * @return the java . util . collection
+     * @throws TestCaseExecutionException the test case execution exception
+     */
     abstract protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException;
 
 
+    /**
+     * Test execution for a Source againsts a TestSuite
+     *
+     * @param source the source we want to test
+     * @param testSuite the test suite we test the source against
+     * @param delay delay between sparql queries
+     */
     public void execute(Source source, TestSuite testSuite, int delay) {
         isCanceled = false;
 
@@ -103,10 +130,20 @@ public abstract class TestExecutor {
         }
     }
 
+    /**
+     * Add test executor monitor / subscriber.
+     *
+     * @param monitor the monitor
+     */
     public void addTestExecutorMonitor(TestExecutorMonitor monitor) {
         progressMonitors.add(monitor);
     }
 
+    /**
+     * Remove a test executor monitor  / subscriber.
+     *
+     * @param monitor the monitor
+     */
     public void removeTestExecutorMonitor(TestExecutorMonitor monitor) {
         progressMonitors.remove(monitor);
     }

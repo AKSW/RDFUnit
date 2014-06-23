@@ -7,9 +7,11 @@ import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 /**
+ * The Extended Test Executor extends RLOG Executor but provides richer error metadata
+ * TODO: At the moment this is not implemented and return RLOG results
+ *
  * @author Dimitris Kontokostas
- *         Executes results for ExtendedTestCaseResult sets
- * @since 2/2/14 6:13 PM
+ * @since 2 /2/14 6:13 PM
  */
 public class ExtendedTestExecutor extends RLOGTestExecutor {
 

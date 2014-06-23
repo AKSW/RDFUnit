@@ -14,9 +14,10 @@ import java.util.Arrays;
 
 
 /**
+ * Test Executor that reports only a status (Success, Fail, Timeout or Error) for every test case and nothing more
+ *
  * @author Dimitris Kontokostas
- *         Executes results for StatusTestCaseResult sets
- * @since 2/2/14 3:49 PM
+ * @since 2 /2/14 3:49 PM
  */
 public class StatusTestExecutor extends TestExecutor {
     @Override

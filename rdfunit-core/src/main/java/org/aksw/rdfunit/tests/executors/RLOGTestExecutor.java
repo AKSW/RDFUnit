@@ -17,9 +17,11 @@ import java.util.ArrayList;
 
 
 /**
+ * The RLOG Executor returns violation instances and for every instance it generates an rlog:Entry
+ * See the rlog vocabulary
+ *
  * @author Dimitris Kontokostas
- *         Executes results for RLOGTestCaseResult sets
- * @since 2/2/14 4:25 PM
+ * @since 2 /2/14 4:25 PM
  */
 public class RLOGTestExecutor extends TestExecutor {
 
@@ -55,6 +57,13 @@ public class RLOGTestExecutor extends TestExecutor {
 
     }
 
+    /**
+     * Generate single result.
+     *
+     * @param qs the qs
+     * @param testCase the test case
+     * @return the test case result
+     */
     protected TestCaseResult generateSingleResult(QuerySolution qs, TestCase testCase) {
         String resource = qs.get("resource").toString();
         String message = testCase.getResultMessage();

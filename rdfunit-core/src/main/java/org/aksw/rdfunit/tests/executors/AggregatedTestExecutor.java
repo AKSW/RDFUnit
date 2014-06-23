@@ -13,9 +13,10 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import java.util.Arrays;
 
 /**
+ * Test Executor that extends StatusExecutor and in addition reports error counts and prevalence for every test case
+ *
  * @author Dimitris Kontokostas
- *         Executes results for AggregatedTestCaseResult sets
- * @since 2/2/14 4:05 PM
+ * @since 2 /2/14 4:05 PM
  */
 public class AggregatedTestExecutor extends TestExecutor {
 
