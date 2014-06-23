@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.io;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
  * @author Dimitris Kontokostas
@@ -9,7 +10,8 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
  */
 public class SPARULWriter extends DataWriter {
     @Override
-    public void write(QueryExecutionFactory qef) {
+    public void write(QueryExecutionFactory qef) throws TripleWriterException {
         //TODO implement
+        throw new TripleWriterException("SPARQLReader not implemented yet");
     }
 }

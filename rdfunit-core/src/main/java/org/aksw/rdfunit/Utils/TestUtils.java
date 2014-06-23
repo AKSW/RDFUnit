@@ -194,8 +194,6 @@ public final class TestUtils {
             }
         } catch (TestCaseInstantiationException e) {
             log.error(e.getMessage(), e);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
         } finally {
             if (qe != null) {
                 qe.close();
@@ -271,8 +269,6 @@ public final class TestUtils {
                 }
             }
         } catch (TestCaseInstantiationException e) {
-            log.error(e.getMessage(), e);
-        } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {
             if (qe != null) {

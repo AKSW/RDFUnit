@@ -35,7 +35,6 @@ public class SerializationFormat {
      * A list of synonyms to make format parsing easier
      * for NTRIPLES format it can be NTRIPLES, NTRIPLE, NT, NT-RIPLES, NT-RIPLE,
      * Case does not matter here!
-     *
      */
     private final Set<String> synonyms;
 
@@ -49,11 +48,11 @@ public class SerializationFormat {
     /**
      * Constructor
      *
-     * @param name the name
-     * @param type the type
-     * @param extension the extension
+     * @param name       the name
+     * @param type       the type
+     * @param extension  the extension
      * @param headerType the header type
-     * @param synonyms the synonyms
+     * @param synonyms   the synonyms
      */
     public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType, Set<String> synonyms) {
         this.name = name;
@@ -61,7 +60,7 @@ public class SerializationFormat {
         this.extension = extension;
         this.headerType = headerType;
         // Convert all to lowercase
-        this.synonyms = new HashSet<String>();
+        this.synonyms = new HashSet<>();
         for (String synonym : synonyms) {
             this.synonyms.add(synonym.toLowerCase());
         }
