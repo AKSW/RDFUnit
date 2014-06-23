@@ -10,19 +10,34 @@ import org.aksw.rdfunit.tests.TestCase;
 
 
 /**
+ * The type Extended test case result.
+ *
  * @author Dimitris Kontokostas
- *         Description
- * @since 2/2/14 3:57 PM
+ * @since 2 /2/14 3:57 PM
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
     private final java.util.Collection<ResultAnnotation> resultAnnotations;
 
+    /**
+     * Instantiates a new Extended test case result.
+     *
+     * @param testCase the test case
+     * @param resource the resource
+     * @param message the message
+     * @param logLevel the log level
+     */
     public ExtendedTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
         super(testCase, resource, message, logLevel);
         this.resultAnnotations = testCase.getResultAnnotations();
     }
 
+    /**
+     * Instantiates a new Extended test case result.
+     *
+     * @param testCase the test case
+     * @param rlogResult the rlog result
+     */
     public ExtendedTestCaseResult(TestCase testCase, RLOGTestCaseResult rlogResult) {
         super(testCase, rlogResult.getResource(), rlogResult.getMessage(), rlogResult.getLogLevel());
         this.resultAnnotations = testCase.getResultAnnotations();

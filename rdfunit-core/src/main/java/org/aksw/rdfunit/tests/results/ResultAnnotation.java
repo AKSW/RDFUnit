@@ -9,20 +9,41 @@ import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * Holds a test case result annotation that will be used when we generate individual results
+ *
+ * @author Dimitris Kontokostas
  */
 public class ResultAnnotation {
     private final String annotationProperty;
     private final RDFNode annotationValue;
 
+    /**
+     * Instantiates a new Result annotation.
+     *
+     * @param annotationProperty the annotation property
+     * @param annotationValue the annotation value
+     */
     public ResultAnnotation(String annotationProperty, RDFNode annotationValue) {
         this.annotationProperty = annotationProperty;
         this.annotationValue = annotationValue;
     }
 
+    /**
+     * Serialize this annotation for an extended test case result
+     *
+     * @param resource the resource
+     * @param model the model
+     * @return the resource
+     */
     public Resource serializeAsResult(Resource resource, Model model) {
         return resource.addProperty(ResourceFactory.createProperty(getAnnotationProperty()), getAnnotationValue());
     }
 
+    /**
+     * Serialize this annotation for exporting a test case.
+     *
+     * @param model the model
+     * @return the resource
+     */
     public Resource serializeAsTestCase(Model model) {
         return model.createResource()
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "ResultAnnotation"))
@@ -30,10 +51,20 @@ public class ResultAnnotation {
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "annotationValue"), annotationValue);
     }
 
+    /**
+     * Gets the annotation property.
+     *
+     * @return the annotation property
+     */
     public String getAnnotationProperty() {
         return annotationProperty;
     }
 
+    /**
+     * Gets the annotation value.
+     *
+     * @return the annotation value
+     */
     public RDFNode getAnnotationValue() {
         return annotationValue;
     }

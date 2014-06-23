@@ -10,32 +10,40 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
+ * The type Aggregated test case result.
  * @author Dimitris Kontokostas
  *         Description
- * @since 1/2/14 3:44 PM
+ * @since 1 /2/14 3:44 PM
  */
 public class AggregatedTestCaseResult extends StatusTestCaseResult {
     private final long errorCount;
     private final long prevalenceCount;
 
+    /**
+     * Instantiates a new Aggregated test case result.
+     *
+     * @param testCase the test case
+     * @param errorCount the error count
+     * @param prevalenceCount the prevalence count
+     */
     public AggregatedTestCaseResult(TestCase testCase, long errorCount, long prevalenceCount) {
         super(testCase, TestCaseResultStatus.resolve(errorCount));
         this.errorCount = errorCount;
         this.prevalenceCount = prevalenceCount;
     }
 
+    /**
+     * Instantiates a new Aggregated test case result.
+     *
+     * @param testCase the test case
+     * @param status the status
+     * @param errorCount the error count
+     * @param prevalenceCount the prevalence count
+     */
     public AggregatedTestCaseResult(TestCase testCase, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
         super(testCase, status);
         this.errorCount = errorCount;
         this.prevalenceCount = prevalenceCount;
-    }
-
-    public long getErrorCount() {
-        return errorCount;
-    }
-
-    public long getPrevalenceCount() {
-        return prevalenceCount;
     }
 
     @Override
@@ -46,6 +54,24 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
                         ResourceFactory.createTypedLiteral("" + errorCount, XSDDatatype.XSDinteger))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultPrevalence"),
                         ResourceFactory.createTypedLiteral("" + prevalenceCount, XSDDatatype.XSDinteger));
+    }
+
+    /**
+     * Gets error count.
+     *
+     * @return the error count
+     */
+    public long getErrorCount() {
+        return errorCount;
+    }
+
+    /**
+     * Gets prevalence count.
+     *
+     * @return the prevalence count
+     */
+    public long getPrevalenceCount() {
+        return prevalenceCount;
     }
 
     @Override

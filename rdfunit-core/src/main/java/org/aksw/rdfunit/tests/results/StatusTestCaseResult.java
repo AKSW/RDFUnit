@@ -9,13 +9,19 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
+ * The Status test case result.
  * @author Dimitris Kontokostas
- *         Description
- * @since 1/6/14 3:26 PM
+ * @since 1 /6/14 3:26 PM
  */
 public class StatusTestCaseResult extends TestCaseResult {
     private final TestCaseResultStatus status;
 
+    /**
+     * Instantiates a new Status test case result.
+     *
+     * @param testCase the test case
+     * @param status the status
+     */
     public StatusTestCaseResult(TestCase testCase, TestCaseResultStatus status) {
         super(testCase);
         this.status = status;
@@ -30,6 +36,11 @@ public class StatusTestCaseResult extends TestCaseResult {
                 ;
     }
 
+    /**
+     * Gets the status.
+     *
+     * @return the status
+     */
     public TestCaseResultStatus getStatus() {
         return status;
     }

@@ -13,23 +13,29 @@ import org.aksw.rdfunit.tests.TestCase;
 import java.util.Calendar;
 
 /**
+ * An abstract Test Case Result.
+ *
  * @author Dimitris Kontokostas
- *         Description
- * @since 1/2/14 3:44 PM
+ * @since 1 /2/14 3:44 PM
  */
 public abstract class TestCaseResult {
     private final TestCase testCase;
     private final XSDDateTime timestamp;
 
+    /**
+     * Constructor
+     *
+     * @param testCase the test case this result is erlated with
+     */
     protected TestCaseResult(TestCase testCase) {
         this.testCase = testCase;
         this.timestamp = new XSDDateTime(Calendar.getInstance());
     }
 
     /**
-     * Serializes a @TestCaseResult in a model. Subclasses should call super.serialize() and add all additional triples
+     * Serializes a TestCaseResult in a model. Subclasses should call super.serialize() and add all additional triples
      *
-     * @param model            The @Model we want to write to
+     * @param model The @Model we want to write to
      * @param testExecutionURI The test execution URI for the current execution
      * @return a @Resource with all the triples for this @TestCaseResult
      */
@@ -42,10 +48,20 @@ public abstract class TestCaseResult {
                 ;
     }
 
+    /**
+     * Gets the associated test case.
+     *
+     * @return the test case
+     */
     public TestCase getTestCase() {
         return testCase;
     }
 
+    /**
+     * Gets the result timestamp.
+     *
+     * @return the timestamp
+     */
     public XSDDateTime getTimestamp() {
         return timestamp;
     }

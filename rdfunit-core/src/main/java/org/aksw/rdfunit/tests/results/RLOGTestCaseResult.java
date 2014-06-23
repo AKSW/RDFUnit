@@ -9,9 +9,10 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
 /**
+ * The type RLOG test case result.
+ *
  * @author Dimitris Kontokostas
- *         Description
- * @since 2/2/14 3:28 PM
+ * @since 2 /2/14 3:28 PM
  */
 public class RLOGTestCaseResult extends TestCaseResult {
 
@@ -19,6 +20,14 @@ public class RLOGTestCaseResult extends TestCaseResult {
     private final String message;
     private final RLOGLevel logLevel;
 
+    /**
+     * Instantiates a new RLOG test case result.
+     *
+     * @param testCase the test case
+     * @param resource the resource
+     * @param message the message
+     * @param logLevel the log level
+     */
     public RLOGTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
         super(testCase);
 
@@ -38,14 +47,29 @@ public class RLOGTestCaseResult extends TestCaseResult {
                 ;
     }
 
+    /**
+     * Gets the resource.
+     *
+     * @return the resource
+     */
     public String getResource() {
         return resource;
     }
 
+    /**
+     * Gets the message.
+     *
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Gets the log level.
+     *
+     * @return the log level
+     */
     public RLOGLevel getLogLevel() {
         return logLevel;
     }

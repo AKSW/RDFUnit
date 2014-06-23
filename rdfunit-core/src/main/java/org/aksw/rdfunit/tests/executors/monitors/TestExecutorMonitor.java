@@ -8,28 +8,39 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 
 /**
+ * interface for monitoring a TestExecutor
+ * .
  * @author Dimitris Kontokostas
  *         Description
- * @since 1/3/14 12:23 PM
+ * @since 1 /3/14 12:23 PM
  */
 public interface TestExecutorMonitor {
-    /*
-    * Called when testing starts
-    * */
+    /**
+     * Called when testing starts
+     *
+     * @param dataset the dataset
+     * @param testSuite the test suite
+     */
     void testingStarted(final Source dataset, final TestSuite testSuite);
 
-    /*
-    * Called when a single test starts
-    * */
+    /**
+     * Called when a single test starts
+     *
+     * @param test the test
+     */
     void singleTestStarted(final TestCase test);
 
-    /*
-    * Called when a single test is executed
-    * */
+    /**
+     * Called when a single test is executed
+     *
+     * @param test the test
+     * @param status the status
+     * @param results the results
+     */
     void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results);
 
-    /*
-    * Called when testing ends
-    * */
+    /**
+     * Called when testing ends
+     */
     void testingFinished();
 }
