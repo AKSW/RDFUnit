@@ -4,4 +4,8 @@
 echo "re-instaling depentant modules"
 mvn -pl rdfunit-validate -am clean install -Dmaven.test.skip=true -q
 echo "done"
+
+# Increase java heap with the following
+#export MAVEN_OPTS="-Xmx4096m"
+
 bin/rdfunit "$*"
