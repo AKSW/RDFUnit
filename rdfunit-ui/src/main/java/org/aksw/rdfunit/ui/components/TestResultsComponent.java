@@ -7,7 +7,7 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.sources.EndpointSource;
+import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -111,10 +111,10 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                             item.getItemProperty("Errors");
                     errorsProperty.setValue(new Label("-"));
                 } else {
-                    if (source instanceof EndpointSource) {
-                        String endpoint = ((EndpointSource) source).getSparqlEndpoint();
+                    if (source instanceof EndpointTestSource) {
+                        String endpoint = ((EndpointTestSource) source).getSparqlEndpoint();
                         //TODO check default graph uri when array
-                        java.util.Collection<String> graphs = ((EndpointSource) source).getSparqlGraphs();
+                        java.util.Collection<String> graphs = ((EndpointTestSource) source).getSparqlGraphs();
                         String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
                         String query = test.getSparqlQuery() + " LIMIT 10";
                         try {

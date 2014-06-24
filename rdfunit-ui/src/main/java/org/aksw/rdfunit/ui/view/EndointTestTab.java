@@ -9,7 +9,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
-import org.aksw.rdfunit.sources.EndpointSource;
+import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
@@ -495,9 +495,9 @@ public class EndointTestTab extends VerticalLayout {
         }
 
         Source dataset = configuration.getTestSource();
-        if (dataset instanceof EndpointSource) {
-            endpointField.setValue(((EndpointSource) dataset).getSparqlEndpoint());
-            java.util.Collection<String> graphs = ((EndpointSource) dataset).getSparqlGraphs();
+        if (dataset instanceof EndpointTestSource) {
+            endpointField.setValue(((EndpointTestSource) dataset).getSparqlEndpoint());
+            java.util.Collection<String> graphs = ((EndpointTestSource) dataset).getSparqlGraphs();
             graphField.setValue(RDFUnitUtils.getFirstItemInCollection(graphs));
         } else {
             endpointField.setValue("");

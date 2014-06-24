@@ -8,7 +8,7 @@ import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.*;
-import org.aksw.rdfunit.sources.DumpSource;
+import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
@@ -165,7 +165,7 @@ public class RDFUnitStaticWrapper {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
-        final Source modelSource = new DumpSource(
+        final Source modelSource = new DumpTestSource(
                 "custom", // prefix
                 inputURI,
                 new DataModelReader(input), // the input model as a DataReader

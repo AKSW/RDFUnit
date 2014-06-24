@@ -19,23 +19,23 @@ import org.aksw.rdfunit.io.DataReaderFactory;
  * @author Dimitris Kontokostas
  * @since 2/6/14 9:32 AM
  */
-public class DumpSource extends Source {
+public class DumpTestSource extends Source {
 
     private final DataReader dumpReader;
 
-    public DumpSource(String prefix, String uri) {
+    public DumpTestSource(String prefix, String uri) {
         this(prefix, uri, DataReaderFactory.createDereferenceReader(uri), null);
     }
 
-    public DumpSource(String prefix, String uri, String location) {
+    public DumpTestSource(String prefix, String uri, String location) {
         this(prefix, uri, location, null);
     }
 
-    public DumpSource(String prefix, String uri, String location, java.util.Collection<SchemaSource> schemata) {
+    public DumpTestSource(String prefix, String uri, String location, java.util.Collection<SchemaSource> schemata) {
         this(prefix, uri, DataReaderFactory.createDereferenceReader(location), schemata);
     }
 
-    public DumpSource(String prefix, String uri, DataReader dumpReader, java.util.Collection<SchemaSource> schemata) {
+    public DumpTestSource(String prefix, String uri, DataReader dumpReader, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
         if (schemata != null) {
@@ -64,7 +64,6 @@ public class DumpSource extends Source {
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
         }
-        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
-        return new QueryExecutionFactoryLimit(qef, true, (long) 15);
+        return new QueryExecutionFactoryModel(model);
     }
 }

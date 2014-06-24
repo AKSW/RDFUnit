@@ -139,7 +139,7 @@ public class RDFUnitConfiguration {
 
         if (endpointURI != null && !endpointURI.isEmpty()) {
             // return a SPARQL Endpoint source
-            return new EndpointSource(
+            return new EndpointTestSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,
                     endpointURI,
@@ -152,7 +152,7 @@ public class RDFUnitConfiguration {
         if (customTextSource != null) {
             InputStream is = new ByteArrayInputStream(customTextSource.getBytes());
             DataReader textReader = new RDFStreamReader(is, customTextFormat.getName());
-            return new DumpSource(
+            return new DumpTestSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,
                     textReader,
@@ -165,7 +165,7 @@ public class RDFUnitConfiguration {
         if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
             tmp_customDereferenceURI = customDereferenceURI;
         }
-        return new DumpSource(
+        return new DumpTestSource(
                 CacheUtils.getAutoPrefixForURI(datasetURI),
                 datasetURI,
                 tmp_customDereferenceURI,

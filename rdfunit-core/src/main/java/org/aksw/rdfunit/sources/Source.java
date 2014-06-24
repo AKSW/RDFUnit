@@ -22,7 +22,7 @@ public abstract class Source implements Comparable<Source> {
     private final String uri;
     private final java.util.Collection<SchemaSource> referencesSchemata;
 
-    private QueryExecutionFactory queryFactory;
+    private QueryExecutionFactory queryFactory = null;
 
     public Source(String prefix, String uri) {
         this.prefix = prefix;

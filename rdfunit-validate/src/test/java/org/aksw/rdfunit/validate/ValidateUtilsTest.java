@@ -2,8 +2,8 @@ package org.aksw.rdfunit.validate;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.EndpointSource;
-import org.aksw.rdfunit.sources.DumpSource;
+import org.aksw.rdfunit.sources.DumpTestSource;
+import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -43,7 +43,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getDataFolder(), "../data/");
         assertEquals(configuration.getTestFolder(), "../data/tests/");
         assertEquals(configuration.getOutputFormats().size(), 1); // html by default
-        assertTrue(configuration.getTestSource() instanceof EndpointSource);
+        assertTrue(configuration.getTestSource() instanceof EndpointTestSource);
 
 
         args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle";
@@ -60,7 +60,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.isManualTestsEnabled(), false);
         assertEquals(configuration.isTestCacheEnabled(), true);
         assertEquals(configuration.isCalculateCoverageEnabled(), false);
-        assertTrue(configuration.getTestSource() instanceof DumpSource);
+        assertTrue(configuration.getTestSource() instanceof DumpTestSource);
 
 
         args = " -d http://dbpedia.org -s rdfs -f /home/rdfunit/ -C -c";

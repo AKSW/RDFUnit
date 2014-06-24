@@ -10,11 +10,13 @@ import org.aksw.jena_sparql_api.cache.staging.CacheBackendDataSource;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.aksw.jena_sparql_api.limit.QueryExecutionFactoryLimit;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.RunScript;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -29,16 +31,16 @@ import java.util.Collection;
  * @since 9/16/13 1:54 PM
  */
 
-public class EndpointSource extends Source {
+public class EndpointTestSource extends Source {
 
     private final String sparqlEndpoint;
     private final java.util.Collection<String> sparqlGraph;
 
-    public EndpointSource(String prefix, String uri) {
+    public EndpointTestSource(String prefix, String uri) {
         this(prefix, uri, uri, new ArrayList<String>(), null);
     }
 
-    public EndpointSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
+    public EndpointTestSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = new ArrayList<>(sparqlGraph);
@@ -47,7 +49,7 @@ public class EndpointSource extends Source {
         }
     }
 
-    public EndpointSource(EndpointSource source) {
+    public EndpointTestSource(EndpointTestSource source) {
         this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraphs(), source.getReferencesSchemata());
     }
 
@@ -84,23 +86,29 @@ public class EndpointSource extends Source {
             Class.forName("org.h2.Driver");
 
             JdbcDataSource dataSource = new JdbcDataSource();
-            dataSource.setURL("jdbc:h2:file:./cache/sparql/" + getPrefix() + ";DB_CLOSE_DELAY=-1");
+            String cacheLocation = "./cache/sparql/\" + getPrefix()";
+            File cacheLocationFile = new File(cacheLocation);
+            boolean cacheAlreadyExists = cacheLocationFile.exists();
+
+            dataSource.setURL("jdbc:h2:file:" + cacheLocation + "; DB_CLOSE_DELAY=-1");
             dataSource.setUser("sa");
             dataSource.setPassword("sa");
 
-            String schemaResourceName = "/org/aksw/jena_sparql_api/cache/cache-schema-pgsql.sql";
-            InputStream in = CacheBackendDao.class.getResourceAsStream(schemaResourceName);
+            if (! cacheAlreadyExists) {
+                String schemaResourceName = "/org/aksw/jena_sparql_api/cache/cache-schema-pgsql.sql";
+                InputStream in = CacheBackendDao.class.getResourceAsStream(schemaResourceName);
 
-            if (in == null) {
-                throw new RuntimeException("Failed to load resource: " + schemaResourceName);
-            }
+                if (in == null) {
+                    throw new RuntimeException("Failed to load resource: " + schemaResourceName);
+                }
 
-            InputStreamReader reader = new InputStreamReader(in);
-            Connection conn = dataSource.getConnection();
-            try {
-                RunScript.execute(conn, reader);
-            } finally {
-                conn.close();
+                InputStreamReader reader = new InputStreamReader(in);
+                Connection conn = dataSource.getConnection();
+                try {
+                    RunScript.execute(conn, reader);
+                } finally {
+                    conn.close();
+                }
             }
 
 
@@ -115,6 +123,8 @@ public class EndpointSource extends Source {
 
         // Add pagination
         qef = new QueryExecutionFactoryPaginated(qef, 900);
+
+        qef = new QueryExecutionFactoryLimit(qef, true, (long) 10);
 
         return qef;
     }
