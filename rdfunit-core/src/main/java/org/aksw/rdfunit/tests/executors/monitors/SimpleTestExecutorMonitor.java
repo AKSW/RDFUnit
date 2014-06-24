@@ -41,18 +41,37 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     private long counter = 0;
 
+    /**
+     * Instantiates a new Simple test executor monitor.
+     */
     public SimpleTestExecutorMonitor() {
         this(ModelFactory.createDefaultModel(), true);
     }
 
+    /**
+     * Instantiates a new Simple test executor monitor.
+     *
+     * @param loggingEnabled have logging enabled / disabled
+     */
     public SimpleTestExecutorMonitor(boolean loggingEnabled) {
         this(ModelFactory.createDefaultModel(), loggingEnabled);
     }
 
+    /**
+     * Instantiates a new Simple test executor monitor using an external Model.
+     *
+     * @param model the external model
+     */
     public SimpleTestExecutorMonitor(Model model) {
         this(model, true);
     }
 
+    /**
+     * Instantiates a new Simple test executor monitor.
+     *
+     * @param model the model
+     * @param loggingEnabled the logging enabled
+     */
     public SimpleTestExecutorMonitor(Model model, boolean loggingEnabled) {
         this.model = model;
         this.loggingEnabled = loggingEnabled;
@@ -137,6 +156,10 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
             long individualErrors = results.size();
             overviewResults.increaseIndividualErrors(individualErrors);
 
+            if (loggingEnabled) {
+                log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + results.size() + " violation instances / TC: " + test.getAbrTestURI());
+            }
+
         }
     }
 
@@ -179,10 +202,20 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         }
     }
 
+    /**
+     * Gets model that contains the results
+     *
+     * @return the model
+     */
     public Model getModel() {
         return model;
     }
 
+    /**
+     * Gets overview results.
+     *
+     * @return the overview results
+     */
     public DatasetOverviewResults getOverviewResults() {
         return overviewResults;
     }
