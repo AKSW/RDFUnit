@@ -36,9 +36,10 @@ public class RDFUnitConfiguration {
     /* SPARQL endpoint configuration */
     private String endpointURI = null;
     private Collection<String> endpointGraphs = null;
-    private long endpointDelayinMS = 7000; // delay between queries
-    private long endpointCacheTTL = 7l * 24l * 60l * 60l * 1000l; // cache time to live
-    private long endpointPagination = 900; // default pagination behind the schenes
+    private long endpointDelayinMS = EndpointTestSource.QUERY_DELAY;
+    private long endpointCacheTTL = EndpointTestSource.CACHE_TTL;
+    private long endpointPagination = EndpointTestSource.PAGINATION;
+    private long endpointLimit = EndpointTestSource.QUERY_LIMIT;
 
     /* Dereference testing (if different from datasetURI) */
     private String customDereferenceURI = null;
@@ -84,12 +85,17 @@ public class RDFUnitConfiguration {
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination) {
+        setEndpointConfiguration(endpointURI,endpointGraphs,endpointDelayinMS,endpointCacheTTL,endpointPagination, this.endpointLimit);
+    }
+
+    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination, long endpointLimit) {
         this.endpointURI = endpointURI;
         this.endpointGraphs = new ArrayList<>();
         this.endpointGraphs.addAll(endpointGraphs);
         this.endpointDelayinMS = endpointDelayinMS;
         this.endpointCacheTTL = endpointCacheTTL;
         this.endpointPagination = endpointPagination;
+        this.endpointLimit = endpointLimit;
     }
 
     public void setCustomDereferenceURI(String customDereferenceURI) {

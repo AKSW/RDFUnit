@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.sources;
 
+import com.hp.hpl.jena.query.Query;
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheBackend;
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
@@ -32,6 +33,33 @@ import java.util.Collection;
  */
 
 public class EndpointTestSource extends Source {
+
+
+    /**
+     * cache time to live (in ms), set to 1 week by default
+     */
+    public static final long CACHE_TTL = 7l * 24l * 60l * 60l * 1000l;
+
+    /**
+     * Delay between queries in a SPARQL Endpoint, set to 5 seconds by default
+     */
+    public static final long QUERY_DELAY = 5l * 1000l;
+
+    /**
+     * Pose a limit on the returned results. No limit by default
+     */
+    public static final long QUERY_LIMIT = Query.NOLIMIT;
+
+    /**
+     * Pagination for big results, set to 800 records by default
+     */
+    public static final long PAGINATION = 800;
+
+
+    private long cacheTTL = CACHE_TTL;
+    private long queryDelay = QUERY_DELAY;
+    private long queryLimit = QUERY_LIMIT;
+    private long pagination = PAGINATION;
 
     private final String sparqlEndpoint;
     private final java.util.Collection<String> sparqlGraph;
@@ -69,62 +97,69 @@ public class EndpointTestSource extends Source {
             qef = new QueryExecutionFactoryHttp(getSparqlEndpoint(), getSparqlGraphs());
         }
 
-
         // Add delay in order to be nice to the remote server (delay in milli seconds)
-        qef = new QueryExecutionFactoryDelay(qef, 15);
+        if (this.queryDelay > 0) {
+            qef = new QueryExecutionFactoryDelay(qef, this.queryDelay);
+        }
 
-        QueryExecutionFactory qefBackup = qef;
 
-        try {
-            // Copied from
-            // https://github.com/AKSW/jena-sparql-api/blob/master/jena-sparql-api-cache-h2/src/test/java/org/aksw/jena_sparql_api/SparqlTest.java
-            //
-            // Set up a cache
-            // Cache entries are valid for 7 days
-            long timeToLive = 7l * 24l * 60l * 60l * 1000l;
+        if (this.cacheTTL > 0 ) {
+            QueryExecutionFactory qefBackup = qef;
 
-            Class.forName("org.h2.Driver");
+            try {
+                // Copied from
+                // https://github.com/AKSW/jena-sparql-api/blob/master/jena-sparql-api-cache-h2/src/test/java/org/aksw/jena_sparql_api/SparqlTest.java
 
-            JdbcDataSource dataSource = new JdbcDataSource();
-            String cacheLocation = "./cache/sparql/\" + getPrefix()";
-            File cacheLocationFile = new File(cacheLocation);
-            boolean cacheAlreadyExists = cacheLocationFile.exists();
+                Class.forName("org.h2.Driver");
 
-            dataSource.setURL("jdbc:h2:file:" + cacheLocation + "; DB_CLOSE_DELAY=-1");
-            dataSource.setUser("sa");
-            dataSource.setPassword("sa");
+                JdbcDataSource dataSource = new JdbcDataSource();
+                String cacheLocation = "./cache/sparql/" + getPrefix();
+                File cacheLocationFile = new File(cacheLocation);
+                boolean cacheAlreadyExists = cacheLocationFile.exists();
 
-            if (! cacheAlreadyExists) {
-                String schemaResourceName = "/org/aksw/jena_sparql_api/cache/cache-schema-pgsql.sql";
-                InputStream in = CacheBackendDao.class.getResourceAsStream(schemaResourceName);
+                dataSource.setURL("jdbc:h2:file:" + cacheLocation + "; DB_CLOSE_DELAY=-1");
+                dataSource.setUser("sa");
+                dataSource.setPassword("sa");
 
-                if (in == null) {
-                    throw new RuntimeException("Failed to load resource: " + schemaResourceName);
+                if (!cacheAlreadyExists) {
+                    String schemaResourceName = "/org/aksw/jena_sparql_api/cache/cache-schema-pgsql.sql";
+                    InputStream in = CacheBackendDao.class.getResourceAsStream(schemaResourceName);
+
+                    if (in == null) {
+                        throw new RuntimeException("Failed to load resource: " + schemaResourceName);
+                    }
+
+                    InputStreamReader reader = new InputStreamReader(in);
+                    Connection conn = dataSource.getConnection();
+                    try {
+                        RunScript.execute(conn, reader);
+                    } finally {
+                        conn.close();
+                    }
+                    log.debug("Created new cache for endpoint");
                 }
 
-                InputStreamReader reader = new InputStreamReader(in);
-                Connection conn = dataSource.getConnection();
-                try {
-                    RunScript.execute(conn, reader);
-                } finally {
-                    conn.close();
-                }
+
+                CacheBackendDao dao = new CacheBackendDaoPostgres();
+                CacheBackend cacheBackend = new CacheBackendDataSource(dataSource, dao);
+                CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
+                qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+
+            } catch (Exception e) {
+                //Try to create cache, if fails continue...
+                qef = qefBackup;
+                log.debug("Could not instantiate cache for Endpoint", e);
             }
-
-
-            CacheBackendDao dao = new CacheBackendDaoPostgres();
-            CacheBackend cacheBackend = new CacheBackendDataSource(dataSource, dao);
-            CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
-            qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-        } catch (Exception e) {
-            //Try to create cache, if fails continue...
-            qef = qefBackup;
         }
 
         // Add pagination
-        qef = new QueryExecutionFactoryPaginated(qef, 900);
+        if (this.pagination > 0) {
+            qef = new QueryExecutionFactoryPaginated(qef, 900);
+        }
 
-        qef = new QueryExecutionFactoryLimit(qef, true, (long) 10);
+        if (this.queryLimit > 0 || this.queryLimit < Query.NOLIMIT) {
+            qef = new QueryExecutionFactoryLimit(qef, true, this.queryLimit);
+        }
 
         return qef;
     }
