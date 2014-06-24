@@ -22,21 +22,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * Describes an arbitary datatest source
+ * TODO make this abstract and create an EndpointSource and a DumpSource
+ *
  * @author Dimitris Kontokostas
- *         Describes an arbitary datatest source TODO make this abstract and create an EndpointSource and a DumpSource
  * @since 9/16/13 1:54 PM
  */
 
-public class DatasetSource extends Source {
+public class EndpointSource extends Source {
 
     private final String sparqlEndpoint;
     private final java.util.Collection<String> sparqlGraph;
 
-    public DatasetSource(String prefix, String uri) {
+    public EndpointSource(String prefix, String uri) {
         this(prefix, uri, uri, new ArrayList<String>(), null);
     }
 
-    public DatasetSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
+    public EndpointSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = new ArrayList<>(sparqlGraph);
@@ -45,7 +47,7 @@ public class DatasetSource extends Source {
         }
     }
 
-    public DatasetSource(DatasetSource source) {
+    public EndpointSource(EndpointSource source) {
         this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraphs(), source.getReferencesSchemata());
     }
 
@@ -67,7 +69,7 @@ public class DatasetSource extends Source {
 
 
         // Add delay in order to be nice to the remote server (delay in milli seconds)
-        qef = new QueryExecutionFactoryDelay(qef, 7000);
+        qef = new QueryExecutionFactoryDelay(qef, 15);
 
         QueryExecutionFactory qefBackup = qef;
 

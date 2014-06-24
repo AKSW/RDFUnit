@@ -139,7 +139,7 @@ public class RDFUnitConfiguration {
 
         if (endpointURI != null && !endpointURI.isEmpty()) {
             // return a SPARQL Endpoint source
-            return new DatasetSource(
+            return new EndpointSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,
                     endpointURI,

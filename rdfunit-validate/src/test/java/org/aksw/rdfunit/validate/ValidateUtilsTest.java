@@ -2,7 +2,7 @@ package org.aksw.rdfunit.validate;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.DatasetSource;
+import org.aksw.rdfunit.sources.EndpointSource;
 import org.aksw.rdfunit.sources.DumpSource;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -43,7 +43,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getDataFolder(), "../data/");
         assertEquals(configuration.getTestFolder(), "../data/tests/");
         assertEquals(configuration.getOutputFormats().size(), 1); // html by default
-        assertTrue(configuration.getTestSource() instanceof DatasetSource);
+        assertTrue(configuration.getTestSource() instanceof EndpointSource);
 
 
         args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle";

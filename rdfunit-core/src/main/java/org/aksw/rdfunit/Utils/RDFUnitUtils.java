@@ -6,7 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.DatasetSource;
+import org.aksw.rdfunit.sources.EndpointSource;
 import org.aksw.rdfunit.sources.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +84,7 @@ public final class RDFUnitUtils {
 
     public static void fillSchemaServiceFromLOV() {
 
-        Source lov = new DatasetSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
+        Source lov = new EndpointSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
 
         QueryExecution qe = null;
         int count = 0;

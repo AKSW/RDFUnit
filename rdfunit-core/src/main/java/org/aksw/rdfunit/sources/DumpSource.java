@@ -4,17 +4,19 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.limit.QueryExecutionFactoryLimit;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.DataReader;
 import org.aksw.rdfunit.io.DataReaderFactory;
 
 /**
+ * Defines a source based on an RDF Dump
+ * This can be any type of dump (ttl, nt, rdfa, rdf, etc)
+ * This has to be more sophisticated in the end (e.g. read zippped files) but there is always time to improve ;)
+ * TODO refactor sources and make this a subclass of DatasetSource
+ *
  * @author Dimitris Kontokostas
- *         Defines a source based on an RDF Dump
- *         This can be any type of dump (ttl, nt, rdfa, rdf, etc)
- *         This has to be more sophisticated in the end (e.g. read zippped files) but there is always time to improve ;)
- *         TODO refactor sources and make this a subclass of DatasetSource
  * @since 2/6/14 9:32 AM
  */
 public class DumpSource extends Source {
@@ -62,6 +64,7 @@ public class DumpSource extends Source {
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
         }
-        return new QueryExecutionFactoryModel(model);
+        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
+        return new QueryExecutionFactoryLimit(qef, true, (long) 15);
     }
 }
