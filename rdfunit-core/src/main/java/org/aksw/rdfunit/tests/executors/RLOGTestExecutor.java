@@ -45,8 +45,6 @@ public class RLOGTestExecutor extends TestExecutor {
             } else {
                 throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
             }
-        } catch (Exception e) {
-            throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
         } finally {
             if (qe != null) {
                 qe.close();
