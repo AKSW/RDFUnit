@@ -101,6 +101,8 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public Query getSparqlPrevalenceQuery() {
+        if (getSparqlPrevalence().trim().isEmpty())
+            return null;
         return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence());
     }
 

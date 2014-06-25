@@ -18,8 +18,8 @@ public class ManualTestCase extends TestCase {
 
     public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) throws TestCaseInstantiationException {
         super(testURI, annotation);
-        this.sparqlWhere = sparqlWhere;
-        this.sparqlPrevalence = sparqlPrevalence;
+        this.sparqlWhere = sparqlWhere.trim();
+        this.sparqlPrevalence = sparqlPrevalence.trim();
         validateQueries();
     }
 

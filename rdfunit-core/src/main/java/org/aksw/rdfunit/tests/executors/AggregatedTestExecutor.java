@@ -25,7 +25,10 @@ public class AggregatedTestExecutor extends TestExecutor {
         int total = -1, prevalence = -1;
 
         try {
-            prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
+            Query prevalenceQuery = testCase.getSparqlPrevalenceQuery();
+            if (prevalenceQuery != null) {
+                prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
+            }
         } catch (QueryExceptionHTTP e) {
             if (SparqlUtils.checkStatusForTimeout(e)) {
                 prevalence = -1;

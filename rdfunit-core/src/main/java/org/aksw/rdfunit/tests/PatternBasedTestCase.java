@@ -51,12 +51,12 @@ public class PatternBasedTestCase extends TestCase {
 
     @Override
     public String getSparqlWhere() {
-        return instantiateBindings(bindings, pattern.getSparqlWherePattern());
+        return instantiateBindings(bindings, pattern.getSparqlWherePattern()).trim();
     }
 
     @Override
     public String getSparqlPrevalence() {
-        return instantiateBindings(bindings, pattern.getSparqlPatternPrevalence());
+        return instantiateBindings(bindings, pattern.getSparqlPatternPrevalence()).trim();
     }
 
     private String instantiateBindings(java.util.Collection<Binding> bindings, String query) {
