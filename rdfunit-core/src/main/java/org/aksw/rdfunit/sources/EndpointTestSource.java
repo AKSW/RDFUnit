@@ -41,19 +41,19 @@ public class EndpointTestSource extends Source {
     public static final long CACHE_TTL = 7l * 24l * 60l * 60l * 1000l;
 
     /**
+     * Pagination for big results, set to 800 records by default
+     */
+    public static final long PAGINATION = 800;
+
+    /**
      * Delay between queries in a SPARQL Endpoint, set to 5 seconds by default
      */
     public static final long QUERY_DELAY = 5l * 1000l;
 
     /**
-     * Pose a limit on the returned results. No limit by default
+     * Pose a limit on the returned results. Limit to pagination by default
      */
-    public static final long QUERY_LIMIT = Query.NOLIMIT;
-
-    /**
-     * Pagination for big results, set to 800 records by default
-     */
-    public static final long PAGINATION = 800;
+    public static final long QUERY_LIMIT = PAGINATION - 1;
 
 
     private long cacheTTL = CACHE_TTL;
@@ -104,7 +104,6 @@ public class EndpointTestSource extends Source {
 
 
         if (this.cacheTTL > 0 ) {
-            QueryExecutionFactory qefBackup = qef;
 
             try {
                 // Copied from
@@ -113,42 +112,34 @@ public class EndpointTestSource extends Source {
                 Class.forName("org.h2.Driver");
 
                 JdbcDataSource dataSource = new JdbcDataSource();
-                String cacheLocation = "./cache/sparql/" + getPrefix();
-                File cacheLocationFile = new File(cacheLocation);
-                boolean cacheAlreadyExists = cacheLocationFile.exists();
-
-                dataSource.setURL("jdbc:h2:file:" + cacheLocation + "; DB_CLOSE_DELAY=-1");
+                dataSource.setURL("jdbc:h2:file:./cache/sparql/" + getPrefix() + ";DB_CLOSE_DELAY=-1");
                 dataSource.setUser("sa");
                 dataSource.setPassword("sa");
 
-                if (!cacheAlreadyExists) {
-                    String schemaResourceName = "/org/aksw/jena_sparql_api/cache/cache-schema-pgsql.sql";
-                    InputStream in = CacheBackendDao.class.getResourceAsStream(schemaResourceName);
+                String schemaResourceName = "/org/aksw/jena_sparql_api/cache/cache-schema-pgsql.sql";
+                InputStream in = CacheBackendDao.class.getResourceAsStream(schemaResourceName);
 
-                    if (in == null) {
-                        throw new RuntimeException("Failed to load resource: " + schemaResourceName);
-                    }
-
-                    InputStreamReader reader = new InputStreamReader(in);
-                    Connection conn = dataSource.getConnection();
-                    try {
-                        RunScript.execute(conn, reader);
-                    } finally {
-                        conn.close();
-                    }
-                    log.debug("Created new cache for endpoint");
+                if (in == null) {
+                    throw new RuntimeException("Failed to load resource: " + schemaResourceName);
                 }
 
+                InputStreamReader reader = new InputStreamReader(in);
+                Connection conn = dataSource.getConnection();
+                try {
+                    RunScript.execute(conn, reader);
+                } finally {
+                    conn.close();
+                }
 
-                CacheBackendDao dao = new CacheBackendDaoPostgres();
+                CacheBackendDao dao = new CacheBackendDaoPostgres(this.cacheTTL);
                 CacheBackend cacheBackend = new CacheBackendDataSource(dataSource, dao);
                 CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
                 qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+                log.debug("Cache for endpoint set up: " + this.getSparqlEndpoint());
 
             } catch (Exception e) {
                 //Try to create cache, if fails continue...
-                qef = qefBackup;
-                log.debug("Could not instantiate cache for Endpoint", e);
+                log.debug("Could not instantiate cache for Endpoint" + this.getSparqlEndpoint(), e);
             }
         }
 
