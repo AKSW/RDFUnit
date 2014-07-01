@@ -29,7 +29,7 @@ public class ValidateUtilsTest {
         SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
 
-        args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -s rdfs,owl -p dbo";
+        args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -s rdfs,owl -p dbo -A";
         commandLine = cliParser.parse(cliOptions, args.split(" "));
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
@@ -44,6 +44,9 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getTestFolder(), "../data/tests/");
         assertEquals(configuration.getOutputFormats().size(), 1); // html by default
         assertTrue(configuration.getTestSource() instanceof EndpointTestSource);
+        assertTrue(configuration.isManualTestsEnabled());
+        assertFalse(configuration.isAutoTestsEnabled());
+        assertFalse(configuration.isTestCacheEnabled());
 
 
         args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle";
@@ -58,6 +61,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getDataFolder(), "/home/rdfunit/");
         assertEquals(configuration.getTestFolder(), "/home/rdfunit/tests/");
         assertEquals(configuration.isManualTestsEnabled(), false);
+        assertEquals(configuration.isAutoTestsEnabled(), true);
         assertEquals(configuration.isTestCacheEnabled(), true);
         assertEquals(configuration.isCalculateCoverageEnabled(), false);
         assertTrue(configuration.getTestSource() instanceof DumpTestSource);
@@ -84,7 +88,7 @@ public class ValidateUtilsTest {
                 "Expected exception for defining both -e & -u");
         exceptionsExpected.put(
                 " -d http://dbpedia.org -e http://dbpedia.org/sparql -s rdf -l log",
-                "Expected exception for asking unusupported -l");
+                "Expected exception for asking unsupported -l");
         exceptionsExpected.put(
                 " -d http://dbpedia.org -s foaf ",
                 "Expected exception for asking for undefined 'foaf' schema ");
@@ -94,6 +98,12 @@ public class ValidateUtilsTest {
         exceptionsExpected.put(
                 " -d http://dbpedia.org -s rdf -o html,turtle123",
                 "Expected exception for asking for undefined serialization 'turtle123'");
+        exceptionsExpected.put(
+                " -d http://dbpedia.org -s rdf -M -A",
+                "Expected exception for asking for excluding both manual & auto test cases");
+        exceptionsExpected.put(
+                " -d http://dbpedia.org -s rdf -A -C",
+                "Expected exception for asking for excluding auto tests & specifying -C");
 
         for (String arg : exceptionsExpected.keySet()) {
 

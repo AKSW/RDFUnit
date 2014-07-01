@@ -26,18 +26,33 @@ import java.util.ArrayList;
  */
 public class TestGeneratorExecutor {
     private static final Logger log = LoggerFactory.getLogger(TestGeneratorExecutor.class);
-    private boolean isCanceled = false;
+    private volatile boolean isCanceled = false;
     private final boolean loadFromCache;
     private final boolean useManualTests;
+    private final boolean useAutoTests;
 
     public TestGeneratorExecutor() {
-        this.loadFromCache = true;
-        this.useManualTests = true;
+        this(true, true, true);
     }
 
-    public TestGeneratorExecutor(boolean loadFromCache, boolean useManualTests) {
+    /**
+     * TestAutoGenerator constructor
+     * TODO: loadFromCache does not make sense if useAutoTests is false
+     *
+     * @param useAutoTests
+     * @param loadFromCache
+     * @param useManualTests
+     */
+    public TestGeneratorExecutor(boolean useAutoTests, boolean loadFromCache, boolean useManualTests) {
+        this.useAutoTests = useAutoTests;
         this.loadFromCache = loadFromCache;
         this.useManualTests = useManualTests;
+
+        // no auto && no manual tests do not make sense
+        assert (!useAutoTests && !useManualTests);
+
+        // no auto && cache does not make sense TODO fix this
+        assert (!useAutoTests && loadFromCache);
     }
 
     private final java.util.Collection<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<>();
@@ -67,7 +82,9 @@ public class TestGeneratorExecutor {
             log.info("Generating tests for: " + s.getUri());
 
             //Generate auto tests from schema
-            allTests.addAll(generateAutoTestsForSchemaSource(testFolder, s, autoGenerators));
+            if (useAutoTests) {
+                allTests.addAll(generateAutoTestsForSchemaSource(testFolder, s, autoGenerators));
+            }
 
             //Find manual tests for schema
             if (useManualTests) {

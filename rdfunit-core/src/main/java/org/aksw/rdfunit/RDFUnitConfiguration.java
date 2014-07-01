@@ -59,6 +59,9 @@ public class RDFUnitConfiguration {
     /* if set to false it will generate only schema based test cases */
     private boolean manualTestsEnabled = true;
 
+    /* if set to false it will load only manual test cases */
+    private boolean autoTestsEnabled = true;
+
     /* Execution type */
     private TestCaseExecutionType testCaseExecutionType = TestCaseExecutionType.aggregatedTestCaseResult;
 
@@ -208,6 +211,17 @@ public class RDFUnitConfiguration {
 
     public void setManualTestsEnabled(boolean manualTestsEnabled) {
         this.manualTestsEnabled = manualTestsEnabled;
+    }
+
+    public boolean isAutoTestsEnabled() {
+        return autoTestsEnabled;
+    }
+
+    public void setAutoTestsEnabled(boolean autoTestsEnabled) {
+        this.autoTestsEnabled = autoTestsEnabled;
+        if (!this.autoTestsEnabled) {
+            this.setTestCacheEnabled(false);
+        }
     }
 
     public TestCaseExecutionType getTestCaseExecutionType() {

@@ -49,6 +49,7 @@ public class ValidateUtils {
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("C", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
         cliOptions.addOption("M", "no-manual-tests", false, "Do not load any manually defined test cases (Manual test cases are loaded by default)");
+        cliOptions.addOption("A", "no-auto-tests", false, "Do not load any schema / automatically generated test cases (Automatically generated test cases are loaded by default)");
         cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
         cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
@@ -137,9 +138,21 @@ public class ValidateUtils {
         boolean testCacheEnabled = !commandLine.hasOption("C");
         configuration.setTestCacheEnabled(testCacheEnabled);
 
-        //Use only automatic tests
+        //Do not use manual tests
         boolean manualTestsEnabled = !commandLine.hasOption("M");
         configuration.setManualTestsEnabled(manualTestsEnabled);
+
+        //Do not use automatic tests
+        boolean autoTestsEnabled = !commandLine.hasOption("A");
+        configuration.setAutoTestsEnabled(autoTestsEnabled);
+
+        if (!configuration.isManualTestsEnabled() && !configuration.isAutoTestsEnabled()) {
+            throw new ParameterException("both -M & -A does not make sense");
+        }
+
+        if (!configuration.isAutoTestsEnabled() && configuration.isTestCacheEnabled()) {
+            throw new ParameterException("both -A & -C does not make sense");
+        }
 
 
         boolean calculateCoverage = commandLine.hasOption("c");

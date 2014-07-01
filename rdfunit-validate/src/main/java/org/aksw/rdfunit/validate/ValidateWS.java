@@ -53,7 +53,10 @@ public class ValidateWS extends RDFUnitWebService {
 
     @Override
     protected synchronized TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset) {
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+                configuration.isAutoTestsEnabled(),
+                configuration.isTestCacheEnabled(),
+                configuration.isManualTestsEnabled());
         return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
     }
 

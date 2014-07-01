@@ -101,7 +101,10 @@ public class ValidateCLI {
         final Source dataset = configuration.getTestSource();
         /* </cliStuff> */
 
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(configuration.isTestCacheEnabled(), configuration.isManualTestsEnabled());
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+                configuration.isAutoTestsEnabled(),
+                configuration.isTestCacheEnabled(),
+                configuration.isManualTestsEnabled());
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
 
 
