@@ -162,4 +162,36 @@ public class EndpointTestSource extends Source {
     public Collection<String> getSparqlGraphs() {
         return sparqlGraph;
     }
+
+    public void setCacheTTL(long cacheTTL) {
+        this.cacheTTL = cacheTTL;
+    }
+
+    public void setQueryDelay(long queryDelay) {
+        this.queryDelay = queryDelay;
+    }
+
+    public void setQueryLimit(long queryLimit) {
+        this.queryLimit = queryLimit;
+    }
+
+    public void setPagination(long pagination) {
+        this.pagination = pagination;
+    }
+
+    public long getCacheTTL() {
+        return cacheTTL;
+    }
+
+    public long getQueryDelay() {
+        return queryDelay;
+    }
+
+    public long getQueryLimit() {
+        return queryLimit;
+    }
+
+    public long getPagination() {
+        return pagination;
+    }
 }

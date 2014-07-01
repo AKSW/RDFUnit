@@ -21,6 +21,7 @@ import java.util.Collection;
  * @author Dimitris Kontokostas
  *         Holds a configuration for a complete test
  *         TODO: Got too big, maybe break it down a bit
+ *         TODO: Got really really big!!!
  * @since 11/15/13 11:50 AM
  */
 public class RDFUnitConfiguration {
@@ -36,10 +37,10 @@ public class RDFUnitConfiguration {
     /* SPARQL endpoint configuration */
     private String endpointURI = null;
     private Collection<String> endpointGraphs = null;
-    private long endpointDelayinMS = EndpointTestSource.QUERY_DELAY;
-    private long endpointCacheTTL = EndpointTestSource.CACHE_TTL;
-    private long endpointPagination = EndpointTestSource.PAGINATION;
-    private long endpointLimit = EndpointTestSource.QUERY_LIMIT;
+    private long endpointQueryDelayMS = EndpointTestSource.QUERY_DELAY;
+    private long endpointQueryCacheTTL = EndpointTestSource.CACHE_TTL;
+    private long endpointQueryPagination = EndpointTestSource.PAGINATION;
+    private long endpointQueryLimit = EndpointTestSource.QUERY_LIMIT;
 
     /* Dereference testing (if different from datasetURI) */
     private String customDereferenceURI = null;
@@ -84,21 +85,21 @@ public class RDFUnitConfiguration {
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
-        setEndpointConfiguration(endpointURI, endpointGraphs, this.endpointDelayinMS, this.endpointCacheTTL, this.endpointPagination);
+        setEndpointConfiguration(endpointURI, endpointGraphs, this.endpointQueryDelayMS, this.endpointQueryCacheTTL, this.endpointQueryPagination);
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination) {
-        setEndpointConfiguration(endpointURI,endpointGraphs,endpointDelayinMS,endpointCacheTTL,endpointPagination, this.endpointLimit);
+        setEndpointConfiguration(endpointURI,endpointGraphs,endpointDelayinMS,endpointCacheTTL,endpointPagination, this.endpointQueryLimit);
     }
 
-    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination, long endpointLimit) {
+    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointQueryDelayMS, long endpointQueryCacheTTL, long endpointQueryPagination, long endpointQueryLimit) {
         this.endpointURI = endpointURI;
         this.endpointGraphs = new ArrayList<>();
         this.endpointGraphs.addAll(endpointGraphs);
-        this.endpointDelayinMS = endpointDelayinMS;
-        this.endpointCacheTTL = endpointCacheTTL;
-        this.endpointPagination = endpointPagination;
-        this.endpointLimit = endpointLimit;
+        this.endpointQueryDelayMS = endpointQueryDelayMS;
+        this.endpointQueryCacheTTL = endpointQueryCacheTTL;
+        this.endpointQueryPagination = endpointQueryPagination;
+        this.endpointQueryLimit = endpointQueryLimit;
     }
 
     public void setCustomDereferenceURI(String customDereferenceURI) {
@@ -148,13 +149,19 @@ public class RDFUnitConfiguration {
 
         if (endpointURI != null && !endpointURI.isEmpty()) {
             // return a SPARQL Endpoint source
-            return new EndpointTestSource(
+            EndpointTestSource endpointSource = new EndpointTestSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,
                     endpointURI,
                     endpointGraphs,
                     getAllSchemata());
 
+            endpointSource.setQueryDelay(this.endpointQueryDelayMS);
+            endpointSource.setCacheTTL(this.endpointQueryCacheTTL);
+            endpointSource.setPagination(this.endpointQueryPagination);
+            endpointSource.setQueryLimit(this.endpointQueryLimit);
+
+            return endpointSource;
         }
 
         // Return a text source
@@ -282,5 +289,37 @@ public class RDFUnitConfiguration {
 
     public SerializationFormat geFirstOutputFormat() {
         return RDFUnitUtils.getFirstItemInCollection(outputFormats);
+    }
+
+    public long getEndpointQueryDelayMS() {
+        return endpointQueryDelayMS;
+    }
+
+    public void setEndpointQueryDelayMS(long endpointQueryDelayMS) {
+        this.endpointQueryDelayMS = endpointQueryDelayMS;
+    }
+
+    public long getEndpointQueryCacheTTL() {
+        return endpointQueryCacheTTL;
+    }
+
+    public void setEndpointQueryCacheTTL(long endpointQueryCacheTTL) {
+        this.endpointQueryCacheTTL = endpointQueryCacheTTL;
+    }
+
+    public long getEndpointQueryPagination() {
+        return endpointQueryPagination;
+    }
+
+    public void setEndpointQueryPagination(long endpointQueryPagination) {
+        this.endpointQueryPagination = endpointQueryPagination;
+    }
+
+    public long getEndpointQueryLimit() {
+        return endpointQueryLimit;
+    }
+
+    public void setEndpointQueryLimit(long endpointQueryLimit) {
+        this.endpointQueryLimit = endpointQueryLimit;
     }
 }

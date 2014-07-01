@@ -4,6 +4,7 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
+import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +53,10 @@ public class ValidateUtils {
         cliOptions.addOption("A", "no-auto-tests", false, "Do not load any schema / automatically generated test cases (Automatically generated test cases are loaded by default)");
         cliOptions.addOption("r", "result-level", true, "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
         cliOptions.addOption("l", "logging-level", true, "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
+        cliOptions.addOption("T", "query-cache-ttl", true, "Specify the SPARQL Endpoint cache Time-To-Live (TTL) of the cache (in minutes) or '0' to disable it.");
+        cliOptions.addOption("D", "query-delay", true, "Specify the delay between consecutive queries cache against an Endpoint or '0' to disable delay.");
+        cliOptions.addOption("L", "query-limit", true, "Specify the maximum results from a SPARQL test query or '0' to disable limits.");
+        cliOptions.addOption("P", "query-pagination", true, "Specify a pagination option for retrieving big results or '0' to disable it.");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit). " +
                 "If none exists, bundled versions will be loaded.'");
@@ -152,6 +157,68 @@ public class ValidateUtils {
 
         if (!configuration.isAutoTestsEnabled() && configuration.isTestCacheEnabled()) {
             throw new ParameterException("both -A & -C does not make sense");
+        }
+
+        // Get time to live cache option
+        String ttlStr = commandLine.getOptionValue("T");
+        if (ttlStr != null) {
+            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
+                throw new ParameterException("-T works only with an endpoint");
+            }
+            try {
+                // we set the cache in minutes
+                long ttl = 60l * 1000l * Long.parseLong(ttlStr);
+                configuration.setEndpointQueryCacheTTL(ttl);
+
+            } catch (NumberFormatException e) {
+                throw new ParameterException("-T not a valid number", e);
+            }
+        }
+
+        // Get endpoint delay option
+        String delayStr = commandLine.getOptionValue("D");
+        if (delayStr != null) {
+            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
+                throw new ParameterException("-D works only with an endpoint");
+            }
+            try {
+                long delay = Long.parseLong(delayStr);
+                configuration.setEndpointQueryDelayMS(delay);
+
+            } catch (NumberFormatException e) {
+                throw new ParameterException("-D not a valid number", e);
+            }
+        }
+
+
+        // Get endpoint pagination option
+        String paginationStr = commandLine.getOptionValue("P");
+        if (paginationStr != null) {
+            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
+                throw new ParameterException("-P works only with an endpoint");
+            }
+            try {
+                long pagination = Long.parseLong(paginationStr);
+                configuration.setEndpointQueryPagination(pagination);
+
+            } catch (NumberFormatException e) {
+                throw new ParameterException("-P not a valid number", e);
+            }
+        }
+
+        // Get query Limit option
+        String limitStr = commandLine.getOptionValue("L");
+        if (limitStr != null) {
+            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
+                throw new ParameterException("-L works only with an endpoint");
+            }
+            try {
+                long limit = Long.parseLong(limitStr);
+                configuration.setEndpointQueryLimit(limit);
+
+            } catch (NumberFormatException e) {
+                throw new ParameterException("-L not a valid number", e);
+            }
         }
 
 
