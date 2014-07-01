@@ -86,6 +86,10 @@ public abstract class TestExecutor {
             java.util.Collection<TestCaseResult> results = new ArrayList<>();
             TestCaseResultStatus status;
 
+            // Test case execution and debug logging
+            long executionTimeStartInMS = System.currentTimeMillis();
+            log.debug(testCase.getAbrTestURI()+ " : started execution");
+
             try {
                 results = executeSingleTest(source, testCase);
             } catch (TestCaseExecutionException e) {
@@ -100,6 +104,9 @@ public abstract class TestExecutor {
                     status = TestCaseResultStatus.Error;
                 }
             }
+
+            long executionTimeEndInMS = System.currentTimeMillis();
+            log.debug(testCase.getAbrTestURI()+ " : execution completed in " + (executionTimeEndInMS - executionTimeStartInMS) + "ms");
 
             if (results.size() == 0) {
                 status = TestCaseResultStatus.Success;
