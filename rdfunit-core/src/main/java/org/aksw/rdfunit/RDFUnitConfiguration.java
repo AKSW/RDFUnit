@@ -190,7 +190,6 @@ public class RDFUnitConfiguration {
 
     public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
         outputFormats = new ArrayList<>();
-        boolean invalidInput = false;
         for (String name : outputNames) {
             SerializationFormat serializationFormat = FormatService.getOutputFormat(name);
             if (serializationFormat != null) {
