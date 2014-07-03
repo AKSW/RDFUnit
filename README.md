@@ -54,54 +54,8 @@ To run a data quality assessment of a certain SPARQL endpoint the following step
    The enrichment process will try to infer constraints for the dataset based on the actual data using the [DL-Learner](http://dl-learner.org/Projects/DLLearner) tool.)
 5. Run the actual assessment based on the test cases created in the previous step
 
-To do so, you first have to clone this repository and install the software using the Maven 3 build tool as follows:
-```console
-$ git clone https://github.com/AKSW/RDFUnit.git
-$ cd RDFUnit/
-$ mvn clean install
 
-# argument help
-$ bin/rdfunit -h
-
-# Simple call (SPARQL)
-$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1,graph2,...>  -s <schema1,schema2,schema3,...>
-
-# with use of enriched ontnology
-$ bin/rdfunit -d <dataset-uri> -e <endpoint>  -g <graph1,graph2,...>  -s <schema1,schema2,schema3,...> -p <enriched-schema-prefix>
-
-# Simple call (Dereferencing)
-$ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>
-
-# Simple call (Dereferencing when you want to keep the manual tests for a dataset)
-$ bin/rdfunit -d <dataset-uri> -U <source-URI> -s <schema1,schema2,schema3,...>
-```
-
-Description of the options, you need to provide:
-- of the *dataset* with the general *URI* `http://dbpedia.org`
-- the SPARQL *endpoint* URL `http://dbpedia.org/sparql`
-- referring to the *graphs* `http://dbpedia.org`
-- that uses the *schemas* `owl`, `dbo`, `foaf`, `dcterms`, `dc`, `skos`, `geo`, `prov`
-- with the *enriched schema prefix* `dbo`
-
-
-Note that all schemas are resolved using the [LOV dataset](http://lov.okfn.org) and are downloaded automatically.
-The framework automatically loads all associated tests (manual, automatic and enriched) that are defined (See next section) and at the moment uses files to store/retrieve them.
-Future versions of the tool will work directly with a SPARQL endpoint.
-
-An example call with already defined manual and enriched test cases is:
-```console
-$ bin/rdfunit -d http://dbpedia.org/ -e http://dbpedia.org/sparql -g http://dbpedia.org -s owl,dbo,foaf,dcterms,dc,skos,geo,prov -p dbo
-```
-
-### Data folder structure
-
-the data folder consists of the following folders:
-* `ontology` holds the rdfunit ontology
-* `results` stores the results of the evaluation in RDF
-* `tests` stores the test cases along with a cache of the schema source in turtle
-    * `Schema` holds the automatically generated test cases are stored
-    * `EnrichedSchema` holds the automatically generated test cases from an enriched schema
-    * `Manual` here we define the manual test cases for a source. Note that a source can be either a schema or a dataset and we use their URI to destinguish them.
+See the wiki for execution information
 
 
 ### Create manual data quality test cases
@@ -114,13 +68,4 @@ At the moment you can store your manually generated queries in the respective `M
 RDFUnit already resolves all schema prefixes with the LOV dataset and can automatically download and generate tests for all 361 LOV vocabularies.
 If your vocabulary you want to use is not there you can place it in the RDFUnitUtils.fillSchemaService() accordingly.
 
-### 3) Enrich the schema of the considered dataset
 
-The enrichment of the schema is not necessary per se, but may lead to better results in cases where the schema/ontology of the considered dataset is in some sense light-weight, meaning that there are only a few constraints that can be used for automatic pattern instantiation.
-
-Since the enrichment is performed by an external tool (the [DL-Learner](http://dl-learner.org/Projects/DLLearner)) we refer to the [project site](http://dl-learner.org/wiki/SVNRun) for further details how to run it.
-
-An example for the enrichment of the [DBpedia](http://dbpedia.org) dataset could be
-```console
-user@host interfaces $ mvn exec:java -e -Dexec.mainClass="org.dllearner.cli.Enrichment" -Dexec.args="-e http://dbpedia.org/sparql -g http://dbpedia.org -f rdf/xml -o enrichment_dbpediaorg.xml -s enrichment_dbpediaorg.owl -l -1 -t 0.9"
-```
