@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @since 9 /30/13 11:11 AM
  */
 public abstract class TestExecutor {
-    private static Logger log = LoggerFactory.getLogger(TestExecutor.class);
+    private static final Logger log = LoggerFactory.getLogger(TestExecutor.class);
     /**
      * Used in {@code cancel()} to stop the current execution
      */
@@ -59,13 +59,18 @@ public abstract class TestExecutor {
 
 
     /**
-     * Test execution for a Source againsts a TestSuite
+     * Test execution for a Source against a TestSuite
      *
      * @param source the source we want to test
      * @param testSuite the test suite we test the source against
      * @param delay delay between sparql queries
+     * @return true if all TC executed successfully, false otherwise
      */
-    public void execute(Source source, TestSuite testSuite, int delay) {
+    public boolean execute(Source source, TestSuite testSuite, int delay) {
+        // used to hold the whole status of the execution
+        boolean success = true;
+
+        // reset to false for this execution
         isCanceled = false;
 
         /*notify start of testing */
@@ -124,6 +129,12 @@ public abstract class TestExecutor {
                 }
             }
 
+            // If at least one TC fails the whole TestSuite fails
+            if (status != TestCaseResultStatus.Success) {
+                success = false;
+            }
+
+
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {
                 monitor.singleTestExecuted(testCase, status, results);
@@ -136,12 +147,15 @@ public abstract class TestExecutor {
                     // do nothing
                 }
             }
-        }
+
+        } // End of TC execution for loop
 
         /*notify end of testing */
         for (TestExecutorMonitor monitor : progressMonitors) {
             monitor.testingFinished();
         }
+
+        return success;
     }
 
     /**
