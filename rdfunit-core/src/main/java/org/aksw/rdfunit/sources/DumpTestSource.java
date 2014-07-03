@@ -4,11 +4,10 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.limit.QueryExecutionFactoryLimit;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.DataReader;
-import org.aksw.rdfunit.io.DataReaderFactory;
+import org.aksw.rdfunit.io.RDFReader;
+import org.aksw.rdfunit.io.RDFReaderFactory;
 
 /**
  * Defines a source based on an RDF Dump
@@ -21,10 +20,10 @@ import org.aksw.rdfunit.io.DataReaderFactory;
  */
 public class DumpTestSource extends Source {
 
-    private final DataReader dumpReader;
+    private final RDFReader dumpReader;
 
     public DumpTestSource(String prefix, String uri) {
-        this(prefix, uri, DataReaderFactory.createDereferenceReader(uri), null);
+        this(prefix, uri, RDFReaderFactory.createDereferenceReader(uri), null);
     }
 
     public DumpTestSource(String prefix, String uri, String location) {
@@ -32,10 +31,10 @@ public class DumpTestSource extends Source {
     }
 
     public DumpTestSource(String prefix, String uri, String location, java.util.Collection<SchemaSource> schemata) {
-        this(prefix, uri, DataReaderFactory.createDereferenceReader(location), schemata);
+        this(prefix, uri, RDFReaderFactory.createDereferenceReader(location), schemata);
     }
 
-    public DumpTestSource(String prefix, String uri, DataReader dumpReader, java.util.Collection<SchemaSource> schemata) {
+    public DumpTestSource(String prefix, String uri, RDFReader dumpReader, java.util.Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
         if (schemata != null) {

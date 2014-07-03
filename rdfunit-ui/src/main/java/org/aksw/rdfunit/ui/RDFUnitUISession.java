@@ -6,7 +6,7 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -58,8 +58,8 @@ public class RDFUnitUISession extends VaadinSession {
 
     public static void initRDFUnit() {
         try {
-            DataReader patternReader = RDFUnitUtils.getPatternsFromResource();
-            DataReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
+            RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
+            RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
             getRDFUnit().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO

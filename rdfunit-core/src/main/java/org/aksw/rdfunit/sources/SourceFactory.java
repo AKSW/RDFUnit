@@ -2,8 +2,8 @@ package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.DataReader;
-import org.aksw.rdfunit.io.DataReaderFactory;
+import org.aksw.rdfunit.io.RDFReader;
+import org.aksw.rdfunit.io.RDFReaderFactory;
 
 /**
  * @author Dimitris Kontokostas
@@ -21,7 +21,7 @@ public final class SourceFactory {
 
     public static SchemaSource createSchemaSourceFromCache(String baseFolder, String prefix, String uri, String schema) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.Schema, prefix, uri);
-        DataReader reader = DataReaderFactory.createFileOrDereferenceReader(cacheFile, schema);
+        RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, schema);
         return new SchemaSource(prefix, uri, schema, reader);
     }
 
@@ -30,13 +30,13 @@ public final class SourceFactory {
     }
 
     public static SchemaSource createSchemaSourceDereference(String prefix, String uri, String schema) {
-        DataReader reader = DataReaderFactory.createDereferenceReader(schema);
+        RDFReader reader = RDFReaderFactory.createDereferenceReader(schema);
         return new SchemaSource(prefix, uri, schema, reader);
     }
 
     public static EnrichedSchemaSource createEnrichedSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.EnrichedSchema, prefix, uri);
-        DataReader reader = DataReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
+        RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
         return new EnrichedSchemaSource(prefix, uri, reader);
     }
 }

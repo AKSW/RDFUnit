@@ -3,7 +3,7 @@ package org.aksw.rdfunit.Utils;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.EndpointTestSource;
@@ -140,11 +140,11 @@ public final class RDFUnitUtils {
         return f.exists();
     }
 
-    public static DataReader getPatternsFromResource() {
+    public static RDFReader getPatternsFromResource() {
         return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/patterns.ttl"));
     }
 
-    public static DataReader getAutoGeneratorsFromResource() {
+    public static RDFReader getAutoGeneratorsFromResource() {
         return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/testAutoGenerators.ttl"));
     }
 

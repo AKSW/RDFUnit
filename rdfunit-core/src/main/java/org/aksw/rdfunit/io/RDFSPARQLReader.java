@@ -9,12 +9,12 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  *         TODO implement
  * @since 11/14/13 8:58 AM
  */
-public class SPARQLReader extends DataReader {
+public class RDFSPARQLReader extends RDFReader {
 
     private final String endpoint;
     private final String graph;
 
-    public SPARQLReader(String endpoint, String graph) {
+    public RDFSPARQLReader(String endpoint, String graph) {
         this.endpoint = endpoint;
         this.graph = graph;
     }
@@ -22,6 +22,6 @@ public class SPARQLReader extends DataReader {
     @Override
     public void read(Model model) throws TripleReaderException {
         //TODO implement
-        throw new TripleReaderException("SPARQLReader (" + endpoint + " / " + graph +") not implemented yet");
+        throw new TripleReaderException("RDFSPARQLReader (" + endpoint + " / " + graph +") not implemented yet");
     }
 }

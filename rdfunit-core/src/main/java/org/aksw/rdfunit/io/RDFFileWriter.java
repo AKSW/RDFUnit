@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
  *         Writes a Model to a file
  * @since 11/14/13 1:01 PM
  */
-public class RDFFileWriter extends DataWriter {
+public class RDFFileWriter extends RDFWriter {
     private final String filename;
     private final String filetype;
     private final boolean skipIfExists;

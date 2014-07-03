@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 
 /**
  * @author Dimitris Kontokostas
@@ -10,7 +10,7 @@ import org.aksw.rdfunit.io.DataReader;
  */
 public class EnrichedSchemaSource extends SchemaSource {
 
-    public EnrichedSchemaSource(String prefix, String uri, DataReader schemaReader) {
+    public EnrichedSchemaSource(String prefix, String uri, RDFReader schemaReader) {
         super(prefix, uri, schemaReader);
     }
 

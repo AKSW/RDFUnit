@@ -28,7 +28,7 @@ import java.util.Collection;
  */
 public class RDFUnitStaticWrapper {
 
-    private static DataReader ontologyReader = null;
+    private static RDFReader ontologyReader = null;
     private static TestSuite testSuite = null;
 
     /**
@@ -61,11 +61,11 @@ public class RDFUnitStaticWrapper {
     }
 
     /**
-     * This functions return the ontology reader as @DataReader
+     * This functions return the ontology reader as @RDFReader
      *
-     * @return a @DataReader
+     * @return a @RDFReader
      */
-    private static DataReader getOntologyReader() {
+    private static RDFReader getOntologyReader() {
 
         // No locking here => possible deadock with getTestSuite()
         // even if it's called twice, there is no harm & the overhead is negligible
@@ -77,13 +77,13 @@ public class RDFUnitStaticWrapper {
             }
 
             // Reader the ontology either from a resource or, if it fails, dereference it from the URI
-            Collection<DataReader> nifReaderList = new ArrayList<>();
+            Collection<RDFReader> nifReaderList = new ArrayList<>();
             if (ontologyResourceURI != null) {
                 nifReaderList.add(new RDFStreamReader(RDFUnitStaticWrapper.class.getResourceAsStream(ontologyResourceURI)));
             }
-            nifReaderList.add(DataReaderFactory.createDereferenceReader(ontologyURI));
+            nifReaderList.add(RDFReaderFactory.createDereferenceReader(ontologyURI));
 
-            ontologyReader = new DataFirstSuccessReader(nifReaderList);
+            ontologyReader = new RDFFirstSuccessReader(nifReaderList);
         }
         return ontologyReader;
     }
@@ -98,7 +98,7 @@ public class RDFUnitStaticWrapper {
                     Source nifSchema = new SchemaSource("custom", ontologyURI, getOntologyReader());
 
                     // Set up the manual nif test cases (from resource)
-                    DataReader manualTestCaseReader = new RDFStreamReader(
+                    RDFReader manualTestCaseReader = new RDFStreamReader(
                             RDFUnitStaticWrapper.class.getResourceAsStream(
                                     CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", nifSchema)));
 
@@ -168,7 +168,7 @@ public class RDFUnitStaticWrapper {
         final Source modelSource = new DumpTestSource(
                 "custom", // prefix
                 inputURI,
-                new DataModelReader(input), // the input model as a DataReader
+                new RDFModelReader(input), // the input model as a RDFReader
                 Arrays.asList(  // List of associated ontologies (these will be loaded in the testing model)
                         new SchemaSource("custom", ontologyURI, getOntologyReader()))
         );

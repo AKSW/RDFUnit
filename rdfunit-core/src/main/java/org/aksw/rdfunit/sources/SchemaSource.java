@@ -7,7 +7,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 
 /**
  * @author Dimitris Kontokostas
@@ -17,13 +17,13 @@ import org.aksw.rdfunit.io.DataReader;
 public class SchemaSource extends Source {
 
     protected final String schema;
-    protected final DataReader schemaReader;
+    protected final RDFReader schemaReader;
 
-    public SchemaSource(String prefix, String uri, DataReader schemaReader) {
+    public SchemaSource(String prefix, String uri, RDFReader schemaReader) {
         this(prefix, uri, uri, schemaReader);
     }
 
-    public SchemaSource(String prefix, String uri, String schema, DataReader schemaReader) {
+    public SchemaSource(String prefix, String uri, String schema, RDFReader schemaReader) {
         super(prefix, uri);
         this.schema = schema;
         this.schemaReader = schemaReader;

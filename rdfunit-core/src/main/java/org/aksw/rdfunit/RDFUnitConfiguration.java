@@ -5,7 +5,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.services.FormatService;
@@ -167,7 +167,7 @@ public class RDFUnitConfiguration {
         // Return a text source
         if (customTextSource != null) {
             InputStream is = new ByteArrayInputStream(customTextSource.getBytes());
-            DataReader textReader = new RDFStreamReader(is, customTextFormat.getName());
+            RDFReader textReader = new RDFStreamReader(is, customTextFormat.getName());
             return new DumpTestSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,

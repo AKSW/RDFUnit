@@ -8,11 +8,11 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  *         Encapsulates reading directly from a model
  * @since 5/7/14 3:36 PM
  */
-public class DataModelReader extends DataReader {
+public class RDFModelReader extends RDFReader {
 
     private final Model model;
 
-    public DataModelReader(Model model) {
+    public RDFModelReader(Model model) {
         this.model = model;
     }
 

@@ -9,7 +9,7 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  *         Description
  * @since 11/14/13 8:48 AM
  */
-public class RDFDereferenceReader extends DataReader {
+public class RDFDereferenceReader extends RDFReader {
 
     private final String uri;
 

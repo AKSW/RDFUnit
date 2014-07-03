@@ -8,11 +8,11 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  *         Description
  * @since 11/14/13 8:51 AM
  */
-public class DataFirstSuccessReader extends DataReader {
+public class RDFFirstSuccessReader extends RDFReader {
 
-    private final java.util.Collection<DataReader> readers;
+    private final java.util.Collection<RDFReader> readers;
 
-    public DataFirstSuccessReader(java.util.Collection<DataReader> readers) {
+    public RDFFirstSuccessReader(java.util.Collection<RDFReader> readers) {
         this.readers = readers;
     }
 
@@ -20,7 +20,7 @@ public class DataFirstSuccessReader extends DataReader {
     public void read(Model model) throws TripleReaderException {
         String message = "";
         // return the first successful attempt
-        for (DataReader r : readers) {
+        for (RDFReader r : readers) {
             try {
                 r.read(model);
                 // return on first read() that does not throw an exception

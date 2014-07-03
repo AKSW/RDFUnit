@@ -18,15 +18,15 @@ import java.util.Collection;
  *         Writes results in HTML format
  * @since 11/14/13 1:04 PM
  */
-public abstract class HTMLResultsWriter extends DataWriter {
+public abstract class RDFHTMLResultsWriter extends RDFWriter {
     private final OutputStream outputStream;
 
 
-    public HTMLResultsWriter(OutputStream outputStream) {
+    public RDFHTMLResultsWriter(OutputStream outputStream) {
         this.outputStream = outputStream;
     }
 
-    public HTMLResultsWriter(String filename) {
+    public RDFHTMLResultsWriter(String filename) {
         this.outputStream = RDFStreamWriter.getOutputStreamFromFilename(filename);
     }
 

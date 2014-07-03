@@ -6,7 +6,7 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -36,8 +36,8 @@ public class ValidateWS extends RDFUnitWebService {
 
     private final String dataFolder = "data/";
     private final String testFolder = dataFolder + "tests/";
-    private final DataReader patternReader = RDFUnitUtils.getPatternsFromResource();
-    private final DataReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
+    private final RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
+    private final RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
     private final RDFUnit rdfunit = new RDFUnit();
 
     @Override

@@ -7,7 +7,7 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.PatternUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.DataReader;
+import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
@@ -33,7 +33,7 @@ public class RDFUnit {
     public RDFUnit() {
     }
 
-    public void initPatternsAndGenerators(DataReader patterReader, DataReader testGeneratorReader) throws TripleReaderException {
+    public void initPatternsAndGenerators(RDFReader patterReader, RDFReader testGeneratorReader) throws TripleReaderException {
         Model patternModel = ModelFactory.createDefaultModel();
         try {
             patterReader.read(patternModel);

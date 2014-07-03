@@ -9,7 +9,7 @@ import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
-import org.aksw.rdfunit.io.DataReaderFactory;
+import org.aksw.rdfunit.io.RDFReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
@@ -187,7 +187,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
                             prefix = prefixField.getValue();
                             uri = uriField.getValue();
                             if (!(prefix == null || uri == null || prefix.isEmpty() || uri.isEmpty())) {
-                                SchemaSource source = new SchemaSource(prefix, uri, DataReaderFactory.createDereferenceReader(uri));
+                                SchemaSource source = new SchemaSource(prefix, uri, RDFReaderFactory.createDereferenceReader(uri));
                                 ((BeanItemContainer) f.getContainerDataSource())
                                         .addBean(source);
                                 f.addToken(source);

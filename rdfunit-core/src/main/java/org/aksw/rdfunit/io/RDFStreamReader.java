@@ -12,7 +12,7 @@ import java.io.InputStream;
  *         Reads a model from an InputStream (or a filename)
  * @since 11/14/13 8:37 AM
  */
-public class RDFStreamReader extends DataReader {
+public class RDFStreamReader extends RDFReader {
     private final InputStream inputStream;
     private final String format;
 

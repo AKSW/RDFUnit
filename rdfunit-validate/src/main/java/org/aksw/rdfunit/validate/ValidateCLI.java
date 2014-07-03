@@ -70,14 +70,14 @@ public class ValidateCLI {
         }
 
         // First try to load the modified patterns, if exists, and then try the resource
-        DataReader patternReader_data = new RDFStreamReader(configuration.getDataFolder() + "patterns.ttl");
-        DataReader patternReader_resource = RDFUnitUtils.getPatternsFromResource();
-        DataReader patternReader = new DataFirstSuccessReader(Arrays.asList(patternReader_data, patternReader_resource));
+        RDFReader patternReader_data = new RDFStreamReader(configuration.getDataFolder() + "patterns.ttl");
+        RDFReader patternReader_resource = RDFUnitUtils.getPatternsFromResource();
+        RDFReader patternReader = new RDFFirstSuccessReader(Arrays.asList(patternReader_data, patternReader_resource));
 
         // Similar to patterns
-        DataReader testGeneratorReader_data = new RDFStreamReader(configuration.getDataFolder() + "testAutoGenerators.ttl");
-        DataReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsFromResource();
-        DataReader testGeneratorReader = new DataFirstSuccessReader(Arrays.asList(testGeneratorReader_data, testGeneratorReader_resource));
+        RDFReader testGeneratorReader_data = new RDFStreamReader(configuration.getDataFolder() + "testAutoGenerators.ttl");
+        RDFReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsFromResource();
+        RDFReader testGeneratorReader = new RDFFirstSuccessReader(Arrays.asList(testGeneratorReader_data, testGeneratorReader_resource));
 
         RDFUnit rdfunit = new RDFUnit();
         try {
@@ -119,15 +119,15 @@ public class ValidateCLI {
         testExecutor.execute(dataset, testSuite, 0);
 
 
-        // Write results to DataWriter ()
+        // Write results to RDFWriter ()
         String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
 
-        ArrayList<DataWriter> outputWriters = new ArrayList<>();
+        ArrayList<RDFWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
-            outputWriters.add(DataWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getTestCaseExecutionType()));
+            outputWriters.add(RDFWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getTestCaseExecutionType()));
         }
 
-        DataWriter resultWriter = new DataMultipleWriter(outputWriters);
+        RDFWriter resultWriter = new RDFMultipleWriter(outputWriters);
         try {
             resultWriter.write(testExecutorMonitor.getModel());
             log.info("Results stored in: " + filename + ".*");

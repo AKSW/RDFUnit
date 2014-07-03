@@ -13,13 +13,13 @@ import java.io.OutputStream;
  *         Description
  * @since 4/23/14 8:55 AM
  */
-public class HTMLResultsRlogWriter extends HTMLResultsWriter {
+public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
 
-    public HTMLResultsRlogWriter(String filename) {
+    public RDFHTMLResultsRlogWriter(String filename) {
         super(filename);
     }
 
-    public HTMLResultsRlogWriter(OutputStream outputStream) {
+    public RDFHTMLResultsRlogWriter(OutputStream outputStream) {
         super(outputStream);
     }
 

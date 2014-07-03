@@ -11,27 +11,27 @@ public class DataFirstSuccessReaderTest {
 
     @Test
     public void testRead() throws Exception {
-        ArrayList<DataReader> dataReaders = new ArrayList<>();
+        ArrayList<RDFReader> rdfReaders = new ArrayList<>();
 
-        DataFirstSuccessReader reader = new DataFirstSuccessReader(dataReaders);
+        RDFFirstSuccessReader reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
             fail("Should have raised a TripleReaderException");
         } catch (TripleReaderException e) {
         }
 
-        dataReaders.add(new RDFStreamReader(""));
+        rdfReaders.add(new RDFStreamReader(""));
 
-        reader = new DataFirstSuccessReader(dataReaders);
+        reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
             fail("Should have raised a TripleReaderException");
         } catch (TripleReaderException e) {
         }
 
-        dataReaders.add(new RDFStreamReader(DataFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
+        rdfReaders.add(new RDFStreamReader(DataFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
 
-        reader = new DataFirstSuccessReader(dataReaders);
+        reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
         } catch (TripleReaderException e) {

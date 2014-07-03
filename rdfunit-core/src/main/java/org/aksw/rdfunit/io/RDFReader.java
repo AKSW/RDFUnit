@@ -10,7 +10,7 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  * @author Dimitris Kontokostas
  * @since 11/14/13 8:33 AM
  */
-public abstract class DataReader {
+public abstract class RDFReader {
 
     /**
      * Reads RDF and returns a {@code Model}

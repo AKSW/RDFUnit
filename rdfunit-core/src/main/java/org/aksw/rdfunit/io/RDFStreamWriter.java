@@ -15,7 +15,7 @@ import java.io.OutputStream;
  *         Writes a QEF / Model to an arbitrary OutputStream (RDFFileWriter does more logic and provided separate)
  * @since 5/27/14 5:46 PM
  */
-public class RDFStreamWriter extends DataWriter {
+public class RDFStreamWriter extends RDFWriter {
     private final OutputStream outputStream;
     private final String filetype;
 

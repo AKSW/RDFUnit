@@ -6,14 +6,14 @@ import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 /**
  * @author Dimitris Kontokostas
- *         reads from a DataReader and caches result
+ *         reads from a RDFReader and caches result
  * @since 11/14/13 1:09 PM
  */
-public class DataReadAndCacheReader extends DataReader {
-    private final DataReader reader;
-    private final DataWriter writer;
+public class RDFReadAndCacheReader extends RDFReader {
+    private final RDFReader reader;
+    private final RDFWriter writer;
 
-    public DataReadAndCacheReader(DataReader reader, DataWriter writer) {
+    public RDFReadAndCacheReader(RDFReader reader, RDFWriter writer) {
         this.reader = reader;
         this.writer = writer;
     }

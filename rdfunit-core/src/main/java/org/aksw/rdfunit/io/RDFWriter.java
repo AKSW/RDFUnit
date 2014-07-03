@@ -11,7 +11,7 @@ import org.aksw.rdfunit.exceptions.TripleWriterException;
  * @author Dimitris Kontokostas
  * @since 11 /14/13 12:59 PM
  */
-public abstract class DataWriter {
+public abstract class RDFWriter {
 
     /**
      * Writes a model into a destination. This function delegates to {@code write(QueryExecutionFactory qef)}

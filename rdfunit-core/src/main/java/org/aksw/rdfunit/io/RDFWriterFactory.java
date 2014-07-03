@@ -11,11 +11,11 @@ import java.io.OutputStream;
  *         Description
  * @since 6/19/14 9:20 AM
  */
-public final class DataWriterFactory {
-    protected DataWriterFactory() {
+public final class RDFWriterFactory {
+    protected RDFWriterFactory() {
     }
 
-    public static DataWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestCaseExecutionType executionType) {
+    public static RDFWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestCaseExecutionType executionType) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHTMLWriter(executionType, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else {
@@ -23,7 +23,7 @@ public final class DataWriterFactory {
         }
     }
 
-    public static DataWriter createWriterFromFormat(OutputStream outputStream, SerializationFormat serializationFormat, TestCaseExecutionType executionType) {
+    public static RDFWriter createWriterFromFormat(OutputStream outputStream, SerializationFormat serializationFormat, TestCaseExecutionType executionType) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHTMLWriter(executionType, outputStream);
         } else {
@@ -32,28 +32,28 @@ public final class DataWriterFactory {
     }
 
 
-    public static HTMLResultsWriter createHTMLWriter(TestCaseExecutionType type, String filename) {
+    public static RDFHTMLResultsWriter createHTMLWriter(TestCaseExecutionType type, String filename) {
         switch (type) {
             case statusTestCaseResult:
-                return new HTMLResultsStatusWriter(filename);
+                return new RDFHTMLResultsStatusWriter(filename);
             case aggregatedTestCaseResult:
-                return new HTMLResultsAggregateWriter(filename);
+                return new RDFHTMLResultsAggregateWriter(filename);
             case rlogTestCaseResult:
-                return new HTMLResultsRlogWriter(filename);
+                return new RDFHTMLResultsRlogWriter(filename);
             //case extendedTestCaseResult:
             default:
                 return null;
         }
     }
 
-    public static HTMLResultsWriter createHTMLWriter(TestCaseExecutionType type, OutputStream outputStream) {
+    public static RDFHTMLResultsWriter createHTMLWriter(TestCaseExecutionType type, OutputStream outputStream) {
         switch (type) {
             case statusTestCaseResult:
-                return new HTMLResultsStatusWriter(outputStream);
+                return new RDFHTMLResultsStatusWriter(outputStream);
             case aggregatedTestCaseResult:
-                return new HTMLResultsAggregateWriter(outputStream);
+                return new RDFHTMLResultsAggregateWriter(outputStream);
             case rlogTestCaseResult:
-                return new HTMLResultsRlogWriter(outputStream);
+                return new RDFHTMLResultsRlogWriter(outputStream);
             //case extendedTestCaseResult:
             default:
                 return null;

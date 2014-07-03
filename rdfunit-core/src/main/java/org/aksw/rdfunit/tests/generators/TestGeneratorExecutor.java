@@ -4,7 +4,7 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.DataReaderFactory;
+import org.aksw.rdfunit.io.RDFReaderFactory;
 import org.aksw.rdfunit.io.RDFFileWriter;
 import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -145,7 +145,7 @@ public class TestGeneratorExecutor {
         }
         try {
             java.util.Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    DataReaderFactory.createFileOrResourceReader(
+                    RDFReaderFactory.createFileOrResourceReader(
                             CacheUtils.getSourceManualTestFile(testFolder, s),                 // check for local directory first
                             CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", s)  // otherwise check if it exists in resources
                     ).read());

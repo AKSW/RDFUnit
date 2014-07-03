@@ -15,7 +15,7 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.io.DataWriter;
+import org.aksw.rdfunit.io.RDFWriter;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PatternService;
@@ -280,7 +280,7 @@ public final class TestUtils {
         return null;
     }
 
-    public static void writeTestsToFile(java.util.Collection<TestCase> tests, DataWriter testCache) {
+    public static void writeTestsToFile(java.util.Collection<TestCase> tests, RDFWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests) {
             t.serialize(model);
