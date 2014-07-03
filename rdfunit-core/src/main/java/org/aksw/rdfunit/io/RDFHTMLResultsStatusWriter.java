@@ -31,12 +31,13 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td><a href=\"%s\">%s</a></td><td><span title=\"%s\">%s</span></td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td><span title=\"%s\">%s</span></td></tr>";
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?resultStatus ?testcase ?description WHERE {" +
                 " ?s a rut:StatusTestCaseResult ; " +
                 "    rut:resultStatus ?resultStatus ; " +
+                "    rut:testCaseLogLevel ?level ; " +
                 "    rut:testCase ?testcase ;" +
                 "    dcterms:description ?description ;" +
                 //"    rut:resultCount ?resultCount ; " +
@@ -55,16 +56,16 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
                 String resultStatus = qs.get("resultStatus").toString();
                 String testcase = qs.get("testcase").toString();
                 String description = qs.get("description").toString();
-                //String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
-                //String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
+                String level = qs.get("level").toString();
 
                 String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
+                String levelShort = level.replace(PrefixNSService.getNSFromPrefix("rlog"), "");
                 String rowClass = getStatusClass(statusShort);
 
                 String row = String.format(template,
                         rowClass,
-                        resultStatus,
-                        statusShort,
+                        "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
+                        "<a href=\"" + level + "\">" + levelShort + "</a>",
                         testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                         description
                         //resultCount,

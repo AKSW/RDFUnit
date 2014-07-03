@@ -25,18 +25,19 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
 
     @Override
     protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Status</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>");
+        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>");
     }
 
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td><a href=\"%s\">%s</a></td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>";
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resultStatus ?testcase ?description ?resultCount ?resultPrevalence WHERE {" +
+                " SELECT DISTINCT ?resultStatus ?level ?testcase ?description ?resultCount ?resultPrevalence WHERE {" +
                 " ?s a rut:AggregatedTestResult ; " +
                 "    rut:resultStatus ?resultStatus ; " +
+                "    rut:testCaseLogLevel ?level ; " +
                 "    rut:testCase ?testcase ;" +
                 "    dcterms:description ?description ;" +
                 "    rut:resultCount ?resultCount ; " +
@@ -57,14 +58,16 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
                 String description = qs.get("description").toString();
                 String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
                 String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
+                String level = qs.get("level").toString();
 
                 String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
+                String levelShort = level.replace(PrefixNSService.getNSFromPrefix("rlog"), "");
                 String rowClass = getStatusClass(statusShort);
 
                 String row = String.format(template,
                         rowClass,
-                        resultStatus,
-                        statusShort,
+                        "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
+                        "<a href=\"" + level + "\">" + levelShort + "</a>",
                         testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                         description,
                         resultCount,

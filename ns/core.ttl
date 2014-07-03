@@ -239,7 +239,6 @@ rut:testCaseLogLevel
     a owl:ObjectProperty ;
     rdfs:label "testCaseLogLevel"@en ;
     rdfs:comment "the rlog:Level this case is associated with."@en ;
-    rdfs:domain rut:TestCase ;
     rdfs:range rlog:Level ;
     .
 
@@ -522,6 +521,11 @@ rut:StatusTestCaseResult
     rdfs:subClassOf [
         rdf:type owl:Restriction;
         owl:onProperty dcterms:description ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:testCaseLogLevel ;
         owl:cardinality "1"^^xsd:nonNegativeInteger
     ] ;
     .
