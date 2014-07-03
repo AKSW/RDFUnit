@@ -192,6 +192,25 @@ rutg:OWLDISJP a rut:TestGenerator ;
 
     .
 
+##########################################
+#### owl:AllDisjointProperties pattern
+##########################################
+
+rutg:OWLALLDISJP a rut:TestGenerator ;
+    dcterms:description """Generate all owl:AllDisjointProperties constrains defined in a schema"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?P2 ?DESCRIPTION WHERE {
+                             ?r rdf:type    owl:AllDisjointProperties ;
+                                owl:members ?P1 ;
+                                owl:members ?P2 .
+                             FILTER (str(?P1) < str(?P2) ).
+                             BIND ( concat("Property ", str(?P1)," is owl:propertyDisjointWith with ",str(?P2)) AS ?DESCRIPTION) } """ ;
+    rut:basedOnPattern rutp:OWLDISJP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
 
 ##########################################
 #### owl:complementOf pattern
@@ -239,7 +258,7 @@ rutg:OWLCARDEX a rut:TestGenerator ;
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
                              FILTER (?v > 0) .
-							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " (is 0) for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
