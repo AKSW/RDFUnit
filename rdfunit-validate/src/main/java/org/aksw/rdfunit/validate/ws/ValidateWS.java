@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.validate;
+package org.aksw.rdfunit.validate.ws;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
@@ -13,7 +13,8 @@ import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
-import org.aksw.rdfunit.validate.ws.RDFUnitWebService;
+import org.aksw.rdfunit.validate.ParameterException;
+import org.aksw.rdfunit.validate.utils.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;

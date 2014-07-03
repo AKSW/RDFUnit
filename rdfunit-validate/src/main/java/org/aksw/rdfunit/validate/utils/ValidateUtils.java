@@ -1,10 +1,10 @@
-package org.aksw.rdfunit.validate;
+package org.aksw.rdfunit.validate.utils;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
-import org.aksw.rdfunit.sources.EndpointTestSource;
+import org.aksw.rdfunit.validate.ParameterException;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
