@@ -1,6 +1,8 @@
 RDFUnit
 ==========
 
+**Note**:We are porting this documentation in the [github wiki](https://github.com/AKSW/RDFUnit/wiki) and some parts are more up-to-date there
+
 This repository contains the *RDFUnit* -- a tool for test-driven quality evaluation of Linked Data quality.
 Further background information about the underlying *Test Driven Data Quality Methodology* can be looked up in the following publications: [methodology (WWW2014)](http://svn.aksw.org/papers/2014/WWW_Databugger/public.pdf), [demo paper (WWW2014)](http://svn.aksw.org/papers/2014/WWW_Databugger_demo/public.pdf) and [ontology definition (ESWC2014)](http://svn.aksw.org/papers/2014/ESWC_NLP_Cleansing/public.pdf).
 The results of the methodology paper are available [here](https://github.com/AKSW/RDFUnit/tree/master/data/archive/WWW_2014) .
