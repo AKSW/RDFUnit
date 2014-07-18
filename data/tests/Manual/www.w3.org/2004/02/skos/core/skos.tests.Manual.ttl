@@ -13,89 +13,16 @@
 # TODO Check this one (http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf)
 # Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
 
-# multiple languages in prefLabel (en)
-rutt:skos-ONELANG-singleEnPrefLabel
+# multiple languages in prefLabel
+rutt:skos-ONELANG-singlePrefLabel
       a       rut:PatternBasedTestCase ;
-      dcterms:description "skos:prefLabel should have one value for English";
+      dcterms:description "skos:prefLabel should have at most one value for every language";
       rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:ONELANG ;
+      rut:basedOnPattern rutp:ONELANGGLOBAL ;
       rut:binding
               [ a       rut:Binding ;
                 rut:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                rut:parameter rutp:ONELANG-P1
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "en" ;
-                rut:parameter rutp:ONELANG-V1
-              ] ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      rut:source <http://www.w3.org/2004/02/skos/core#> ;
-      rut:testCaseLogLevel
-              rlog:WARN .
-
-
-# multiple languages in prefLabel (es)
-rutt:skos-ONELANG-singleEsPrefLabel
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "skos:prefLabel should have one value for Spanish";
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:ONELANG ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                rut:parameter rutp:ONELANG-P1
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "es" ;
-                rut:parameter rutp:ONELANG-V1
-              ] ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      rut:source <http://www.w3.org/2004/02/skos/core#> ;
-      rut:testCaseLogLevel
-              rlog:WARN .
-
-# multiple languages in prefLabel (fr)
-rutt:skos-ONELANG-singleFrPrefLabel
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "skos:prefLabel should have one value for French";
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:ONELANG ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                rut:parameter rutp:ONELANG-P1
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "fr" ;
-                rut:parameter rutp:ONELANG-V1
-              ] ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      rut:source <http://www.w3.org/2004/02/skos/core#> ;
-      rut:testCaseLogLevel
-              rlog:WARN .
-
-
-# multiple languages in prefLabel (de)
-rutt:skos-ONELANG-singleDePrefLabel
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "skos:prefLabel should have one value for German";
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:ONELANG ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                rut:parameter rutp:ONELANG-P1
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "de" ;
-                rut:parameter rutp:ONELANG-V1
+                rut:parameter rutp:ONELANGGLOBAL-P1
               ] ;
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
@@ -139,37 +66,6 @@ rutt:skos-ConseptWithoutRdfslabel
       rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
                                  
-# Loose Concepts
-
-# AmbiguousprefLabelvalues
-
-# skos:prefLabel cannot exists more than once 
-rutt:skos-CARD-prefLabel
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "skos:prefLabel should exist once for every resource";
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:OWLCARD ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-                rut:parameter rutp:OWLCARD-P1
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue ">" ;
-                rut:parameter rutp:OWLCARD-OP
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "1" ;
-                rut:parameter rutp:OWLCARD-V1
-              ] ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2004/02/skos/core#prefLabel> ;
-      rut:source <http://www.w3.org/2004/02/skos/core#> ;
-      rut:testCaseLogLevel
-              rlog:WARN .
-
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
 rutt:skos-OWLDISJP-skosaltpreflabel
