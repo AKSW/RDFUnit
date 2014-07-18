@@ -652,11 +652,10 @@ rutp:ONELANG a rut:Pattern ;
     dcterms:identifier "ONELANG" ;
     dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
     rut:sparqlWherePattern """ {
-                                    ?resource %%P1%% ?c .
-                                    BIND ( lang(?c) AS ?l ) .
-                                    FILTER (isLiteral (?c) && lang(?c) = '%%V1%%') .
-                                } GROUP BY ?resource
-                                HAVING ( COUNT (?l) > 1 ) """ ;
+                                    ?resource %%P1%% ?c1 ;
+                                              %%P1%% ?c2 .
+                                    FILTER ( (?c1 != ?c2) && (lang(?c1) = '%%V1%%') && (lang(?c1) = lang(?c2)) ) .
+                                } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
     rut:parameter rutp:ONELANG-P1 ;
@@ -669,5 +668,29 @@ rutp:ONELANG-P1 a rut:Parameter ;
 rutp:ONELANG-V1 a rut:Parameter ;
     dcterms:identifier "V1" ;
     rut:parameterConstraint rut:None .
+
+
+################################################################################
+#### ONELANGGLOBAL
+#### Resource has more than one plain literal of a certain language assigned
+#### (e.g. more than one foaf:name in english)
+################################################################################
+
+rutp:ONELANGGLOBAL a rut:Pattern ;
+    dcterms:identifier "ONELANGGLOBAL" ;
+    dcterms:description """Resource has more than one plain literal of any language assigned"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?resource %%P1%% ?c1 ;
+                                              %%P1%% ?c2 .
+                                    FILTER ( (?c1 != ?c2) && (lang(?c1) = lang(?c2)) ) .
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource %%P1%% ?c .}""" ;
+    rut:parameter rutp:ONELANGGLOBAL-P1 .
+
+rutp:ONELANGGLOBAL-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
 
 
