@@ -3,6 +3,7 @@
 
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix spin: <http://spinrdf.org/spin#> .
 
 
 ##########################################
@@ -26,11 +27,11 @@ rutp:RDFSRANGE a rut:Pattern ;
                                      WHERE { ?s %%P1%% ?resource .} """ ;
     rut:parameter rutp:RDFSRANGE-P1 ;
     rut:parameter rutp:RDFSRANGE-T1 ;
-#    rut:resultAnnotation [
-#        a rut:ResultAnnotation ;
-#        rut:annotationProperty <http://xxxx> ;
-#        rut:annotationValue <http://YYYY>
-#    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 
@@ -57,11 +58,11 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
     rut:parameter rutp:RDFSRANGE-MISS-P1 ;
-#    rut:resultAnnotation [
-#        a rut:ResultAnnotation ;
-#        rut:annotationProperty <http://xxxx> ;
-#        rut:annotationValue <http://YYYY>
-#    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 
@@ -84,6 +85,11 @@ rutp:RDFSRANGED a rut:Pattern ;
                                      WHERE { ?resource %%P1%% ?c .} """ ;
     rut:parameter rutp:RDFSRANGED-P1 ;
     rut:parameter rutp:RDFSRANGED-D1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 
@@ -115,6 +121,11 @@ rutp:RDFSDOMAIN a rut:Pattern ;
     rut:parameter rutp:RDFSDOMAIN-P1 ;
     rut:parameter rutp:RDFSDOMAIN-V1 ;
     rut:parameter rutp:RDFSDOMAIN-T1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:RDFSDOMAIN-P1 a rut:Parameter ;
@@ -167,6 +178,11 @@ rutp:OWLDISJP a rut:Pattern ;
     rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJP-P1 ;
     rut:parameter rutp:OWLDISJP-P2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%""", """%%P2%%"""
+    ];
     .
 
 rutp:OWLDISJP-P1 a rut:Parameter ;
@@ -193,6 +209,11 @@ rutp:OWLCARD a rut:Pattern ;
     rut:parameter rutp:OWLCARD-P1 ;
     rut:parameter rutp:OWLCARD-OP ;
     rut:parameter rutp:OWLCARD-V1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:OWLCARD-P1 a rut:Parameter ;
@@ -239,6 +260,11 @@ rutp:OWLCARDT a rut:Pattern ;
     rut:parameter rutp:OWLCARDT-P1 ;
     rut:parameter rutp:OWLCARDT-OP ;
     rut:parameter rutp:OWLCARDT-V1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:OWLCARDT-T1 a rut:Parameter ;
@@ -283,6 +309,11 @@ rutp:TYPRODEP a rut:Pattern ;
     rut:parameter rutp:TYPRODEP-T1 ;
     rut:parameter rutp:TYPRODEP-NOT ;
     rut:parameter rutp:TYPRODEP-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:TYPRODEP-T1 a rut:Parameter ;
@@ -313,6 +344,11 @@ rutp:INVFUNC a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?a %%P1%% ?resource . }""" ;
     rut:parameter rutp:INVFUNC-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:INVFUNC-P1 a rut:Parameter ;
@@ -344,6 +380,11 @@ rutp:INVFUNCT a rut:Pattern ;
                                        UNION {?a %%P1%% ?resource ; rdfs:subClassOf+ %%T1%% .} }""" ;
     rut:parameter rutp:INVFUNCT-P1 ;
     rut:parameter rutp:INVFUNCT-T1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:INVFUNCT-P1 a rut:Parameter ;
@@ -370,6 +411,11 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( *) AS ?total)
                                      WHERE { ?r1 %%P1%% ?r2 . }""" ;
     rut:parameter rutp:OWLSYMMETRICPROP-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:OWLSYMMETRICPROP-P1 a rut:Parameter ;
@@ -392,6 +438,11 @@ rutp:OWLASYMMETRICPROP a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""";
     rut:parameter rutp:OWLASYMMETRICPROP-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:OWLASYMMETRICPROP-P1 a rut:Parameter ;
@@ -417,6 +468,11 @@ rutp:OWLTRANSPROP a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?r2 .}""" ;
     rut:parameter rutp:OWLTRANSPROP-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:OWLTRANSPROP-P1 a rut:Parameter ;
@@ -437,6 +493,11 @@ rutp:OWLIRREFLEXIVE a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE {?resource %%P1%% ?o .}""" ;
     rut:parameter rutp:OWLIRREFLEXIVE-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:OWLIRREFLEXIVE-P1 a rut:Parameter ;
@@ -463,6 +524,11 @@ rutp:COMP a rut:Pattern ;
     rut:parameter rutp:COMP-P1 ;
     rut:parameter rutp:COMP-P2 ;
     rut:parameter rutp:COMP-OP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%""", """%%P2%%"""
+    ];
     .
 
 rutp:COMP-P1 a rut:Parameter ;
@@ -495,6 +561,11 @@ rutp:MATCH a rut:Pattern ;
     rut:parameter rutp:MATCH-P1 ;
     rut:parameter rutp:MATCH-OP ;
     rut:parameter rutp:MATCH-REGEX ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:MATCH-P1 a rut:Parameter ;
@@ -533,6 +604,11 @@ rutp:LITRAN a rut:Pattern ;
     rut:parameter rutp:LITRAN-NOP ;
     rut:parameter rutp:LITRAN-valueMin ;
     rut:parameter rutp:LITRAN-valueMax ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:LITRAN-T1 a rut:Parameter ;
@@ -603,6 +679,11 @@ rutp:PVT a rut:Pattern ;
     rut:parameter rutp:PVT-P1 ;
     rut:parameter rutp:PVT-V1 ;
     rut:parameter rutp:PVT-P2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%""", """%%P2"""
+    ];
     .
 
 rutp:PVT-P1 a rut:Parameter ;
@@ -619,7 +700,7 @@ rutp:PVT-P2 a rut:Parameter ;
 
 ################################################################################
 #### TRIPLE
-#### Resource has ValueA for PropertyB
+#### Resource has ValueA for PropertyA
 ################################################################################
 
 rutp:TRIPLE a rut:Pattern ;
@@ -632,6 +713,11 @@ rutp:TRIPLE a rut:Pattern ;
                                      WHERE { ?resource %%P1%% ?value . }""" ;
     rut:parameter rutp:TRIPLE-P1 ;
     rut:parameter rutp:TRIPLE-V1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
     .
 
 rutp:TRIPLE-P1 a rut:Parameter ;
@@ -659,7 +745,13 @@ rutp:ONELANG a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
     rut:parameter rutp:ONELANG-P1 ;
-    rut:parameter rutp:ONELANG-V1 .
+    rut:parameter rutp:ONELANG-V1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
 
 rutp:ONELANG-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
@@ -686,7 +778,13 @@ rutp:ONELANGGLOBAL a rut:Pattern ;
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .}""" ;
-    rut:parameter rutp:ONELANGGLOBAL-P1 .
+    rut:parameter rutp:ONELANGGLOBAL-P1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
 
 rutp:ONELANGGLOBAL-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
