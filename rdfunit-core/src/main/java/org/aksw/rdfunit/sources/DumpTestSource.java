@@ -62,6 +62,7 @@ public class DumpTestSource extends Source {
             }
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
+            throw new IllegalArgumentException("Dump source (" + getUri() + ") does not exists");
         }
         return new QueryExecutionFactoryModel(model);
     }

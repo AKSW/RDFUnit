@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -30,15 +31,14 @@ public class TestAutoGenerator {
     private final String description;
     private final String query;
     private final Pattern pattern;
-    private final java.util.Collection<ResultAnnotation> annotations;
+    private final java.util.Collection<ResultAnnotation> generatorAnnotations;
 
-    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, java.util.Collection<ResultAnnotation> annotations) {
+    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, java.util.Collection<ResultAnnotation> generatorAnnotations) {
         this.uri = uri;
         this.description = description;
         this.query = query;
         this.pattern = pattern;
-        this.annotations = annotations;
-        this.annotations.addAll(pattern.getAnnotations()); // get Pattern annotations and add them
+        this.generatorAnnotations = generatorAnnotations;
     }
 
     /**
@@ -114,6 +114,8 @@ public class TestAutoGenerator {
 
 
             try {
+                Collection<ResultAnnotation> patternBindedAnnotations = pattern.getBindedAnnotations(bindings);
+                patternBindedAnnotations.addAll(generatorAnnotations);
                 PatternBasedTestCase tc = new PatternBasedTestCase(
                         TestUtils.generateTestURI(source.getPrefix(), getPattern(), bindings, uri),
                         new TestCaseAnnotation(
@@ -124,7 +126,7 @@ public class TestAutoGenerator {
                                 references,
                                 description,
                                 null,
-                                annotations),
+                                patternBindedAnnotations),
                         pattern,
                         bindings
                 );

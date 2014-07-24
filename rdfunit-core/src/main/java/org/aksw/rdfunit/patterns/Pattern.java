@@ -1,6 +1,10 @@
 package org.aksw.rdfunit.patterns;
 
+import org.aksw.rdfunit.tests.Binding;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -46,6 +50,29 @@ public class Pattern {
         return true;
     }
 
+
+    /**
+     * Goes through all external annotations and if it finds a literal value with %%XX%%
+     * it replaces it with the binding value
+     */
+    public Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
+        Collection<ResultAnnotation> finalAnnotations = new ArrayList<>();
+
+        for (ResultAnnotation externalAnnotation: annotations) {
+            ResultAnnotation sanitizedAnnotation = externalAnnotation;
+            if (externalAnnotation.getAnnotationValue().isLiteral()) {
+                String value = externalAnnotation.getAnnotationValue().toString();
+                for (Binding binding: bindings) {
+                    if (value.equals("%%" + binding.getParameterId() + "%%")) {
+                        sanitizedAnnotation = new ResultAnnotation(externalAnnotation.getAnnotationProperty(), binding.getValue());
+                    }
+                }
+            }
+            finalAnnotations.add(sanitizedAnnotation);
+        }
+        return finalAnnotations;
+    }
+
     public String getId() {
         return id;
     }
@@ -75,7 +102,4 @@ public class Pattern {
         return null;
     }
 
-    public java.util.Collection<ResultAnnotation> getAnnotations() {
-        return annotations;
-    }
 }

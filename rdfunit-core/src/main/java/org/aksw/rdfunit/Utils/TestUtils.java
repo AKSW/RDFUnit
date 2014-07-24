@@ -363,7 +363,7 @@ public final class TestUtils {
         String testURI = PrefixNSService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         String string2hash = generatorURI;
         for (Binding binding : bindings) {
-            string2hash += binding.getValue();
+            string2hash += binding.getValueAsString();
         }
         String md5Hash = TestUtils.getMD5FromString(string2hash);
         if (md5Hash == null) {

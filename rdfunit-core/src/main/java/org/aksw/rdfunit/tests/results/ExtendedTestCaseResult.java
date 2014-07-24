@@ -50,7 +50,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("spin") + "ConstraintViolation"));
 
         for (ResultAnnotation annotation : resultAnnotations) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultAnnotation"), annotation.serializeAsTestCase(model));
+            annotation.serializeAsResult(resource, model);
         }
 
         return resource;

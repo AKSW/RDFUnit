@@ -29,7 +29,7 @@ public class Binding {
         }
     }
 
-    public String getValue() {
+    public String getValueAsString() {
         if (value.isResource()) {
             // some vocabularies use spaces in uris
             return "<" + value.toString().trim().replace(" ", "") + ">";
@@ -37,6 +37,10 @@ public class Binding {
         } else {
             return value.toString();
         }
+    }
+
+    public RDFNode getValue() {
+        return value;
     }
 
     public String getParameterId() {
