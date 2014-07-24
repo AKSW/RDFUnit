@@ -40,7 +40,9 @@ public final class RDFWriterFactory {
                 return new RDFHTMLResultsAggregateWriter(filename);
             case rlogTestCaseResult:
                 return new RDFHTMLResultsRlogWriter(filename);
-            //case extendedTestCaseResult:
+            case extendedTestCaseResult:
+                // TODO extended not supported ATM, use RLOG instead
+                return new RDFHTMLResultsRlogWriter(filename);
             default:
                 return null;
         }
@@ -54,7 +56,9 @@ public final class RDFWriterFactory {
                 return new RDFHTMLResultsAggregateWriter(outputStream);
             case rlogTestCaseResult:
                 return new RDFHTMLResultsRlogWriter(outputStream);
-            //case extendedTestCaseResult:
+            case extendedTestCaseResult:
+                // TODO extended not supported ATM, use RLOG instead
+                return new RDFHTMLResultsRlogWriter(outputStream);
             default:
                 return null;
         }
