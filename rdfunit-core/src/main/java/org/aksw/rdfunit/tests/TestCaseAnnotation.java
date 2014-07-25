@@ -10,6 +10,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -21,12 +22,12 @@ public class TestCaseAnnotation {
     private final String autoGeneratorURI;
     private final TestAppliesTo appliesTo;
     private final String sourceUri;
-    private final java.util.Collection<String> references;
+    private final Collection<String> references;
     private final String description;
     private final RLOGLevel testCaseLogLevel;
-    private final java.util.Collection<ResultAnnotation> resultAnnotations;
+    private final Collection<ResultAnnotation> resultAnnotations;
 
-    public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, java.util.Collection<String> references, String description, RLOGLevel testCaseLogLevel, java.util.Collection<ResultAnnotation> resultAnnotations) {
+    public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
         this.generated = generated;
         this.autoGeneratorURI = autoGeneratorURI;
         this.appliesTo = appliesTo;
@@ -75,7 +76,7 @@ public class TestCaseAnnotation {
         return sourceUri;
     }
 
-    public java.util.Collection<String> getReferences() {
+    public Collection<String> getReferences() {
         return references;
     }
 
@@ -111,7 +112,7 @@ public class TestCaseAnnotation {
         return testCaseLogLevel;
     }
 
-    public java.util.Collection<ResultAnnotation> getResultAnnotations() {
+    public Collection<ResultAnnotation> getResultAnnotations() {
         return resultAnnotations;
     }
 

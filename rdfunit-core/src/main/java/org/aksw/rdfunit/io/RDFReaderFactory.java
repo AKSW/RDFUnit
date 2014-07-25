@@ -19,7 +19,7 @@ public final class RDFReaderFactory {
 
     public static RDFReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
-        java.util.Collection<RDFReader> readers = new ArrayList<>();
+        Collection<RDFReader> readers = new ArrayList<>();
         readers.add(new RDFStreamReader(filename));
         readers.add(new RDFDereferenceReader(uri));
 

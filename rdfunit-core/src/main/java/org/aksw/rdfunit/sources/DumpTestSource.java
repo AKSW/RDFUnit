@@ -9,6 +9,8 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFReaderFactory;
 
+import java.util.Collection;
+
 /**
  * Defines a source based on an RDF Dump
  * This can be any type of dump (ttl, nt, rdfa, rdf, etc)
@@ -30,11 +32,11 @@ public class DumpTestSource extends Source {
         this(prefix, uri, location, null);
     }
 
-    public DumpTestSource(String prefix, String uri, String location, java.util.Collection<SchemaSource> schemata) {
+    public DumpTestSource(String prefix, String uri, String location, Collection<SchemaSource> schemata) {
         this(prefix, uri, RDFReaderFactory.createDereferenceReader(location), schemata);
     }
 
-    public DumpTestSource(String prefix, String uri, RDFReader dumpReader, java.util.Collection<SchemaSource> schemata) {
+    public DumpTestSource(String prefix, String uri, RDFReader dumpReader, Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
         if (schemata != null) {

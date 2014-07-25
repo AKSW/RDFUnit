@@ -12,6 +12,7 @@ import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Test Executor that extends StatusExecutor and in addition reports error counts and prevalence for every test case
@@ -31,7 +32,7 @@ public class AggregatedTestExecutor extends TestExecutor {
     }
 
     @Override
-    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
+    protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
         int total = -1, prevalence = -1;
 
         try {

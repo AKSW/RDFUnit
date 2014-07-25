@@ -31,9 +31,9 @@ public class TestAutoGenerator {
     private final String description;
     private final String query;
     private final Pattern pattern;
-    private final java.util.Collection<ResultAnnotation> generatorAnnotations;
+    private final Collection<ResultAnnotation> generatorAnnotations;
 
-    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, java.util.Collection<ResultAnnotation> generatorAnnotations) {
+    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
         this.uri = uri;
         this.description = description;
         this.query = query;
@@ -57,7 +57,7 @@ public class TestAutoGenerator {
             return false;
         }
 
-        java.util.Collection<Var> sv = q.getProjectVars();
+        Collection<Var> sv = q.getProjectVars();
         if (sv.size() != pattern.getParameters().size() + 1) {
             log.error(getUri() + " Select variables are different than Pattern parameters");
             return false;
@@ -67,8 +67,8 @@ public class TestAutoGenerator {
         return true;
     }
 
-    public java.util.Collection<TestCase> generate(Source source) {
-        java.util.Collection<TestCase> tests = new ArrayList<>();
+    public Collection<TestCase> generate(Source source) {
+        Collection<TestCase> tests = new ArrayList<>();
 
         Query q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getQuery());
         QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
@@ -77,8 +77,8 @@ public class TestAutoGenerator {
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
 
-            java.util.Collection<Binding> bindings = new ArrayList<>();
-            java.util.Collection<String> references = new ArrayList<>();
+            Collection<Binding> bindings = new ArrayList<>();
+            Collection<String> references = new ArrayList<>();
             String description = "";
 
             for (PatternParameter p : pattern.getParameters()) {

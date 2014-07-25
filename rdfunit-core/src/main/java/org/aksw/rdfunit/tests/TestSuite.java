@@ -7,23 +7,25 @@ import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.services.PrefixNSService;
 
+import java.util.Collection;
+
 /**
  * @author Dimitris Kontokostas
  *         Description
  * @since 1/6/14 8:33 AM
  */
 public class TestSuite {
-    private final java.util.Collection<TestCase> testCases;
+    private final Collection<TestCase> testCases;
 
-    public TestSuite(java.util.Collection<TestCase> testCases) {
+    public TestSuite(Collection<TestCase> testCases) {
         this.testCases = testCases;
     }
 
-    public java.util.Collection<TestCase> getTestCases() {
+    public Collection<TestCase> getTestCases() {
         return testCases;
     }
 
-    public void setTestCases(java.util.Collection<TestCase> testCases) {
+    public void setTestCases(Collection<TestCase> testCases) {
         this.testCases.clear();
         this.testCases.addAll(testCases);
     }

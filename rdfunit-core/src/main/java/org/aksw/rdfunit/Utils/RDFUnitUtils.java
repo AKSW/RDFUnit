@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -148,7 +149,7 @@ public final class RDFUnitUtils {
         return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/testAutoGenerators.ttl"));
     }
 
-    public static <T> T getFirstItemInCollection(java.util.Collection<T> collection) {
+    public static <T> T getFirstItemInCollection(Collection<T> collection) {
         //noinspection LoopStatementThatDoesntLoop
         for (T item : collection) {
             return item;

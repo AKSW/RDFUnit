@@ -3,15 +3,17 @@ package org.aksw.rdfunit.io;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
 
+import java.util.Collection;
+
 /**
  * @author Dimitris Kontokostas
  *         Description
  * @since 11/14/13 1:13 PM
  */
 public class RDFMultipleWriter extends RDFWriter {
-    private final java.util.Collection<RDFWriter> writers;
+    private final Collection<RDFWriter> writers;
 
-    public RDFMultipleWriter(java.util.Collection<RDFWriter> writers) {
+    public RDFMultipleWriter(Collection<RDFWriter> writers) {
         this.writers = writers;
     }
 

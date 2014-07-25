@@ -6,6 +6,7 @@ import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,8 +60,8 @@ public final class SchemaService {
         }
     }
 
-    public static java.util.Collection<SchemaSource> getSourceList(String baseFolder, java.util.Collection<String> ids) throws UndefinedSchemaException {
-        java.util.Collection<SchemaSource> sources = new ArrayList<>();
+    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> ids) throws UndefinedSchemaException {
+        Collection<SchemaSource> sources = new ArrayList<>();
         for (String id : ids) {
             SchemaSource src = getSource(baseFolder, id.trim());
             if (src != null) {
@@ -72,8 +73,8 @@ public final class SchemaService {
         return sources;
     }
 
-    public static java.util.Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) throws UndefinedSchemaException {
-        java.util.Collection<String> prefixes = new ArrayList<>();
+    public static Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) throws UndefinedSchemaException {
+        Collection<String> prefixes = new ArrayList<>();
         prefixes.addAll(schemata.keySet());
 
         if (fileCache) {

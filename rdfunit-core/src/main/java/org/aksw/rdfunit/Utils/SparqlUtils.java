@@ -12,6 +12,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -24,8 +25,8 @@ public final class SparqlUtils {
     private SparqlUtils() {
     }
 
-    static public java.util.Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
-        java.util.Collection<ResultAnnotation> annotations = new ArrayList<>();
+    static public Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
+        Collection<ResultAnnotation> annotations = new ArrayList<>();
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +
                 " <" + uri + "> rut:resultAnnotation ?annotation . " +

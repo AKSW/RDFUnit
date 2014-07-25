@@ -15,6 +15,7 @@ import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -36,9 +37,9 @@ public class RLOGTestExecutor extends TestExecutor {
     }
 
     @Override
-    protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
+    protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 
-        java.util.Collection<TestCaseResult> testCaseResults = new ArrayList<>();
+        Collection<TestCaseResult> testCaseResults = new ArrayList<>();
 
         QueryExecution qe = null;
         try {

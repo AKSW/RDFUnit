@@ -2,11 +2,12 @@ package org.aksw.rdfunit.tests.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
+
+import java.util.Collection;
 
 
 /**
@@ -17,7 +18,7 @@ import org.aksw.rdfunit.tests.TestCase;
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
-    private final java.util.Collection<ResultAnnotation> resultAnnotations;
+    private final Collection<ResultAnnotation> resultAnnotations;
 
     /**
      * Instantiates a new Extended test case result.

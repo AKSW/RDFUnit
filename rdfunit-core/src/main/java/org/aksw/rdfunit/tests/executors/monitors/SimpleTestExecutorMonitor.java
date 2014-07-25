@@ -20,6 +20,8 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+
 /**
  * A simple test executor monitor. This is used in the CLI version
  *
@@ -104,7 +106,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     }
 
     @Override
-    public void singleTestExecuted(TestCase test, TestCaseResultStatus status, java.util.Collection<TestCaseResult> results) {
+    public void singleTestExecuted(TestCase test, TestCaseResultStatus status, Collection<TestCaseResult> results) {
 
         if (status.equals(TestCaseResultStatus.Error)) {
             overviewResults.increaseErrorTests();

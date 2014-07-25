@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -20,7 +21,7 @@ public abstract class Source implements Comparable<Source> {
 
     private final String prefix;
     private final String uri;
-    private final java.util.Collection<SchemaSource> referencesSchemata;
+    private final Collection<SchemaSource> referencesSchemata;
 
     private QueryExecutionFactory queryFactory = null;
 
@@ -55,11 +56,11 @@ public abstract class Source implements Comparable<Source> {
         return queryFactory;
     }
 
-    public java.util.Collection<SchemaSource> getReferencesSchemata() {
+    public Collection<SchemaSource> getReferencesSchemata() {
         return referencesSchemata;
     }
 
-    public void addReferencesSchemata(java.util.Collection<SchemaSource> schemata) {
+    public void addReferencesSchemata(Collection<SchemaSource> schemata) {
         this.referencesSchemata.addAll(schemata);
     }
 

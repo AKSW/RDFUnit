@@ -9,6 +9,8 @@ import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PrefixNSService;
 
+import java.util.Collection;
+
 /**
  * @author Dimitris Kontokostas
  *         Description
@@ -17,9 +19,9 @@ import org.aksw.rdfunit.services.PrefixNSService;
 public class PatternBasedTestCase extends TestCase {
 
     private final Pattern pattern;
-    private final java.util.Collection<Binding> bindings;
+    private final Collection<Binding> bindings;
 
-    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, java.util.Collection<Binding> bindings) throws TestCaseInstantiationException {
+    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) throws TestCaseInstantiationException {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
@@ -59,7 +61,7 @@ public class PatternBasedTestCase extends TestCase {
         return instantiateBindings(bindings, pattern.getSparqlPatternPrevalence()).trim();
     }
 
-    private String instantiateBindings(java.util.Collection<Binding> bindings, String query) {
+    private String instantiateBindings(Collection<Binding> bindings, String query) {
         String sparql = query;
         for (Binding b : bindings) {
             sparql = sparql.replace("%%" + b.getParameterId() + "%%", b.getValueAsString());

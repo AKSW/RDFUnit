@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Takes a dataset source and executes the test queries against the endpoint.
@@ -32,7 +33,7 @@ public abstract class TestExecutor {
     /**
      * Collection of subscribers in the current test execution
      */
-    private final java.util.Collection<TestExecutorMonitor> progressMonitors = new ArrayList<>();
+    private final Collection<TestExecutorMonitor> progressMonitors = new ArrayList<>();
 
     /**
      * Used to transform TestCases to SPARQL Queries
@@ -61,7 +62,7 @@ public abstract class TestExecutor {
      * @return the java . util . collection
      * @throws TestCaseExecutionException the test case execution exception
      */
-    abstract protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException;
+    abstract protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException;
 
 
     /**
@@ -94,7 +95,7 @@ public abstract class TestExecutor {
                 monitor.singleTestStarted(testCase);
             }
 
-            java.util.Collection<TestCaseResult> results = new ArrayList<>();
+            Collection<TestCaseResult> results = new ArrayList<>();
             TestCaseResultStatus status;
 
             // Test case execution and debug logging

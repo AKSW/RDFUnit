@@ -15,6 +15,8 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+
 /**
  * @author Dimitris Kontokostas
  *         Description
@@ -58,7 +60,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         return annotation.getTestCaseLogLevel();
     }
 
-    public java.util.Collection<ResultAnnotation> getResultAnnotations() {
+    public Collection<ResultAnnotation> getResultAnnotations() {
         return annotation.getResultAnnotations();
     }
 
@@ -86,7 +88,7 @@ public abstract class TestCase implements Comparable<TestCase> {
             validateSPARQL(getSparqlPrevalence(), "prevalence");
         }
 
-        java.util.Collection<String> vars = new QueryGenerationSelectFactory().getSparqlQuery(this).getResultVars();
+        Collection<String> vars = new QueryGenerationSelectFactory().getSparqlQuery(this).getResultVars();
         // check for Resource & message
         boolean hasResource = false;
         for (String v : vars) {

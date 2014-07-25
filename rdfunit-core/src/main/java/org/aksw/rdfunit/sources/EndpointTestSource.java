@@ -50,13 +50,13 @@ public class EndpointTestSource extends Source {
     private long pagination = PAGINATION;
 
     private final String sparqlEndpoint;
-    private final java.util.Collection<String> sparqlGraph;
+    private final Collection<String> sparqlGraph;
 
     public EndpointTestSource(String prefix, String uri) {
         this(prefix, uri, uri, new ArrayList<String>(), null);
     }
 
-    public EndpointTestSource(String prefix, String uri, String sparqlEndpoint, java.util.Collection<String> sparqlGraph, java.util.Collection<SchemaSource> schemata) {
+    public EndpointTestSource(String prefix, String uri, String sparqlEndpoint, Collection<String> sparqlGraph, Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
         this.sparqlGraph = new ArrayList<>(sparqlGraph);

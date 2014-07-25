@@ -6,6 +6,8 @@ import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
+import java.util.Collection;
+
 
 /**
  * interface for monitoring a TestExecutor
@@ -37,7 +39,7 @@ public interface TestExecutorMonitor {
      * @param status the status
      * @param results the results
      */
-    void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results);
+    void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final Collection<TestCaseResult> results);
 
     /**
      * Called when testing ends

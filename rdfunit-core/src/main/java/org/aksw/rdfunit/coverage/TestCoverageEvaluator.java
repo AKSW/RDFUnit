@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Dimitris Kontokostas
@@ -23,18 +20,18 @@ public class TestCoverageEvaluator {
     private static final Logger log = LoggerFactory.getLogger(TestCoverageEvaluator.class);
 
 
-    private final java.util.Collection<String> fDomPatterns = Arrays.asList("RDFSDOMAIN", "OWLDISJP",
+    private final Collection<String> fDomPatterns = Arrays.asList("RDFSDOMAIN", "OWLDISJP",
             "TYPRODEP", "OWLSYMMETRICPROP", "OWLASYMMETRICPROP",
             "OWLTRANSPROP", "COMP", "LITRAN", "TYPDEP", "PVT");
-    private final java.util.Collection<String> fRangPatterns = Arrays.asList("RDFSRANGE", "OWLDISJP",
+    private final Collection<String> fRangPatterns = Arrays.asList("RDFSRANGE", "OWLDISJP",
             "OWLCARD", "INVFUNC", "OWLSYMMETRICPROP", "OWLASYMMETRICPROP",
             "OWLTRANSPROP", "COMP", "MATCH", "LITRAN", "ONELANG");
-    private final java.util.Collection<String> fDepPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
+    private final Collection<String> fDepPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "COMP", "LITRAN", "PVT");
-    private final java.util.Collection<String> fCardPatterns = Arrays.asList("OWLCARD", "ONELANG");
-    private final java.util.Collection<String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
+    private final Collection<String> fCardPatterns = Arrays.asList("OWLCARD", "ONELANG");
+    private final Collection<String> fMemPatterns = Arrays.asList("RDFSRANGE", "RDFSDOMAIN",
             "OWLDISJP", "TYPRODEP", "LITRAN");
-    private final java.util.Collection<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
+    private final Collection<String> fCDepPatterns = Arrays.asList("OWLDISJC", "TYPDEP");
     private final String sparql = PrefixNSService.getSparqlPrefixDecl() +
             " SELECT distinct ?reference WHERE {\n" +
             "   ?t a  rut:TestCase ; \n" +
@@ -42,7 +39,7 @@ public class TestCoverageEvaluator {
             "      rut:references ?reference .\n" +
             "   VALUES ( ?pattern )  { %%PATTERNS%%} }";
 
-    private String generateInClause(java.util.Collection<String> patterns) {
+    private String generateInClause(Collection<String> patterns) {
         StringBuilder inClause = new StringBuilder("");
         //int count = 0;
         for (String s : patterns) {
@@ -99,7 +96,7 @@ public class TestCoverageEvaluator {
     public void calculateCoverage(QueryExecutionFactory model, Map<String, Long> propertyCount, long totalProperties, Map<String, Long> classCount, long totalClasses) {
 
         String sparqlQuery = "";
-        java.util.Collection<String> references;
+        Collection<String> references;
 
         // Fdomain Coverage metric
         references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fDomPatterns)));
@@ -132,7 +129,7 @@ public class TestCoverageEvaluator {
         log.info("fCDep Coverage: " + fCDep);
     }
 
-    private double getCoverage(java.util.Collection<String> references, Map<String, Long> referencesCount, long totalReferences) {
+    private double getCoverage(Collection<String> references, Map<String, Long> referencesCount, long totalReferences) {
         double coverage = 0;
 
         for (String reference : references) {
@@ -145,9 +142,9 @@ public class TestCoverageEvaluator {
         return coverage;
     }
 
-    private java.util.Collection<String> getReferenceSet(QueryExecutionFactory model, String query) {
+    private Collection<String> getReferenceSet(QueryExecutionFactory model, String query) {
 
-        java.util.Collection<String> references = new ArrayList<>();
+        Collection<String> references = new ArrayList<>();
         Query q = QueryFactory.create(query);
         QueryExecution qe = model.createQueryExecution(q);
         ResultSet rs = qe.execSelect();
