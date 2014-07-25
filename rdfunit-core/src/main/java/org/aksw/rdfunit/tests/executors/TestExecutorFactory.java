@@ -1,6 +1,9 @@
 package org.aksw.rdfunit.tests.executors;
 
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
+import org.aksw.rdfunit.tests.QueryGenerationAskFactory;
+import org.aksw.rdfunit.tests.QueryGenerationCountFactory;
+import org.aksw.rdfunit.tests.QueryGenerationSelectFactory;
 
 /**
  * Factory methods for Test Executors instantiation
@@ -21,13 +24,13 @@ public final class TestExecutorFactory {
     public static TestExecutor createTestExecutor(TestCaseExecutionType executionType) {
         switch (executionType) {
             case statusTestCaseResult:
-                return new StatusTestExecutor();
+                return new StatusTestExecutor(new QueryGenerationAskFactory());
             case aggregatedTestCaseResult:
-                return new AggregatedTestExecutor();
+                return new AggregatedTestExecutor(new QueryGenerationCountFactory());
             case rlogTestCaseResult:
-                return new RLOGTestExecutor();
+                return new RLOGTestExecutor(new QueryGenerationSelectFactory());
             case extendedTestCaseResult:
-                return new ExtendedTestExecutor();
+                return new ExtendedTestExecutor(new QueryGenerationSelectFactory());
             default:
                 return null;
         }

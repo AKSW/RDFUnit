@@ -50,44 +50,6 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     }
 
-    public String getSparql() {
-        return " SELECT DISTINCT ?resource WHERE " + getSparqlWhere();
-    }
-
-    public Query getSparqlQuery() {
-        return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparql());
-    }
-
-    public String getSparqlAsCount() {
-        return " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE " + getSparqlWhere();
-    }
-
-    public Query getSparqlAsCountQuery() {
-        return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlAsCount());
-    }
-
-    public String getSparqlAsAsk() {
-        return getSparqlAsAskQuery().toString();
-    }
-
-    public Query getSparqlAsAskQuery() {
-        Query q = getSparqlQuery();
-        q.setQueryAskType();
-        return q;
-    }
-
-    public Query getSparqlAnnotatedQuery() {
-
-        // TODO set construct annotations
-        return getSparqlQuery();
-    }
-
-    public String getSparqlAnnotated() {
-
-        // TODO set construct annotations
-        return getSparql();
-    }
-
     public String getResultMessage() {
         return annotation.getDescription();
     }
@@ -115,15 +77,16 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     public void validateQueries() throws TestCaseInstantiationException {
-        validateSPARQL(getSparql(), "SPARQL");
-        validateSPARQL(getSparqlAsCount(), "SPARQL Count");
-        validateSPARQL(getSparqlAsAsk(), "ASK");
-        validateSPARQL(getSparqlAnnotated(), "construct");
+        // TODO move this in a separate class
+
+        validateSPARQL(new QueryGenerationSelectFactory().getSparqlQueryAsString(this), "SPARQL");
+        validateSPARQL(new QueryGenerationCountFactory().getSparqlQueryAsString(this), "SPARQL Count");
+        validateSPARQL(new QueryGenerationAskFactory().getSparqlQueryAsString(this), "ASK");
         if (!getSparqlPrevalence().trim().equals("")) { // Prevalence in not always defined
             validateSPARQL(getSparqlPrevalence(), "prevalence");
         }
 
-        java.util.Collection<String> vars = getSparqlQuery().getResultVars();
+        java.util.Collection<String> vars = new QueryGenerationSelectFactory().getSparqlQuery(this).getResultVars();
         // check for Resource & message
         boolean hasResource = false;
         for (String v : vars) {

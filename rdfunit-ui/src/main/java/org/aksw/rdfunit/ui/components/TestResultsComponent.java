@@ -9,6 +9,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.QueryGenerationSelectFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
@@ -76,7 +77,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
             @Override
             public void run() {
                 Label testLabel = new Label(test.getTestURI());
-                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(test.getSparql()).replaceAll(" +", " ") + "\n  </pre>");
+                testLabel.setDescription("<pre>  \n" + SafeHtmlUtils.htmlEscape(new QueryGenerationSelectFactory().getSparqlQueryAsString(test)).replaceAll(" +", " ") + "\n  </pre>");
                 resultsTable.addItem(new Object[]{
                         "R", testLabel, new Label(""), ""}, test);
 
@@ -116,7 +117,7 @@ public class TestResultsComponent extends VerticalLayout implements TestExecutor
                         //TODO check default graph uri when array
                         java.util.Collection<String> graphs = ((EndpointTestSource) source).getSparqlGraphs();
                         String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
-                        String query = test.getSparqlQuery() + " LIMIT 10";
+                        String query = new QueryGenerationSelectFactory().getSparqlQueryAsString(test) + " LIMIT 10";
                         try {
                             String url = endpoint + "?default-graph-uri=" + URLEncoder.encode(graph, "UTF-8") + "&query=" + URLEncoder.encode(query, "UTF-8");
                             Link link = new Link("" + errors, new ExternalResource(url));

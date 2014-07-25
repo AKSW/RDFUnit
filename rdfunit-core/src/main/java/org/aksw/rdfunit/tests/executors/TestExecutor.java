@@ -4,6 +4,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
@@ -34,10 +35,15 @@ public abstract class TestExecutor {
     private final java.util.Collection<TestExecutorMonitor> progressMonitors = new ArrayList<>();
 
     /**
+     * Used to transform TestCases to SPARQL Queries
+     */
+    protected final QueryGenerationFactory queryGenerationFactory;
+
+    /**
      * Instantiates a new Test executor.
      */
-    public TestExecutor() {
-
+    public TestExecutor(QueryGenerationFactory queryGenerationFactory) {
+        this.queryGenerationFactory = queryGenerationFactory;
     }
 
     /**

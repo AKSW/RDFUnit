@@ -9,6 +9,7 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
@@ -25,6 +26,15 @@ import java.util.ArrayList;
  */
 public class RLOGTestExecutor extends TestExecutor {
 
+    /**
+     * Instantiates a new RLOGTestExecutor
+     *
+     * @param queryGenerationFactory
+     */
+    public RLOGTestExecutor(QueryGenerationFactory queryGenerationFactory) {
+        super(queryGenerationFactory);
+    }
+
     @Override
     protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 
@@ -32,7 +42,7 @@ public class RLOGTestExecutor extends TestExecutor {
 
         QueryExecution qe = null;
         try {
-            qe = source.getExecutionFactory().createQueryExecution(testCase.getSparqlAnnotatedQuery());
+            qe = source.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
             ResultSet results = qe.execSelect();
 
             while (results.hasNext()) {
@@ -63,6 +73,7 @@ public class RLOGTestExecutor extends TestExecutor {
      * @return the test case result
      */
     protected TestCaseResult generateSingleResult(QuerySolution qs, TestCase testCase) {
+        assert (qs != null);
         String resource = qs.get("resource").toString();
         String message = testCase.getResultMessage();
         if (qs.contains("message")) {

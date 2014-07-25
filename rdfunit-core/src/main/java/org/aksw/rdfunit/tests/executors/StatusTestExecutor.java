@@ -6,6 +6,7 @@ import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
@@ -20,6 +21,15 @@ import java.util.Arrays;
  * @since 2 /2/14 3:49 PM
  */
 public class StatusTestExecutor extends TestExecutor {
+    /**
+     * Instantiates a new StatusTestExecutor.
+     *
+     * @param queryGenerationFactory
+     */
+    public StatusTestExecutor(QueryGenerationFactory queryGenerationFactory) {
+        super(queryGenerationFactory);
+    }
+
     @Override
     protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 
@@ -27,7 +37,7 @@ public class StatusTestExecutor extends TestExecutor {
         QueryExecution qe = null;
 
         try {
-            qe = source.getExecutionFactory().createQueryExecution(testCase.getSparqlAsAskQuery());
+            qe = source.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
             boolean fail = qe.execAsk();
 
             if (fail) {

@@ -6,6 +6,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
@@ -19,6 +20,15 @@ import java.util.Arrays;
  * @since 2 /2/14 4:05 PM
  */
 public class AggregatedTestExecutor extends TestExecutor {
+
+    /**
+     * Instantiates a new AggregatedTestExecutor
+     *
+     * @param queryGenerationFactory
+     */
+    public AggregatedTestExecutor(QueryGenerationFactory queryGenerationFactory) {
+        super(queryGenerationFactory);
+    }
 
     @Override
     protected java.util.Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
@@ -40,7 +50,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         if (prevalence != 0) {
             // if prevalence !=0 calculate total
             try {
-                total = getCountNumber(source.getExecutionFactory(), testCase.getSparqlAsCountQuery(), "total");
+                total = getCountNumber(source.getExecutionFactory(), queryGenerationFactory.getSparqlQuery(testCase), "total");
             } catch (QueryExceptionHTTP e) {
                 if (SparqlUtils.checkStatusForTimeout(e)) {
                     total = -1;
