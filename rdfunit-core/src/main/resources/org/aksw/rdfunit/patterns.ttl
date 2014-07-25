@@ -203,7 +203,7 @@ rutp:OWLCARD a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
                                 } GROUP BY ?resource
-                                HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
+                                HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;    #count!=0 see https://issues.apache.org/jira/browse/JENA-750
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c. }""" ;
     rut:parameter rutp:OWLCARD-P1 ;
@@ -247,7 +247,7 @@ rutp:OWLCARDT a rut:Pattern ;
                                     	?resource %%P1%% ?c.
 									}
                                 } GROUP BY ?resource
-                                HAVING ( count(?c)  %%OP%% %%V1%% ) """ ;
+                                HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;  #count!=0 see https://issues.apache.org/jira/browse/JENA-750
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
                                     	?resource rdf:type %%T1%%.
                                     	?resource %%P1%% ?c.
