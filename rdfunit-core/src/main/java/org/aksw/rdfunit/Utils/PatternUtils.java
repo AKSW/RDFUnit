@@ -15,6 +15,8 @@ import java.util.Collection;
 
 
 /**
+ * Util functions that instantiate patterns from a QEF
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 9/23/13 11:09 AM
@@ -25,7 +27,12 @@ public final class PatternUtils {
     }
 
 
-
+    /**
+     * Takes a QEF and tries to instantiate all defined patterns in that QEF
+     *
+     * @param queryFactory the query factory
+     * @return the collection
+     */
     public static Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
 
         final String sparqlSelectPatterns = PrefixNSService.getSparqlPrefixDecl() +
@@ -112,6 +119,13 @@ public final class PatternUtils {
         return pattern;
     }
 
+    /**
+     * Instantiates all parameters defined in a Pattern
+     *
+     * @param queryFactory the QEF to query to
+     * @param patternURI the pattern URI
+     * @return a list of pattern parameters for a specific pattern
+     */
     private static Collection<PatternParameter> getPatternParameters(QueryExecutionFactory queryFactory, String patternURI) {
 
         final String sparqlSelectParameters = PrefixNSService.getSparqlPrefixDecl() +

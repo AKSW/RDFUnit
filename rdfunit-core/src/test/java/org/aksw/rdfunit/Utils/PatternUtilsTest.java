@@ -8,6 +8,9 @@ import org.junit.Test;
 
 //import static org.junit.Assert.*;
 
+/**
+ * We test if the defined patterns in resources throw any exceptions during generation
+ */
 public class PatternUtilsTest {
 
     QueryExecutionFactory qef;
