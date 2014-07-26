@@ -173,26 +173,26 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         Resource testSuiteResource = testSuite.serialize(getModel());
 
         getModel().createResource(executionUUID)
-                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getNSFromPrefix("rut") + "TestExecution"))
-                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getNSFromPrefix("prov") + "Activity"))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "used"), testSuiteResource)
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "startedAtTime"),
+                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getURIFromAbbrev("rut:TestExecution")))
+                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getURIFromAbbrev("prov:Activity")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:used")), testSuiteResource)
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:startedAtTime")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getStartTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "endedAtTime"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:endedAtTime")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getEndTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "source"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:source")),
                         getModel().createResource(testedDataset.getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsRun"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testsRun")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getTotalTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsSuceedded"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testsSuceedded")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getSuccessfullTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsFailed"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testsFailed")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getFailedTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsTimeout"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testsTimeout")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getTimeoutTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testsError"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testsError")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "totalIndividualErrors"),
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:totalIndividualErrors")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger));
 
         if (loggingEnabled) {

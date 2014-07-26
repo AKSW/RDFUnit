@@ -40,7 +40,7 @@ public enum TestCaseResultStatus {
      */
     public static TestCaseResultStatus resolve(String value) {
 
-        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus", "");
+        String qName = PrefixNSService.getLocalName(value, schemaPrefix).replace("ResultStatus", "");
         for (TestCaseResultStatus status : values()) {
             if (qName.equals(status.name())) {
                 return status;

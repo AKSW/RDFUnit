@@ -8,6 +8,8 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import java.util.Map;
 
 /**
+ * A service class that keeps track of the defined prefixes and provides various utils
+ *
  * @author Dimitris Kontokostas
  *         Keeps a list of all prefixNsBidiMap used in the project.
  *         In addition it is used to generate the SPARQL prefixNsBidiMap for all the queries and set the NS Prefix Map is a Model
@@ -29,14 +31,25 @@ public final class PrefixNSService {
         getPrefixNsBidiMap().put(prefix, uri);
     } */
 
-    public static String getNSFromPrefix(String id) {
-        return getPrefixNsBidiMap().get(id);
+    /**
+     * Given a prefix it returns the prefix namespace.
+     *
+     * @param prefix the prefix we want to get
+     * @return the namespace or null if it does not exists
+     */
+    public static String getNSFromPrefix(final String prefix) {
+        return getPrefixNsBidiMap().get(prefix);
     }
 
-    public static String getPrefixFromNS(String namespace) {
+    public static String getPrefixFromNS(final String namespace) {
         return getPrefixNsBidiMap().getKey(namespace);
     }
 
+    /**
+     * Adds the defined prefixes in a give model
+     *
+     * @param model the model we want to initialize
+     */
     public static void setNSPrefixesInModel(Model model) {
         model.setNsPrefixes(getPrefixMap());
     }
@@ -61,6 +74,41 @@ public final class PrefixNSService {
 
     }
 
+    /**
+     * Given an abbreviated URI, it returns a full URI
+     *
+     * @param abbreviation the abbreviation
+     * @return the URI
+     */
+    public static String getURIFromAbbrev(final String abbreviation) {
+        String [] parts = abbreviation.split(":");
+        if (parts.length == 2) {
+            return getNSFromPrefix(parts[0]) + parts[1];
+        }
+        throw new IllegalArgumentException("Undefined prefix in " + abbreviation);
+    }
+
+    /*
+    public static String getLocalName(String uri) {
+
+    } */
+
+
+    /**
+     * Returns the local name of a URI by removing the prefix namespace
+     *
+     * @param uri the uri
+     * @param prefix the prefix we want to remove
+     * @return the local name (uri without prefix namespace)
+     */
+    public static String getLocalName(final String uri, final String prefix) {
+        String ns = getNSFromPrefix(prefix);
+        if (ns != null) {
+            return uri.replace(ns, "");
+        }
+        throw new IllegalArgumentException("Undefined prefix (" + prefix + ") in URI: " + uri);
+    }
+
     private static Map<String, String> getPrefixMap() {
         return getPrefixNsBidiMap();
     }
@@ -74,7 +122,7 @@ public final class PrefixNSService {
                     try {
                         prefixModel.read(PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl"), null, "TURTLE");
                     } catch (Exception e) {
-                        throw new RuntimeException("Cannot read refixes.ttl from resources", e);
+                        throw new RuntimeException("Cannot read prefixes.ttl from resources", e);
                     }
 
                     // Update Prefix Service

@@ -39,11 +39,11 @@ public class RLOGTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "RLOGTestCaseResult"))
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rlog") + "Entry"))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "resource"), model.createResource(getResource()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "message"), getMessage())
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rlog"), "level"), model.createResource(getLogLevel().getUri()))
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:RLOGTestCaseResult")))
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rlog:Entry")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:resource")), model.createResource(getResource()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:message")), getMessage())
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:level")), model.createResource(getLogLevel().getUri()))
                 ;
     }
 

@@ -59,7 +59,7 @@ public enum PatternParameterConstraints {
      */
     public static PatternParameterConstraints resolve(String value) {
 
-        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
+        String qName = PrefixNSService.getLocalName(value, schemaPrefix);
         for (PatternParameterConstraints constraint : values()) {
             if (qName.equals(constraint.name())) {
                 return constraint;

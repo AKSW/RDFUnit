@@ -49,9 +49,9 @@ public class Binding {
 
     public Resource writeToModel(Model model) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "Binding"))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "parameter"), model.createResource(parameter.getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "bindingValue"), value);
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:Binding")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:parameter")), model.createResource(parameter.getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:bindingValue")), value);
 
     }
 

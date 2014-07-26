@@ -234,7 +234,7 @@ public final class TestUtils {
                 String source = qs.get("source").toString();
                 RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
                 String patternURI = qs.get("basedOnPattern").toString();
-                Pattern pattern = PatternService.getPattern(patternURI.replace(PrefixNSService.getNSFromPrefix("rutp"), ""));
+                Pattern pattern = PatternService.getPattern( PrefixNSService.getLocalName(patternURI, "rutp"));
                 if (pattern == null) {
                     log.error("Pattern does not exists for test: " + testURI);
                     return null;

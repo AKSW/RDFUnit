@@ -46,9 +46,9 @@ public class ResultAnnotation {
      */
     public Resource serializeAsTestCase(Model model) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "ResultAnnotation"))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "annotationProperty"), model.createResource(annotationProperty))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "annotationValue"), annotationValue);
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:ResultAnnotation")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:annotationProperty")), model.createResource(annotationProperty))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:annotationValue")), annotationValue);
     }
 
     /**

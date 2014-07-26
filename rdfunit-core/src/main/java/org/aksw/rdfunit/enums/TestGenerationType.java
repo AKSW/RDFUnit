@@ -44,7 +44,7 @@ public enum TestGenerationType {
      */
     public static TestGenerationType resolve(String value) {
 
-        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
+        String qName = PrefixNSService.getLocalName(value, schemaPrefix);
         for (TestGenerationType type : values()) {
             if (qName.equals(type.name())) {
                 return type;

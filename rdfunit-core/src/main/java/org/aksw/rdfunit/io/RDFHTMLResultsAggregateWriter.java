@@ -61,7 +61,7 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
                 String level = qs.get("level").toString();
 
                 String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
-                String levelShort = level.replace(PrefixNSService.getNSFromPrefix("rlog"), "");
+                String levelShort =  PrefixNSService.getLocalName(level, "rlog");
                 String rowClass = getStatusClass(statusShort);
 
                 String row = String.format(template,

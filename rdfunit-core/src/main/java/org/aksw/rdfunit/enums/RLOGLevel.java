@@ -75,7 +75,7 @@ public enum RLOGLevel {
      */
     public static RLOGLevel resolve(String value) {
 
-        String qName = value.replace(PrefixNSService.getNSFromPrefix(schemaPrefix), "");
+        String qName = PrefixNSService.getLocalName(value, schemaPrefix);
         for (RLOGLevel level : values()) {
             if (qName.equals(level.name())) {
                 return level;

@@ -42,19 +42,19 @@ public class TestCaseAnnotation {
 
     public Resource serialize(Resource resource, Model model) {
         resource
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("dcterms"), "description"), description)
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "generated"), model.createResource(getGenerated().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testGenerator"), model.createResource(getAutoGeneratorURI()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "appliesTo"), model.createResource(getAppliesTo().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "source"), model.createResource(getSourceUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCaseLogLevel"), model.createResource(getTestCaseLogLevel().getUri()));
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("dcterms:description")), description)
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:generated")), model.createResource(getGenerated().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testGenerator")), model.createResource(getAutoGeneratorURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:appliesTo")), model.createResource(getAppliesTo().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:source")), model.createResource(getSourceUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testCaseLogLevel")), model.createResource(getTestCaseLogLevel().getUri()));
 
         for (String r : getReferences()) {
-            resource.addProperty(model.createProperty(PrefixNSService.getNSFromPrefix("rut") + "references"), ResourceFactory.createResource(r));
+            resource.addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("rut:references")), ResourceFactory.createResource(r));
         }
 
         for (ResultAnnotation annotation : resultAnnotations) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultAnnotation"), annotation.serializeAsTestCase(model));
+            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultAnnotation")), annotation.serializeAsTestCase(model));
         }
 
         return resource;
@@ -90,7 +90,7 @@ public class TestCaseAnnotation {
 
         ResultAnnotation pointer = null;
         for (ResultAnnotation annotation : resultAnnotations) {
-            if (annotation.getAnnotationProperty().equals(PrefixNSService.getNSFromPrefix("rlog") + "level")) {
+            if (annotation.getAnnotationProperty().equals(PrefixNSService.getURIFromAbbrev("rlog:level"))) {
                 pointer = annotation;
             }
         }
@@ -99,10 +99,6 @@ public class TestCaseAnnotation {
                 logLevel = RLOGLevel.resolve(pointer.getAnnotationValue().toString());
             }
             resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
-        }
-
-        if (logLevel == null) {
-            String ff = "";
         }
 
         return logLevel;

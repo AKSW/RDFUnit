@@ -30,13 +30,10 @@ public class StatusTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "StatusTestCaseResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "resultStatus"), model.createResource(getStatus().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("dcterms"), "description"), getTestCase().getResultMessage())
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCaseLogLevel"), model.createResource(getTestCase().getLogLevel().getUri()))
-
-
-
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:StatusTestCaseResult")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultStatus")), model.createResource(getStatus().getUri()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("dcterms:description")), getTestCase().getResultMessage())
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testCaseLogLevel")), model.createResource(getTestCase().getLogLevel().getUri()))
                 ;
     }
 

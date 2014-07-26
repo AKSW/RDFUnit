@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.fail;
 
-public class DataFirstSuccessReaderTest {
+public class RDFFirstSuccessReaderTest {
 
     @Test
     public void testRead() throws Exception {
@@ -29,7 +29,7 @@ public class DataFirstSuccessReaderTest {
         } catch (TripleReaderException e) {
         }
 
-        rdfReaders.add(new RDFStreamReader(DataFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
+        rdfReaders.add(new RDFStreamReader(RDFFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
 
         reader = new RDFFirstSuccessReader(rdfReaders);
         try {

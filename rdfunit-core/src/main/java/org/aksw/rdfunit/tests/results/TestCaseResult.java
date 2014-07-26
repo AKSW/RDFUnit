@@ -41,10 +41,10 @@ public abstract class TestCaseResult {
      */
     public Resource serialize(Model model, String testExecutionURI) {
         return model.createResource(JenaUUID.generate().asString())
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getNSFromPrefix("rut") + "TestCaseResult"))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("prov"), "wasGeneratedBy"), model.createResource(testExecutionURI))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("rut"), "testCase"), model.createResource(getTestCase().getTestURI()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getNSFromPrefix("dcterms"), "date"), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:TestCaseResult")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasGeneratedBy")), model.createResource(testExecutionURI))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testCase")), model.createResource(getTestCase().getTestURI()))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("dcterms:date")), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;
     }
 

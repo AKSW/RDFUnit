@@ -56,7 +56,7 @@ public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
                 String resource = qs.get("resource").toString();
                 String testcase = qs.get("testcase").toString();
 
-                String levelShort = level.replace(PrefixNSService.getNSFromPrefix("rlog"), "");
+                String levelShort =  PrefixNSService.getLocalName(level, "rlog");
                 String rowClass = "";
                 switch (levelShort) {
                     case "WARN":
