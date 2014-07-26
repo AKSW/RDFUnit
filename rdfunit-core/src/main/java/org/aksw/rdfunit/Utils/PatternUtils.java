@@ -24,18 +24,97 @@ public final class PatternUtils {
     private PatternUtils() {
     }
 
-    public static Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
-        Collection<Pattern> patterns = new ArrayList<>();
 
-        String sparqlSelectPatterns = PrefixNSService.getSparqlPrefixDecl() +
+
+    public static Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
+
+        final String sparqlSelectPatterns = PrefixNSService.getSparqlPrefixDecl() +
+                "SELECT distinct ?sparqlPattern WHERE { " +
+                " ?sparqlPattern a rut:Pattern . }";
+
+        Collection<String> patternURIs = new ArrayList<>();
+
+
+        QueryExecution qe = null;
+        try {
+            qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
+            ResultSet results = qe.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution qs = results.next();
+
+                patternURIs.add(qs.get("sparqlPattern").toString());
+            }
+        } finally {
+            if (qe != null) {
+                qe.close();
+            }
+        }
+
+        Collection<Pattern> patterns = new ArrayList<>();
+        for (String patternURI : patternURIs) {
+            patterns.add (getPattern(queryFactory, patternURI));
+        }
+
+        return patterns;
+    }
+
+    /**
+     * Given a QueryExecutionFactory and a pattern URI, it instantiates a new Pattern
+     *
+     * @param queryFactory the query factory
+     * @param patternURI the pattern uRI
+     * @return the pattern object
+     */
+    public static Pattern getPattern(QueryExecutionFactory queryFactory, String patternURI) {
+        final String sparqlSelectPattern = PrefixNSService.getSparqlPrefixDecl() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
-                " ?sparqlPattern a rut:Pattern ; " +
+                "  <" + patternURI + "> a rut:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
                 "  dcterms:description ?desc ; " +
                 "  rut:sparqlWherePattern ?sparql ; " +
                 "  rut:sparqlPrevalencePattern ?sparqlPrev ; " +
                 "} ORDER BY ?sparqlPattern";
-        String sparqlSelectParameters = PrefixNSService.getSparqlPrefixDecl() +
+
+        Pattern pattern = null;
+        QueryExecution qe = null;
+        try {
+            qe = queryFactory.createQueryExecution(sparqlSelectPattern);
+            ResultSet results = qe.execSelect();
+
+            if (results.hasNext()) {
+                QuerySolution qs = results.next();
+
+                String id = qs.get("id").toString();
+                String desc = qs.get("desc").toString();
+                String sparql = qs.get("sparql").toString();
+                String sparqlPrev = qs.get("sparqlPrev").toString();
+
+                // Get pattern parameters
+                Collection<PatternParameter> parameters = getPatternParameters(queryFactory, patternURI);
+
+                // Get annotations from TAG URI
+                Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
+
+                pattern = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
+
+                // if not valid OR if multiple results returns something is wrong
+                if (!pattern.isValid() || results.hasNext()) {
+                    throw new IllegalArgumentException("Pattern not valid: " + pattern.getId());
+                }
+            }
+        } finally {
+            if (qe != null) {
+                qe.close();
+            }
+        }
+
+        return pattern;
+    }
+
+    private static Collection<PatternParameter> getPatternParameters(QueryExecutionFactory queryFactory, String patternURI) {
+
+        final String sparqlSelectParameters = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
                 " %%PATTERN%%  rut:parameter ?parameterURI . " +
                 " ?parameterURI a rut:Parameter . " +
@@ -44,25 +123,16 @@ public final class PatternUtils {
                 " OPTIONAL {?parameterURI rut:constraintPattern ?constraintPattern .}" +
                 " } ";
 
-        QueryExecution qe = queryFactory.createQueryExecution(sparqlSelectPatterns);
-        ResultSet results = qe.execSelect();
+        Collection<PatternParameter> parameters = new ArrayList<>();
 
-        while (results.hasNext()) {
-            QuerySolution qs = results.next();
+        QueryExecution qe = null;
+        try {
+            qe = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
+            ResultSet rs = qe.execSelect();
 
-            String patternURI = qs.get("sparqlPattern").toString();
-            String id = qs.get("id").toString();
-            String desc = qs.get("desc").toString();
-            String sparql = qs.get("sparql").toString();
-            String sparqlPrev = qs.get("sparqlPrev").toString();
-            Collection<PatternParameter> parameters = new ArrayList<>();
+            while (rs.hasNext()) {
 
-            QueryExecution qeNested = queryFactory.createQueryExecution(sparqlSelectParameters.replace("%%PATTERN%%", "<" + patternURI + ">"));
-            ResultSet resultsNested = qeNested.execSelect();
-
-            while (resultsNested.hasNext()) {
-
-                QuerySolution parSol = resultsNested.next();
+                QuerySolution parSol = rs.next();
 
                 String parameterURI = parSol.get("parameterURI").toString();
                 String parameterID = parSol.get("id").toString();
@@ -78,22 +148,12 @@ public final class PatternUtils {
                 PatternParameterConstraints constrain = PatternParameterConstraints.resolve(constrainStr);
                 parameters.add(new PatternParameter(parameterURI, parameterID, constrain, constrainPat));
             }
-            qeNested.close();
-
-            // Get annotations from TAG URI
-            Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
-
-            Pattern pat = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
-            if (pat.isValid()) {
-                patterns.add(pat);
-            } else {
-                //TODO logger
-                System.err.println("Pattern not valid: " + pat.getId());
-                System.exit(-1);
+        } finally {
+            if (qe != null) {
+                qe.close();
             }
         }
-        qe.close();
 
-        return patterns;
+        return parameters;
     }
 }
