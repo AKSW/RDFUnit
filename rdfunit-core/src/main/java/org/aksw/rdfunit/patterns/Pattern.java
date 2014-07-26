@@ -5,8 +5,11 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
+ * Represents a SPARQL Pattern
+ *
  * @author Dimitris Kontokostas
  *         Class that holds a sparqlWherePattern definition
  * @since 9/16/13 1:14 PM
@@ -44,11 +47,11 @@ public class Pattern {
 
     /*
     * Checks if all given arguments exist in the patters and the opposite
-    * */
+    *
     private boolean validateArguments() {
         //TODO implement this method
         return true;
-    }
+    } */
 
 
     /**
@@ -89,10 +92,21 @@ public class Pattern {
         return sparqlPatternPrevalence;
     }
 
+    /**
+     * Returns the Pattern Parameters as an immutable Collection
+     *
+     * @return the pattern parameters as an Collections.unmodifiableCollection()
+     */
     public Collection<PatternParameter> getParameters() {
-        return parameters;
+        return Collections.unmodifiableCollection(parameters);
     }
 
+    /**
+     * Returns a parameter object from a parameter URI
+     *
+     * @param parameterURI the parameter uRI
+     * @return the parameter object or null if it does not exists
+     */
     public PatternParameter getParameter(String parameterURI) {
         for (PatternParameter parameter : parameters) {
             if (parameter.getUri().equals(parameterURI)) {
