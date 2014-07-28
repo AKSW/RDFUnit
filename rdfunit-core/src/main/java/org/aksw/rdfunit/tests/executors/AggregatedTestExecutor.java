@@ -25,7 +25,7 @@ public class AggregatedTestExecutor extends TestExecutor {
     /**
      * Instantiates a new AggregatedTestExecutor
      *
-     * @param queryGenerationFactory
+     * @param queryGenerationFactory a QueryGenerationFactory
      */
     public AggregatedTestExecutor(QueryGenerationFactory queryGenerationFactory) {
         super(queryGenerationFactory);

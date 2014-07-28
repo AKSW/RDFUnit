@@ -19,7 +19,7 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
     /**
      * Instantiates a new ExtendedTestExecutor
      *
-     * @param queryGenerationFactory
+     * @param queryGenerationFactory a QueryGenerationFactory
      */
     public ExtendedTestExecutor(QueryGenerationFactory queryGenerationFactory) {
         super(queryGenerationFactory);

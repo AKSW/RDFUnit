@@ -25,7 +25,7 @@ public class StatusTestExecutor extends TestExecutor {
     /**
      * Instantiates a new StatusTestExecutor.
      *
-     * @param queryGenerationFactory
+     * @param queryGenerationFactory a QueryGenerationFactory
      */
     public StatusTestExecutor(QueryGenerationFactory queryGenerationFactory) {
         super(queryGenerationFactory);

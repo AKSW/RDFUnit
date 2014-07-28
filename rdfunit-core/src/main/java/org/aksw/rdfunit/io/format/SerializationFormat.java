@@ -73,10 +73,8 @@ public class SerializationFormat {
      * @return the boolean true if the format matches or false if it doesn't
      */
     public boolean isAcceptedAsInput(String format) {
-        if (type.equals(SerializationFormatType.output))
-            return false;
+        return !type.equals(SerializationFormatType.output) && containsFormatName(format);
 
-        return containsFormatName(format);
     }
 
     /**
@@ -86,20 +84,16 @@ public class SerializationFormat {
      * @return the boolean true if the format matches or false if it doesn't
      */
     public boolean isAcceptedAsOutput(String format) {
-        if (type.equals(SerializationFormatType.input))
-            return false;
+        return !type.equals(SerializationFormatType.input) && containsFormatName(format);
 
-        return containsFormatName(format);
     }
 
     /**
      * Helper function that matches only the synonyms
      */
     private boolean containsFormatName(String format) {
-        if (name.equalsIgnoreCase(format))
-            return true;
+        return name.equalsIgnoreCase(format) || synonyms.contains(format.toLowerCase());
 
-        return synonyms.contains(format.toLowerCase());
     }
 
     /**
@@ -138,9 +132,8 @@ public class SerializationFormat {
 
         if (!extension.equals(that.extension)) return false;
         if (!type.equals(that.type)) return false;
-        if (!name.equals(that.name)) return false;
+        return name.equals(that.name);
 
-        return true;
     }
 
     @Override
