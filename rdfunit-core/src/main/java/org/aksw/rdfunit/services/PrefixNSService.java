@@ -23,7 +23,9 @@ public final class PrefixNSService {
         private static final BidiMap<String, String> prefixNsBidiMap = createPrefixNsBidiMap();
     }
 
-    private static final String sparqlPrefixDecl = createSparqlPrefixes();
+    private static class DeclInstance {
+        private static final String sparqlPrefixDecl = createSparqlPrefixes();
+    }
 
     private PrefixNSService() {
     }
@@ -57,7 +59,7 @@ public final class PrefixNSService {
     }
 
     public static String getSparqlPrefixDecl() {
-        return sparqlPrefixDecl;
+        return DeclInstance.sparqlPrefixDecl;
     }
 
     /**
