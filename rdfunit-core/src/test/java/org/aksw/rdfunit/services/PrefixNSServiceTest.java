@@ -28,6 +28,6 @@ public class PrefixNSServiceTest {
         }
 
         // The size should be the same
-        assertEquals("mismatch in size of prefixes", prefixes.size(), PrefixNSService.getPrefixNsBidiMap().size());
+        assertEquals("mismatch in size of prefixes", prefixes.size(), PrefixNSService.createPrefixNsBidiMap().size());
     }
 }
