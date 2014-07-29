@@ -9,6 +9,7 @@ public class BindingException extends Exception {
 
 
     public BindingException() {
+        super();
     }
 
     public BindingException(String message, Throwable e) {

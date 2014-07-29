@@ -94,8 +94,7 @@ public class EndpointTestSource extends Source {
         if (this.cacheTTL > 0) {
 
             try {
-                QueryExecutionFactory _qef = CacheUtilsH2.createQueryExecutionFactory(qef, "./cache/sparql/" + getPrefix(), false, cacheTTL);
-                qef = _qef;
+                qef = CacheUtilsH2.createQueryExecutionFactory(qef, "./cache/sparql/" + getPrefix(), false, cacheTTL);
                 log.debug("Cache for endpoint set up: " + this.getSparqlEndpoint());
             } catch (Exception e) {
                 log.debug("Could not instantiate cache for Endpoint" + this.getSparqlEndpoint(), e);

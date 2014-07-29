@@ -13,6 +13,7 @@ public class RDFModelReader extends RDFReader {
     private final Model model;
 
     public RDFModelReader(Model model) {
+        super();
         this.model = model;
     }
 

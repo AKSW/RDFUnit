@@ -15,6 +15,7 @@ public class RDFFirstSuccessReader extends RDFReader {
     private final Collection<RDFReader> readers;
 
     public RDFFirstSuccessReader(Collection<RDFReader> readers) {
+        super();
         this.readers = readers;
     }
 

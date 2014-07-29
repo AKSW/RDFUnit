@@ -23,10 +23,12 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
 
 
     public RDFHTMLResultsWriter(OutputStream outputStream) {
+        super();
         this.outputStream = outputStream;
     }
 
     public RDFHTMLResultsWriter(String filename) {
+        super();
         this.outputStream = RDFStreamWriter.getOutputStreamFromFilename(filename);
     }
 

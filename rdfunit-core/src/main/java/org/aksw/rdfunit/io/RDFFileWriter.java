@@ -35,6 +35,7 @@ public class RDFFileWriter extends RDFWriter {
     }
 
     public RDFFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {
+        super();
         this.filename = filename;
         this.filetype = filetype;
         this.skipIfExists = skipIfExists;

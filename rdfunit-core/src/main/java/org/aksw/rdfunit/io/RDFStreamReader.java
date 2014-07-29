@@ -29,6 +29,7 @@ public class RDFStreamReader extends RDFReader {
     }
 
     public RDFStreamReader(InputStream inputStream, String format) {
+        super();
         this.inputStream = inputStream;
         this.format = format;
     }

@@ -2,9 +2,9 @@ package org.aksw.rdfunit.services;
 
 import org.aksw.rdfunit.patterns.Pattern;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dimitris Kontokostas
@@ -12,7 +12,7 @@ import java.util.Set;
  * @since 9/20/13 2:52 PM
  */
 public final class PatternService {
-    final private static Map<String, Pattern> patterns = new HashMap<>();
+    final private static Map<String, Pattern> patterns = new ConcurrentHashMap<>();
 
 
     private PatternService() {

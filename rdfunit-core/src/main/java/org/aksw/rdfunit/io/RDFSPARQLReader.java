@@ -15,6 +15,7 @@ public class RDFSPARQLReader extends RDFReader {
     private final String graph;
 
     public RDFSPARQLReader(String endpoint, String graph) {
+        super();
         this.endpoint = endpoint;
         this.graph = graph;
     }

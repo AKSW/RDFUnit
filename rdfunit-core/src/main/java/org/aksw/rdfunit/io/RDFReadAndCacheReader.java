@@ -14,6 +14,7 @@ public class RDFReadAndCacheReader extends RDFReader {
     private final RDFWriter writer;
 
     public RDFReadAndCacheReader(RDFReader reader, RDFWriter writer) {
+        super();
         this.reader = reader;
         this.writer = writer;
     }

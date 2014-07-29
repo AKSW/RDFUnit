@@ -9,6 +9,7 @@ public class TestCaseInstantiationException extends Exception {
 
 
     public TestCaseInstantiationException() {
+        super();
     }
 
     public TestCaseInstantiationException(String message, Throwable e) {

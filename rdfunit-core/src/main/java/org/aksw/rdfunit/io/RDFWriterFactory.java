@@ -12,7 +12,7 @@ import java.io.OutputStream;
  * @since 6/19/14 9:20 AM
  */
 public final class RDFWriterFactory {
-    protected RDFWriterFactory() {
+    private RDFWriterFactory() {
     }
 
     public static RDFWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestCaseExecutionType executionType) {

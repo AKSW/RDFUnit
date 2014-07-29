@@ -23,7 +23,6 @@ import java.util.Collection;
  * @since 9/23/13 6:31 AM
  */
 public abstract class TestCase implements Comparable<TestCase> {
-    protected Logger log = LoggerFactory.getLogger(TestCase.class);
 
     private final String testURI;
     private final TestCaseAnnotation annotation;
@@ -142,4 +141,5 @@ public abstract class TestCase implements Comparable<TestCase> {
     public String toString() {
         return this.getTestURI();
     }
+
 }

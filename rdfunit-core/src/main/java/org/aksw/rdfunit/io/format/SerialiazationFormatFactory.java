@@ -10,7 +10,9 @@ import java.util.HashSet;
  *         Description
  * @since 6/18/14 4:27 PM
  */
-public class SerialiazationFormatFactory {
+public final class SerialiazationFormatFactory {
+
+    private SerialiazationFormatFactory(){}
 
     /**
      * Returns a list with all the defined serialization formats

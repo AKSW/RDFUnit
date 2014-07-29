@@ -20,11 +20,13 @@ public class RDFStreamWriter extends RDFWriter {
     private final String filetype;
 
     public RDFStreamWriter(OutputStream outputStream, String filetype) {
+        super();
         this.outputStream = outputStream;
         this.filetype = filetype;
     }
 
     public RDFStreamWriter(OutputStream outputStream) {
+        super();
         this.outputStream = outputStream;
         this.filetype = "TURTLE";
     }

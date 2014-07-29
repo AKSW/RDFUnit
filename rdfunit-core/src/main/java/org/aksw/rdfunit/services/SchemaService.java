@@ -7,8 +7,8 @@ import org.aksw.rdfunit.sources.SourceFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dimitris Kontokostas
@@ -16,7 +16,7 @@ import java.util.Map;
  * @since 10/2/13 12:24 PM
  */
 public final class SchemaService {
-    final private static Map<String, String> schemata = new HashMap<>();
+    final private static Map<String, String> schemata = new ConcurrentHashMap<>();
 
     private SchemaService() {
     }

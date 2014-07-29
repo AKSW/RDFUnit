@@ -9,6 +9,7 @@ public class TripleReaderException extends Exception {
 
 
     public TripleReaderException() {
+        super();
     }
 
     public TripleReaderException(String message, Throwable e) {

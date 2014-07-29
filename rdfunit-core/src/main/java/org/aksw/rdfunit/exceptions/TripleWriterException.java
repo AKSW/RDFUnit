@@ -9,6 +9,7 @@ public class TripleWriterException extends Exception {
 
 
     public TripleWriterException() {
+        super();
     }
 
     public TripleWriterException(String message, Throwable e) {

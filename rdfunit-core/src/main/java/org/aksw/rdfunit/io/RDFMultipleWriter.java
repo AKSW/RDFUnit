@@ -14,6 +14,7 @@ public class RDFMultipleWriter extends RDFWriter {
     private final Collection<RDFWriter> writers;
 
     public RDFMultipleWriter(Collection<RDFWriter> writers) {
+        super();
         this.writers = writers;
     }
 

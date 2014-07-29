@@ -14,6 +14,7 @@ public class RDFDereferenceReader extends RDFReader {
     private final String uri;
 
     public RDFDereferenceReader(String uri) {
+        super();
         this.uri = uri;
     }
 
