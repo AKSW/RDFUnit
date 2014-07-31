@@ -24,7 +24,7 @@ addons:
   coverity_scan:
     project:
       name: "AKSW/RDFUnit"
-      description: "<Your project description here>"
+      description: "RDFUnit Unit Testing suite"
     notification_email: jimkont@gmail.com
 #    build_command_prepend: "<Your build preprocessing command here>"
     build_command:   "mvn install"
