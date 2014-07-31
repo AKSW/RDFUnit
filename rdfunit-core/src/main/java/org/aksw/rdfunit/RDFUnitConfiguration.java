@@ -14,6 +14,7 @@ import org.aksw.rdfunit.sources.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -166,7 +167,12 @@ public class RDFUnitConfiguration {
 
         // Return a text source
         if (customTextSource != null) {
-            InputStream is = new ByteArrayInputStream(customTextSource.getBytes());
+            InputStream is = null;
+            try {
+                is = new ByteArrayInputStream(customTextSource.getBytes("UTF8"));
+            } catch (UnsupportedEncodingException e) {
+                throw new IllegalArgumentException("Invalid source name: " + customTextSource, e);
+            }
             RDFReader textReader = new RDFStreamReader(is, customTextFormat.getName());
             return new DumpTestSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),

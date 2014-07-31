@@ -38,15 +38,15 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
 
         try {
             // TODO not efficient StringBuilder.toString().getBytes()
-            outputStream.write(getHeader().toString().getBytes());
+            outputStream.write(getHeader().toString().getBytes("UTF8"));
 
             for (String te : testExecutionURIs) {
-                outputStream.write(getTestExecutionStats(qef, te).toString().getBytes());
-                outputStream.write(getTestExecutionResults(qef, te).toString().getBytes());
+                outputStream.write(getTestExecutionStats(qef, te).toString().getBytes("UTF8"));
+                outputStream.write(getTestExecutionResults(qef, te).toString().getBytes("UTF8"));
                 // break; // For now print only one (this is the case at the moment)
             }
 
-            outputStream.write(getFooter().toString().getBytes());
+            outputStream.write(getFooter().toString().getBytes("UTF8"));
             outputStream.close();
 
         } catch (IOException e) {

@@ -26,6 +26,7 @@ import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -379,15 +380,17 @@ public final class TestUtils {
     public static String getMD5FromString(String md5) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(md5.getBytes());
+            byte[] array = md.digest(md5.getBytes("UTF-8"));
             StringBuilder sb = new StringBuilder();
             for (byte anArray : array) {
                 sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {
+            throw new RuntimeException("Cannot calculate MD5 hash for :" + md5, e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Cannot calculate MD5 hash for :" + md5, e);
         }
-        return null;
     }
 
 }
