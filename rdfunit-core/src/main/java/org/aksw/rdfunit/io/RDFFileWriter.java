@@ -59,7 +59,9 @@ public class RDFFileWriter extends RDFWriter {
             if (createParentDirectories) {
                 File parentF = file.getParentFile();
                 if (parentF != null && !parentF.exists()) {
-                    file.getParentFile().mkdirs();
+                    if ( ! parentF.mkdirs()) {
+                        throw new TripleWriterException("Cannot create new directory structure for file: " + filename);
+                    }
                 }
             }
             Model model = SparqlUtils.getModelFromQueryFactory(qef);

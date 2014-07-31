@@ -74,6 +74,9 @@ public class AggregatedTestExecutor extends TestExecutor {
 
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
 
+        assert (query != null);
+        assert (var != null);
+
         int result = 0;
         QueryExecution qe = null;
         try {
