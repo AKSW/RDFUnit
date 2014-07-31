@@ -28,14 +28,14 @@ import java.util.Collection;
  */
 public class RDFUnitStaticWrapper {
 
-    private static RDFReader ontologyReader = null;
-    private static TestSuite testSuite = null;
+    private static volatile RDFReader ontologyReader = null;
+    private static volatile TestSuite testSuite = null;
 
     /**
      * The following variables must be initialized with initWrapper before any validation
      */
-    private static String ontologyURI = null;
-    private static String ontologyResourceURI = null;
+    private static volatile String ontologyURI = null;
+    private static volatile String ontologyResourceURI = null;
 
     private RDFUnitStaticWrapper() {
     }
