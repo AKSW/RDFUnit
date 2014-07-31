@@ -106,7 +106,7 @@ public class EndpointTestSource extends Source {
             qef = new QueryExecutionFactoryPaginated(qef, this.pagination);
         }
 
-        if (this.queryLimit > 0 || this.queryLimit < Query.NOLIMIT) {
+        if (this.queryLimit > 0) {
             qef = new QueryExecutionFactoryLimit(qef, true, this.queryLimit);
         }
 
