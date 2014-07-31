@@ -1,3 +1,9 @@
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "Z2ojEkRBC3mmNraadphidPjEabJpGQixlSnn+AoIzCy6nnSX8pJ6EALabKwiys7URWgFQ0C6JfdmW63GEeEoKQ8q61k0yLkmz2B7pKItOSsJjQFU8d81jpBWo2w9JCCJWKr58JExVnsiZt8Mz2Z6hVIolV1PV0SnbAu6yaDL92Q="
+
 language: java
 jdk:
   - openjdk7
@@ -13,3 +19,13 @@ notifications:
       - jimkont@gmail.com
     on_success: change
     on_failure: change
+
+addons:
+  coverity_scan:
+    project:
+      name: "AKSW/RDFUnit"
+      description: "<Your project description here>"
+    notification_email: jimkont@gmail.com
+#    build_command_prepend: "<Your build preprocessing command here>"
+    build_command:   "mvn install"
+    branch_pattern: dev

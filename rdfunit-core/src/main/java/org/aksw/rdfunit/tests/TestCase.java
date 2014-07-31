@@ -12,8 +12,6 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
