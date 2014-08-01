@@ -11,6 +11,7 @@ branches:
   only:
     - master
     - dev
+    - coverity_scan
 install: /bin/true
 script: "mvn clean install"
 notifications:
