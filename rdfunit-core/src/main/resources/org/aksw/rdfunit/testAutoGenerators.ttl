@@ -106,7 +106,7 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?T1 ?DESCRIPTION where {
                              ?P1 rdfs:domain ?T1 .
-                             BIND (concat(str(?P1)," does not have rdfs:domain: ", str(?T1)) AS ?DESCRIPTION)
+                             BIND (concat(str(?P1)," has rdfs:domain different from: ", str(?T1)) AS ?DESCRIPTION)
                              FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
                                       (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
                                       (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
@@ -119,6 +119,27 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
         rut:annotationValue rlog:ERROR] ;
     .
 
+
+##########################################
+#### rdfs:domain missing pattern
+##########################################
+
+rutg:RDFSDOMAIN-MISS a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?DESCRIPTION where {
+                             ?P1 rdfs:domain ?T1 .
+                             BIND (concat(str(?P1)," does not have rdfs:domain: ", str(?T1)) AS ?DESCRIPTION)
+                             FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
+                                      (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
+                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
+                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
+                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
+    rut:basedOnPattern rutp:RDFSDOMAIN-MISS ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:WARN] ;
+    .
 
 ##########################################
 #### owl:disjointClass pattern (1) (without reverse relations)

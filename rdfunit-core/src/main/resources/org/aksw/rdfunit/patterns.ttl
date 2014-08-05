@@ -102,14 +102,16 @@ rutp:RDFSRANGED-D1 a rut:Parameter ;
     rut:parameterConstraint rut:None .
 
 ##########################################
-#### rdfs:domain pattern
+#### rdfs:domain pattern (exists but wrong)
 ##########################################
 
 rutp:RDFSDOMAIN a rut:Pattern ;
     dcterms:identifier "RDFSDOMAIN" ;
-    dcterms:description """Emulates the rdfs:domain constrain. It can be extended by using specific values in V1"""@en ;
+    dcterms:description """Checks if the rdfs:domain is wrongly defined. It can be extended by using specific values in V1"""@en ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
+                                    FILTER EXISTS {
+                                        ?resource rdf:type ?anyClass  }
                                     FILTER NOT EXISTS {
                                         ?resource rdf:type ?T1 .
                                         ?T1 rdfs:subClassOf+ %%T1%% . }
@@ -139,6 +141,39 @@ rutp:RDFSDOMAIN-V1 a rut:Parameter ;
 rutp:RDFSDOMAIN-T1 a rut:Parameter ;
     dcterms:identifier "T1" ;
     rut:parameterConstraint rut:Class .
+
+##########################################
+#### rdfs:domain pattern (missing in the dataset)
+##########################################
+
+rutp:RDFSDOMAIN-MISS a rut:Pattern ;
+    dcterms:identifier "RDFSDOMAIN-MISS" ;
+    dcterms:description """Checks if the rdfs:domain is missing. It can be extended by using specific values in V1"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?resource %%P1%% %%V1%%
+                                    FILTER NOT EXISTS {
+                                        ?resource rdf:type ?anyClass .}
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource %%P1%% ?c .} """ ;
+    rut:parameter rutp:RDFSDOMAIN-MISS-P1 ;
+    rut:parameter rutp:RDFSDOMAIN-MISS-V1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
+
+rutp:RDFSDOMAIN-MISS-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:RDFSDOMAIN-MISS-V1 a rut:Parameter ;
+    dcterms:identifier "V1" ;
+    rut:parameterConstraint rut:None .
+
+
 
 ##########################################
 #### owl:disjointClass pattern  (#TODO fix transitive)
