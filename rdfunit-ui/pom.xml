@@ -271,6 +271,54 @@
                         </lifecycleMappingMetadata>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                    <executions>
+                        <execution>
+                            <id>copy-resources-war</id>
+                            <!-- this copies the schemaDecl.csv in the war file -->
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${basedir}/target/rdfunit-ui-${project.version}/data</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>../data</directory>
+                                        <includes>
+                                            <include>schemaDecl.csv</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                                <overwrite>true</overwrite>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-resources-local</id>
+                            <!-- This is needed to run the ui locally -->
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${basedir}/src/main/webapp/data</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>../data</directory>
+                                        <includes>
+                                            <include>schemaDecl.csv</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                                <overwrite>true</overwrite>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
