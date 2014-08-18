@@ -18,10 +18,7 @@ rutp:RDFSRANGE a rut:Pattern ;
                                     FILTER EXISTS {
                                         ?resource rdf:type ?anyClass . }
                                     FILTER NOT EXISTS {
-                                        ?resource rdf:type ?T1 .
-                                        ?T1 rdfs:subClassOf+ %%T1%% . }
-                                    FILTER NOT EXISTS {
-                                        ?resource rdf:type %%T1%%  }
+                                        ?resource rdf:type/rdfs:subClassOf* %%T1%%  }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?s %%P1%% ?resource .} """ ;
@@ -56,7 +53,7 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
                                         ?resource rdf:type ?anyClass . }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?s %%P1%% ?resource .} """ ;
+                                     WHERE { ?resource %%P1%% ?s .} """ ;
     rut:parameter rutp:RDFSRANGE-MISS-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -113,10 +110,7 @@ rutp:RDFSDOMAIN a rut:Pattern ;
                                     FILTER EXISTS {
                                         ?resource rdf:type ?anyClass  }
                                     FILTER NOT EXISTS {
-                                        ?resource rdf:type ?T1 .
-                                        ?T1 rdfs:subClassOf+ %%T1%% . }
-                                    FILTER NOT EXISTS {
-                                        ?resource rdf:type %%T1%%  }
+                                        ?resource rdf:type/rdfs:subClassOf* %%T1%% . }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c .} """ ;
@@ -183,8 +177,8 @@ rutp:OWLDISJC a rut:Pattern ;
     dcterms:identifier "OWLDISJC" ;
     dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
     rut:sparqlWherePattern """ {
-                                    ?resource rdf:type %%T1%% .
-                                    ?resource rdf:type %%T2%% .
+                                    ?resource rdf:type/rdfs:subClassOf* %%T1%% .
+                                    ?resource rdf:type/rdfs:subClassOf* %%T2%% .
                                 } """ ;
     rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJC-T1 ;
@@ -274,21 +268,13 @@ rutp:OWLCARDT a rut:Pattern ;
     dcterms:description """Emulates the owl:cardinality constrain on a Class"""@en ;
     rut:sparqlWherePattern """ {
 									{
-                                    	?resource rdf:type %%T1%%.
-                                    	?resource %%P1%% ?c.
-									} UNION {
-										?resource rdf:type ?t1.
-										?t1 rdfs:subClassOf+ %%T1%%.
+                                    	?resource rdf:type/rdfs:subClassOf* %%T1%%.
                                     	?resource %%P1%% ?c.
 									}
                                 } GROUP BY ?resource
                                 HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;  #count!=0 see https://issues.apache.org/jira/browse/JENA-750
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
-                                    	?resource rdf:type %%T1%%.
-                                    	?resource %%P1%% ?c.
-									} UNION {
-										?resource rdf:type ?t1.
-										?t1 rdfs:subClassOf+ %%T1%%.
+                                    	?resource rdf:type/rdfs:subClassOf* %%T1%%.
                                     	?resource %%P1%% ?c.
 									} }""" ;
     rut:parameter rutp:OWLCARDT-T1 ;
@@ -329,18 +315,12 @@ rutp:TYPRODEP a rut:Pattern ;
     dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence"""@en ;
     rut:sparqlWherePattern """ {
                                     {
-										?resource rdf:type %%T1%% .
+										?resource rdf:type/rdfs:subClassOf* %%T1%% .
                                     	FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
-									} UNION {
-										?resource rdf:type ?t1 . 
-										?t1 rdfs:subClassOf+ %%T1%%
-										FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
 									}
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { {?resource rdf:type %%T1%% .}
-									 		UNION { ?resource rdf:type ?t1 . 
-											?t1 rdfs:subClassOf+ %%T1%% .} } """ ;
+                                     WHERE { ?resource rdf:type/rdfs:subClassOf* %%T1%% .} """ ;
     rut:parameter rutp:TYPRODEP-T1 ;
     rut:parameter rutp:TYPRODEP-NOT ;
     rut:parameter rutp:TYPRODEP-P1 ;
@@ -397,22 +377,15 @@ rutp:INVFUNC-P1 a rut:Parameter ;
 rutp:INVFUNCT a rut:Pattern ;
     dcterms:identifier "INVFUNCT" ;
     dcterms:description """ Unique value constraint of inverse functional properties (constraint on a class) """@en ;
-    rut:sparqlWherePattern """ {   {
-                                        ?a %%P1%% ?resource ;
-                                           a %%T1%% .
-                                        ?b %%P1%% ?resource ;
-                                           a %%T1%% .
-                                    } UNION {
-                                        ?a %%P1%% ?resource ;
-                                            rdfs:subClassOf+ %%T1%% .
-                                        ?b %%P1%% ?resource ;
-                                            rdfs:subClassOf+ %%T1%% .
-                                    }
+    rut:sparqlWherePattern """ {
+                                    ?a %%P1%% ?resource ;
+                                       rdf:type/rdfs:subClassOf* %%T1%% .
+                                    ?b %%P1%% ?resource ;
+                                       rdf:type/rdfs:subClassOf* %%T1%% .
                                     FILTER (?a != ?b)
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { {?a %%P1%% ?resource ; a %%T1%% }
-                                       UNION {?a %%P1%% ?resource ; rdfs:subClassOf+ %%T1%% .} }""" ;
+                                     WHERE {?a %%P1%% ?resource ; rdf:type/rdfs:subClassOf* %%T1%% }""" ;
     rut:parameter rutp:INVFUNCT-P1 ;
     rut:parameter rutp:INVFUNCT-T1 ;
     rut:resultAnnotation [
@@ -625,13 +598,13 @@ rutp:LITRAN a rut:Pattern ;
     dcterms:identifier "LITRAN" ;
     dcterms:description """Literal in specific range"""@en ;
     rut:sparqlWherePattern """ {
-                                    ?resource a      %%T1%% .
+                                    ?resource rdf:type/rdfs:subClassOf* %%T1%% .
                                     ?resource %%P1%% ?value .
                                     FILTER( %%NOP%% ( ?value > %%valueMin%% &&
                                                       ?value < %%valueMax%% )) .
                                 }""" ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total) WHERE {
-                                        ?resource a      %%T1%% .
+                                        ?resource rdf:type/rdfs:subClassOf* %%T1%% .
                                         ?resource %%P1%% ?value .
                                      }""" ;
     rut:parameter rutp:LITRAN-T1 ;
@@ -678,12 +651,12 @@ rutp:TYPDEP a rut:Pattern ;
     dcterms:identifier "TYPDEP" ;
     dcterms:description """Resource is of type A and not of type B"""@en ;
     rut:sparqlWherePattern """ {
-                                    ?resource rdf:type %%T1%% .
-                                    FILTER NOT EXISTS {?resource rdf:type %%T2%%}
+                                    ?resource rdf:type/rdfs:subClassOf* %%T1%% .
+                                    FILTER NOT EXISTS {?resource rdf:type/rdfs:subClassOf* %%T2%%}
                                 } """ ;
       
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?resource rdf:type %%T1%% . }""" ;
+                                     WHERE { ?resource rdf:type/rdfs:subClassOf* %%T1%% . }""" ;
     rut:parameter rutp:TYPDEP-T1 ;
     rut:parameter rutp:TYPDEP-T2 ;
     .
