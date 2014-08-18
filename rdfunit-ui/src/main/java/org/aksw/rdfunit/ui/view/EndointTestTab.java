@@ -498,7 +498,10 @@ public class EndointTestTab extends VerticalLayout {
         if (dataset instanceof EndpointTestSource) {
             endpointField.setValue(((EndpointTestSource) dataset).getSparqlEndpoint());
             java.util.Collection<String> graphs = ((EndpointTestSource) dataset).getSparqlGraphs();
-            graphField.setValue(RDFUnitUtils.getFirstItemInCollection(graphs));
+            String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
+            if (graph != null && !graph.isEmpty()) {
+                graphField.setValue(graph);
+            }
         } else {
             endpointField.setValue("");
             graphField.setValue("");
