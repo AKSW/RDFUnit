@@ -54,7 +54,7 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
                                         ?resource rdf:type ?anyClass . }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?resource %%P1%% ?s .} """ ;
+                                     WHERE { ?s %%P1%% ?resource .} """ ;
     rut:parameter rutp:RDFSRANGE-MISS-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
