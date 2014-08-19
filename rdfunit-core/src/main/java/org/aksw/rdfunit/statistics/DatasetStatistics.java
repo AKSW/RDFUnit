@@ -130,22 +130,15 @@ public final class DatasetStatistics {
 
         for (String namespace : getAllNamespaces()) {
 
-            //Get the prefix for this namespace
-            String schemaPrefix = PrefixNSService.getPrefixFromNS(namespace);
-            SchemaSource source = null;
+            SchemaSource source = SchemaService.getSourceFromUri(namespace);
 
             // If not null, get it from SchemaService
-            if (schemaPrefix != null && !schemaPrefix.isEmpty()) {
+            if (source != null ) {
 
                 // Skip some schemas that don't add anything
-                if (excludePrefixes.contains(schemaPrefix)) {
+                if (excludePrefixes.contains(source.getPrefix())) {
                     continue;
                 }
-
-                source = SchemaService.getSource(schemaPrefix);
-            }
-
-            if (source != null) {
                 sources.add(source);
             }
             else {

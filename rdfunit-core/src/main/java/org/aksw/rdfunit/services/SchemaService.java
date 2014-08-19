@@ -35,6 +35,10 @@ public final class SchemaService {
 
     public static SchemaSource getSourceFromUri(String baseFolder, String uri) {
         String prefix = schemata.getKey(uri);
+        if (prefix == null) {
+            return null;
+        }
+
         return getSourceFromPrefix(baseFolder, prefix);
     }
 
