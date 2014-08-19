@@ -108,10 +108,11 @@ public final class RDFUnitUtils {
                             "PREFIX frbr:<http://purl.org/vocab/frbr/core#>\n" +
                             "PREFIX lov:<http://lov.okfn.org/dataset/lov/lov#>\n" +
                             "\n" +
-                            "SELECT ?vocabPrefix ?vocabURI \n" +
+                            "SELECT ?vocabURI ?vocabPrefix ?vocabNamespace\n" +
                             "WHERE{\n" +
                             "\t?vocabURI a voaf:Vocabulary.\n" +
                             "\t?vocabURI vann:preferredNamespacePrefix ?vocabPrefix.\n" +
+                            "\t?vocabURI vann:preferredNamespaceUri ?vocabNamespace.\n" +
                             "} \n" +
                             "ORDER BY ?vocabPrefix ");
 
@@ -122,7 +123,11 @@ public final class RDFUnitUtils {
 
                 String prefix = row.get("vocabPrefix").toString();
                 String vocab = row.get("vocabURI").toString();
-                SchemaService.addSchemaDecl(prefix, vocab);
+                String ns = row.get("vocabNamespace").toString();
+                if (ns == null || ns.isEmpty()) {
+                    ns = vocab;
+                }
+                SchemaService.addSchemaDecl(prefix, ns);
                 count++;
             }
         } catch (Exception e) {
