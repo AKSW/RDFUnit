@@ -58,7 +58,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
                         s = (SchemaSource) tokenId;
                     }
                     if (tokenId instanceof String) {
-                        s = SchemaService.getSource((String) tokenId);
+                        s = SchemaService.getSourceFromPrefix((String) tokenId);
                     }
                 }
 

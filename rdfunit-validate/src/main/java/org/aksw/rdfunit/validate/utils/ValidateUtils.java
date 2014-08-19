@@ -112,6 +112,7 @@ public class ValidateUtils {
         }
         // try to guess schemas automatically
         else {
+            log.info("Searching for used schemata in dataset");
             configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
         }
 

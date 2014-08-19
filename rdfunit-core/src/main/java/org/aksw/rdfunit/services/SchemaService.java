@@ -4,11 +4,11 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dimitris Kontokostas
@@ -16,29 +16,38 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 10/2/13 12:24 PM
  */
 public final class SchemaService {
-    final private static Map<String, String> schemata = new ConcurrentHashMap<>();
+    final private static BidiMap<String, String> schemata = new DualHashBidiMap<>();
 
     private SchemaService() {
     }
 
-    public static void addSchemaDecl(String id, String uri, String url) {
-        schemata.put(id, uri + "\t" + url);
+    public static void addSchemaDecl(String prefix, String uri, String url) {
+        schemata.put(prefix, uri + "\t" + url);
     }
 
-    public static void addSchemaDecl(String id, String uri) {
-        schemata.put(id, uri);
+    public static void addSchemaDecl(String prefix, String uri) {
+        schemata.put(prefix, uri);
     }
 
-    public static SchemaSource getSource(String id) {
-        return getSource(null, id);
+    public static SchemaSource getSourceFromUri(String uri) {
+        return getSourceFromUri(null, uri);
     }
 
-    public static SchemaSource getSource(String baseFolder, String id) {
-        String sourceUriURL = schemata.get(id);
+    public static SchemaSource getSourceFromUri(String baseFolder, String uri) {
+        String prefix = schemata.getKey(uri);
+        return getSourceFromPrefix(baseFolder, prefix);
+    }
+
+    public static SchemaSource getSourceFromPrefix(String prefix) {
+        return getSourceFromPrefix(null, prefix);
+    }
+
+    public static SchemaSource getSourceFromPrefix(String baseFolder, String prefix) {
+        String sourceUriURL = schemata.get(prefix);
         if (sourceUriURL == null) {
             // If not a prefix try to dereference it
-            if (id.contains("/") || id.contains("\\")) {
-                return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(id), id);
+            if (prefix.contains("/") || prefix.contains("\\")) {
+                return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(prefix), prefix);
             } else {
                 return null;
             }
@@ -47,23 +56,23 @@ public final class SchemaService {
         String[] split = sourceUriURL.split("\t");
         if (split.length == 2) {
             if (baseFolder != null) {
-                return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0], split[1]);
+                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, split[0], split[1]);
             } else {
-                return SourceFactory.createSchemaSourceDereference(id, split[0], split[1]);
+                return SourceFactory.createSchemaSourceDereference(prefix, split[0], split[1]);
             }
         } else {
             if (baseFolder != null) {
-                return SourceFactory.createSchemaSourceFromCache(baseFolder, id, split[0]);
+                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, split[0]);
             } else {
-                return SourceFactory.createSchemaSourceDereference(id, split[0]);
+                return SourceFactory.createSchemaSourceDereference(prefix, split[0]);
             }
         }
     }
 
-    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> ids) throws UndefinedSchemaException {
+    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixes) throws UndefinedSchemaException {
         Collection<SchemaSource> sources = new ArrayList<>();
-        for (String id : ids) {
-            SchemaSource src = getSource(baseFolder, id.trim());
+        for (String id : prefixes) {
+            SchemaSource src = getSourceFromPrefix(baseFolder, id.trim());
             if (src != null) {
                 sources.add(src);
             } else {
