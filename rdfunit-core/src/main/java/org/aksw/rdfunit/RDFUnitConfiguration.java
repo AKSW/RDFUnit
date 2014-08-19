@@ -1,5 +1,6 @@
 package org.aksw.rdfunit;
 
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
@@ -11,6 +12,7 @@ import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.services.FormatService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
+import org.aksw.rdfunit.statistics.DatasetStatistics;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -117,6 +119,11 @@ public class RDFUnitConfiguration {
         //Clear endpoint / custom dereference
         this.endpointURI = null;
         this.customDereferenceURI = null;
+    }
+
+    public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
+        DatasetStatistics datasetStatistics = new DatasetStatistics(qef, false);
+        this.schemas = datasetStatistics.getIdentifiedSchemata();
     }
 
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {

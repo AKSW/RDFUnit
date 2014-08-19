@@ -118,9 +118,6 @@ public class ValidateUtilsTest {
                 " -s rdf ",
                 "Expected exception for missing -d");
         exceptionsExpected.put(
-                " -d http://dbpedia.org ",
-                "Expected exception for missing -s");
-        exceptionsExpected.put(
                 " -d http://dbpedia.org -e http://dbpedia.org/sparql -u http://custom.dbpedia.org ",
                 "Expected exception for defining both -e & -u");
         exceptionsExpected.put(

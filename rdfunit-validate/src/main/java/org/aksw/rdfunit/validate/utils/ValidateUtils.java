@@ -43,7 +43,7 @@ public class ValidateUtils {
         cliOptions.addOption("u", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
         cliOptions.addOption("s", "schemas", true,
                 "the schemas used in the chosen graph " +
-                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)"
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/). If this option is missing RDFUnit will try to guess them automatically"
         );
         cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev");
         cliOptions.addOption("p", "enriched-prefix", true,
@@ -66,7 +66,7 @@ public class ValidateUtils {
 
     public static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) throws ParameterException {
 
-        if (!commandLine.hasOption("d") || !commandLine.hasOption("s")) {
+        if (!commandLine.hasOption("d")) {
             throw new ParameterException("Error: Required arguments are missing.");
 
         }
@@ -101,12 +101,18 @@ public class ValidateUtils {
         Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
         configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
 
-        try {
-            //Get schema list
-            Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("s"));
-            configuration.setSchemataFromPrefixes(schemaUriPrefixes);
-        } catch (UndefinedSchemaException e) {
-            throw new ParameterException(e.getMessage(), e);
+        if (commandLine.hasOption("s")) {
+            try {
+                //Get schema list
+                Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("s"));
+                configuration.setSchemataFromPrefixes(schemaUriPrefixes);
+            } catch (UndefinedSchemaException e) {
+                throw new ParameterException(e.getMessage(), e);
+            }
+        }
+        // try to guess schemas automatically
+        else {
+            configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
         }
 
         //Get enriched schema
