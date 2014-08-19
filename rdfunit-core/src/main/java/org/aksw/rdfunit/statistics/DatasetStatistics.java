@@ -118,6 +118,8 @@ public final class DatasetStatistics {
         return namespaces;
     }
 
+    private final Collection<String> excludePrefixes = Arrays.asList("rdf", "rdfs", "owl");
+
     /**
      * Uses the getAllNamespaces() function and tries to match them to SchemaSource's
      *
@@ -134,6 +136,12 @@ public final class DatasetStatistics {
 
             // If not null, get it from SchemaService
             if (schemaPrefix != null && !schemaPrefix.isEmpty()) {
+
+                // Skip some schemas that don't add anything
+                if (excludePrefixes.contains(schemaPrefix)) {
+                    continue;
+                }
+
                 source = SchemaService.getSource(schemaPrefix);
             }
 
