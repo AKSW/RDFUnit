@@ -183,6 +183,11 @@ rutp:OWLDISJC a rut:Pattern ;
     rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJC-T1 ;
     rut:parameter rutp:OWLDISJC-T2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue rdf:type
+    ];
     .
 
 rutp:OWLDISJC-T1 a rut:Parameter ;
@@ -659,6 +664,11 @@ rutp:TYPDEP a rut:Pattern ;
                                      WHERE { ?resource rdf:type/rdfs:subClassOf* %%T1%% . }""" ;
     rut:parameter rutp:TYPDEP-T1 ;
     rut:parameter rutp:TYPDEP-T2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue rdf:type
+    ];
     .
 
 rutp:TYPDEP-T1 a rut:Parameter ;
