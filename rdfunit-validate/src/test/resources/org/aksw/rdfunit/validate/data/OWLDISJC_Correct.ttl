@@ -8,6 +8,6 @@
 # Sample wrong data for testing
 
 
-<correct1> a ex:Person .
-<correct2> a ex:Work .
-<correct3> a ex:PopulatedPlace.
+ex:correct1 a ex:Person .
+ex:correct2 a ex:Work .
+ex:correct3 a ex:PopulatedPlace.

@@ -7,6 +7,6 @@
 
 # Sample wrong data for testing
 
-<error1> a ex:Athlete ;
+ex:error1 a ex:Athlete ;
 	ex:livesIn ex:Athens .  # no range 1 error
 

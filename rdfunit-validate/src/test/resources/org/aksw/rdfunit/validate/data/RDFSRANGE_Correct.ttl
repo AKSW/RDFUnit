@@ -8,7 +8,7 @@
 # Sample correct data for testing
 
 
-<correct1> a ex:Athlete ;
+ex:correct1 a ex:Athlete ;
 	ex:livesIn ex:Athens .
 
 ex:Athens a ex:Town

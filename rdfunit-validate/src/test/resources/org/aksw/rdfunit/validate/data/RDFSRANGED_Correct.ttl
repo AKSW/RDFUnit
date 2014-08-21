@@ -8,7 +8,7 @@
 # Sample correct data for testing
 
 
-<correct1> a ex:Athlete ;
+ex:correct1 a ex:Athlete ;
 	ex:name "john doe"@en ;
 	ex:name "john doe" ;
 	ex:age "25"^^xsd:nonNegativeInteger ;
