@@ -52,6 +52,9 @@ public class StatusTestExecutor extends TestExecutor {
             if (SparqlUtils.checkStatusForTimeout(e)) {
                 status = TestCaseResultStatus.Timeout;
             }
+            else {
+                status = TestCaseResultStatus.Error;
+            }
 
         } finally {
             if (qe != null) {
