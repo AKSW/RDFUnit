@@ -29,10 +29,14 @@ public final class RDFReaderFactory {
 
     }
 
+    public static RDFReader createResourceReader(String resource) {
+        return new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource));
+    }
+
     public static RDFReader createFileOrResourceReader(String filename, String resource) {
         Collection<RDFReader> readers = new ArrayList<>();
         readers.add(new RDFStreamReader(filename));
-        readers.add(new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource)));
+        readers.add(createResourceReader(resource));
 
         return new RDFFirstSuccessReader(readers);
     }
