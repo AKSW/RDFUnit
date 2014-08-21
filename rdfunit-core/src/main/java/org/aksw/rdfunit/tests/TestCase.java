@@ -61,6 +61,10 @@ public abstract class TestCase implements Comparable<TestCase> {
         return annotation.getResultAnnotations();
     }
 
+    public Collection<ResultAnnotation> getVariableAnnotations() {
+        return annotation.getVariableAnnotations();
+    }
+
     public Query getSparqlPrevalenceQuery() {
         if (getSparqlPrevalence().trim().isEmpty())
             return null;
@@ -79,6 +83,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         // TODO move this in a separate class
 
         validateSPARQL(new QueryGenerationSelectFactory().getSparqlQueryAsString(this), "SPARQL");
+        validateSPARQL(new QueryGenerationExtendedSelectFactory().getSparqlQueryAsString(this), "SPARQL Extended");
         validateSPARQL(new QueryGenerationCountFactory().getSparqlQueryAsString(this), "SPARQL Count");
         validateSPARQL(new QueryGenerationAskFactory().getSparqlQueryAsString(this), "ASK");
         if (!getSparqlPrevalence().trim().equals("")) { // Prevalence in not always defined

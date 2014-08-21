@@ -26,6 +26,7 @@ public class TestCaseAnnotation {
     private final String description;
     private final RLOGLevel testCaseLogLevel;
     private final Collection<ResultAnnotation> resultAnnotations;
+    private final Collection<ResultAnnotation> variableAnnotations;
 
     public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
         this.generated = generated;
@@ -38,6 +39,7 @@ public class TestCaseAnnotation {
         this.resultAnnotations.addAll(resultAnnotations);
         // need to instantiate result annotations first
         this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel);
+        this.variableAnnotations = findVariableAnnotations();
     }
 
     public Resource serialize(Resource resource, Model model) {
@@ -54,6 +56,10 @@ public class TestCaseAnnotation {
         }
 
         for (ResultAnnotation annotation : resultAnnotations) {
+            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultAnnotation")), annotation.serializeAsTestCase(model));
+        }
+
+        for (ResultAnnotation annotation : variableAnnotations) {
             resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultAnnotation")), annotation.serializeAsTestCase(model));
         }
 
@@ -104,12 +110,38 @@ public class TestCaseAnnotation {
         return logLevel;
     }
 
+    /*
+    * Get either testCaseLogLevel or generate it from resultAnnotations (and then remove the annotation)
+    * */
+    private Collection<ResultAnnotation> findVariableAnnotations() {
+
+        ArrayList<ResultAnnotation> variableAnnotations = new ArrayList<>();
+
+        ResultAnnotation pointer = null;
+        for (ResultAnnotation annotation : resultAnnotations) {
+            String value = annotation.getAnnotationValue().toString().trim();
+            if (value.startsWith("?")) {
+                pointer = annotation;
+                variableAnnotations.add(annotation);
+            }
+        }
+        if (pointer != null) {
+            resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
+        }
+
+        return variableAnnotations;
+    }
+
     public RLOGLevel getTestCaseLogLevel() {
         return testCaseLogLevel;
     }
 
     public Collection<ResultAnnotation> getResultAnnotations() {
         return resultAnnotations;
+    }
+
+    public Collection<ResultAnnotation> getVariableAnnotations() {
+        return variableAnnotations;
     }
 
     public String getDescription() {

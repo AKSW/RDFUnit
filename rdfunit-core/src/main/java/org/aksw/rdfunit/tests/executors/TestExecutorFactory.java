@@ -3,6 +3,7 @@ package org.aksw.rdfunit.tests.executors;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.tests.QueryGenerationAskFactory;
 import org.aksw.rdfunit.tests.QueryGenerationCountFactory;
+import org.aksw.rdfunit.tests.QueryGenerationExtendedSelectFactory;
 import org.aksw.rdfunit.tests.QueryGenerationSelectFactory;
 
 /**
@@ -30,7 +31,7 @@ public final class TestExecutorFactory {
             case rlogTestCaseResult:
                 return new RLOGTestExecutor(new QueryGenerationSelectFactory());
             case extendedTestCaseResult:
-                return new ExtendedTestExecutor(new QueryGenerationSelectFactory());
+                return new ExtendedTestExecutor(new QueryGenerationExtendedSelectFactory());
             default:
                 return null;
         }
