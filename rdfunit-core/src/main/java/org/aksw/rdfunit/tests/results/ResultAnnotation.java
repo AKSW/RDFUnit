@@ -12,17 +12,21 @@ import org.aksw.rdfunit.services.PrefixNSService;
  *
  * @author Dimitris Kontokostas
  */
-public class ResultAnnotation {
+public final class ResultAnnotation {
     private final String annotationProperty;
     private final RDFNode annotationValue;
 
     /**
+
      * Instantiates a new Result annotation.
      *
      * @param annotationProperty the annotation property
      * @param annotationValue the annotation value
      */
     public ResultAnnotation(String annotationProperty, RDFNode annotationValue) {
+        assert (annotationProperty != null);
+        assert (annotationValue    != null);
+
         this.annotationProperty = annotationProperty;
         this.annotationValue = annotationValue;
     }
@@ -67,5 +71,33 @@ public class ResultAnnotation {
      */
     public RDFNode getAnnotationValue() {
         return annotationValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ResultAnnotation)) {
+            return false;
+        }
+
+        ResultAnnotation that = (ResultAnnotation) o;
+
+        if (!annotationProperty.equals(that.annotationProperty)) {
+            return false;
+        }
+        if (!annotationValue.equals(that.annotationValue)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = annotationProperty.hashCode();
+        result = 31 * result + annotationValue.hashCode();
+        return result;
     }
 }
