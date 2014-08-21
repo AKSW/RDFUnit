@@ -10,11 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @Category(IntegrationTest.class)
 public class PatternIntegrationTest {
@@ -33,6 +32,8 @@ public class PatternIntegrationTest {
         testsWithErrors.put("RDFSRANGE-MISS_Wrong.ttl", 1);
         testsWithErrors.put("RDFSRANGED_Correct.ttl", 0);
         testsWithErrors.put("RDFSRANGED_Wrong.ttl", 2);
+        testsWithErrors.put("INVFUNC_Correct.ttl", 0);
+        testsWithErrors.put("INVFUNC_Wrong.ttl", 2);
 
         // Load test ontology from resource
         RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "ontology.ttl");
@@ -51,10 +52,17 @@ public class PatternIntegrationTest {
         for (String resource : testsWithErrors.keySet()) {
             int errors = testsWithErrors.get(resource);
 
-            RDFReader reader = RDFReaderFactory.createResourceReader(resourcePrefix + resource);
-            RDFUnitStaticWrapper.validate(reader.read(), TestCaseExecutionType.rlogTestCaseResult, resourcePrefix + resource, overviewResults);
+            // Test all execution types
+            for (TestCaseExecutionType executionType : TestCaseExecutionType.values()) {
 
-            assertEquals("Errors not as expected for " + resource, errors, overviewResults.getIndividualErrors() );
+                RDFReader reader = RDFReaderFactory.createResourceReader(resourcePrefix + resource);
+                RDFUnitStaticWrapper.validate(reader.read(), executionType, resourcePrefix + resource, overviewResults);
+
+                // For status results we don't get violation instances
+                if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
+                    assertEquals("Errors not as expected for " + resource, errors, overviewResults.getIndividualErrors());
+                }
+            }
 
         }
     }

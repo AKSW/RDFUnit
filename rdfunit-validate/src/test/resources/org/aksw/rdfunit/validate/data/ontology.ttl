@@ -31,13 +31,15 @@ ex:name
     .
 
 ex:birthDate
-	a owl:DatatypeProperty ;
+	a owl:DatatypeProperty,
+		owl:FunctionalProperty ; # Should generate 2 test cases
     rdfs:domain ex:Person ;  # should generate 2 test cases
     rdfs:range xsd:date ;    # should generate 1 test case
     .
 
 ex:age
-	a owl:DatatypeProperty ;
+	a owl:DatatypeProperty,
+        owl:FunctionalProperty ; # Should generate 2 test cases
     rdfs:domain ex:Person ;  # should generate 2 test cases
     rdfs:range xsd:nonNegativeInteger ;    # should generate 1 test case
     .
@@ -46,3 +48,9 @@ ex:livesIn
 	a owl:ObjectProperty ;
     rdfs:domain ex:Person ;  # should generate 2 test cases
     rdfs:range ex:Place ;    # should generate 2 test case
+    .
+
+ex:homepage
+	a owl:ObjectProperty, owl:InverseFunctionalProperty;
+	rdfs:domain ex:Person ;  # should generate 2 test cases
+	.
