@@ -1,13 +1,15 @@
 package org.aksw.rdfunit.tests.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
 
-import java.util.Collection;
+import java.util.*;
 
 
 /**
@@ -17,6 +19,18 @@ import java.util.Collection;
  * @since 2 /2/14 3:57 PM
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
+
+    private final Map<ResultAnnotation, Set<RDFNode>> variableAnnotationsMap;
+
+    /**
+     * Instantiates a new Extended test case result.
+     *
+     * @param testCase the test case
+     * @param rlogResult the rlog result
+     */
+    public ExtendedTestCaseResult(TestCase testCase, RLOGTestCaseResult rlogResult) {
+        this(testCase, rlogResult.getResource(), rlogResult.getMessage(), rlogResult.getLogLevel());
+    }
 
     /**
      * Instantiates a new Extended test case result.
@@ -28,17 +42,9 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
      */
     public ExtendedTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
         super(testCase, resource, message, logLevel);
+        this.variableAnnotationsMap = createMap();
     }
 
-    /**
-     * Instantiates a new Extended test case result.
-     *
-     * @param testCase the test case
-     * @param rlogResult the rlog result
-     */
-    public ExtendedTestCaseResult(TestCase testCase, RLOGTestCaseResult rlogResult) {
-        super(testCase, rlogResult.getResource(), rlogResult.getMessage(), rlogResult.getLogLevel());
-    }
 
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
@@ -51,7 +57,27 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
             annotation.serializeAsResult(resource, model);
         }
 
+        for (ResultAnnotation annotation : variableAnnotationsMap.keySet()) {
+            for (RDFNode rdfNode: variableAnnotationsMap.get(annotation)) {
+                resource.addProperty(ResourceFactory.createProperty(annotation.getAnnotationProperty()), rdfNode);
+            }
+        }
+
         return resource;
     }
 
+    public Map<ResultAnnotation, Set<RDFNode>> getVariableAnnotationsMap() {
+        return variableAnnotationsMap;
+    }
+
+    private Map<ResultAnnotation, Set<RDFNode>> createMap() {
+        Map<ResultAnnotation, Set<RDFNode>> vaMap = new HashMap<>();
+
+        Collection<ResultAnnotation> variableAnnotations = getTestCase().getVariableAnnotations();
+        for (ResultAnnotation annotation : variableAnnotations) {
+            vaMap.put(annotation, new HashSet<RDFNode>());
+        }
+
+        return Collections.unmodifiableMap(vaMap);
+    }
 }
