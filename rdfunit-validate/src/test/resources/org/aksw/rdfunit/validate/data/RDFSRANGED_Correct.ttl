@@ -5,9 +5,12 @@
 @prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:        <http://www.w3.org/2002/07/owl#> .
 
-# Sample wrong data for testing
+# Sample correct data for testing
 
 
-<correct1> a ex:Person .
-<correct2> a ex:Work .
-<correct3> a ex:PopulatedPlace.
+<correct1> a ex:Athlete ;
+	ex:name "john doe"@en ;
+	ex:name "john doe" ;
+	ex:age "25"^^xsd:nonNegativeInteger ;
+	ex:birthDate "2014-08-21"^^xsd:date
+	.

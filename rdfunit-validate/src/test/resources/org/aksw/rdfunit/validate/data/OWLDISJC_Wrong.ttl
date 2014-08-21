@@ -8,9 +8,9 @@
 @prefix owl:        <http://www.w3.org/2002/07/owl#> .
 
 
-<OWLDISJC_error1> a ex:Person, ex:Place . # direct class
-<OWLDISJC_error2> a ex:Place, ex:Work .   # direct again
-<OWLDISJC_error3> a ex:PopulatedPlace, ex:Athlete . # 1 level of subClassOf
-<OWLDISJC_error4> a ex:SoccerPlayer, ex:Town . # 2 levels of subClassOf
-<OWLDISJC_error5> a ex:Athlete, ex:Town .  # mixed level of subClassOf
-<OWLDISJC_error6> a ex:Person, ex:Town .  # mixed level of subClassOf
+<error1> a ex:Person, ex:Place . # direct class
+<error2> a ex:Place, ex:Work .   # direct again
+<error3> a ex:PopulatedPlace, ex:Athlete . # 1 level of subClassOf
+<error4> a ex:SoccerPlayer, ex:Town . # 2 levels of subClassOf
+<error5> a ex:Athlete, ex:Town .  # mixed level of subClassOf
+<error6> a ex:Person, ex:Town .  # mixed level of subClassOf

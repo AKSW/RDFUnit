@@ -30,8 +30,19 @@ ex:name
     rdfs:range xsd:string ;  # should generate 1 test case
     .
 
-ex:birthdate
+ex:birthDate
 	a owl:DatatypeProperty ;
     rdfs:domain ex:Person ;  # should generate 2 test cases
     rdfs:range xsd:date ;    # should generate 1 test case
     .
+
+ex:age
+	a owl:DatatypeProperty ;
+    rdfs:domain ex:Person ;  # should generate 2 test cases
+    rdfs:range xsd:nonNegativeInteger ;    # should generate 1 test case
+    .
+
+ex:livesIn
+	a owl:ObjectProperty ;
+    rdfs:domain ex:Person ;  # should generate 2 test cases
+    rdfs:range ex:Place ;    # should generate 2 test case

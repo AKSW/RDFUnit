@@ -7,7 +7,8 @@
 
 # Sample wrong data for testing
 
-
-<correct1> a ex:Person .
-<correct2> a ex:Work .
-<correct3> a ex:PopulatedPlace.
+<error1> a ex:Athlete ;
+	ex:name "2014-08-21"^^xsd:date ; # 1 error ## TODO fix this one (we skip xsd:string)
+	ex:age "25" ; # 1 error
+	ex:birthDate "2014-08-21" # 1 error
+	.

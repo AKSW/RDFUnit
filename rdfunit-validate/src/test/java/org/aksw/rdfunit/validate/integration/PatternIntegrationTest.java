@@ -28,6 +28,11 @@ public class PatternIntegrationTest {
     public void setUp() throws Exception {
         testsWithErrors.put("OWLDISJC_Correct.ttl", 0);
         testsWithErrors.put("OWLDISJC_Wrong.ttl", 6);
+        testsWithErrors.put("RDFSRANGE_Correct.ttl", 0);
+        testsWithErrors.put("RDFSRANGE_Wrong.ttl", 1);
+        testsWithErrors.put("RDFSRANGE-MISS_Wrong.ttl", 1);
+        testsWithErrors.put("RDFSRANGED_Correct.ttl", 0);
+        testsWithErrors.put("RDFSRANGED_Wrong.ttl", 2);
 
         // Load test ontology from resource
         RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "ontology.ttl");

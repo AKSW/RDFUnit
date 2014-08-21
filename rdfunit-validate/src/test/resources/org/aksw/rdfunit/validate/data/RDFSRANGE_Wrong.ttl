@@ -7,7 +7,7 @@
 
 # Sample wrong data for testing
 
+<error1> a ex:Athlete ;
+	ex:livesIn ex:Athens .  # wrong range 1 error
 
-<correct1> a ex:Person .
-<correct2> a ex:Work .
-<correct3> a ex:PopulatedPlace.
+ex:Athens a ex:Work
