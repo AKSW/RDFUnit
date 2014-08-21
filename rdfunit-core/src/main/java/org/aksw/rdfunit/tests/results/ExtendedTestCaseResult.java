@@ -18,8 +18,6 @@ import java.util.Collection;
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
-    private final Collection<ResultAnnotation> resultAnnotations;
-
     /**
      * Instantiates a new Extended test case result.
      *
@@ -30,7 +28,6 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
      */
     public ExtendedTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
         super(testCase, resource, message, logLevel);
-        this.resultAnnotations = testCase.getResultAnnotations();
     }
 
     /**
@@ -41,7 +38,6 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
      */
     public ExtendedTestCaseResult(TestCase testCase, RLOGTestCaseResult rlogResult) {
         super(testCase, rlogResult.getResource(), rlogResult.getMessage(), rlogResult.getLogLevel());
-        this.resultAnnotations = testCase.getResultAnnotations();
     }
 
     @Override
@@ -51,7 +47,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("spin:ConstraintViolation")))
                 .addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("spin:violationRoot")), model.createResource(getResource()));
 
-        for (ResultAnnotation annotation : resultAnnotations) {
+        for (ResultAnnotation annotation : getTestCase().getResultAnnotations()) {
             annotation.serializeAsResult(resource, model);
         }
 
