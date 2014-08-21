@@ -30,6 +30,7 @@ import java.util.Collection;
 public class RDFUnitStaticWrapper {
 
     private static volatile RDFReader ontologyReader = null;
+    private static volatile SchemaSource ontologySource = null;
     private static volatile TestSuite testSuite = null;
 
     /**
@@ -89,6 +90,22 @@ public class RDFUnitStaticWrapper {
         return ontologyReader;
     }
 
+    /**
+     * This functions return the ontology Source as @SchemaSource
+     *
+     * @return a @RDFReader
+     */
+    private static SchemaSource getOntologySource() {
+
+        // No locking here => possible deadock with getTestSuite()
+        // even if it's called twice, there is no harm & the overhead is negligible
+        if (ontologySource == null) {
+
+            ontologySource = new SchemaSource("custom", ontologyURI, getOntologyReader());
+        }
+        return ontologySource;
+    }
+
     public static TestSuite getTestSuite() {
         if (testSuite == null) {
             synchronized (RDFUnitStaticWrapper.class) {
@@ -96,12 +113,12 @@ public class RDFUnitStaticWrapper {
 
 
                     // Initialize the nif Source
-                    Source nifSchema = new SchemaSource("custom", ontologyURI, getOntologyReader());
+                    Source ontologySource = getOntologySource();
 
                     // Set up the manual nif test cases (from resource)
                     RDFReader manualTestCaseReader = new RDFStreamReader(
                             RDFUnitStaticWrapper.class.getResourceAsStream(
-                                    CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", nifSchema)));
+                                    CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", ontologySource)));
 
                     // Instantiate manual test cases
                     Collection<TestCase> manualTestCases;
@@ -124,7 +141,7 @@ public class RDFUnitStaticWrapper {
                         return testSuite; // do not execute further
                     }
 
-                    Collection<TestCase> autoTestCases = TestUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), nifSchema);
+                    Collection<TestCase> autoTestCases = TestUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
 
                     Collection<TestCase> allTestCases = new ArrayList<TestCase>();
                     allTestCases.addAll(autoTestCases);
@@ -189,7 +206,7 @@ public class RDFUnitStaticWrapper {
                 inputURI,
                 new RDFModelReader(input), // the input model as a RDFReader
                 Arrays.asList(  // List of associated ontologies (these will be loaded in the testing model)
-                        new SchemaSource("custom", ontologyURI, getOntologyReader()))
+                        getOntologySource())
         );
 
         testExecutor.execute(modelSource, getTestSuite(), 0);
