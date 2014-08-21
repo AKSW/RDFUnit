@@ -39,6 +39,18 @@ public class DatasetOverviewResults {
         endTime = null;
     }
 
+    public void set(DatasetOverviewResults results) {
+        this.totalTests = results.totalTests;
+        this.successfullTests = results.successfullTests;
+        this.failedTests = results.failedTests;
+        this.timeoutTests = results.timeoutTests;
+        this.errorTests = results.errorTests;
+        this.individualErrors = results.individualErrors;
+
+        this.startTime = results.startTime;
+        this.endTime = results.endTime;
+    }
+
 
     public long getTotalTests() {
         return totalTests;

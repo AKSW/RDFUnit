@@ -210,7 +210,7 @@ public class RDFUnitStaticWrapper {
         );
 
         testExecutor.execute(modelSource, getTestSuite(), 0);
-        overviewResults = testExecutorMonitor.getOverviewResults();
+        overviewResults.set(testExecutorMonitor.getOverviewResults());
 
         return testExecutorMonitor.getModel();
     }
