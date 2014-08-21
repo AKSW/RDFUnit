@@ -5,6 +5,9 @@ import com.hp.hpl.jena.query.QueryFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Factory that returns select queries and besides
  * SELECT ?resource it adds all variable annotations
@@ -21,15 +24,21 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
         sb.append(PrefixNSService.getSparqlPrefixDecl());
         sb.append(" SELECT DISTINCT ?resource ");
 
+        Set<String> existingVariables = new HashSet<>();
+        existingVariables.add("?resource");
+
         // Add all defined variables in the query
         for (ResultAnnotation annotation : testCase.getVariableAnnotations()) {
             String value = annotation.getAnnotationValue().toString().trim();
 
-            // if resource is redefined don't add it again
-            if (!value.equalsIgnoreCase("?resource")) {
+            // if variable is not redefined don't add it again
+            // This is needed if the same variable takes part in different annotations
+            if (!existingVariables.contains(value)) {
                 sb.append(" ");
                 sb.append(value);
                 sb.append(" ");
+
+                existingVariables.add(value);
             }
         }
         sb.append("  WHERE ");
