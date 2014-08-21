@@ -47,15 +47,20 @@ public class RLOGTestExecutor extends TestExecutor {
             ResultSet results = qe.execSelect();
 
             while (results.hasNext()) {
-                testCaseResults.add(generateSingleResult(results.next(), testCase));
 
+                QuerySolution qs = results.next();
+
+                String resource = qs.get("resource").toString();
+                String message = testCase.getResultMessage();
+                if (qs.contains("message")) {
+                    message = qs.get("message").toString();
+                }
+                RLOGLevel logLevel = testCase.getLogLevel();
+
+                testCaseResults.add(new RLOGTestCaseResult(testCase, resource, message, logLevel));
             }
         } catch (QueryExceptionHTTP e) {
-            if (SparqlUtils.checkStatusForTimeout(e)) {
-                throw new TestCaseExecutionException(TestCaseResultStatus.Timeout, e);
-            } else {
-                throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
-            }
+            checkQueryResultStatus(e);
         } finally {
             if (qe != null) {
                 qe.close();
@@ -66,23 +71,11 @@ public class RLOGTestExecutor extends TestExecutor {
 
     }
 
-    /**
-     * Generate single result.
-     *
-     * @param qs the qs
-     * @param testCase the test case
-     * @return the test case result
-     */
-    protected TestCaseResult generateSingleResult(QuerySolution qs, TestCase testCase) {
-        assert (qs != null);
-        String resource = qs.get("resource").toString();
-        String message = testCase.getResultMessage();
-        if (qs.contains("message")) {
-            message = qs.get("message").toString();
+    protected void checkQueryResultStatus(QueryExceptionHTTP e) throws TestCaseExecutionException {
+        if (SparqlUtils.checkStatusForTimeout(e)) {
+            throw new TestCaseExecutionException(TestCaseResultStatus.Timeout, e);
+        } else {
+            throw new TestCaseExecutionException(TestCaseResultStatus.Error, e);
         }
-        RLOGLevel logLevel = testCase.getLogLevel();
-
-        return new RLOGTestCaseResult(testCase, resource, message, logLevel);
-
     }
 }
