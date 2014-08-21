@@ -15,20 +15,25 @@ rutp:RDFSRANGE a rut:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain and checks when range is wrongly defined"""@en ;
     rut:sparqlWherePattern """ {
-                                    ?s %%P1%% ?resource.
+                                    ?resource %%P1%% ?s .
                                     FILTER EXISTS {
-                                        ?resource rdf:type ?anyClass . }
+                                        ?s rdf:type ?anyClass . }
                                     FILTER NOT EXISTS {
-                                        ?resource rdf:type/rdfs:subClassOf* %%T1%%  }
+                                        ?s rdf:type/rdfs:subClassOf* %%T1%%  }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?s %%P1%% ?resource .} """ ;
+                                     WHERE { ?resource %%P1%% ?s .} """ ;
     rut:parameter rutp:RDFSRANGE-P1 ;
     rut:parameter rutp:RDFSRANGE-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?s"""
     ];
     .
 
@@ -87,6 +92,11 @@ rutp:RDFSRANGED a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?c"""
     ];
     .
 
@@ -189,6 +199,11 @@ rutp:OWLDISJC a rut:Pattern ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue rdf:type
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """%%T1%%""","""%%T2%%"""
+    ];
     .
 
 rutp:OWLDISJC-T1 a rut:Parameter ;
@@ -216,7 +231,12 @@ rutp:OWLDISJP a rut:Pattern ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
-        rut:annotationValue """%%P1%%""", """%%P2%%"""
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?v"""
     ];
     .
 
@@ -236,8 +256,8 @@ rutp:OWLCARD a rut:Pattern ;
     dcterms:identifier "OWLCARD" ;
     dcterms:description """Emulates the owl:cardinality constrain without a Class constraint"""@en ;
     rut:sparqlWherePattern """ {
-                                    ?resource %%P1%% ?c.
-                                } GROUP BY ?resource
+                                 ?resource %%P1%% ?c.
+                               } GROUP BY ?resource
                                 HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;    #count!=0 see https://issues.apache.org/jira/browse/JENA-750
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
                                      WHERE { ?resource %%P1%% ?c. }""" ;
@@ -358,17 +378,22 @@ rutp:INVFUNC a rut:Pattern ;
     dcterms:identifier "INVFUNC" ;
     dcterms:description """ Unique value constraint of inverse functional properties """@en ;
     rut:sparqlWherePattern """ {
-                                    ?a %%P1%% ?resource .
-                                    ?b %%P1%% ?resource .
-                                    FILTER (?a != ?b)
+                                    ?resource %%P1%% ?object .
+                                    ?resource2 %%P1%% ?object .
+                                    FILTER (?resource != ?resource2)
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE { ?a %%P1%% ?resource . }""" ;
+                                     WHERE { ?resource %%P1%% ?v . }""" ;
     rut:parameter rutp:INVFUNC-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?object"""
     ];
     .
 
@@ -384,20 +409,25 @@ rutp:INVFUNCT a rut:Pattern ;
     dcterms:identifier "INVFUNCT" ;
     dcterms:description """ Unique value constraint of inverse functional properties (constraint on a class) """@en ;
     rut:sparqlWherePattern """ {
-                                    ?a %%P1%% ?resource ;
+                                    ?resource %%P1%% ?object ;
                                        rdf:type/rdfs:subClassOf* %%T1%% .
-                                    ?b %%P1%% ?resource ;
+                                    ?resource2 %%P1%% ?object ;
                                        rdf:type/rdfs:subClassOf* %%T1%% .
-                                    FILTER (?a != ?b)
+                                    FILTER (?resource != ?resource2)
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
-                                     WHERE {?a %%P1%% ?resource ; rdf:type/rdfs:subClassOf* %%T1%% }""" ;
+                                     WHERE {?resource %%P1%% ?object ; rdf:type/rdfs:subClassOf* %%T1%% }""" ;
     rut:parameter rutp:INVFUNCT-P1 ;
     rut:parameter rutp:INVFUNCT-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?object"""
     ];
     .
 
@@ -419,8 +449,8 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
     dcterms:identifier "OWLSYMMETRICPROP" ;
     dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
     rut:sparqlWherePattern """ {
-                                    ?resource  %%P1%% ?r1 .
-                                    FILTER NOT EXISTS {?r1 %%P1%% ?resource } .
+                                    ?r1  %%P1%% ?resource .
+                                    FILTER NOT EXISTS {?resource %%P1%% ?r1 } .
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( *) AS ?total)
                                      WHERE { ?r1 %%P1%% ?r2 . }""" ;
@@ -429,6 +459,11 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """?r1"""
     ];
     .
 
@@ -456,6 +491,11 @@ rutp:OWLASYMMETRICPROP a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?r2"""
     ];
     .
 
@@ -487,6 +527,11 @@ rutp:OWLTRANSPROP a rut:Pattern ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """?r3"""
+    ];
     .
 
 rutp:OWLTRANSPROP-P1 a rut:Parameter ;
@@ -511,6 +556,11 @@ rutp:OWLIRREFLEXIVE a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?resource"""
     ];
     .
 
@@ -541,7 +591,12 @@ rutp:COMP a rut:Pattern ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
-        rut:annotationValue """%%P1%%""", """%%P2%%"""
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?beforeVal"""
     ];
     .
 
@@ -579,6 +634,11 @@ rutp:MATCH a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?value"""
     ];
     .
 
@@ -622,6 +682,11 @@ rutp:LITRAN a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?value"""
     ];
     .
 
@@ -670,6 +735,11 @@ rutp:TYPDEP a rut:Pattern ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue rdf:type
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """%%T2%%"""
+    ];
     .
 
 rutp:TYPDEP-T1 a rut:Parameter ;
@@ -701,7 +771,7 @@ rutp:PVT a rut:Pattern ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
-        rut:annotationValue """%%P1%%""", """%%P2"""
+        rut:annotationValue """%%P2%%"""
     ];
     .
 
@@ -737,6 +807,11 @@ rutp:TRIPLE a rut:Pattern ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """%%V1%%"""
+    ];
     .
 
 rutp:TRIPLE-P1 a rut:Parameter ;
@@ -770,6 +845,11 @@ rutp:ONELANG a rut:Pattern ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?c1""", """?c2"""
+    ];
     .
 
 rutp:ONELANG-P1 a rut:Parameter ;
@@ -802,6 +882,11 @@ rutp:ONELANGGLOBAL a rut:Pattern ;
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationPath ;
         rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?c1""", """?c2"""
     ];
     .
 
