@@ -363,11 +363,11 @@ public final class TestUtils {
 
     public static String generateTestURI(String sourcePrefix, Pattern pattern, Collection<Binding> bindings, String generatorURI) {
         String testURI = PrefixNSService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
-        String string2hash = generatorURI;
+        StringBuilder string2hash = new StringBuilder(generatorURI);
         for (Binding binding : bindings) {
-            string2hash += binding.getValueAsString();
+            string2hash.append(binding.getValueAsString());
         }
-        String md5Hash = TestUtils.getMD5FromString(string2hash);
+        String md5Hash = TestUtils.getMD5FromString(string2hash.toString());
         if (md5Hash == null) {
             testURI += JenaUUID.generate().asString();
         } else {
