@@ -34,37 +34,49 @@ rutt:skos-ONELANG-singlePrefLabel
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing  rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#ConceptScheme>
 rutt:skos-ConseptSchemeWithoutRdfslabel
-      a       rut:ManualTestCase ;
-      dcterms:description "A skos:ConceptScheme should contain one of skos:label or skos:prefLabel";
-      rut:appliesTo rut:Schema ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2004/02/skos/core#ConceptScheme>, <http://www.w3.org/2000/01/rdf-schema#label> ;
-      rut:source <http://www.w3.org/2004/02/skos/core#> ;
-      rut:testCaseLogLevel rlog:WARN ;
-      rut:sparqlWhere """ {
-                                 ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
-                                 FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
-                                 FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
-      rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ .
+    a       rut:ManualTestCase ;
+    dcterms:description "A skos:ConceptScheme should contain one of skos:label or skos:prefLabel";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2004/02/skos/core#ConceptScheme>, <http://www.w3.org/2000/01/rdf-schema#label> ;
+    rut:source <http://www.w3.org/2004/02/skos/core#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+	                         ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+	                         FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
+	                         FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v2 }} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> , <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+    ];
+	.
 
 # http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf
 # Missing rdfs:label and skos:prefLabel in <http://www.w3.org/2004/02/skos/core#Concept>
 # TODO not according to pattern (2 filters)
 rutt:skos-ConseptWithoutRdfslabel
-      a       rut:ManualTestCase ;
-      dcterms:description "A skos:Consept should have at least one of rdf:label or skos:prefLabel";
-      rut:appliesTo rut:Schema ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#label> ;
-      rut:source <http://www.w3.org/2004/02/skos/core#> ;
-      rut:testCaseLogLevel rlog:WARN ;
-      rut:sparqlWhere """ {
-                                 ?resource a <http://www.w3.org/2004/02/skos/core#Concept> .
-                                 FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
-                                 FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
-      rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource a <http://www.w3.org/2004/02/skos/core#Concept> . } """ .
+    a       rut:ManualTestCase ;
+    dcterms:description "A skos:Consept should have at least one of rdf:label or skos:prefLabel";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2004/02/skos/core#Concept>, <http://www.w3.org/2000/01/rdf-schema#label> ;
+    rut:source <http://www.w3.org/2004/02/skos/core#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                             ?resource a <http://www.w3.org/2004/02/skos/core#Concept> .
+                             FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
+                             FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource a <http://www.w3.org/2004/02/skos/core#Concept> . } """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> , <http://www.w3.org/2004/02/skos/core#prefLabel> ;
+	];
+	.
                                  
 # Overlap in Disjoint Label Properties
 # skos:prefLabel is not a skos:altLabel
