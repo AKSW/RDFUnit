@@ -293,10 +293,8 @@ rutp:OWLCARDT a rut:Pattern ;
     dcterms:identifier "OWLCARDT" ;
     dcterms:description """Emulates the owl:cardinality constrain on a Class"""@en ;
     rut:sparqlWherePattern """ {
-									{
-                                    	?resource rdf:type/rdfs:subClassOf* %%T1%%.
-                                    	?resource %%P1%% ?c.
-									}
+	                                ?resource rdf:type/rdfs:subClassOf* %%T1%%.
+	                                ?resource %%P1%% ?c.
                                 } GROUP BY ?resource
                                 HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;  #count!=0 see https://issues.apache.org/jira/browse/JENA-750
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
