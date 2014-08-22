@@ -21,10 +21,10 @@ public class PrefixNSServiceTest {
         }
         // Update Prefix Service
         Map<String, String> prefixes = prefixModel.getNsPrefixMap();
-        for (String id : prefixes.keySet()) {
+        for (Map.Entry<String,String> entry : prefixes.entrySet()) {
             // All entries should match
-            String uri = PrefixNSService.getNSFromPrefix(id);
-            assertEquals("All prefixed should be initialized", uri, prefixes.get(id));
+            String uri = PrefixNSService.getNSFromPrefix(entry.getKey());
+            assertEquals("All prefixed should be initialized", uri, entry.getValue());
         }
 
         // The size should be the same

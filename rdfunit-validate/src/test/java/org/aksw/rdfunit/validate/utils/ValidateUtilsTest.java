@@ -12,6 +12,7 @@ import org.apache.commons.cli.Options;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -166,12 +167,12 @@ public class ValidateUtilsTest {
 
 
 
-        for (String arg : exceptionsExpected.keySet()) {
+        for (Map.Entry<String,String> entry : exceptionsExpected.entrySet()) {
 
             try {
-                commandLine = cliParser.parse(cliOptions, arg.split(" "));
+                commandLine = cliParser.parse(cliOptions, entry.getKey().split(" "));
                 configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
-                fail(exceptionsExpected.get(arg));
+                fail(entry.getValue());
             } catch (ParameterException e) {
                 // Expected exception
                 // Do nothing here

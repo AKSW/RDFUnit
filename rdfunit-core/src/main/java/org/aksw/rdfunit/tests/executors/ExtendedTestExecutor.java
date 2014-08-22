@@ -3,6 +3,7 @@ package org.aksw.rdfunit.tests.executors;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
@@ -15,6 +16,8 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The Extended Test Executor extends RLOG Executor but provides richer error metadata
@@ -69,12 +72,12 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                     result = new ExtendedTestCaseResult(testCase, resource, message, logLevel);
                 }
 
-                for (ResultAnnotation variableAnnotation: result.getVariableAnnotationsMap().keySet()) {
+                for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry: result.getVariableAnnotationsMap().entrySet()) {
                     // Get the variable name
-                    String variable = variableAnnotation.getAnnotationValue().toString().trim().replace("?", "");
+                    String variable = vaEntry.getKey().getAnnotationValue().toString().trim().replace("?", "");
                     //If it exists, add it in the Set
                     if (qs.contains(variable)) {
-                        result.getVariableAnnotationsMap().get(variableAnnotation).add(qs.get(variable));
+                        vaEntry.getValue().add(qs.get(variable));
                     }
                 }
             }

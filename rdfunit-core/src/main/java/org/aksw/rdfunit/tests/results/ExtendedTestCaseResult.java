@@ -57,9 +57,9 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
             annotation.serializeAsResult(resource, model);
         }
 
-        for (ResultAnnotation annotation : variableAnnotationsMap.keySet()) {
-            for (RDFNode rdfNode: variableAnnotationsMap.get(annotation)) {
-                resource.addProperty(ResourceFactory.createProperty(annotation.getAnnotationProperty()), rdfNode);
+        for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {
+            for (RDFNode rdfNode: vaEntry.getValue()) {
+                resource.addProperty(ResourceFactory.createProperty(vaEntry.getKey().getAnnotationProperty()), rdfNode);
             }
         }
 

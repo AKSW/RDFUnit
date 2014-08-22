@@ -12,10 +12,8 @@ import org.junit.Test;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class DatasetStatisticsTest {
 
@@ -47,14 +45,14 @@ public class DatasetStatisticsTest {
 
         assertEquals("Stats with counts should be equal without counts", pStats.size(), pStatsCounts.size());
 
-        for (String s : pStats.keySet()) {
-            Integer count = pStats.get(s);
+        for (Map.Entry<String, Integer> entry : pStats.entrySet()) {
+            Integer count = entry.getValue();
             assertNotNull(count);
             assertEquals("No count stats must have 0 as count", count, zero);
         }
 
-        for (String s : pStatsCounts.keySet()) {
-            Integer count = pStatsCounts.get(s);
+        for (Map.Entry<String, Integer> entry : pStatsCounts.entrySet()) {
+            Integer count = entry.getValue();
             assertNotNull(count);
             assertNotEquals("No count stats must have <>0 as count", count, zero);
         }
@@ -70,14 +68,14 @@ public class DatasetStatisticsTest {
         assertEquals("Stats with counts should be equal without counts", cStats.size(), cStatsCounts.size());
 
 
-        for (String s : cStats.keySet()) {
-            Integer count = cStats.get(s);
+        for (Map.Entry<String, Integer> entry : cStats.entrySet()) {
+            Integer count = entry.getValue();
             assertNotNull(count);
             assertEquals("No count stats must have 0 as count", count, zero);
         }
 
-        for (String s : cStatsCounts.keySet()) {
-            Integer count = cStatsCounts.get(s);
+        for (Map.Entry<String, Integer> entry : cStatsCounts.entrySet()) {
+            Integer count = entry.getValue();
             assertNotNull(count);
             assertNotEquals("No count stats must have <>0 as count", count, zero);
         }
@@ -111,11 +109,11 @@ public class DatasetStatisticsTest {
         examples.put("http://example.com#property", "http://example.com#");
         examples.put("http://www.w3.org/2004/02/skos/core#broader", "http://www.w3.org/2004/02/skos/core#");
 
-        for (String uri : examples.keySet()) {
-            String namespace = examples.get(uri);
-            assertEquals("All prefixed should be initialized", namespace, datasetStatistics.getNamespaceFromURI(uri));
+        for (Map.Entry<String, String> entry : examples.entrySet()) {
+            String namespace = entry.getValue();
+            assertEquals("All prefixed should be initialized", namespace, datasetStatistics.getNamespaceFromURI(entry.getKey()));
             // test both in case there is a conflict
-            assertEquals("All prefixed should be initialized", namespace, datasetStatisticsCounts.getNamespaceFromURI(uri));
+            assertEquals("All prefixed should be initialized", namespace, datasetStatisticsCounts.getNamespaceFromURI(entry.getKey()));
         }
     }
 
