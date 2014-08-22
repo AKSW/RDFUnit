@@ -123,16 +123,23 @@ public class ValidateUtils {
         TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
         if (commandLine.hasOption("r")) {
             String rl = commandLine.getOptionValue("r", "aggregate");
-            if (rl.equals("status"))
-                resultLevel = TestCaseExecutionType.statusTestCaseResult;
-            else if (rl.equals("aggregate"))
-                resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
-            else if (rl.equals("rlog"))
-                resultLevel = TestCaseExecutionType.rlogTestCaseResult;
-            else if (rl.equals("extended"))
-                resultLevel = TestCaseExecutionType.extendedTestCaseResult;
-            else
-                log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
+            switch (rl) {
+                case "status":
+                    resultLevel = TestCaseExecutionType.statusTestCaseResult;
+                    break;
+                case "aggregate":
+                    resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
+                    break;
+                case "rlog":
+                    resultLevel = TestCaseExecutionType.rlogTestCaseResult;
+                    break;
+                case "extended":
+                    resultLevel = TestCaseExecutionType.extendedTestCaseResult;
+                    break;
+                default:
+                    log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
+                    break;
+            }
         }
         configuration.setTestCaseExecutionType(resultLevel);
 
