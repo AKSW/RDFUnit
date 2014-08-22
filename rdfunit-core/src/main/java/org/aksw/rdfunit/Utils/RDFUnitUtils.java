@@ -78,6 +78,11 @@ public final class RDFUnitUtils {
 
             log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
         }
+        try {
+            additionalCSV.close();
+        } catch (IOException e) {
+            log.debug("IOException: ", e);
+        }
     }
 
     public static void fillSchemaServiceFromLOV() {
