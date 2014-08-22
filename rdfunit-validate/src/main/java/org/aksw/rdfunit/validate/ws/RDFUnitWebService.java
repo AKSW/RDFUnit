@@ -49,7 +49,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private final void handleRequestAndRespond(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+    private void handleRequestAndRespond(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         RDFUnitConfiguration configuration = null;
         try {
             configuration = getConfiguration(httpServletRequest);
@@ -73,7 +73,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         try {
             results = validate(configuration, dataset, testSuite);
         } catch (TestCaseExecutionException e) {
-
+            // TODO catch error
         }
         assert (results != null);
 
@@ -93,7 +93,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @throws TripleWriterException
      * @throws IOException
      */
-    private final void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
+    private void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());

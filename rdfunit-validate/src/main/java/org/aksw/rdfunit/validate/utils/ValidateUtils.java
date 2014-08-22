@@ -31,7 +31,7 @@ public class ValidateUtils {
         return cliParser.parse(getCliOptions(), args);
     }
 
-    public static Options generateCLIOptions() {
+    private static Options generateCLIOptions() {
         Options cliOptions = new Options();
 
         cliOptions.addOption("h", "help", false, "show this help message");
@@ -244,7 +244,7 @@ public class ValidateUtils {
 
 
     private static Collection<String> getUriStrs(String parameterStr) {
-        Collection<String> uriStrs = new ArrayList<String>();
+        Collection<String> uriStrs = new ArrayList<>();
         if (parameterStr == null) return uriStrs;
 
         for (String uriStr : parameterStr.split(",")) {

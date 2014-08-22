@@ -126,7 +126,7 @@ public class RDFUnitStaticWrapper {
                         manualTestCases = TestUtils.instantiateTestsFromModel(manualTestCaseReader.read());
                     } catch (TripleReaderException e) {
                         // Create an empty collection
-                        manualTestCases = new ArrayList<TestCase>();
+                        manualTestCases = new ArrayList<>();
                     }
 
                     // Generate test cases from ontology (do this every time in case ontology changes)
@@ -143,7 +143,7 @@ public class RDFUnitStaticWrapper {
 
                     Collection<TestCase> autoTestCases = TestUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
 
-                    Collection<TestCase> allTestCases = new ArrayList<TestCase>();
+                    Collection<TestCase> allTestCases = new ArrayList<>();
                     allTestCases.addAll(autoTestCases);
                     allTestCases.addAll(manualTestCases);
 

@@ -5,7 +5,6 @@ import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.validate.ParameterException;
-import org.aksw.rdfunit.validate.utils.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -174,6 +173,8 @@ public class ValidateUtilsTest {
                 configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
                 fail(exceptionsExpected.get(arg));
             } catch (ParameterException e) {
+                // Expected exception
+                // Do nothing here
             }
         }
 

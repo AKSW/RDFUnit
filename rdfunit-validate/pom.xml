@@ -21,6 +21,7 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-resources</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
