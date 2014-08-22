@@ -116,7 +116,7 @@ public class TestCoverageEvaluator {
         // FCard Coverage metric
         references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCardPatterns)));
         double fCard = getCoverage(references, propertyCount, totalProperties);
-        log.info("fCard Coverage: " + fRang);
+        log.info("fCard Coverage: " + fCard);
 
         // Fmem Coverage metric
         references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fMemPatterns)));
