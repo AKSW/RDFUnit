@@ -83,8 +83,8 @@ public class ValidateUtils {
         String dataFolder = commandLine.getOptionValue("f", "../data/");
 
         //Dataset URI, important & required (used to associate manual dataset test cases)
-        String datasetURI = commandLine.getOptionValue("d");
-        if (datasetURI!= null && datasetURI.endsWith("/"))
+        String datasetURI = commandLine.getOptionValue("d", "");
+        if (!datasetURI.isEmpty() && datasetURI.endsWith("/"))
             datasetURI = datasetURI.substring(0, datasetURI.length() - 1);
 
         configuration = new RDFUnitConfiguration(datasetURI, dataFolder);
