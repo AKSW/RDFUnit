@@ -21,7 +21,7 @@ public class RDFFirstSuccessReader extends RDFReader {
 
     @Override
     public void read(Model model) throws TripleReaderException {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         // return the first successful attempt
         for (RDFReader r : readers) {
             try {
@@ -29,15 +29,15 @@ public class RDFFirstSuccessReader extends RDFReader {
                 // return on first read() that does not throw an exception
                 return;
             } catch (TripleReaderException e) {
-                message += "\n";
+                message.append("\n");
                 if (e.getMessage() != null) {
-                    message += e.getMessage();
+                    message.append(e.getMessage());
                 } else {
-                    message += e.toString();
+                    message.append(e.toString());
                 }
             }
         }
 
-        throw new TripleReaderException("Cannot read from any reader: " + message);
+        throw new TripleReaderException("Cannot read from any reader: " + message.toString());
     }
 }
