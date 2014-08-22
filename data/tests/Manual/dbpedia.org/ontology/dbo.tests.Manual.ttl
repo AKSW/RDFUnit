@@ -9,6 +9,8 @@
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix spin: <http://spinrdf.org/spin#> .
+
 
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
 rutt:dbo-CARD-rdfslabelforeachlanguage

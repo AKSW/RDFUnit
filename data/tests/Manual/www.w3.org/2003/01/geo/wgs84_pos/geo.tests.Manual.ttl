@@ -9,7 +9,7 @@
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-
+@prefix spin: <http://spinrdf.org/spin#> .
 
 
 # geo:lat must be in the range [-90,90]
