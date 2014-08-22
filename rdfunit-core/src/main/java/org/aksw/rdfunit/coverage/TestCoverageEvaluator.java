@@ -54,41 +54,41 @@ public class TestCoverageEvaluator {
         return inClause.toString();
     }
 
-    public void calculateCoverage(QueryExecutionFactory model, String propertiesFile, String classFile) throws IOException {
+    public void calculateCoverage(QueryExecutionFactory qef, String propertiesFile, String classFile) throws IOException {
 
-
-        Map<String, Long> properties = new HashMap<>();
-        BufferedReader br = new BufferedReader(new FileReader(propertiesFile));
         String line;
         long propertiesTotal = 0;
-        while ((line = br.readLine()) != null) {
-            // process the line.
-            String[] ar = line.split(" ");
-            long count = Long.parseLong(ar[0].trim());
-            String ref = ar[1].trim();
-            propertiesTotal += count;
-            properties.put(ref, count);
+        long classesTotal = 0;
 
+        Map<String, Long> properties = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(propertiesFile))) {
+
+            while ((line = br.readLine()) != null) {
+                // process the line.
+                String[] ar = line.split(" ");
+                long count = Long.parseLong(ar[0].trim());
+                String ref = ar[1].trim();
+                propertiesTotal += count;
+                properties.put(ref, count);
+
+            }
         }
-        br.close();
-
 
         Map<String, Long> classes = new HashMap<>();
-        br = new BufferedReader(new FileReader(classFile));
+        try (BufferedReader br = new BufferedReader(new FileReader(classFile))){
 
-        long classesTotal = 0;
-        while ((line = br.readLine()) != null) {
-            // process the line.
-            String[] ar = line.split(" ");
-            long count = Long.parseLong(ar[0].trim());
-            String ref = ar[1].trim();
-            classesTotal += count;
-            classes.put(ref, count);
+            while ((line = br.readLine()) != null) {
+                // process the line.
+                String[] ar = line.split(" ");
+                long count = Long.parseLong(ar[0].trim());
+                String ref = ar[1].trim();
+                classesTotal += count;
+                classes.put(ref, count);
 
+            }
         }
-        br.close();
 
-        calculateCoverage(model, properties, propertiesTotal, classes, classesTotal);
+        calculateCoverage(qef, properties, propertiesTotal, classes, classesTotal);
 
 
     }

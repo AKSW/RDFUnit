@@ -48,6 +48,23 @@ public abstract class Source implements Comparable<Source> {
 
     protected abstract QueryExecutionFactory initQueryFactory();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Source)) return false;
+
+        Source source = (Source) o;
+
+        if (!uri.equals(source.uri)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return uri.hashCode();
+    }
+
     public QueryExecutionFactory getExecutionFactory() {
         // TODO not thread safe but minor
         if (queryFactory == null) {
@@ -66,24 +83,11 @@ public abstract class Source implements Comparable<Source> {
 
     @Override
     public int compareTo(Source o) {
-        if (this.getPrefix().equals(o.getPrefix()) && this.getUri().equals(o.getUri())) {
-            return 0;
-        } else {
-            return this.getPrefix().compareTo(o.getPrefix());
+        if (o == null) {
+            return -1;
         }
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Source) {
-            return this.compareTo((Source) obj) == 0;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.toString().hashCode();
+        return this.getUri().compareTo(o.getUri());
     }
 
     @Override

@@ -162,9 +162,7 @@ public final class DatasetStatistics {
         }
 
         int pos = Math.min(uri.lastIndexOf(breakChar), uri.length());
-        String namespace = uri.substring(0, pos + 1);
-
-        return namespace;
+        return uri.substring(0, pos + 1);
     }
 
 

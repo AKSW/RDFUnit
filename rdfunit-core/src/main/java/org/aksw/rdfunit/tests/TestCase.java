@@ -124,20 +124,28 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     @Override
     public int compareTo(TestCase o) {
+        if (o == null) {
+            return -1;
+        }
+
         return this.getTestURI().compareTo(o.getTestURI());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof TestCase) {
-            return this.getTestURI().compareTo(((TestCase) obj).getTestURI()) == 0;
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestCase)) return false;
+
+        TestCase testCase = (TestCase) o;
+
+        if (!testURI.equals(testCase.testURI)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        return testURI.hashCode();
     }
 
     @Override
