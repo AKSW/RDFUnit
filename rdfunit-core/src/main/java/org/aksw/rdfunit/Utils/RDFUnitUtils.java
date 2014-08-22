@@ -41,18 +41,11 @@ public final class RDFUnitUtils {
         int count = 0;
 
         if (additionalCSV != null) {
-            BufferedReader in = null;
 
-            try {
-                in = new BufferedReader(new InputStreamReader(additionalCSV, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                log.debug("UnsupportedEncodingException: ", e);
-                return;
-            }
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(additionalCSV, "UTF-8"))) {
 
-            String line = null;
+                String line = null;
 
-            try {
                 while ((line = in.readLine()) != null) {
                     // skip comments & empty lines
                     if (line.startsWith("#") || line.trim().isEmpty()) {
@@ -75,8 +68,11 @@ public final class RDFUnitUtils {
                     }
                 }
 
+            } catch (UnsupportedEncodingException e) {
+                log.debug("UnsupportedEncodingException: ", e);
+                return;
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                log.debug("IOException: ", e);
             }
 
             log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
