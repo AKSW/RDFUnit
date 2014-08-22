@@ -12,19 +12,22 @@
 
 # rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
 rutt:dbo-CARD-rdfslabelforeachlanguage
-      a       rut:TestCase ;
-      dcterms:description "TODO" ;
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:OWLCARD ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-      rut:source <http://dbpedia.org/ontology/> ;
-      rut:sparqlWhere """ SELECT DISTINCT ?s WHERE {
-                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 .
-                                 GROUP BY ?s
-                                 HAVING count(?v1) > 20 } """ ;
-      rut:sparqlPrevalence """ SELECT (count(?s) AS ?total) WHERE {
-                                 ?s <http://www.w3.org/2000/01/rdf-schema#label> ?v1 . } """ .
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "One rdfs:label per lang per resource" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:ONELANGGLOBAL ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:binding
+	[ a     rut:Binding ;
+        rut:bindingValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+		rut:parameter rutp:ONELANGGLOBAL-P1
+	] ;
+	rut:testCaseLogLevel
+		rlog:ERROR ;
+	.
+
 
 
 # dbo:deathDate after dbo:birthDate
@@ -86,80 +89,91 @@ rutt:dbo-COMP-demolitionbuildingstartdate
 
 # dbo:latestReleaseDate after dbo:releaseDate
 rutt:dbo-COMP-releaselatestreleasedate
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "A dbp:releaseDate cannot be after a dbo:latestReleaseDate" ;
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:COMP ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
-      rut:source <http://dbpedia.org/ontology/> ;
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "A dbp:releaseDate cannot be after a dbo:latestReleaseDate" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:COMP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/latestReleaseDate>, <http://dbpedia.org/ontology/releaseDate> ;
+    rut:source <http://dbpedia.org/ontology/> ;
     rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
-            rut:parameter rutp:COMP-P1
-        ] ;
+    [ a     rut:Binding ;
+        rut:bindingValue <http://dbpedia.org/ontology/releaseDate> ;
+        rut:parameter rutp:COMP-P1
+    ] ;
     rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
-            rut:parameter rutp:COMP-P2
-        ] ;
+    [ a     rut:Binding ;
+        rut:bindingValue <http://dbpedia.org/ontology/latestReleaseDate> ;
+        rut:parameter rutp:COMP-P2
+    ] ;
     rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue ">" ;
-            rut:parameter rutp:COMP-OP
-        ] ;
+    [ a     rut:Binding ;
+        rut:bindingValue ">" ;
+        rut:parameter rutp:COMP-OP
+    ] ;
     rut:testCaseLogLevel
                   rlog:ERROR .
 
 
 # Different countries having the same capital
 rutt:dbo-INVFUNC-countriessamecapital
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "Two different dbo:Country(s) should not have the same dbo:capital" ;
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:INVFUNCT ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://dbpedia.org/ontology/capital> ;
-      rut:references <http://dbpedia.org/ontology/Country> ;
-      rut:source <http://dbpedia.org> ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue <http://dbpedia.org/ontology/capital> ;
-            rut:parameter rutp:INVFUNCT-P1
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue <http://dbpedia.org/ontology/Country> ;
-            rut:parameter rutp:INVFUNCT-T1
-        ] ;
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "Two different dbo:Country(s) should not have the same dbo:capital" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:INVFUNCT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/capital> ;
+    rut:references <http://dbpedia.org/ontology/Country> ;
+    rut:source <http://dbpedia.org> ;
+    rut:binding [
+        a     rut:Binding ;
+        rut:bindingValue <http://dbpedia.org/ontology/capital> ;
+        rut:parameter rutp:INVFUNCT-P1
+    ] ;
+    rut:binding [
+        a     rut:Binding ;
+        rut:bindingValue <http://dbpedia.org/ontology/Country> ;
+        rut:parameter rutp:INVFUNCT-T1
+    ] ;
     rut:testCaseLogLevel
-                  rlog:ERROR ;
+		rlog:ERROR ;
     .
 
 
 # height of a dbo:Person between 0.4 and 2.5 meter
 rutt:dbo-LITRAN-rangeheightperson
-      a       rut:ManualTestCase ;
-      dcterms:description "A dbo:Person should have a height between 0.4 and 2.5 meters" ;
-      rut:appliesTo rut:Schema ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://dbpedia.org/ontology/Person> ;
-      rut:references <http://dbpedia.org/ontology/height> ;
-      rut:source <http://dbpedia.org/ontology/> ;
-      rut:sparqlWhere """  {
-                                 {
-                                    ?resource a <http://dbpedia.org/ontology/Person> .
-                                    ?resource <http://dbpedia.org/ontology/height> ?v1 .
-                                 }  UNION {
-                                    ?resource a ?class .
-                                    ?class rdfs:subClassOf+ <http://dbpedia.org/ontology/Person> .
-                                    ?resource <http://dbpedia.org/ontology/height> ?v1 .
-                                 }
-                                 FILTER ( !(xsd:double(?v1) < 44 || xsd:double(?v1) > 250))} """ ;
-      rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    a       rut:ManualTestCase ;
+    dcterms:description "A dbo:Person should have a height between 0.4 and 2.5 meters" ;
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/Person> ;
+    rut:references <http://dbpedia.org/ontology/height> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:sparqlWhere """  {
+                             {
+                                ?resource a <http://dbpedia.org/ontology/Person> .
+                                ?resource <http://dbpedia.org/ontology/height> ?v1 .
+                             }  UNION {
+                                ?resource a ?class .
+                                ?class rdfs:subClassOf+ <http://dbpedia.org/ontology/Person> .
+                                ?resource <http://dbpedia.org/ontology/height> ?v1 .
+                             }
+                             FILTER ( !(xsd:double(?v1) < 44 || xsd:double(?v1) > 250))} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?resource <http://dbpedia.org/ontology/height> ?v1 . } """ ;
     rut:testCaseLogLevel
-            rlog:WARN .
+        rlog:WARN ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue <http://dbpedia.org/ontology/Person>
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?v1""";
+    ];
+    .
 
 # weight of a dbo:Person is between 1 and 375 KG
 rutt:dbo-LITRAN-rangeweightperson
@@ -170,31 +184,31 @@ rutt:dbo-LITRAN-rangeweightperson
       rut:references <http://dbpedia.org/ontology/Person/weight> ;
       rut:source <http://dbpedia.org/ontology/> ;
       rut:basedOnPattern rutp:LITRAN ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue "[]" ;
-                      rut:parameter rutp:LITRAN-T1
-                    ] ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue <http://dbpedia.org/ontology/Person/weight> ;
-                      rut:parameter rutp:LITRAN-P1
-                    ] ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue "!" ;
-                      rut:parameter rutp:LITRAN-NOP
-                    ] ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue "1" ;
-                      rut:parameter rutp:LITRAN-valueMin
-                    ] ;
-          rut:binding
-                    [ a       rut:Binding ;
-                      rut:bindingValue "375" ;
-                      rut:parameter rutp:LITRAN-valueMax
-                    ] ;
+      rut:binding
+                [ a       rut:Binding ;
+                  rut:bindingValue "[]" ;
+                  rut:parameter rutp:LITRAN-T1
+                ] ;
+      rut:binding
+                [ a       rut:Binding ;
+                  rut:bindingValue <http://dbpedia.org/ontology/Person/weight> ;
+                  rut:parameter rutp:LITRAN-P1
+                ] ;
+      rut:binding
+                [ a       rut:Binding ;
+                  rut:bindingValue "!" ;
+                  rut:parameter rutp:LITRAN-NOP
+                ] ;
+      rut:binding
+                [ a       rut:Binding ;
+                  rut:bindingValue "1" ;
+                  rut:parameter rutp:LITRAN-valueMin
+                ] ;
+      rut:binding
+                [ a       rut:Binding ;
+                  rut:bindingValue "375" ;
+                  rut:parameter rutp:LITRAN-valueMax
+                ] ;
     rut:testCaseLogLevel
             rlog:WARN .
 
@@ -375,29 +389,29 @@ rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
 
 # dbo:Person without a dbo:birthDate
 rutt:dbo-TYPRODEP-personwithoutbirthdate
-      a       rut:PatternBasedTestCase ;
-      dcterms:description "A dbo:Person should have a dbo:birthDate" ;
-      rut:appliesTo rut:Schema ;
-      rut:basedOnPattern rutp:TYPRODEP ;
-      rut:generated rut:ManuallyGenerated ;
-      rut:references <http://dbpedia.org/ontology/Person> ;
-      rut:references <http://dbpedia.org/ontology/birthDate> ;
-      rut:source <http://dbpedia.org/ontology/> ;
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "A dbo:Person should have a dbo:birthDate" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://dbpedia.org/ontology/Person> ;
+    rut:references <http://dbpedia.org/ontology/birthDate> ;
+    rut:source <http://dbpedia.org/ontology/> ;
     rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue " NOT " ;
-                rut:parameter rutp:TYPRODEP-NOT
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://dbpedia.org/ontology/Person> ;
-                rut:parameter rutp:TYPRODEP-T1
-              ] ;
-      rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
-                rut:parameter rutp:TYPRODEP-P1
-              ] ;
+	[ a       rut:Binding ;
+		rut:bindingValue " NOT " ;
+		rut:parameter rutp:TYPRODEP-NOT
+	] ;
+    rut:binding
+	[ a       rut:Binding ;
+		rut:bindingValue <http://dbpedia.org/ontology/Person> ;
+		rut:parameter rutp:TYPRODEP-T1
+	] ;
+    rut:binding
+	[ a       rut:Binding ;
+		rut:bindingValue <http://dbpedia.org/ontology/birthDate> ;
+		rut:parameter rutp:TYPRODEP-P1
+	] ;
     rut:testCaseLogLevel
             rlog:ERROR ;
     .
