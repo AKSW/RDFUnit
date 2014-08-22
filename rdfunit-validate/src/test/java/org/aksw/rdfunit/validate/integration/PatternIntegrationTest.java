@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
 @Category(IntegrationTest.class)
 public class PatternIntegrationTest {
 
-    private final Map<String, Integer> testsWithErrors = new HashMap<>();
-    private final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
+    private static final Map<String, Integer> testsWithErrors = new HashMap<>();
+    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
 
 
 

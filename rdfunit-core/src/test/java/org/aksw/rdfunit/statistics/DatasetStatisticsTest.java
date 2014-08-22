@@ -4,7 +4,6 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.io.RDFReader;
-import org.aksw.rdfunit.sources.SchemaSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +20,8 @@ public class DatasetStatisticsTest {
     private DatasetStatistics datasetStatisticsCounts;
 
     /* number of defined NS in patterns.ttl*/
-    private final int nsInPatterns = 3;
-    private final Integer zero = new Integer(0);
+    private static final int nsInPatterns = 3;
+    private static final Integer zero = new Integer(0);
 
 
     @Before
@@ -93,7 +92,7 @@ public class DatasetStatisticsTest {
 
     @Test
     public void testgetIdentifiedSchemata() throws Exception {
-        Collection<SchemaSource> schemata = datasetStatistics.getIdentifiedSchemata();
+        /*Collection<SchemaSource> schemata = */ datasetStatistics.getIdentifiedSchemata();
         //Collection<SchemaSource> schemataCount = datasetStatisticsCounts.getIdentifiedSchemata();
 
         // TODO: init SchemaService to get data
