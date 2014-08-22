@@ -95,6 +95,9 @@ public abstract class RDFUnitWebService extends HttpServlet {
      */
     private void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
+        if (serializationFormat == null) {
+            throw new TripleWriterException("Invalid output format");
+        }
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());
         RDFWriter RDFWriter = RDFWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getTestCaseExecutionType());
