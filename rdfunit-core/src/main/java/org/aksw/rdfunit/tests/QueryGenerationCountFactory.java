@@ -21,7 +21,7 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
         Query query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE " + testCase.getSparqlWhere()
         );
-        if (!query.hasHaving()) {
+        if (!query.hasGroupBy()) {
             return query;
         }
 
