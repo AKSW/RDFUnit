@@ -28,10 +28,11 @@ public final class RDFUnitUtils {
 
     public static void fillSchemaServiceFromFile(String additionalCSV) {
 
-        try {
-            InputStream inputStream = new FileInputStream(additionalCSV);
+        try (InputStream inputStream = new FileInputStream(additionalCSV)){
             fillSchemaServiceFromFile(inputStream);
         } catch (FileNotFoundException e) {
+            log.error("File " + additionalCSV + " not fount!", e);
+        } catch (IOException e) {
             log.error("File " + additionalCSV + " not fount!", e);
         }
     }
