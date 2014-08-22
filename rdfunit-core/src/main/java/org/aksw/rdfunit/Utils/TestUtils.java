@@ -94,7 +94,16 @@ public final class TestUtils {
 
     }
 
-    public static Collection<TestCase> instantiateTestsFromModel(Model model) {
+    public static Collection<TestCase> instantiateTestsFromModel(Model model)  {
+        try {
+            return instantiateTestsFromModel(model, false);
+        } catch (TestCaseInstantiationException e) {
+            // This should not occur since we pass strict-> false
+        }
+        throw new RuntimeException("Unexpected exception...");
+    }
+
+    public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) throws TestCaseInstantiationException {
         Collection<TestCase> tests = new ArrayList<>();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
 
@@ -110,10 +119,16 @@ public final class TestUtils {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
-            ManualTestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
-            if (tc != null) {
+            try {
+                ManualTestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
                 tests.add(tc);
+            } catch (TestCaseInstantiationException e) {
+                log.error(e.getMessage(), e);
+                if (strict) {
+                    throw new TestCaseInstantiationException(e.getMessage(), e);
+                }
             }
+
         }
 
         // Get all pattern based tests
@@ -128,16 +143,21 @@ public final class TestUtils {
         while (results.hasNext()) {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
-            PatternBasedTestCase tc = instantiateSinglePatternTestFromModel(qef, testURI);
-            if (tc != null) {
+            try {
+                PatternBasedTestCase tc = instantiateSinglePatternTestFromModel(qef, testURI);
                 tests.add(tc);
+            } catch (TestCaseInstantiationException e) {
+                log.error(e.getMessage(), e);
+                if (strict) {
+                    throw new TestCaseInstantiationException(e.getMessage(), e);
+                }
             }
         }
 
         return tests;
     }
 
-    public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) {
+    public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
         String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
@@ -194,20 +214,17 @@ public final class TestUtils {
                             sparqlPrevalence);
                 }
             }
-        } catch (TestCaseInstantiationException e) {
-            log.error(e.getMessage(), e);
+
         } finally {
             if (qe != null) {
                 qe.close();
             }
         }
 
-        log.error("Cannot instantiate test case: " + testURI);
-        return null;
-
+        throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
     }
 
-    public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) {
+    public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
         String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
@@ -237,8 +254,7 @@ public final class TestUtils {
                 String patternURI = qs.get("basedOnPattern").toString();
                 Pattern pattern = PatternService.getPattern( PrefixNSService.getLocalName(patternURI, "rutp"));
                 if (pattern == null) {
-                    log.error("Pattern does not exists for test: " + testURI);
-                    return null;
+                    throw new TestCaseInstantiationException("Pattern does not exists for TC: " + testURI);
                 }
 
                 Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
@@ -270,16 +286,13 @@ public final class TestUtils {
                             bindings);
                 }
             }
-        } catch (TestCaseInstantiationException e) {
-            log.error(e.getMessage(), e);
         } finally {
             if (qe != null) {
                 qe.close();
             }
         }
 
-        log.error("Cannot instantiate test case: " + testURI);
-        return null;
+        throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
     }
 
     public static void writeTestsToFile(Collection<TestCase> tests, RDFWriter testCache) {

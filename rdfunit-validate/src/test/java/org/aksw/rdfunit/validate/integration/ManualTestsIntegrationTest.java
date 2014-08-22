@@ -59,7 +59,7 @@ public class ManualTestsIntegrationTest {
             String uri = entry.getValue();
             String resource = "/org/aksw/rdfunit/tests/" + "Manual/" + CacheUtils.getCacheFolderForURI(uri) + prefix + "." + "tests" + "." + "Manual" + ".ttl";
             try {
-                TestUtils.instantiateTestsFromModel(RDFReaderFactory.createResourceReader(resource).read());
+                TestUtils.instantiateTestsFromModel(RDFReaderFactory.createResourceReader(resource).read(), true);
             } catch (TripleReaderException e) {
                 fail("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")");
             }
