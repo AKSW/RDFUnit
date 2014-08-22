@@ -106,15 +106,11 @@ public abstract class TestExecutor {
                 results = executeSingleTest(source, testCase);
             } catch (TestCaseExecutionException e) {
                 status = e.getStatus();
+            } catch (RuntimeException e) {
+                throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
             } catch (Exception e) {
-                String message = "Unknown error while executing TC: " + testCase.getAbrTestURI();
-                log.error(message, e);
-                if (e instanceof RuntimeException) {
-                    throw new RuntimeException(message, e);
-                }
-                else {
-                    status = TestCaseResultStatus.Error;
-                }
+                log.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
+                status = TestCaseResultStatus.Error;
             }
 
             long executionTimeEndInMS = System.currentTimeMillis();
