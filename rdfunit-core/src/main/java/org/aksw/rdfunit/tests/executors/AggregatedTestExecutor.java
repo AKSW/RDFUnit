@@ -1,6 +1,9 @@
 package org.aksw.rdfunit.tests.executors;
 
-import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
@@ -66,10 +69,6 @@ public class AggregatedTestExecutor extends TestExecutor {
 
         // No need to throw exception here, class supports status
         return Arrays.<TestCaseResult>asList(new AggregatedTestCaseResult(testCase, total, prevalence));
-    }
-
-    private int getCountNumber(QueryExecutionFactory model, String query, String var) {
-        return getCountNumber(model, QueryFactory.create(query), var);
     }
 
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
