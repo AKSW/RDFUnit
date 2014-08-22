@@ -37,8 +37,8 @@ public class PatternIntegrationTest {
         testsWithErrors.put("INVFUNC_Wrong.ttl", 2);
         testsWithErrors.put("OWLCARDT_Correct.ttl", 0);
         testsWithErrors.put("OWLCARDT_Wrong_Exact.ttl", 6);
-        //testsWithErrors.put("OWLCARDT_Wrong_Min.ttl", 100);
-        //testsWithErrors.put("OWLCARDT_Wrong_Max.ttl", 100);
+        testsWithErrors.put("OWLCARDT_Wrong_Min.ttl", 2);
+        testsWithErrors.put("OWLCARDT_Wrong_Max.ttl", 2);
 
         // Load test ontology from resource
         RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "ontology.ttl");
