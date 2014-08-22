@@ -25,6 +25,7 @@ public class PatternIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
+        // Set of
         testsWithErrors.put("OWLDISJC_Correct.ttl", 0);
         testsWithErrors.put("OWLDISJC_Wrong.ttl", 6);
         testsWithErrors.put("RDFSRANGE_Correct.ttl", 0);
@@ -34,6 +35,10 @@ public class PatternIntegrationTest {
         testsWithErrors.put("RDFSRANGED_Wrong.ttl", 2);
         testsWithErrors.put("INVFUNC_Correct.ttl", 0);
         testsWithErrors.put("INVFUNC_Wrong.ttl", 2);
+        testsWithErrors.put("OWLCARDT_Correct.ttl", 0);
+        testsWithErrors.put("OWLCARDT_Wrong_Exact.ttl", 6);
+        //testsWithErrors.put("OWLCARDT_Wrong_Min.ttl", 100);
+        //testsWithErrors.put("OWLCARDT_Wrong_Max.ttl", 100);
 
         // Load test ontology from resource
         RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "ontology.ttl");
@@ -49,10 +54,12 @@ public class PatternIntegrationTest {
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
-        for (String resource : testsWithErrors.keySet()) {
+        for (Map.Entry<String, Integer> entry : testsWithErrors.entrySet()) {
+            String resource = entry.getKey();
             int errors = testsWithErrors.get(resource);
 
             // Test all execution types
+            long failedTestCases = -1;
             for (TestCaseExecutionType executionType : TestCaseExecutionType.values()) {
 
                 RDFReader reader = RDFReaderFactory.createResourceReader(resourcePrefix + resource);
@@ -60,7 +67,14 @@ public class PatternIntegrationTest {
 
                 // For status results we don't get violation instances
                 if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
-                    assertEquals("Errors not as expected for " + resource, errors, overviewResults.getIndividualErrors());
+                    assertEquals(executionType + ": Errors not as expected for " + resource, errors, overviewResults.getIndividualErrors());
+                }
+
+                if (failedTestCases == -1) {
+                    failedTestCases = overviewResults.getFailedTests();
+                }
+                else {
+                    assertEquals(executionType + ": Failed test cases not as expected for " + resource, failedTestCases, overviewResults.getFailedTests());
                 }
             }
 

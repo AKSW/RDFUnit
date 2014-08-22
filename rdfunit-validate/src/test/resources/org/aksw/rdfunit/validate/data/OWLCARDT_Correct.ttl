@@ -1,0 +1,55 @@
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample correct data for testing
+
+
+ex:correct1 a ex:CardExact0Class .
+
+
+ex:correct2 a ex:CardExact1Class ;
+	ex:cardExact1 ex:abc.
+
+ex:correct3 a ex:CardExact3Class ;
+	ex:cardExact3 ex:abc1 ;
+	ex:cardExact3 ex:abc2 ;
+	ex:cardExact3 ex:abc3 ;
+	.
+
+
+ex:correct4 a ex:CardMin0Class ;
+    ex:cardMin0 ex:abc1 ;
+    ex:cardMin0 ex:abc2 ;
+    ex:cardMin0 ex:abc3 ;
+    ex:cardMin0 ex:abc4 ;
+    ex:cardMin0 ex:abc5 ;
+    .
+
+ex:correct5 a ex:CardMin2Class ;
+	ex:cardMin2 ex:abc1 ;
+	ex:cardMin2 ex:abc2 ;
+	.
+
+ex:correct5b a ex:CardMin2Class ;
+	ex:cardMin2 ex:abc1 ;
+	ex:cardMin2 ex:abc2 ;
+	ex:cardMin2 ex:abc3 ;
+	.
+
+ex:correct6 a ex:CardMax0Class .
+
+ex:correct7 a ex:CardMax2Class ;
+	ex:cardMax2 ex:abc1;
+	.
+ex:correct7b a ex:CardMax2Class ;
+	ex:cardMax2 ex:abc1;
+	ex:cardMax2 ex:abc2;
+	.
+
+
+
+

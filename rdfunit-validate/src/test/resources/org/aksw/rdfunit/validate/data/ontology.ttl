@@ -51,6 +51,74 @@ ex:livesIn
     .
 
 ex:homepage
-	a owl:ObjectProperty, owl:InverseFunctionalProperty;
+	a owl:ObjectProperty,
+		owl:InverseFunctionalProperty; # should generate 1 test case
 	rdfs:domain ex:Person ;  # should generate 2 test cases
 	.
+
+###################
+### cardinality ###
+###################
+
+ex:CardExact0Class
+	a owl:Class ;
+	rdfs:subClassOf [               # ex:cardExact0 exactly 0
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardExact0;
+        owl:cardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+	.
+
+ex:CardExact1Class
+	a owl:Class ;
+	rdfs:subClassOf [               # ex:cardExact1 exactly 1
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardExact1;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+	.
+
+ex:CardExact3Class
+	a owl:Class ;
+    rdfs:subClassOf [               # ex:cardExact3 exactly 3
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardExact3 ;
+        owl:cardinality "3"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:CardMin0Class
+	a owl:Class ;
+	rdfs:subClassOf [               # ex:cardMin0 min 0
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardMin0;
+        owl:minCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:CardMin2Class
+    a owl:Class ;
+    rdfs:subClassOf [               # ex:cardMin2 min 2
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardMin2 ;
+        owl:minCardinality "2"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:CardMax0Class
+    a owl:Class ;
+    rdfs:subClassOf [               # ex:cardMax0 max 0
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardMax0 ;
+        owl:maxCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:CardMax2Class
+    a owl:Class ;
+    rdfs:subClassOf [               # ex:cardMax2 max 2
+        rdf:type owl:Restriction;
+        owl:onProperty ex:cardMax2 ;
+        owl:maxCardinality "2"^^xsd:nonNegativeInteger
+    ] ;
+    .
