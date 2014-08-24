@@ -6,7 +6,7 @@
         <groupId>org.aksw.rdfunit</groupId>
         <version>0.6.7-SNAPSHOT</version>
     </parent>
-    <artifactId>rdfunit-ui</artifactId>
+    <artifactId>rdfunit-web-demo</artifactId>
     <packaging>war</packaging>
     <name>RDFUnit - UI</name>
 
