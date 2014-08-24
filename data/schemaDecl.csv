@@ -1,7 +1,4 @@
 #prefix,URI,URL(if URI does not dereference)
-rdfs,http://www.w3.org/2000/01/rdf-schema#
-owl,http://www.w3.org/2002/07/owl#
-rdf,http://www.w3.org/1999/02/22-rdf-syntax-ns#
 dbo,http://dbpedia.org/ontology/,http://mappings.dbpedia.org/server/ontology/dbpedia.owl
 dc,http://purl.org/dc/elements/1.1/
 georss,http://www.georss.org/georss/
@@ -16,4 +13,4 @@ itsrdf,http://www.w3.org/2005/11/its/rdf#,http://www.w3.org/2005/11/its/rdf-cont
 olia,http://purl.org/olia
 nif,http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#,https://raw.github.com/NLP2RDF/ontologies/master/nif-core/nif-core.ttl
 dataid,https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl
-foaf,http://xmlns.com/foaf/0.1/
+schema,http://schema.org,http://www.w3.org/2012/pyRdfa/extract?uri=http%3A%2F%2Fschema.org%2Fdocs%2Fschema_org_rdfa.html&format=turtle
