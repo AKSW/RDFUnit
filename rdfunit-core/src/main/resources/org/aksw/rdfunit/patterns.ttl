@@ -340,7 +340,9 @@ rutp:TYPRODEP a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     {
 										?resource rdf:type/rdfs:subClassOf* %%T1%% .
-                                    	FILTER %%NOT%% EXISTS {?resource %%P1%% ?v }
+                                    	FILTER %%NOT%% EXISTS {?resource %%P1%% ?v
+                                    	                        FILTER (%%P1%% != rdf:type)
+                                    	}
 									}
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
