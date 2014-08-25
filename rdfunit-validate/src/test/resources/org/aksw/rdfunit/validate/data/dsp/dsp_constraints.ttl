@@ -12,3 +12,53 @@ ex:DSPStandaloneClass
 		a dsp:DescriptionTemplate ;
 		dsp:standalone "true"^^xsd:boolean ;
 		dsp:resourceClass ex:StandaloneClass .
+
+
+########
+# Property cardinality constraints
+
+ex:DSPPropCard_1_1
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass ex:PropCard_1_1 ;
+	dsp:statementTemplate [
+		a dsp:NonLiteralStatementTemplate ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:property ex:prop_1_1 ;
+		]
+		.
+
+ex:DSPPropCard_0_3
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass ex:PropCard_0_3 ;
+	dsp:statementTemplate [
+		a dsp:NonLiteralStatementTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+		dsp:property ex:prop_0_3 ;
+		]
+		.
+
+ex:DSPPropCard_3_x
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass ex:PropCard_3_x ;
+	dsp:statementTemplate [
+		a dsp:NonLiteralStatementTemplate ;
+		dsp:minOccur "3"^^xsd:nonNegativeInteger ;
+		dsp:property ex:prop_3_x ;
+		]
+		.
+
+
+ex:DSPPropCard_x_0
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass ex:PropCard_x_0 ;
+	dsp:statementTemplate [
+		a dsp:NonLiteralStatementTemplate ;
+		dsp:maxOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:property ex:prop_x_0 ;
+		]
+		.
+
+##############33
+# dsp:ValueClass (range)

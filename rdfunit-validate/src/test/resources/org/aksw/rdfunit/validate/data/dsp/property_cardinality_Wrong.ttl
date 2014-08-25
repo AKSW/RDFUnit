@@ -1,0 +1,35 @@
+@prefix ex: <http://example.com/dsp#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix dsp:      <http://dublincore.org/dc-dsp#>
+
+
+
+ex:correcta1 a ex:PropCard_1_1 . # error
+
+ex:correcta2 a ex:PropCard_1_1 ; # error
+	ex:prop_1_1 ex:v1 ;
+	ex:prop_1_1 ex:v2 ;
+	.
+
+
+ex:correctb1 a ex:PropCard_0_3 ;  # error
+	ex:prop_0_3 ex:v1 ;
+	ex:prop_0_3 ex:v2 ;
+	ex:prop_0_3 ex:v3 ;
+	ex:prop_0_3 ex:v4 ;
+	.
+
+ex:correctc1 a ex:PropCard_3_x ; # error
+	ex:prop_3_x ex:v1 ;
+	ex:prop_3_x ex:v2 ;
+	.
+
+
+ex:correctc1 a ex:PropCard_x_0 ; # error
+	ex:prop_x_0 ex:v1 ;
+	.
