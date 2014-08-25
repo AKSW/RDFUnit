@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class PatternIntegrationTest {
 
     private static final Map<String, Integer> testsWithErrors = new HashMap<>();
-    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
+    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/owl/";
 
 
 
