@@ -156,7 +156,7 @@ public final class RDFUnitUtils {
     }
 
     public static RDFReader getAutoGeneratorsFromResource() {
-        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/testAutoGenerators.ttl"));
+        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/autoGeneratorsOWL.ttl"));
     }
 
     public static <T> T getFirstItemInCollection(Collection<T> collection) {
