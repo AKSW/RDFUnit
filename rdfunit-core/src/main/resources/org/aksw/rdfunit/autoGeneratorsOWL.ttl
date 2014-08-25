@@ -311,7 +311,8 @@ rutg:OWLCARD-MIN a rut:TestGenerator ;
 							 ?T1 rdfs:subClassOf+ ?t .
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
-                             ?t owl:minCardinality ?v . 
+                             ?t owl:minCardinality ?v .
+                             FILTER (?v > 0) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
