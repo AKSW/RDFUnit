@@ -155,8 +155,12 @@ public final class RDFUnitUtils {
         return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/patterns.ttl"));
     }
 
-    public static RDFReader getAutoGeneratorsFromResource() {
+    public static RDFReader getAutoGeneratorsOWLFromResource() {
         return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/autoGeneratorsOWL.ttl"));
+    }
+
+    public static RDFReader getAutoGeneratorsDSPFromResource() {
+        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/autoGeneratorsDSP.ttl"));
     }
 
     public static <T> T getFirstItemInCollection(Collection<T> collection) {

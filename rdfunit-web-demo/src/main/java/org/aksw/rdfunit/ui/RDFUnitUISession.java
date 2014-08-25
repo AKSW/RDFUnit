@@ -59,7 +59,7 @@ public class RDFUnitUISession extends VaadinSession {
     public static void initRDFUnit() {
         try {
             RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
-            RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
+            RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsOWLFromResource();
             getRDFUnit().initPatternsAndGenerators(patternReader, testGeneratorReader);
         } catch (Exception e) {
             //TODO

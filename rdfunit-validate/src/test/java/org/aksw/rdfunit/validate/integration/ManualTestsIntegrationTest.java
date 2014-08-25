@@ -35,7 +35,7 @@ public class ManualTestsIntegrationTest {
         RDFUnitStaticWrapper.initWrapper("", emptyResource);
 
         RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
-        RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
+        RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsOWLFromResource();
         RDFUnit rdfunit = new RDFUnit();
         try {
             rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);

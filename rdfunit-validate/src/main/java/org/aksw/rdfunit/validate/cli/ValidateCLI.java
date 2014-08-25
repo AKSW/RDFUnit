@@ -78,7 +78,7 @@ public class ValidateCLI {
 
         // Similar to patterns
         RDFReader testGeneratorReader_data = new RDFStreamReader(configuration.getDataFolder() + "testAutoGenerators.ttl");
-        RDFReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsFromResource();
+        RDFReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsOWLFromResource();
         RDFReader testGeneratorReader = new RDFFirstSuccessReader(Arrays.asList(testGeneratorReader_data, testGeneratorReader_resource));
 
         RDFUnit rdfunit = new RDFUnit();

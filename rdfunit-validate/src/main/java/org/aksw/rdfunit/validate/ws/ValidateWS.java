@@ -38,7 +38,7 @@ public class ValidateWS extends RDFUnitWebService {
     private final String dataFolder = "data/";
     private final String testFolder = dataFolder + "tests/";
     private final RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
-    private final RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsFromResource();
+    private final RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsOWLFromResource();
     private final RDFUnit rdfunit = new RDFUnit();
 
     @Override
