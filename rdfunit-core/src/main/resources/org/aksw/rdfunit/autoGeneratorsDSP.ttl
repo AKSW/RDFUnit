@@ -1,0 +1,46 @@
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+
+
+
+##########################################
+#### TODO: DSP class standalone
+##########################################
+
+rutg:DSPSTANDALONE a rut:TestGenerator ;
+    dcterms:description """Standalone class constrant, instances of a class cannot have any other properties"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('' as ?NOT) ('?p1' as ?P1) ?DESCRIPTION WHERE {
+							 ?s a dsp:DescriptionTemplate ;
+                                dsp:standalone "true"^^xsd:boolean ;
+                                dsp:resourceClass ?T1 .
+							 BIND ( concat("Instances of class ",  str(?T1)," are not allowed to have any properties") AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
+##########################################
+#### TODO: DSP class min occurs
+##########################################
+
+
+##########################################
+#### TODO: DSP class max occurs
+##########################################
+
+
+##########################################
+#### TODO: DSP Statement Template (with Class) min occurs) ("infinity"^^xsd:nonNegativeInteger)
+##########################################
+
+
+##########################################
+#### TODO: DSP Statement Template (with Class) max occurs)  ("infinity"^^xsd:nonNegativeInteger)
+##########################################
