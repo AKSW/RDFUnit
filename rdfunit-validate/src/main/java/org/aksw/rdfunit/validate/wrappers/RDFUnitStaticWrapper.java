@@ -134,7 +134,7 @@ public class RDFUnitStaticWrapper {
                     try {
                         rdfunit.initPatternsAndGenerators(
                                 RDFUnitUtils.getPatternsFromResource(),
-                                RDFUnitUtils.getAutoGeneratorsOWLFromResource());
+                                RDFUnitUtils.getAutoGeneratorsALLFromResource());
                     } catch (TripleReaderException e) {
                         // fatal error / send only manual test cases
                         testSuite = new TestSuite(manualTestCases);
