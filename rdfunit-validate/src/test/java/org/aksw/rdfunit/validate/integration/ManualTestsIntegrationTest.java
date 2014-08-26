@@ -8,7 +8,6 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFReaderFactory;
 import org.aksw.rdfunit.resources.Resources;
-import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 import org.junit.After;
 import org.junit.Before;
@@ -51,8 +50,6 @@ public class ManualTestsIntegrationTest {
 
     @Test
     public void testManualTestCases() throws Exception {
-
-        DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
         for (Map.Entry<String,String> entry : Resources.getInstance().entrySet() ) {
             String prefix = entry.getKey();
