@@ -73,7 +73,7 @@ public class SerializationFormat {
      * @return the boolean true if the format matches or false if it doesn't
      */
     public boolean isAcceptedAsInput(String format) {
-        return !type.equals(SerializationFormatType.output) && containsFormatName(format);
+        return isAcceptedAsAny(format, SerializationFormatType.output);
 
     }
 
@@ -84,8 +84,12 @@ public class SerializationFormat {
      * @return the boolean true if the format matches or false if it doesn't
      */
     public boolean isAcceptedAsOutput(String format) {
-        return !type.equals(SerializationFormatType.input) && containsFormatName(format);
+        return isAcceptedAsAny(format, SerializationFormatType.input);
 
+    }
+
+    private boolean isAcceptedAsAny(String format, SerializationFormatType formatType) {
+        return !type.equals(formatType) && containsFormatName(format);
     }
 
     /**
