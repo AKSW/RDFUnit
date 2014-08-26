@@ -9,7 +9,7 @@
 
     <artifactId>rdfunit-validate</artifactId>
     <name>RDFUnit - Validate</name>
-    <packaging>war</packaging>
+    <!-- packaging>war</packaging -->
 
     <dependencies>
 
