@@ -39,7 +39,7 @@ rutg:DSPSTANDALONE a rut:TestGenerator ;
 
 
 ##########################################
-#### DSP Statement Template (with Class) min occurs) ("infinity"^^xsd:nonNegativeInteger)
+#### DSP Statement Template (with Class) min occurs)
 ##########################################
 
 # dsp:minOccur number > 0 (count restriction if exists)
@@ -173,3 +173,11 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
         rut:annotationValue rlog:WARN] ;
     .
 
+# TODO DSP value min occurs
+# TODO DSP value max occurs
+# TODO dsp:subPropertyOf
+# TODO dsp:vocabularyEncodingScheme
+# TODO dsp:literalConstraint -> dsp:literal
+# TODO dsp:literalConstraint -> dsp:languageOccurrence
+# TODO dsp:literalConstraint -> dsp:language
+# TODO dsp:literalConstraint -> dsp:syntaxEncodingSchemeOccurrence
