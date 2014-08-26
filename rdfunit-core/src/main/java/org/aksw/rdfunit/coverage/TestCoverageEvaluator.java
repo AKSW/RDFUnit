@@ -93,9 +93,8 @@ public class TestCoverageEvaluator {
 
     }
 
-    public void calculateCoverage(QueryExecutionFactory model, Map<String, Long> propertyCount, long totalProperties, Map<String, Long> classCount, long totalClasses) {
+    private void calculateCoverage(QueryExecutionFactory model, Map<String, Long> propertyCount, long totalProperties, Map<String, Long> classCount, long totalClasses) {
 
-        String sparqlQuery = "";
         Collection<String> references;
 
         if (totalProperties > 0) {
