@@ -19,29 +19,35 @@ import static org.junit.Assert.assertEquals;
 public class PatternIntegrationTest {
 
     private static final Map<String, Integer> testsWithErrors = new HashMap<>();
-    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/owl/";
+    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
 
 
 
     @Before
     public void setUp() throws Exception {
         // Set of
-        testsWithErrors.put("OWLDISJC_Correct.ttl", 0);
-        testsWithErrors.put("OWLDISJC_Wrong.ttl", 6);
-        testsWithErrors.put("RDFSRANGE_Correct.ttl", 0);
-        testsWithErrors.put("RDFSRANGE_Wrong.ttl", 1);
-        testsWithErrors.put("RDFSRANGE-MISS_Wrong.ttl", 1);
-        testsWithErrors.put("RDFSRANGED_Correct.ttl", 0);
-        testsWithErrors.put("RDFSRANGED_Wrong.ttl", 2);
-        testsWithErrors.put("INVFUNC_Correct.ttl", 0);
-        testsWithErrors.put("INVFUNC_Wrong.ttl", 2);
-        testsWithErrors.put("OWLCARDT_Correct.ttl", 0);
-        testsWithErrors.put("OWLCARDT_Wrong_Exact.ttl", 6);
-        testsWithErrors.put("OWLCARDT_Wrong_Min.ttl", 2);
-        testsWithErrors.put("OWLCARDT_Wrong_Max.ttl", 2);
+        testsWithErrors.put("owl/OWLDISJC_Correct.ttl", 0);
+        testsWithErrors.put("owl/OWLDISJC_Wrong.ttl", 6);
+        testsWithErrors.put("owl/RDFSRANGE_Correct.ttl", 0);
+        testsWithErrors.put("owl/RDFSRANGE_Wrong.ttl", 1);
+        testsWithErrors.put("owl/RDFSRANGE-MISS_Wrong.ttl", 1);
+        testsWithErrors.put("owl/RDFSRANGED_Correct.ttl", 0);
+        testsWithErrors.put("owl/RDFSRANGED_Wrong.ttl", 2);
+        testsWithErrors.put("owl/INVFUNC_Correct.ttl", 0);
+        testsWithErrors.put("owl/INVFUNC_Wrong.ttl", 2);
+        testsWithErrors.put("owl/OWLCARDT_Correct.ttl", 0);
+        testsWithErrors.put("owl/OWLCARDT_Wrong_Exact.ttl", 6);
+        testsWithErrors.put("owl/OWLCARDT_Wrong_Min.ttl", 2);
+        testsWithErrors.put("owl/OWLCARDT_Wrong_Max.ttl", 2);
 
+        /*
+        testsWithErrors.put("dsp/standalone_class_Correct.ttl", 0);
+        testsWithErrors.put("dsp/standalone_class_Wrong.ttl", 1);
+        testsWithErrors.put("dsp/property_cardinality_Correct.ttl", 0);
+        testsWithErrors.put("dsp/property_cardinality_Wrong.ttl", 5);
+        */
         // Load test ontology from resource
-        RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "ontology.ttl");
+        RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "owl/ontology.ttl");
 
     }
 
