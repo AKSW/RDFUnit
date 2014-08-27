@@ -379,11 +379,7 @@ rutg:OWLCARD-MAX0 a rut:TestGenerator ;
 rutg:OWLFUNC a rut:TestGenerator ;
     dcterms:description """ Generates owl:FunctionalProperty constrains. IF the property exists we ensure it exists only once"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?P1 ('!=' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
-							 { 
-							   ?P1 rdf:type owl:FunctionalProperty .
-							 } UNION {
-                               ?P1 rdfs:subPropertyOf+ owl:FunctionalProperty .
-							 }  
+							 ?P1 rdf:type/rdfs:subPropertyOf* owl:FunctionalProperty .
 							 BIND ( concat(str(?P1)," is an owl:FunctionalProperty and should occur at most once in a resource") AS ?DESCRIPTION) }""" ;
     rut:basedOnPattern rutp:OWLCARD ;
     rut:resultAnnotation [
@@ -399,11 +395,7 @@ rutg:OWLFUNC a rut:TestGenerator ;
 rutg:OWLINVFUNC a rut:TestGenerator ;
     dcterms:description """ Generates owl:InverseFunctionalProperty constraints. If such a property exists we ensure that resources are assigned only once via this property """@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?DESCRIPTION WHERE {
-                             { 
-							   ?P1 rdf:type owl:InverseFunctionalProperty .
-							 } UNION {
-                               ?P1 rdfs:subPropertyOf+ owl:InverseFunctionalProperty .
-							 }  
+                             ?P1 rdf:type/rdfs:subPropertyOf* owl:InverseFunctionalProperty .
 							 BIND ( concat(str(?P1)," is an owl:InverseFunctionalProperty and should be unique") AS ?DESCRIPTION) }""" ;
     rut:basedOnPattern rutp:INVFUNC ;
     rut:resultAnnotation [
@@ -420,11 +412,7 @@ rutg:OWLINVFUNC a rut:TestGenerator ;
 rutg:OWLSYMMETRICPROP a rut:TestGenerator ;
     dcterms:description """ Generates owl:SymmetricProperty constraints. If such a property exists we ensure that statements about the involved resources are made in both directions, i.e. both resources will appear will apear in subject and object position, respectively """@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?DESCRIPTION WHERE {
-                              {
-                                ?P1 rdf:type owl:SymmetricProperty .
-                              } UNION {
-                                ?P1 rdfs:subPropertyOf+ owl:SymmetricProperty .
-                              }
+                              ?P1 rdf:type/rdfs:subPropertyOf* owl:SymmetricProperty .
                               BIND ( concat(str(?P1)," is an owl:SymmetricProperty and the reverse relationship should exist") AS ?DESCRIPTION) } """ ;
     rut:basedOnPattern rutp:OWLSYMMETRICPROP ;
     rut:resultAnnotation [
@@ -441,11 +429,7 @@ rutg:OWLSYMMETRICPROP a rut:TestGenerator ;
 rutg:OWLASYMMETRICPROP a rut:TestGenerator ;
     dcterms:description """ Generates owl:AsymmetricProperty constraints. Given a statement with an asymmetric property we ensure that no inverse statements with the same property exist in the dataset """@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?DESCRIPTION WHERE {
-                             { 
-							   ?P1 rdf:type owl:AsymmetricProperty .
-							 } UNION {
-                               ?P1 rdfs:subPropertyOf+ owl:AsymmetricProperty .
-							 }   
+                             ?P1 rdf:type/rdfs:subPropertyOf* owl:AsymmetricProperty .
 							 BIND ( concat(str(?P1)," is an owl:AsymmetricProperty and should be used as an owl:SymetricProperty") AS ?DESCRIPTION) } """ ;
     rut:basedOnPattern rutp:OWLASYMMETRICPROP ;
     rut:resultAnnotation [
@@ -462,8 +446,8 @@ rutg:OWLASYMMETRICPROP a rut:TestGenerator ;
 # rutg:OWLTRANSPROP a rut:TestGenerator ;
 #    dcterms:description """ Generates owl:TransitiveProperty constraints. Given multiple related transitive statements we ensure that no statements containing the consequent transitive entailments are missing """@en ;
 #    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?DESCRIPTION WHERE {
-#                                ?P1 a owl:TransitiveProperty .
-#                              }""" ;
+#                                ?P1 rdf:type/rdfs:subPropertyOf* owl:TransitiveProperty .
+#                            }""" ;
 #    rut:basedOnPattern rutp:OWLTRANSPROP .
 
 
@@ -474,11 +458,7 @@ rutg:OWLASYMMETRICPROP a rut:TestGenerator ;
 rutg:OWLIRREFLEXIVE a rut:TestGenerator ;
     dcterms:description """ Generates owl:IrreflexiveProperty constraints. Given an irreflexive property we ensure that it is not used reflexively """@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?P1 ?DESCRIPTION WHERE {
-                             { 
-							   ?P1 rdf:type owl:IrreflexiveProperty .
-							 } UNION {
-                               ?P1 rdfs:subPropertyOf+ owl:IrreflexiveProperty .
-							 }    
+                             ?P1 rdf:type/rdfs:subPropertyOf* owl:IrreflexiveProperty .
 							 BIND ( concat(str(?P1)," is an owl:IrreflexiveProperty and a subject must not be the the object") AS ?DESCRIPTION) }""" ;
     rut:basedOnPattern rutp:OWLIRREFLEXIVE ;
     rut:resultAnnotation [
@@ -495,11 +475,7 @@ rutg:OWLIRREFLEXIVE a rut:TestGenerator ;
 rutg:OWLDEPRECATEDP a rut:TestGenerator ;
     dcterms:description """ Generates owl:DeprecatedProperty warnings. """@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1'  as ?V1) ?DESCRIPTION WHERE {
-                             {
-							   ?P1 rdf:type owl:DeprecatedProperty .
-							 } UNION {
-                               ?P1 rdfs:subPropertyOf+ owl:DeprecatedProperty .
-							 }
+                             ?P1 rdf:type/rdfs:subPropertyOf* owl:DeprecatedProperty .
 							 BIND ( concat(str(?P1)," is an owl:DeprecatedProperty and should not be used anymore") AS ?DESCRIPTION) }""" ;
     rut:basedOnPattern rutp:TRIPLE ;
     rut:resultAnnotation [
