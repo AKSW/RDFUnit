@@ -8,13 +8,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Represents a SPARQL Pattern
+ * Defines an RDFUnitL Pattern
  *
  * @author Dimitris Kontokostas
- *         Class that holds a sparqlWherePattern definition
  * @since 9/16/13 1:14 PM
  */
-public class Pattern {
+public final class Pattern {
     private final String id;
     private final String description;
     private final String sparqlWherePattern;
@@ -23,11 +22,23 @@ public class Pattern {
     private final Collection<ResultAnnotation> annotations;
 
     public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, Collection<PatternParameter> parameters, Collection<ResultAnnotation> annotations) {
+
+        assert id != null;
         this.id = id;
+
+        assert description != null;
         this.description = description;
+
+        assert sparqlWherePattern != null;
         this.sparqlWherePattern = sparqlWherePattern;
+
+        assert sparqlPatternPrevalence != null;
         this.sparqlPatternPrevalence = sparqlPatternPrevalence;
+
+        assert parameters != null;
         this.parameters = parameters;
+
+        assert annotations != null;
         this.annotations = annotations;
     }
 
@@ -116,4 +127,31 @@ public class Pattern {
         return null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pattern)) return false;
+
+        Pattern pattern = (Pattern) o;
+
+        if (!annotations.equals(pattern.annotations)) return false;
+        if (!description.equals(pattern.description)) return false;
+        if (!id.equals(pattern.id)) return false;
+        if (!parameters.equals(pattern.parameters)) return false;
+        if (!sparqlPatternPrevalence.equals(pattern.sparqlPatternPrevalence)) return false;
+        if (!sparqlWherePattern.equals(pattern.sparqlWherePattern)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + sparqlWherePattern.hashCode();
+        result = 31 * result + sparqlPatternPrevalence.hashCode();
+        result = 31 * result + parameters.hashCode();
+        result = 31 * result + annotations.hashCode();
+        return result;
+    }
 }
