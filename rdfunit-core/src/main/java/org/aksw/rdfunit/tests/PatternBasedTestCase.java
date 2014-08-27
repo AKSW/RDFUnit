@@ -41,7 +41,7 @@ public class PatternBasedTestCase extends TestCase {
         resource
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:PatternBasedTestCase")))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:basedOnPattern")), model.createResource(PrefixNSService.getURIFromAbbrev("rutp:" + pattern.getId())))
-                .addProperty(RDFS.comment, "FOR DEBUGGING ONLY: SPARQL Query: \n" + PrefixNSService.getSparqlPrefixDecl() + new QueryGenerationSelectFactory().getSparqlQueryAsString(this) + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
+                .addProperty(RDFS.comment, "FOR DEBUGGING ONLY: SPARQL Query: \n" + new QueryGenerationSelectFactory().getSparqlQueryAsString(this) + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
 
 
         for (Binding binding : bindings) {
