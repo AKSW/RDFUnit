@@ -17,13 +17,13 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               ?P1 (rdfs:range|schema:rangeIncludes) ?T .
 
                               # don't check for datatypes / literals here
-                              FILTER NOT EXISTS {?T rdf:type/rdfs:subclassOf* rdfs:Literal }
-                              FILTER NOT EXISTS {?T rdf:type/rdfs:subclassOf* rdfs:Datatype }
-                              FILTER NOT EXISTS {?T rdf:type/rdfs:subclassOf* schema:DataType }
+                              FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Literal }
+                              FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Datatype }
+                              FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* schema:DataType }
 
                               # it must be defined that the range is a class
-                              ?T rdf:type/rdfs:subclassOf* ?class .
-                              FILTER ( ?class IN (owl:Class, rdfs:Class) )
+                              ?T rdf:type/rdfs:subClassOf* ?class .
+                              FILTER ( ?class IN (owl:Class, rdfs:Class, schema:Class) )
 
                               # don't check for general classes
                               FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
@@ -44,13 +44,13 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
                                 ?P1 (rdfs:range|schema:rangeIncludes) ?T .
 
 								# don't check for datatypes / literals here
-								FILTER NOT EXISTS {?T rdf:type/rdfs:subclassOf* rdfs:Literal }
-								FILTER NOT EXISTS {?T rdf:type/rdfs:subclassOf* rdfs:Datatype }
-								FILTER NOT EXISTS {?T rdf:type/rdfs:subclassOf* schema:DataType }
+								FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Literal }
+								FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Datatype }
+								FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* schema:DataType }
 
 								# it must be defined that the range is a class
-								?T rdf:type/rdfs:subclassOf* ?class .
-								FILTER ( ?class IN (owl:Class, rdfs:Class) )
+								?T rdf:type/rdfs:subClassOf* ?class .
+								FILTER ( ?class IN (owl:Class, rdfs:Class, schema:Class) )
 
 								# don't check for general classes
 								FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
@@ -64,20 +64,46 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
         rut:annotationValue rlog:WARN] ;
     .
 
+# Check for Literal
+rutg:RDFSRANGEL a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('!' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {
+                                {   # xsd datatypes
+	                                ?P1 rdfs:range ?D1 .
+	                                FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
+	                            } UNION {
+	                                ?P1 rdfs:range ?D1 .
+	                                ?D1 rdf:type/rdfs:subClassOf* rdfs:Datatype .
+	                            } UNION {
+	                                ?P1 rdfs:range ?D1 .
+	                                ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
+	                            } UNION {
+                                    ?P1 rdfs:range rdf:Literal .
+                                } UNION {
+                                    ?P1 schema:rangeIncludes ?D1 .
+                                    ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
+                                }
+                                BIND (concat(str(?P1)," does contain a literal value") AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
 # Datatype range
 rutg:RDFSRANGED a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
-                              {
+                              {   # xsd datatypes
                                   ?P1 rdfs:range ?D1 .
-                                  ?P1 rdf:type <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
                                   FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
-                                  ?D1 rdf:type/rdfs:subclassOf* <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+                                  ?D1 rdf:type/rdfs:subClassOf* rdfs:Datatype .
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
-                                  ?P1 rdf:type/rdfs:subclassOf* <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+                                  ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                          (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
                               BIND (concat(str(?P1)," does not have datatype: ", str(?D1)) AS ?DESCRIPTION)} """ ;
