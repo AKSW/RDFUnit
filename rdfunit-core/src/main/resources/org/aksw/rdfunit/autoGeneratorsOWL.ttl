@@ -26,7 +26,7 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               FILTER ( ?class IN (owl:Class, rdfs:Class) )
 
                               # don't check for general classes
-                              FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property ))
+                              FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
                               BIND (concat(str(?P1)," does not have correct range: ", str(?T)) AS ?D)}
                               GROUP BY ?P1
                               HAVING (count(?T) = 1) """ ;
@@ -53,7 +53,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
 								FILTER ( ?class IN (owl:Class, rdfs:Class) )
 
 								# don't check for general classes
-								FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property ))
+								FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
 								BIND (concat(str(?P1)," does not have correct range: ", str(?T)) AS ?D)}
 								GROUP BY ?P1
 								HAVING (count(?T) = 1)  """ ;
@@ -74,10 +74,10 @@ rutg:RDFSRANGED a rut:TestGenerator ;
                                   FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
-                                  ?D1 rdf:type <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+                                  ?D1 rdf:type/rdfs:subclassOf* <http://www.w3.org/2000/01/rdf-schema#Datatype> .
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
-                                  ?P1 rdf:type+ <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+                                  ?P1 rdf:type/rdfs:subclassOf* <http://www.w3.org/2002/07/owl#DatatypeProperty> .
                               } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
                                          (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
                               BIND (concat(str(?P1)," does not have datatype: ", str(?D1)) AS ?DESCRIPTION)} """ ;
