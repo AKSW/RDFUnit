@@ -2,6 +2,7 @@ package org.aksw.rdfunit.Utils;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.RDFReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class PatternUtilsTest {
 
     @Before
     public void setUp() throws Exception {
-        RDFReader reader = RDFUnitUtils.getPatternsFromResource();
+        RDFReader reader = RDFUnit.getPatternsReader();
         qef = new QueryExecutionFactoryModel(reader.read());
     }
 

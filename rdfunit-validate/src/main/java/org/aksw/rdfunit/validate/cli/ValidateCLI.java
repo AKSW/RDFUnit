@@ -9,7 +9,9 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.io.*;
+import org.aksw.rdfunit.io.RDFMultipleWriter;
+import org.aksw.rdfunit.io.RDFWriter;
+import org.aksw.rdfunit.io.RDFWriterFactory;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
@@ -27,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Dimitris Kontokostas
@@ -71,19 +72,9 @@ public class ValidateCLI {
             System.exit(1);
         }
 
-        // First try to load the modified patterns, if exists, and then try the resource
-        RDFReader patternReader_data = new RDFStreamReader(configuration.getDataFolder() + "patterns.ttl");
-        RDFReader patternReader_resource = RDFUnitUtils.getPatternsFromResource();
-        RDFReader patternReader = new RDFFirstSuccessReader(Arrays.asList(patternReader_data, patternReader_resource));
-
-        // Similar to patterns
-        RDFReader testGeneratorReader_data = new RDFStreamReader(configuration.getDataFolder() + "testAutoGenerators.ttl");
-        RDFReader testGeneratorReader_resource = RDFUnitUtils.getAutoGeneratorsOWLFromResource();
-        RDFReader testGeneratorReader = new RDFFirstSuccessReader(Arrays.asList(testGeneratorReader_data, testGeneratorReader_resource));
-
-        RDFUnit rdfunit = new RDFUnit();
+        RDFUnit rdfunit = new RDFUnit(configuration.getDataFolder());
         try {
-            rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);
+            rdfunit.init();
         } catch (TripleReaderException e) {
             displayHelpAndExit("Cannot read patterns and/or pattern generators");
         }

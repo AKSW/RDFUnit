@@ -2,7 +2,7 @@ package org.aksw.rdfunit.statistics;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.RDFReader;
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class DatasetStatisticsTest {
 
     @Before
     public void setUp() throws Exception {
-        RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
+        RDFReader patternReader = RDFUnit.getPatternsReader();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(patternReader.read());
         datasetStatistics = new DatasetStatistics(qef, false);
         datasetStatisticsCounts = new DatasetStatistics(qef, true);

@@ -7,7 +7,7 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.PatternUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.RDFReader;
+import org.aksw.rdfunit.io.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -27,35 +28,42 @@ public class RDFUnit {
 
 
     private static Logger log = LoggerFactory.getLogger(RDFUnit.class);
+    private final Collection<String> baseDirectories;
     private QueryExecutionFactory patternQueryFactory;
-    private Collection<Pattern> patterns = new ArrayList<>();
-    private Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
 
-    public RDFUnit() {
+    public RDFUnit(Collection<String> baseDirectories) {
+        this.baseDirectories = baseDirectories;
     }
 
-    public void initPatternsAndGenerators(RDFReader patterReader, RDFReader testGeneratorReader) throws TripleReaderException {
-        Model patternModel = ModelFactory.createDefaultModel();
+    public RDFUnit(String baseDirectory) {
+        this(Arrays.asList(baseDirectory));
+    }
+
+    public RDFUnit(){
+        this(new ArrayList<String>());
+    }
+
+    public void init() throws TripleReaderException {
+        Model model = ModelFactory.createDefaultModel();
+        // Set the defined prefixes
+        PrefixNSService.setNSPrefixesInModel(model);
+
         try {
-            patterReader.read(patternModel);
-            testGeneratorReader.read(patternModel);
+            getPatternsReader(baseDirectories).read(model);
+            getAutoGeneratorsALLReader(baseDirectories).read(model);
         } catch (TripleReaderException e) {
             throw new TripleReaderException(e.getMessage(), e);
         }
 
-        PrefixNSService.setNSPrefixesInModel(patternModel);
-        this.patternQueryFactory = new QueryExecutionFactoryModel(patternModel);
-        this.patterns = getPatterns();
+        patternQueryFactory = new QueryExecutionFactoryModel(model);
 
         // Update pattern service
-        for (Pattern pattern : patterns) {
+        for (Pattern pattern : getPatterns()) {
             PatternService.addPattern(pattern.getId(), pattern);
         }
-
-        this.autoGenerators = getAutoGenerators();
     }
 
-    public Collection<Pattern> getPatterns() {
+    private Collection<Pattern> getPatterns() {
         return PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
     }
 
@@ -63,5 +71,50 @@ public class RDFUnit {
         return TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
     }
 
+    private static RDFReader createReaderFromBaseDirsAndResource(Collection<String> baseDirectories, String relativeName) {
+        ArrayList<RDFReader> readers = new ArrayList<>();
+        for (String baseDirectory: baseDirectories) {
+            String normalizedBaseDir = (baseDirectory.endsWith("/") ? baseDirectory : baseDirectory + "/");
+            readers.add(new RDFStreamReader(normalizedBaseDir + relativeName));
+        }
+        readers.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/" + relativeName));
+        return new RDFFirstSuccessReader(readers);
+    }
 
+    public static RDFReader getPatternsReader(Collection<String> baseDirectories) {
+        return createReaderFromBaseDirsAndResource(baseDirectories, "patterns.ttl");
+    }
+
+    public static RDFReader getPatternsReader() {
+        return getPatternsReader(new ArrayList<String>());
+    }
+
+    public static RDFReader getAutoGeneratorsOWLReader(Collection<String> baseDirectories) {
+        return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl");
+    }
+
+    public static RDFReader getAutoGeneratorsOWLReader() {
+        return getAutoGeneratorsOWLReader(new ArrayList<String>());
+    }
+
+    public static RDFReader getAutoGeneratorsDSPReader(Collection<String> baseDirectories) {
+        return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsDSP.ttl");
+    }
+
+    public static RDFReader getAutoGeneratorsDSPReader() {
+        return getAutoGeneratorsDSPReader(new ArrayList<String>());
+    }
+
+    public static RDFReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {
+        Collection<RDFReader> readers = Arrays.asList(
+                getAutoGeneratorsOWLReader(baseDirectories),
+                getAutoGeneratorsDSPReader(baseDirectories)
+        );
+
+        return new RDFMultipleReader(readers);
+    }
+
+    public static RDFReader getAutoGeneratorsALLReader() {
+        return getAutoGeneratorsALLReader(new ArrayList<String>());
+    }
 }

@@ -3,9 +3,6 @@ package org.aksw.rdfunit.Utils;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import org.aksw.rdfunit.io.RDFMultipleReader;
-import org.aksw.rdfunit.io.RDFReader;
-import org.aksw.rdfunit.io.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.sources.Source;
@@ -14,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -151,27 +147,6 @@ public final class RDFUnitUtils {
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
-    }
-
-    public static RDFReader getPatternsFromResource() {
-        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/patterns.ttl"));
-    }
-
-    public static RDFReader getAutoGeneratorsOWLFromResource() {
-        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/autoGeneratorsOWL.ttl"));
-    }
-
-    public static RDFReader getAutoGeneratorsDSPFromResource() {
-        return new RDFStreamReader(RDFUnitUtils.class.getResourceAsStream("/org/aksw/rdfunit/autoGeneratorsDSP.ttl"));
-    }
-
-    public static RDFReader getAutoGeneratorsALLFromResource() {
-        Collection<RDFReader> readers = Arrays.asList(
-                getAutoGeneratorsOWLFromResource(),
-                getAutoGeneratorsDSPFromResource()
-        );
-
-        return new RDFMultipleReader(readers);
     }
 
     public static <T> T getFirstItemInCollection(Collection<T> collection) {

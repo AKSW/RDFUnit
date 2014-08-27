@@ -3,7 +3,6 @@ package org.aksw.rdfunit.validate.wrappers;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
@@ -132,9 +131,7 @@ public class RDFUnitStaticWrapper {
                     // Generate test cases from ontology (do this every time in case ontology changes)
                     RDFUnit rdfunit = new RDFUnit();
                     try {
-                        rdfunit.initPatternsAndGenerators(
-                                RDFUnitUtils.getPatternsFromResource(),
-                                RDFUnitUtils.getAutoGeneratorsALLFromResource());
+                        rdfunit.init();
                     } catch (TripleReaderException e) {
                         // fatal error / send only manual test cases
                         testSuite = new TestSuite(manualTestCases);

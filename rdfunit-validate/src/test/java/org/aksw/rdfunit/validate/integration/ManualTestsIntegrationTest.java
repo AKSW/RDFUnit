@@ -2,10 +2,8 @@ package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFReaderFactory;
 import org.aksw.rdfunit.resources.Resources;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
@@ -33,11 +31,9 @@ public class ManualTestsIntegrationTest {
         // Load test ontology from resource (empty in this case)
         RDFUnitStaticWrapper.initWrapper("", emptyResource);
 
-        RDFReader patternReader = RDFUnitUtils.getPatternsFromResource();
-        RDFReader testGeneratorReader = RDFUnitUtils.getAutoGeneratorsOWLFromResource();
         RDFUnit rdfunit = new RDFUnit();
         try {
-            rdfunit.initPatternsAndGenerators(patternReader, testGeneratorReader);
+            rdfunit.init();
         } catch (TripleReaderException e) {
             fail("Cannot read patterns and/or pattern generators");
         }
