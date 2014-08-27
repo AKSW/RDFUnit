@@ -122,3 +122,11 @@ ex:CardMax2Class
         owl:maxCardinality "2"^^xsd:nonNegativeInteger
     ] ;
     .
+
+############################
+### Literals / Datatypes ###
+############################
+
+# rdf:langString
+ex:langStringProperty a rdf:property ;
+	rdfs:range rdf:langString .

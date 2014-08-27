@@ -867,6 +867,50 @@ rutp:OBJFUNC-FUNC a rut:Parameter ;
 
 
 ################################################################################
+#### CHECKLANG
+#### Check the language of an object for a specific value
+#### (e.g. foaf:name should have an english language)
+################################################################################
+
+rutp:CHECKLANG a rut:Pattern ;
+    dcterms:identifier "CHECKLANG" ;
+    dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?resource %%P1%% ?c .
+                                    FILTER ( lang(?c) %%OP%% '%%V1%%')  .
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource %%P1%% ?c .}""" ;
+    rut:parameter rutp:CHECKLANG-P1 ;
+    rut:parameter rutp:CHECKLANG-OP ;
+    rut:parameter rutp:CHECKLANG-V1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?c"""
+    ];
+    .
+
+rutp:CHECKLANG-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:CHECKLANG-OP a rut:Parameter ;
+    dcterms:identifier "OP" ;
+    rut:parameterConstraint rut:Operator ;
+    rut:constraintPattern """<|<=|>|>=|=|!=""" .
+
+rutp:CHECKLANG-V1 a rut:Parameter ;
+    dcterms:identifier "V1" ;
+    rut:parameterConstraint rut:None .
+
+
+################################################################################
 #### ONELANG
 #### Resource has more than one plain literal of a certain language assigned
 #### (e.g. more than one foaf:name in english)

@@ -39,6 +39,8 @@ public class PatternIntegrationTest {
         testsWithErrors.put("owl/OWLCARDT_Wrong_Exact.ttl", 6);
         testsWithErrors.put("owl/OWLCARDT_Wrong_Min.ttl", 2);
         testsWithErrors.put("owl/OWLCARDT_Wrong_Max.ttl", 2);
+        testsWithErrors.put("owl/RDFLANGSTRING_Correct.ttl", 0);
+        testsWithErrors.put("owl/RDFLANGSTRING_Wrong.ttl", 2);
 
         /*
         testsWithErrors.put("dsp/standalone_class_Correct.ttl", 0);

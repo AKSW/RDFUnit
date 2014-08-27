@@ -64,10 +64,14 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
         rut:annotationValue rlog:WARN] ;
     .
 
+##########################################
+#### Literals / Datatypes
+##########################################
+
 # Check for Literal
 rutg:RDFSRANGEL a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ('!' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {
+    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
                                 {   # xsd datatypes
 	                                ?P1 rdfs:range ?D1 .
 	                                FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
@@ -86,6 +90,19 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                 }
                                 BIND (concat(str(?P1)," does contain a literal value") AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+# Check for rdf:langString
+rutg:RDFLANGSTRING a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
+	                                ?P1 rdfs:range rdf:langString .
+                                BIND (concat(str(?P1)," is an rdf:langString and should have a language") AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
