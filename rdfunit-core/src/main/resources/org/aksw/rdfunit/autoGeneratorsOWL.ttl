@@ -78,7 +78,8 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
 	                                ?P1 rdfs:range ?D1 .
 	                                ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
 	                            } UNION {
-                                    ?P1 rdfs:range rdf:Literal .
+                                    ?P1 rdfs:range ?D1 .
+                                    FILTER ( ?D1 in (rdf:Literal, rdf:langString) ) .
                                 } UNION {
                                     ?P1 schema:rangeIncludes ?D1 .
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
