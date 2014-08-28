@@ -111,6 +111,8 @@ public class PatternsGeneratorsIntegrationTest {
                 } else {
                     assertEquals(executionType + ": Failed test cases not as expected for " + resource, failedTestCases, overviewResults.getFailedTests());
                 }
+
+                assertEquals(executionType + ": There should be no failed test cases for " + resource, 0, overviewResults.getErrorTests());
             }
 
         }
