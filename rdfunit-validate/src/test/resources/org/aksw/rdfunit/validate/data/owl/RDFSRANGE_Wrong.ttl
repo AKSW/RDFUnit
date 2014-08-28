@@ -10,4 +10,6 @@
 ex:error1 a ex:Athlete ;
 	ex:livesIn ex:Athens .  # wrong range 1 error
 
-ex:Athens a ex:Work
+ex:Athens a ex:Work .
+
+ex:error2 ex:multRanges ex:Athens . # 1 error TODO not supported yet (multiple range)

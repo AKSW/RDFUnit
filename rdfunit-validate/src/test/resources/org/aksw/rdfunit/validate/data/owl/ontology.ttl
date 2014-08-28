@@ -18,6 +18,7 @@ ex:Work a owl:Class.
 
 # Some subclasses
 
+ex:Politician rdfs:subClassOf ex:Person .
 ex:Athlete rdfs:subClassOf ex:Person .
 ex:SoccerPlayer rdfs:subClassOf ex:Athlete .
 
@@ -55,6 +56,9 @@ ex:homepage
 		owl:InverseFunctionalProperty; # should generate 1 test case
 	rdfs:domain ex:Person ;  # should generate 2 test cases
 	.
+
+ex:multRanges a owl:ObjectProperty ;
+    rdfs:range ex:Politician, ex:Athlete . # double range
 
 ###################
 ### cardinality ###

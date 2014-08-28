@@ -11,4 +11,8 @@
 ex:correct1 a ex:Athlete ;
 	ex:livesIn ex:Athens .
 
-ex:Athens a ex:Town
+ex:Athens a ex:Town .
+
+# multiple ranges
+ex:correct3 ex:multRanges ex:Athlete .
+ex:correct4 ex:multRanges ex:Politicial .
