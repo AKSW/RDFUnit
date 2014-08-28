@@ -29,6 +29,11 @@ public class Binding {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Binding [" + parameter.getId() + " => " + value + ']';
+    }
+
     public String getValueAsString() {
         if (value.isResource()) {
             // some vocabularies use spaces in uris
