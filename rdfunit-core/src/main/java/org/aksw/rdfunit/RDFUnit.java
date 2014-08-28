@@ -12,22 +12,20 @@ import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
 /**
+ * Main class used to load & instantiate patterns and provide access to Test Generators
+ *
  * @author Dimitris Kontokostas
- *         Main Class
  * @since 9/20/13 5:59 PM
  */
 public class RDFUnit {
 
 
-    private static Logger log = LoggerFactory.getLogger(RDFUnit.class);
     private final Collection<String> baseDirectories;
     private QueryExecutionFactory patternQueryFactory;
 
@@ -105,10 +103,19 @@ public class RDFUnit {
         return getAutoGeneratorsDSPReader(new ArrayList<String>());
     }
 
+    public static RDFReader getAutoGeneratorsRSReader(Collection<String> baseDirectories) {
+        return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsRS.ttl");
+    }
+
+    public static RDFReader getAutoGeneratorsRSReader() {
+        return getAutoGeneratorsRSReader(new ArrayList<String>());
+    }
+
     public static RDFReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {
         Collection<RDFReader> readers = Arrays.asList(
                 getAutoGeneratorsOWLReader(baseDirectories),
-                getAutoGeneratorsDSPReader(baseDirectories)
+                getAutoGeneratorsDSPReader(baseDirectories),
+                getAutoGeneratorsRSReader(baseDirectories)
         );
 
         return new RDFMultipleReader(readers);

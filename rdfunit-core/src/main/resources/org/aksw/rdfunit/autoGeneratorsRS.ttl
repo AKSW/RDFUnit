@@ -1,0 +1,21 @@
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix schema: <http://schema.org/> .
+@prefix oslc:      <http://open-services.net/ns/core#> .
+
+############################################
+### Generates test cases for Types Shapes
+### see http://www.w3.org/Submission/2014/SUBM-shapes-20140211/#associating-and-applying-shapes
+############################################
+
+# TODO OSLC allowedValue / allowedValues
+# TODO OSLC oslc:occurs (oslc:Exactly-one / oslc:One-or-many / oslc:Zero-or-many / oslc:Zero-or-one)
+# TODO OSLC oslc:maxSize (has to be xsd:string)
+# TODO OSLC oslc:range (a class or oslc:Any)
+# TODO OSLC oslc:valueShape
+# TODO OSLC oslc:valueType (rdf:XMLLiteral, xsd:boolean, xsd:dateTime, xsd:decimal, xsd:double, xsd:float, xsd:integer, xsd:string)
+# TODO OSLC oslc:valueType (oslc:AnyResource, oslc:LocalResource, oslc:Resource)
