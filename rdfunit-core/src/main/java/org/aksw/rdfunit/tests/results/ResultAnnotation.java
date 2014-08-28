@@ -17,15 +17,14 @@ public final class ResultAnnotation {
     private final RDFNode annotationValue;
 
     /**
-
      * Instantiates a new Result annotation.
      *
      * @param annotationProperty the annotation property
-     * @param annotationValue the annotation value
+     * @param annotationValue    the annotation value
      */
     public ResultAnnotation(String annotationProperty, RDFNode annotationValue) {
         assert (annotationProperty != null);
-        assert (annotationValue    != null);
+        assert (annotationValue != null);
 
         this.annotationProperty = annotationProperty;
         this.annotationValue = annotationValue;
@@ -35,7 +34,7 @@ public final class ResultAnnotation {
      * Serialize this annotation for an extended test case result
      *
      * @param resource the resource
-     * @param model the model
+     * @param model    the model
      * @return the resource
      */
     public Resource serializeAsResult(Resource resource, Model model) {

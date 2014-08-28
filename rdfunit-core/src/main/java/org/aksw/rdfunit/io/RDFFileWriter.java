@@ -59,7 +59,7 @@ public class RDFFileWriter extends RDFWriter {
             if (createParentDirectories) {
                 File parentF = file.getParentFile();
                 if (parentF != null && !parentF.exists()) {
-                    if ( ! parentF.mkdirs()) {
+                    if (!parentF.mkdirs()) {
                         throw new TripleWriterException("Cannot create new directory structure for file: " + filename);
                     }
                 }

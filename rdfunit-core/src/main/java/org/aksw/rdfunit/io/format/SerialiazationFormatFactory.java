@@ -12,7 +12,8 @@ import java.util.HashSet;
  */
 public final class SerialiazationFormatFactory {
 
-    private SerialiazationFormatFactory(){}
+    private SerialiazationFormatFactory() {
+    }
 
     /**
      * Returns a list with all the defined serialization formats

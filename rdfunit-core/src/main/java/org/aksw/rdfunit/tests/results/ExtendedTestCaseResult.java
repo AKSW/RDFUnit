@@ -25,7 +25,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
     /**
      * Instantiates a new Extended test case result.
      *
-     * @param testCase the test case
+     * @param testCase   the test case
      * @param rlogResult the rlog result
      */
     public ExtendedTestCaseResult(TestCase testCase, RLOGTestCaseResult rlogResult) {
@@ -37,7 +37,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
      *
      * @param testCase the test case
      * @param resource the resource
-     * @param message the message
+     * @param message  the message
      * @param logLevel the log level
      */
     public ExtendedTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
@@ -58,7 +58,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
         }
 
         for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {
-            for (RDFNode rdfNode: vaEntry.getValue()) {
+            for (RDFNode rdfNode : vaEntry.getValue()) {
                 resource.addProperty(ResourceFactory.createProperty(vaEntry.getKey().getAnnotationProperty()), rdfNode);
             }
         }

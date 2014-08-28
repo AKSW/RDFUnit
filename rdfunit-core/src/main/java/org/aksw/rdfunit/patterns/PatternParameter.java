@@ -18,9 +18,9 @@ public final class PatternParameter {
     /**
      * Instantiates a new Pattern parameter.
      *
-     * @param uri the uri of the parameter
-     * @param id the parameter id
-     * @param constrain the constrain
+     * @param uri               the uri of the parameter
+     * @param id                the parameter id
+     * @param constrain         the constrain
      * @param constraintPattern the constraint pattern (if exists)
      */
     public PatternParameter(String uri, String id, PatternParameterConstraints constrain, String constraintPattern) {

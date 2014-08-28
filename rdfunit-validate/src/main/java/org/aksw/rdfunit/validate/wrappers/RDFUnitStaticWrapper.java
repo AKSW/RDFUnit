@@ -184,10 +184,10 @@ public class RDFUnitStaticWrapper {
      * Static method that validates an input model. You MUST call initWrapper once before calling this function
      * Used for testing only ATM
      *
-     * @param input         the Model we want to validate
-     * @param executionType What type of results we want
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param overviewResults      This is a way to get validation statistics
+     * @param input           the Model we want to validate
+     * @param executionType   What type of results we want
+     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
+     * @param overviewResults This is a way to get validation statistics
      * @return a new Model that contains the validation results. The results are according to executionType
      */
     public static Model validate(final Model input, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {

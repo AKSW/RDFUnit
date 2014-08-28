@@ -11,6 +11,7 @@ import org.aksw.rdfunit.tests.TestCase;
 
 /**
  * The type Aggregated test case result.
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 1 /2/14 3:44 PM
@@ -22,8 +23,8 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
     /**
      * Instantiates a new Aggregated test case result.
      *
-     * @param testCase the test case
-     * @param errorCount the error count
+     * @param testCase        the test case
+     * @param errorCount      the error count
      * @param prevalenceCount the prevalence count
      */
     public AggregatedTestCaseResult(TestCase testCase, long errorCount, long prevalenceCount) {
@@ -35,9 +36,9 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
     /**
      * Instantiates a new Aggregated test case result.
      *
-     * @param testCase the test case
-     * @param status the status
-     * @param errorCount the error count
+     * @param testCase        the test case
+     * @param status          the status
+     * @param errorCount      the error count
      * @param prevalenceCount the prevalence count
      */
     public AggregatedTestCaseResult(TestCase testCase, TestCaseResultStatus status, long errorCount, long prevalenceCount) {

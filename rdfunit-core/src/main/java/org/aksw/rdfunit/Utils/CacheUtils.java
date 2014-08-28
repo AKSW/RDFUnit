@@ -25,7 +25,7 @@ public final class CacheUtils {
             URI tmp = new URI(uri);
             String host = tmp.getHost();
             String path = tmp.getPath();
-            retVal = host + path + ( path.endsWith("/") ? "" :  "/");
+            retVal = host + path + (path.endsWith("/") ? "" : "/");
         } catch (Exception e) {
             // TODO handle exception
         }

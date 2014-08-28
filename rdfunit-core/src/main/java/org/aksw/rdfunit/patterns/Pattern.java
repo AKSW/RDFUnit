@@ -72,11 +72,11 @@ public final class Pattern {
     public Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
         Collection<ResultAnnotation> finalAnnotations = new ArrayList<>();
 
-        for (ResultAnnotation externalAnnotation: annotations) {
+        for (ResultAnnotation externalAnnotation : annotations) {
             ResultAnnotation sanitizedAnnotation = externalAnnotation;
             if (externalAnnotation.getAnnotationValue().isLiteral()) {
                 String value = externalAnnotation.getAnnotationValue().toString();
-                for (Binding binding: bindings) {
+                for (Binding binding : bindings) {
                     if (value.equals("%%" + binding.getParameterId() + "%%")) {
                         sanitizedAnnotation = new ResultAnnotation(externalAnnotation.getAnnotationProperty(), binding.getValue());
                     }

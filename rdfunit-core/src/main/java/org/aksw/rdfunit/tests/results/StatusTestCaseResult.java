@@ -10,6 +10,7 @@ import org.aksw.rdfunit.tests.TestCase;
 
 /**
  * The Status test case result.
+ *
  * @author Dimitris Kontokostas
  * @since 1 /6/14 3:26 PM
  */
@@ -20,7 +21,7 @@ public class StatusTestCaseResult extends TestCaseResult {
      * Instantiates a new Status test case result.
      *
      * @param testCase the test case
-     * @param status the status
+     * @param status   the status
      */
     public StatusTestCaseResult(TestCase testCase, TestCaseResultStatus status) {
         super(testCase);

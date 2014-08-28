@@ -22,7 +22,6 @@ public class PatternIntegrationTest {
     private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
 
 
-
     @Before
     public void setUp() throws Exception {
         // /*
@@ -85,8 +84,7 @@ public class PatternIntegrationTest {
 
                 if (failedTestCases == -1) {
                     failedTestCases = overviewResults.getFailedTests();
-                }
-                else {
+                } else {
                     assertEquals(executionType + ": Failed test cases not as expected for " + resource, failedTestCases, overviewResults.getFailedTests());
                 }
             }

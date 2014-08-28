@@ -14,7 +14,8 @@ import org.aksw.rdfunit.tests.QueryGenerationSelectFactory;
  */
 public final class TestExecutorFactory {
 
-    private TestExecutorFactory() {}
+    private TestExecutorFactory() {
+    }
 
     /**
      * Creates a test executor based on a TestCaseExecutionType

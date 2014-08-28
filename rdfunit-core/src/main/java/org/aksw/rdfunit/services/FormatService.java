@@ -12,7 +12,8 @@ import java.util.Collection;
  */
 public final class FormatService {
 
-    private FormatService(){}
+    private FormatService() {
+    }
 
     /**
      * keeps all the available formats we define (lazy init)

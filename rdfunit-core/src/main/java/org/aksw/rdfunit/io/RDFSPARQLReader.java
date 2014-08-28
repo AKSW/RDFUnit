@@ -23,6 +23,6 @@ public class RDFSPARQLReader extends RDFReader {
     @Override
     public void read(Model model) throws TripleReaderException {
         //TODO implement
-        throw new TripleReaderException("RDFSPARQLReader (" + endpoint + " / " + graph +") not implemented yet");
+        throw new TripleReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
     }
 }

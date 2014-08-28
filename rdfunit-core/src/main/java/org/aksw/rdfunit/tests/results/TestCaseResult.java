@@ -35,7 +35,7 @@ public abstract class TestCaseResult {
     /**
      * Serializes a TestCaseResult in a model. Subclasses should call super.serialize() and add all additional triples
      *
-     * @param model The @Model we want to write to
+     * @param model            The @Model we want to write to
      * @param testExecutionURI The test execution URI for the current execution
      * @return a @Resource with all the triples for this @TestCaseResult
      */

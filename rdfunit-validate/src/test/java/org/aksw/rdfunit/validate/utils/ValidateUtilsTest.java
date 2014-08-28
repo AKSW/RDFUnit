@@ -166,8 +166,7 @@ public class ValidateUtilsTest {
                 "Expected exception for asking for setting non-numeric in -L");
 
 
-
-        for (Map.Entry<String,String> entry : exceptionsExpected.entrySet()) {
+        for (Map.Entry<String, String> entry : exceptionsExpected.entrySet()) {
 
             try {
                 commandLine = cliParser.parse(cliOptions, entry.getKey().split(" "));

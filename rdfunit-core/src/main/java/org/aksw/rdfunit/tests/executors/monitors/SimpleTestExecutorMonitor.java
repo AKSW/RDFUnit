@@ -71,7 +71,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     /**
      * Instantiates a new Simple test executor monitor.
      *
-     * @param model the model
+     * @param model          the model
      * @param loggingEnabled the logging enabled
      */
     public SimpleTestExecutorMonitor(Model model, boolean loggingEnabled) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
@@ -50,17 +51,17 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.5</version>
 
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <directory>${basedir}/src/main/resources/org/aksw/rdfunit/</directory>
-                                    <includes>
-                                        <include>schemaDecl.csv</include>
-                                        <include>tests/Manual/**</include>
-                                    </includes>
-                                </fileset>
-                            </filesets>
-                        </configuration>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/resources/org/aksw/rdfunit/</directory>
+                            <includes>
+                                <include>schemaDecl.csv</include>
+                                <include>tests/Manual/**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
 

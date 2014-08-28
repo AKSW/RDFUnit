@@ -133,15 +133,14 @@ public final class DatasetStatistics {
             SchemaSource source = SchemaService.getSourceFromUri(namespace);
 
             // If not null, get it from SchemaService
-            if (source != null ) {
+            if (source != null) {
 
                 // Skip some schemas that don't add anything
                 if (excludePrefixes.contains(source.getPrefix())) {
                     continue;
                 }
                 sources.add(source);
-            }
-            else {
+            } else {
                 log.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
             }
         }

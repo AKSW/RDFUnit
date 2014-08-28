@@ -92,7 +92,7 @@ public class RDFUnitConfiguration {
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination) {
-        setEndpointConfiguration(endpointURI,endpointGraphs,endpointDelayinMS,endpointCacheTTL,endpointPagination, this.endpointQueryLimit);
+        setEndpointConfiguration(endpointURI, endpointGraphs, endpointDelayinMS, endpointCacheTTL, endpointPagination, this.endpointQueryLimit);
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointQueryDelayMS, long endpointQueryCacheTTL, long endpointQueryPagination, long endpointQueryLimit) {

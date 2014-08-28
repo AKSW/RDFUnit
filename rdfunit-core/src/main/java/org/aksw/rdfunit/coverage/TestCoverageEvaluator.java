@@ -75,7 +75,7 @@ public class TestCoverageEvaluator {
         }
 
         Map<String, Long> classes = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(classFile))){
+        try (BufferedReader br = new BufferedReader(new FileReader(classFile))) {
 
             while ((line = br.readLine()) != null) {
                 // process the line.
@@ -117,8 +117,7 @@ public class TestCoverageEvaluator {
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCardPatterns)));
             double fCard = getCoverage(references, propertyCount, totalProperties);
             log.info("fCard Coverage: " + fCard);
-        }
-        else {
+        } else {
             log.warn("No properties found in Source (probably source is empty)");
         }
 
@@ -132,8 +131,7 @@ public class TestCoverageEvaluator {
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCDepPatterns)));
             double fCDep = getCoverage(references, classCount, totalClasses);
             log.info("fCDep Coverage: " + fCDep);
-        }
-        else {
+        } else {
             log.warn("No Class usage found in Source");
         }
     }

@@ -39,7 +39,7 @@ public class RDFUnit {
         this(Arrays.asList(baseDirectory));
     }
 
-    public RDFUnit(){
+    public RDFUnit() {
         this(new ArrayList<String>());
     }
 
@@ -73,7 +73,7 @@ public class RDFUnit {
 
     private static RDFReader createReaderFromBaseDirsAndResource(Collection<String> baseDirectories, String relativeName) {
         ArrayList<RDFReader> readers = new ArrayList<>();
-        for (String baseDirectory: baseDirectories) {
+        for (String baseDirectory : baseDirectories) {
             String normalizedBaseDir = (baseDirectory.endsWith("/") ? baseDirectory : baseDirectory + "/");
             readers.add(new RDFStreamReader(normalizedBaseDir + relativeName));
         }

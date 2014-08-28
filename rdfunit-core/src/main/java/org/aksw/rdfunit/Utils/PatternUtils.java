@@ -60,7 +60,7 @@ public final class PatternUtils {
 
         Collection<Pattern> patterns = new ArrayList<>();
         for (String patternURI : patternURIs) {
-            patterns.add (getPattern(queryFactory, patternURI));
+            patterns.add(getPattern(queryFactory, patternURI));
         }
 
         return patterns;
@@ -70,7 +70,7 @@ public final class PatternUtils {
      * Given a QueryExecutionFactory and a pattern URI, it instantiates a new Pattern
      *
      * @param queryFactory the query factory
-     * @param patternURI the pattern uRI
+     * @param patternURI   the pattern uRI
      * @return the pattern object
      */
     public static Pattern getPattern(QueryExecutionFactory queryFactory, String patternURI) {
@@ -123,7 +123,7 @@ public final class PatternUtils {
      * Instantiates all parameters defined in a Pattern
      *
      * @param queryFactory the QEF to query to
-     * @param patternURI the pattern URI
+     * @param patternURI   the pattern URI
      * @return a list of pattern parameters for a specific pattern
      */
     private static Collection<PatternParameter> getPatternParameters(QueryExecutionFactory queryFactory, String patternURI) {

@@ -73,9 +73,9 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                 }
 
                 // result must be initialized by now
-                assert result != null ;
+                assert result != null;
 
-                for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry: result.getVariableAnnotationsMap().entrySet()) {
+                for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : result.getVariableAnnotationsMap().entrySet()) {
                     // Get the variable name
                     String variable = vaEntry.getKey().getAnnotationValue().toString().trim().replace("?", "");
                     //If it exists, add it in the Set

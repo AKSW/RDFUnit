@@ -13,7 +13,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
-        return  PrefixNSService.getSparqlPrefixDecl() +
+        return PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?resource WHERE " + testCase.getSparqlWhere();
     }
 

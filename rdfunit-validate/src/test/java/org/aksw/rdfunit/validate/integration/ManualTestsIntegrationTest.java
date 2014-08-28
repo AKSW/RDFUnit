@@ -24,7 +24,6 @@ public class ManualTestsIntegrationTest {
     private static final String emptyResource = "/org/aksw/rdfunit/validate/data/empty.ttl";
 
 
-
     @Before
     public void setUp() throws Exception {
 
@@ -47,7 +46,7 @@ public class ManualTestsIntegrationTest {
     @Test
     public void testManualTestCases() throws Exception {
 
-        for (Map.Entry<String,String> entry : Resources.getInstance().entrySet() ) {
+        for (Map.Entry<String, String> entry : Resources.getInstance().entrySet()) {
             String prefix = entry.getKey();
             String uri = entry.getValue();
             String resource = "/org/aksw/rdfunit/tests/" + "Manual/" + CacheUtils.getCacheFolderForURI(uri) + prefix + "." + "tests" + "." + "Manual" + ".ttl";

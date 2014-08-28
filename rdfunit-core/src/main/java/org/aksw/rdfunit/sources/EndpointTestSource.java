@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.sources;
 
-import com.hp.hpl.jena.query.Query;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;

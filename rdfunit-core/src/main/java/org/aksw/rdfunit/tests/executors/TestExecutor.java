@@ -57,7 +57,7 @@ public abstract class TestExecutor {
     /**
      * Executes single test.
      *
-     * @param source the source
+     * @param source   the source
      * @param testCase the test case
      * @return the java . util . collection
      * @throws TestCaseExecutionException the test case execution exception
@@ -68,9 +68,9 @@ public abstract class TestExecutor {
     /**
      * Test execution for a Source against a TestSuite
      *
-     * @param source the source we want to test
+     * @param source    the source we want to test
      * @param testSuite the test suite we test the source against
-     * @param delay delay between sparql queries
+     * @param delay     delay between sparql queries
      * @return true if all TC executed successfully, false otherwise
      */
     public boolean execute(Source source, TestSuite testSuite, int delay) {
@@ -100,7 +100,7 @@ public abstract class TestExecutor {
 
             // Test case execution and debug logging
             long executionTimeStartInMS = System.currentTimeMillis();
-            log.debug(testCase.getAbrTestURI()+ " : started execution");
+            log.debug(testCase.getAbrTestURI() + " : started execution");
 
             try {
                 results = executeSingleTest(source, testCase);
@@ -114,7 +114,7 @@ public abstract class TestExecutor {
             }
 
             long executionTimeEndInMS = System.currentTimeMillis();
-            log.debug(testCase.getAbrTestURI()+ " : execution completed in " + (executionTimeEndInMS - executionTimeStartInMS) + "ms");
+            log.debug(testCase.getAbrTestURI() + " : execution completed in " + (executionTimeEndInMS - executionTimeStartInMS) + "ms");
 
             if (results.size() == 0) {
                 status = TestCaseResultStatus.Success;

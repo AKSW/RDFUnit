@@ -30,7 +30,7 @@ public class RLOGTestExecutor extends TestExecutor {
     /**
      * Instantiates a new RLOGTestExecutor
      *
-     * @param queryGenerationFactory  a QueryGenerationFactory
+     * @param queryGenerationFactory a QueryGenerationFactory
      */
     public RLOGTestExecutor(QueryGenerationFactory queryGenerationFactory) {
         super(queryGenerationFactory);

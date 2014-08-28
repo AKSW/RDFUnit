@@ -19,7 +19,7 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         Query query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE " + testCase.getSparqlWhere()
+                        " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE " + testCase.getSparqlWhere()
         );
         if (!query.hasGroupBy()) {
             return query;
@@ -29,10 +29,10 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
         // This way we enclose the query in a sub-select and calculate the count () correctly
         // See https://issues.apache.org/jira/browse/JENA-766
         query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
-                " SELECT ?resource WHERE "
-                + testCase.getSparqlWhere() +
-                "}"
+                        " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
+                        " SELECT ?resource WHERE "
+                        + testCase.getSparqlWhere() +
+                        "}"
         );
 
         return query;

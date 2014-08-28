@@ -44,7 +44,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
         sb.append("  WHERE ");
         sb.append(testCase.getSparqlWhere());
         sb.append("  ORDER BY ASC(?resource) ");
-        return  sb.toString();
+        return sb.toString();
     }
 
     @Override

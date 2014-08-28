@@ -94,7 +94,7 @@ public final class TestUtils {
 
     }
 
-    public static Collection<TestCase> instantiateTestsFromModel(Model model)  {
+    public static Collection<TestCase> instantiateTestsFromModel(Model model) {
         try {
             return instantiateTestsFromModel(model, false);
         } catch (TestCaseInstantiationException e) {
@@ -252,7 +252,7 @@ public final class TestUtils {
                 String source = qs.get("source").toString();
                 RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
                 String patternURI = qs.get("basedOnPattern").toString();
-                Pattern pattern = PatternService.getPattern( PrefixNSService.getLocalName(patternURI, "rutp"));
+                Pattern pattern = PatternService.getPattern(PrefixNSService.getLocalName(patternURI, "rutp"));
                 if (pattern == null) {
                     throw new TestCaseInstantiationException("Pattern does not exists for TC: " + testURI);
                 }

@@ -12,7 +12,7 @@ import java.util.Map;
  * A service class that keeps track of the defined prefixes and provides various utils
  *
  * @author Dimitris Kontokostas
-  * @since 10/1/13 7:06 PM
+ * @since 10/1/13 7:06 PM
  */
 public final class PrefixNSService {
 
@@ -69,7 +69,7 @@ public final class PrefixNSService {
      * @return the URI
      */
     public static String getURIFromAbbrev(final String abbreviation) {
-        String [] parts = abbreviation.split(":");
+        String[] parts = abbreviation.split(":");
         if (parts.length == 2) {
             return getNSFromPrefix(parts[0]) + parts[1];
         }
@@ -85,7 +85,7 @@ public final class PrefixNSService {
     /**
      * Returns the local name of a URI by removing the prefix namespace
      *
-     * @param uri the uri
+     * @param uri    the uri
      * @param prefix the prefix we want to remove
      * @return the local name (uri without prefix namespace)
      */

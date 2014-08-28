@@ -25,7 +25,7 @@ public class RLOGTestCaseResult extends TestCaseResult {
      *
      * @param testCase the test case
      * @param resource the resource
-     * @param message the message
+     * @param message  the message
      * @param logLevel the log level
      */
     public RLOGTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {

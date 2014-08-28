@@ -12,6 +12,7 @@ import java.util.Collection;
 /**
  * interface for monitoring a TestExecutor
  * .
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 1 /3/14 12:23 PM
@@ -20,7 +21,7 @@ public interface TestExecutorMonitor {
     /**
      * Called when testing starts
      *
-     * @param dataset the dataset
+     * @param dataset   the dataset
      * @param testSuite the test suite
      */
     void testingStarted(final Source dataset, final TestSuite testSuite);
@@ -35,8 +36,8 @@ public interface TestExecutorMonitor {
     /**
      * Called when a single test is executed
      *
-     * @param test the test
-     * @param status the status
+     * @param test    the test
+     * @param status  the status
      * @param results the results
      */
     void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final Collection<TestCaseResult> results);

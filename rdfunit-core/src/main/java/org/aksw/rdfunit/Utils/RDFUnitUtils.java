@@ -26,7 +26,7 @@ public final class RDFUnitUtils {
 
     public static void fillSchemaServiceFromFile(String additionalCSV) {
 
-        try (InputStream inputStream = new FileInputStream(additionalCSV)){
+        try (InputStream inputStream = new FileInputStream(additionalCSV)) {
             fillSchemaServiceFromFile(inputStream);
         } catch (FileNotFoundException e) {
             log.error("File " + additionalCSV + " not fount!", e);
@@ -77,7 +77,7 @@ public final class RDFUnitUtils {
             log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
         }
 
-        if (additionalCSV!=null) {
+        if (additionalCSV != null) {
             try {
                 additionalCSV.close();
             } catch (IOException e) {
