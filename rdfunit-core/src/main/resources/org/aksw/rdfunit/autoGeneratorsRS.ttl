@@ -12,10 +12,58 @@
 ### see http://www.w3.org/Submission/2014/SUBM-shapes-20140211/#associating-and-applying-shapes
 ############################################
 
+# OSLC oslc:range (a single class or oslc:Any)
+# Class range wrongly defined (single range)
+rutg:OSLCRANGEC a rut:TestGenerator ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
+								?s a oslc:ResourceShape .
+                                ?s oslc:ResourceShape/oslc:property/oslc:propertyDefinition ?P1 .
+                                ?s oslc:ResourceShape/oslc:property/oslc:range ?T1 .
+
+                                # don't check for general classes (and oslc:Any)
+	                            FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+	                            # Keep unique ranges only
+                                FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
+                                                    FILTER (?T1 = ?T2)
+                                }
+	                            BIND (concat(str(?P1)," does not have correct range: ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# Class range missing (single range)
+rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is missing)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
+                                ?s a oslc:ResourceShape .
+                                ?s oslc:ResourceShape/oslc:property/oslc:propertyDefinition ?P1 .
+                                ?s oslc:ResourceShape/oslc:property/oslc:range ?T1 .
+
+                                # don't check for general classes
+                                FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+                                # Keep unique ranges only
+                                FILTER NOT EXISTS {?s oslc:ResourceShape/oslc:property/oslc:range ?T2 .
+                                                    FILTER (?T1 = ?T2)
+                                }
+
+                                BIND (concat(str(?P1)," does not have correct range: ", str(?T1)) AS ?DESCRIPTION)}  """ ;
+    rut:basedOnPattern rutp:RDFSRANGE-MISS ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:WARN] ;
+    .
+
+
 # TODO OSLC allowedValue / allowedValues
 # TODO OSLC oslc:occurs (oslc:Exactly-one / oslc:One-or-many / oslc:Zero-or-many / oslc:Zero-or-one)
 # TODO OSLC oslc:maxSize (has to be xsd:string)
-# TODO OSLC oslc:range (a class or oslc:Any)
 # TODO OSLC oslc:valueShape
 # TODO OSLC oslc:valueType (rdf:XMLLiteral, xsd:boolean, xsd:dateTime, xsd:decimal, xsd:double, xsd:float, xsd:integer, xsd:string)
 # TODO OSLC oslc:valueType (oslc:AnyResource, oslc:LocalResource, oslc:Resource)
