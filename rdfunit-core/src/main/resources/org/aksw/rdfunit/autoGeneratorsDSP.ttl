@@ -4,6 +4,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix schema: <http://schema.org/> .
 @prefix dsp:      <http://dublincore.org/dc-dsp#> .
 
 
@@ -121,27 +122,28 @@ rutg:OWLCARD-MAX0 a rut:TestGenerator ;
 
 
 ##########################################
-#### TODO: DSP Statement Template valueClass (like domain)
+#### TODO: DSP Statement Template valueClass (like range)
 ##########################################
 
 
-# Class range wrongly defined
+# Class range wrongly defined (single range)
 rutg:DSPRANGEC a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ?T1 ?DESCRIPTION where {
-								?s a dsp:DescriptionTemplate ;
-	                                dsp:statementTemplate ?templ.
-	                            ?templ dsp:property ?P1 ;
-	                                dsp:nonLiteralConstraint ?nlt .
-	                            ?nlt dsp:valueClass ?T1.
-	                            FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
-	                                   (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
-	                                   (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )
-	                            BIND (concat(str(?P1)," does not have correct rdfs:range: ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:sparqlGenerator """ select distinct ?P1 (sample (?T) AS ?T1) (sample(?D) AS ?DESCRIPTION) where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T .
+
+	                            # don't check for datatypes / literals here
+                                FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Literal }
+                                FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Datatype }
+                                FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* schema:DataType }
+
+                                # don't check for general classes
+	                            FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+	                            BIND (concat(str(?P1)," does not have correct range: ", str(?T)) AS ?D)}
+	                            GROUP BY ?P1
+                                HAVING (count(?T) = 1)""" ;
     rut:basedOnPattern rutp:RDFSRANGE ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -149,23 +151,24 @@ rutg:DSPRANGEC a rut:TestGenerator ;
         rut:annotationValue rlog:ERROR] ;
     .
 
-# Class range missing
+# Class range missing (single range)
 rutg:DSPRANGEC-MISS a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is missing)"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
-                                ?s a dsp:DescriptionTemplate ;
-                                    dsp:statementTemplate ?templ.
-                                ?templ dsp:property ?P1 ;
-                                    dsp:nonLiteralConstraint ?nlt .
-                                ?nlt dsp:valueClass ?T1.
-	                            FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
-	                                   (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class")  &&
-	                                   (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Datatype")  &&
-	                                   (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") )
-                                BIND (concat(str(?P1)," does not have defined rdfs:range: ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:sparqlGenerator """ select distinct ?P1 (sample(?D) AS ?DESCRIPTION) where {
+                                ?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T .
+
+                                # don't check for datatypes / literals here
+                                FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Literal }
+                                FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* rdfs:Datatype }
+                                FILTER NOT EXISTS {?T rdf:type/rdfs:subClassOf* schema:DataType }
+
+                                # don't check for general classes
+                                FILTER (  ?T NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+                                BIND (concat(str(?P1)," does not have correct range: ", str(?T)) AS ?D)}
+                                GROUP BY ?P1
+                                HAVING (count(?T) = 1) """ ;
     rut:basedOnPattern rutp:RDFSRANGE-MISS ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;

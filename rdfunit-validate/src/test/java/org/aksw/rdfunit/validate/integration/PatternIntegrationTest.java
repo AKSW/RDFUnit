@@ -25,7 +25,7 @@ public class PatternIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        // Set of
+        // /*
         testsWithErrors.put("owl/OWLDISJC_Correct.ttl", 0);
         testsWithErrors.put("owl/OWLDISJC_Wrong.ttl", 6);
         testsWithErrors.put("owl/RDFSRANGE_Correct.ttl", 0);
@@ -47,9 +47,14 @@ public class PatternIntegrationTest {
         testsWithErrors.put("dsp/standalone_class_Wrong.ttl", 1);
         testsWithErrors.put("dsp/property_cardinality_Correct.ttl", 0);
         testsWithErrors.put("dsp/property_cardinality_Wrong.ttl", 5);
+        testsWithErrors.put("dsp/valueClass_Correct.ttl", 0);
+        testsWithErrors.put("dsp/valueClass_Wrong.ttl", 1);
+        testsWithErrors.put("dsp/valueClass-miss_Wrong.ttl", 1);
+
         */
         // Load test ontology from resource
         RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "owl/ontology.ttl");
+        //RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "dsp/dsp_constraints.ttl");
 
     }
 

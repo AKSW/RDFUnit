@@ -60,5 +60,17 @@ ex:DSPPropCard_x_0
 		]
 		.
 
-##############33
+##############
 # dsp:ValueClass (range)
+
+ex:DSPValueClass
+		a dsp:DescriptionTemplate ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:property ex:PropValueClass ;
+			dsp:nonLiteralConstraint [
+				a dsp:NonLiteralConstraint ;
+				dsp:valueClass ex:ValueClassClass ;
+			]
+		]
+	.
