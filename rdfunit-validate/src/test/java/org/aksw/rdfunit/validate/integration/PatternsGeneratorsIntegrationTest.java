@@ -1,8 +1,15 @@
 package org.aksw.rdfunit.validate.integration;
 
+import org.aksw.rdfunit.RDFUnit;
+import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
+import org.aksw.rdfunit.io.RDFMultipleReader;
 import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFReaderFactory;
+import org.aksw.rdfunit.sources.DumpTestSource;
+import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 import org.junit.After;
@@ -10,21 +17,27 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 @Category(IntegrationTest.class)
-public class PatternIntegrationTest {
+public class PatternsGeneratorsIntegrationTest {
 
-    private static final Map<String, Integer> testsWithErrors = new HashMap<>();
-    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
-
-
+    private final Map<String, Integer> testsWithErrors = new HashMap<>();
+    private final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
+    private final RDFReader ontologyReader = new RDFMultipleReader(Arrays.asList(
+                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "owl/ontology.ttl" ),
+                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "dsp/dsp_constraints.ttl" )
+                                                    // add RS definitions
+                                            ));
+    private final SchemaSource ontologySource = new SchemaSource("tests", "http://rdfunit.aksw.org",ontologyReader);
     @Before
     public void setUp() throws Exception {
-        // /*
+
+        // OWL
         testsWithErrors.put("owl/OWLDISJC_Correct.ttl", 0);
         testsWithErrors.put("owl/OWLDISJC_Wrong.ttl", 6);
         testsWithErrors.put("owl/RDFSRANGE_Correct.ttl", 0);
@@ -41,7 +54,7 @@ public class PatternIntegrationTest {
         testsWithErrors.put("owl/RDFLANGSTRING_Correct.ttl", 0);
         testsWithErrors.put("owl/RDFLANGSTRING_Wrong.ttl", 2);
 
-        /*
+        // DSP
         testsWithErrors.put("dsp/standalone_class_Correct.ttl", 0);
         testsWithErrors.put("dsp/standalone_class_Wrong.ttl", 1);
         testsWithErrors.put("dsp/property_cardinality_Correct.ttl", 0);
@@ -50,10 +63,8 @@ public class PatternIntegrationTest {
         testsWithErrors.put("dsp/valueClass_Wrong.ttl", 1);
         testsWithErrors.put("dsp/valueClass-miss_Wrong.ttl", 1);
 
-        */
-        // Load test ontology from resource
-        RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "owl/ontology.ttl");
-        //RDFUnitStaticWrapper.initWrapper("", resourcePrefix + "dsp/dsp_constraints.ttl");
+        // Resource Shapes
+        //
 
     }
 
@@ -63,6 +74,12 @@ public class PatternIntegrationTest {
 
     @Test
     public void testPatterns() throws Exception {
+
+        RDFUnit rdfUnit = new RDFUnit();
+        rdfUnit.init();
+
+        TestSuite testSuite = new TestSuite(
+                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologySource));
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
@@ -74,8 +91,15 @@ public class PatternIntegrationTest {
             long failedTestCases = -1;
             for (TestCaseExecutionType executionType : TestCaseExecutionType.values()) {
 
-                RDFReader reader = RDFReaderFactory.createResourceReader(resourcePrefix + resource);
-                RDFUnitStaticWrapper.validate(reader.read(), executionType, resourcePrefix + resource, overviewResults);
+                // create new dataset for current entry
+                final Source modelSource = new DumpTestSource(
+                        "test", // prefix
+                        resource,
+                        RDFReaderFactory.createResourceReader(resourcePrefix + resource),
+                        Arrays.asList( ontologySource)
+                );
+
+                RDFUnitStaticWrapper.validate(executionType, modelSource, testSuite, overviewResults);
 
                 // For status results we don't get violation instances
                 if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
