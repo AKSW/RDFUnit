@@ -144,7 +144,7 @@ rutg:DSPRANGEC a rut:TestGenerator ;
 
 	                            # Keep unique ranges only
                                 FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
-                                                    FILTER (?T1 = ?T2)
+                                                    FILTER (?T1 != ?T2)
                                 }
 	                            BIND (concat(str(?P1)," has different range from: ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:RDFSRANGE ;
@@ -172,7 +172,7 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
 
                                 # Keep unique ranges only
                                 FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
-                                                    FILTER (?T1 = ?T2)
+                                                    FILTER (?T1 != ?T2)
                                 }
 
                                 BIND (concat(str(?P1)," does not have defined range: ", str(?T1)) AS ?DESCRIPTION)}  """ ;

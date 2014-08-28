@@ -12,7 +12,7 @@
 ### see http://www.w3.org/Submission/2014/SUBM-shapes-20140211/#associating-and-applying-shapes
 ############################################
 
-# OSLC oslc:range (a single class or oslc:Any)
+# OSLC oslc:range (a single range)
 # Class range wrongly defined (single range)
 rutg:OSLCRANGEC a rut:TestGenerator ;
     dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)"""@en ;
@@ -26,7 +26,7 @@ rutg:OSLCRANGEC a rut:TestGenerator ;
 
 	                            # Keep unique ranges only
                                 FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
-                                                    FILTER (?T1 = ?T2)
+                                                    FILTER (?T1 != ?T2)
                                 }
 	                            BIND (concat(str(?P1)," does not have correct range: ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:RDFSRANGE ;
@@ -49,7 +49,7 @@ rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
 
                                 # Keep unique ranges only
                                 FILTER NOT EXISTS {?s oslc:ResourceShape/oslc:property/oslc:range ?T2 .
-                                                    FILTER (?T1 = ?T2)
+                                                    FILTER (?T1 != ?T2)
                                 }
 
                                 BIND (concat(str(?P1)," does not have correct range: ", str(?T1)) AS ?DESCRIPTION)}  """ ;
