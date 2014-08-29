@@ -1,4 +1,4 @@
-@prefix ex: <http://example.com/dsp#> .
+@prefix exdsp: <http://example.com/dsp#> .
 
 @prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -7,5 +7,5 @@
 
 # Sample wrong data for testing
 
-ex:error1 ex:PropValueClass ex:Anything .  # no range in ex:Anything 1 error
+exdsp:error1 exdsp:PropValueClass exdsp:Anything .  # no range in exdsp:Anything 1 error
 

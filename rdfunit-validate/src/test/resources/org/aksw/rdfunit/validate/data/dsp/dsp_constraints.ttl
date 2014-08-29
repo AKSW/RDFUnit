@@ -1,4 +1,4 @@
-@prefix ex: <http://example.com/dsp#> .
+@prefix exdsp: <http://example.com/dsp#> .
 
 @prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -8,69 +8,69 @@
 @prefix dsp:      <http://dublincore.org/dc-dsp#> .
 
 
-ex:DSPStandaloneClass
+exdsp:DSPStandaloneClass
 		a dsp:DescriptionTemplate ;
 		dsp:standalone "true"^^xsd:boolean ;
-		dsp:resourceClass ex:StandaloneClass .
+		dsp:resourceClass exdsp:StandaloneClass .
 
 
 ########
 # Property cardinality constraints
 
-ex:DSPPropCard_1_1
+exdsp:DSPPropCard_1_1
 	a dsp:DescriptionTemplate ;
-	dsp:resourceClass ex:PropCard_1_1 ;
+	dsp:resourceClass exdsp:PropCard_1_1 ;
 	dsp:statementTemplate [
 		a dsp:NonLiteralStatementTemplate ;
 		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:property ex:prop_1_1 ;
+		dsp:property exdsp:prop_1_1 ;
 		]
 		.
 
-ex:DSPPropCard_0_3
+exdsp:DSPPropCard_0_3
 	a dsp:DescriptionTemplate ;
-	dsp:resourceClass ex:PropCard_0_3 ;
+	dsp:resourceClass exdsp:PropCard_0_3 ;
 	dsp:statementTemplate [
 		a dsp:NonLiteralStatementTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
-		dsp:property ex:prop_0_3 ;
+		dsp:property exdsp:prop_0_3 ;
 		]
 		.
 
-ex:DSPPropCard_3_x
+exdsp:DSPPropCard_3_x
 	a dsp:DescriptionTemplate ;
-	dsp:resourceClass ex:PropCard_3_x ;
+	dsp:resourceClass exdsp:PropCard_3_x ;
 	dsp:statementTemplate [
 		a dsp:NonLiteralStatementTemplate ;
 		dsp:minOccur "3"^^xsd:nonNegativeInteger ;
-		dsp:property ex:prop_3_x ;
+		dsp:property exdsp:prop_3_x ;
 		]
 		.
 
 
-ex:DSPPropCard_x_0
+exdsp:DSPPropCard_x_0
 	a dsp:DescriptionTemplate ;
-	dsp:resourceClass ex:PropCard_x_0 ;
+	dsp:resourceClass exdsp:PropCard_x_0 ;
 	dsp:statementTemplate [
 		a dsp:NonLiteralStatementTemplate ;
 		dsp:maxOccur "0"^^xsd:nonNegativeInteger ;
-		dsp:property ex:prop_x_0 ;
+		dsp:property exdsp:prop_x_0 ;
 		]
 		.
 
 ##############
 # dsp:ValueClass (range)
 
-ex:DSPValueClass
+exdsp:DSPValueClass
 		a dsp:DescriptionTemplate ;
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
-			dsp:property ex:PropValueClass ;
+			dsp:property exdsp:PropValueClass ;
 			dsp:nonLiteralConstraint [
 				a dsp:NonLiteralConstraint ;
-				dsp:valueClass ex:ValueClassClass ;
+				dsp:valueClass exdsp:ValueClassClass ;
 			]
 		]
 	.

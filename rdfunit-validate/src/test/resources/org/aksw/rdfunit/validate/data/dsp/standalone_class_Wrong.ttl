@@ -1,4 +1,4 @@
-@prefix ex: <http://example.com/dsp#> .
+@prefix exdsp: <http://example.com/dsp#> .
 
 @prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -7,5 +7,5 @@
 
 @prefix dsp:      <http://dublincore.org/dc-dsp#>
 
-ex:correct1 a ex:StandaloneClass ;
-	ex:anyProperty ex:anyValue.    # 1 error
+exdsp:correct1 a exdsp:StandaloneClass ;
+	exdsp:anyProperty exdsp:anyValue.    # 1 error

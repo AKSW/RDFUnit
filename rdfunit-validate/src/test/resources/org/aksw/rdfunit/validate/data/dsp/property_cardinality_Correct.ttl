@@ -1,4 +1,4 @@
-@prefix ex: <http://example.com/dsp#> .
+@prefix exdsp: <http://example.com/dsp#> .
 
 @prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -7,32 +7,32 @@
 
 @prefix dsp:      <http://dublincore.org/dc-dsp#>
 
-ex:correcta1 a ex:PropCard_1_1 ;
-	ex:prop_1_1 ex:v1 .
+exdsp:correcta1 a exdsp:PropCard_1_1 ;
+	exdsp:prop_1_1 exdsp:v1 .
 
 
-ex:correctb1 a ex:PropCard_0_3 .
+exdsp:correctb1 a exdsp:PropCard_0_3 .
 
-ex:correctb2 a ex:PropCard_0_3 ;
-	ex:prop_0_3 ex:v1 ;
+exdsp:correctb2 a exdsp:PropCard_0_3 ;
+	exdsp:prop_0_3 exdsp:v1 ;
 	.
 
-ex:correctb3 a ex:PropCard_0_3 ;
-	ex:prop_0_3 ex:v1 ;
-	ex:prop_0_3 ex:v2 .
+exdsp:correctb3 a exdsp:PropCard_0_3 ;
+	exdsp:prop_0_3 exdsp:v1 ;
+	exdsp:prop_0_3 exdsp:v2 .
 
-ex:correctb4 a ex:PropCard_0_3 ;
-	ex:prop_0_3 ex:v1 ;
-	ex:prop_0_3 ex:v2 ;
-	ex:prop_0_3 ex:v3 ;
+exdsp:correctb4 a exdsp:PropCard_0_3 ;
+	exdsp:prop_0_3 exdsp:v1 ;
+	exdsp:prop_0_3 exdsp:v2 ;
+	exdsp:prop_0_3 exdsp:v3 ;
 		.
 
-ex:correctc1 a ex:PropCard_3_x ;
-	ex:prop_3_x ex:v1 ;
-	ex:prop_3_x ex:v2 ;
-	ex:prop_3_x ex:v3 ;
+exdsp:correctc1 a exdsp:PropCard_3_x ;
+	exdsp:prop_3_x exdsp:v1 ;
+	exdsp:prop_3_x exdsp:v2 ;
+	exdsp:prop_3_x exdsp:v3 ;
 	.
 
-ex:correctc1 a ex:PropCard_x_0 ;
-	ex:anyProp ex:anyVal;
+exdsp:correctc1 a exdsp:PropCard_x_0 ;
+	exdsp:anyProp exdsp:anyVal;
 	.
