@@ -1,0 +1,26 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:correct1
+	a exrs:ValueType ;
+    exrs:propVTypeRes  [ exrs:p exrs:p]; # 1 error (not blank node)
+    exrs:propVTypeLocRes exrs:Anything; # 1 error (blank node)
+
+    exrs:propVTypeXMLLiteral exrs:URIinsteadOfXMLLiteral;  # 1 error
+    exrs:propVTypeXMLLiteral "2014-08-06T18:01:47.920Z"^^xsd:dateTime ; #1 error
+
+    exrs:propVTypeBoolean "any text"^^xsd:string ; # 1 error
+    exrs:propVTypeDateTime "2014-08-06T18:01:47.920Z" ; # 1 error missing the datatype
+    exrs:propVTypeDecimal  "123";           # 1 error missing the datatype
+    exrs:propVTypeDouble "123.123"^^xsd:float; # 1 error mixing datatypes
+    exrs:propVTypeFloat "123.123"^^xsd:double; # 1 error mixing datatypes
+    exrs:propVTypeInteger "any text"^^xsd:string; # 1 error wrong datatype
+    exrs:propVTypeString "123.123"^^xsd:float ;  # 1 error missing datatype ;
+
+    .
