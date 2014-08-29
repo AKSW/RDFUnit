@@ -34,7 +34,7 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
         String template = "<tr class=\"%s\"><td>%s</td><td><span title=\"%s\">%s</span></td></tr>";
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resultStatus ?testcase ?description WHERE {" +
+                " SELECT DISTINCT ?resultStatus ?testcase ?level ?description WHERE {" +
                 " ?s a rut:StatusTestCaseResult ; " +
                 "    rut:resultStatus ?resultStatus ; " +
                 "    rut:testCaseLogLevel ?level ; " +
