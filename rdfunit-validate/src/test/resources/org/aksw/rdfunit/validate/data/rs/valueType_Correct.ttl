@@ -1,0 +1,24 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:correct1
+	a exrs:ValueType ;
+    exrs:propVTypeRes exrs:Anything;
+    exrs:propVTypeLocRes [ exrs:p exrs:p] ;
+    exrs:propVTypeXMLLiteral "sample text"^^rdf:XMLLiteral;
+    exrs:propVTypeBoolean true ;
+    exrs:propVTypeBoolean false ;
+    exrs:propVTypeDateTime "2014-08-06T18:01:47.920Z"^^xsd:dateTime ;
+    exrs:propVTypeDecimal  "123"^^xsd:decimal;
+    exrs:propVTypeDouble "123.123"^^xsd:double;
+    exrs:propVTypeFloat "123.123"^^xsd:float;
+    exrs:propVTypeInteger "123"^^xsd:integer;
+    exrs:propVTypeString "any text"^^xsd:string ;
+
+    .

@@ -1,0 +1,63 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:RSValueType
+	a oslc:ResourceShape ;
+    oslc:describes exrs:ClassA ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeRes ;
+        oslc:valueType oslc:Resource ;
+    ] ;
+    oslc:property [          # valueType oslc:LocalResource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeLocRes ;
+        oslc:valueType oslc:LocalResource ;
+    ] ;
+    oslc:property [          # valueType rdf:XMLLiteral
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeXMLLiteral;
+        oslc:valueType rdf:XMLLiteral ;
+    ] ;
+    oslc:property [          # valueType xsd:boolean
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeBoolean;
+        oslc:valueType xsd:boolean ; ;
+    ] ;
+    oslc:property [          # valueType xsd:dateTime
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeDateTime;
+        oslc:valueType xsd:dateTime ;
+    ] ;
+    oslc:property [          # valueType xsd:decimal
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeDecimal;
+        oslc:valueType xsd:decimal ;
+    ] ;
+    oslc:property [          # valueType xsd:double
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeDouble;
+        oslc:valueType xsd:double ;
+    ] ;
+    oslc:property [          # valueType xsd:float
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeFloat;
+        oslc:valueType xsd:float ;
+    ] ;
+    oslc:property [          # valueType xsd:integer
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeInteger;
+        oslc:valueType xsd:integer ;
+    ] ;
+    oslc:property [          # valueType xsd:string
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propVTypeString;
+        oslc:valueType xsd:string ;
+    ] ;
+    .

@@ -26,12 +26,12 @@ import static org.junit.Assert.assertEquals;
 @Category(IntegrationTest.class)
 public class PatternsGeneratorsIntegrationTest {
 
-    private final Map<String, Integer> testsWithErrors = new HashMap<>();
-    private final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
-    private final RDFReader ontologyReader = new RDFMultipleReader(Arrays.asList(
+    private static final Map<String, Integer> testsWithErrors = new HashMap<>();
+    private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
+    private static final RDFReader ontologyReader = new RDFMultipleReader(Arrays.asList(
                                                     RDFReaderFactory.createResourceReader(resourcePrefix + "owl/ontology.ttl" ),
-                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "dsp/dsp_constraints.ttl" )
-                                                    // add RS definitions
+                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "dsp/dsp_constraints.ttl" ),
+                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "rs/rs_constraints.ttl" )
                                             ));
     private final SchemaSource ontologySource = new SchemaSource("tests", "http://rdfunit.aksw.org",ontologyReader);
     @Before
@@ -64,7 +64,8 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrors.put("dsp/valueClass-miss_Wrong.ttl", 1);
 
         // Resource Shapes
-        //
+        testsWithErrors.put("rs/valueType_Correct.ttl", 0);
+        testsWithErrors.put("rs/valueType_Wrong.ttl", 2);
 
     }
 
