@@ -24,8 +24,6 @@ import org.aksw.rdfunit.webdemo.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.webdemo.components.SchemaSelectorComponent;
 import org.aksw.rdfunit.webdemo.components.TestGenerationComponent;
 import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
-import org.aksw.rdfunit.webdemo.model.DataSelectorModel;
-import org.aksw.rdfunit.webdemo.presenter.DataSelectorPresenter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -115,12 +113,13 @@ public class EndointTestTab extends VerticalLayout {
         this.setWidth("100%");
 
         // Create the model and the Vaadin view implementation
-        DataSelectorModel dataSelectorModel = new DataSelectorModel();
-        DataSelectorViewImpl dataSelectorView = new DataSelectorViewImpl();
-
-        new DataSelectorPresenter(dataSelectorModel, dataSelectorView);
-
-        this.addComponent(dataSelectorView);
+//        DataSelectorViewImpl dataSelectorView = new DataSelectorViewImpl();
+//        new DataSelectorPresenter(dataSelectorView);
+//        this.addComponent(dataSelectorView);
+//
+//        SchemaSelectorViewImpl schemaSelectorView = new SchemaSelectorViewImpl();
+//        new SchemaSelectorPresenter(schemaSelectorView);
+//        this.addComponent(schemaSelectorView);
 
         HorizontalLayout confHeader = new HorizontalLayout();
         this.addComponent(confHeader);

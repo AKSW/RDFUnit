@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.webdemo.view;
 
+import org.aksw.rdfunit.webdemo.utils.DataOption;
+
 /**
  * Description
  *
@@ -10,7 +12,7 @@ public interface DataSelectorView {
 
 
     public interface DataSelectorViewListener {
-        public void sourceIsSet(boolean isText, String text, String format);
+        public void sourceIsSet(DataOption dataOption, String text, String format);
     }
 
     public void addListener(DataSelectorViewListener listener);
