@@ -233,29 +233,37 @@ public class SchemaSelectorComponent extends VerticalLayout {
 
         RemoveWindow(final Source s, final TokenField f) {
             super("Remove " + s.getPrefix() + "?");
+            FormLayout outer = new FormLayout();
+            outer.setSpacing(true);
+            setContent(outer);
 
             VerticalLayout l = new VerticalLayout();
-            setContent(l);
+            l.setSpacing(true);
+            outer.addComponent(l);
+
 
             setStyleName("black");
             setResizable(false);
             center();
             setModal(true);
-            setWidth("250px");
-            setClosable(false);
+            setWidth("320px");
+            setHeight("170px");
+            setClosable(true);
+
+            l.addComponent(new Label("Are you sure you want to remove " + s.getPrefix() + "?\n" + s.getUri()));
 
             // layout buttons horizontally
             HorizontalLayout hz = new HorizontalLayout();
             l.addComponent(hz);
             hz.setSpacing(true);
-            hz.setWidth("100%");
+            //hz.setWidth("100%");
 
             Button cancel = new Button("Cancel", new Button.ClickListener() {
 
                 private static final long serialVersionUID = 7675170261217815011L;
 
                 public void buttonClick(ClickEvent event) {
-                    f.getUI().removeWindow(RemoveWindow.this);
+                    RemoveWindow.this.close();
                 }
             });
             hz.addComponent(cancel);
@@ -267,7 +275,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
 
                 public void buttonClick(ClickEvent event) {
                     f.removeToken(s);
-                    f.getUI().removeWindow(RemoveWindow.this);
+                    RemoveWindow.this.close();
                 }
             });
             hz.addComponent(remove);

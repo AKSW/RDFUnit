@@ -1,6 +1,12 @@
 package org.aksw.rdfunit.webdemo.presenter;
 
+import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
+import org.aksw.rdfunit.webdemo.utils.SchemaOption;
 import org.aksw.rdfunit.webdemo.view.SchemaSelectorView;
+
+import java.util.Collection;
 
 /**
  * Description
@@ -21,10 +27,48 @@ public class SchemaSelectorPresenter implements SchemaSelectorView.SchemaSelecto
     }
 
     @Override
-    public void schemaIsSet(boolean isText, String text, String format) {
+    public boolean schemaIsSet(SchemaOption schemaOption, Collection<SchemaSource> schemaSources, String text, String format) {
+        RDFUnitConfiguration configuration = RDFUnitDemoSession.getRDFUnitConfiguration();
 
+        if (configuration == null) {
+            schemaSelectorView.setMessage("Data Selection not configured properly", true);
+            return false;
+        }
 
+        switch (schemaOption) {
+            case AUTO_OWL:
+                configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
+                break;
+            case SPECIFIC_URIS:
+                configuration.setSchemata(schemaSources);
+                break;
+            case CUSTOM_TEXT:
 
+                break;
 
+            default:
+                schemaSelectorView.setMessage("Unknown error, try again", true);
+                return false;
+        }
+
+        schemaSelectorView.setMessage("Constraints loaded successfully: (" + getSchemaDesc(configuration.getAllSchemata()) + ")", false);
+        return true;
+
+    }
+
+    private String getSchemaDesc(Collection<SchemaSource> schemaSources) {
+        StringBuilder builder = new StringBuilder();
+        boolean firstTime = true;
+        for (SchemaSource src : schemaSources) {
+            if (!firstTime) {
+                builder.append(", ");
+            }
+            else {
+                firstTime = false;
+            }
+
+            builder.append(src.getPrefix());
+        }
+        return builder.toString();
     }
 }

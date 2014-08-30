@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.webdemo.components;
+package org.aksw.rdfunit.webdemo.view;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -19,11 +19,11 @@ import java.io.File;
  *         Description
  * @since 11/20/13 5:20 PM
  */
-public class TestGenerationComponent extends VerticalLayout implements TestGeneratorExecutorMonitor {
+public class TestGenerationViewImpl extends VerticalLayout implements TestGeneratorExecutorMonitor {
 
     private final Table resultsTable = new Table("Test Results");
 
-    public TestGenerationComponent() {
+    public TestGenerationViewImpl() {
         initLayout();
 
     }
@@ -39,7 +39,7 @@ public class TestGenerationComponent extends VerticalLayout implements TestGener
         resultsTable.setColumnCollapsingAllowed(true);
         resultsTable.setSelectable(true);
         resultsTable.setVisible(false);
-        TestGenerationComponent.this.addComponent(resultsTable);
+        TestGenerationViewImpl.this.addComponent(resultsTable);
     }
 
     public void clearTableRowsAndHide() {

@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.webdemo.view;
+package org.aksw.rdfunit.webdemo.components;
 
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.label.ContentMode;

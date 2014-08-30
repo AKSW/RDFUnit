@@ -27,6 +27,5 @@ addons:
       name: "AKSW/RDFUnit"
       description: "RDFUnit Unit Testing suite"
     notification_email: jimkont@gmail.com
-#    build_command_prepend: "<Your build preprocessing command here>"
     build_command:   "mvn clean install"
     branch_pattern: coverity_scan

@@ -27,9 +27,9 @@ public class DataSelectorPresenter implements DataSelectorView.DataSelectorViewL
     }
 
     @Override
-    public void sourceIsSet(DataOption dataOption, String text, String format) {
+    public boolean sourceIsSet(DataOption dataOption, String text, String format) {
 
-        String uri = "http://rdfunit.aksw.org";
+        String uri = "CustomText";
         if (dataOption.equals(DataOption.URI)) {
             uri = text.trim();
         }
@@ -54,14 +54,17 @@ public class DataSelectorPresenter implements DataSelectorView.DataSelectorViewL
             }
             else {
                 configuration.setCustomTextSource(text, format);
+                configuration.getTestSource().getExecutionFactory();
             }
             // If successful add it in session
             dataSelectorView.setMessage("Data loaded successfully!", false);
             RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
+            return true;
 
         }
         catch (Exception e) {
             dataSelectorView.setMessage("Error: " + e.getMessage(), true);
+            return false;
 
         }
 

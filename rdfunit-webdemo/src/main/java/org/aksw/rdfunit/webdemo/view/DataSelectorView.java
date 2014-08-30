@@ -12,7 +12,7 @@ public interface DataSelectorView {
 
 
     public interface DataSelectorViewListener {
-        public void sourceIsSet(DataOption dataOption, String text, String format);
+        public boolean sourceIsSet(DataOption dataOption, String text, String format);
     }
 
     public void addListener(DataSelectorViewListener listener);

@@ -1,16 +1,10 @@
 package org.aksw.rdfunit.webdemo.view;
 
-import com.vaadin.data.Property;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
-import org.aksw.rdfunit.sources.EndpointTestSource;
-import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -20,14 +14,11 @@ import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoCommons;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
-import org.aksw.rdfunit.webdemo.RDFunitConfigurationFactory;
-import org.aksw.rdfunit.webdemo.components.SchemaSelectorComponent;
-import org.aksw.rdfunit.webdemo.components.TestGenerationComponent;
 import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
+import org.aksw.rdfunit.webdemo.presenter.DataSelectorPresenter;
+import org.aksw.rdfunit.webdemo.presenter.SchemaSelectorPresenter;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Dimitris Kontokostas
@@ -39,14 +30,14 @@ import java.util.Arrays;
 public class EndointTestTab extends VerticalLayout {
 
 
-    private final NativeSelect examplesSelect = new NativeSelect("Select an example");
-    private final TextField endpointField = new TextField();
-    private final TextField graphField = new TextField();
-    private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
+//    private final NativeSelect examplesSelect = new NativeSelect("Select an example");
+//    private final TextField endpointField = new TextField();
+//    private final TextField graphField = new TextField();
+//    private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
     private final TestResultsComponent testResultsComponent = new TestResultsComponent();
-    private final TestGenerationComponent testGenerationComponent = new TestGenerationComponent();
+    private final TestGenerationViewImpl testGenerationViewImpl = new TestGenerationViewImpl();
 
-    private final NativeSelect limitSelect = new NativeSelect();
+//    private final NativeSelect limitSelect = new NativeSelect();
     private final Button clearButton = new Button("Clear");
     private final Button generateTestsButton = new Button("Generate tests");
     private final Button generateTestsCancelButton = new Button("Cancel");
@@ -63,45 +54,45 @@ public class EndointTestTab extends VerticalLayout {
         initLayout();
 
         //TODO move this away from here
-        File f = VaadinSession.getCurrent().getService().getBaseDirectory();
-        String baseDir = f.getAbsolutePath() + "/data/";
-        try {
-
-            RDFUnitConfiguration dbpediaConf = RDFunitConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
-            RDFUnitConfiguration dbpediaLConf = RDFunitConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
-            RDFUnitConfiguration dbpediaNLConf = RDFunitConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
-            RDFUnitConfiguration linkedChemistry = RDFunitConfigurationFactory.createConfiguration("http://linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito", baseDir);
-            RDFUnitConfiguration uriBurner = RDFunitConfigurationFactory.createConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", new ArrayList<String>(), "foaf,skos,geo,dcterms,prov", baseDir);
-            RDFUnitConfiguration bbcNature = RDFunitConfigurationFactory.createConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "dcterms,po,wo,wlo,foaf", baseDir);
-            RDFUnitConfiguration musicBrainz = RDFunitConfigurationFactory.createConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "ov,mo,foaf", baseDir);
-            RDFUnitConfiguration umls = RDFunitConfigurationFactory.createConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://linkedlifedata.com/resource/umls"), "dcterms,skos,owl", baseDir);
-            RDFUnitConfiguration umbel = RDFunitConfigurationFactory.createConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://umbel.org"), "vann,skos,owl", baseDir);
-            RDFUnitConfiguration datasw = RDFunitConfigurationFactory.createConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://data.semanticweb.org"), "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf", baseDir);
-
-
-            examplesSelect.addItem(uriBurner);
-            examplesSelect.setItemCaption(uriBurner, "Uri Burner");
-            examplesSelect.addItem(bbcNature);
-            examplesSelect.setItemCaption(bbcNature, "BBC Nature (LOD Cache)");
-            examplesSelect.addItem(musicBrainz);
-            examplesSelect.setItemCaption(musicBrainz, "MusicBrainz (LOD Cache)");
-            examplesSelect.addItem(umls);
-            examplesSelect.setItemCaption(umls, "LinkedLifeData UMLS (LOD Cache)");
-            examplesSelect.addItem(umbel);
-            examplesSelect.setItemCaption(umbel, "umbel (LOD Cache)");
-            examplesSelect.addItem(datasw);
-            examplesSelect.setItemCaption(datasw, "data.semanticweb.org (LOD Cache)");
-            examplesSelect.addItem(linkedChemistry);
-            examplesSelect.setItemCaption(linkedChemistry, "LinkedChemistry");
-            examplesSelect.addItem(dbpediaConf);
-            examplesSelect.setItemCaption(dbpediaConf, "DBpedia");
-            examplesSelect.addItem(dbpediaLConf);
-            examplesSelect.setItemCaption(dbpediaLConf, "DBpedia Live");
-            examplesSelect.addItem(dbpediaNLConf);
-            examplesSelect.setItemCaption(dbpediaNLConf, "DBpedia NL");
-        } catch (UndefinedSchemaException e) {
-            //
-        }
+//        File f = VaadinSession.getCurrent().getService().getBaseDirectory();
+//        String baseDir = f.getAbsolutePath() + "/data/";
+//        try {
+//
+//            RDFUnitConfiguration dbpediaConf = RDFunitConfigurationFactory.createDBpediaConfigurationSimple(baseDir);
+//            RDFUnitConfiguration dbpediaLConf = RDFunitConfigurationFactory.createDBpediaLiveConfigurationSimple(baseDir);
+//            RDFUnitConfiguration dbpediaNLConf = RDFunitConfigurationFactory.createDBpediaNLDatasetSimple(baseDir);
+//            RDFUnitConfiguration linkedChemistry = RDFunitConfigurationFactory.createConfiguration("http://linkedchemistry.info", "http://rdf.farmbio.uu.se/chembl/sparql", Arrays.asList("http://linkedchemistry.info/chembl/"), "cheminf,cito", baseDir);
+//            RDFUnitConfiguration uriBurner = RDFunitConfigurationFactory.createConfiguration("http://linkeddata.uriburner.com", "http://linkeddata.uriburner.com/sparql/", new ArrayList<String>(), "foaf,skos,geo,dcterms,prov", baseDir);
+//            RDFUnitConfiguration bbcNature = RDFunitConfigurationFactory.createConfiguration("http://bbc.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "dcterms,po,wo,wlo,foaf", baseDir);
+//            RDFUnitConfiguration musicBrainz = RDFunitConfigurationFactory.createConfiguration("http://musicbrainz.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://www.bbc.co.uk/nature/"), "ov,mo,foaf", baseDir);
+//            RDFUnitConfiguration umls = RDFunitConfigurationFactory.createConfiguration("http://umls.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://linkedlifedata.com/resource/umls"), "dcterms,skos,owl", baseDir);
+//            RDFUnitConfiguration umbel = RDFunitConfigurationFactory.createConfiguration("http://umpel.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://umbel.org"), "vann,skos,owl", baseDir);
+//            RDFUnitConfiguration datasw = RDFunitConfigurationFactory.createConfiguration("http://datasw.lod.openlinksw.com", "http://lod.openlinksw.com/sparql", Arrays.asList("http://data.semanticweb.org"), "cal,event,tl,dcterms,bibo,rooms,cal,skos,foaf", baseDir);
+//
+//
+//            examplesSelect.addItem(uriBurner);
+//            examplesSelect.setItemCaption(uriBurner, "Uri Burner");
+//            examplesSelect.addItem(bbcNature);
+//            examplesSelect.setItemCaption(bbcNature, "BBC Nature (LOD Cache)");
+//            examplesSelect.addItem(musicBrainz);
+//            examplesSelect.setItemCaption(musicBrainz, "MusicBrainz (LOD Cache)");
+//            examplesSelect.addItem(umls);
+//            examplesSelect.setItemCaption(umls, "LinkedLifeData UMLS (LOD Cache)");
+//            examplesSelect.addItem(umbel);
+//            examplesSelect.setItemCaption(umbel, "umbel (LOD Cache)");
+//            examplesSelect.addItem(datasw);
+//            examplesSelect.setItemCaption(datasw, "data.semanticweb.org (LOD Cache)");
+//            examplesSelect.addItem(linkedChemistry);
+//            examplesSelect.setItemCaption(linkedChemistry, "LinkedChemistry");
+//            examplesSelect.addItem(dbpediaConf);
+//            examplesSelect.setItemCaption(dbpediaConf, "DBpedia");
+//            examplesSelect.addItem(dbpediaLConf);
+//            examplesSelect.setItemCaption(dbpediaLConf, "DBpedia Live");
+//            examplesSelect.addItem(dbpediaNLConf);
+//            examplesSelect.setItemCaption(dbpediaNLConf, "DBpedia NL");
+//        } catch (UndefinedSchemaException e) {
+//            //
+//        }
 
 
         initInteractions();
@@ -112,59 +103,65 @@ public class EndointTestTab extends VerticalLayout {
         this.setId("EndointTestTab");
         this.setWidth("100%");
 
+        this.addComponent( new Label("<h2>1. Data Selection</h2>", ContentMode.HTML));
+
         // Create the model and the Vaadin view implementation
-//        DataSelectorViewImpl dataSelectorView = new DataSelectorViewImpl();
-//        new DataSelectorPresenter(dataSelectorView);
-//        this.addComponent(dataSelectorView);
+        DataSelectorViewImpl dataSelectorView = new DataSelectorViewImpl();
+        new DataSelectorPresenter(dataSelectorView);
+        this.addComponent(dataSelectorView);
+
+        this.addComponent( new Label("<h2>2. Constraints Selection</h2>", ContentMode.HTML));
+        SchemaSelectorViewImpl schemaSelectorView = new SchemaSelectorViewImpl();
+        new SchemaSelectorPresenter(schemaSelectorView);
+        this.addComponent(schemaSelectorView);
+
+        dataSelectorView.setNextItem(schemaSelectorView);
+        schemaSelectorView.setPreviousItem(dataSelectorView);
+
+//        HorizontalLayout confHeader = new HorizontalLayout();
+//        this.addComponent(confHeader);
 //
-//        SchemaSelectorViewImpl schemaSelectorView = new SchemaSelectorViewImpl();
-//        new SchemaSelectorPresenter(schemaSelectorView);
-//        this.addComponent(schemaSelectorView);
-
-        HorizontalLayout confHeader = new HorizontalLayout();
-        this.addComponent(confHeader);
-
-        confHeader.addStyleName("header");
-        Label confLabel = new Label("<h2>Testing Configuration</h2>", ContentMode.HTML);
-        confHeader.addComponent(confLabel);
-        confHeader.setComponentAlignment(confLabel, Alignment.MIDDLE_LEFT);
-        confHeader.addComponent(clearButton);
-        confHeader.setComponentAlignment(clearButton, Alignment.MIDDLE_CENTER);
-
-
-        HorizontalLayout configurationSetLayout = new HorizontalLayout();
-        configurationSetLayout.setId("test-configuration");
-        //configurationSetLayout.setWidth("100%");
-
-        this.addComponent(configurationSetLayout);
-
-        examplesSelect.addStyleName("examples");
-        examplesSelect.setImmediate(true);
-
-        configurationSetLayout.addComponent(examplesSelect);
-
-        HorizontalLayout manualConfigurationLayout = new HorizontalLayout();
-        configurationSetLayout.addComponent(manualConfigurationLayout);
-        configurationSetLayout.setExpandRatio(manualConfigurationLayout, 1.0f);
-        manualConfigurationLayout.addStyleName("manual");
-
-
-        VerticalLayout textboxes = new VerticalLayout();
-        manualConfigurationLayout.addComponent(textboxes);
-
-        textboxes.addComponent(new Label("SPARQL Endpoint"));
-        textboxes.addComponent(endpointField);
-        textboxes.addComponent(new Label("Graph"));
-        textboxes.addComponent(graphField);
-
-        endpointField.setWidth("150px");
-        graphField.setWidth("150px");
-
-        schemaSelectorWidget.addStyleName("schema-selector");
-        manualConfigurationLayout.addComponent(schemaSelectorWidget);
-        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget, 1.0f);
-
-
+//        confHeader.addStyleName("header");
+//        Label confLabel = new Label("<h2>Testing Configuration</h2>", ContentMode.HTML);
+//        confHeader.addComponent(confLabel);
+//        confHeader.setComponentAlignment(confLabel, Alignment.MIDDLE_LEFT);
+//        confHeader.addComponent(clearButton);
+//        confHeader.setComponentAlignment(clearButton, Alignment.MIDDLE_CENTER);
+//
+//
+//        HorizontalLayout configurationSetLayout = new HorizontalLayout();
+//        configurationSetLayout.setId("test-configuration");
+//        //configurationSetLayout.setWidth("100%");
+//
+//        this.addComponent(configurationSetLayout);
+//
+//        examplesSelect.addStyleName("examples");
+//        examplesSelect.setImmediate(true);
+//
+//        configurationSetLayout.addComponent(examplesSelect);
+//
+//        HorizontalLayout manualConfigurationLayout = new HorizontalLayout();
+//        configurationSetLayout.addComponent(manualConfigurationLayout);
+//        configurationSetLayout.setExpandRatio(manualConfigurationLayout, 1.0f);
+//        manualConfigurationLayout.addStyleName("manual");
+//
+//
+//        VerticalLayout textboxes = new VerticalLayout();
+//        manualConfigurationLayout.addComponent(textboxes);
+//
+//        textboxes.addComponent(new Label("SPARQL Endpoint"));
+//        textboxes.addComponent(endpointField);
+//        textboxes.addComponent(new Label("Graph"));
+//        textboxes.addComponent(graphField);
+//
+//        endpointField.setWidth("150px");
+//        graphField.setWidth("150px");
+//
+//        schemaSelectorWidget.addStyleName("schema-selector");
+//        manualConfigurationLayout.addComponent(schemaSelectorWidget);
+//        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget, 1.0f);
+//
+//
         HorizontalLayout genHeader = new HorizontalLayout();
         this.addComponent(genHeader);
         genHeader.addStyleName("header");
@@ -183,7 +180,7 @@ public class EndointTestTab extends VerticalLayout {
         this.generateTestsCancelButton.setEnabled(false);
         generateTestsProgress.setEnabled(false);
         generateTestsProgress.setWidth("150px");
-        this.addComponent(testGenerationComponent);
+        this.addComponent(testGenerationViewImpl);
 
 
         HorizontalLayout testHeader = new HorizontalLayout();
@@ -211,17 +208,17 @@ public class EndointTestTab extends VerticalLayout {
     }
 
     private void initInteractions() {
-        examplesSelect.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                Property property = valueChangeEvent.getProperty();
-                RDFUnitConfiguration configuration = (RDFUnitConfiguration) property.getValue();
-                if (configuration != null) {
-                    setExampleConfiguration(configuration);
-                    RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
-                }
-            }
-        });
+//        examplesSelect.addValueChangeListener(new Property.ValueChangeListener() {
+//            @Override
+//            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+//                Property property = valueChangeEvent.getProperty();
+//                RDFUnitConfiguration configuration = (RDFUnitConfiguration) property.getValue();
+//                if (configuration != null) {
+//                    setExampleConfiguration(configuration);
+//                    RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
+//                }
+//            }
+//        });
 
         clearButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -236,11 +233,11 @@ public class EndointTestTab extends VerticalLayout {
             @Override
             public void run() {
 
-                createConfigurationFromUser();
+                //createConfigurationFromUser();
                 if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
                     Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                    RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
+                    RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationViewImpl);
 
                     RDFUnitDemoSession.setTestSuite(
                             RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
@@ -469,52 +466,48 @@ public class EndointTestTab extends VerticalLayout {
 
     private void clearConfigurations() {
 
-        endpointField.setValue("");
-        graphField.setValue("");
-        schemaSelectorWidget.setSelections(new ArrayList<SchemaSource>());
-        examplesSelect.select(null);
+//        endpointField.setValue("");
+//        graphField.setValue("");
+//        schemaSelectorWidget.setSelections(new ArrayList<SchemaSource>());
+//        examplesSelect.select(null);
 
         testResultsComponent.clearTableRowsAndHide();
-        testGenerationComponent.clearTableRowsAndHide();
+        testGenerationViewImpl.clearTableRowsAndHide();
 
-        generateTestsButton.setEnabled(true);
-        startTestingButton.setEnabled(false);
-        resultsButton.setEnabled(false);
-
-        generateTestsProgressLabel.setValue("0/0");
+        //generateTestsProgressLabel.setValue("0/0");
         testingProgressLabel.setValue("0/0");
 
     }
 
-    private void createConfigurationFromUser() {
+//    private void createConfigurationFromUser() {
+//
+//        String datasetURI = endpointField.getValue().replace("/sparql", "");
+//
+//        RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, RDFUnitDemoSession.getBaseDir());
+//        configuration.setEndpointConfiguration(endpointField.getValue(), Arrays.asList(graphField.getValue()));
+//        configuration.setSchemata(schemaSelectorWidget.getSelections());
+//
+//        RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
+//    }
 
-        String datasetURI = endpointField.getValue().replace("/sparql", "");
-
-        RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, RDFUnitDemoSession.getBaseDir());
-        configuration.setEndpointConfiguration(endpointField.getValue(), Arrays.asList(graphField.getValue()));
-        configuration.setSchemata(schemaSelectorWidget.getSelections());
-
-        RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
-    }
-
-    private void setExampleConfiguration(RDFUnitConfiguration configuration) {
-        if (!(endpointField.getValue().isEmpty() || graphField.getValue().isEmpty() || schemaSelectorWidget.getSelections().isEmpty())) {
-            //TODO confirm dialog for clear
-            clearConfigurations();
-        }
-
-        Source dataset = configuration.getTestSource();
-        if (dataset instanceof EndpointTestSource) {
-            endpointField.setValue(((EndpointTestSource) dataset).getSparqlEndpoint());
-            java.util.Collection<String> graphs = ((EndpointTestSource) dataset).getSparqlGraphs();
-            String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
-            if (graph != null && !graph.isEmpty()) {
-                graphField.setValue(graph);
-            }
-        } else {
-            endpointField.setValue("");
-            graphField.setValue("");
-        }
-        schemaSelectorWidget.setSelections(dataset.getReferencesSchemata());
-    }
+//    private void setExampleConfiguration(RDFUnitConfiguration configuration) {
+//        if (!(endpointField.getValue().isEmpty() || graphField.getValue().isEmpty() || schemaSelectorWidget.getSelections().isEmpty())) {
+//            //TODO confirm dialog for clear
+//            clearConfigurations();
+//        }
+//
+//        Source dataset = configuration.getTestSource();
+//        if (dataset instanceof EndpointTestSource) {
+//            endpointField.setValue(((EndpointTestSource) dataset).getSparqlEndpoint());
+//            java.util.Collection<String> graphs = ((EndpointTestSource) dataset).getSparqlGraphs();
+//            String graph = RDFUnitUtils.getFirstItemInCollection(graphs);
+//            if (graph != null && !graph.isEmpty()) {
+//                graphField.setValue(graph);
+//            }
+//        } else {
+//            endpointField.setValue("");
+//            graphField.setValue("");
+//        }
+//        schemaSelectorWidget.setSelections(dataset.getReferencesSchemata());
+//    }
 }

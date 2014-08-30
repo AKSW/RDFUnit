@@ -8,8 +8,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.aksw.rdfunit.webdemo.components.IntroTab;
 import org.aksw.rdfunit.webdemo.view.EndointTestTab;
-import org.aksw.rdfunit.webdemo.view.IntroTab;
 
 import javax.servlet.annotation.WebServlet;
 /*

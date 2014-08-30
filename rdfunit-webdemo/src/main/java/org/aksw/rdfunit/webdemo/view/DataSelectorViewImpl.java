@@ -15,7 +15,7 @@ import java.util.List;
  * @author Dimitris Kontokostas
  * @since 8/30/14 12:25 PM
  */
-public class DataSelectorViewImpl extends CustomComponent implements DataSelectorView{
+public class DataSelectorViewImpl extends CustomComponent implements DataSelectorView, WorkflowItem {
 
     private final List<DataSelectorViewListener> listeners =
             new ArrayList<DataSelectorViewListener>();
@@ -26,6 +26,11 @@ public class DataSelectorViewImpl extends CustomComponent implements DataSelecto
     private final Label messageLabel = new Label();
     private final Button clearButton = new Button("Clear");
     private final Button continueButton = new Button("Load");
+
+    private WorkflowItem previous;
+    private WorkflowItem next;
+
+    private volatile boolean isReady = false;
 
 
     public DataSelectorViewImpl(){
@@ -80,6 +85,7 @@ public class DataSelectorViewImpl extends CustomComponent implements DataSelecto
         clearButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                isReady = false;
                 setDefaultValues();
             }
         });
@@ -90,6 +96,10 @@ public class DataSelectorViewImpl extends CustomComponent implements DataSelecto
 
                 messageLabel.setValue("Loading...");
                 messageLabel.setStyleName(ValoTheme.LABEL_SPINNER);
+
+                isReady = false;
+
+                DataSelectorViewImpl.this.setEnabled(false);
 
                 for (DataSelectorViewListener listener : listeners) {
 
@@ -112,12 +122,15 @@ public class DataSelectorViewImpl extends CustomComponent implements DataSelecto
 
     @Override
     public void setMessage(String message, boolean isError) {
+        DataSelectorViewImpl.this.setEnabled(true);
         messageLabel.setValue(message);
         if (isError) {
             messageLabel.setStyleName(ValoTheme.LABEL_FAILURE);
+            isReady = false;
         }
         else {
             messageLabel.setStyleName(ValoTheme.LABEL_SUCCESS);
+            isReady = true;
         }
 
     }
@@ -152,10 +165,14 @@ public class DataSelectorViewImpl extends CustomComponent implements DataSelecto
     }
 
     private void setInputTypes() {
+        inputTypeSelect.addItem(DataOption.SPARQL);
+        inputTypeSelect.setItemCaption(DataOption.SPARQL, "SPARQL");
         inputTypeSelect.addItem(DataOption.URI);
         inputTypeSelect.setItemCaption(DataOption.URI, "Remote Files");
         inputTypeSelect.addItem(DataOption.TEXT);
         inputTypeSelect.setItemCaption(DataOption.TEXT, "Direct Input");
+
+        inputTypeSelect.setItemEnabled(DataOption.SPARQL,false);
 
         inputTypeSelect.addValueChangeListener(new Property.ValueChangeListener() {
 
@@ -186,4 +203,28 @@ public class DataSelectorViewImpl extends CustomComponent implements DataSelecto
     }
 
 
+    @Override
+    public boolean isReady() {
+        return isReady;
+    }
+
+    @Override
+    public void setPreviousItem(WorkflowItem item) {
+        previous = item;
+    }
+
+    @Override
+    public void setNextItem(WorkflowItem item) {
+        next = item;
+    }
+
+    @Override
+    public WorkflowItem getPreviousItem() {
+        return previous;
+    }
+
+    @Override
+    public WorkflowItem getNextItem() {
+        return next;
+    }
 }
