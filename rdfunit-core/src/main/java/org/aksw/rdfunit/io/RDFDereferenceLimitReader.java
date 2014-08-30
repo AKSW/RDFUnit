@@ -75,7 +75,7 @@ public class RDFDereferenceLimitReader extends RDFReader {
      * @param urlStr the uri to check
      * @return the exact size or -1 in case of an error or unknown length
      */
-    private long getUriSize(String urlStr) {
+    public static long getUriSize(String urlStr) {
         HttpURLConnection conn = null;
         try {
             URL url = new URL(urlStr);
@@ -86,7 +86,8 @@ public class RDFDereferenceLimitReader extends RDFReader {
         } catch (IOException e) {
             return -1;
         } finally {
-            conn.disconnect();
+            if (conn!=null)
+                conn.disconnect();
         }
     }
 }
