@@ -17,10 +17,10 @@ import javax.servlet.annotation.WebServlet;
 */
 
 @Theme("rdfunit")
-public class RDFUnitUI extends UI {
+public class RDFUnitDemo extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = RDFUnitUI.class, widgetset = "org.aksw.rdfunit.ui.AppWidgetSet")
+    @VaadinServletConfiguration(productionMode = false, ui = RDFUnitDemo.class, widgetset = "org.aksw.rdfunit.ui.AppWidgetSet")
     public static class Servlet extends VaadinServlet {
     }
 
@@ -37,7 +37,7 @@ public class RDFUnitUI extends UI {
      */
     protected void init(VaadinRequest request) {
 
-        RDFUnitUISession.init();
+        RDFUnitDemoSession.init();
 
         initLayout();
 
@@ -48,8 +48,8 @@ public class RDFUnitUI extends UI {
         // When user exits (window close, loose session) stop background threads
         this.addDetachListener(new DetachListener() {
             public void detach(DetachEvent event) {
-                RDFUnitUISession.getTestExecutor().cancel();
-                RDFUnitUISession.getTestGeneratorExecutor().cancel();
+                RDFUnitDemoSession.getTestExecutor().cancel();
+                RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
             }
         });
 

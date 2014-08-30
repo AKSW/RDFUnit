@@ -18,7 +18,7 @@ import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.rdfunit.webdemo.RDFUnitUISession;
+import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.webdemo.components.SchemaSelectorComponent;
 import org.aksw.rdfunit.webdemo.components.TestGenerationComponent;
@@ -208,7 +208,7 @@ public class EndointTestTab extends VerticalLayout {
                 RDFUnitConfiguration configuration = (RDFUnitConfiguration) property.getValue();
                 if (configuration != null) {
                     setExampleConfiguration(configuration);
-                    RDFUnitUISession.setRDFUnitConfiguration(configuration);
+                    RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
                 }
             }
         });
@@ -227,19 +227,19 @@ public class EndointTestTab extends VerticalLayout {
             public void run() {
 
                 createConfigurationFromUser();
-                if (RDFUnitUISession.getRDFUnitConfiguration() != null) {
-                    Source dataset = RDFUnitUISession.getRDFUnitConfiguration().getTestSource();
+                if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
+                    Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                    RDFUnitUISession.initRDFUnit();
-                    RDFUnitUISession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
+                    RDFUnitDemoSession.initRDFUnit();
+                    RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
-                    RDFUnitUISession.setTestSuite(
-                            RDFUnitUISession.getTestGeneratorExecutor().generateTestSuite(
-                                    RDFUnitUISession.getBaseDir() + "tests/",
+                    RDFUnitDemoSession.setTestSuite(
+                            RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
+                                    RDFUnitDemoSession.getBaseDir() + "tests/",
                                     dataset,
-                                    RDFUnitUISession.getRDFUnit().getAutoGenerators()));
+                                    RDFUnitDemoSession.getRDFUnit().getAutoGenerators()));
 
-                    if (RDFUnitUISession.getTestSuite().size() != 0) {
+                    if (RDFUnitDemoSession.getTestSuite().size() != 0) {
                         UI.getCurrent().access(new Runnable() {
                             @Override
                             public void run() {
@@ -272,7 +272,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        RDFUnitUISession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutorMonitor() {
+        RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutorMonitor() {
             private long count = 0;
             private long total = 0;
             private long tests = 0;
@@ -328,7 +328,7 @@ public class EndointTestTab extends VerticalLayout {
         generateTestsCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                RDFUnitUISession.getTestGeneratorExecutor().cancel();
+                RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
             }
         });
 
@@ -338,18 +338,18 @@ public class EndointTestTab extends VerticalLayout {
             public void run() {
 
                 //TODO make this cleaner
-                if (RDFUnitUISession.getRDFUnitConfiguration() != null) {
-                    Source dataset = RDFUnitUISession.getRDFUnitConfiguration().getTestSource();
+                if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
+                    Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                    RDFUnitUISession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
-                    String resultsFile = RDFUnitUISession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
+                    RDFUnitDemoSession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
+                    String resultsFile = RDFUnitDemoSession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
                     //TODO refactor this, do not use cache here
                     File f = new File(resultsFile);
                     try {
                         f.delete();
                     } catch (Exception e) {
                     }
-                    RDFUnitUISession.getTestExecutor().execute(dataset, RDFUnitUISession.getTestSuite(), 3);
+                    RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite(), 3);
                 }
 
             }
@@ -366,7 +366,7 @@ public class EndointTestTab extends VerticalLayout {
             }
         });
 
-        RDFUnitUISession.getTestExecutor().addTestExecutorMonitor(new TestExecutorMonitor() {
+        RDFUnitDemoSession.getTestExecutor().addTestExecutorMonitor(new TestExecutorMonitor() {
             private long count = 0;
             private long totalErrors = 0;
             private long failTest = 0;
@@ -452,7 +452,7 @@ public class EndointTestTab extends VerticalLayout {
         startTestingCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                RDFUnitUISession.getTestExecutor().cancel();
+                RDFUnitDemoSession.getTestExecutor().cancel();
             }
         });
 
@@ -481,11 +481,11 @@ public class EndointTestTab extends VerticalLayout {
 
         String datasetURI = endpointField.getValue().replace("/sparql", "");
 
-        RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, RDFUnitUISession.getBaseDir());
+        RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetURI, RDFUnitDemoSession.getBaseDir());
         configuration.setEndpointConfiguration(endpointField.getValue(), Arrays.asList(graphField.getValue()));
         configuration.setSchemata(schemaSelectorWidget.getSelections());
 
-        RDFUnitUISession.setRDFUnitConfiguration(configuration);
+        RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
     }
 
     private void setExampleConfiguration(RDFUnitConfiguration configuration) {

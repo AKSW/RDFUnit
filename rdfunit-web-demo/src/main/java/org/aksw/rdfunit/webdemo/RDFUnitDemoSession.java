@@ -22,10 +22,10 @@ import java.util.ArrayList;
  *         TODO refactor
  * @since 11/15/13 9:52 AM
  */
-public class RDFUnitUISession extends VaadinSession {
+public class RDFUnitDemoSession extends VaadinSession {
 
 
-    public RDFUnitUISession(VaadinService service) {
+    public RDFUnitDemoSession(VaadinService service) {
         super(service);
     }
 
