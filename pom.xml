@@ -15,7 +15,7 @@
         <module>rdfunit-core</module>
         <module>rdfunit-resources</module>
         <module>rdfunit-validate</module>
-        <module>rdfunit-web-demo</module>
+        <module>rdfunit-webdemo</module>
     </modules>
 
     <issueManagement>
