@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.ui.components;
+package org.aksw.rdfunit.webdemo.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -10,7 +10,7 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
-import org.aksw.rdfunit.ui.RDFUnitUISession;
+import org.aksw.rdfunit.webdemo.RDFUnitUISession;
 
 import java.io.File;
 

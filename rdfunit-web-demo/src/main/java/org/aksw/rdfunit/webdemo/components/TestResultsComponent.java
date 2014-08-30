@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.ui.components;
+package org.aksw.rdfunit.webdemo.components;
 
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;

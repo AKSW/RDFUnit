@@ -9,7 +9,7 @@
     </parent>
     <artifactId>rdfunit-web-demo</artifactId>
     <packaging>war</packaging>
-    <name>RDFUnit - UI</name>
+    <name>RDFUnit - Web Demo</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -187,7 +187,7 @@
                     <compileReport>true</compileReport>
                     <style>OBF</style>
                     <strict>true</strict>
-                    <runTarget>http://localhost:8080/</runTarget>
+                    <runTarget>http://localhost:8787/</runTarget>
                 </configuration>
                 <executions>
                     <execution>
@@ -234,6 +234,22 @@
                 <version>2.7</version>
                 <configuration>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <skipSource>true</skipSource>
                 </configuration>
             </plugin>
         </plugins>

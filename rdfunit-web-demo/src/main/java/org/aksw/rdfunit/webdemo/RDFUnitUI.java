@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.ui;
+package org.aksw.rdfunit.webdemo;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -8,9 +8,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.rdfunit.ui.view.EndointTestTab;
-import org.aksw.rdfunit.ui.view.IntroTab;
-import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.aksw.rdfunit.webdemo.view.EndointTestTab;
+import org.aksw.rdfunit.webdemo.view.IntroTab;
 
 import javax.servlet.annotation.WebServlet;
 /*
@@ -25,9 +24,7 @@ public class RDFUnitUI extends UI {
     public static class Servlet extends VaadinServlet {
     }
 
-    static {
-        SLF4JBridgeHandler.install();
-    }
+
         /* User interface components are stored in session. */
 
     private final HorizontalLayout headerLayout = new HorizontalLayout();
@@ -90,7 +87,7 @@ public class RDFUnitUI extends UI {
         VerticalLayout rdfunitLogo = new VerticalLayout();
         rdfunitLogo.setStyleName("logo");
         rdfunitLogo.addComponent(new Label("<h1>RDFUnit</h1>", ContentMode.HTML));
-        rdfunitLogo.addComponent(new Label("<span>A Data Debugging Framework</span>", ContentMode.HTML));
+        rdfunitLogo.addComponent(new Label("<span>A RDF Unit Testing Suite</span>", ContentMode.HTML));
 
 
         headerLayout.addComponent(rdfunitLogo);

@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.ui;
+package org.aksw.rdfunit.webdemo;
 
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;

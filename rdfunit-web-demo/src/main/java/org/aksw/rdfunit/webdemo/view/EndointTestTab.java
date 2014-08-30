@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.ui.view;
+package org.aksw.rdfunit.webdemo.view;
 
 import com.vaadin.data.Property;
 import com.vaadin.server.VaadinSession;
@@ -18,11 +18,11 @@ import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.rdfunit.ui.RDFUnitUISession;
-import org.aksw.rdfunit.ui.RDFunitConfigurationFactory;
-import org.aksw.rdfunit.ui.components.SchemaSelectorComponent;
-import org.aksw.rdfunit.ui.components.TestGenerationComponent;
-import org.aksw.rdfunit.ui.components.TestResultsComponent;
+import org.aksw.rdfunit.webdemo.RDFUnitUISession;
+import org.aksw.rdfunit.webdemo.RDFunitConfigurationFactory;
+import org.aksw.rdfunit.webdemo.components.SchemaSelectorComponent;
+import org.aksw.rdfunit.webdemo.components.TestGenerationComponent;
+import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -34,4 +34,6 @@
     <inherits name="org.vaadin.tokenfield.TokenfieldWidgetset"/>
 
 
+
+    <inherits name="org.aksw.rdfunit.ui.AppWidgetSet" />
 </module>

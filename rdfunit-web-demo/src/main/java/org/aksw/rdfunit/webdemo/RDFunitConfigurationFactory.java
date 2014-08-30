@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.ui;
+package org.aksw.rdfunit.webdemo;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
