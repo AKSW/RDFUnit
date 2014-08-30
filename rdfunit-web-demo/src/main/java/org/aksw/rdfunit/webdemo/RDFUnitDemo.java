@@ -41,9 +41,9 @@ public class RDFUnitDemo extends UI {
 
         initLayout();
 
-        mainTab.addTab(new IntroTab(), "Welcome");
-        mainTab.addTab(new EndointTestTab(), "Test an Endpoint");
-        //mainTab.setSelectedTab(1);
+        mainTab.addTab(new IntroTab(), "Introduction");
+        mainTab.addTab(new EndointTestTab(), "Test RDF Data");
+        mainTab.setSelectedTab(1);
 
         // When user exits (window close, loose session) stop background threads
         this.addDetachListener(new DetachListener() {
@@ -103,7 +103,7 @@ public class RDFUnitDemo extends UI {
     private void initLayoutFooter() {
         layoutFooter.setHeight("40px");
         layoutFooter.addStyleName("v-link");
-        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://aksw.org/Projects/RDFUnit\">RDFUnit</a>", ContentMode.HTML));
+        layoutFooter.addComponent(new Label("@ <a href=\"http://aksw.org\">AKSW</a> / <a href=\"http://rdfunit.aksw.org\">RDFUnit</a>", ContentMode.HTML));
     }
 
 }

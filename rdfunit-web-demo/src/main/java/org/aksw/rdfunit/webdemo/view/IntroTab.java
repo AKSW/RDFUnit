@@ -18,7 +18,7 @@ public class IntroTab extends VerticalLayout {
 
     private void initLayout() {
         this.setMargin(true);
-        this.addComponent(new Label("<h2>RDFUnit - A Data Debugging Framework for the Web of Data</h2>", ContentMode.HTML));
+        this.addComponent(new Label("<h2>RDFUnit - A Unit Testing Suite for RDF</h2>", ContentMode.HTML));
 
         this.addComponent(new Label(
                 "<p><strong>Welcome to the RDFUnit Demo</strong></p>" +

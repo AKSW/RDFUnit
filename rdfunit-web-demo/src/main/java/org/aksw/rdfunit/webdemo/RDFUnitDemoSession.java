@@ -2,11 +2,8 @@ package org.aksw.rdfunit.webdemo;
 
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
-import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -31,9 +28,6 @@ public class RDFUnitDemoSession extends VaadinSession {
 
     public static void init() {
 
-        RDFUnit rdfunit = new RDFUnit();
-        VaadinSession.getCurrent().setAttribute(RDFUnit.class, rdfunit);
-
         String baseDir = _getBaseDir();
         VaadinSession.getCurrent().setAttribute(String.class, baseDir);
 
@@ -46,28 +40,12 @@ public class RDFUnitDemoSession extends VaadinSession {
         TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
-        //Fill the service schema
-        RDFUnitUtils.fillSchemaServiceFromLOV();
-        RDFUnitUtils.fillSchemaServiceFromFile(getBaseDir() + "schemaDecl.csv");
+        RDFUnitDemoCommons.initializeSchemaServices();
     }
 
     private static String _getBaseDir() {
         File f = VaadinSession.getCurrent().getService().getBaseDirectory();
         return f.getAbsolutePath() + "/data/";
-    }
-
-    public static void initRDFUnit() {
-        try {
-            getRDFUnit().init();
-        } catch (TripleReaderException e) {
-            //TODO cannot read patterns / generators
-        } catch (RuntimeException e) {
-            //TODO Reinitialized
-        }
-    }
-
-    public static RDFUnit getRDFUnit() {
-        return VaadinSession.getCurrent().getAttribute(RDFUnit.class);
     }
 
     public static String getBaseDir() {

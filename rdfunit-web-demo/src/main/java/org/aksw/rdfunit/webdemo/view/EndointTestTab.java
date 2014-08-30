@@ -18,11 +18,14 @@ import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
+import org.aksw.rdfunit.webdemo.RDFUnitDemoCommons;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.RDFunitConfigurationFactory;
 import org.aksw.rdfunit.webdemo.components.SchemaSelectorComponent;
 import org.aksw.rdfunit.webdemo.components.TestGenerationComponent;
 import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
+import org.aksw.rdfunit.webdemo.model.DataSelectorModel;
+import org.aksw.rdfunit.webdemo.presenter.DataSelectorPresenter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -110,6 +113,14 @@ public class EndointTestTab extends VerticalLayout {
         this.setMargin(true);
         this.setId("EndointTestTab");
         this.setWidth("100%");
+
+        // Create the model and the Vaadin view implementation
+        DataSelectorModel dataSelectorModel = new DataSelectorModel();
+        DataSelectorViewImpl dataSelectorView = new DataSelectorViewImpl();
+
+        new DataSelectorPresenter(dataSelectorModel, dataSelectorView);
+
+        this.addComponent(dataSelectorView);
 
         HorizontalLayout confHeader = new HorizontalLayout();
         this.addComponent(confHeader);
@@ -230,14 +241,13 @@ public class EndointTestTab extends VerticalLayout {
                 if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
                     Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                    RDFUnitDemoSession.initRDFUnit();
                     RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationComponent);
 
                     RDFUnitDemoSession.setTestSuite(
                             RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
                                     RDFUnitDemoSession.getBaseDir() + "tests/",
                                     dataset,
-                                    RDFUnitDemoSession.getRDFUnit().getAutoGenerators()));
+                                    RDFUnitDemoCommons.getRDFUnit().getAutoGenerators()));
 
                     if (RDFUnitDemoSession.getTestSuite().size() != 0) {
                         UI.getCurrent().access(new Runnable() {
