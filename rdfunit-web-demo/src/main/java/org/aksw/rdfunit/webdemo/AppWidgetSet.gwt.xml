@@ -35,5 +35,5 @@
 
 
 
-    <inherits name="org.aksw.rdfunit.ui.AppWidgetSet" />
+    <inherits name="org.aksw.rdfunit.webdemo.AppWidgetSet" />
 </module>

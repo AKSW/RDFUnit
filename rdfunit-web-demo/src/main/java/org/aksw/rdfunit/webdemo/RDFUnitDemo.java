@@ -20,7 +20,7 @@ import javax.servlet.annotation.WebServlet;
 public class RDFUnitDemo extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = RDFUnitDemo.class, widgetset = "org.aksw.rdfunit.ui.AppWidgetSet")
+    @VaadinServletConfiguration(productionMode = false, ui = RDFUnitDemo.class, widgetset = "org.aksw.rdfunit.webdemo.AppWidgetSet")
     public static class Servlet extends VaadinServlet {
     }
 
@@ -69,7 +69,7 @@ public class RDFUnitDemo extends UI {
         initLayoutHeader();
 
         page.addComponent(mainTab);
-        initLayoutMain();
+
 
         initLayoutFooter();
         page.addComponent(layoutFooter);
@@ -84,25 +84,17 @@ public class RDFUnitDemo extends UI {
         headerLayout.setHeight("80px");
         headerLayout.setId("header");
 
-        VerticalLayout rdfunitLogo = new VerticalLayout();
-        rdfunitLogo.setStyleName("logo");
-        rdfunitLogo.addComponent(new Label("<h1>RDFUnit</h1>", ContentMode.HTML));
-        rdfunitLogo.addComponent(new Label("<span>A RDF Unit Testing Suite</span>", ContentMode.HTML));
+        Link rdfunit = new Link("",
+                new ExternalResource("http://rdfunit.aksw.org/"));
+        rdfunit.setIcon(new ThemeResource("images/logo-rdfunit.png"));
 
-
-        headerLayout.addComponent(rdfunitLogo);
+        headerLayout.addComponent(rdfunit);
 
         Link aksw = new Link("",
                 new ExternalResource("http://aksw.org/"));
         aksw.setIcon(new ThemeResource("images/logo-aksw.png"));
         aksw.addStyleName("align-right");
         headerLayout.addComponent(aksw);
-    }
-
-    /*
-    * setup the main content of the page
-    * */
-    private void initLayoutMain() {
     }
 
     /*
