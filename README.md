@@ -1,4 +1,4 @@
-RDFUnit - an RDF Unit Testing Suite
+RDFUnit - RDF Unit Testing Suite
 ==========
 
 [![Build Status](https://travis-ci.org/AKSW/RDFUnit.svg?branch=master)](https://travis-ci.org/AKSW/RDFUnit)
