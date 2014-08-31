@@ -1,11 +1,14 @@
 package org.aksw.rdfunit.webdemo.presenter;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.services.FormatService;
 import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.SchemaOption;
 import org.aksw.rdfunit.webdemo.view.SchemaSelectorView;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -43,7 +46,12 @@ public class SchemaSelectorPresenter implements SchemaSelectorView.SchemaSelecto
                 configuration.setSchemata(schemaSources);
                 break;
             case CUSTOM_TEXT:
+                String oficialFormat = FormatService.getInputFormat(format).getName();
+                Collection<SchemaSource> customTestSource = Arrays.asList(
+                        SourceFactory.createSchemaSourceFromText("http//rdfunit.aksw.org/custom#", text, oficialFormat)
+                );
 
+                configuration.setSchemata(customTestSource);
                 break;
 
             default:

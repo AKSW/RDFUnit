@@ -213,11 +213,11 @@ public class SchemaSelectorViewImpl extends CustomComponent implements SchemaSel
 
                         break;
                     case CUSTOM_TEXT:
-                        inputFormatsSelect.setVisible(false);
                         specificSchemasMessage.setVisible(false);
                         schemaSelectorWidget.setVisible(false);
                         autoOWLMessage.setVisible(false);
 
+                        inputFormatsSelect.setVisible(true);
                         inputText.setVisible(true);
 
                         break;
