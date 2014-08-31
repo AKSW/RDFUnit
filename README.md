@@ -10,3 +10,25 @@ RDFUnit - an RDF Unit Testing Suite
 **Presentations**: http://www.slideshare.net/jimkont  <br/>
 **Brief Overview**: https://github.com/AKSW/RDFUnit/wiki/Overview
 
+### Basic usage
+
+See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) for (a lot more) more options but the simplest setting is as follows:
+
+```console
+$ bin/rdfunit -d <local-or remote-location-URI>
+```
+
+What RDFUnit will do is:
+
+1. Get statistics about all properties & classes in the dataset
+1. Get the namespaces out of them and try to dereference all that exist in [LOV](http://lov.okfn.org)
+1. Run our [Test Generators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators) on the schemas and generate RDFUnit Test cases
+1. Run the RDFUnit test cases on the dataset
+1. You get a results report in html (be default) but you can request it in [RDF](http://rdfunit.aksw.org/ns/core#) or even multiple serializations with e.g.  `-o html,turtle,jsonld`
+
+You can also run:
+```console
+$ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>
+```
+
+Where you define your own schemas and we pick up from step 3. You can also use prefixes directly (e.g. `-s foaf,skos`) we can get everything that is defined in [LOV](http://lov.okfn.org).
