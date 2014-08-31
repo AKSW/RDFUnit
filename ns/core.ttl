@@ -43,7 +43,7 @@
     dc:description
         """The RDFUnit ontology describes concepts used in RDFUnit, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
-    rdfs:seeAlso <http://aksw.org/Projects/RDFUnit.html> .
+    rdfs:seeAlso <http://rdfunit.aksw.org> .
 
 
 #################################################################
