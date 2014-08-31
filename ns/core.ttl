@@ -20,7 +20,7 @@
     owl:versionInfo "0.4" ;
 
     rdfs:label "Test-Driven Data Validation Ontology"@en ;
-    dcterms:title "Test-Driven Data Debugging Ontology"@en ;
+    dcterms:title "Test-Driven Data Validation Ontology"@en ;
     rdfs:isDefinedBy <http://rdfunit.aksw.org/ns/core.ttl> ;
     dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
     dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
