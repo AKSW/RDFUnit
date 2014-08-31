@@ -4,19 +4,17 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
-import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.rdfunit.webdemo.RDFUnitDemoCommons;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
 import org.aksw.rdfunit.webdemo.presenter.DataSelectorPresenter;
 import org.aksw.rdfunit.webdemo.presenter.SchemaSelectorPresenter;
+import org.aksw.rdfunit.webdemo.presenter.TestGenerationPresenter;
 
 import java.io.File;
 
@@ -39,15 +37,12 @@ public class EndointTestTab extends VerticalLayout {
 
 //    private final NativeSelect limitSelect = new NativeSelect();
     private final Button clearButton = new Button("Clear");
-    private final Button generateTestsButton = new Button("Generate tests");
-    private final Button generateTestsCancelButton = new Button("Cancel");
+
     private final Button startTestingButton = new Button("Run tests");
     private final Button startTestingCancelButton = new Button("Cancel");
     private final Button resultsButton = new Button("Display Results");
 
-    private final ProgressBar generateTestsProgress = new ProgressBar();
     private final ProgressBar testingProgress = new ProgressBar();
-    private final Label generateTestsProgressLabel = new Label("0/0");
     private final Label testingProgressLabel = new Label("0/0");
 
     public EndointTestTab() {
@@ -115,8 +110,7 @@ public class EndointTestTab extends VerticalLayout {
         new SchemaSelectorPresenter(schemaSelectorView);
         this.addComponent(schemaSelectorView);
 
-        dataSelectorView.setNextItem(schemaSelectorView);
-        schemaSelectorView.setPreviousItem(dataSelectorView);
+
 
 //        HorizontalLayout confHeader = new HorizontalLayout();
 //        this.addComponent(confHeader);
@@ -162,26 +156,20 @@ public class EndointTestTab extends VerticalLayout {
 //        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget, 1.0f);
 //
 //
-        HorizontalLayout genHeader = new HorizontalLayout();
-        this.addComponent(genHeader);
-        genHeader.addStyleName("header");
-        Label genLabel = new Label("<h2>Test Generation</h2>", ContentMode.HTML);
-        genHeader.addComponent(genLabel);
-        genHeader.setComponentAlignment(genLabel, Alignment.MIDDLE_LEFT);
-        genHeader.addComponent(generateTestsButton);
-        genHeader.setComponentAlignment(generateTestsButton, Alignment.MIDDLE_CENTER);
-        genHeader.addComponent(generateTestsProgress);
-        genHeader.setComponentAlignment(generateTestsProgress, Alignment.MIDDLE_CENTER);
-        genHeader.addComponent(generateTestsProgressLabel);
-        genHeader.setComponentAlignment(generateTestsProgressLabel, Alignment.MIDDLE_CENTER);
-        genHeader.addComponent(generateTestsCancelButton);
-        genHeader.setComponentAlignment(generateTestsCancelButton, Alignment.MIDDLE_CENTER);
-        this.startTestingButton.setEnabled(false);
-        this.generateTestsCancelButton.setEnabled(false);
-        generateTestsProgress.setEnabled(false);
-        generateTestsProgress.setWidth("150px");
-        this.addComponent(testGenerationViewImpl);
+        this.addComponent( new Label("<h2>3. Test Generation</h2>", ContentMode.HTML));
 
+        TestGenerationViewImpl testGenerationView = new TestGenerationViewImpl();
+        new TestGenerationPresenter(testGenerationView);
+        this.addComponent(testGenerationView);
+
+        // Set previous / next
+        dataSelectorView.setNextItem(schemaSelectorView);
+        schemaSelectorView.setPreviousItem(dataSelectorView);
+        schemaSelectorView.setNextItem(testGenerationView);
+
+
+
+        this.addComponent( new Label("<h2>4. Testing</h2>", ContentMode.HTML));
 
         HorizontalLayout testHeader = new HorizontalLayout();
         this.addComponent(testHeader);
@@ -197,14 +185,11 @@ public class EndointTestTab extends VerticalLayout {
         testHeader.setComponentAlignment(testingProgressLabel, Alignment.MIDDLE_CENTER);
         testHeader.addComponent(startTestingCancelButton);
         testHeader.setComponentAlignment(startTestingCancelButton, Alignment.MIDDLE_CENTER);
-        this.startTestingButton.setEnabled(false);
-        this.startTestingCancelButton.setEnabled(false);
-        testingProgress.setEnabled(false);
+
         testingProgress.setWidth("150px");
 
         this.addComponent(this.testResultsComponent);
         //this.addComponent(this.resultsButton);
-        this.resultsButton.setEnabled(false);
     }
 
     private void initInteractions() {
@@ -228,115 +213,9 @@ public class EndointTestTab extends VerticalLayout {
         });
 
 
-        class TestGenerationThread extends Thread {
 
-            @Override
-            public void run() {
 
-                //createConfigurationFromUser();
-                if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
-                    Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                    RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(testGenerationViewImpl);
-
-                    RDFUnitDemoSession.setTestSuite(
-                            RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
-                                    RDFUnitDemoSession.getBaseDir() + "tests/",
-                                    dataset,
-                                    RDFUnitDemoCommons.getRDFUnit().getAutoGenerators()));
-
-                    if (RDFUnitDemoSession.getTestSuite().size() != 0) {
-                        UI.getCurrent().access(new Runnable() {
-                            @Override
-                            public void run() {
-                                startTestingButton.setEnabled(true);
-                            }
-                        });
-                    }
-                } else {
-                    UI.getCurrent().access(new Runnable() {
-                        @Override
-                        public void run() {
-                            generateTestsButton.setEnabled(true);
-                        }
-                    });
-                }
-
-            }
-        }
-
-        // Clicking the button creates and runs a work thread
-        generateTestsButton.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-
-                generateTestsButton.setEnabled(false);
-                final TestGenerationThread thread = new TestGenerationThread();
-                thread.start();
-
-                // Enable polling and set frequency to 0.5 seconds
-                UI.getCurrent().setPollInterval(500);
-            }
-        });
-
-        RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(new TestGeneratorExecutorMonitor() {
-            private long count = 0;
-            private long total = 0;
-            private long tests = 0;
-
-            @Override
-            public void generationStarted(final Source source, final long numberOfSources) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        generateTestsCancelButton.setEnabled(true);
-                        total = numberOfSources;
-                        count = 0;
-                        tests = 0;
-                        generateTestsProgress.setEnabled(true);
-                        generateTestsProgress.setValue(0.0f);
-                        generateTestsProgressLabel.setValue("0/" + numberOfSources);
-                    }
-                });
-
-            }
-
-            @Override
-            public void sourceGenerationStarted(Source source, TestGenerationType generationType) {
-            }
-
-            @Override
-            public void sourceGenerationExecuted(final Source source, final TestGenerationType generationType, final long testsCreated) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        count++;
-                        tests += testsCreated;
-                        generateTestsProgress.setValue((float) count / total);
-                        generateTestsProgressLabel.setValue(count + "/" + total);
-                    }
-                });
-            }
-
-            @Override
-            public void generationFinished() {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        generateTestsProgress.setValue(1.0f);
-                        generateTestsProgressLabel.setValue("Completed! Generated " + tests + " tests");
-                        generateTestsCancelButton.setEnabled(false);
-                        UI.getCurrent().setPollInterval(-1);
-                    }
-                });
-            }
-        });
-
-        generateTestsCancelButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
-            }
-        });
 
 
         class TestExecutorThread extends Thread {
