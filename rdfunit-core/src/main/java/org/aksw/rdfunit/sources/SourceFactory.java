@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.RDFReader;
 import org.aksw.rdfunit.io.RDFReaderFactory;
@@ -38,5 +39,13 @@ public final class SourceFactory {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.EnrichedSchema, prefix, uri);
         RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
         return new EnrichedSchemaSource(prefix, uri, reader);
+    }
+
+    public static SchemaSource createSchemaSourceFromText(String namespace, String text, String format) {
+
+        String uri = namespace + TestUtils.getMD5FromString(text);
+        String prefix = CacheUtils.getAutoPrefixForURI(uri);
+
+        return new SchemaSource(prefix, uri, uri, RDFReaderFactory.createReaderFromText(text, format));
     }
 }

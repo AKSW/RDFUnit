@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -57,5 +60,15 @@ public final class RDFReaderFactory {
         }
 
         return new RDFFirstSuccessReader(readers);
+    }
+
+    public static RDFReader createReaderFromText(String text, String format) {
+        InputStream is;
+        try {
+            is = new ByteArrayInputStream(text.getBytes("UTF8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException("Invalid source name: " + text, e);
+        }
+        return new RDFStreamReader(is, format);
     }
 }
