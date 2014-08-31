@@ -12,7 +12,7 @@ RDFUnit - an RDF Unit Testing Suite
 
 ### Basic usage
 
-See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) for (a lot more) more options but the simplest setting is as follows:
+See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) for (a lot) more options but the simplest setting is as follows:
 
 ```console
 $ bin/rdfunit -d <local-or remote-location-URI>
