@@ -7,6 +7,18 @@
 
 @prefix oslc: <http://open-services.net/ns/core#> .
 
+
+exrs:RSRange
+	a oslc:ResourceShape ;
+    oslc:describes exrs:Range-Class ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:prop-range ;
+        oslc:range exrs:The-Range-Class ;
+    ] ;
+    .
+
+
 exrs:RSOccurs-Exactly-one
 	a oslc:ResourceShape ;
     oslc:describes exrs:Occurs-Exactly-one-Class ;

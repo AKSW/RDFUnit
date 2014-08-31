@@ -17,10 +17,11 @@
 rutg:OSLCRANGEC a rut:TestGenerator ;
     dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
-								?s a oslc:ResourceShape .
-								?s oslc:describes ?class . # we work only on typed classes
-                                ?s oslc:property/oslc:propertyDefinition ?P1 .
-                                ?s oslc:property/oslc:range ?T1 .
+								?s a oslc:ResourceShape ;
+                                   oslc:describes ?class ; # we work only on typed classes
+                                   oslc:property ?rsp .
+                                ?rsp oslc:propertyDefinition ?P1 ;
+                                     oslc:range ?T1 .
 
                                 # don't check for general classes (and oslc:Any)
 	                            FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
@@ -41,10 +42,11 @@ rutg:OSLCRANGEC a rut:TestGenerator ;
 rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
     dcterms:description """Generate all oslc:range constrains defined in a schema (when range is missing)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
-                                ?s a oslc:ResourceShape .
-								?s oslc:describes ?class . # we work only on typed classes
-                                ?s oslc:property/oslc:propertyDefinition ?P1 .
-                                ?s oslc:property/oslc:range ?T1 .
+                                ?s a oslc:ResourceShape ;
+	                               oslc:describes ?class ; # we work only on typed classes
+	                               oslc:property ?rsp .
+	                            ?rsp oslc:propertyDefinition ?P1 ;
+	                                 oslc:range ?T1 .
 
                                 # don't check for general classes
                                 FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))

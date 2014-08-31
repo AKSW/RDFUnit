@@ -1,0 +1,23 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:correctA1
+	a exrs:Range-Class ;
+	exrs:prop-range exrs:Something1 ;
+	.
+
+exrs:Something1 a exrs:Not-The-Range-Class ; # 1 error (wrong range)
+    .
+
+
+exrs:correctA2
+	a exrs:Range-Class ;
+	exrs:prop-range exrs:Something2 ; # 1 error (missing range)
+	.
+

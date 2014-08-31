@@ -68,6 +68,8 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrors.put("rs/valueType_Wrong.ttl", 11);
         testsWithErrors.put("rs/occurs_Correct.ttl", 0);
         testsWithErrors.put("rs/occurs_Wrong.ttl", 4);
+        testsWithErrors.put("rs/range_Correct.ttl", 0);
+        testsWithErrors.put("rs/range_Wrong.ttl", 2);
     }
 
     @After
