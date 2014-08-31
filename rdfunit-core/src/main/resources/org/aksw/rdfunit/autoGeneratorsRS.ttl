@@ -70,10 +70,11 @@ rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
 rutg:PSCARDEX a rut:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
-							 ?s a oslc:ResourceShape .
-							 ?s oslc:describes ?class . # we work only on typed classes
-                             ?s oslc:property/oslc:propertyDefinition ?P1 .
-                             ?s oslc:property/oslc:occurs ?occurs .
+							 ?s a oslc:ResourceShape ;
+                                oslc:describes ?T1 ; # we work only on typed classes
+                                oslc:property ?rsp .
+                             ?rsp oslc:propertyDefinition ?P1 ;
+                                 oslc:occurs ?occurs .
                              FILTER (?occurs IN (oslc:Exactly-one, oslc:One-or-many)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," is 0 for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
@@ -87,10 +88,11 @@ rutg:PSCARDEX a rut:TestGenerator ;
 rutg:RSCARD a rut:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
-							 ?s a oslc:ResourceShape .
-							 ?s oslc:describes ?class . # we work only on typed classes
-                             ?s oslc:property/oslc:propertyDefinition ?P1 .
-                             ?s oslc:property/oslc:occurs oslc:Exactly-one .
+							 ?s a oslc:ResourceShape ;
+                                oslc:describes ?T1 ; # we work only on typed classes
+                                oslc:property ?rsp .
+                             ?rsp oslc:propertyDefinition ?P1 ;
+                                 oslc:occurs oslc:Exactly-one .
 							 BIND ( concat("Cardinality of ",  str(?P1)," different from 1 for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
@@ -102,11 +104,12 @@ rutg:RSCARD a rut:TestGenerator ;
 # oslc:Zero-or-one
 rutg:RSGARD-MAX a rut:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
-    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?DESCRIPTION WHERE {
-							 ?s a oslc:ResourceShape .
-							 ?s oslc:describes ?class . # we work only on typed classes
-                             ?s oslc:property/oslc:propertyDefinition ?P1 .
-                             ?s oslc:property/oslc:occurs oslc:Zero-or-one .
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
+							 ?s a oslc:ResourceShape ;
+	                            oslc:describes ?T1 ; # we work only on typed classes
+	                            oslc:property ?rsp .
+	                         ?rsp oslc:propertyDefinition ?P1 ;
+                                oslc:occurs oslc:Zero-or-one .
 							 BIND ( concat("Cardinality of ",  str(?P1)," higher than 1 for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
