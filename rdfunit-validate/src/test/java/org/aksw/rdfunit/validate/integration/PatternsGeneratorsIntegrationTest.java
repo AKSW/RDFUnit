@@ -66,7 +66,8 @@ public class PatternsGeneratorsIntegrationTest {
         // Resource Shapes
         testsWithErrors.put("rs/valueType_Correct.ttl", 0);
         testsWithErrors.put("rs/valueType_Wrong.ttl", 11);
-
+        testsWithErrors.put("rs/occurs_Correct.ttl", 0);
+        testsWithErrors.put("rs/occurs_Wrong.ttl", 4);
     }
 
     @After

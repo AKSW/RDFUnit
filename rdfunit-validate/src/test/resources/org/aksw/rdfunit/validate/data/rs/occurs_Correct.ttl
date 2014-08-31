@@ -1,0 +1,56 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:correctA1
+	a exrs:Occurs-Exactly-one-Class ;
+	exrs:propOccurs-Exactly-one exrs:Anything ;   # correct
+	exrs:someProperty exrs:Anything2  ; # add something not defined (should be ok)
+	.
+
+
+exrs:correctB1
+	a exrs:Occurs-One-or-many-Class ;
+	exrs:prop-OccursOne-or-many exrs:Anything ;   # correct
+	.
+
+exrs:correctB2
+	a exrs:Occurs-One-or-many-Class ;
+	exrs:prop-OccursOne-or-many exrs:Anything1 ;   # correct
+	exrs:prop-OccursOne-or-many exrs:Anything2 ;   # correct
+	exrs:prop-OccursOne-or-many exrs:Anything3 ;   # correct
+	exrs:prop-OccursOne-or-many exrs:Anything4 ;   # correct
+	.
+
+
+exrs:correctC1
+	a exrs:OccursZero-or-many-Class ;
+	.                                   # correct
+
+exrs:correctC2
+	a exrs:OccursZero-or-many-Class ;
+	exrs:propOccursZero-or-many exrs:Anything ;   # correct
+	.
+
+exrs:correctC3
+	a exrs:OccursZero-or-many-Class ;
+	exrs:propOccursZero-or-many exrs:Anything1 ;   # correct
+	exrs:propOccursZero-or-many exrs:Anything2 ;   # correct
+	exrs:propOccursZero-or-many exrs:Anything3 ;   # correct
+	exrs:propOccursZero-or-many exrs:Anything4 ;   # correct
+	.
+
+
+exrs:correctD1
+	a exrs:Occurs-Zero-or-one-Class ;
+	.                                   # correct
+
+exrs:correctD2
+	a exrs:Occurs-Zero-or-one-Class ;
+	exrs:propOccurs-Zero-or-one exrs:Anything ;   # correct
+	.

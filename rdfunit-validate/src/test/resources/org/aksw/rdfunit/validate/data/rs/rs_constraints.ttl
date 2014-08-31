@@ -7,6 +7,50 @@
 
 @prefix oslc: <http://open-services.net/ns/core#> .
 
+exrs:RSOccurs-Exactly-one
+	a oslc:ResourceShape ;
+    oslc:describes exrs:Occurs-Exactly-one-Class ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propOccurs-Exactly-one ;
+        oslc:occurs oslc:Exactly-one ;
+    ] ;
+    .
+
+exrs:RSOccurs-One-or-many
+	a oslc:ResourceShape ;
+    oslc:describes exrs:Occurs-One-or-many-Class ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:prop-OccursOne-or-many ;
+        oslc:occurs oslc:One-or-many ;
+    ] ;
+    .
+
+
+exrs:RSOccurs-Zero-or-many
+	a oslc:ResourceShape ;
+    oslc:describes exrs:OccursZero-or-many-Class ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propOccursZero-or-many ;
+        oslc:occurs oslc:Zero-or-many ;
+    ] ;
+    .
+
+
+exrs:RSOccurs-Zero-or-one
+	a oslc:ResourceShape ;
+    oslc:describes exrs:Occurs-Zero-or-one-Class ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propOccurs-Zero-or-one ;
+        oslc:occurs oslc:Zero-or-one ;
+    ] ;
+    .
+
+
+
 exrs:RSValueType
 	a oslc:ResourceShape ;
     oslc:describes exrs:ClassA ;
@@ -61,3 +105,5 @@ exrs:RSValueType
         oslc:valueType xsd:string ;
     ] ;
     .
+
+

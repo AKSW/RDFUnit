@@ -1,0 +1,34 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:wrongA1
+	a exrs:Occurs-Exactly-one-Class ;    # 1 error should exist once
+	.
+
+exrs:wrongA2
+	a exrs:Occurs-Exactly-one-Class ;
+	exrs:propOccurs-Exactly-one exrs:Anything ;
+	exrs:propOccurs-Exactly-one exrs:Anything2 ;   # 1 error occurs twice
+	.
+
+
+exrs:wrongB1
+	a exrs:Occurs-One-or-many-Class ;  # 1 error <1
+	.
+
+
+
+
+# exrs:wrongC1 a exrs:OccursZero-or-many-Class ; # No need to check this
+
+exrs:wrongD1
+	a exrs:Occurs-Zero-or-one-Class ;
+	exrs:propOccurs-Zero-or-one exrs:Anything1 ;
+	exrs:propOccurs-Zero-or-one exrs:Anything2 ;   # 1 error
+	.
