@@ -17,9 +17,9 @@
     <http://purl.org/vocab/vann/preferredNamespaceUri> "http://rdfunit.aksw.org/ns/core#" ;
     <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/RDFUnit/commits/master/ns> ;
 
-    owl:versionInfo "0.3" ;
+    owl:versionInfo "0.4" ;
 
-    rdfs:label "Test-Driven Data Debugging Ontology"@en ;
+    rdfs:label "Test-Driven Data Validation Ontology"@en ;
     dcterms:title "Test-Driven Data Debugging Ontology"@en ;
     rdfs:isDefinedBy <http://rdfunit.aksw.org/ns/core.ttl> ;
     dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
@@ -35,7 +35,7 @@
                "Sebastian Hellmann"@en ,
                "Sören Auer"@en ;
 
-#	dc:description <diagram url> .
+	dc:description <http://rdfunit.aksw.org/ns/rdfunit_ontology_diagram.png> .
 
     rdfs:comment
         """The RDFUnit ontology describes concepts used in RDFUnit, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
