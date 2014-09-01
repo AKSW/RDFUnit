@@ -9,20 +9,33 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * Holds all the schema definitions
+ * It is usually instantiated from LOV on app startup
+ *
  * @author Dimitris Kontokostas
- *         Description
  * @since 10/2/13 12:24 PM
  */
 public final class SchemaService {
+    /**
+     * Creates a Bi-Directional map between prefix & namespace
+     */
     final private static BidiMap<String, String> schemata = new DualHashBidiMap<>();
+
+    /**
+     * if namespace is different from the ontology uri, we keep it in this map
+     */
+    final private static Map<String,String> definedBy = new HashMap<>();
 
     private SchemaService() {
     }
 
     public static void addSchemaDecl(String prefix, String uri, String url) {
-        schemata.put(prefix, uri + "\t" + url);
+        schemata.put(prefix, uri);
+        definedBy.put(uri, url);
     }
 
     public static void addSchemaDecl(String prefix, String uri) {
@@ -47,8 +60,8 @@ public final class SchemaService {
     }
 
     public static SchemaSource getSourceFromPrefix(String baseFolder, String prefix) {
-        String sourceUriURL = schemata.get(prefix);
-        if (sourceUriURL == null) {
+        String namespace = schemata.get(prefix);
+        if (namespace == null) {
             // If not a prefix try to dereference it
             if (prefix.contains("/") || prefix.contains("\\")) {
                 return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(prefix), prefix);
@@ -57,18 +70,20 @@ public final class SchemaService {
             }
         }
 
-        String[] split = sourceUriURL.split("\t");
-        if (split.length == 2) {
+        String isDefinedBy = definedBy.get(namespace);
+
+
+        if (isDefinedBy != null && !isDefinedBy.isEmpty()) {
             if (baseFolder != null) {
-                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, split[0], split[1]);
+                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace, isDefinedBy);
             } else {
-                return SourceFactory.createSchemaSourceDereference(prefix, split[0], split[1]);
+                return SourceFactory.createSchemaSourceDereference(prefix, namespace, isDefinedBy);
             }
         } else {
             if (baseFolder != null) {
-                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, split[0]);
+                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace);
             } else {
-                return SourceFactory.createSchemaSourceDereference(prefix, split[0]);
+                return SourceFactory.createSchemaSourceDereference(prefix, namespace);
             }
         }
     }
