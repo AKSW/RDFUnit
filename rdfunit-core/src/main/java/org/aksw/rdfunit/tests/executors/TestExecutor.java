@@ -167,7 +167,10 @@ public abstract class TestExecutor {
      * @param monitor the monitor
      */
     public void addTestExecutorMonitor(TestExecutorMonitor monitor) {
-        progressMonitors.add(monitor);
+
+        if (!progressMonitors.contains(monitor)) {
+            progressMonitors.add(monitor);
+        }
     }
 
     /**

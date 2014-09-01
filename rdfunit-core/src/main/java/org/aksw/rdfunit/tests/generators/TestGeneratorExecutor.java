@@ -168,7 +168,10 @@ public class TestGeneratorExecutor {
 
 
     public void addTestExecutorMonitor(TestGeneratorExecutorMonitor monitor) {
-        progressMonitors.add(monitor);
+
+        if (!progressMonitors.contains(monitor)) {
+            progressMonitors.add(monitor);
+        }
     }
 
     public void removeTestExecutorMonitor(TestGeneratorExecutorMonitor monitor) {
