@@ -15,7 +15,7 @@ RDFUnit - RDF Unit Testing Suite
 See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) for (a lot) more options but the simplest setting is as follows:
 
 ```console
-$ bin/rdfunit -d <local-or remote-location-URI>
+$ bin/rdfunit -d <local-or-remote-location-URI>
 ```
 
 What RDFUnit will do is:
@@ -24,7 +24,7 @@ What RDFUnit will do is:
 1. Get the namespaces out of them and try to dereference all that exist in [LOV](http://lov.okfn.org)
 1. Run our [Test Generators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators) on the schemas and generate RDFUnit Test cases
 1. Run the RDFUnit test cases on the dataset
-1. You get a results report in html (be default) but you can request it in [RDF](http://rdfunit.aksw.org/ns/core#) or even multiple serializations with e.g.  `-o html,turtle,jsonld`
+1. You get a results report in html (by default) but you can request it in [RDF](http://rdfunit.aksw.org/ns/core#) or even multiple serializations with e.g.  `-o html,turtle,jsonld`
 
 You can also run:
 ```console
