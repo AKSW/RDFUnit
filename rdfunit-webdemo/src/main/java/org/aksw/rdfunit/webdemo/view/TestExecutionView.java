@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.webdemo.components;
+package org.aksw.rdfunit.webdemo.view;
 
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.vaadin.data.Item;
@@ -23,12 +23,12 @@ import java.net.URLEncoder;
  *         Description
  * @since 11/20/13 5:20 PM
  */
-public class TestResultsComponent extends VerticalLayout implements TestExecutorMonitor {
+public class TestExecutionView extends VerticalLayout implements TestExecutorMonitor {
 
     private final Table resultsTable = new Table("Test Results");
     private Source source = null;
 
-    public TestResultsComponent() {
+    public TestExecutionView() {
         initLayout();
 
     }

@@ -11,7 +11,6 @@ import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
-import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
 
 import java.io.File;
 
@@ -29,7 +28,7 @@ public class EndointTestTab extends VerticalLayout {
 //    private final TextField endpointField = new TextField();
 //    private final TextField graphField = new TextField();
 //    private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
-    private final TestResultsComponent testResultsComponent = new TestResultsComponent();
+    private final TestExecutionView testExecutionView = new TestExecutionView();
     private final TestGenerationView testGenerationView = new TestGenerationView();
 
     //    private final NativeSelect limitSelect = new NativeSelect();
@@ -184,7 +183,7 @@ public class EndointTestTab extends VerticalLayout {
 
         testingProgress.setWidth("150px");
 
-        this.addComponent(this.testResultsComponent);
+        this.addComponent(this.testExecutionView);
         //this.addComponent(this.resultsButton);
     }
 
@@ -217,7 +216,7 @@ public class EndointTestTab extends VerticalLayout {
                 if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
                     Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                    RDFUnitDemoSession.getTestExecutor().addTestExecutorMonitor(testResultsComponent);
+                    RDFUnitDemoSession.getTestExecutor().addTestExecutorMonitor(testExecutionView);
                     String resultsFile = RDFUnitDemoSession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
                     //TODO refactor this, do not use cache here
                     File f = new File(resultsFile);
@@ -338,7 +337,7 @@ public class EndointTestTab extends VerticalLayout {
 //        schemaSelectorWidget.setSelections(new ArrayList<SchemaSource>());
 //        examplesSelect.select(null);
 
-        testResultsComponent.clearTableRowsAndHide();
+        testExecutionView.clearTableRowsAndHide();
         testGenerationView.clearTableRowsAndHide();
 
         //generateTestsProgressLabel.setValue("0/0");
