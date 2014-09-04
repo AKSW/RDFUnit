@@ -9,10 +9,18 @@ package org.aksw.rdfunit.webdemo.view;
 public interface WorkflowItem {
     public boolean isReady();
 
+    public void setReady(boolean isReady);
+
     public void setPreviousItem(WorkflowItem item);
+
     public void setNextItem(WorkflowItem item);
 
-    public WorkflowItem  getPreviousItem();
-    public WorkflowItem  getNextItem();
+    public WorkflowItem getPreviousItem();
+
+    public WorkflowItem getNextItem();
+
+    public boolean execute();
+
+    public void setMessage(String message, boolean isError);
 
 }

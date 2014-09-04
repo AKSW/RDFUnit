@@ -12,9 +12,6 @@ import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.components.TestResultsComponent;
-import org.aksw.rdfunit.webdemo.presenter.DataSelectorPresenter;
-import org.aksw.rdfunit.webdemo.presenter.SchemaSelectorPresenter;
-import org.aksw.rdfunit.webdemo.presenter.TestGenerationPresenter;
 
 import java.io.File;
 
@@ -28,14 +25,14 @@ import java.io.File;
 public class EndointTestTab extends VerticalLayout {
 
 
-//    private final NativeSelect examplesSelect = new NativeSelect("Select an example");
+    //    private final NativeSelect examplesSelect = new NativeSelect("Select an example");
 //    private final TextField endpointField = new TextField();
 //    private final TextField graphField = new TextField();
 //    private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
     private final TestResultsComponent testResultsComponent = new TestResultsComponent();
-    private final TestGenerationViewImpl testGenerationViewImpl = new TestGenerationViewImpl();
+    private final TestGenerationView testGenerationView = new TestGenerationView();
 
-//    private final NativeSelect limitSelect = new NativeSelect();
+    //    private final NativeSelect limitSelect = new NativeSelect();
     private final Button clearButton = new Button("Clear");
 
     private final Button startTestingButton = new Button("Run tests");
@@ -98,18 +95,15 @@ public class EndointTestTab extends VerticalLayout {
         this.setId("EndointTestTab");
         this.setWidth("100%");
 
-        this.addComponent( new Label("<h2>1. Data Selection</h2>", ContentMode.HTML));
+        this.addComponent(new Label("<h2>1. Data Selection</h2>", ContentMode.HTML));
 
         // Create the model and the Vaadin view implementation
-        DataSelectorViewImpl dataSelectorView = new DataSelectorViewImpl();
-        new DataSelectorPresenter(dataSelectorView);
+        DataSelectorView dataSelectorView = new DataSelectorView();
         this.addComponent(dataSelectorView);
 
-        this.addComponent( new Label("<h2>2. Constraints Selection</h2>", ContentMode.HTML));
-        SchemaSelectorViewImpl schemaSelectorView = new SchemaSelectorViewImpl();
-        new SchemaSelectorPresenter(schemaSelectorView);
+        this.addComponent(new Label("<h2>2. Constraints Selection</h2>", ContentMode.HTML));
+        SchemaSelectorView schemaSelectorView = new SchemaSelectorView();
         this.addComponent(schemaSelectorView);
-
 
 
 //        HorizontalLayout confHeader = new HorizontalLayout();
@@ -156,20 +150,22 @@ public class EndointTestTab extends VerticalLayout {
 //        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget, 1.0f);
 //
 //
-        this.addComponent( new Label("<h2>3. Test Generation</h2>", ContentMode.HTML));
+        this.addComponent(new Label("<h2>3. Test Generation</h2>", ContentMode.HTML));
 
-        TestGenerationViewImpl testGenerationView = new TestGenerationViewImpl();
-        new TestGenerationPresenter(testGenerationView);
+        TestGenerationView testGenerationView = new TestGenerationView();
         this.addComponent(testGenerationView);
 
         // Set previous / next
         dataSelectorView.setNextItem(schemaSelectorView);
+
         schemaSelectorView.setPreviousItem(dataSelectorView);
         schemaSelectorView.setNextItem(testGenerationView);
 
+        testGenerationView.setPreviousItem(schemaSelectorView);
+        //testGenerationView.setNextItem();
 
 
-        this.addComponent( new Label("<h2>4. Testing</h2>", ContentMode.HTML));
+        this.addComponent(new Label("<h2>4. Testing</h2>", ContentMode.HTML));
 
         HorizontalLayout testHeader = new HorizontalLayout();
         this.addComponent(testHeader);
@@ -213,11 +209,6 @@ public class EndointTestTab extends VerticalLayout {
         });
 
 
-
-
-
-
-
         class TestExecutorThread extends Thread {
             @Override
             public void run() {
@@ -246,8 +237,6 @@ public class EndointTestTab extends VerticalLayout {
                 startTestingButton.setEnabled(false);
                 final TestExecutorThread thread = new TestExecutorThread();
                 thread.start();
-
-                UI.getCurrent().setPollInterval(1000);
             }
         });
 
@@ -328,7 +317,6 @@ public class EndointTestTab extends VerticalLayout {
                         testingProgress.setValue(1.0f);
                         testingProgressLabel.setValue("Completed! (S: " + sucessTests + " / F:" + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
                         startTestingCancelButton.setEnabled(false);
-                        UI.getCurrent().setPollInterval(-1);
                     }
                 });
             }
@@ -351,7 +339,7 @@ public class EndointTestTab extends VerticalLayout {
 //        examplesSelect.select(null);
 
         testResultsComponent.clearTableRowsAndHide();
-        testGenerationViewImpl.clearTableRowsAndHide();
+        testGenerationView.clearTableRowsAndHide();
 
         //generateTestsProgressLabel.setValue("0/0");
         testingProgressLabel.setValue("0/0");

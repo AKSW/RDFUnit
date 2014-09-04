@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.webdemo;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.ExternalResource;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 */
 
 @Theme("rdfunit")
+@Push
 public class RDFUnitDemo extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
