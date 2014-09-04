@@ -104,51 +104,6 @@ public class EndointTestTab extends VerticalLayout {
         SchemaSelectorView schemaSelectorView = new SchemaSelectorView();
         this.addComponent(schemaSelectorView);
 
-
-//        HorizontalLayout confHeader = new HorizontalLayout();
-//        this.addComponent(confHeader);
-//
-//        confHeader.addStyleName("header");
-//        Label confLabel = new Label("<h2>Testing Configuration</h2>", ContentMode.HTML);
-//        confHeader.addComponent(confLabel);
-//        confHeader.setComponentAlignment(confLabel, Alignment.MIDDLE_LEFT);
-//        confHeader.addComponent(clearButton);
-//        confHeader.setComponentAlignment(clearButton, Alignment.MIDDLE_CENTER);
-//
-//
-//        HorizontalLayout configurationSetLayout = new HorizontalLayout();
-//        configurationSetLayout.setId("test-configuration");
-//        //configurationSetLayout.setWidth("100%");
-//
-//        this.addComponent(configurationSetLayout);
-//
-//        examplesSelect.addStyleName("examples");
-//        examplesSelect.setImmediate(true);
-//
-//        configurationSetLayout.addComponent(examplesSelect);
-//
-//        HorizontalLayout manualConfigurationLayout = new HorizontalLayout();
-//        configurationSetLayout.addComponent(manualConfigurationLayout);
-//        configurationSetLayout.setExpandRatio(manualConfigurationLayout, 1.0f);
-//        manualConfigurationLayout.addStyleName("manual");
-//
-//
-//        VerticalLayout textboxes = new VerticalLayout();
-//        manualConfigurationLayout.addComponent(textboxes);
-//
-//        textboxes.addComponent(new Label("SPARQL Endpoint"));
-//        textboxes.addComponent(endpointField);
-//        textboxes.addComponent(new Label("Graph"));
-//        textboxes.addComponent(graphField);
-//
-//        endpointField.setWidth("150px");
-//        graphField.setWidth("150px");
-//
-//        schemaSelectorWidget.addStyleName("schema-selector");
-//        manualConfigurationLayout.addComponent(schemaSelectorWidget);
-//        manualConfigurationLayout.setExpandRatio(schemaSelectorWidget, 1.0f);
-//
-//
         this.addComponent(new Label("<h2>3. Test Generation</h2>", ContentMode.HTML));
 
         TestGenerationView testGenerationView = new TestGenerationView();
