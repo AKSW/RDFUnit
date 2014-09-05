@@ -7,7 +7,7 @@ RDFUnit - RDF Unit Testing Suite
 
 **Homepage**: http://rdfunit.aksw.org <br/>
 **Documentation**: https://github.com/AKSW/RDFUnit/wiki  <br/>
-**Mainling list**: https://groups.google.com/d/forum/rdfunit (rdfunit [at] googlegroups.com)
+**Mainling list**: https://groups.google.com/d/forum/rdfunit (rdfunit [at] googlegroups.com)  <br/>
 **Presentations**: http://www.slideshare.net/jimkont  <br/>
 **Brief Overview**: https://github.com/AKSW/RDFUnit/wiki/Overview
 
