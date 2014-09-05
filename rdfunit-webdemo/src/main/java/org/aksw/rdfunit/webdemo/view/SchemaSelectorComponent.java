@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.webdemo.components;
+package org.aksw.rdfunit.webdemo.view;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.fieldgroup.FieldGroup;

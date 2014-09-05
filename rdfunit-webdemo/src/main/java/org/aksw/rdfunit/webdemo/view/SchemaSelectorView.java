@@ -9,7 +9,6 @@ import org.aksw.rdfunit.services.FormatService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
-import org.aksw.rdfunit.webdemo.components.SchemaSelectorComponent;
 import org.aksw.rdfunit.webdemo.utils.SchemaOption;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 
