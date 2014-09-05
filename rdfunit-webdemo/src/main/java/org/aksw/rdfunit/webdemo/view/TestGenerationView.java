@@ -181,7 +181,12 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
     @Override
     public boolean execute() {
-        return false;
+        RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this);
+        RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this.progressMonitor);
+
+        final TestGenerationThread thread = new TestGenerationThread();
+        thread.start();
+        return true;
     }
 
     private void initInteractions() {
@@ -199,11 +204,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
                 inProgress = true;
                 TestGenerationView.this.generateBtn.setEnabled(false);
 
-                RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this);
-                RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this.progressMonitor);
-
-                final TestGenerationThread thread = new TestGenerationThread();
-                thread.start();
+                TestGenerationView.this.execute();
 
                 // Enable polling and set frequency to 0.5 seconds
 
