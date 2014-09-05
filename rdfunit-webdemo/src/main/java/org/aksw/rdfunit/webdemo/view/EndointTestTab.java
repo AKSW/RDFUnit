@@ -178,6 +178,7 @@ public class EndointTestTab extends VerticalLayout {
                     try {
                         f.delete();
                     } catch (Exception e) {
+                        // catch
                     }
                     RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite(), 3);
                 }

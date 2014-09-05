@@ -45,7 +45,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
     }
 
-    public void initLayout() {
+    private void initLayout() {
         this.setWidth("100%");
 
         messageLabel.setValue("Press Generate to start generating test cases");
@@ -161,22 +161,22 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
     @Override
     public void setPreviousItem(WorkflowItem item) {
-        previous = item;
+        this.previous = item;
     }
 
     @Override
     public void setNextItem(WorkflowItem item) {
-        next = item;
+        this.next = item;
     }
 
     @Override
     public WorkflowItem getPreviousItem() {
-        return null;
+        return previous;
     }
 
     @Override
     public WorkflowItem getNextItem() {
-        return null;
+        return next;
     }
 
     @Override
@@ -264,7 +264,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
     }
 
-    class TestGenerationThread extends Thread {
+    private class TestGenerationThread extends Thread {
 
         @Override
         public void run() {

@@ -27,9 +27,9 @@ import java.util.Set;
  * @since 11/18/13 11:26 AM
  */
 public class SchemaSelectorComponent extends VerticalLayout {
-    private static Logger log = LoggerFactory.getLogger(SchemaSelectorComponent.class);
+    private static final Logger log = LoggerFactory.getLogger(SchemaSelectorComponent.class);
 
-    final TokenField tokenField;
+    final private TokenField tokenField;
 
     public SchemaSelectorComponent() {
 
@@ -145,8 +145,8 @@ public class SchemaSelectorComponent extends VerticalLayout {
 
             // Have some layout and create the fields
             PropertysetItem item = new PropertysetItem();
-            item.addItemProperty("Prefix", new ObjectProperty<String>(prefix));
-            item.addItemProperty("URI", new ObjectProperty<String>(uri));
+            item.addItemProperty("Prefix", new ObjectProperty<>(prefix));
+            item.addItemProperty("URI", new ObjectProperty<>(uri));
 
             final FormLayout form = new FormLayout();
             form.setMargin(true);
@@ -206,10 +206,10 @@ public class SchemaSelectorComponent extends VerticalLayout {
     }
 
     private static Container generateTestContainer() {
-        BeanItemContainer<SchemaSource> container = new BeanItemContainer<SchemaSource>(
+        BeanItemContainer<SchemaSource> container = new BeanItemContainer<>(
                 SchemaSource.class);
 
-        java.util.Collection<SchemaSource> sources = null;
+        java.util.Collection<SchemaSource> sources;
         try {
             sources = SchemaService.getSourceListAll(false, null);
         } catch (UndefinedSchemaException e) {

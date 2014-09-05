@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 * @author Dimitris Kontokostas
 */
 
+@SuppressWarnings("WeakerAccess")
 @Theme("rdfunit")
 @Push
 public class RDFUnitDemo extends UI {

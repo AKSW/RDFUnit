@@ -23,7 +23,7 @@ import java.net.URLEncoder;
  *         Description
  * @since 11/20/13 5:20 PM
  */
-public class TestExecutionView extends VerticalLayout implements TestExecutorMonitor {
+class TestExecutionView extends VerticalLayout implements TestExecutorMonitor {
 
     private final Table resultsTable = new Table("Test Results");
     private Source source = null;
@@ -39,7 +39,7 @@ public class TestExecutionView extends VerticalLayout implements TestExecutorMon
         resultsTable.setVisible(false);
     }
 
-    public void initLayout() {
+    private void initLayout() {
         this.setWidth("100%");
 
         //resultsTable.setSizeFull();
