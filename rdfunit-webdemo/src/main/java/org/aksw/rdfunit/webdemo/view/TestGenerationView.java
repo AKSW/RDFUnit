@@ -48,6 +48,20 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
     private void initLayout() {
         this.setWidth("100%");
 
+
+
+        resultsTable.setHeight("250px");
+        resultsTable.setWidth("100%");
+        resultsTable.addContainerProperty("Type", String.class, null);
+        resultsTable.addContainerProperty("URI", Link.class, null);
+        resultsTable.addContainerProperty("Automatic", AbstractComponent.class, null);
+        resultsTable.addContainerProperty("Manual", AbstractComponent.class, null);
+        resultsTable.setColumnCollapsingAllowed(true);
+        resultsTable.setSelectable(true);
+        resultsTable.setVisible(false);
+
+        this.addComponent(resultsTable);
+
         messageLabel.setValue("Press Generate to start generating test cases");
         messageLabel.setContentMode(ContentMode.HTML);
 
@@ -74,19 +88,6 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
         genHeader.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
         genHeader.addComponent(generateBtn);
         genHeader.setComponentAlignment(generateBtn, Alignment.MIDDLE_RIGHT);
-
-
-        resultsTable.setHeight("250px");
-        resultsTable.setWidth("100%");
-        resultsTable.addContainerProperty("Type", String.class, null);
-        resultsTable.addContainerProperty("URI", Link.class, null);
-        resultsTable.addContainerProperty("Automatic", AbstractComponent.class, null);
-        resultsTable.addContainerProperty("Manual", AbstractComponent.class, null);
-        resultsTable.setColumnCollapsingAllowed(true);
-        resultsTable.setSelectable(true);
-        resultsTable.setVisible(false);
-
-        this.addComponent(resultsTable);
 
         initInteractions();
     }
