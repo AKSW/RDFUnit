@@ -1,8 +1,9 @@
-package org.aksw.rdfunit.webdemo;
+package org.aksw.rdfunit.webdemo.utils;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
+import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 
 /**
  * Used to instantiate common variables shared across all sessions
@@ -10,7 +11,7 @@ import org.aksw.rdfunit.exceptions.TripleReaderException;
  * @author Dimitris Kontokostas
  * @since 8/30/14 4:14 PM
  */
-public class RDFUnitDemoCommons {
+public class CommonAccessUtils {
 
     private static class PatternsAndGenerators {
         private static volatile RDFUnit rdfUnit;

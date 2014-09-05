@@ -11,8 +11,8 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
-import org.aksw.rdfunit.webdemo.RDFUnitDemoCommons;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
+import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 
 import java.io.File;
@@ -280,7 +280,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
                         RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
                                 RDFUnitDemoSession.getBaseDir() + "tests/",
                                 dataset,
-                                RDFUnitDemoCommons.getRDFUnit().getAutoGenerators()));
+                                CommonAccessUtils.getRDFUnit().getAutoGenerators()));
             }
         }
     }

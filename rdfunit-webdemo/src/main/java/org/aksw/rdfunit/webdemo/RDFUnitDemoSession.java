@@ -9,6 +9,7 @@ import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
+import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class RDFUnitDemoSession extends VaadinSession {
         TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
-        RDFUnitDemoCommons.initializeSchemaServices();
+        CommonAccessUtils.initializeSchemaServices();
     }
 
     private static String _getBaseDir() {
