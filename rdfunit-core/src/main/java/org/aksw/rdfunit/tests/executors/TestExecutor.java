@@ -182,4 +182,11 @@ public abstract class TestExecutor {
         progressMonitors.remove(monitor);
     }
 
+    /**
+     * Clears all test executor monitors.
+     */
+    public void clearTestExecutorMonitor() {
+        progressMonitors.clear();
+    }
+
 }
