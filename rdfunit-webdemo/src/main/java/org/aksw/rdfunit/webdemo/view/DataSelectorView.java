@@ -153,7 +153,7 @@ public class DataSelectorView extends CustomComponent implements WorkflowItem {
 
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                String value = valueChangeEvent.getProperty().getValue().toString();
+                DataOption value = (DataOption) valueChangeEvent.getProperty().getValue();
                 if (value.equals(DataOption.URI)) {
                     inputFormatsSelect.setVisible(false);
                 } else {

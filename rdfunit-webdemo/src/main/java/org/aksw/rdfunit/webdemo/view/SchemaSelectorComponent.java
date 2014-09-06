@@ -71,8 +71,8 @@ public class SchemaSelectorComponent extends VerticalLayout {
                     if (s == null || !cb.containsId(s)) {
                         // don't add directly,
                         // show custom "add to address book" dialog
-                        UI.getCurrent().addWindow(new EditContactWindow(tokenId
-                                .toString(), this));
+                        UI.getCurrent().addWindow(new EditContactWindow(
+                                tokenId != null ? tokenId.toString() : "", this));
                     } else {
                         // it's in the 'address book', just add
                         addToken(s);

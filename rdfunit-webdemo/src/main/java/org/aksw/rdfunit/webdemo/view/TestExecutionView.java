@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.webdemo.view;
 
+import com.vaadin.server.ConnectorResource;
+import com.vaadin.server.DownloadStream;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
@@ -8,6 +10,7 @@ import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.writer.RDFStreamWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -20,6 +23,7 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -209,24 +213,45 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                 String resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
 
-                VerticalLayout inner = new VerticalLayout();
+                //OutputStream os;
+                final ByteArrayOutputStream os = new ByteArrayOutputStream();
+                try {
+                    if (resultFormat.equals("html")) {
+                        RDFWriterFactory.createHTMLWriter((TestCaseExecutionType) execTypeSelect.getValue(), os).write(modelMonitor.getModel());
+                    } else {
+                        new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
+                    }
+                } catch (RDFWriterException e) {
+                    Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
+                    // TODO log
+                }
+
+                final VerticalLayout inner = new VerticalLayout();
                 inner.setSpacing(true);
                 inner.setWidth("100%");
                 inner.setHeight("100%");
                 if (resultFormat.equals("html")) {
-                    inner.addComponent(new TextArea("html"));
+                    BrowserFrame frame = new BrowserFrame("", new ConnectorResource() {
+                        @Override
+                        public DownloadStream getStream() {
+                            return new DownloadStream(new ByteArrayInputStream(os.toByteArray()), "text/html", "");
+                        }
+
+                        @Override
+                        public String getFilename() {
+                            return "";
+                        }
+
+                        @Override
+                        public String getMIMEType() {
+                            return "text/html";
+                        }
+                    }) ;
+                    //Label htmlLabel = new Label(os.toString(), ContentMode.HTML);
+                    frame.setWidth("100%");
+                    frame.setHeight("100%");
+                    inner.addComponent(frame);
                 } else {
-
-
-                    //OutputStream os;
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    try {
-                        new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
-                    } catch (RDFWriterException e) {
-                        Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
-                        // TODO log
-                    }
-
                     TextArea textArea = new TextArea("", os.toString());
                     textArea.setWidth("100%");
                     textArea.setHeight("100%");
@@ -238,7 +263,6 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 window.setWidth("90%");
                 window.setHeight("90%");
                 window.setModal(true);
-                final FormLayout content = new FormLayout();
                 window.setContent(inner);
 
 
