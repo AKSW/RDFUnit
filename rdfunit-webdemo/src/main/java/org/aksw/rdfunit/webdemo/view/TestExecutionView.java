@@ -283,7 +283,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
     @Override
     public boolean isReady() {
-        return false;
+        return isReady;
     }
 
     @Override
