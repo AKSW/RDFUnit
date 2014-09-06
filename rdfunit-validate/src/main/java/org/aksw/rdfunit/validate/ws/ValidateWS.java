@@ -5,7 +5,7 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -44,7 +44,7 @@ public class ValidateWS extends RDFUnitWebService {
         RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"));
         try {
             rdfunit.init();
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             log.error("Cannot read patterns and/or pattern generators");
         }
     }

@@ -1,9 +1,8 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
+import org.aksw.rdfunit.io.writer.RDFWriterException;
 
 /**
  * @author Dimitris Kontokostas
@@ -21,12 +20,12 @@ public class RDFReadAndCacheReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         reader.read(model);
         //If read succeeds try to write
         try {
             writer.write(model);
-        } catch (TripleWriterException e) {
+        } catch (RDFWriterException e) {
 
         }
     }

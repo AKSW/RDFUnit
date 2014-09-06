@@ -3,7 +3,7 @@ package org.aksw.rdfunit.tests.generators;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
@@ -123,7 +123,7 @@ public class TestGeneratorExecutor {
             tests.addAll(testsAutoCached);
             log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
 
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             // cannot read from file  / generate
             Collection<TestCase> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
             tests.addAll(testsAuto);
@@ -153,7 +153,7 @@ public class TestGeneratorExecutor {
 
             tests.addAll(testsManuals);
             log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             // Do nothing, Manual tests do not exist
         }
 

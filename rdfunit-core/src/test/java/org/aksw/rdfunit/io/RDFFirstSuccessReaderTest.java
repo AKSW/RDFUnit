@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.io;
 
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.reader.RDFFirstSuccessReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class RDFFirstSuccessReaderTest {
         try {
             reader.read();
             fail("Should have raised a TripleReaderException");
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
         }
 
         rdfReaders.add(new RDFStreamReader(""));
@@ -29,7 +29,7 @@ public class RDFFirstSuccessReaderTest {
         try {
             reader.read();
             fail("Should have raised a TripleReaderException");
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
         }
 
         rdfReaders.add(new RDFStreamReader(RDFFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
@@ -37,7 +37,7 @@ public class RDFFirstSuccessReaderTest {
         reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             fail("Should have NOT raised a TripleReaderException");
         }
     }

@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,11 +34,11 @@ public class RDFStreamReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         try {
             model.read(inputStream, null, format);
         } catch (Exception e) {
-            throw new TripleReaderException(e.getMessage(), e);
+            throw new RDFReaderException(e.getMessage(), e);
         }
 
     }

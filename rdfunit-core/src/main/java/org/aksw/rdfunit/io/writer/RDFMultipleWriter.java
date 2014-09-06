@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 
 import java.util.Collection;
 
@@ -19,7 +18,7 @@ public class RDFMultipleWriter extends RDFWriter {
     }
 
     @Override
-    public void write(QueryExecutionFactory model) throws TripleWriterException {
+    public void write(QueryExecutionFactory model) throws RDFWriterException {
         //TODO check for early exceptions
         for (RDFWriter w : writers) {
             if (w != null) {

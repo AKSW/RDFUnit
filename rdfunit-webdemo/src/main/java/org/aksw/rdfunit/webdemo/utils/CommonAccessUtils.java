@@ -2,7 +2,7 @@ package org.aksw.rdfunit.webdemo.utils;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 
 /**
@@ -24,7 +24,7 @@ public class CommonAccessUtils {
                         rdfUnit = new RDFUnit();
                         try {
                             rdfUnit.init();
-                        } catch (TripleReaderException e) {
+                        } catch (RDFReaderException e) {
                             // show error
                         }
                     }

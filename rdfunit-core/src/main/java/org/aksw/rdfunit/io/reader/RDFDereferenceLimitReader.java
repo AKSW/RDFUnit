@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -57,11 +56,11 @@ public class RDFDereferenceLimitReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         // Check for size
         long size = getUriSize(uri);
         if (size > limitInBytes || !strict || size < 0) {
-            throw new TripleReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
+            throw new RDFReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
         }
 
         // continue with a normal Dereference Reader

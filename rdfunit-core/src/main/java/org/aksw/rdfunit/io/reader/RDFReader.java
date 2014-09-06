@@ -2,7 +2,6 @@ package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
  * Triple reader superclass
@@ -16,15 +15,15 @@ public abstract class RDFReader {
      * Reads RDF and returns a {@code Model}
      *
      * @return a {@code Model} with the data read
-     * @throws TripleReaderException
+     * @throws RDFReaderException
      */
-    public Model read() throws TripleReaderException {
+    public Model read() throws RDFReaderException {
         try {
             Model model = ModelFactory.createDefaultModel();
             read(model);
             return model;
         } catch (Exception e) {
-            throw new TripleReaderException(e);
+            throw new RDFReaderException(e);
         }
     }
 
@@ -32,7 +31,7 @@ public abstract class RDFReader {
      * Reads RDF and writes the data in the Model provided by the user
      *
      * @param model the model we want to write our data into
-     * @throws TripleReaderException
+     * @throws RDFReaderException
      */
-    public abstract void read(Model model) throws TripleReaderException;
+    public abstract void read(Model model) throws RDFReaderException;
 }

@@ -7,11 +7,11 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.writer.RDFMultipleWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
+import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
@@ -75,7 +75,7 @@ public class ValidateCLI {
         RDFUnit rdfunit = new RDFUnit(configuration.getDataFolder());
         try {
             rdfunit.init();
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             displayHelpAndExit("Cannot read patterns and/or pattern generators");
         }
          /*
@@ -124,7 +124,7 @@ public class ValidateCLI {
         try {
             resultWriter.write(testExecutorMonitor.getModel());
             log.info("Results stored in: " + filename + ".*");
-        } catch (TripleWriterException e) {
+        } catch (RDFWriterException e) {
             log.error("Cannot write tests to file: " + e.getMessage());
         }
 

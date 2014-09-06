@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
  * @author Dimitris Kontokostas
@@ -18,7 +17,7 @@ public class RDFModelReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         model.add(this.model);
     }
 }

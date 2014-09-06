@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 import java.util.Collection;
 
@@ -20,7 +19,7 @@ public class RDFFirstSuccessReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         StringBuilder message = new StringBuilder();
         // return the first successful attempt
         for (RDFReader r : readers) {
@@ -28,7 +27,7 @@ public class RDFFirstSuccessReader extends RDFReader {
                 r.read(model);
                 // return on first read() that does not throw an exception
                 return;
-            } catch (TripleReaderException e) {
+            } catch (RDFReaderException e) {
                 message.append("\n");
                 if (e.getMessage() != null) {
                     message.append(e.getMessage());
@@ -38,6 +37,6 @@ public class RDFFirstSuccessReader extends RDFReader {
             }
         }
 
-        throw new TripleReaderException("Cannot read from any reader: " + message.toString());
+        throw new RDFReaderException("Cannot read from any reader: " + message.toString());
     }
 }

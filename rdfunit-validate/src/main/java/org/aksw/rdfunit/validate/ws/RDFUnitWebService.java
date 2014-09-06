@@ -3,9 +3,9 @@ package org.aksw.rdfunit.validate.ws;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.writer.RDFWriter;
+import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -79,7 +79,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
 
         try {
             writeResults(configuration, results, httpServletResponse);
-        } catch (TripleWriterException e) {
+        } catch (RDFWriterException e) {
             printMessage(httpServletResponse, e.getMessage());
         }
     }
@@ -90,13 +90,13 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @param configuration       an RDFUnitConfiguration object generated with getConfiguration
      * @param model               a Model generated with validate()
      * @param httpServletResponse the HttpServletResponse where we write our output
-     * @throws TripleWriterException
+     * @throws org.aksw.rdfunit.io.writer.RDFWriterException
      * @throws IOException
      */
-    private void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws TripleWriterException, IOException {
+    private void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws RDFWriterException, IOException {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
         if (serializationFormat == null) {
-            throw new TripleWriterException("Invalid output format");
+            throw new RDFWriterException("Invalid output format");
         }
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());

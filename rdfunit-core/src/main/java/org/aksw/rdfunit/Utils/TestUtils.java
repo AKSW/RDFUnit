@@ -14,8 +14,8 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
+import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PatternService;
@@ -303,7 +303,7 @@ public final class TestUtils {
         try {
             PrefixNSService.setNSPrefixesInModel(model);
             testCache.write(model);
-        } catch (TripleWriterException e) {
+        } catch (RDFWriterException e) {
             log.error("Cannot cache tests: " + e.getMessage());
         }
     }

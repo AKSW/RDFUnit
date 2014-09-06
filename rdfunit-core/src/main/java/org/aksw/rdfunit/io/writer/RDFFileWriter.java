@@ -3,7 +3,6 @@ package org.aksw.rdfunit.io.writer;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.File;
@@ -44,7 +43,7 @@ public class RDFFileWriter extends RDFWriter {
     }
 
     @Override
-    public void write(QueryExecutionFactory qef) throws TripleWriterException {
+    public void write(QueryExecutionFactory qef) throws RDFWriterException {
         try {
             File file = new File(filename);
 
@@ -53,14 +52,14 @@ public class RDFFileWriter extends RDFWriter {
             }
 
             if (file.exists() && !overwrite) {
-                throw new TripleWriterException("File already exists and cannot overwrite");
+                throw new RDFWriterException("File already exists and cannot overwrite");
             }
 
             if (createParentDirectories) {
                 File parentF = file.getParentFile();
                 if (parentF != null && !parentF.exists()) {
                     if (!parentF.mkdirs()) {
-                        throw new TripleWriterException("Cannot create new directory structure for file: " + filename);
+                        throw new RDFWriterException("Cannot create new directory structure for file: " + filename);
                     }
                 }
             }
@@ -69,7 +68,7 @@ public class RDFFileWriter extends RDFWriter {
             model.write(new FileOutputStream(file), filetype);
 
         } catch (Exception e) {
-            throw new TripleWriterException("Error writing file: " + e.getMessage(), e);
+            throw new RDFWriterException("Error writing file: " + e.getMessage(), e);
         }
 
     }

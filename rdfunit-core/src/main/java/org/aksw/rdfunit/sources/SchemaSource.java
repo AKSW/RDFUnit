@@ -6,8 +6,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 
 /**
  * @author Dimitris Kontokostas
@@ -45,7 +45,7 @@ public class SchemaSource extends Source {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         try {
             schemaReader.read(model);
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             log.error("Cannot load ontology: " + getSchema() + " Reason: " + e.getMessage(), e);
         }
         return new QueryExecutionFactoryModel(model);

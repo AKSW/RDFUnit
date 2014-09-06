@@ -2,7 +2,6 @@ package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.NotFoundException;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
  * @author Dimitris Kontokostas
@@ -19,20 +18,20 @@ public class RDFDereferenceReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         try {
             //TODO check for relative file names and convert to absolute paths
             model.read(uri);
 
             // Not found
         } catch (NotFoundException e) {
-            throw new TripleReaderException("'" + uri + "' not found", e);
+            throw new RDFReaderException("'" + uri + "' not found", e);
         }
 
         //org.apache.jena.riot.RiotException -> if wrong format, i.e. turtle instead of RDF/XML
 
         catch (Exception e) {
-            throw new TripleReaderException(e);
+            throw new RDFReaderException(e);
         }
     }
 }

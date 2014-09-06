@@ -6,7 +6,6 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.PatternUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
@@ -41,7 +40,7 @@ public class RDFUnit {
         this(new ArrayList<String>());
     }
 
-    public void init() throws TripleReaderException {
+    public void init() throws RDFReaderException {
         Model model = ModelFactory.createDefaultModel();
         // Set the defined prefixes
         PrefixNSService.setNSPrefixesInModel(model);
@@ -49,8 +48,8 @@ public class RDFUnit {
         try {
             getPatternsReader(baseDirectories).read(model);
             getAutoGeneratorsALLReader(baseDirectories).read(model);
-        } catch (TripleReaderException e) {
-            throw new TripleReaderException(e.getMessage(), e);
+        } catch (RDFReaderException e) {
+            throw new RDFReaderException(e.getMessage(), e);
         }
 
         patternQueryFactory = new QueryExecutionFactoryModel(model);

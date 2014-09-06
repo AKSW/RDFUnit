@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 
 /**
  * @author Dimitris Kontokostas
@@ -21,8 +20,8 @@ public class RDFSPARQLReader extends RDFReader {
     }
 
     @Override
-    public void read(Model model) throws TripleReaderException {
+    public void read(Model model) throws RDFReaderException {
         //TODO implement
-        throw new TripleReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
+        throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
     }
 }

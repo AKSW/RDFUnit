@@ -5,7 +5,6 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -123,7 +122,7 @@ public class RDFUnitStaticWrapper {
                     Collection<TestCase> manualTestCases;
                     try {
                         manualTestCases = TestUtils.instantiateTestsFromModel(manualTestCaseReader.read());
-                    } catch (TripleReaderException e) {
+                    } catch (RDFReaderException e) {
                         // Create an empty collection
                         manualTestCases = new ArrayList<>();
                     }
@@ -132,7 +131,7 @@ public class RDFUnitStaticWrapper {
                     RDFUnit rdfunit = new RDFUnit();
                     try {
                         rdfunit.init();
-                    } catch (TripleReaderException e) {
+                    } catch (RDFReaderException e) {
                         // fatal error / send only manual test cases
                         testSuite = new TestSuite(manualTestCases);
                         return testSuite; // do not execute further

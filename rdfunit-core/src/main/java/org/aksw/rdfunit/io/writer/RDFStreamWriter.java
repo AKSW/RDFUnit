@@ -3,7 +3,6 @@ package org.aksw.rdfunit.io.writer;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.FileNotFoundException;
@@ -32,14 +31,14 @@ public class RDFStreamWriter extends RDFWriter {
     }
 
     @Override
-    public void write(QueryExecutionFactory qef) throws TripleWriterException {
+    public void write(QueryExecutionFactory qef) throws RDFWriterException {
         try {
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
             PrefixNSService.setNSPrefixesInModel(model);
             model.write(outputStream, filetype);
 
         } catch (Exception e) {
-            throw new TripleWriterException("Error writing in OutputStream: " + e.getMessage(), e);
+            throw new RDFWriterException("Error writing in OutputStream: " + e.getMessage(), e);
         }
     }
 

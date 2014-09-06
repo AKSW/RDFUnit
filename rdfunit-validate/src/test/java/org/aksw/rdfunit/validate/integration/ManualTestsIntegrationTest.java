@@ -3,7 +3,7 @@ package org.aksw.rdfunit.validate.integration;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
-import org.aksw.rdfunit.exceptions.TripleReaderException;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.resources.Resources;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
@@ -33,7 +33,7 @@ public class ManualTestsIntegrationTest {
         RDFUnit rdfunit = new RDFUnit();
         try {
             rdfunit.init();
-        } catch (TripleReaderException e) {
+        } catch (RDFReaderException e) {
             fail("Cannot read patterns and/or pattern generators");
         }
 
@@ -52,7 +52,7 @@ public class ManualTestsIntegrationTest {
             String resource = "/org/aksw/rdfunit/tests/" + "Manual/" + CacheUtils.getCacheFolderForURI(uri) + prefix + "." + "tests" + "." + "Manual" + ".ttl";
             try {
                 TestUtils.instantiateTestsFromModel(RDFReaderFactory.createResourceReader(resource).read(), true);
-            } catch (TripleReaderException e) {
+            } catch (RDFReaderException e) {
                 fail("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")");
             }
 

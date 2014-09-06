@@ -5,7 +5,6 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.exceptions.TripleWriterException;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
     }
 
     @Override
-    public void write(QueryExecutionFactory qef) throws TripleWriterException {
+    public void write(QueryExecutionFactory qef) throws RDFWriterException {
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);
 
         try {
@@ -50,7 +49,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
             outputStream.close();
 
         } catch (IOException e) {
-            throw new TripleWriterException("Cannot write HTML", e);
+            throw new RDFWriterException("Cannot write HTML", e);
         }
     }
 
