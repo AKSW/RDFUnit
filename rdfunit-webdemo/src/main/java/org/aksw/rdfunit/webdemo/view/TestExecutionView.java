@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.webdemo.view;
 
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
@@ -36,7 +35,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
     private final ProgressBar testingProgress = new ProgressBar();
     private final Label testingProgressLabel = new Label("0/0");
 
-    private final Table resultsTable = new Table("Test Results");
+//    private final Table resultsTable = new Table("Test Results");
 //    private Source source = null;
 
 
@@ -62,31 +61,39 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         this.setWidth("100%");
 
         HorizontalLayout testHeader = new HorizontalLayout();
+        testHeader.setSpacing(true);
+        testHeader.setWidth("100%");
         this.addComponent(testHeader);
-        testHeader.addStyleName("header");
-        Label testLabel = new Label("<h2>Testing</h2>", ContentMode.HTML);
-        testHeader.addComponent(testLabel);
-        testHeader.setComponentAlignment(testLabel, Alignment.MIDDLE_LEFT);
-        testHeader.addComponent(startTestingButton);
-        testHeader.setComponentAlignment(startTestingButton, Alignment.MIDDLE_CENTER);
+
+        testHeader.addComponent(messageLabel);
+        testHeader.setExpandRatio(messageLabel, 1.0f);
+        testHeader.setComponentAlignment(messageLabel, Alignment.MIDDLE_RIGHT);
+
+
         testHeader.addComponent(testingProgress);
+        testingProgress.setWidth("150px");
         testHeader.setComponentAlignment(testingProgress, Alignment.MIDDLE_CENTER);
+
         testHeader.addComponent(testingProgressLabel);
         testHeader.setComponentAlignment(testingProgressLabel, Alignment.MIDDLE_CENTER);
+
         testHeader.addComponent(startTestingCancelButton);
         testHeader.setComponentAlignment(startTestingCancelButton, Alignment.MIDDLE_CENTER);
 
-        testingProgress.setWidth("150px");
+        testHeader.addComponent(startTestingButton);
+        testHeader.setComponentAlignment(startTestingButton, Alignment.MIDDLE_CENTER);
 
         //resultsTable.setSizeFull();
-        resultsTable.addContainerProperty("S", String.class, null);
-        resultsTable.addContainerProperty("Test", Label.class, null);
-        resultsTable.addContainerProperty("Errors", AbstractComponent.class, null);
-        resultsTable.addContainerProperty("Prevalence", String.class, null);
-        resultsTable.setColumnCollapsingAllowed(true);
-        resultsTable.setSelectable(true);
-        resultsTable.setVisible(false);
-        this.addComponent(resultsTable);
+//        resultsTable.addContainerProperty("S", String.class, null);
+//        resultsTable.addContainerProperty("Test", Label.class, null);
+//        resultsTable.addContainerProperty("Errors", AbstractComponent.class, null);
+//        resultsTable.addContainerProperty("Prevalence", String.class, null);
+//        resultsTable.setColumnCollapsingAllowed(true);
+//        resultsTable.setSelectable(true);
+//        resultsTable.setVisible(false);
+//        this.addComponent(resultsTable);
+
+        testHeader.addComponent(resultsButton);
 
 
         // Clicking the button creates and runs a work thread
@@ -106,6 +113,22 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 RDFUnitDemoSession.getTestExecutor().cancel();
             }
         });
+
+        resultsButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                final Window window = new Window("Window");
+                window.setWidth("90%");
+                window.setModal(true);
+                final FormLayout content = new FormLayout();
+                window.setContent(content);
+
+
+                UI.getCurrent().addWindow(window);
+            }
+        });
+
+
     }
 
         //progressMonitor =
