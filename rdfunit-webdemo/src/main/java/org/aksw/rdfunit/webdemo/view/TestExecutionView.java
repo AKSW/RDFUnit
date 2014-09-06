@@ -1,12 +1,18 @@
 package org.aksw.rdfunit.webdemo.view;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.io.format.FormatService;
+import org.aksw.rdfunit.io.writer.RDFStreamWriter;
+import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
@@ -14,7 +20,7 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 
 /**
  * @author Dimitris Kontokostas
@@ -26,6 +32,9 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
     private final Button startTestingButton = new Button("Run tests");
     private final Button startTestingCancelButton = new Button("Cancel");
     private final Button resultsButton = new Button("Display Results");
+
+    private final NativeSelect execTypeSelect = new NativeSelect();
+    private final NativeSelect resultsFormatsSelect = new NativeSelect();
 
     private final Label messageLabel = new Label();
     private final TestExecutorMonitor progressMonitor = createProgressMonitor();
@@ -47,8 +56,46 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
     public TestExecutionView() {
 
+        initData();
         initLayout();
 
+    }
+
+    private void initData() {
+
+        messageLabel.setValue("Please select a report type and press 'Run Tests'");
+
+        execTypeSelect.addItem(TestCaseExecutionType.statusTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.statusTestCaseResult, "Status");
+        execTypeSelect.addItem(TestCaseExecutionType.aggregatedTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.aggregatedTestCaseResult, "Counts");
+        execTypeSelect.addItem(TestCaseExecutionType.rlogTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.rlogTestCaseResult, "Resources");
+        execTypeSelect.addItem(TestCaseExecutionType.extendedTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.extendedTestCaseResult, "Annotated Res.");
+
+        // Select turtle
+        execTypeSelect.setNullSelectionAllowed(false);
+        execTypeSelect.setValue(TestCaseExecutionType.aggregatedTestCaseResult);
+
+
+        resultsFormatsSelect.addItem("html");
+        resultsFormatsSelect.setItemCaption("html", "HTML");
+        resultsFormatsSelect.addItem("turtle");
+        resultsFormatsSelect.setItemCaption("turtle", "Turtle");
+        resultsFormatsSelect.addItem("ntriples");
+        resultsFormatsSelect.setItemCaption("ntriples", "N-Triples");
+        resultsFormatsSelect.addItem("n3");
+        resultsFormatsSelect.setItemCaption("n3", "N3");
+        resultsFormatsSelect.addItem("jsonld");
+        resultsFormatsSelect.setItemCaption("jsonld", "JSON-LD");
+        resultsFormatsSelect.addItem("rdfjson");
+        resultsFormatsSelect.setItemCaption("rdfjson", "RDF/JSON");
+        resultsFormatsSelect.addItem("rdfxml");
+        resultsFormatsSelect.setItemCaption("rdfxml", "RDF/XML");
+
+        resultsFormatsSelect.setNullSelectionAllowed(false);
+        resultsFormatsSelect.setValue("html");
     }
 
 
@@ -59,6 +106,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
     private void initLayout() {
         this.setWidth("100%");
+        this.setSpacing(true);
 
         HorizontalLayout testHeader = new HorizontalLayout();
         testHeader.setSpacing(true);
@@ -69,13 +117,13 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         testHeader.setExpandRatio(messageLabel, 1.0f);
         testHeader.setComponentAlignment(messageLabel, Alignment.MIDDLE_RIGHT);
 
+        Label selLabel = new Label("Select Report Type:");
+        testHeader.addComponent(selLabel);
+        selLabel.setWidth("170px");
+        testHeader.setComponentAlignment(selLabel, Alignment.MIDDLE_RIGHT);
 
-        testHeader.addComponent(testingProgress);
-        testingProgress.setWidth("150px");
-        testHeader.setComponentAlignment(testingProgress, Alignment.MIDDLE_CENTER);
-
-        testHeader.addComponent(testingProgressLabel);
-        testHeader.setComponentAlignment(testingProgressLabel, Alignment.MIDDLE_CENTER);
+        testHeader.addComponent(execTypeSelect);
+        testHeader.setComponentAlignment(execTypeSelect, Alignment.MIDDLE_CENTER);
 
         testHeader.addComponent(startTestingCancelButton);
         testHeader.setComponentAlignment(startTestingCancelButton, Alignment.MIDDLE_CENTER);
@@ -83,17 +131,36 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         testHeader.addComponent(startTestingButton);
         testHeader.setComponentAlignment(startTestingButton, Alignment.MIDDLE_CENTER);
 
-        //resultsTable.setSizeFull();
-//        resultsTable.addContainerProperty("S", String.class, null);
-//        resultsTable.addContainerProperty("Test", Label.class, null);
-//        resultsTable.addContainerProperty("Errors", AbstractComponent.class, null);
-//        resultsTable.addContainerProperty("Prevalence", String.class, null);
-//        resultsTable.setColumnCollapsingAllowed(true);
-//        resultsTable.setSelectable(true);
-//        resultsTable.setVisible(false);
-//        this.addComponent(resultsTable);
 
-        testHeader.addComponent(resultsButton);
+        this.addComponent(new Label("<br/>", ContentMode.HTML));
+
+
+        HorizontalLayout resultsHeader = new HorizontalLayout();
+        resultsHeader.setSpacing(true);
+        resultsHeader.setWidth("100%");
+        this.addComponent(resultsHeader);
+
+
+        resultsHeader.addComponent(testingProgress);
+        resultsHeader.setExpandRatio(testingProgress, 1.0f);
+        testingProgress.setWidth("100%");
+        resultsHeader.setComponentAlignment(testingProgress, Alignment.MIDDLE_RIGHT);
+
+        resultsHeader.addComponent(testingProgressLabel);
+        testingProgressLabel.setWidth("320px");
+        resultsHeader.setComponentAlignment(testingProgressLabel, Alignment.MIDDLE_CENTER);
+
+        Label resLabel = new Label("Select Results Format:");
+        resultsHeader.addComponent(resLabel);
+        resLabel.setWidth("170px");
+        resultsHeader.setComponentAlignment(resLabel, Alignment.MIDDLE_RIGHT);
+
+        resultsHeader.addComponent(resultsFormatsSelect);
+        resultsHeader.setComponentAlignment(resultsFormatsSelect, Alignment.MIDDLE_CENTER);
+
+
+        resultsHeader.addComponent(resultsButton);
+        resultsHeader.setComponentAlignment(resultsButton, Alignment.MIDDLE_CENTER);
 
 
         // Clicking the button creates and runs a work thread
@@ -101,6 +168,19 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
             public void buttonClick(Button.ClickEvent event) {
                 startTestingButton.setEnabled(false);
                 UI.getCurrent().push();
+
+                if (inProgress) {
+                    setMessage("Test Execution already in progress", true);
+                    UI.getCurrent().push();
+                    return;
+                }
+                if (!WorkflowUtils.checkIfPreviousItemIsReady(TestExecutionView.this)) {
+                    setMessage("Please Complete previous step correctly", true);
+                    UI.getCurrent().push();
+                    return;
+                }
+
+
                 TestExecutionView.this.execute();
             }
         });
@@ -108,6 +188,10 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         startTestingCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                if (!inProgress) {
+                    Notification.show("Test Execution Not in progress", Notification.Type.WARNING_MESSAGE);
+                    return;
+                }
                 TestExecutionView.this.setMessage("Sending cancel signal, waiting for currect test to execute", false);
                 UI.getCurrent().push();
                 RDFUnitDemoSession.getTestExecutor().cancel();
@@ -117,11 +201,45 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         resultsButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                final Window window = new Window("Window");
+
+                if (!isReady) {
+                    Notification.show("Test Execution Not completed", Notification.Type.WARNING_MESSAGE);
+                    return;
+                }
+
+                String resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
+
+                VerticalLayout inner = new VerticalLayout();
+                inner.setSpacing(true);
+                inner.setWidth("100%");
+                inner.setHeight("100%");
+                if (resultFormat.equals("html")) {
+                    inner.addComponent(new TextArea("html"));
+                } else {
+
+
+                    //OutputStream os;
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    try {
+                        new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
+                    } catch (RDFWriterException e) {
+                        Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
+                        // TODO log
+                    }
+
+                    TextArea textArea = new TextArea("", os.toString());
+                    textArea.setWidth("100%");
+                    textArea.setHeight("100%");
+                    inner.addComponent(textArea);
+
+                }
+
+                final Window window = new Window("Results");
                 window.setWidth("90%");
+                window.setHeight("90%");
                 window.setModal(true);
                 final FormLayout content = new FormLayout();
-                window.setContent(content);
+                window.setContent(inner);
 
 
                 UI.getCurrent().addWindow(window);
@@ -131,7 +249,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
     }
 
-        //progressMonitor =
+    //progressMonitor =
 
     @Override
     public void setMessage(String message, boolean isError) {
@@ -177,30 +295,28 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
             @Override
             public void run() {
 
-                    modelMonitor = new SimpleTestExecutorMonitor(false);
-                    TestExecutor testExecutor = RDFUnitDemoSession.getTestExecutor();
-                    testExecutor.clearTestExecutorMonitor();
-                    testExecutor.addTestExecutorMonitor(progressMonitor);
-                    testExecutor.addTestExecutorMonitor(modelMonitor);
 
-                    Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
+                TestCaseExecutionType executionType = (TestCaseExecutionType) execTypeSelect.getValue();
+                TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
+                RDFUnitDemoSession.setTestExecutor(testExecutor);
 
-                    String resultsFile = RDFUnitDemoSession.getBaseDir() + "results/" + dataset.getPrefix() + ".results.ttl";
-                    //TODO refactor this, do not use cache here
-                    File f = new File(resultsFile);
-                    try {
-                        f.delete();
-                    } catch (Exception e) {
-                        // catch
-                    }
-                    RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite(), 3);
+                TestExecutionView.this.modelMonitor = new SimpleTestExecutorMonitor(false);
+
+
+                testExecutor.clearTestExecutorMonitor();
+                testExecutor.addTestExecutorMonitor(progressMonitor);
+                testExecutor.addTestExecutorMonitor(modelMonitor);
+
+
+                Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
+
+                RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite(), 0);
 
             }
         }
 
         if (RDFUnitDemoSession.getRDFUnitConfiguration() == null)
             return false;
-
 
 
         final TestExecutorThread thread = new TestExecutorThread();
@@ -255,14 +371,14 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 }
 
                 testingProgress.setValue((float) count / total);
-                testingProgressLabel.setValue(count + "/" + total + " (S: " + sucessTests + " / F: " + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")");
+                testingProgressLabel.setValue(count + "/" + total + getStatusStr());
 
-                if ((timeoutTests == 10 || timeoutTests == 30) && sucessTests == 0 && failTest == 0) {
-                    //Too many timeouts maybe banned
-                    Notification.show("Too many timeouts",
-                            "Maybe the endpoint banned this IP. Try a different endpoint of try the tool from a different IP.",
-                            Notification.Type.WARNING_MESSAGE);
-                }
+//                if ((timeoutTests == 10 || timeoutTests == 30) && sucessTests == 0 && failTest == 0) {
+//                    //Too many timeouts maybe banned
+//                    Notification.show("Too many timeouts",
+//                            "Maybe the endpoint banned this IP. Try a different endpoint of try the tool from a different IP.",
+//                            Notification.Type.WARNING_MESSAGE);
+//                }
 
                 UI.getCurrent().push();
             }
@@ -271,9 +387,14 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
             public void testingFinished() {
 
                 testingProgress.setValue(1.0f);
-                setMessage("Completed! (S: " + sucessTests + " / F:" + failTest + " / T: " + timeoutTests + " / E : " + totalErrors + ")", false);
-                startTestingCancelButton.setEnabled(true);
+                setMessage("Completed! " + getStatusStr() + ". See the results or rerun with a different 'Report Type'", false);
+                startTestingButton.setEnabled(true);
+                isReady = true;
                 UI.getCurrent().push();
+            }
+
+            private String getStatusStr() {
+                return " (S: " + sucessTests + " / F: " + failTest + " / E: " + timeoutTests + " / T : " + totalErrors + ")";
             }
         };
 

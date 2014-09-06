@@ -3,11 +3,9 @@ package org.aksw.rdfunit.webdemo;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
-import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 
@@ -35,8 +33,7 @@ public class RDFUnitDemoSession extends VaadinSession {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
 
-        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(TestCaseExecutionType.aggregatedTestCaseResult);
-        VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
+
 
         TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
@@ -59,6 +56,10 @@ public class RDFUnitDemoSession extends VaadinSession {
 
     public static TestExecutor getTestExecutor() {
         return VaadinSession.getCurrent().getAttribute(TestExecutor.class);
+    }
+
+    public static void setTestExecutor(TestExecutor testExecutor) {
+        VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
     }
 
     public static TestSuite getTestSuite() {
