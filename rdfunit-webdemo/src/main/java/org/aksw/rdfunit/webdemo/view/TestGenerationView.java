@@ -152,7 +152,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
     @Override
     public boolean isReady() {
-        return false;
+        return isReady;
     }
 
     @Override
@@ -259,6 +259,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
             public void generationFinished() {
                 generateTestsProgress.setValue(1.0f);
                 WorkflowUtils.setMessage(messageLabel, "Completed! Generated " + tests + " tests\"", false);
+                isReady = true;
                 UI.getCurrent().push();
             }
         };
