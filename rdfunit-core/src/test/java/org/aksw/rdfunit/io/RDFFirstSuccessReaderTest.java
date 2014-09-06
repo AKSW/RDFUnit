@@ -1,6 +1,9 @@
 package org.aksw.rdfunit.io;
 
 import org.aksw.rdfunit.exceptions.TripleReaderException;
+import org.aksw.rdfunit.io.reader.RDFFirstSuccessReader;
+import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.junit.Test;
 
 import java.util.ArrayList;

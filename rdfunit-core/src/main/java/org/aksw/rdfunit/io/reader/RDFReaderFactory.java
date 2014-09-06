@@ -1,4 +1,7 @@
-package org.aksw.rdfunit.io;
+package org.aksw.rdfunit.io.reader;
+
+import org.aksw.rdfunit.io.writer.RDFFileWriter;
+import org.aksw.rdfunit.io.writer.RDFWriter;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

@@ -4,7 +4,7 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.resources.Resources;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 import org.junit.After;

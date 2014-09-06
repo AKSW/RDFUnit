@@ -6,8 +6,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.RDFReader;
-import org.aksw.rdfunit.io.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 
 import java.util.Collection;
 

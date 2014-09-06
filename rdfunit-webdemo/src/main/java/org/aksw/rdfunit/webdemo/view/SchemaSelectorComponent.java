@@ -9,7 +9,7 @@ import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
-import org.aksw.rdfunit.io.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;

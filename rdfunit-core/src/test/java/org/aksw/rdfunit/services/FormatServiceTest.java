@@ -1,11 +1,12 @@
 package org.aksw.rdfunit.services;
 
+import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerialiazationFormatFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class FormatServiceTest {
 

@@ -5,7 +5,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.services.FormatService;
+import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;

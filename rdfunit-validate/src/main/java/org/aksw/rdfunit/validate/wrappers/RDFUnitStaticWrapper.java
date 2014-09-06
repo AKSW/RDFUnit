@@ -6,7 +6,7 @@ import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.*;
+import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;

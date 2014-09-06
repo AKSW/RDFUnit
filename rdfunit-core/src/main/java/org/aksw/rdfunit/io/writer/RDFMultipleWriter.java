@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.io;
+package org.aksw.rdfunit.io.writer;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.exceptions.TripleWriterException;

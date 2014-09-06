@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.io;
+package org.aksw.rdfunit.io.writer;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;

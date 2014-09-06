@@ -7,7 +7,7 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.PatternUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.*;
+import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;

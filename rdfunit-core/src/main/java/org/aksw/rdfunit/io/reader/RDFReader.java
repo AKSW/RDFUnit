@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.io;
+package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;

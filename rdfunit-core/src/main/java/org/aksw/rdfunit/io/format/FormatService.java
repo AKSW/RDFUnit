@@ -1,7 +1,4 @@
-package org.aksw.rdfunit.services;
-
-import org.aksw.rdfunit.io.format.SerialiazationFormatFactory;
-import org.aksw.rdfunit.io.format.SerializationFormat;
+package org.aksw.rdfunit.io.format;
 
 import java.util.Collection;
 

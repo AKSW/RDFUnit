@@ -7,7 +7,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
-import org.aksw.rdfunit.io.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReader;
 
 /**
  * @author Dimitris Kontokostas

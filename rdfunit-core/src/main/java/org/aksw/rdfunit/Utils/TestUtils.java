@@ -15,7 +15,7 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
-import org.aksw.rdfunit.io.RDFWriter;
+import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PatternService;

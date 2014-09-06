@@ -3,7 +3,7 @@ package org.aksw.rdfunit.Utils;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.io.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReader;
 import org.junit.Before;
 import org.junit.Test;
 

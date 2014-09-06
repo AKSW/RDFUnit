@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReader;
 
 /**
  * @author Dimitris Kontokostas

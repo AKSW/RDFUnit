@@ -1,8 +1,9 @@
-package org.aksw.rdfunit.io;
+package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.exceptions.TripleReaderException;
 import org.aksw.rdfunit.exceptions.TripleWriterException;
+import org.aksw.rdfunit.io.writer.RDFWriter;
 
 /**
  * @author Dimitris Kontokostas

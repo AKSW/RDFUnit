@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io;
 
+import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
