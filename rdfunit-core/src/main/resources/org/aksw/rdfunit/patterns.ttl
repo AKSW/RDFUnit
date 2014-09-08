@@ -866,6 +866,55 @@ rutp:OBJFUNC-FUNC a rut:Parameter ;
     rut:parameterConstraint rut:None .
 
 
+###################################################################################
+#### OBJFUNCD
+#### The object of a triple satisfies a function but the resource has specific type
+###################################################################################
+
+rutp:OBJFUNCD a rut:Pattern ;
+    dcterms:identifier "OBJFUNCD" ;
+    dcterms:description """The object of a triple satisfies a function but the resource has specific type"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?resource rdf:type|rdfs:subClassOf* %%T1%% ;
+                                              %%P1%% ?obj .
+                                    FILTER( %%NEG%%  %%FUNC%% (?obj))
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource rdf:type|rdfs:subClassOf* %%T1%% ;
+                                                       %%P1%% ?value . }""" ;
+    rut:parameter rutp:OBJFUNCD-T1 ;
+    rut:parameter rutp:OBJFUNCD-P1 ;
+    rut:parameter rutp:OBJFUNCD-NEG ;
+    rut:parameter rutp:OBJFUNCD-FUNC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?obj"""
+    ];
+    .
+
+rutp:OBJFUNCD-T1 a rut:Parameter ;
+    dcterms:identifier "T1" ;
+    rut:parameterConstraint rut:Class .
+
+rutp:OBJFUNCD-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:OBJFUNCD-NEG a rut:Parameter ;
+    dcterms:identifier "NEG" ;
+    rut:parameterConstraint rut:Operator ;
+    rut:constraintPattern """!|""" .
+
+rutp:OBJFUNCD-FUNC a rut:Parameter ;
+    dcterms:identifier "FUNC" ;
+    rut:parameterConstraint rut:None .
+
 ################################################################################
 #### CHECKLANG
 #### Check the language of an object for a specific value

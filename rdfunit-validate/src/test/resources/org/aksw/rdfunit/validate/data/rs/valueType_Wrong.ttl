@@ -8,7 +8,7 @@
 @prefix oslc: <http://open-services.net/ns/core#> .
 
 exrs:correct1
-	a exrs:ValueType ;
+	a exrs:RSValueTypeClass ;
     exrs:propVTypeRes  [ exrs:p exrs:p]; # 1 error (not blank node)
     exrs:propVTypeLocRes exrs:Anything; # 1 error (blank node)
 

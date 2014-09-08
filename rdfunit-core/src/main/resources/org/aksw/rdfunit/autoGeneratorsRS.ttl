@@ -122,22 +122,22 @@ rutg:RSGARD-MAX a rut:TestGenerator ;
 
 
 ############################
-# oslc:valueType  (TODO maybe we need to check the property in combination to the domain
+# oslc:valueType
 ############################
 
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:RSRANGEL a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
-                                 oslc:describes ?class ; # we work only on typed classes
+                                 oslc:describes ?T1 ; # we work only on typed classes
                                  oslc:property ?rsp .
                               ?rsp oslc:propertyDefinition ?P1 ;
                                    oslc:valueType  ?valueType .
                               FILTER (?valueType NOT IN (oslc:AnyResource, oslc:LocalResource, oslc:Resource) )
                               BIND (concat(str(?P1)," does contain a literal value") AS ?DESCRIPTION)} """ ;
-    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
@@ -147,22 +147,22 @@ rutg:RSRANGEL a rut:TestGenerator ;
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:RSRANGEC a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {   # isLiteral instead of isIRI because of blank nodes
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {   # isLiteral instead of isIRI because of blank nodes
                              ?s a oslc:ResourceShape ;
-                                oslc:describes ?class ; # we work only on typed classes
+                                oslc:describes ?T1 ; # we work only on typed classes
                                 oslc:property ?rsp .
                              ?rsp oslc:propertyDefinition ?P1 ;
                                   oslc:valueType ?valueType .
                              FILTER (?valueType IN (oslc:AnyResource, oslc:LocalResource, oslc:Resource) )
                              BIND (concat(str(?P1)," does contain a literal value") AS ?DESCRIPTION)} """ ;
-    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
 	.
 
-# Datatype range
+# Datatype range (TODO check domain as well / needs new pattern)
 rutg:RSRANGED a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
@@ -183,14 +183,14 @@ rutg:RSRANGED a rut:TestGenerator ;
 # Check for blank nodes (oslc:valueType oslc:LocalResource)
 rutg:RSRANGE-BLANK a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ('!' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('!' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
-	                             oslc:describes ?class ; # we work only on typed classes
+	                             oslc:describes ?T1 ; # we work only on typed classes
 	                             oslc:property ?rsp .
 	                          ?rsp oslc:propertyDefinition ?P1 ;
 	                               oslc:valueType  oslc:LocalResource .
                               BIND (concat(str(?P1)," does contain a blank node (local resource)") AS ?DESCRIPTION)} """ ;
-    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
@@ -200,14 +200,14 @@ rutg:RSRANGE-BLANK a rut:TestGenerator ;
 # Check for non-blank nodes (oslc:valueType oslc:Resource => must not be a blank node)
 rutg:RSRANGE-RES a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
-                                 oslc:describes ?class ; # we work only on typed classes
+                                 oslc:describes ?T1 ; # we work only on typed classes
                                  oslc:property ?rsp .
                               ?rsp oslc:propertyDefinition ?P1 ;
                                    oslc:valueType  oslc:Resource .
                               BIND (concat(str(?P1)," does contain a blank node (local resource)") AS ?DESCRIPTION)} """ ;
-    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;

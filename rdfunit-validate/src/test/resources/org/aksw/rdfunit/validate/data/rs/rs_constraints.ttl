@@ -65,7 +65,7 @@ exrs:RSOccurs-Zero-or-one
 
 exrs:RSValueType
 	a oslc:ResourceShape ;
-    oslc:describes exrs:ClassA ;
+    oslc:describes exrs:RSValueTypeClass ;
     oslc:property [         # valueType oslc:Resource
         a oslc:Property ;
         oslc:propertyDefinition exrs:propVTypeRes ;

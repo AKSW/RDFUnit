@@ -8,7 +8,7 @@
 @prefix oslc: <http://open-services.net/ns/core#> .
 
 exrs:correct1
-	a exrs:ValueType ;
+	a exrs:RSValueTypeClass ;
     exrs:propVTypeRes exrs:Anything;
     exrs:propVTypeLocRes [ exrs:p exrs:p] ;
     exrs:propVTypeXMLLiteral "sample text"^^rdf:XMLLiteral;
