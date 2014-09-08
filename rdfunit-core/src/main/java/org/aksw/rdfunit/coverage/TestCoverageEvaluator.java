@@ -7,8 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 /**
@@ -61,7 +62,9 @@ public class TestCoverageEvaluator {
         long classesTotal = 0;
 
         Map<String, Long> properties = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(propertiesFile))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(propertiesFile), "UTF8"))) {
 
             while ((line = br.readLine()) != null) {
                 // process the line.
@@ -75,7 +78,9 @@ public class TestCoverageEvaluator {
         }
 
         Map<String, Long> classes = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(classFile))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(classFile), "UTF8"))) {
 
             while ((line = br.readLine()) != null) {
                 // process the line.
