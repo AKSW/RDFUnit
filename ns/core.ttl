@@ -17,9 +17,9 @@
     <http://purl.org/vocab/vann/preferredNamespaceUri> "http://rdfunit.aksw.org/ns/core#" ;
     <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/RDFUnit/commits/master/ns> ;
 
-    owl:versionInfo "0.4" ;
+    owl:versionInfo "0.4.1" ;
 
-    rdfs:label "Test-Driven Data Validation Ontology"@en ;
+    rdfs:label "Test-Driven RDF Validation Ontology"@en ;
     dcterms:title "Test-Driven Data Validation Ontology"@en ;
     rdfs:isDefinedBy <http://rdfunit.aksw.org/ns/core.ttl> ;
     dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
@@ -38,14 +38,16 @@
 	dc:description <http://rdfunit.aksw.org/ns/rdfunit_ontology_diagram.png> .
 
     rdfs:comment
-        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven RDF Validation framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
     dc:description
-        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
+        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven RDF Validation framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
 
     rdfs:seeAlso <http://rdfunit.aksw.org> .
 
-
+## set correct licence range
+<http://creativecommons.org/licenses/by/3.0/> a dcterms:LicenseDocument .
+<http://www.apache.org/licenses/LICENSE-2.0>  a dcterms:LicenseDocument .
 #################################################################
 # Patterns
 #################################################################
