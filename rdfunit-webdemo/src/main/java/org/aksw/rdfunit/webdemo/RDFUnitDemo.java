@@ -17,11 +17,17 @@ import javax.servlet.annotation.WebServlet;
 * @author Dimitris Kontokostas
 */
 
+/**
+ * The main Vaadin UI entry Class
+ */
 @SuppressWarnings("WeakerAccess")
 @Theme("rdfunit")
 @Push
 public class RDFUnitDemo extends UI {
 
+    /**
+     * Setup the servlet
+     */
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = RDFUnitDemo.class, widgetset = "org.aksw.rdfunit.webdemo.AppWidgetSet")
     public static class Servlet extends VaadinServlet {

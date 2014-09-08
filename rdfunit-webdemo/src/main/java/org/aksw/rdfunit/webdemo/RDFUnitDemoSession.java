@@ -13,18 +13,27 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * @author Dimitris Kontokostas
- *         Keeps user session variables
+ Keeps user session variables
  *         TODO refactor
- * @since 11/15/13 9:52 AM
+ * @author Dimitris Kontokostas
+ *
+ * @since 11 /15/13 9:52 AM
  */
 public class RDFUnitDemoSession extends VaadinSession {
 
 
+    /**
+     * Instantiates a new RDF unit demo session.
+     *
+     * @param service the service
+     */
     public RDFUnitDemoSession(VaadinService service) {
         super(service);
     }
 
+    /**
+     * Init session variables.
+     */
     public static void init() {
 
         String baseDir = _getBaseDir();
@@ -46,34 +55,74 @@ public class RDFUnitDemoSession extends VaadinSession {
         return f.getAbsolutePath() + "/data/";
     }
 
+    /**
+     * Gets base directory.
+     *
+     * @return the base dir
+     */
     public static String getBaseDir() {
         return VaadinSession.getCurrent().getAttribute(String.class);
     }
 
+    /**
+     * Gets current testGeneratorExecutor.
+     *
+     * @return the test generator executor
+     */
     public static TestGeneratorExecutor getTestGeneratorExecutor() {
         return VaadinSession.getCurrent().getAttribute(TestGeneratorExecutor.class);
     }
 
+    /**
+     * Gets current testExecutor.
+     *
+     * @return current testExecutor
+     */
     public static TestExecutor getTestExecutor() {
         return VaadinSession.getCurrent().getAttribute(TestExecutor.class);
     }
 
+    /**
+     * Sets test executor.
+     *
+     * @param testExecutor the test executor
+     */
     public static void setTestExecutor(TestExecutor testExecutor) {
         VaadinSession.getCurrent().setAttribute(TestExecutor.class, testExecutor);
     }
 
+    /**
+     * Gets current testSuite.
+     *
+     * @return current testSuite
+     */
     public static TestSuite getTestSuite() {
         return VaadinSession.getCurrent().getAttribute(TestSuite.class);
     }
 
+    /**
+     * Sets current testSuite.
+     *
+     * @param testSuite current testSuite
+     */
     public static void setTestSuite(TestSuite testSuite) {
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
     }
 
+    /**
+     * Sets current RDFUnitConfiguration.
+     *
+     * @param configuration the configuration
+     */
     public static void setRDFUnitConfiguration(RDFUnitConfiguration configuration) {
         VaadinSession.getCurrent().setAttribute(RDFUnitConfiguration.class, configuration);
     }
 
+    /**
+     * Gets current RDFUnitConfiguration.
+     *
+     * @return current RDFUnitConfiguration
+     */
     public static RDFUnitConfiguration getRDFUnitConfiguration() {
         return VaadinSession.getCurrent().getAttribute(RDFUnitConfiguration.class);
     }
