@@ -175,7 +175,6 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         startTestingButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 startTestingButton.setEnabled(false);
-                UI.getCurrent().push();
 
                 if (inProgress) {
                     setMessage("Test Execution already in progress", true);
@@ -187,6 +186,9 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                     UI.getCurrent().push();
                     return;
                 }
+
+                setMessage("Running tests... Wait a few seconds...", false);
+                UI.getCurrent().push();
 
 
                 TestExecutionView.this.execute();
