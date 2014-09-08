@@ -35,7 +35,7 @@ public class TestSuite {
     }
 
     public Resource serialize(Model model) {
-        Resource resource = model.createResource(JenaUUID.generate().asString())
+        Resource resource = model.createResource(PrefixNSService.getURIFromAbbrev("ruts:" + JenaUUID.generate().asString()))
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:TestSuite")))
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("prov:Collection")));
 

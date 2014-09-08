@@ -40,7 +40,7 @@ public abstract class TestCaseResult {
      * @return a @Resource with all the triples for this @TestCaseResult
      */
     public Resource serialize(Model model, String testExecutionURI) {
-        return model.createResource(JenaUUID.generate().asString())
+        return model.createResource(testExecutionURI + "/" + JenaUUID.generate().asString())
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:TestCaseResult")))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasGeneratedBy")), model.createResource(testExecutionURI))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testCase")), model.createResource(getTestCase().getTestURI()))
