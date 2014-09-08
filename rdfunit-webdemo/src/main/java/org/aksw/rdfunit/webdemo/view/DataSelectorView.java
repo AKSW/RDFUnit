@@ -95,6 +95,7 @@ public class DataSelectorView extends CustomComponent implements WorkflowItem {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 DataSelectorView.this.loadBtn.setEnabled(false);
+                setMessage("Loading...", false);
                 UI.getCurrent().push();
                 DataSelectorView.this.execute();
                 DataSelectorView.this.loadBtn.setEnabled(true);

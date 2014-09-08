@@ -117,6 +117,7 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 SchemaSelectorView.this.loadBtn.setEnabled(false);
+                setMessage("Loading...", false);
                 UI.getCurrent().push();
                 SchemaSelectorView.this.execute();
                 SchemaSelectorView.this.loadBtn.setEnabled(true);
