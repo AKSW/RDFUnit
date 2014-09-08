@@ -10,6 +10,7 @@ import com.vaadin.ui.*;
 import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
@@ -49,7 +50,6 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
         this.setWidth("100%");
 
 
-
         resultsTable.setHeight("250px");
         resultsTable.setWidth("100%");
         resultsTable.addContainerProperty("Type", String.class, null);
@@ -64,7 +64,6 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
         messageLabel.setValue("Press Generate to start generating test cases");
         messageLabel.setContentMode(ContentMode.HTML);
-
 
 
         HorizontalLayout genHeader = new HorizontalLayout();
@@ -182,8 +181,16 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
     @Override
     public boolean execute() {
-        RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this);
-        RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this.progressMonitor);
+        if (RDFUnitDemoSession.getRDFUnitConfiguration() == null) {
+            setMessage("Something went wrong, please retry", true);
+            return false;
+        }
+
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
+        testGeneratorExecutor.addTestExecutorMonitor(TestGenerationView.this);
+        testGeneratorExecutor.addTestExecutorMonitor(TestGenerationView.this.progressMonitor);
+
+        RDFUnitDemoSession.setTestGeneratorExecutor(testGeneratorExecutor);
 
         final TestGenerationThread thread = new TestGenerationThread();
         thread.start();
@@ -216,8 +223,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
             public void buttonClick(Button.ClickEvent clickEvent) {
                 if (inProgress) {
                     RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
-                }
-                else {
+                } else {
                     Notification.show("Nothing to cancel, generation not in progress",
                             Notification.Type.WARNING_MESSAGE);
                 }
@@ -231,7 +237,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
 
             @Override
             public void generationStarted(final Source source, final long numberOfSources) {
-                total = numberOfSources*2 + 1;
+                total = numberOfSources * 2 + 1;
                 count = 0;
                 tests = 0;
                 generateTestsProgress.setValue(0.0f);
@@ -271,19 +277,12 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
         @Override
         public void run() {
 
-            //createConfigurationFromUser();
-            if (RDFUnitDemoSession.getRDFUnitConfiguration() != null) {
-                Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
-
-                RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this);
-                RDFUnitDemoSession.getTestGeneratorExecutor().addTestExecutorMonitor(TestGenerationView.this.progressMonitor);
-
-                RDFUnitDemoSession.setTestSuite(
-                        RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
-                                RDFUnitDemoSession.getBaseDir() + "tests/",
-                                dataset,
-                                CommonAccessUtils.getRDFUnit().getAutoGenerators()));
-            }
+            RDFUnitDemoSession.setTestSuite(
+                    RDFUnitDemoSession.getTestGeneratorExecutor().generateTestSuite(
+                            RDFUnitDemoSession.getBaseDir() + "tests/",
+                            RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource(),
+                            CommonAccessUtils.getRDFUnit().getAutoGenerators()));
         }
+
     }
 }

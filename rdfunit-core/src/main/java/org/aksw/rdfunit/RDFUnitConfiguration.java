@@ -120,6 +120,7 @@ public class RDFUnitConfiguration {
 
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
         DatasetStatistics datasetStatistics = new DatasetStatistics(qef, false);
+        this.schemas = new ArrayList<>();
         this.schemas = datasetStatistics.getIdentifiedSchemata();
     }
 

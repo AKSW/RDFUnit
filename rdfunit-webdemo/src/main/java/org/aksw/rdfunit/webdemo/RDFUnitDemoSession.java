@@ -13,10 +13,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- Keeps user session variables
- *         TODO refactor
- * @author Dimitris Kontokostas
+ * Keeps user session variables
+ * TODO refactor
  *
+ * @author Dimitris Kontokostas
  * @since 11 /15/13 9:52 AM
  */
 public class RDFUnitDemoSession extends VaadinSession {
@@ -41,7 +41,6 @@ public class RDFUnitDemoSession extends VaadinSession {
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor();
         VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
-
 
 
         TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
@@ -71,6 +70,13 @@ public class RDFUnitDemoSession extends VaadinSession {
      */
     public static TestGeneratorExecutor getTestGeneratorExecutor() {
         return VaadinSession.getCurrent().getAttribute(TestGeneratorExecutor.class);
+    }
+
+    /**
+     * Sets current testGeneratorExecutor.
+     */
+    public static void setTestGeneratorExecutor(TestGeneratorExecutor testGeneratorExecutor) {
+        VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
     }
 
     /**

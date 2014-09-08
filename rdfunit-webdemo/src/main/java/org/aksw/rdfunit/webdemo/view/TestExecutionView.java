@@ -187,7 +187,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                     return;
                 }
 
-                setMessage("Running tests... Wait a few seconds...", false);
+                setMessage("Initializing Test Suite...", false);
                 UI.getCurrent().push();
 
 
@@ -252,7 +252,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         public String getMIMEType() {
                             return "text/html";
                         }
-                    }) ;
+                    });
                     //Label htmlLabel = new Label(os.toString(), ContentMode.HTML);
                     frame.setWidth("100%");
                     frame.setHeight("100%");
@@ -378,7 +378,10 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
             @Override
             public void singleTestStarted(final TestCase test) {
-
+                if (count == 0) {
+                    setMessage("Running tests...", false);
+                    UI.getCurrent().push();
+                }
             }
 
             @Override
