@@ -257,6 +257,14 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                     frame.setWidth("100%");
                     frame.setHeight("100%");
                     inner.addComponent(frame);
+                    if (execTypeSelect.getValue().equals(TestCaseExecutionType.extendedTestCaseResult)) {
+                        Notification.show(
+                                "Annotated results don't support HTML",
+                                "This will fall back to simple 'Resources' HTML report\n" +
+                                        "Select an RDF serialization (e.g. turtle) to see the annotations",
+                                Notification.Type.ERROR_MESSAGE
+                        );
+                    }
                 } else {
                     TextArea textArea = new TextArea("", os.toString());
                     textArea.setWidth("100%");
