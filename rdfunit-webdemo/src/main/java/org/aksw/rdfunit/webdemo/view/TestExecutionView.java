@@ -261,7 +261,8 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         Notification.show(
                                 "Annotated results don't support HTML",
                                 "This will fall back to simple 'Resources' HTML report\n" +
-                                        "Select an RDF serialization (e.g. turtle) to see the annotations",
+                                        "Select an RDF serialization (e.g. turtle) to see the annotations.\n" +
+                                        "(click on this message to close it)",
                                 Notification.Type.ERROR_MESSAGE
                         );
                     }
