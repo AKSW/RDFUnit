@@ -217,7 +217,7 @@ public class DataSelectorView extends CustomComponent implements WorkflowItem {
         String format = inputFormatsSelect.getValue().toString();
 
 
-        String uri = "CustomText";
+        String uri = "http://rdfunit.aksw.org/CustomText";
         if (dataOption.equals(DataOption.URI)) {
             uri = text.trim();
         }
