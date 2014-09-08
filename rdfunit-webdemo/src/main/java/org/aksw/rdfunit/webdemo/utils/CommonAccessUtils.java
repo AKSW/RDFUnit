@@ -16,18 +16,14 @@ public class CommonAccessUtils {
     private static class PatternsAndGenerators {
         private static volatile RDFUnit rdfUnit;
 
-        static RDFUnit getInstance() {
+        static synchronized RDFUnit getInstance() {
 
             if (rdfUnit == null) {
-                synchronized (PatternsAndGenerators.class) {
-                    if (rdfUnit == null) {
-                        rdfUnit = new RDFUnit();
-                        try {
-                            rdfUnit.init();
-                        } catch (RDFReaderException e) {
-                            // show error
-                        }
-                    }
+                rdfUnit = new RDFUnit();
+                try {
+                    rdfUnit.init();
+                } catch (RDFReaderException e) {
+                    // show error
                 }
             }
             return rdfUnit;
@@ -41,16 +37,13 @@ public class CommonAccessUtils {
     private static class SchemaServices {
         private static volatile boolean initialized = false;
 
-        static void initialize() {
+        static synchronized void initialize() {
+
             if (!initialized) {
-                synchronized (PatternsAndGenerators.class) {
-                    if (!initialized) {
-                        initialized = true;
-                        //Fill the service schema
-                        RDFUnitUtils.fillSchemaServiceFromLOV();
-                        RDFUnitUtils.fillSchemaServiceFromFile(RDFUnitDemoSession.getBaseDir() + "schemaDecl.csv");
-                    }
-                }
+                initialized = true;
+                //Fill the service schema
+                RDFUnitUtils.fillSchemaServiceFromLOV();
+                RDFUnitUtils.fillSchemaServiceFromFile(RDFUnitDemoSession.getBaseDir() + "schemaDecl.csv");
             }
         }
 
