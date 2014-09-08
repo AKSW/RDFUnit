@@ -7,7 +7,7 @@
         <groupId>org.aksw.rdfunit</groupId>
         <version>0.6.9-SNAPSHOT</version>
     </parent>
-    <artifactId>rdfunit-web-demo</artifactId>
+    <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
     <name>RDFUnit - Web Demo</name>
 
