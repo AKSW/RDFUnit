@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author Dimitris Kontokostas
@@ -236,11 +237,27 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 inner.setSpacing(true);
                 inner.setWidth("100%");
                 inner.setHeight("100%");
+
+                // Get contents as String
+                String tmp_contents = " ";
+                try {
+                    tmp_contents = os.toString("UTF8");
+                } catch (UnsupportedEncodingException e) {
+                    log.error("Encoding error: " + e.getMessage());
+                }
+                final String contents = tmp_contents;
+
                 if (resultFormat.equals("html")) {
                     BrowserFrame frame = new BrowserFrame("", new ConnectorResource() {
+
                         @Override
                         public DownloadStream getStream() {
-                            return new DownloadStream(new ByteArrayInputStream(os.toByteArray()), "text/html", "");
+                            try {
+                                return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
+                            } catch (UnsupportedEncodingException e) {
+                                log.error("Encoding error: " + e.getMessage());
+                            }
+                            return null;
                         }
 
                         @Override
@@ -267,7 +284,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         );
                     }
                 } else {
-                    TextArea textArea = new TextArea("", os.toString());
+                    TextArea textArea = new TextArea("", contents);
                     textArea.setWidth("100%");
                     textArea.setHeight("100%");
                     inner.addComponent(textArea);
