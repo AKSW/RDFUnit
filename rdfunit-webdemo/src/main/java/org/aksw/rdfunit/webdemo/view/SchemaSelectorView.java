@@ -220,7 +220,7 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
         inputText.setWidth("100%");
 
         autoOWLMessage.setContentMode(ContentMode.HTML);
-        autoOWLMessage.setValue("<h3>Automatic Constraint Detection based on RDFS/OWL</h3>" +
+        autoOWLMessage.setValue("<h3>Automatic Constraint Detection based on RDFS/OWL (with CWA)</h3>" +
                 "We will parse the input source and identify all used properties and classes.<br/>" +
                 "Based on them we will try to dereference all mentions vocabularies & ontologies.<br/>" +
                 "Then we will use these vocabularies in our algorithms to generate automatic RDFUnit Test Cases.<br/>" +
