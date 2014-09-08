@@ -210,7 +210,7 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
                 isReady = false;
                 inProgress = true;
                 TestGenerationView.this.generateBtn.setEnabled(false);
-                TestGenerationView.this.setMessage("Generating tests...", false);
+                TestGenerationView.this.setMessage("Generating tests... (note that big ontologies may take a while)", false);
                 UI.getCurrent().push();
 
                 TestGenerationView.this.execute();

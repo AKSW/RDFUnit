@@ -74,9 +74,9 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
         messageLabel.setValue("Please select a report type and press 'Run Tests'");
 
         execTypeSelect.addItem(TestCaseExecutionType.statusTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.statusTestCaseResult, "Status");
+        execTypeSelect.setItemCaption(TestCaseExecutionType.statusTestCaseResult, "Status (all)");
         execTypeSelect.addItem(TestCaseExecutionType.aggregatedTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.aggregatedTestCaseResult, "Counts");
+        execTypeSelect.setItemCaption(TestCaseExecutionType.aggregatedTestCaseResult, "Counts (all)");
         execTypeSelect.addItem(TestCaseExecutionType.rlogTestCaseResult);
         execTypeSelect.setItemCaption(TestCaseExecutionType.rlogTestCaseResult, "Resources");
         execTypeSelect.addItem(TestCaseExecutionType.extendedTestCaseResult);
