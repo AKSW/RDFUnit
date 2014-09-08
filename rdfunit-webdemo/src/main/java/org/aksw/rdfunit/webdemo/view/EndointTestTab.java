@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.webdemo.view;
 
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -22,7 +21,7 @@ public class EndointTestTab extends VerticalLayout {
 
 
     //    private final NativeSelect limitSelect = new NativeSelect();
-    private final Button clearButton = new Button("Clear");
+    //private final Button clearButton = new Button("Clear");
 
 
 

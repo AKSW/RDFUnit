@@ -18,7 +18,7 @@ import java.net.URL;
  * @author Dimitris Kontokostas
  * @since 8/30/14 12:25 PM
  */
-public class DataSelectorView extends CustomComponent implements WorkflowItem {
+final class DataSelectorView extends CustomComponent implements WorkflowItem {
 
     private static final long fileLimit = 10 * 1024 * 1024;
 

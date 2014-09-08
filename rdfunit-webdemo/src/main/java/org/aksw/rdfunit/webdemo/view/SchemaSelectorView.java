@@ -25,7 +25,7 @@ import java.util.Collection;
  * @author Dimitris Kontokostas
  * @since 8/30/14 12:25 PM
  */
-public class SchemaSelectorView extends CustomComponent implements WorkflowItem {
+final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
 
     private final NativeSelect inputFormatsSelect = new NativeSelect("Select Input Format");
     private final OptionGroup inputTypeSelect = new OptionGroup("Constraints Input Type");

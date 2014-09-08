@@ -23,7 +23,7 @@ import java.io.File;
  *         Description
  * @since 11/20/13 5:20 PM
  */
-public class TestGenerationView extends VerticalLayout implements TestGeneratorExecutorMonitor, WorkflowItem {
+final class TestGenerationView extends VerticalLayout implements TestGeneratorExecutorMonitor, WorkflowItem {
 
     private final Button generateBtn = new Button("Generate tests");
     private final Button cancelBtn = new Button("Cancel");
@@ -91,10 +91,10 @@ public class TestGenerationView extends VerticalLayout implements TestGeneratorE
         initInteractions();
     }
 
-    public void clearTableRowsAndHide() {
-        resultsTable.removeAllItems();
-        resultsTable.setVisible(false);
-    }
+//    public void clearTableRowsAndHide() {
+//        resultsTable.removeAllItems();
+//        resultsTable.setVisible(false);
+//    }
 
     @Override
     public void generationStarted(final Source source, final long numberOfSources) {

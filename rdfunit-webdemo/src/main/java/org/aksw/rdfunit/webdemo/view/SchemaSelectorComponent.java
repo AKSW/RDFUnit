@@ -26,7 +26,7 @@ import java.util.Set;
  *         provides a schema
  * @since 11/18/13 11:26 AM
  */
-public class SchemaSelectorComponent extends VerticalLayout {
+final class SchemaSelectorComponent extends VerticalLayout {
     private static final Logger log = LoggerFactory.getLogger(SchemaSelectorComponent.class);
 
     final private TokenField tokenField;

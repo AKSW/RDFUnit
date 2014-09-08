@@ -33,7 +33,7 @@ import java.io.ByteArrayOutputStream;
  *         Description
  * @since 11/20/13 5:20 PM
  */
-class TestExecutionView extends VerticalLayout implements WorkflowItem {
+final class TestExecutionView extends VerticalLayout implements WorkflowItem {
     private static final Logger log = LoggerFactory.getLogger(TestExecutionView.class);
 
 
