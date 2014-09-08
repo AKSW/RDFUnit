@@ -1,11 +1,15 @@
 package org.aksw.rdfunit.webdemo.view;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.io.format.FormatService;
+import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
@@ -27,8 +31,8 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
     private final OptionGroup inputTypeSelect = new OptionGroup("Constraints Input Type");
     private final TextArea inputText = new TextArea();
     private final Label messageLabel = new Label();
-    private final Button clearButton = new Button("Clear");
-    private final Button continueButton = new Button("Load");
+    private final Button clearBtn = new Button("Clear");
+    private final Button loadBtn = new Button("Load");
 
     private final Label autoOWLMessage = new Label();
     private final Label specificSchemasMessage = new Label();
@@ -86,8 +90,8 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
         bottomLayout.setExpandRatio(messageLabel, 1.0f);
         messageLabel.setContentMode(ContentMode.HTML);
 
-        bottomLayout.addComponent(clearButton);
-        bottomLayout.addComponent(continueButton);
+        bottomLayout.addComponent(clearBtn);
+        bottomLayout.addComponent(loadBtn);
 
 
         root.addComponent(components);
@@ -99,21 +103,23 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
         setCompositionRoot(root);
 
 
-        clearButton.addClickListener(new Button.ClickListener() {
+        clearBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 isReady = false;
                 setDefaultValues();
+                SchemaSelectorView.this.loadBtn.setEnabled(true);
+                UI.getCurrent().push();
             }
         });
 
-        continueButton.addClickListener(new Button.ClickListener() {
+        loadBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                SchemaSelectorView.this.continueButton.setEnabled(false);
+                SchemaSelectorView.this.loadBtn.setEnabled(false);
                 UI.getCurrent().push();
                 SchemaSelectorView.this.execute();
-                SchemaSelectorView.this.continueButton.setEnabled(true);
+                SchemaSelectorView.this.loadBtn.setEnabled(true);
                 UI.getCurrent().push();
             }
         });
@@ -277,7 +283,12 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
         SchemaOption schemaOption = (SchemaOption) inputTypeSelect.getValue();
         Collection<SchemaSource> schemaSources = schemaSelectorWidget.getSelections();
         String text = inputText.getValue();
-        String format = inputFormatsSelect.getValue().toString();
+        SerializationFormat sf = FormatService.getInputFormat(inputFormatsSelect.getValue().toString());
+        if (sf == null) {
+            this.setMessage("Wrong format definition", true);
+            return false;
+        }
+        String format = sf.getName();
 
         RDFUnitConfiguration configuration = RDFUnitDemoSession.getRDFUnitConfiguration();
 
@@ -294,12 +305,24 @@ public class SchemaSelectorView extends CustomComponent implements WorkflowItem 
                 configuration.setSchemata(schemaSources);
                 break;
             case CUSTOM_TEXT:
-                String oficialFormat = FormatService.getInputFormat(format).getName();
-                Collection<SchemaSource> customTestSource = Arrays.asList(
-                        SourceFactory.createSchemaSourceFromText("http//rdfunit.aksw.org/custom#", text, oficialFormat)
-                );
+                if (text.trim().isEmpty()) {
+                    this.setMessage("Empty constraints ", true);
+                    return false;
+                }
+                try {
+                    Model model = RDFReaderFactory.createReaderFromText(text, format).read();
+                    if (model.isEmpty()) {
+                        this.setMessage("Empty constraints ", true);
+                        return false;
+                    }
+                } catch (RDFReaderException e) {
+                    this.setMessage("Invalid RDF: " + e.getMessage(), true);
+                    return false;
 
-                configuration.setSchemata(customTestSource);
+                }
+                String oficialFormat = FormatService.getInputFormat(format).getName();
+                SchemaSource source = SourceFactory.createSchemaSourceFromText("http//rdfunit.aksw.org/custom#", text, oficialFormat);
+                configuration.setSchemata(Arrays.asList(source));
                 break;
 
             default:
