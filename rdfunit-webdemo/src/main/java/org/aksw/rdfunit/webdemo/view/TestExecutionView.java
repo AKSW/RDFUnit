@@ -22,6 +22,8 @@ import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,6 +34,8 @@ import java.io.ByteArrayOutputStream;
  * @since 11/20/13 5:20 PM
  */
 class TestExecutionView extends VerticalLayout implements WorkflowItem {
+    private static final Logger log = LoggerFactory.getLogger(TestExecutionView.class);
+
 
     private final Button startTestingButton = new Button("Run tests");
     private final Button startTestingCancelButton = new Button("Cancel");
@@ -223,7 +227,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                     }
                 } catch (RDFWriterException e) {
                     Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
-                    // TODO log
+                    log.error("Error Occurred in Serialization", e);
                 }
 
                 final VerticalLayout inner = new VerticalLayout();
