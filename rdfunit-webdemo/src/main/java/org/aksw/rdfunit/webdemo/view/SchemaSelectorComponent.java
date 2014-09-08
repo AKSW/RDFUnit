@@ -55,10 +55,10 @@ public class SchemaSelectorComponent extends VerticalLayout {
                 SchemaSource s = null;
                 if (tokenId != null) {
                     if (tokenId instanceof SchemaSource) {
-                        s = (SchemaSource) tokenId;
+                        s = new SchemaSource((SchemaSource) tokenId);
                     }
                     if (tokenId instanceof String) {
-                        s = SchemaService.getSourceFromPrefix((String) tokenId);
+                        s = new SchemaSource(SchemaService.getSourceFromPrefix((String) tokenId));
                     }
                 }
 
@@ -75,7 +75,7 @@ public class SchemaSelectorComponent extends VerticalLayout {
                                 tokenId != null ? tokenId.toString() : "", this));
                     } else {
                         // it's in the 'address book', just add
-                        addToken(s);
+                        addToken(new SchemaSource(s));
                     }
                 }
             }
