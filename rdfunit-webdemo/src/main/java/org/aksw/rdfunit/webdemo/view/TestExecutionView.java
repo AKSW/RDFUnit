@@ -350,6 +350,8 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
 
         final TestExecutorThread thread = new TestExecutorThread();
+        inProgress = true;
+        isReady = false;
         thread.start();
         return true;
     }
@@ -422,6 +424,7 @@ class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 testingProgress.setValue(1.0f);
                 setMessage("Completed! " + getStatusStr() + ". See the results or rerun with a different 'Report Type'", false);
                 startTestingButton.setEnabled(true);
+                inProgress = false;
                 isReady = true;
                 UI.getCurrent().push();
             }
