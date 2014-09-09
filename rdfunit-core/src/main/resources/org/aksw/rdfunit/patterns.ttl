@@ -915,6 +915,56 @@ rutp:OBJFUNCD-FUNC a rut:Parameter ;
     dcterms:identifier "FUNC" ;
     rut:parameterConstraint rut:None .
 
+
+###################################################################################
+#### OBJVALIND
+#### The object of a triple had specific values and the resource has specific type
+###################################################################################
+
+rutp:OBJVALIND a rut:Pattern ;
+    dcterms:identifier "OBJVALIND" ;
+    dcterms:description """The object of a triple satisfies a function but the resource has specific type"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?resource rdf:type|rdfs:subClassOf* %%T1%% ;
+                                              %%P1%% ?obj .
+                                    FILTER( ?obj  %%NOT%% IN ( %%VALUES%% ))
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource rdf:type|rdfs:subClassOf* %%T1%% ;
+                                                       %%P1%% ?value . }""" ;
+    rut:parameter rutp:OBJVALIND-T1 ;
+    rut:parameter rutp:OBJVALIND-P1 ;
+    rut:parameter rutp:OBJVALIND-NOT ;
+    rut:parameter rutp:OBJVALIND-VALUES ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?obj"""
+    ];
+    .
+
+rutp:OBJVALIND-T1 a rut:Parameter ;
+    dcterms:identifier "T1" ;
+    rut:parameterConstraint rut:Class .
+
+rutp:OBJVALIND-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:OBJVALIND-NOT a rut:Parameter ;
+    dcterms:identifier "NOT" ;
+    rut:parameterConstraint rut:Operator ;
+    rut:constraintPattern """NOT|""" .
+
+rutp:OBJVALIND-VALUES a rut:Parameter ;
+    dcterms:identifier "VALUES" ;
+    rut:parameterConstraint rut:None .
+
 ################################################################################
 #### CHECKLANG
 #### Check the language of an object for a specific value

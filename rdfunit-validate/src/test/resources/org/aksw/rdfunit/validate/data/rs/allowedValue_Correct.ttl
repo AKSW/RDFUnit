@@ -1,0 +1,33 @@
+@prefix exrs: <http://example.com/rs#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix oslc: <http://open-services.net/ns/core#> .
+
+exrs:correct1 a exrs:AllowedValueSingleClass ;
+    exrs:propAllowedValueSingle exrs:value1;
+    .
+
+exrs:correct2 a exrs:AllowedValueMulClass ;
+    exrs:propAllowedValueMul exrs:value1;
+    exrs:propAllowedValueMul exrs:value2;
+    exrs:propAllowedValueMul exrs:value3;
+    .
+
+exrs:correct3 a exrs:AllowedValueMixClass ;
+    exrs:propAllowedValueMix exrs:value1 ;
+    exrs:propAllowedValueMix "value2"^^xsd:string ;
+    exrs:propAllowedValueMix "3"^^xsd:integer ;
+    .
+
+exrs:correct4 a exrs:AllowedValueMixClass2 ;
+    exrs:propAllowedValueMix2 exrs:value1 ;
+    exrs:propAllowedValueMix2 "value2"^^xsd:string ;
+    exrs:propAllowedValueMix2 "3"^^xsd:integer ;
+    exrs:propAllowedValueMix2 "4"^^xsd:long ;
+    exrs:propAllowedValueMix2 "xml-5"^^rdf:XMLLiteral ;
+    exrs:propAllowedValueMix2 "sample value" ;
+    .

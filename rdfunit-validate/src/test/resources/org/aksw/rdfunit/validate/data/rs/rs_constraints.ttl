@@ -119,3 +119,53 @@ exrs:RSValueType
     .
 
 
+exrs:RSAllowedValueSingle
+	a oslc:ResourceShape ;
+    oslc:describes exrs:AllowedValueSingleClass ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propAllowedValueSingle ;
+        oslc:allowedValue exrs:value1 ;
+    ] ;
+    .
+
+exrs:RSAllowedValueMul
+	a oslc:ResourceShape ;
+    oslc:describes exrs:AllowedValueMulClass ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propAllowedValueMul ;
+        oslc:allowedValue exrs:value1 ;
+        oslc:allowedValue exrs:value2 ;
+        oslc:allowedValue exrs:value3 ;
+    ] ;
+    .
+
+exrs:RSAllowedValueMix
+	a oslc:ResourceShape ;
+    oslc:describes exrs:AllowedValueMixClass ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propAllowedValueMix ;
+        oslc:allowedValue exrs:value1 ;
+        oslc:allowedValue "value2"^^xsd:string ;
+        oslc:allowedValue "3"^^xsd:integer ;
+    ] ;
+    .
+
+exrs:RSAllowedValueMix2
+	a oslc:ResourceShape ;
+    oslc:describes exrs:AllowedValueMixClass2 ;
+    oslc:property [         # valueType oslc:Resource
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:propAllowedValueMix2 ;
+        oslc:allowedValue exrs:value1 ;
+        oslc:allowedValue "value2"^^xsd:string ;
+        oslc:allowedValue "3"^^xsd:integer ;
+        oslc:allowedValues [
+			oslc:allowedValue "4"^^xsd:long ;
+	        oslc:allowedValue "xml-5"^^rdf:XMLLiteral ;
+        ];
+    ] ;
+    .
+

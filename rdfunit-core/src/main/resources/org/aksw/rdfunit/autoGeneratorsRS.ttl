@@ -213,6 +213,39 @@ rutg:RSRANGE-RES a rut:TestGenerator ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
 	.
-# TODO OSLC allowedValue / allowedValues
+
+
+
+# OSLC allowedValue / allowedValues
+
+# Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
+rutg:RSALLOWEDVAL a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
+	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {
+									select distinct ?T1 ?P1 ( ?term as ?VALUE) WHERE {
+	                                    ?s a oslc:ResourceShape ;
+	                                        oslc:describes ?T1 ; # we work only on typed classes
+	                                        oslc:property ?rsp .
+	                                    ?rsp oslc:propertyDefinition ?P1 ;
+	                                        (oslc:allowedValue)|(oslc:allowedValues/oslc:allowedValue) ?v .
+
+	                                    BIND ( IF( ! isLiteral(?v),
+	                                            CONCAT ('<',str(?v), '>') ,   # if not literal, construct IRI
+	                                            CONCAT ( '"', str(?v), '"',
+	                                             IF ( str(datatype(?v)) != '' , CONCAT('^^<',str(datatype(?v)), '>' ), '')))
+	                                             as ?term )
+	                                    } }
+	                            GROUP BY ?T1  ?P1 }
+	                         FILTER (bound (?VALUES) && str(?VALUES) != "")
+                             BIND (concat(str(?P1)," not is predefined values: ", str(?VALUES)) AS ?DESCRIPTION) }""" ;
+    rut:basedOnPattern rutp:OBJVALIND ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+
 # TODO OSLC oslc:maxSize (has to be xsd:string)
 # TODO OSLC oslc:valueShape
