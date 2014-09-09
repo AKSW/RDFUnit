@@ -19,6 +19,7 @@ import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
@@ -418,11 +419,16 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                 long errors = 0;
                 TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
-                if (result != null && result instanceof AggregatedTestCaseResult) {
-                    errors = ((AggregatedTestCaseResult) result).getErrorCount();
+                if (result != null) {
+                    if (result instanceof AggregatedTestCaseResult) {
+                        errors = ((AggregatedTestCaseResult) result).getErrorCount();
+                    }
+                    if (!( result instanceof StatusTestCaseResult)) {
+                        errors = results.size();
+                    }
                 }
                 count++;
-                totalErrors += (errors > 0 ? errors : 0);
+                totalErrors += (errors > 0 ? errors : 0);  // errors might be -1 in aggregated
                 if (errors == -1)
                     timeoutTests++;
                 else {
