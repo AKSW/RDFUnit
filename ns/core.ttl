@@ -35,7 +35,7 @@
                "Sebastian Hellmann"@en ,
                "Sören Auer"@en ;
 
-	dc:description <http://rdfunit.aksw.org/ns/rdfunit_ontology_diagram.png> .
+	dc:description <http://rdfunit.aksw.org/ns/rdfunit_ontology_diagram.png> ;
 
     rdfs:comment
         """The RDFUnit ontology describes concepts used in RDFUnit, a test driven RDF Validation framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint."""@en ;
