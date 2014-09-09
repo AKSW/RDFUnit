@@ -6,7 +6,7 @@
     <artifactId>rdfunit-parent</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.6.9-SNAPSHOT</version>
+    <version>0.7</version>
     <name>RDFUnit - Parent</name>
     <url>http://github.org/AKSW/RDFUnit</url>
 
@@ -35,7 +35,7 @@
         <url>https://github.com/AKSW/RDFUnit</url>
         <connection>scm:git:git://github.com/AKSW/RDFUnit.git</connection>
         <developerConnection>scm:git:git@github.com:AKSW/RDFUnit.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.7</tag>
     </scm>
 
     <developers>
