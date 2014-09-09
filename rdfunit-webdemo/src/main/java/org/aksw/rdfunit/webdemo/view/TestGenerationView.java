@@ -267,6 +267,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
                 generateTestsProgress.setValue(1.0f);
                 WorkflowUtils.setMessage(messageLabel, "Completed! Generated " + tests + " tests\"", false);
                 isReady = true;
+                inProgress = false;
                 UI.getCurrent().push();
             }
         };

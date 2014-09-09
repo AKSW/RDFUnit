@@ -213,8 +213,8 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                if (!isReady) {
-                    Notification.show("Test Execution Not completed", Notification.Type.WARNING_MESSAGE);
+                if (!isReady || inProgress) {
+                    Notification.show("Test Execution in progress or not completed", Notification.Type.WARNING_MESSAGE);
                     return;
                 }
 
