@@ -24,9 +24,11 @@ import java.util.Collection;
  */
 public class RDFUnit {
 
-
     private final Collection<String> baseDirectories;
-    private QueryExecutionFactory patternQueryFactory;
+
+    private volatile Collection<TestAutoGenerator> autoGenerators;
+    private volatile Collection<Pattern> patterns;
+    private volatile QueryExecutionFactory patternQueryFactory;
 
     public RDFUnit(Collection<String> baseDirectories) {
         this.baseDirectories = baseDirectories;
@@ -60,12 +62,18 @@ public class RDFUnit {
         }
     }
 
-    private Collection<Pattern> getPatterns() {
-        return PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
+    private synchronized Collection<Pattern> getPatterns() {
+        if (patterns == null) {
+            patterns = PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
+        }
+        return patterns;
     }
 
-    public Collection<TestAutoGenerator> getAutoGenerators() {
-        return TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
+    public synchronized Collection<TestAutoGenerator> getAutoGenerators() {
+        if (autoGenerators == null) {
+            autoGenerators = TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
+        }
+        return autoGenerators;
     }
 
     private static RDFReader createReaderFromBaseDirsAndResource(Collection<String> baseDirectories, String relativeName) {
