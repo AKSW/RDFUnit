@@ -115,7 +115,7 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     private void validateSPARQL(String sparql, String type) throws TestCaseInstantiationException {
         try {
-            QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + sparql);
+            QueryFactory.create(sparql);
         } catch (QueryParseException e) {
             String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
             throw new TestCaseInstantiationException(message, e);
