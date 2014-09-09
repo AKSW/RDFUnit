@@ -63,7 +63,10 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrors.put("dsp/valueClass_Wrong.ttl", 1);
         testsWithErrors.put("dsp/valueClass-miss_Wrong.ttl", 1);
         testsWithErrors.put("dsp/languageOccurrence_Correct.ttl", 0);
-        testsWithErrors.put("dsp/languageOccurrence_Wrong.ttl", 2);  // TODO 4
+        testsWithErrors.put("dsp/languageOccurrence_Wrong.ttl", 2);
+        testsWithErrors.put("dsp/language_Correct.ttl", 0);
+        testsWithErrors.put("dsp/language_Wrong.ttl", 3);
+        testsWithErrors.put("dsp/literal_Wrong.ttl", 1);
 
         // Resource Shapes
         testsWithErrors.put("rs/valueType_Correct.ttl", 0);

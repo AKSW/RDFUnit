@@ -187,7 +187,6 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
 # TODO DSP value max occurs
 # TODO dsp:subPropertyOf
 # TODO dsp:vocabularyEncodingScheme
-# TODO dsp:literalConstraint -> dsp:literal
 
 ##########################################
 # dsp:literalConstraint => must be Literal
@@ -210,6 +209,8 @@ rutg:DSPLITERAL a rut:TestGenerator ;
         rut:annotationValue rlog:ERROR] ;
     .
 
+# TODO dsp:literalConstraint -> dsp:literal
+
 ##########################################
 # dsp:literalConstraint -> dsp:languageOccurrence     => "mandatory" / "optional" / "disallowed"
 ##########################################
@@ -218,7 +219,7 @@ rutg:DSPLITERAL a rut:TestGenerator ;
 
 # no domain check mandatory
 rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    dcterms:description """dsp:languageOccurrence -> mandatory constraint generation"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -237,7 +238,7 @@ rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
 
 # no domain check disallowed
 rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    dcterms:description """dsp:languageOccurrence -> disallowed constraint generation"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -258,9 +259,10 @@ rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
 # dsp:literalConstraint -> dsp:language
 ##########################################
 # TODO check with domain as well? (needs new pattern)
+# TODO check multiple languages
 # no domain check disallowed
 rutg:DSPLANG a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    dcterms:description """ Check if the property has the correct language"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) (str(?lang) as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -280,3 +282,5 @@ rutg:DSPLANG a rut:TestGenerator ;
 
 
 # TODO dsp:literalConstraint -> dsp:syntaxEncodingSchemeOccurrence
+# TODO dsp:ValueURIOccurrence
+# TODO dsp:ValueStringConstraint
