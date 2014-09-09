@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import org.aksw.rdfunit.io.format.FormatService;
+import org.aksw.rdfunit.io.format.SerializationFormat;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,12 +18,12 @@ public class RDFStreamReader extends RDFReader {
     private final String format;
 
     public RDFStreamReader(String filename) {
-        this(getInputStreamFromFilename(filename), "TURTLE");
+        this(getInputStreamFromFilename(filename), getFormatFromExtension(filename));
     }
 
-    public RDFStreamReader(InputStream inputStream) {
-        this(inputStream, "TURTLE");
-    }
+    //public RDFStreamReader(InputStream inputStream) {
+    //    this(inputStream, "TURTLE");
+    //}
 
     public RDFStreamReader(String filename, String format) {
         this(getInputStreamFromFilename(filename), format);
@@ -52,5 +54,20 @@ public class RDFStreamReader extends RDFReader {
             // do not handle exception at construction time
             return null;
         }
+    }
+
+    public static String getFormatFromExtension(String filename) {
+        String format = "TURTLE";
+        try {
+            int index = filename.lastIndexOf(".");
+            String extension = filename.substring(index+1, filename.length() );
+            SerializationFormat f = FormatService.getInputFormat(extension);
+            if (f != null) {
+                format = f.getName();
+            }
+        } catch (Exception e) {
+            return "TURTLE";
+        }
+        return format;
     }
 }

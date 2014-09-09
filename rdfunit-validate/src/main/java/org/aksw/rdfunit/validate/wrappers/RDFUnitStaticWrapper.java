@@ -114,9 +114,8 @@ public class RDFUnitStaticWrapper {
                     Source ontologySource = getOntologySource();
 
                     // Set up the manual nif test cases (from resource)
-                    RDFReader manualTestCaseReader = new RDFStreamReader(
-                            RDFUnitStaticWrapper.class.getResourceAsStream(
-                                    CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", ontologySource)));
+                    RDFReader manualTestCaseReader = RDFReaderFactory.createResourceReader(
+                                    CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", ontologySource));
 
                     // Instantiate manual test cases
                     Collection<TestCase> manualTestCases;

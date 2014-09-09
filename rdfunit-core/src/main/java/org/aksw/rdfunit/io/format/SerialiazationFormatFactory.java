@@ -75,7 +75,7 @@ public final class SerialiazationFormatFactory {
     public static SerializationFormat createNTriples() {
         // ntriples -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("n-triple", "n-triples", "ntriple", "ntriples"));
+        currentSynonyms.addAll(Arrays.asList("n-triple", "n-triples", "ntriple", "ntriples", "nt"));
         return new SerializationFormat(
                 "N-TRIPLE", SerializationFormatType.inputAndOutput, "nt", "application/n-triples", currentSynonyms);
 
@@ -98,7 +98,7 @@ public final class SerialiazationFormatFactory {
     public static SerializationFormat createRDFJson() {
         // RDF/JSON -> input & output
         HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDF/JSON", "RDF-JSON", "RDFJSON"));
+        currentSynonyms.addAll(Arrays.asList("RDF/JSON", "RDF-JSON", "RDFJSON", "RJ"));
         return new SerializationFormat(
                 "RDF/JSON", SerializationFormatType.inputAndOutput, "rj", "application/rdf+json", currentSynonyms);
     }
@@ -132,7 +132,7 @@ public final class SerialiazationFormatFactory {
     public static SerializationFormat createRDFXMLIn() {
         // RDF/XML -> input
         HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV"));
+        currentSynonyms.addAll(Arrays.asList("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV", "RDF", "XML"));
         return new SerializationFormat(
                 "RDF/XML", SerializationFormatType.input, "rdf", "application/rdf+xml", currentSynonyms);
 

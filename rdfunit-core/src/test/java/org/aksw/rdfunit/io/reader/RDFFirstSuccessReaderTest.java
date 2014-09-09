@@ -1,14 +1,9 @@
-package org.aksw.rdfunit.io;
+package org.aksw.rdfunit.io.reader;
 
-import org.aksw.rdfunit.io.reader.RDFFirstSuccessReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFStreamReader;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.fail;
 
 public class RDFFirstSuccessReaderTest {
 
@@ -19,7 +14,7 @@ public class RDFFirstSuccessReaderTest {
         RDFFirstSuccessReader reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
-            fail("Should have raised a TripleReaderException");
+            Assert.fail("Should have raised a TripleReaderException");
         } catch (RDFReaderException e) {
         }
 
@@ -28,17 +23,17 @@ public class RDFFirstSuccessReaderTest {
         reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
-            fail("Should have raised a TripleReaderException");
+            Assert.fail("Should have raised a TripleReaderException");
         } catch (RDFReaderException e) {
         }
 
-        rdfReaders.add(new RDFStreamReader(RDFFirstSuccessReaderTest.class.getResourceAsStream("/org/aksw/rdfunit/data/empty.ttl")));
+        rdfReaders.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/empty.ttl"));
 
         reader = new RDFFirstSuccessReader(rdfReaders);
         try {
             reader.read();
         } catch (RDFReaderException e) {
-            fail("Should have NOT raised a TripleReaderException");
+            Assert.fail("Should have NOT raised a TripleReaderException");
         }
     }
 }

@@ -36,7 +36,7 @@ public final class RDFReaderFactory {
     }
 
     public static RDFReader createResourceReader(String resource) {
-        return new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource));
+        return new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource), RDFStreamReader.getFormatFromExtension(resource));
     }
 
     public static RDFReader createFileOrResourceReader(String filename, String resource) {
@@ -59,7 +59,7 @@ public final class RDFReaderFactory {
             readers.add(new RDFDereferenceReader(uri));
         } else {
             readers.add(new RDFStreamReader(uri));
-            readers.add(new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(uri)));
+            readers.add( RDFReaderFactory.createResourceReader(uri));
         }
 
         return new RDFFirstSuccessReader(readers);
