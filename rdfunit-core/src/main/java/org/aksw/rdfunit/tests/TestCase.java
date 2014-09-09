@@ -87,7 +87,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         validateSPARQL(new QueryGenerationCountFactory().getSparqlQueryAsString(this), "SPARQL Count");
         validateSPARQL(new QueryGenerationAskFactory().getSparqlQueryAsString(this), "ASK");
         if (!getSparqlPrevalence().trim().equals("")) { // Prevalence in not always defined
-            validateSPARQL(getSparqlPrevalence(), "prevalence");
+            validateSPARQL(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence(), "prevalence");
         }
 
         Collection<String> vars = new QueryGenerationSelectFactory().getSparqlQuery(this).getResultVars();
