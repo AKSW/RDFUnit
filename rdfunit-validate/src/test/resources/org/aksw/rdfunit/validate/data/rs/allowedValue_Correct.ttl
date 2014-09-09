@@ -19,7 +19,7 @@ exrs:correct2 a exrs:AllowedValueMulClass ;
 
 exrs:correct3 a exrs:AllowedValueMixClass ;
     exrs:propAllowedValueMix exrs:value1 ;
-    exrs:propAllowedValueMix "value2"^^xsd:string ;
+    exrs:propAllowedValueMix "value2"@en ;
     exrs:propAllowedValueMix "3"^^xsd:integer ;
     .
 

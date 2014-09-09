@@ -215,8 +215,9 @@ rutg:RSRANGE-RES a rut:TestGenerator ;
 	.
 
 
-
+############################
 # OSLC allowedValue / allowedValues
+############################
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:RSALLOWEDVAL a rut:TestGenerator ;
@@ -233,7 +234,8 @@ rutg:RSALLOWEDVAL a rut:TestGenerator ;
 	                                    BIND ( IF( ! isLiteral(?v),
 	                                            CONCAT ('<',str(?v), '>') ,   # if not literal, construct IRI
 	                                            CONCAT ( '"', str(?v), '"',
-	                                             IF ( str(datatype(?v)) != '' , CONCAT('^^<',str(datatype(?v)), '>' ), '')))
+	                                             IF ( str(lang(?v)) != '' , CONCAT('@',str(lang(?v))), '') ,
+	                                             IF ( str(lang(?v)) = '' && str(datatype(?v)) != '' , CONCAT('^^<',str(datatype(?v)), '>' ), '')))
 	                                             as ?term )
 	                                    } }
 	                            GROUP BY ?T1  ?P1 }

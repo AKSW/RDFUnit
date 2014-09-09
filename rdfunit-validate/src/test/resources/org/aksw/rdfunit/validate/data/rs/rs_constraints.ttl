@@ -148,7 +148,7 @@ exrs:RSAllowedValueMix
         a oslc:Property ;
         oslc:propertyDefinition exrs:propAllowedValueMix ;
         oslc:allowedValue exrs:value1 ;
-        oslc:allowedValue "value2"^^xsd:string ;
+        oslc:allowedValue "value2"@en ;
         oslc:allowedValue "3"^^xsd:integer ;
     ] ;
     .

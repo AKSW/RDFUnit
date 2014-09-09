@@ -76,7 +76,7 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrors.put("rs/range_Correct.ttl", 0);
         testsWithErrors.put("rs/range_Wrong.ttl", 2);
         testsWithErrors.put("rs/allowedValue_Correct.ttl", 0);
-        testsWithErrors.put("rs/allowedValue_Wrong.ttl", 7);
+        testsWithErrors.put("rs/allowedValue_Wrong.ttl", 8);
     }
 
     @After

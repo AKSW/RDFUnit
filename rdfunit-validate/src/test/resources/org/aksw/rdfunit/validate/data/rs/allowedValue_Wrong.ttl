@@ -31,7 +31,7 @@ exrs:wrong2b a exrs:AllowedValueMulClass ;
 
 exrs:wrong3a a exrs:AllowedValueMixClass ;
     exrs:propAllowedValueMix exrs:value1 ;
-    exrs:propAllowedValueMix "value2" ;
+    exrs:propAllowedValueMix "value2"@it ;      # 1 error (wrong lang)
     exrs:propAllowedValueMix "3"^^xsd:string ;  # 1 error (xsd:integer)
     .
 
