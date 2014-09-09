@@ -190,13 +190,34 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
 # TODO dsp:literalConstraint -> dsp:literal
 
 ##########################################
+# dsp:literalConstraint => must be Literal
+##########################################
+
+# no domain check mandatory  (TODO Check with domain as well?)
+rutg:DSPLITERAL a rut:TestGenerator ;
+    dcterms:description """Checks if a property is Literal"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC)  ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint ?x .
+
+                                FILTER NOT EXISTS {?s dsp:resourceClass ?x}
+	                            BIND (concat(str(?P1)," should be a literal") AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+##########################################
 # dsp:literalConstraint -> dsp:languageOccurrence     => "mandatory" / "optional" / "disallowed"
 ##########################################
 
 # TODO make pattern for lang in domain
 
 # no domain check mandatory
-rutg:DSPLANG-OC a rut:TestGenerator ;
+rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
@@ -215,7 +236,7 @@ rutg:DSPLANG-OC a rut:TestGenerator ;
     .
 
 # no domain check disallowed
-rutg:DSPLANG-OC a rut:TestGenerator ;
+rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
@@ -238,7 +259,7 @@ rutg:DSPLANG-OC a rut:TestGenerator ;
 ##########################################
 # TODO check with domain as well? (needs new pattern)
 # no domain check disallowed
-rutg:DSPLANG-OC a rut:TestGenerator ;
+rutg:DSPLANG a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) (str(?lang) as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
