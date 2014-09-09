@@ -49,6 +49,7 @@ public class RDFUnitDemo extends UI {
         RDFUnitDemoSession.init();
 
         initLayout();
+        setPollInterval(2000);
 
         mainTab.addTab(new IntroTab(), "Introduction");
         mainTab.addTab(new EndointTestTab(), "Test RDF Data");
