@@ -7,6 +7,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.io.reader.RDFDereferenceLimitReader;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
+import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.DataOption;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 
@@ -96,10 +97,10 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 DataSelectorView.this.loadBtn.setEnabled(false);
                 setMessage("Loading...", false);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
                 DataSelectorView.this.execute();
                 DataSelectorView.this.loadBtn.setEnabled(true);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
         });
 

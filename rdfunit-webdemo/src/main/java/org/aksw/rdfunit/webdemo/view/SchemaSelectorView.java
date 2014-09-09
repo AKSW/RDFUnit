@@ -13,6 +13,7 @@ import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
+import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.SchemaOption;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 
@@ -109,7 +110,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                 isReady = false;
                 setDefaultValues();
                 SchemaSelectorView.this.loadBtn.setEnabled(true);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
         });
 
@@ -118,10 +119,10 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 SchemaSelectorView.this.loadBtn.setEnabled(false);
                 setMessage("Loading...", false);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
                 SchemaSelectorView.this.execute();
                 SchemaSelectorView.this.loadBtn.setEnabled(true);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
         });
 

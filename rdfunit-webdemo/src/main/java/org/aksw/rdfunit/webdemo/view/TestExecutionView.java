@@ -21,6 +21,7 @@ import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
+import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -179,17 +180,17 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                 if (inProgress) {
                     setMessage("Test Execution already in progress", true);
-                    UI.getCurrent().push();
+                    CommonAccessUtils.pushToClient();
                     return;
                 }
                 if (!WorkflowUtils.checkIfPreviousItemIsReady(TestExecutionView.this)) {
                     setMessage("Please Complete previous step correctly", true);
-                    UI.getCurrent().push();
+                    CommonAccessUtils.pushToClient();
                     return;
                 }
 
                 setMessage("Initializing Test Suite...", false);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
 
 
                 TestExecutionView.this.execute();
@@ -204,7 +205,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                     return;
                 }
                 TestExecutionView.this.setMessage("Sending cancel signal, waiting for currect test to execute", false);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
                 RDFUnitDemoSession.getTestExecutor().cancel();
             }
         });
@@ -401,14 +402,14 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 testingProgress.setEnabled(true);
                 testingProgress.setValue(0.0f);
                 testingProgressLabel.setValue("0/" + total);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
 
             @Override
             public void singleTestStarted(final TestCase test) {
                 if (count == 0) {
                     setMessage("Running tests...", false);
-                    UI.getCurrent().push();
+                    CommonAccessUtils.pushToClient();
                 }
             }
 
@@ -441,7 +442,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 //                            Notification.Type.WARNING_MESSAGE);
 //                }
 
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
 
             @Override
@@ -452,7 +453,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 startTestingButton.setEnabled(true);
                 inProgress = false;
                 isReady = true;
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
 
             private String getStatusStr() {

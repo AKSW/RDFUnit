@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.webdemo.utils;
 
 import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.rdfunit.webdemo.view.WorkflowItem;
 
@@ -29,6 +28,6 @@ public final class WorkflowUtils {
         }
 
         label.setValue(message);
-        UI.getCurrent().push();
+        CommonAccessUtils.pushToClient();
     }
 }

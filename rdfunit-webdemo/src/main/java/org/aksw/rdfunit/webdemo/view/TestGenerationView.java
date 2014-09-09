@@ -101,7 +101,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
         resultsTable.setVisible(true);
         resultsTable.setPageLength((int) Math.min(7, numberOfSources));
         resultsTable.removeAllItems();
-        UI.getCurrent().push();
+        CommonAccessUtils.pushToClient();
     }
 
     @Override
@@ -112,7 +112,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
         resultsTable.addItem(new Object[]{
                 source.getClass().getSimpleName(), uriLink, new Label("-"), new Label("-")}, source);
         resultsTable.setCurrentPageFirstItemIndex(resultsTable.getCurrentPageFirstItemIndex() + 1);
-        UI.getCurrent().push();
+        CommonAccessUtils.pushToClient();
     }
 
     @Override
@@ -131,7 +131,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
             fileName = CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source);
             statusProperty.setValue(new Link("" + testsCreated, new ClassResource(fileName)));
         }
-        UI.getCurrent().push();
+        CommonAccessUtils.pushToClient();
     }
 
     @Override
@@ -140,7 +140,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
         isReady = true;
         inProgress = false;
         generateBtn.setEnabled(true);
-        UI.getCurrent().push();
+        CommonAccessUtils.pushToClient();
     }
 
     @Override
@@ -211,7 +211,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
                 inProgress = true;
                 TestGenerationView.this.generateBtn.setEnabled(false);
                 TestGenerationView.this.setMessage("Generating tests... (note that big ontologies may take a while)", false);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
 
                 TestGenerationView.this.execute();
 
@@ -244,7 +244,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
                 tests = 0;
                 generateTestsProgress.setValue(0.0f);
                 progressLabel.setValue("0/" + numberOfSources);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
 
             }
 
@@ -258,7 +258,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
                 tests += testsCreated;
                 generateTestsProgress.setValue((float) count / total);
                 progressLabel.setValue(count + "/" + total);
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
 
             }
 
@@ -268,7 +268,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
                 WorkflowUtils.setMessage(messageLabel, "Completed! Generated " + tests + " tests\"", false);
                 isReady = true;
                 inProgress = false;
-                UI.getCurrent().push();
+                CommonAccessUtils.pushToClient();
             }
         };
 
