@@ -13,6 +13,7 @@ import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.tokenfield.TokenField;
@@ -58,7 +59,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
                         s = new SchemaSource((SchemaSource) tokenId);
                     }
                     if (tokenId instanceof String) {
-                        s = new SchemaSource(SchemaService.getSourceFromPrefix((String) tokenId));
+                        s = new SchemaSource(SchemaService.getSourceFromPrefix(RDFUnitDemoSession.getBaseDir(), (String) tokenId));
                     }
                 }
 
