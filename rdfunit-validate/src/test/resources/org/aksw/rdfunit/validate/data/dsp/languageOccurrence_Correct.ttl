@@ -15,4 +15,4 @@ exdsp:correct2 exdsp:languageOccurrenceMandatoryPropSA "value"@en .
 exdsp:correct3 a exdsp:languageOccurrenceDisallowedClass ;
  	exdsp:languageOccurrenceDisallowedProp "value" .
 
-exdsp:correct4 exdsp:languageOccurrenceDisallowedPropSA "value"@en .
+exdsp:correct4 exdsp:languageOccurrenceDisallowedPropSA "value" .

@@ -6,13 +6,13 @@
 @prefix owl:        <http://www.w3.org/2002/07/owl#> .
 
 # Sample correct data for testing
-
-exdsp:correct1 a exdsp:languageOccurrenceMandatoryClass ;
-	exdsp:languageOccurrenceMandatoryProp "value" .     # 1 error
+# TODO check lang with domain
+#exdsp:correct1 a exdsp:languageOccurrenceMandatoryClass ;
+#	exdsp:languageOccurrenceMandatoryProp "value" .     # 1 error
 
 exdsp:correct2 exdsp:languageOccurrenceMandatoryPropSA "value" .  # 1 error
 
-exdsp:correct3 a exdsp:languageOccurrenceDisallowedClass ;
-	exdsp:languageOccurrenceDisallowedProp "value"@it .   # 1 error
+#exdsp:correct3 a exdsp:languageOccurrenceDisallowedClass ;
+#	exdsp:languageOccurrenceDisallowedProp "value"@it .   # 1 error
 
-exdsp:correct4 exdsp:languageOccurrenceDisallowedPropSA "value" . # 1 error
+exdsp:correct4 exdsp:languageOccurrenceDisallowedPropSA "value"@it . # 1 error
