@@ -113,7 +113,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
     }
 
     private void setDefaultValues() {
-        messageLabel.setValue("SPARQL Endpoints are excluded from the demo to prevent abuse...");
+        messageLabel.setValue("SPARQL Endpoints are excluded from the demo to prevent abuse");
         messageLabel.setStyleName(ValoTheme.LABEL_LIGHT);
         inputFormatsSelect.setValue("turtle");
         inputTypeSelect.setValue(DataOption.TEXT);

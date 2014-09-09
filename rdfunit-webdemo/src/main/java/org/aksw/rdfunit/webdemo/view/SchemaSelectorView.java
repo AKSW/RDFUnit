@@ -229,7 +229,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         autoOWLMessage.setContentMode(ContentMode.HTML);
         autoOWLMessage.setValue("<h3>Automatic Constraint Detection based on RDFS/OWL (with CWA)</h3>" +
                 "We will parse the input source and identify all used properties and classes.<br/>" +
-                "Based on them we will try to dereference all mentions vocabularies & ontologies.<br/>" +
+                "Based on them we will try to dereference all the mentioned vocabularies & ontologies.<br/>" +
                 "Then we will use these vocabularies in our algorithms to generate automatic RDFUnit Test Cases.<br/>" +
                 "<b>Note that atm (for safety reasons) we automatically dereference only schemas that are available in LOV</b>");
 
