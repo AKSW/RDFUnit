@@ -28,6 +28,4 @@ exrs:correct4 a exrs:AllowedValueMixClass2 ;
     exrs:propAllowedValueMix2 "value2"^^xsd:string ;
     exrs:propAllowedValueMix2 "3"^^xsd:integer ;
     exrs:propAllowedValueMix2 "4"^^xsd:long ;
-    exrs:propAllowedValueMix2 "xml-5"^^rdf:XMLLiteral ;
-    exrs:propAllowedValueMix2 "sample value" ;
     .

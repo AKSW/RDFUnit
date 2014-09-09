@@ -31,8 +31,11 @@ exrs:wrong2b a exrs:AllowedValueMulClass ;
 
 exrs:wrong3a a exrs:AllowedValueMixClass ;
     exrs:propAllowedValueMix exrs:value1 ;
-    exrs:propAllowedValueMix "value2"@it ;      # 1 error (wrong lang)
     exrs:propAllowedValueMix "3"^^xsd:string ;  # 1 error (xsd:integer)
+    .
+
+exrs:wrong3b a exrs:AllowedValueMixClass ;
+    exrs:propAllowedValueMix "value2"@it ;      # 1 error (wrong lang)
     .
 
 exrs:wrong4a a exrs:AllowedValueMixClass2 ;
@@ -40,12 +43,9 @@ exrs:wrong4a a exrs:AllowedValueMixClass2 ;
     exrs:propAllowedValueMix2 "value2"^^xsd:string ;
     exrs:propAllowedValueMix2 "3"^^xsd:integer ;
     exrs:propAllowedValueMix2 "4"^^xsd:long ;
-    exrs:propAllowedValueMix2 "xml-5"^^rdf:XMLLiteral ;
-    exrs:propAllowedValueMix2 "sample value" ;
     exrs:propAllowedValueMix2 exrs:value4;     # 1 error
     .
 
-# TODO check this case
 exrs:wrong4b a exrs:AllowedValueMixClass2 ;
-    #exrs:propAllowedValueMix2 "asdsadasd";     # 1 error
+    exrs:propAllowedValueMix2 "asdsadasd";     # 1 error
     .

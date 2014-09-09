@@ -209,7 +209,38 @@ rutg:DSPLITERAL a rut:TestGenerator ;
         rut:annotationValue rlog:ERROR] ;
     .
 
-# TODO dsp:literalConstraint -> dsp:literal
+##########################################
+# dsp:literalConstraint -> dsp:literal
+##########################################
+
+# Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
+rutg:DSPLITERAL-VAL a rut:TestGenerator ;
+    dcterms:description """Check if a literal is in the defined values"""@en ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
+	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {
+									select distinct ?T1 ?P1 ( ?term as ?VALUE) WHERE {
+	                                    ?s a dsp:DescriptionTemplate .
+	                                    ?s dsp:resourceClass ?T1 .
+                                        ?s dsp:statementTemplate/dsp:property ?P1 .
+                                        ?s dsp:statementTemplate/dsp:literalConstraint/dsp:literal ?v .
+
+	                                    BIND ( IF( ! isLiteral(?v),
+	                                            CONCAT ('<',str(?v), '>') ,   # if not literal, construct IRI
+	                                            CONCAT ( '"', str(?v), '"',
+	                                             IF ( str(lang(?v)) != '' , CONCAT('@',str(lang(?v))), '') ,
+                                                 IF ( str(lang(?v)) = '' && str(datatype(?v)) != '' , CONCAT('^^<',str(datatype(?v)), '>' ), '')))
+	                                             as ?term )
+	                                    } }
+	                            GROUP BY ?T1  ?P1 }
+	                         FILTER (bound (?VALUES) && str(?VALUES) != "")
+                             BIND (concat(str(?P1)," not is predefined values: ", str(?VALUES)) AS ?DESCRIPTION) }""" ;
+    rut:basedOnPattern rutp:OBJVALIND ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
 
 ##########################################
 # dsp:literalConstraint -> dsp:languageOccurrence     => "mandatory" / "optional" / "disallowed"

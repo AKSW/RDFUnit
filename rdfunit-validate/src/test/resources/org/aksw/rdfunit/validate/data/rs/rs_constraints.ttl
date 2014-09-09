@@ -164,7 +164,6 @@ exrs:RSAllowedValueMix2
         oslc:allowedValue "3"^^xsd:integer ;
         oslc:allowedValues [
 			oslc:allowedValue "4"^^xsd:long ;
-	        oslc:allowedValue "xml-5"^^rdf:XMLLiteral ;
         ];
     ] ;
     .
