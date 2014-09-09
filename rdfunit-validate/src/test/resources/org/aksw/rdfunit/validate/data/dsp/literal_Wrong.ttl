@@ -7,6 +7,19 @@
 
 # Sample correct data for testing
 
+exdsp:wrong1 a exdsp:LiteralValuesClass ;
+ 	exdsp:literalValuesProp "value1-en"@de; # 1 error
+ 	.
 
-exdsp:wrong2 exdsp:languagePropSA exdsp:value2 . # 1 error, should be literal
+exdsp:wrong2 a exdsp:LiteralValuesClass ;
+ 	exdsp:literalValuesProp "value1-de"@en;  # 1 error
+ 	.
+
+exdsp:wrong3 a exdsp:LiteralValuesClass ;
+    exdsp:literalValuesProp "value NOT" ;  # 1 error
+    .
+
+exdsp:wrong4 a exdsp:LiteralValuesClass ;
+ 	exdsp:literalValuesProp "111"^^xsd:integer;  # 1 error
+ 	.
 

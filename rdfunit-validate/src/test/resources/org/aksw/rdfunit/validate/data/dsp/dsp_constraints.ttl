@@ -128,7 +128,28 @@ exdsp:languageOccurrenceDisallowedTemplateSA # Standalone
 	]
 	.
 
-#############3
+####################
+# dsp:literal
+
+exdsp:languageOccurrenceDisallowedTemplate
+	dsp:resourceClass exdsp:LiteralValuesClass ;
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass exdsp:languageOccurrenceDisallowedClass ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:literalValuesProp ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:literal "value1-en"@en,
+                        "value1-de"@de ,
+                        "value" ,
+                        "1"^^xsd:integer;
+		]
+	]
+	.
+
+
+##############
 # dsp:language
 
 exdsp:languageTemplate

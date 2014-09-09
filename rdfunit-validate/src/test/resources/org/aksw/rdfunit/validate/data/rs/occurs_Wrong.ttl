@@ -17,15 +17,11 @@ exrs:wrongA2
 	exrs:propOccurs-Exactly-one exrs:Anything2 ;   # 1 error occurs twice
 	.
 
-
 exrs:wrongB1
 	a exrs:Occurs-One-or-many-Class ;  # 1 error <1
 	.
 
-
-
-
-# exrs:wrongC1 a exrs:OccursZero-or-many-Class ; # No need to check this
+# exrs:wrongC1 a exrs:OccursZero-or-many-Class . # No need to check this
 
 exrs:wrongD1
 	a exrs:Occurs-Zero-or-one-Class ;
