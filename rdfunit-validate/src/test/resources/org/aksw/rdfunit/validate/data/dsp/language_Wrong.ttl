@@ -1,0 +1,18 @@
+@prefix exdsp: <http://example.com/dsp#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample correct data for testing
+
+# TODO support lang per domain
+#exdsp:correct1 a exdsp:languageClass ;
+# 	exdsp:languageProp "value"@en .
+
+exdsp:wrong2 exdsp:languagePropSA "value"@it . # 1 error
+
+exdsp:wrong3 exdsp:languagePropSA "value"@el . # 1 error
+
+exdsp:wrong4 exdsp:languagePropSA "value" .    # 1 error

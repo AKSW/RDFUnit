@@ -127,3 +127,33 @@ exdsp:languageOccurrenceDisallowedTemplateSA # Standalone
 		]
 	]
 	.
+
+#############3
+# dsp:language
+
+exdsp:languageTemplate
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass exdsp:languageClass ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:languageProp ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:language "en"^^xsd:language ;
+		]
+	]
+	.
+
+exdsp:languageTemplateSA # Standalone
+	a dsp:DescriptionTemplate ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:languagePropSA ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:language "en"^^xsd:language ;
+		]
+	]
+	.
+
+# TODO multiple languages

@@ -233,6 +233,29 @@ rutg:DSPLANG-OC a rut:TestGenerator ;
         rut:annotationValue rlog:ERROR] ;
     .
 
+##########################################
+# dsp:literalConstraint -> dsp:language
+##########################################
 
-# TODO dsp:literalConstraint -> dsp:language
+# no domain check disallowed
+rutg:DSPLANG-OC a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) (str(?lang) as ?V1) ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint/dsp:language ?lang .
+
+                                #FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:literalConstraint/dsp:language ?lang2 .
+                                #                    FILTER (?lang != ?lang2)}
+
+	                            BIND (concat(str(?P1)," language is different from: ", str(?lang)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
+
 # TODO dsp:literalConstraint -> dsp:syntaxEncodingSchemeOccurrence
