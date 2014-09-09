@@ -64,13 +64,66 @@ exdsp:DSPPropCard_x_0
 # dsp:ValueClass (range)
 
 exdsp:DSPValueClass
-		a dsp:DescriptionTemplate ;
-		dsp:statementTemplate [
-			a dsp:NonLiteralStatementTemplate ;
-			dsp:property exdsp:PropValueClass ;
-			dsp:nonLiteralConstraint [
-				a dsp:NonLiteralConstraint ;
-				dsp:valueClass exdsp:ValueClassClass ;
-			]
+	a dsp:DescriptionTemplate ;
+	dsp:statementTemplate [
+		a dsp:NonLiteralStatementTemplate ;
+		dsp:property exdsp:PropValueClass ;
+		dsp:nonLiteralConstraint [
+			a dsp:NonLiteralConstraint ;
+			dsp:valueClass exdsp:ValueClassClass ;
 		]
+	]
+	.
+
+##############
+# dsp:languageOccurrence  ("mandatory" / "optional" / "disallowed")
+
+exdsp:languageOccurrenceMandatoryTemplate
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass exdsp:languageOccurrenceMandatoryClass ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:languageOccurrenceMandatoryProp ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:languageOccurrence "mandatory"^^dsp:occurrence ;
+		]
+	]
+	.
+
+exdsp:languageOccurrenceMandatoryTemplateSA # standalone (without class)
+	a dsp:DescriptionTemplate ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:languageOccurrenceMandatoryPropSA ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:languageOccurrence "mandatory"^^dsp:occurrence ;
+		]
+	]
+	.
+
+exdsp:languageOccurrenceDisallowedTemplate
+	a dsp:DescriptionTemplate ;
+	dsp:resourceClass exdsp:languageOccurrenceDisallowedClass ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:languageOccurrenceDisallowedProp ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:languageOccurrence "disallowed"^^dsp:occurrence ;
+		]
+	]
+	.
+
+exdsp:languageOccurrenceDisallowedTemplateSA # Standalone
+	a dsp:DescriptionTemplate ;
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:property exdsp:languageOccurrenceDisallowedPropSA ;
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			dsp:languageOccurrence "disallowed"^^dsp:occurrence ;
+		]
+	]
 	.

@@ -188,6 +188,51 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
 # TODO dsp:subPropertyOf
 # TODO dsp:vocabularyEncodingScheme
 # TODO dsp:literalConstraint -> dsp:literal
-# TODO dsp:literalConstraint -> dsp:languageOccurrence
+
+##########################################
+# dsp:literalConstraint -> dsp:languageOccurrence     => "mandatory" / "optional" / "disallowed"
+##########################################
+
+# TODO make pattern for lang in domain
+
+# no domain check mandatory
+rutg:DSPLANG-OC a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint/dsp:languageOccurrence ?lang .
+
+                                FILTER NOT EXISTS {?s dsp:resourceClass ?x}
+
+	                            FILTER ( str(?lang) = "mandatory" )
+	                            BIND (concat(str(?P1)," does not have language defined") AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# no domain check disallowed
+rutg:DSPLANG-OC a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint/dsp:languageOccurrence ?lang .
+
+                                FILTER NOT EXISTS {?s dsp:resourceClass ?x}
+
+	                            FILTER ( str(?lang) = "disallowed" )
+	                            BIND (concat(str(?P1)," language is disallowed") AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
 # TODO dsp:literalConstraint -> dsp:language
 # TODO dsp:literalConstraint -> dsp:syntaxEncodingSchemeOccurrence
