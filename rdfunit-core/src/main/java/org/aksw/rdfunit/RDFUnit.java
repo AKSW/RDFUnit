@@ -15,6 +15,7 @@ import org.aksw.rdfunit.tests.TestAutoGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Main class used to load & instantiate patterns and provide access to Test Generators
@@ -64,14 +65,18 @@ public class RDFUnit {
 
     private synchronized Collection<Pattern> getPatterns() {
         if (patterns == null) {
-            patterns = PatternUtils.instantiatePatternsFromModel(patternQueryFactory);
+            patterns =
+                    Collections.unmodifiableCollection(
+                            PatternUtils.instantiatePatternsFromModel(patternQueryFactory));
         }
         return patterns;
     }
 
     public synchronized Collection<TestAutoGenerator> getAutoGenerators() {
         if (autoGenerators == null) {
-            autoGenerators = TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory);
+            autoGenerators =
+                    Collections.unmodifiableCollection(
+                            TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory));
         }
         return autoGenerators;
     }
