@@ -107,22 +107,35 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         clearBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                isReady = false;
-                setDefaultValues();
-                SchemaSelectorView.this.loadBtn.setEnabled(true);
-                CommonAccessUtils.pushToClient();
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        isReady = false;
+                        setDefaultValues();
+                        SchemaSelectorView.this.loadBtn.setEnabled(true);
+                        CommonAccessUtils.pushToClient();
+                    }
+                });
+
             }
         });
 
         loadBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                SchemaSelectorView.this.loadBtn.setEnabled(false);
-                setMessage("Loading...", false);
-                CommonAccessUtils.pushToClient();
-                SchemaSelectorView.this.execute();
-                SchemaSelectorView.this.loadBtn.setEnabled(true);
-                CommonAccessUtils.pushToClient();
+
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        SchemaSelectorView.this.loadBtn.setEnabled(false);
+                        setMessage("Loading...", false);
+                        CommonAccessUtils.pushToClient();
+                        SchemaSelectorView.this.execute();
+                        SchemaSelectorView.this.loadBtn.setEnabled(true);
+                        CommonAccessUtils.pushToClient();
+                    }
+                });
+
             }
         });
 

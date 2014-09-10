@@ -95,12 +95,18 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
         loadBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                DataSelectorView.this.loadBtn.setEnabled(false);
-                setMessage("Loading...", false);
-                CommonAccessUtils.pushToClient();
-                DataSelectorView.this.execute();
-                DataSelectorView.this.loadBtn.setEnabled(true);
-                CommonAccessUtils.pushToClient();
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        DataSelectorView.this.loadBtn.setEnabled(false);
+                        setMessage("Loading...", false);
+                        CommonAccessUtils.pushToClient();
+                        DataSelectorView.this.execute();
+                        DataSelectorView.this.loadBtn.setEnabled(true);
+                        CommonAccessUtils.pushToClient();
+                    }
+                });
+
             }
         });
 
