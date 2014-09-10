@@ -158,7 +158,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
         resultsHeader.setComponentAlignment(testingProgress, Alignment.MIDDLE_RIGHT);
 
         resultsHeader.addComponent(testingProgressLabel);
-        testingProgressLabel.setWidth("320px");
+        testingProgressLabel.setWidth("350px");
         resultsHeader.setComponentAlignment(testingProgressLabel, Alignment.MIDDLE_CENTER);
 
         Label resLabel = new Label("Select Results Format:");
