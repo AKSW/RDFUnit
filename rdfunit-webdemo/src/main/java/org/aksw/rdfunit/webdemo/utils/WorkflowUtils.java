@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.webdemo.utils;
 
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.rdfunit.webdemo.view.WorkflowItem;
 
@@ -20,14 +21,19 @@ public final class WorkflowUtils {
     }
 
     public static void setMessage(final Label label, final String message, final boolean isError) {
+        UI.getCurrent().access(new Runnable() {
+            @Override
+            public void run() {
+                if (isError) {
+                    label.setStyleName(ValoTheme.LABEL_FAILURE);
+                } else {
+                    label.setStyleName(ValoTheme.LABEL_SUCCESS);
+                }
 
-        if (isError) {
-            label.setStyleName(ValoTheme.LABEL_FAILURE);
-        } else {
-            label.setStyleName(ValoTheme.LABEL_SUCCESS);
-        }
+                label.setValue(message);
+                CommonAccessUtils.pushToClient();
+            }
+        });
 
-        label.setValue(message);
-        CommonAccessUtils.pushToClient();
     }
 }

@@ -177,130 +177,147 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
         // Clicking the button creates and runs a work thread
         startTestingButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                startTestingButton.setEnabled(false);
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        startTestingButton.setEnabled(false);
 
-                if (inProgress) {
-                    setMessage("Test Execution already in progress", true);
-                    CommonAccessUtils.pushToClient();
-                    return;
-                }
-                if (!WorkflowUtils.checkIfPreviousItemIsReady(TestExecutionView.this)) {
-                    setMessage("Please Complete previous step correctly", true);
-                    CommonAccessUtils.pushToClient();
-                    return;
-                }
+                        if (inProgress) {
+                            setMessage("Test Execution already in progress", true);
+                            CommonAccessUtils.pushToClient();
+                            return;
+                        }
+                        if (!WorkflowUtils.checkIfPreviousItemIsReady(TestExecutionView.this)) {
+                            setMessage("Please Complete previous step correctly", true);
+                            CommonAccessUtils.pushToClient();
+                            return;
+                        }
 
-                setMessage("Initializing Test Suite...", false);
-                CommonAccessUtils.pushToClient();
+                        setMessage("Initializing Test Suite...", false);
+                        CommonAccessUtils.pushToClient();
 
 
-                TestExecutionView.this.execute();
+                        TestExecutionView.this.execute();
+                    }
+                });
+
             }
         });
 
         startTestingCancelButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                if (!inProgress) {
-                    Notification.show("Test Execution Not in progress", Notification.Type.WARNING_MESSAGE);
-                    return;
-                }
-                TestExecutionView.this.setMessage("Sending cancel signal, waiting for currect test to execute", false);
-                CommonAccessUtils.pushToClient();
-                RDFUnitDemoSession.getTestExecutor().cancel();
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!inProgress) {
+                            Notification.show("Test Execution Not in progress", Notification.Type.WARNING_MESSAGE);
+                            return;
+                        }
+                        TestExecutionView.this.setMessage("Sending cancel signal, waiting for current test to execute", false);
+                        CommonAccessUtils.pushToClient();
+                        RDFUnitDemoSession.getTestExecutor().cancel();
+                    }
+                });
+
             }
         });
 
         resultsButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isReady || inProgress) {
+                            Notification.show("Test Execution in progress or not completed", Notification.Type.WARNING_MESSAGE);
+                            return;
+                        }
 
-                if (!isReady || inProgress) {
-                    Notification.show("Test Execution in progress or not completed", Notification.Type.WARNING_MESSAGE);
-                    return;
-                }
+                        String resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
 
-                String resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
-
-                //OutputStream os;
-                final ByteArrayOutputStream os = new ByteArrayOutputStream();
-                try {
-                    if (resultFormat.equals("html")) {
-                        RDFWriterFactory.createHTMLWriter((TestCaseExecutionType) execTypeSelect.getValue(), os).write(modelMonitor.getModel());
-                    } else {
-                        new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
-                    }
-                } catch (RDFWriterException e) {
-                    Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
-                    log.error("Error Occurred in Serialization", e);
-                }
-
-                final VerticalLayout inner = new VerticalLayout();
-                inner.setSpacing(true);
-                inner.setWidth("100%");
-                inner.setHeight("100%");
-
-                // Get contents as String
-                String tmp_contents = " ";
-                try {
-                    tmp_contents = os.toString("UTF8");
-                } catch (UnsupportedEncodingException e) {
-                    log.error("Encoding error: " + e.getMessage());
-                }
-                final String contents = tmp_contents;
-
-                if (resultFormat.equals("html")) {
-                    BrowserFrame frame = new BrowserFrame("", new ConnectorResource() {
-
-                        @Override
-                        public DownloadStream getStream() {
-                            try {
-                                return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
-                            } catch (UnsupportedEncodingException e) {
-                                log.error("Encoding error: " + e.getMessage());
+                        //OutputStream os;
+                        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+                        try {
+                            if (resultFormat.equals("html")) {
+                                RDFWriterFactory.createHTMLWriter((TestCaseExecutionType) execTypeSelect.getValue(), os).write(modelMonitor.getModel());
+                            } else {
+                                new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
                             }
-                            return null;
+                        } catch (RDFWriterException e) {
+                            Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
+                            log.error("Error Occurred in Serialization", e);
                         }
 
-                        @Override
-                        public String getFilename() {
-                            return "";
+                        final VerticalLayout inner = new VerticalLayout();
+                        inner.setSpacing(true);
+                        inner.setWidth("100%");
+                        inner.setHeight("100%");
+
+                        // Get contents as String
+                        String tmp_contents = " ";
+                        try {
+                            tmp_contents = os.toString("UTF8");
+                        } catch (UnsupportedEncodingException e) {
+                            log.error("Encoding error: " + e.getMessage());
+                        }
+                        final String contents = tmp_contents;
+
+                        if (resultFormat.equals("html")) {
+                            BrowserFrame frame = new BrowserFrame("", new ConnectorResource() {
+
+                                @Override
+                                public DownloadStream getStream() {
+                                    try {
+                                        return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
+                                    } catch (UnsupportedEncodingException e) {
+                                        log.error("Encoding error: " + e.getMessage());
+                                    }
+                                    return null;
+                                }
+
+                                @Override
+                                public String getFilename() {
+                                    return "";
+                                }
+
+                                @Override
+                                public String getMIMEType() {
+                                    return "text/html";
+                                }
+                            });
+                            //Label htmlLabel = new Label(os.toString(), ContentMode.HTML);
+                            frame.setWidth("100%");
+                            frame.setHeight("100%");
+                            inner.addComponent(frame);
+                            if (execTypeSelect.getValue().equals(TestCaseExecutionType.extendedTestCaseResult)) {
+                                Notification.show(
+                                        "Annotated results don't support HTML",
+                                        "This will fall back to simple 'Resources' HTML report\n" +
+                                                "Select an RDF serialization (e.g. turtle) to see the annotations.\n" +
+                                                "(click on this message to close it)",
+                                        Notification.Type.ERROR_MESSAGE
+                                );
+                            }
+                        } else {
+                            TextArea textArea = new TextArea("", contents);
+                            textArea.setWidth("100%");
+                            textArea.setHeight("100%");
+                            inner.addComponent(textArea);
+
                         }
 
-                        @Override
-                        public String getMIMEType() {
-                            return "text/html";
-                        }
-                    });
-                    //Label htmlLabel = new Label(os.toString(), ContentMode.HTML);
-                    frame.setWidth("100%");
-                    frame.setHeight("100%");
-                    inner.addComponent(frame);
-                    if (execTypeSelect.getValue().equals(TestCaseExecutionType.extendedTestCaseResult)) {
-                        Notification.show(
-                                "Annotated results don't support HTML",
-                                "This will fall back to simple 'Resources' HTML report\n" +
-                                        "Select an RDF serialization (e.g. turtle) to see the annotations.\n" +
-                                        "(click on this message to close it)",
-                                Notification.Type.ERROR_MESSAGE
-                        );
+                        final Window window = new Window("Results");
+                        window.setWidth("90%");
+                        window.setHeight("90%");
+                        window.setModal(true);
+                        window.setContent(inner);
+
+
+                        UI.getCurrent().addWindow(window);
                     }
-                } else {
-                    TextArea textArea = new TextArea("", contents);
-                    textArea.setWidth("100%");
-                    textArea.setHeight("100%");
-                    inner.addComponent(textArea);
+                });
 
-                }
-
-                final Window window = new Window("Results");
-                window.setWidth("90%");
-                window.setHeight("90%");
-                window.setModal(true);
-                window.setContent(inner);
-
-
-                UI.getCurrent().addWindow(window);
             }
         });
 
@@ -395,40 +412,52 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
             @Override
             public void testingStarted(final Source source, final TestSuite testSuite) {
-
                 count = totalErrors = failTest = sucessTests = timeoutTests = 0;
                 total = testSuite.size();
 
-                startTestingCancelButton.setEnabled(true);
-                testingProgress.setEnabled(true);
-                testingProgress.setValue(0.0f);
-                testingProgressLabel.setValue("0/" + total);
-                CommonAccessUtils.pushToClient();
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        startTestingCancelButton.setEnabled(true);
+                        testingProgress.setEnabled(true);
+                        testingProgress.setValue(0.0f);
+                        testingProgressLabel.setValue("0/" + total);
+                        CommonAccessUtils.pushToClient();
+                    }
+                });
+
             }
 
             @Override
             public void singleTestStarted(final TestCase test) {
-                if (count == 0) {
-                    setMessage("Running tests...", false);
-                    CommonAccessUtils.pushToClient();
-                }
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (count == 0) {
+                            setMessage("Running tests...", false);
+                            CommonAccessUtils.pushToClient();
+                        }
+                    }
+                });
             }
 
             @Override
             public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results) {
-
                 long errors = 0;
                 TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
                 if (result != null) {
                     if (result instanceof AggregatedTestCaseResult) {
                         errors = ((AggregatedTestCaseResult) result).getErrorCount();
                     }
-                    if (!( result instanceof StatusTestCaseResult)) {
+                    if (!(result instanceof StatusTestCaseResult)) {
                         errors = results.size();
                     }
                 }
                 count++;
-                totalErrors += (errors > 0 ? errors : 0);  // errors might be -1 in aggregated
+                if (errors > 0) {  // errors might be -1 in aggregated
+                    totalErrors += errors;
+                }
                 if (errors == -1)
                     timeoutTests++;
                 else {
@@ -438,8 +467,11 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         failTest++;
                 }
 
-                testingProgress.setValue((float) count / total);
-                testingProgressLabel.setValue(count + "/" + total + getStatusStr());
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        testingProgress.setValue((float) count / total);
+                        testingProgressLabel.setValue(count + "/" + total + getStatusStr());
 
 //                if ((timeoutTests == 10 || timeoutTests == 30) && sucessTests == 0 && failTest == 0) {
 //                    //Too many timeouts maybe banned
@@ -448,18 +480,26 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 //                            Notification.Type.WARNING_MESSAGE);
 //                }
 
-                CommonAccessUtils.pushToClient();
+                        CommonAccessUtils.pushToClient();
+                    }
+                });
+
             }
 
             @Override
             public void testingFinished() {
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        testingProgress.setValue(1.0f);
+                        setMessage("Completed! " + getStatusStr() + ". See the results or rerun with a different 'Report Type'", false);
+                        startTestingButton.setEnabled(true);
+                        inProgress = false;
+                        isReady = true;
+                        CommonAccessUtils.pushToClient();
+                    }
+                });
 
-                testingProgress.setValue(1.0f);
-                setMessage("Completed! " + getStatusStr() + ". See the results or rerun with a different 'Report Type'", false);
-                startTestingButton.setEnabled(true);
-                inProgress = false;
-                isReady = true;
-                CommonAccessUtils.pushToClient();
             }
 
             private String getStatusStr() {
