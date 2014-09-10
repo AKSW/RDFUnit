@@ -3,7 +3,6 @@ package org.aksw.rdfunit.validate.integration;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.sources.DumpTestSource;
@@ -26,59 +25,13 @@ import static org.junit.Assert.assertEquals;
 @Category(IntegrationTest.class)
 public class PatternsGeneratorsIntegrationTest {
 
-    private static final Map<String, Integer> testsWithErrors = new HashMap<>();
     private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
-    private static final RDFReader ontologyReader = new RDFMultipleReader(Arrays.asList(
-                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "owl/ontology.ttl" ),
-                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "dsp/dsp_constraints.ttl" ),
-                                                    RDFReaderFactory.createResourceReader(resourcePrefix + "rs/rs_constraints.ttl" )
-                                            ));
-    private final SchemaSource ontologySource = new SchemaSource("tests", "http://rdfunit.aksw.org",ontologyReader);
+    private final RDFUnit rdfUnit = new RDFUnit();
+
     @Before
     public void setUp() throws Exception {
-
-        // OWL
-        testsWithErrors.put("owl/OWLDISJC_Correct.ttl", 0);
-        testsWithErrors.put("owl/OWLDISJC_Wrong.ttl", 6);
-        testsWithErrors.put("owl/RDFSRANGE_Correct.ttl", 0);
-        testsWithErrors.put("owl/RDFSRANGE_Wrong.ttl", 1);
-        testsWithErrors.put("owl/RDFSRANGE-MISS_Wrong.ttl", 1);
-        testsWithErrors.put("owl/RDFSRANGED_Correct.ttl", 0);
-        testsWithErrors.put("owl/RDFSRANGED_Wrong.ttl", 2);
-        testsWithErrors.put("owl/INVFUNC_Correct.ttl", 0);
-        testsWithErrors.put("owl/INVFUNC_Wrong.ttl", 2);
-        testsWithErrors.put("owl/OWLCARDT_Correct.ttl", 0);
-        testsWithErrors.put("owl/OWLCARDT_Wrong_Exact.ttl", 6);
-        testsWithErrors.put("owl/OWLCARDT_Wrong_Min.ttl", 2);
-        testsWithErrors.put("owl/OWLCARDT_Wrong_Max.ttl", 2);
-        testsWithErrors.put("owl/RDFLANGSTRING_Correct.ttl", 0);
-        testsWithErrors.put("owl/RDFLANGSTRING_Wrong.ttl", 2);
-
-        // DSP
-        testsWithErrors.put("dsp/standalone_class_Correct.ttl", 0);
-        testsWithErrors.put("dsp/standalone_class_Wrong.ttl", 1);
-        testsWithErrors.put("dsp/property_cardinality_Correct.ttl", 0);
-        testsWithErrors.put("dsp/property_cardinality_Wrong.ttl", 5);
-        testsWithErrors.put("dsp/valueClass_Correct.ttl", 0);
-        testsWithErrors.put("dsp/valueClass_Wrong.ttl", 1);
-        testsWithErrors.put("dsp/valueClass-miss_Wrong.ttl", 1);
-        testsWithErrors.put("dsp/languageOccurrence_Correct.ttl", 0);
-        testsWithErrors.put("dsp/languageOccurrence_Wrong.ttl", 2);
-        testsWithErrors.put("dsp/language_Correct.ttl", 0);
-        testsWithErrors.put("dsp/language_Wrong.ttl", 3);
-        testsWithErrors.put("dsp/isLiteral_Wrong.ttl", 1);
-        testsWithErrors.put("dsp/literal_Correct.ttl", 0);
-        testsWithErrors.put("dsp/literal_Wrong.ttl", 4);
-
-        // Resource Shapes
-        testsWithErrors.put("rs/valueType_Correct.ttl", 0);
-        testsWithErrors.put("rs/valueType_Wrong.ttl", 11);
-        testsWithErrors.put("rs/occurs_Correct.ttl", 0);
-        testsWithErrors.put("rs/occurs_Wrong.ttl", 4);
-        testsWithErrors.put("rs/range_Correct.ttl", 0);
-        testsWithErrors.put("rs/range_Wrong.ttl", 2);
-        testsWithErrors.put("rs/allowedValue_Correct.ttl", 0);
-        testsWithErrors.put("rs/allowedValue_Wrong.ttl", 9);
+        // Init RDFUnit
+        rdfUnit.init();
     }
 
     @After
@@ -86,19 +39,93 @@ public class PatternsGeneratorsIntegrationTest {
     }
 
     @Test
-    public void testPatterns() throws Exception {
+    public void testOWL() throws Exception {
+        Map<String, Integer> testsWithErrorsOWL = new HashMap<>();
 
-        RDFUnit rdfUnit = new RDFUnit();
-        rdfUnit.init();
+        testsWithErrorsOWL.put("owl/OWLDISJC_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/OWLDISJC_Wrong.ttl", 6);
+        testsWithErrorsOWL.put("owl/RDFSRANGE_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/RDFSRANGE_Wrong.ttl", 1);
+        testsWithErrorsOWL.put("owl/RDFSRANGE-MISS_Wrong.ttl", 1);
+        testsWithErrorsOWL.put("owl/RDFSRANGED_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/RDFSRANGED_Wrong.ttl", 2);
+        testsWithErrorsOWL.put("owl/INVFUNC_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/INVFUNC_Wrong.ttl", 2);
+        testsWithErrorsOWL.put("owl/OWLCARDT_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/OWLCARDT_Wrong_Exact.ttl", 6);
+        testsWithErrorsOWL.put("owl/OWLCARDT_Wrong_Min.ttl", 2);
+        testsWithErrorsOWL.put("owl/OWLCARDT_Wrong_Max.ttl", 2);
+        testsWithErrorsOWL.put("owl/RDFLANGSTRING_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/RDFLANGSTRING_Wrong.ttl", 2);
+
+        RDFReader ontologyOWLReader = RDFReaderFactory.createResourceReader(resourcePrefix + "owl/ontology.ttl");
+        SchemaSource ontologyOWLSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyOWLReader);
 
         TestSuite testSuite = new TestSuite(
-                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologySource));
+                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyOWLSource));
 
+        testMap(testsWithErrorsOWL, testSuite, ontologyOWLSource);
+    }
+
+    @Test
+    public void testRS() throws Exception {
+        Map<String, Integer> testsWithErrorsRS = new HashMap<>();
+
+        testsWithErrorsRS.put("rs/valueType_Correct.ttl", 0);
+        testsWithErrorsRS.put("rs/valueType_Wrong.ttl", 11);
+        testsWithErrorsRS.put("rs/occurs_Correct.ttl", 0);
+        testsWithErrorsRS.put("rs/occurs_Wrong.ttl", 4);
+        testsWithErrorsRS.put("rs/range_Correct.ttl", 0);
+        testsWithErrorsRS.put("rs/range_Wrong.ttl", 2);
+        testsWithErrorsRS.put("rs/allowedValue_Correct.ttl", 0);
+        testsWithErrorsRS.put("rs/allowedValue_Wrong.ttl", 9);
+
+
+        RDFReader ontologyRSReader = RDFReaderFactory.createResourceReader(resourcePrefix + "rs/rs_constraints.ttl");
+        SchemaSource ontologyRSSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyRSReader);
+
+        TestSuite testSuite = new TestSuite(
+                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyRSSource));
+
+        testMap(testsWithErrorsRS, testSuite, ontologyRSSource);
+    }
+
+    @Test
+    public void testDSP() throws Exception {
+
+        Map<String, Integer> testsWithErrorsDSP = new HashMap<>();
+
+        testsWithErrorsDSP.put("dsp/standalone_class_Correct.ttl", 0);
+        testsWithErrorsDSP.put("dsp/standalone_class_Wrong.ttl", 1);
+        testsWithErrorsDSP.put("dsp/property_cardinality_Correct.ttl", 0);
+        testsWithErrorsDSP.put("dsp/property_cardinality_Wrong.ttl", 5);
+        testsWithErrorsDSP.put("dsp/valueClass_Correct.ttl", 0);
+        testsWithErrorsDSP.put("dsp/valueClass_Wrong.ttl", 1);
+        testsWithErrorsDSP.put("dsp/valueClass-miss_Wrong.ttl", 1);
+        testsWithErrorsDSP.put("dsp/languageOccurrence_Correct.ttl", 0);
+        testsWithErrorsDSP.put("dsp/languageOccurrence_Wrong.ttl", 2);
+        testsWithErrorsDSP.put("dsp/language_Correct.ttl", 0);
+        testsWithErrorsDSP.put("dsp/language_Wrong.ttl", 3);
+        testsWithErrorsDSP.put("dsp/isLiteral_Wrong.ttl", 1);
+        testsWithErrorsDSP.put("dsp/literal_Correct.ttl", 0);
+        testsWithErrorsDSP.put("dsp/literal_Wrong.ttl", 4);
+
+        RDFReader ontologyDSPReader = RDFReaderFactory.createResourceReader(resourcePrefix + "dsp/dsp_constraints.ttl");
+        SchemaSource ontologyDSPSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
+
+
+        TestSuite testSuite = new TestSuite(
+                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyDSPSource));
+
+        testMap(testsWithErrorsDSP, testSuite, ontologyDSPSource);
+    }
+
+    private void testMap(Map<String, Integer> datasets, TestSuite testSuite, SchemaSource ontologySource) {
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
-        for (Map.Entry<String, Integer> entry : testsWithErrors.entrySet()) {
+        for (Map.Entry<String, Integer> entry : datasets.entrySet()) {
             String resource = entry.getKey();
-            int errors = testsWithErrors.get(resource);
+            int errors = datasets.get(resource);
 
             // Test all execution types
             long failedTestCases = -1;
@@ -109,7 +136,7 @@ public class PatternsGeneratorsIntegrationTest {
                         "test", // prefix
                         resource,
                         RDFReaderFactory.createResourceReader(resourcePrefix + resource),
-                        Arrays.asList( ontologySource)
+                        Arrays.asList(ontologySource)
                 );
 
                 RDFUnitStaticWrapper.validate(executionType, modelSource, testSuite, overviewResults);
