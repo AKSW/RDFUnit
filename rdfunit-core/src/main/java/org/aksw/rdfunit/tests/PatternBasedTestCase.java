@@ -20,6 +20,8 @@ public class PatternBasedTestCase extends TestCase {
 
     private final Pattern pattern;
     private final Collection<Binding> bindings;
+    private String sparqlWhereCache = null;
+    private String sparqlPrevalenceCache = null;
 
     public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) throws TestCaseInstantiationException {
         super(testURI, annotation);
@@ -53,12 +55,18 @@ public class PatternBasedTestCase extends TestCase {
 
     @Override
     public String getSparqlWhere() {
-        return instantiateBindings(bindings, pattern.getSparqlWherePattern()).trim();
+        if (sparqlWhereCache == null) {
+            sparqlWhereCache = instantiateBindings(bindings, pattern.getSparqlWherePattern()).trim();
+        }
+        return sparqlWhereCache;
     }
 
     @Override
     public String getSparqlPrevalence() {
-        return instantiateBindings(bindings, pattern.getSparqlPatternPrevalence()).trim();
+        if (sparqlPrevalenceCache == null) {
+            sparqlPrevalenceCache = instantiateBindings(bindings, pattern.getSparqlPatternPrevalence()).trim();
+        }
+        return sparqlPrevalenceCache;
     }
 
     private String instantiateBindings(Collection<Binding> bindings, String query) {
