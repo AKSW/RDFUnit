@@ -4,6 +4,7 @@ import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.io.reader.RDFDereferenceLimitReader;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
@@ -245,12 +246,17 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
                     throw new Exception("Contents of " + uri + " bigger than 10MB");
                 configuration.setCustomDereferenceURI(uri);
 
-                // Try to load it for errors
-                configuration.getTestSource().getExecutionFactory();
             } else {
                 configuration.setCustomTextSource(text, format);
-                configuration.getTestSource().getExecutionFactory();
+
             }
+            // Try to load it for errors
+            QueryExecutionFactoryModel qefm = (QueryExecutionFactoryModel) configuration.getTestSource().getExecutionFactory();
+            if (qefm.getModel().isEmpty()) {
+                this.setMessage("No data found", true);
+                return false;
+            }
+
             // If successful add it in session
             DataSelectorView.this.setMessage("Data loaded successfully!", false);
             RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
