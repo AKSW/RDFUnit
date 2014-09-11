@@ -18,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.tokenfield.TokenField;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -133,9 +135,10 @@ final class SchemaSelectorComponent extends VerticalLayout {
             super("New Schema");
             VerticalLayout l = new VerticalLayout();
             setContent(l);
-            if (t.contains("http://")) {
+            try {
+                new URI(t); // if it fails it's a prefix
                 uri = t;
-            } else {
+            } catch (URISyntaxException e) {
                 prefix = t;
             }
             setModal(true);
