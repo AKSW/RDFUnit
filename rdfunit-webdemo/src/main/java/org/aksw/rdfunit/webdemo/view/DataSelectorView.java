@@ -258,7 +258,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
             }
 
             // If successful add it in session
-            DataSelectorView.this.setMessage("Data loaded successfully!", false);
+            DataSelectorView.this.setMessage("Data loaded successfully! (" + qefm.getModel().size() + " statements)", false);
             RDFUnitDemoSession.setRDFUnitConfiguration(configuration);
             return true;
 
