@@ -8,8 +8,10 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -40,6 +42,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     private Source testedDataset;
     private TestSuite testSuite;
+    private TestCaseExecutionType executionType;
+
+    private String userID = "http://localhost/";
 
     private long counter = 0;
 
@@ -172,7 +177,9 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
         Resource testSuiteResource = testSuite.serialize(getModel());
 
-        getModel().createResource(executionUUID)
+        Resource execution = getModel().createResource(executionUUID);
+
+        execution
                 .addProperty(RDF.type, getModel().createResource(PrefixNSService.getURIFromAbbrev("rut:TestExecution")))
                 .addProperty(RDF.type, getModel().createResource(PrefixNSService.getURIFromAbbrev("prov:Activity")))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:used")), testSuiteResource)
@@ -193,7 +200,21 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testsError")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:totalIndividualErrors")),
-                        ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger));
+                        ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasStartedBy")),
+                        getModel().createResource(userID));
+
+
+        // Associate the constraints to the execution
+        for (SchemaSource src : testedDataset.getReferencesSchemata()) {
+            execution.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasAssociatedWith")),
+                    getModel().createResource(src.getUri()));
+        }
+
+        if (executionType != null) {
+            execution.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:executionType")),
+                    executionType.name());
+        }
 
         if (loggingEnabled) {
             log.info("Tests run: " + overviewResults.getTotalTests() +
@@ -220,5 +241,13 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
      */
     public DatasetOverviewResults getOverviewResults() {
         return overviewResults;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public void setExecutionType(TestCaseExecutionType executionType) {
+        this.executionType = executionType;
     }
 }
