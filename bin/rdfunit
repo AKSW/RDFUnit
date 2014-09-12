@@ -25,5 +25,5 @@ if [ ! -d "rdfunit-validate/target" ]; then
 fi
 
 cd rdfunit-validate/
-$MVN compile exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
+$MVN exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
 cd - > /dev/null
