@@ -232,7 +232,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
             uri = text.trim();
         }
         else {
-            uri = "http://rdfunit.aksw.org/CustomText#"+ TestUtils.getMD5FromString(text);
+            uri = "http://rdfunit.aksw.org/CustomSource#"+ TestUtils.getMD5FromString(text);
         }
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(uri, RDFUnitDemoSession.getBaseDir());
 
