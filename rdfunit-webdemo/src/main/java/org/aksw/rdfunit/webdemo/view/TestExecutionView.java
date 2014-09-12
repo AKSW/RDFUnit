@@ -375,7 +375,15 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
                 RDFUnitDemoSession.setTestExecutor(testExecutor);
 
-                TestExecutionView.this.modelMonitor = new SimpleTestExecutorMonitor(false);
+                SimpleTestExecutorMonitor sessionMonitor = new SimpleTestExecutorMonitor(false);
+                sessionMonitor.setExecutionType(executionType);
+                TestExecutionView.this.modelMonitor = sessionMonitor;
+
+                try {
+                    modelMonitor.setUserID(RDFUnitDemoSession.getHostName());
+                } catch (Exception e) {
+                    // using default
+                }
 
 
                 testExecutor.clearTestExecutorMonitor();

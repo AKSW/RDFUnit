@@ -46,7 +46,9 @@ public class RDFUnitDemo extends UI {
      */
     protected void init(VaadinRequest request) {
 
-        RDFUnitDemoSession.init();
+
+
+        RDFUnitDemoSession.init("http://" + request.getRemoteHost());
 
         initLayout();
         setPollInterval(15000);

@@ -34,7 +34,9 @@ public class RDFUnitDemoSession extends VaadinSession {
     /**
      * Init session variables.
      */
-    public static void init() {
+    public static void init(String clientHost) {
+
+        VaadinSession.getCurrent().setAttribute("client", clientHost);
 
         String baseDir = _getBaseDir();
         VaadinSession.getCurrent().setAttribute(String.class, baseDir);
@@ -52,6 +54,15 @@ public class RDFUnitDemoSession extends VaadinSession {
     private static String _getBaseDir() {
         File f = VaadinSession.getCurrent().getService().getBaseDirectory();
         return f.getAbsolutePath() + "/data/";
+    }
+
+    /**
+     * Gets client hostname
+     *
+     * @return the base dir
+     */
+    public static String getHostName() {
+        return VaadinSession.getCurrent().getAttribute("client").toString();
     }
 
     /**
