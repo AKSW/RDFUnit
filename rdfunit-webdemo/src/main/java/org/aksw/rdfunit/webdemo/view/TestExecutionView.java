@@ -8,6 +8,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.io.format.FormatService;
+import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFStreamWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
@@ -30,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 /**
  * @author Dimitris Kontokostas
@@ -236,7 +238,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                         String resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
 
-                        //OutputStream os;
+                        //OutputStream to get the results as string and display
                         final ByteArrayOutputStream os = new ByteArrayOutputStream();
                         try {
                             if (resultFormat.equals("html")) {
@@ -244,6 +246,10 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                             } else {
                                 new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
                             }
+                            // cache results in result folder
+                            long randomNumber = (new Random()).nextInt(10000);
+                            String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
+                            new RDFFileWriter(fileLocation, "TURTLE").write(modelMonitor.getModel());
                         } catch (RDFWriterException e) {
                             Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
                             log.error("Error Occurred in Serialization", e);
