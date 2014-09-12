@@ -42,6 +42,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.semarglproject</groupId>
+            <artifactId>semargl-jena</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
         </dependency>

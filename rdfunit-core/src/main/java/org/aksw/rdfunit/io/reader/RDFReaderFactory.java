@@ -6,6 +6,8 @@ import org.aksw.rdfunit.io.writer.RDFWriter;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,9 +21,9 @@ public final class RDFReaderFactory {
     private RDFReaderFactory() {
     }
 
-    public static RDFReader createFileOrDereferenceReader(String filenameOrUri) {
-        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
-    }
+//    public static RDFReader createFileOrDereferenceReader(String filenameOrUri) {
+//        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
+//    }
 
     public static RDFReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
@@ -55,11 +57,13 @@ public final class RDFReaderFactory {
      */
     public static RDFReader createDereferenceReader(String uri) {
         Collection<RDFReader> readers = new ArrayList<>();
-        if (uri.contains("://")) {
+        try {
+            new URI(uri); // if it succeeds we need only remote reader
             readers.add(new RDFDereferenceReader(uri));
-        } else {
+            readers.add(new RDFaReader(uri));
+        } catch (URISyntaxException e) {
             readers.add(new RDFStreamReader(uri));
-            readers.add( RDFReaderFactory.createResourceReader(uri));
+            readers.add(RDFReaderFactory.createResourceReader(uri));
         }
 
         return new RDFFirstSuccessReader(readers);
