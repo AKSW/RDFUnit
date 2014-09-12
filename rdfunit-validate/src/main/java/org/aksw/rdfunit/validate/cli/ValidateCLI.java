@@ -106,6 +106,7 @@ public class ValidateCLI {
             displayHelpAndExit("Cannot initialize test executor. Exiting");
         }
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
+        testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results

@@ -240,6 +240,7 @@ public class RDFUnitStaticWrapper {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
+        testExecutorMonitor.setExecutionType(testCaseExecutionType);
 
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(testCaseExecutionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
