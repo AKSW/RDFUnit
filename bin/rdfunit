@@ -18,6 +18,12 @@ MVN="mvn"
 #          cp /tmp/docu.html "$doc"".html"
 #fi
 
+if [ ! -d "rdfunit-validate/target" ]; then
+  echo "First run, compiling code..."
+  mvn -pl rdfunit-validate -am clean install -Dmaven.test.skip=true -q
+  echo "Compiling finished..."
+fi
+
 cd rdfunit-validate/
 $MVN compile exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
 cd - > /dev/null
