@@ -94,6 +94,7 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                 } UNION {
                                     ?P1 schema:rangeIncludes ?D1 .
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
+                                    FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
                                 }
                                 BIND (concat(str(?P1)," does contain a literal value") AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
@@ -129,8 +130,7 @@ rutg:RDFSRANGED a rut:TestGenerator ;
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
-                              } FILTER ( (str(?D1) != "http://www.w3.org/2000/01/rdf-schema#Literal")  &&
-                                         (str(?D1) != "http://www.w3.org/2001/XMLSchema#string")  ) 
+                              } FILTER ( ?D1 NOT IN ( rdfs:Literal, xsd:string, schema:Text, schema:URL) )
                               BIND (concat(str(?P1)," does not have datatype: ", str(?D1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:RDFSRANGED ;
     rut:resultAnnotation [
