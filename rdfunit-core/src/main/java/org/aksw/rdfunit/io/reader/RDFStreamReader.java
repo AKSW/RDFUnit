@@ -3,6 +3,7 @@ package org.aksw.rdfunit.io.reader;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.semarglproject.jena.rdf.rdfa.JenaRdfaReader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,6 +39,10 @@ public class RDFStreamReader extends RDFReader {
     @Override
     public void read(Model model) throws RDFReaderException {
         try {
+            if (format.equals("RDFA")) {
+                // Temporary solution until clearer solution found
+                JenaRdfaReader.inject();
+            }
             model.read(inputStream, null, format);
         } catch (Exception e) {
             throw new RDFReaderException(e.getMessage(), e);
