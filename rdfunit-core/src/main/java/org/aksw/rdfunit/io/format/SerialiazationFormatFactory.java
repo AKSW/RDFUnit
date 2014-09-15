@@ -29,7 +29,9 @@ public final class SerialiazationFormatFactory {
         serializationFormats.add(createRDFXMLAbbrevOut());
         serializationFormats.add(createRDFXMLIn());
         serializationFormats.add(createRDFXMLOut());
+        serializationFormats.add(createRDFa());
         serializationFormats.add(createHTML());
+
 
         return serializationFormats;
     }
@@ -135,6 +137,18 @@ public final class SerialiazationFormatFactory {
         currentSynonyms.addAll(Arrays.asList("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV", "RDF", "XML"));
         return new SerializationFormat(
                 "RDF/XML", SerializationFormatType.input, "rdf", "application/rdf+xml", currentSynonyms);
+
+    }
+
+    /**
+     * @return a new RDFa format for input only
+     */
+    public static SerializationFormat createRDFa() {
+        // RDF/XML -> input
+        HashSet<String> currentSynonyms = new HashSet<>();
+        currentSynonyms.addAll(Arrays.asList("RDFa", "html", "htm"));
+        return new SerializationFormat(
+                "RDFA", SerializationFormatType.input, "html", "text/html", currentSynonyms);
 
     }
 }
