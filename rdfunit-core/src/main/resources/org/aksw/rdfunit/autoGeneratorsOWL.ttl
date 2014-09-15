@@ -17,9 +17,10 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               ?P1 (rdfs:range|schema:rangeIncludes) ?T1 .
 
                               # don't check for datatypes / literals here
-                              FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Literal }
-                              FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Datatype }
-                              FILTER NOT EXISTS {?1T rdf:type/rdfs:subClassOf* schema:DataType }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) rdfs:Literal }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) rdfs:Datatype }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) owl:DatatypeProperty }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) schema:DataType }
 
                               # it must be defined that the range is a class
                               ?T1 rdf:type/rdfs:subClassOf* ?class .
@@ -45,25 +46,26 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
 rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is missing)"""@en ;
     rut:sparqlGenerator """ select distinct ?P1  ?DESCRIPTION where {
-                                ?P1 (rdfs:range|schema:rangeIncludes) ?T1 .
+                              ?P1 (rdfs:range|schema:rangeIncludes) ?T1 .
 
-								# don't check for datatypes / literals here
-								FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Literal }
-								FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Datatype }
-								FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* schema:DataType }
+							  # don't check for datatypes / literals here
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) rdfs:Literal }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) rdfs:Datatype }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) owl:DatatypeProperty }
+                              FILTER NOT EXISTS {?T1 (rdf:type/rdfs:subClassOf*)|(rdfs:subClassOf+) schema:DataType }
 
-								# it must be defined that the range is a class
-								?T1 rdf:type/rdfs:subClassOf* ?class .
-								FILTER ( ?class IN (owl:Class, rdfs:Class, schema:Class) )
+							  # it must be defined that the range is a class
+							  ?T1 rdf:type/rdfs:subClassOf* ?class .
+							  FILTER ( ?class IN (owl:Class, rdfs:Class, schema:Class) )
 
-								# don't check for general classes
-								FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+							  # don't check for general classes
+							  FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
 
-								# Keep unique ranges only
-                                FILTER NOT EXISTS {?P1 (rdfs:range|schema:rangeIncludes) ?T2 .
-                                                    FILTER (?T1 != ?T2)
-                                }
-								BIND (concat(str(?P1)," does not have defined range: ", str(?T1)) AS ?DESCRIPTION)}   """ ;
+							  # Keep unique ranges only
+                              FILTER NOT EXISTS {?P1 (rdfs:range|schema:rangeIncludes) ?T2 .
+                                                  FILTER (?T1 != ?T2)
+                              }
+							  BIND (concat(str(?P1)," does not have defined range: ", str(?T1)) AS ?DESCRIPTION)}   """ ;
     rut:basedOnPattern rutp:RDFSRANGE-MISS ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
