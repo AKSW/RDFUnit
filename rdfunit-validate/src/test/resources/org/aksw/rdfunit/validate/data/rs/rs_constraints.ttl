@@ -18,6 +18,23 @@ exrs:RSRange
     ] ;
     .
 
+exrs:RSValueShapeFrom
+	a oslc:ResourceShape ;
+    oslc:describes exrs:ValueShapeFrom-Class ;
+    oslc:property [
+        a oslc:Property ;
+        oslc:propertyDefinition exrs:ValueShapeFromProp ;
+        oslc:range exrs:ValueShapeTo-Class ;
+    ] ;
+    .
+
+
+exrs:RSValueShapeTo
+	a oslc:ResourceShape ;
+    oslc:describes exrs:ValueShapeTo-Class ;
+    # just checking range here no need for properties
+    .
+
 
 exrs:RSOccurs-Exactly-one
 	a oslc:ResourceShape ;

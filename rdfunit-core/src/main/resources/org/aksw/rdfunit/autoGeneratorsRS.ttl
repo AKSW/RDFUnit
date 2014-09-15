@@ -61,7 +61,32 @@ rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
-        rut:annotationValue rlog:WARN] ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# OSLC oslc:valueShape (still like range on typed shapes)
+rutg:OSLCVALUESHAPE a rut:TestGenerator ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
+								?s a oslc:ResourceShape ;
+                                   oslc:describes ?class ; # we work only on typed classes
+                                   oslc:property ?rsp .
+                                ?rsp oslc:propertyDefinition ?P1 ;
+                                     oslc:valueShape/oslc:describes ?T1 .
+
+                                # don't check for general classes (and oslc:Any)
+	                            FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+	                            # Keep unique ranges only
+                                FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
+                                                    FILTER (?T1 != ?T2)
+                                }
+	                            BIND (concat(str(?P1)," does not have correct range: ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
     .
 
 #############
@@ -250,4 +275,4 @@ rutg:RSALLOWEDVAL a rut:TestGenerator ;
 
 
 # TODO OSLC oslc:maxSize (has to be xsd:string)
-# TODO OSLC oslc:valueShape
+

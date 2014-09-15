@@ -8,10 +8,18 @@
 @prefix oslc: <http://open-services.net/ns/core#> .
 
 exrs:correctA1
-	a exrs:exrs:Range-Class ;
-	exrs:exrs:prop-range exrs:Something ;
+	a exrs:Range-Class ;
+	exrs:prop-range exrs:SomethingA ;
 	.
 
-exrs:Something a exrs:The-Range-Class ; # Correct
+exrs:SomethingA a exrs:The-Range-Class ; # Correct
+	.
 
 
+exrs:correctB1
+	a exrs:ValueShapeFrom-Class ;
+	exrs:ValueShapeFromProp exrs:SomethingB ;
+	.
+
+exrs:SomethingB a exrs:ValueShapeTo-Class ; # Correct
+     .

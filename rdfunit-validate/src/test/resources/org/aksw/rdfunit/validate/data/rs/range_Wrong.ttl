@@ -21,3 +21,15 @@ exrs:correctA2
 	exrs:prop-range exrs:Something2 ; # 1 error (missing range)
 	.
 
+exrs:correctB1
+	a exrs:ValueShapeFrom-Class ;
+	exrs:ValueShapeFromProp exrs:SomethingB ;
+	.
+
+exrs:SomethingB a exrs:ValueShapeTo-Class-NOT ; # 1 error (wrong range)
+     .
+
+exrs:correctB2
+	a exrs:ValueShapeFrom-Class ;
+	exrs:ValueShapeFromProp exrs:SomethingC ;  # 1 error (shape missing)
+	.
