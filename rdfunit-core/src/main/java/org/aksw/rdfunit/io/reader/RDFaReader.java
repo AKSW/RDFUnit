@@ -24,7 +24,7 @@ public class RDFaReader extends RDFReader {
         try {
             // Init RDFa Reader
             JenaRdfaReader.inject();
-            model.read(uri, "RDFA");
+            model.read(uri, null, "RDFA");
         }
         catch (Exception e) {
             throw new RDFReaderException(e);
