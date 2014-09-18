@@ -43,7 +43,7 @@ public final class SourceFactory {
 
     public static SchemaSource createSchemaSourceFromText(String namespace, String text, String format) {
 
-        String uri = namespace + TestUtils.getMD5FromString(text);
+        String uri = namespace + TestUtils.getHashFromString(text);
         String prefix = CacheUtils.getAutoPrefixForURI(uri);
 
         return new SchemaSource(prefix, uri, uri, RDFReaderFactory.createReaderFromText(text, format));
