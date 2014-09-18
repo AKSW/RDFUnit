@@ -25,13 +25,13 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
 
     @Override
     protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Status</th><th>Test Case</th></tr>");
+        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Description</th></tr>");
     }
 
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td>%s</td><td><span title=\"%s\">%s</span></td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?resultStatus ?testcase ?level ?description WHERE {" +
