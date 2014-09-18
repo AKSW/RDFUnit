@@ -1,13 +1,12 @@
 package org.aksw.rdfunit.io.reader;
 
+import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -57,11 +56,10 @@ public final class RDFReaderFactory {
      */
     public static RDFReader createDereferenceReader(String uri) {
         Collection<RDFReader> readers = new ArrayList<>();
-        try {
-            new URI(uri); // if it succeeds we need only remote reader
+        if (RDFUnitUtils.isURI(uri)) {
             readers.add(new RDFDereferenceReader(uri));
             readers.add(new RDFaReader(uri));
-        } catch (URISyntaxException e) {
+        } else {
             readers.add(new RDFStreamReader(uri));
             readers.add(RDFReaderFactory.createResourceReader(uri));
         }

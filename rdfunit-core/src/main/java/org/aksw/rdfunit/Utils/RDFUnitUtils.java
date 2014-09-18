@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -161,5 +163,14 @@ public final class RDFUnitUtils {
             return item;
         }
         return null;
+    }
+
+    public static boolean isURI(String uri) {
+        try {
+            new URL(uri);
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 }
