@@ -55,6 +55,10 @@ public class DumpTestSource extends Source {
         try {
             // Read & load the URI
             dumpReader.read(model);
+
+            if (model.isEmpty()) {
+                throw new IllegalArgumentException("Dump is empty");
+            }
             //Load all the related ontologies as well (for more consistent querying
             for (Source src : getReferencesSchemata()) {
                 QueryExecutionFactory qef = src.getExecutionFactory();
