@@ -118,7 +118,7 @@ public final class DatasetStatistics {
         return namespaces;
     }
 
-    private final Collection<String> excludePrefixes = Arrays.asList("rdf", "rdfs", "owl");
+    private final Collection<String> excludePrefixes = Arrays.asList("rdf", "rdfs", "owl", "rdfa");
 
     /**
      * Uses the getAllNamespaces() function and tries to match them to SchemaSource's
