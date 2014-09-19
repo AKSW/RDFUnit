@@ -151,11 +151,7 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
     rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?T1 ?DESCRIPTION where {
                              ?P1 rdfs:domain ?T1 .
                              BIND (concat(str(?P1)," has rdfs:domain different from: ", str(?T1)) AS ?DESCRIPTION)
-                             FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
-                                      (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
+                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class ))} """ ;
     rut:basedOnPattern rutp:RDFSDOMAIN ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -173,11 +169,7 @@ rutg:RDFSDOMAIN-MISS a rut:TestGenerator ;
     rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?DESCRIPTION where {
                              ?P1 rdfs:domain ?T1 .
                              BIND (concat(str(?P1)," does not have rdfs:domain: ", str(?T1)) AS ?DESCRIPTION)
-                             FILTER ( (str(?T1) != "http://www.w3.org/2002/07/owl#Thing") &&
-                                      (str(?T1) != "http://www.w3.org/ns/prov#Entity") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Resource") &&
-                                      (str(?T1) != "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property") &&
-                                      (str(?T1) != "http://www.w3.org/2000/01/rdf-schema#Class"))} """ ;
+                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class ))} """ ;
     rut:basedOnPattern rutp:RDFSDOMAIN-MISS ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
