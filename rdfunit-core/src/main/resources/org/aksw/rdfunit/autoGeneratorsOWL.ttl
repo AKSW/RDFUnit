@@ -80,10 +80,11 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
 # Check for Literal
 rutg:RDFSRANGEL a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
-    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
+    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where { {
                                 {   # xsd datatypes
 	                                ?P1 rdfs:range ?D1 .
 	                                FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
+	                                FILTER (?D1 NOT IN ( <http://www.w3.org/2001/XMLSchema#anyURI>))
 	                            } UNION {
 	                                ?P1 rdfs:range ?D1 .
 	                                ?D1 rdf:type/rdfs:subClassOf* rdfs:Datatype .
@@ -97,9 +98,9 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                     ?P1 schema:rangeIncludes ?D1 .
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
                                     FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
-                                }
+                                }    }
                                 FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url> ))
-                                BIND (concat(str(?P1)," does contain a literal value") AS ?DESCRIPTION)} """ ;
+                                BIND (concat(str(?P1)," does not contain a literal value (", str(?D1) , ")") AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
