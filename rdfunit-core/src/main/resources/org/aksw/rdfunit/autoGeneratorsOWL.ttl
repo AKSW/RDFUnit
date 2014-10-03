@@ -84,7 +84,6 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                 {   # xsd datatypes
 	                                ?P1 rdfs:range ?D1 .
 	                                FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
-	                                FILTER (?D1 NOT IN ( <http://www.w3.org/2001/XMLSchema#anyURI>))
 	                            } UNION {
 	                                ?P1 rdfs:range ?D1 .
 	                                ?D1 rdf:type/rdfs:subClassOf* rdfs:Datatype .
@@ -99,7 +98,7 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
                                     FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
                                 }    }
-                                FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url> ))
+                                FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
                                 BIND (concat(str(?P1)," does not contain a literal value (", str(?D1) , ")") AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
     rut:resultAnnotation [
