@@ -51,25 +51,31 @@ public class DumpTestSource extends Source {
 
     @Override
     protected QueryExecutionFactory initQueryFactory() {
-        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+        OntModel dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+        // When we load the referenced schemata we do rdfs reasoning to avoid false errors
+        // Many ontologies skip some domain / range statements and this way we add them
+        OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF, ModelFactory.createDefaultModel());
         try {
             // Read & load the URI
-            dumpReader.read(model);
+            dumpReader.read(dumpModel);
 
-            if (model.isEmpty()) {
+            if (dumpModel.isEmpty()) {
                 throw new IllegalArgumentException("Dump is empty");
             }
             //Load all the related ontologies as well (for more consistent querying
             for (Source src : getReferencesSchemata()) {
                 QueryExecutionFactory qef = src.getExecutionFactory();
                 if (qef instanceof QueryExecutionFactoryModel) {
-                    model.add(((QueryExecutionFactoryModel) qef).getModel());
+                    ontModel.add(((QueryExecutionFactoryModel) qef).getModel());
                 }
             }
+            // Here we add the ontologies in the dump mode
+            // Note that the ontologies have reasoning enabled but not the dump source
+            dumpModel.add(ontModel);
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
         }
-        return new QueryExecutionFactoryModel(model);
+        return new QueryExecutionFactoryModel(dumpModel);
     }
 }
