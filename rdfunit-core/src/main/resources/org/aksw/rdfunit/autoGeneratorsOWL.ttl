@@ -300,7 +300,7 @@ rutg:OWLCARD a rut:TestGenerator ;
                              ?t a  owl:Restriction ;
                                 owl:onProperty ?P1 ;
                                 owl:cardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
@@ -317,7 +317,7 @@ rutg:OWLCARDEX a rut:TestGenerator ;
 							 ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " (is 0) for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
     rut:resultAnnotation [
@@ -334,7 +334,7 @@ rutg:OWLCARD0 a rut:TestGenerator ;
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:cardinality ?v .
-                             FILTER (?v = 0) .
+                             FILTER (?v = 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TRIPLE ;
     rut:resultAnnotation [
@@ -351,7 +351,7 @@ rutg:OWLCARD-MIN a rut:TestGenerator ;
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
@@ -368,7 +368,7 @@ rutg:OWLCARDEX-MIN a rut:TestGenerator ;
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:minCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
     rut:resultAnnotation [
@@ -385,7 +385,7 @@ rutg:OWLCGARD-MAX a rut:TestGenerator ;
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
-                             FILTER (?v > 0) . 
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
@@ -402,7 +402,7 @@ rutg:OWLCARD-MAX0 a rut:TestGenerator ;
                              ?t a  owl:Restriction .
                              ?t owl:onProperty ?P1 .
                              ?t owl:maxCardinality ?v .
-                             FILTER (?v = 0) . 
+                             FILTER (?v = 0 && !isBlank(?T1)) .
 							 BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
     rut:resultAnnotation [
@@ -424,7 +424,7 @@ rutg:OWLQCARD a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:qualifiedCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLQCARDT ;
     rut:resultAnnotation [
@@ -442,7 +442,7 @@ rutg:OWLQCARDEX a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:qualifiedCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " (is 0) for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPROTYPEDEP ;
     rut:resultAnnotation [
@@ -460,7 +460,7 @@ rutg:OWLQCARD0 a rut:TestGenerator ;
 	                             owl:onProperty ?P1 ;
 	                             owl:onClass ?T2 ;
 	                             owl:qualifiedCardinality ?v .
-                             FILTER (?v = 0) .
+                             FILTER (?v = 0 && !isBlank(?T1)) .
 							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TRIPLEDR ;
     rut:resultAnnotation [
@@ -478,7 +478,7 @@ rutg:OWLQCARD-MIN a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:minQualifiedCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLQCARDT ;
     rut:resultAnnotation [
@@ -496,7 +496,7 @@ rutg:OWLQCARDEX-MIN a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:minQualifiedCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPROTYPEDEP ;
     rut:resultAnnotation [
@@ -514,7 +514,7 @@ rutg:OWLQCARD-MAX a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:maxQualifiedCardinality ?v .
-                             FILTER (?v > 0) .
+                             FILTER (?v > 0 && !isBlank(?T1)) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
     rut:basedOnPattern rutp:OWLQCARDT ;
     rut:resultAnnotation [
@@ -532,7 +532,7 @@ rutg:OWLQCARD-MAX0 a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:maxQualifiedCardinality ?v .
-                             FILTER (?v = 0) .
+                             FILTER (?v = 0 && !isBlank(?T1)) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPROTYPEDEP ;
     rut:resultAnnotation [
