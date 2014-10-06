@@ -15,16 +15,20 @@ ex:abc1-1 a ex:QCardExact0 .
 
 ex:error2a a ex:QCardExact1Class . # 1 error
 
+
 ex:error2b a ex:QCardExact1Class ; # 1 error
 	ex:qCardExact1 ex:abc2b-1;
 	ex:qCardExact1 ex:abc2b-2;
 	.
+
 
 ex:error2c a ex:QCardExact1Class ; # 1 error
 	ex:qCardExact1 ex:abc2c-1;
 	ex:qCardExact1 ex:abc2c-2;
 	ex:qCardExact1 ex:abc2c-2;
 	.
+ex:abc2c-1 a ex:QCardExact1 .
+ex:abc2c-2 a ex:QCardExact1 .
 
 
 ex:error3a a ex:QCardExact3Class ; # 1 error
@@ -34,10 +38,15 @@ ex:error3a a ex:QCardExact3Class ; # 1 error
 ex:abc3a-1 a ex:QCardExact3 .
 ex:abc3a-2 a ex:QCardExact3 .
 
+
 ex:error3b a ex:QCardExact3Class ; # 1 error
   	ex:qCardExact3 ex:abc3b-1 ;
    	ex:qCardExact3 ex:abc3b-2 ;
    	ex:qCardExact3 ex:abc3b-3 ;
    	ex:qCardExact3 ex:abc3b-4 ;
    	.
+ex:abc3b-1 a ex:QCardExact3 .
+ex:abc3b-2 a ex:QCardExact3 .
+ex:abc3b-3 a ex:QCardExact3 .
+ex:abc3b-4 a ex:QCardExact3 .
 
