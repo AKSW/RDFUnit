@@ -152,7 +152,7 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
     rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?T1 ?DESCRIPTION where {
                              ?P1 rdfs:domain ?T1 .
                              BIND (concat(str(?P1)," has rdfs:domain different from: ", str(?T1)) AS ?DESCRIPTION)
-                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class ))
+                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                              FILTER ( ?P1 NOT IN ( <http://www.w3.org/ns/rdfa#uri> , <http://www.w3.org/ns/rdfa#term> ))} """ ;
     rut:basedOnPattern rutp:RDFSDOMAIN ;
     rut:resultAnnotation [
@@ -171,7 +171,7 @@ rutg:RDFSDOMAIN-MISS a rut:TestGenerator ;
     rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?DESCRIPTION where {
                              ?P1 rdfs:domain ?T1 .
                              BIND (concat(str(?P1)," does not have rdfs:domain: ", str(?T1)) AS ?DESCRIPTION)
-                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class ))
+                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                              FILTER ( ?P1 NOT IN ( <http://www.w3.org/ns/rdfa#uri> , <http://www.w3.org/ns/rdfa#term> ))} """ ;
     rut:basedOnPattern rutp:RDFSDOMAIN-MISS ;
     rut:resultAnnotation [
