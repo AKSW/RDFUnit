@@ -27,7 +27,7 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               FILTER ( ?class IN (owl:Class, rdfs:Class, schema:Class) )
 
                               # don't check for general classes
-                              FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+                              FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class ))
 
 							  # Keep unique ranges only
                               FILTER NOT EXISTS {?P1 (rdfs:range|schema:rangeIncludes) ?T2 .
@@ -59,7 +59,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
 							  FILTER ( ?class IN (owl:Class, rdfs:Class, schema:Class) )
 
 							  # don't check for general classes
-							  FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+							  FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class ))
 
 							  # Keep unique ranges only
                               FILTER NOT EXISTS {?P1 (rdfs:range|schema:rangeIncludes) ?T2 .
@@ -410,6 +410,7 @@ rutg:OWLCARD-MAX0 a rut:TestGenerator ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
     .
+
 
 ##########################################
 #### owl functional property constrains generators
