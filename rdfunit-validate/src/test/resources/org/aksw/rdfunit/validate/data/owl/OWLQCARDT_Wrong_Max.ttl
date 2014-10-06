@@ -1,0 +1,26 @@
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample wrong data for testing
+
+ex:error6 a ex:QCardMax0Class ;
+	ex:qCardMax0 ex:abc6 ; # 1 error
+	.
+ex:abc6 a ex:QCardMax0.
+
+ex:error7b a ex:QCardMax2Class ;
+	ex:qCardMax2 ex:abc7b-1;
+	ex:qCardMax2 ex:abc7b-2;
+	ex:qCardMax2 ex:abc7b-3; # 1 error
+	.
+
+ex:abc7b-1 a ex:QCardMax2.
+ex:abc7b-2 a ex:QCardMax2.
+ex:abc7b-3 a ex:QCardMax2.
+
+
+
