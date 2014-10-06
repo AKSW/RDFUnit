@@ -7,6 +7,7 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -34,16 +36,19 @@ import java.io.PrintWriter;
 public class ValidateWS extends RDFUnitWebService {
     private static final Logger log = LoggerFactory.getLogger(ValidateWS.class);
 
+    // TODO: pass dataFolder in configuration initialization
     private final String dataFolder = "data/";
     private final String testFolder = dataFolder + "tests/";
-    private final RDFUnit rdfunit = new RDFUnit();
+    private Collection<TestAutoGenerator> autogenerators;
 
     @Override
     public void init() throws ServletException {
         RDFUnitUtils.fillSchemaServiceFromLOV();
         RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"));
         try {
+            RDFUnit rdfunit = new RDFUnit();
             rdfunit.init();
+            autogenerators = rdfunit.getAutoGenerators();
         } catch (RDFReaderException e) {
             log.error("Cannot read patterns and/or pattern generators");
         }
@@ -55,7 +60,7 @@ public class ValidateWS extends RDFUnitWebService {
                 configuration.isAutoTestsEnabled(),
                 configuration.isTestCacheEnabled(),
                 configuration.isManualTestsEnabled());
-        return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
+        return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, autogenerators);
     }
 
     @Override
