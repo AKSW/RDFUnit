@@ -411,6 +411,133 @@ rutg:OWLCARD-MAX0 a rut:TestGenerator ;
         rut:annotationValue rlog:ERROR] ;
     .
 
+##########################################
+#### owl qualified cardinality constrains generators  (onClass)
+##########################################
+
+# owl:qualifiedCardinality number > 0 (count restriction if exists)
+rutg:OWLQCARD a rut:TestGenerator ;
+    dcterms:description """Generates owl:qualifiedCardinality constrains defined in a schema"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) (str(?v)  as ?V1) ?T2 ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction ;
+                                owl:onProperty ?P1 ;
+                                owl:onClass ?T2 ;
+                                owl:qualifiedCardinality ?v .
+                             FILTER (?v > 0) .
+							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OWLQCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:qualifiedCardinality number > 0 (exists in db)
+rutg:OWLQCARDEX a rut:TestGenerator ;
+    dcterms:description """ Generates owl:qualifiedCardinality constrains. We ensure that the property exists at least once"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+							 ?t a  owl:Restriction .
+                             ?t owl:onProperty ?P1 .
+                             owl:onClass ?T2 ;
+                             ?t owl:qualifiedCardinality ?v .
+                             FILTER (?v > 0) .
+							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " (is 0) for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEPQ ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:qualifiedCardinality number = 0 (must not exist)
+rutg:OWLQCARD0 a rut:TestGenerator ;
+    dcterms:description """ Generates owl:qualifiedCardinality constrains. We ensure that the qualifiedCardinality is 0"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?P1 ('?v1' as ?V1) ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction .
+                             ?t owl:onProperty ?P1 .
+                             ?t owl:qualifiedCardinality ?v .
+                             FILTER (?v = 0) .
+							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TRIPLEQ ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:minQualifiedCardinality number > 0 (count restriction if exists)
+rutg:OWLQCARD-MIN a rut:TestGenerator ;
+    dcterms:description """Generates owl:minQualifiedCardinality constrains defined in a schema"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<' as ?OP) (str(?v)  as ?V1) ?T2 ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction ;
+                                owl:onProperty ?P1 ;
+                                owl:onClass ?T2 ;
+                                owl:minQualifiedCardinality ?v .
+                             FILTER (?v > 0) .
+							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OWLQCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:minQualifiedCardinality number > 0 (exists in db)
+rutg:OWLQCARDEX-MIN a rut:TestGenerator ;
+    dcterms:description """ Generates owl:minQualifiedCardinality constrains. We ensure that the property exists at least once"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction .
+                             ?t owl:onProperty ?P1 .
+                             ?t owl:minQualifiedCardinality ?v .
+                             FILTER (?v > 0) .
+							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEPQ ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:manQualifiedCardinality number > 0 (count restriction if exists)
+rutg:OWLQCARD-MAX a rut:TestGenerator ;
+    dcterms:description """Generates owl:minQualifiedCardinality constrains defined in a schema"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?T2 ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction ;
+                                owl:onProperty ?P1 ;
+                                owl:onClass ?T2 ;
+                                owl:maxQualifiedCardinality ?v .
+                             FILTER (?v > 0) .
+							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
+    rut:basedOnPattern rutp:OWLQCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:maxQualifiedCardinality number = 0 (must not exist)
+rutg:OWLQCARD-MAX0 a rut:TestGenerator ;
+    dcterms:description """ Generates owl:maxQualifiedCardinality constrains. We ensure that the cardinality < 0"""@en ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('' as ?NOT) ?P1 ?DESCRIPTION WHERE {
+							 ?T1 rdfs:subClassOf+ ?t .
+                             ?t a  owl:Restriction .
+                             ?t owl:onProperty ?P1 .
+                             ?t owl:maxQualifiedCardinality ?v .
+                             FILTER (?v = 0) .
+							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEPQ ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
 
 ##########################################
 #### owl functional property constrains generators

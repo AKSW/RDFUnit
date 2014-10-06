@@ -127,6 +127,80 @@ ex:CardMax2Class
     ] ;
     .
 
+######################################
+### Qualified cardinality (Class)  ###
+######################################
+
+ex:QCardExact0Class
+	a owl:Class ;
+	rdfs:subClassOf [               # ex:qCardExact0 exactly 0
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardExact0;
+        owl:onClass ex:QCardExact0;
+        owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+	.
+
+ex:QCardExact1Class
+	a owl:Class ;
+	rdfs:subClassOf [               # ex:qCardExact1 exactly 1
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardExact1;
+        owl:onClass ex:QCardExact1;
+        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+	.
+
+ex:QCardExact3Class
+	a owl:Class ;
+    rdfs:subClassOf [               # ex:qCardExact3 exactly 3
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardExact3 ;
+        owl:onClass ex:QCardExact3 ;
+        owl:qualifiedCardinality "3"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:QCardMin0Class
+	a owl:Class ;
+	rdfs:subClassOf [               # ex:qCardMin0 min 0
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardMin0;
+        owl:onClass ex:QCardMin0;
+        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:QCardMin2Class
+    a owl:Class ;
+    rdfs:subClassOf [               # ex:qCardMin2 min 2
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardMin2 ;
+        owl:onClass ex:QCardMin2 ;
+        owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:QCardMax0Class
+    a owl:Class ;
+    rdfs:subClassOf [               # ex:qCardMax0 max 0
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardMax0 ;
+        owl:onClass ex:QCardMax0 ;
+        owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+ex:QCardMax2Class
+    a owl:Class ;
+    rdfs:subClassOf [               # ex:qCardMax2 max 2
+        rdf:type owl:Restriction;
+        owl:onProperty ex:qCardMax2 ;
+        owl:onClass ex:QCardMax2 ;
+        owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
 ############################
 ### Literals / Datatypes ###
 ############################

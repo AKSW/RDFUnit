@@ -330,6 +330,59 @@ rutp:OWLCARDT-V1 a rut:Parameter ;
     rut:parameterConstraint rut:None ;
     rut:constraintPattern """[0-9]*""" .
 
+
+##########################################
+#### owl Qualified cardinality constrains pattern
+##########################################
+
+rutp:OWLQCARDT a rut:Pattern ;
+    dcterms:identifier "OWLQCARDT" ;
+    dcterms:description """Emulates the owl:qualifiedCardinality constrain on a Class"""@en ;
+    rut:sparqlWherePattern """ {
+	                                ?resource rdf:type/rdfs:subClassOf* %%T1%%.
+	                                ?resource %%P1%% ?c.
+	                                ?c rdf:type/rdfs:subClassOf* %%T2%%.
+                                } GROUP BY ?resource
+                                HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;  #count!=0 see https://issues.apache.org/jira/browse/JENA-750
+    rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
+                                    	?resource rdf:type/rdfs:subClassOf* %%T1%%.
+                                    	?resource %%P1%% ?c.
+									} }""" ;
+    rut:parameter rutp:OWLQCARDT-T1 ;
+    rut:parameter rutp:OWLQCARDT-P1 ;
+    rut:parameter rutp:OWLQCARDT-OP ;
+    rut:parameter rutp:OWLQCARDT-V1 ;
+    rut:parameter rutp:OWLQCARDT-T2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
+
+rutp:OWLQCARDT-T1 a rut:Parameter ;
+    dcterms:identifier "T1" ;
+    rut:parameterConstraint rut:Class .
+
+rutp:OWLQCARDT-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:OWLQCARDT-OP a rut:Parameter ;
+    dcterms:identifier "OP" ;
+    rut:parameterConstraint rut:Operator ;
+    rut:constraintPattern """<|<=|>|>=|=|!=""" .
+
+rutp:OWLQCARDT-V1 a rut:Parameter ;
+    dcterms:identifier "V1" ;
+    rut:parameterConstraint rut:None ;
+    rut:constraintPattern """[0-9]*""" .
+
+rutp:OWLQCARDT-T2 a rut:Parameter ;
+    dcterms:identifier "T2" ;
+    rut:parameterConstraint rut:Class .
+
+
 ##########################################
 #### Type & Property dependency (equivalent to card > 0)
 ##########################################
