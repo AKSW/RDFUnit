@@ -6,6 +6,7 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
+import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 
@@ -142,5 +143,13 @@ public class RDFUnitDemoSession extends VaadinSession {
      */
     public static RDFUnitConfiguration getRDFUnitConfiguration() {
         return VaadinSession.getCurrent().getAttribute(RDFUnitConfiguration.class);
+    }
+
+    public static void setExecutorMonitor(SimpleTestExecutorMonitor monitor) {
+        VaadinSession.getCurrent().setAttribute(SimpleTestExecutorMonitor.class, monitor);
+    }
+
+    public static SimpleTestExecutorMonitor getExecutorMonitor() {
+        return VaadinSession.getCurrent().getAttribute(SimpleTestExecutorMonitor.class);
     }
 }

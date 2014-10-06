@@ -51,8 +51,6 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
     private final Label messageLabel = new Label();
     private final TestExecutorMonitor progressMonitor = createProgressMonitor();
-    private SimpleTestExecutorMonitor modelMonitor;
-
 
     private final ProgressBar testingProgress = new ProgressBar();
     private final Label testingProgressLabel = new Label("0/0");
@@ -240,16 +238,17 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                         //OutputStream to get the results as string and display
                         final ByteArrayOutputStream os = new ByteArrayOutputStream();
+                        final SimpleTestExecutorMonitor monitor = RDFUnitDemoSession.getExecutorMonitor();
                         try {
                             if (resultFormat.equals("html")) {
-                                RDFWriterFactory.createHTMLWriter((TestCaseExecutionType) execTypeSelect.getValue(), os).write(modelMonitor.getModel());
+                                RDFWriterFactory.createHTMLWriter((TestCaseExecutionType) execTypeSelect.getValue(), os).write(monitor.getModel());
                             } else {
-                                new RDFStreamWriter(os, resultFormat).write(modelMonitor.getModel());
+                                new RDFStreamWriter(os, resultFormat).write(monitor.getModel());
                             }
                             // cache results in result folder
                             long randomNumber = (new Random()).nextInt(10000);
                             String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
-                            new RDFFileWriter(fileLocation, "TURTLE").write(modelMonitor.getModel());
+                            new RDFFileWriter(fileLocation, "TURTLE").write(monitor.getModel());
                         } catch (RDFWriterException e) {
                             Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
                             log.error("Error Occurred in Serialization", e);
@@ -383,10 +382,9 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                 SimpleTestExecutorMonitor sessionMonitor = new SimpleTestExecutorMonitor(false);
                 sessionMonitor.setExecutionType(executionType);
-                TestExecutionView.this.modelMonitor = sessionMonitor;
 
                 try {
-                    modelMonitor.setUserID(RDFUnitDemoSession.getHostName());
+                    sessionMonitor.setUserID(RDFUnitDemoSession.getHostName());
                 } catch (Exception e) {
                     // using default
                 }
@@ -394,8 +392,8 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                 testExecutor.clearTestExecutorMonitor();
                 testExecutor.addTestExecutorMonitor(progressMonitor);
-                testExecutor.addTestExecutorMonitor(modelMonitor);
-
+                testExecutor.addTestExecutorMonitor(sessionMonitor);
+                RDFUnitDemoSession.setExecutorMonitor(sessionMonitor);
 
                 Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
