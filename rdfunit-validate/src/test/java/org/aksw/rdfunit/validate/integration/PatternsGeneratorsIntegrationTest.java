@@ -55,6 +55,10 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsOWL.put("owl/OWLCARDT_Wrong_Exact.ttl", 6);
         testsWithErrorsOWL.put("owl/OWLCARDT_Wrong_Min.ttl", 2);
         testsWithErrorsOWL.put("owl/OWLCARDT_Wrong_Max.ttl", 2);
+        testsWithErrorsOWL.put("owl/OWLQCARDT_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/OWLQCARDT_Wrong_Exact.ttl", 6);
+        testsWithErrorsOWL.put("owl/OWLQCARDT_Wrong_Min.ttl", 2);
+        testsWithErrorsOWL.put("owl/OWLQCARDT_Wrong_Max.ttl", 2);
         testsWithErrorsOWL.put("owl/RDFLANGSTRING_Correct.ttl", 0);
         testsWithErrorsOWL.put("owl/RDFLANGSTRING_Wrong.ttl", 2);
 

@@ -1,0 +1,80 @@
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample correct data for testing
+
+
+ex:correct1 a ex:QCardExact0Class .
+
+
+ex:correct2 a ex:QCardExact1Class ;
+	ex:qCardExact1 ex:abc2 ;
+	.
+ex:abc2 a ex:QCardExact1 .
+
+ex:correct3 a ex:QCardExact3Class ;
+	ex:qCardExact3 ex:abc3-1 ;
+	ex:qCardExact3 ex:abc3-2 ;
+	ex:qCardExact3 ex:abc3-3 ;
+	.
+ex:abc3-1 a ex:QCardExact3 .
+ex:abc3-2 a ex:QCardExact3 .
+ex:abc3-3 a ex:QCardExact3 .
+
+
+
+ex:correct4 a ex:QCardMin0Class ;
+    ex:qCardMin0 ex:abc4-1 ;
+    ex:qCardMin0 ex:abc4-2 ;
+    ex:qCardMin0 ex:abc4-3 ;
+    ex:qCardMin0 ex:abc4-4 ;
+    ex:qCardMin0 ex:abc4-5 ;
+    .
+ex:abc4-1 a ex:QCardMin0 .
+ex:abc4-2 a ex:QCardMin0  .
+ex:abc4-3 a ex:QCardMin0  .
+ex:abc4-3 a ex:QCardMin0  .
+ex:abc4-3 a ex:QCardMin0  .
+
+
+ex:correct5 a ex:QCardMin2Class ;
+	ex:qCardMin2 ex:abc5-1 ;
+	ex:qCardMin2 ex:abc5-2 ;
+	.
+ex:abc5-1 a ex:QCardMin2 .
+ex:abc5-2 a ex:QCardMin2 .
+
+
+ex:correct5b a ex:QCardMin2Class ;
+	ex:qCardMin2 ex:abc5b-1 ;
+	ex:qCardMin2 ex:abc5b-2 ;
+	ex:qCardMin2 ex:abc5b-3 ;
+	.
+ex:abc5b-1 a ex:QCardMin2 .
+ex:abc5b-2 a ex:QCardMin2 .
+ex:abc5b-3 a ex:QCardMin2 .
+
+
+
+ex:correct6 a ex:QCardMax0Class .
+
+ex:correct7 a ex:QCardMax2Class ;
+	ex:qCardMax2 ex:abc7-1;
+	.
+ex:abc7-1 a ex:QCardMax2 .
+
+
+
+ex:correct7b a ex:QCardMax2Class ;
+	ex:qCardMax2 ex:abc7b-1;
+	ex:qCardMax2 ex:abc7b-2;
+	.
+ex:abc7b-1 a ex:QCardMax2 .
+ex:abc7b-2 a ex:QCardMax2 .
+
+
+

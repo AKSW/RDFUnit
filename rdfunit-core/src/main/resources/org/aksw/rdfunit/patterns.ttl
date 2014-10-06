@@ -330,6 +330,59 @@ rutp:OWLCARDT-V1 a rut:Parameter ;
     rut:parameterConstraint rut:None ;
     rut:constraintPattern """[0-9]*""" .
 
+
+##########################################
+#### owl Qualified cardinality constrains pattern
+##########################################
+
+rutp:OWLQCARDT a rut:Pattern ;
+    dcterms:identifier "OWLQCARDT" ;
+    dcterms:description """Emulates the owl:qualifiedCardinality constrain on a Class"""@en ;
+    rut:sparqlWherePattern """ {
+	                                ?resource rdf:type/rdfs:subClassOf* %%T1%%.
+	                                ?resource %%P1%% ?c.
+	                                ?c rdf:type/rdfs:subClassOf* %%T2%%.
+                                } GROUP BY ?resource
+                                HAVING ( ( count(?c)  %%OP%% %%V1%% ) && ( count(?c)  != 0 ) ) """ ;  #count!=0 see https://issues.apache.org/jira/browse/JENA-750
+    rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total) WHERE { {
+                                    	?resource rdf:type/rdfs:subClassOf* %%T1%%.
+                                    	?resource %%P1%% ?c.
+									} }""" ;
+    rut:parameter rutp:OWLQCARDT-T1 ;
+    rut:parameter rutp:OWLQCARDT-P1 ;
+    rut:parameter rutp:OWLQCARDT-OP ;
+    rut:parameter rutp:OWLQCARDT-V1 ;
+    rut:parameter rutp:OWLQCARDT-T2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
+
+rutp:OWLQCARDT-T1 a rut:Parameter ;
+    dcterms:identifier "T1" ;
+    rut:parameterConstraint rut:Class .
+
+rutp:OWLQCARDT-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:OWLQCARDT-OP a rut:Parameter ;
+    dcterms:identifier "OP" ;
+    rut:parameterConstraint rut:Operator ;
+    rut:constraintPattern """<|<=|>|>=|=|!=""" .
+
+rutp:OWLQCARDT-V1 a rut:Parameter ;
+    dcterms:identifier "V1" ;
+    rut:parameterConstraint rut:None ;
+    rut:constraintPattern """[0-9]*""" .
+
+rutp:OWLQCARDT-T2 a rut:Parameter ;
+    dcterms:identifier "T2" ;
+    rut:parameterConstraint rut:Class .
+
+
 ##########################################
 #### Type & Property dependency (equivalent to card > 0)
 ##########################################
@@ -369,6 +422,53 @@ rutp:TYPRODEP-NOT a rut:Parameter ;
 rutp:TYPRODEP-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
+
+
+##########################################
+#### Type & Property/Type dependency (equivalent to Qualified Cardinality > 0)
+##########################################
+
+rutp:TYPROTYPEDEP a rut:Pattern ;
+    dcterms:identifier "TYPROTYPEDEP" ;
+    dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence"""@en ;
+    rut:sparqlWherePattern """ {
+                                    {
+										?resource rdf:type/rdfs:subClassOf* %%T1%% .
+                                    	FILTER %%NOT%% EXISTS {?resource %%P1%% ?v .
+                                    	                        ?v rdf:type/rdfs:subClassOf* %%T2%% .
+                                    	                        FILTER (%%P1%% != rdf:type)
+                                    	}
+									}
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT  (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource rdf:type/rdfs:subClassOf* %%T1%% .} """ ;
+    rut:parameter rutp:TYPROTYPEDEP-T1 ;
+    rut:parameter rutp:TYPROTYPEDEP-NOT ;
+    rut:parameter rutp:TYPROTYPEDEP-P1 ;
+    rut:parameter rutp:TYPROTYPEDEP-T2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
+
+rutp:TYPROTYPEDEP-T1 a rut:Parameter ;
+    dcterms:identifier "T1" ;
+    rut:parameterConstraint rut:Class .
+
+rutp:TYPROTYPEDEP-NOT a rut:Parameter ;
+    dcterms:identifier "NOT" ;
+    rut:parameterConstraint rut:Operator ;
+    rut:constraintPattern """NOT|""" .
+
+rutp:TYPROTYPEDEP-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:TYPROTYPEDEP-T2 a rut:Parameter ;
+    dcterms:identifier "T2" ;
+    rut:parameterConstraint rut:Class .
 
 ################################################################################
 #### unique value constraint of inverse functional properties
@@ -822,6 +922,43 @@ rutp:TRIPLE-V1 a rut:Parameter ;
     dcterms:identifier "V1" ;
     rut:parameterConstraint rut:None .
 
+
+################################################################################
+#### TRIPLEDR - TRIPLE with Domain & Range   (ATM used for Qualified CArdinality checks)
+#### Resource has P1  with domain & range for P1
+################################################################################
+
+rutp:TRIPLEDR a rut:Pattern ;
+    dcterms:identifier "TRIPLEDR" ;
+    dcterms:description """Resource has ValueA for PropertyB"""@en ;
+    rut:sparqlWherePattern """ {
+                                    ?resource rdf:type/rdfs:subClassOf* %%T1%% ;
+                                              %%P1%% ?v .
+									?v rdf:type/rdfs:subClassOf* %%T2%% .
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?resource) AS ?total)
+                                     WHERE { ?resource %%P1%% ?value . }""" ;
+    rut:parameter rutp:TRIPLEDR-T1 ;
+    rut:parameter rutp:TRIPLEDR-P1 ;
+    rut:parameter rutp:TRIPLEDR-T2 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationPath ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    .
+
+rutp:TRIPLEDR-T1 a rut:Parameter ;
+    dcterms:identifier "T1" ;
+    rut:parameterConstraint rut:Class .
+
+rutp:TRIPLEDR-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:TRIPLEDR-T2 a rut:Parameter ;
+    dcterms:identifier "T2" ;
+    rut:parameterConstraint rut:Class .
 
 ################################################################################
 #### OBJFUNC
