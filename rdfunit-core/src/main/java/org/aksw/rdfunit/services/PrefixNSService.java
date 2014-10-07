@@ -5,6 +5,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Map;
 
@@ -106,8 +107,8 @@ public final class PrefixNSService {
         BidiMap<String, String> dualMap = new DualHashBidiMap<>();
         Model prefixModel = ModelFactory.createDefaultModel();
 
-        try {
-            prefixModel.read(PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl"), null, "TURTLE");
+        try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl");) {
+            prefixModel.read(is, null, "TURTLE");
         } catch (Exception e) {
             throw new RuntimeException("Cannot read prefixes.ttl from resources", e);
         }

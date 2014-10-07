@@ -7,6 +7,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * @author Dimitris Kontokostas
@@ -64,8 +65,7 @@ public class RDFFileWriter extends RDFWriter {
             }
         }
 
-        try (FileOutputStream fos = new FileOutputStream(file);)
-        {
+        try (OutputStream fos = new FileOutputStream(file);) {
 
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
             PrefixNSService.setNSPrefixesInModel(model);
