@@ -2,7 +2,7 @@ env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "Z2ojEkRBC3mmNraadphidPjEabJpGQixlSnn+AoIzCy6nnSX8pJ6EALabKwiys7URWgFQ0C6JfdmW63GEeEoKQ8q61k0yLkmz2B7pKItOSsJjQFU8d81jpBWo2w9JCCJWKr58JExVnsiZt8Mz2Z6hVIolV1PV0SnbAu6yaDL92Q="
+   - secure: "H83RF/FQlVTAWgx4ilU1d3aT0WJv2UA6O+KUSfwDP2GcP4paI8xkOKoijFGmb8rbWqh5LmzRVfX/Gm/8FpvwCk8YpE+20qCQ/j/4RDjYgL8v5eDuNaTNcGSBdlHFSNxhNllEEZvGm7t48dNiwSz5cL/4zcxoDSat/0gYXYGkBpo="
 
 language: java
 jdk:
