@@ -44,28 +44,32 @@ public class RDFFileWriter extends RDFWriter {
 
     @Override
     public void write(QueryExecutionFactory qef) throws RDFWriterException {
-        try {
-            File file = new File(filename);
 
-            if (file.exists() && skipIfExists) {
-                return;
-            }
+        File file = new File(filename);
+        if (file.exists() && skipIfExists) {
+            return;
+        }
 
-            if (file.exists() && !overwrite) {
-                throw new RDFWriterException("File already exists and cannot overwrite");
-            }
+        if (file.exists() && !overwrite) {
+            throw new RDFWriterException("Error writing file: File already exists and cannot overwrite");
+        }
 
-            if (createParentDirectories) {
-                File parentF = file.getParentFile();
-                if (parentF != null && !parentF.exists()) {
-                    if (!parentF.mkdirs()) {
-                        throw new RDFWriterException("Cannot create new directory structure for file: " + filename);
-                    }
+
+        if (createParentDirectories) {
+            File parentF = file.getParentFile();
+            if (parentF != null && !parentF.exists()) {
+                if (!parentF.mkdirs()) {
+                    throw new RDFWriterException("Error writing file: Cannot create new directory structure for file: " + filename);
                 }
             }
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(file);)
+        {
+
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
             PrefixNSService.setNSPrefixesInModel(model);
-            model.write(new FileOutputStream(file), filetype);
+            model.write(fos, filetype);
 
         } catch (Exception e) {
             throw new RDFWriterException("Error writing file: " + e.getMessage(), e);
