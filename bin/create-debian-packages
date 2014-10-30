@@ -1,0 +1,15 @@
+#!/bin/bash
+
+mvn clean
+#comment=$(git log -1)
+#version=$(mvn help:evaluate -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)')
+#cd rdfunit-validate
+#dch -v $version "$comment"
+#comment="$(echo "$comment"|tr -d '\n')"
+#sed -i "1s/^/ * $comment\n/" debian/CHANGES.txt
+
+# create cli deb
+mvn -pl rdfunit-validate -am install -Pdebpackage
+
+# create webdemo deb
+mvn -pl rdfunit-webdemo -am  install -Pdebpackage

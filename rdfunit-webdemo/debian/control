@@ -1,0 +1,11 @@
+Package: rdfunit-webdemo
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Homepage: http://aksw.org/Projects/RDFUnit.html
+Depends: tomcat7
+Maintainer: Dimitris Kontokostas <kontokostas@informatik.uni-leipzig.de>
+Description: a tool for test-driven quality evaluation of Linked Data quality
+	RDFUnit is a test driven data-debugging framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint. All test cases are executed as SPARQL queries using a pattern-based transformation approach.
+Distribution: development

@@ -1,5 +1,0 @@
-#!/bin/bash
-
-MVN="mvn"
-
-$MVN clean install && $MVN -pl rdfunit-webdemo tomcat7:redeploy

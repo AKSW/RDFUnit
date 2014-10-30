@@ -179,7 +179,7 @@
                                 </goals>
                                 <configuration>
                                     <verbose>true</verbose>
-                                    <deb>${basedir}/target/rdfunit-cli-${project.version}.deb</deb>
+                                    <deb>${basedir}/target/${project.build.finalName}-${project.version}.deb</deb>
                                     <controlDir>${basedir}/debian</controlDir>
                                     <dataSet>
                                         <data>
