@@ -1,5 +1,44 @@
-PACKAGE (0) UNRELEASED; urgency=low
+PACKAGE (0.7.2-SNAPSHOT) UNRELEASED; urgency=low
 
+  [ dcherix ]
   * Initial release. (Closes: #XXXXXX)
 
- -- dcherix <dcherix@jl-Latitude-E6420>  Sun, 17 Nov 2013 11:58:44 +0100
+  [ Dimitris Kontokostas ]
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+  * commit 1cfc6a32708b7622c29d146d9f03684c5d52f6b5 Author: Dimitris
+    Kontokostas <jimkont@gmail.com> Date:   Tue Oct 7 16:04:43 2014
+    +0300      skip anonymous classes
+
+ -- Dimitris Kontokostas <jim@jimbutu>  Thu, 30 Oct 2014 14:07:43 +0200

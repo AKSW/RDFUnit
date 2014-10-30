@@ -1,0 +1,16 @@
+#!/usr/bin/perl -w
+if (( grep {$_ eq '-f1'} @ARGV ) || ( grep {$_ eq '--data-folder'} @ARGV )){
+	system ("java", "-jar", "/usr/share/java/rdfunit/rdfunit-cli.jar", @ARGV);
+} else {
+	push (@ARGV, "-f");
+	push (@ARGV, "$ENV{HOME}/.rdfunit/");
+	if (! (-d "$ENV{HOME}/.rdfunit")){
+		print("Creating rdfunit dir under $ENV{HOME}/.rdfunit\n");
+		$ok=mkdir("$ENV{HOME}/rdfunit",0777);
+		print "$!\n" if ($ok == 0);
+		print ("Copying data to ~/.rdfunit\n");
+		system("cp","-r","/usr/share/java/rdfunit/data/","$ENV{HOME}/.rdfunit/");
+	}
+
+	system ("java", "-jar", "/usr/share/java/rdfunit/rdfunit-cli.jar", @ARGV);
+}

@@ -170,7 +170,7 @@
                     <plugin>
                         <artifactId>jdeb</artifactId>
                         <groupId>org.vafer</groupId>
-                        <version>1.0</version>
+                        <version>1.3</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -178,25 +178,25 @@
                                     <goal>jdeb</goal>
                                 </goals>
                                 <configuration>
-                                    <deb>${basedir}/target/rdfunit-validate-${project.version}.deb</deb>
+                                    <verbose>true</verbose>
+                                    <deb>${basedir}/target/rdfunit-cli-${project.version}.deb</deb>
                                     <controlDir>${basedir}/debian</controlDir>
                                     <dataSet>
                                         <data>
-                                            <src>${basedir}/target/rdfunit-validate.jar</src>
+                                            <src>${basedir}/target/rdfunit-cli.jar</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <serialization>/etc/share/java/rdfunit</serialization>
+                                                <prefix>/usr/share/java/rdfunit</prefix>
                                             </mapper>
                                         </data>
                                         <data>
                                             <src>${project.basedir}/debian/rdfunit</src>
                                             <type>file</type>
-
                                             <mapper>
                                                 <type>perm</type>
                                                 <filemode>777</filemode>
-                                                <serialization>/usr/bin</serialization>
+                                                <prefix>/usr/bin</prefix>
                                             </mapper>
                                         </data>
 
@@ -207,7 +207,7 @@
                                             <mapper>
                                                 <type>perm</type>
                                                 <filemode>777</filemode>
-                                                <serialization>/etc/share/java/rdfunit/data</serialization>
+                                                <prefix>/usr/share/java/rdfunit/data</prefix>
                                             </mapper>
                                         </data>
                                     </dataSet>

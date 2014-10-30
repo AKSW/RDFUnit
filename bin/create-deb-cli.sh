@@ -5,4 +5,4 @@ cd rdfunit-validate
 dch -v $version "$comment"
 comment="$(echo "$comment"|tr -d '\n')"
 sed -i "1s/^/ * $comment\n/" debian/CHANGES.txt
-mvn clean install -DskipTests -Pdebpackage
+mvn clean install -DskipTests -Pdebpackage -am
