@@ -13,3 +13,7 @@ mvn -pl rdfunit-validate -am install -Pdebpackage
 
 # create webdemo deb
 mvn -pl rdfunit-webdemo -am  install -Pdebpackage
+
+# move *.deb to project folder
+find . -iname "rdfunit*.deb" -exec mv '{}' ./ \;
+find . -iname "rdfunit*.changes" -exec mv '{}' ./ \;

@@ -381,7 +381,7 @@
                                     </dataSet>
                                     <changesIn>${basedir}/debian/CHANGES.txt</changesIn>
                                     <changesSave>${basedir}/debian/CHANGES.txt</changesSave>
-                                    <changesOut>${project.build.directory}/${project.build.finalName}.changes</changesOut>
+                                    <changesOut>${project.build.directory}/${project.build.finalName}-${project.version}.changes</changesOut>
                                 </configuration>
                             </execution>
                         </executions>
