@@ -6,6 +6,7 @@ env:
 
 language: java
 jdk:
+  - oraclejdk7
   - openjdk7
 branches:
   only:
@@ -20,7 +21,8 @@ notifications:
       - jimkont@gmail.com
     on_success: change
     on_failure: change
-
+after_success:
+  - mvn clean cobertura:cobertura coveralls:cobertura
 addons:
   coverity_scan:
     project:
