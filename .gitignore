@@ -5,6 +5,8 @@
 *.project
 *.settings
 .idea
+*.deb
+*.changes
 target
 pom.xml.releaseBackup
 dependency-reduced-pom.xml
