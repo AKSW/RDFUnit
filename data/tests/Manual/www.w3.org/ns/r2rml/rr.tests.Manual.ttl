@@ -1,0 +1,39 @@
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix rutp:  <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rlog:  <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix oslc:  <http://open-services.net/ns/core#> .
+@prefix rutg:  <http://rdfunit.aksw.org/data/generators#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dsp:   <http://dublincore.org/dc-dsp#> .
+@prefix schema: <http://schema.org/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rut:   <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutr:  <http://rdfunit.aksw.org/data/results#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix spin:  <http://spinrdf.org/spin#> .
+@prefix rutt:  <http://rdfunit.aksw.org/data/tests#> .
+@prefix ruts:  <http://rdfunit.aksw.org/data/testsuite#> .
+
+
+rutt:rr-subjectmap-template-missing-class
+    a       rut:ManualTestCase ;
+    dcterms:description "A rr.subjectMap with an rr:template should have a rr:class defined";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#subjectMap>, <http://www.w3.org/ns/r2rml#template>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                             ?resource <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#template> ?template.
+                             FILTER NOT EXISTS {?resource <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class. }}""" ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#template> ?template. } """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#subjectMap> ;
+	];
+	.
