@@ -106,8 +106,9 @@ public abstract class TestExecutor {
                 results = executeSingleTest(source, testCase);
             } catch (TestCaseExecutionException e) {
                 status = e.getStatus();
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
+            } catch (RuntimeException e) {
+                //Thread.sleep(...) when VOS (SPARQL Endpoint crashes we can put a sleep here until it restarts and comment the throw
+                throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
             } catch (Exception e) {
                 log.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
                 status = TestCaseResultStatus.Error;
