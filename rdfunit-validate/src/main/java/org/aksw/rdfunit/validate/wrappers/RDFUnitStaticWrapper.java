@@ -204,7 +204,7 @@ public class RDFUnitStaticWrapper {
                         getOntologySource())
         );
 
-        testExecutor.execute(modelSource, getTestSuite(), 0);
+        testExecutor.execute(modelSource, getTestSuite());
         overviewResults.set(testExecutorMonitor.getOverviewResults());
 
         return testExecutorMonitor.getModel();
@@ -244,7 +244,7 @@ public class RDFUnitStaticWrapper {
 
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(testCaseExecutionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
-        testExecutor.execute(dataset, testSuite, 0);
+        testExecutor.execute(dataset, testSuite);
         overviewResults.set(testExecutorMonitor.getOverviewResults());
 
         return testExecutorMonitor.getModel();

@@ -110,7 +110,7 @@ public class ValidateCLI {
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results
-        testExecutor.execute(dataset, testSuite, 0);
+        testExecutor.execute(dataset, testSuite);
 
 
         // Write results to RDFWriter ()

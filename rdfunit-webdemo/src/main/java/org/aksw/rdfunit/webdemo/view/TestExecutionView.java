@@ -397,7 +397,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
                 Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
-                RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite(), 0);
+                RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite());
 
             }
         }

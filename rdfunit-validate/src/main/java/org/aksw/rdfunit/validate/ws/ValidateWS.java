@@ -73,7 +73,7 @@ public class ValidateWS extends RDFUnitWebService {
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results
-        testExecutor.execute(dataset, testSuite, 0);
+        testExecutor.execute(dataset, testSuite);
 
         return testExecutorMonitor.getModel();
     }

@@ -70,10 +70,9 @@ public abstract class TestExecutor {
      *
      * @param source    the source we want to test
      * @param testSuite the test suite we test the source against
-     * @param delay     delay between sparql queries
      * @return true if all TC executed successfully, false otherwise
      */
-    public boolean execute(Source source, TestSuite testSuite, int delay) {
+    public boolean execute(Source source, TestSuite testSuite) {
         // used to hold the whole status of the execution
         boolean success = true;
 
@@ -142,14 +141,6 @@ public abstract class TestExecutor {
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {
                 monitor.singleTestExecuted(testCase, status, results);
-            }
-
-            if (delay > 0) {
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    // do nothing
-                }
             }
 
         } // End of TC execution for loop
