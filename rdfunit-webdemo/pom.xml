@@ -368,7 +368,6 @@
                                 <configuration>
                                     <verbose>true</verbose>
                                     <deb>${basedir}/target/${project.build.finalName}-${project.version}.deb</deb>
-                                    <controlDir>${basedir}/debian</controlDir>
                                     <dataSet>
                                         <data>
                                             <src>${project.build.directory}/${project.build.finalName}.war</src>

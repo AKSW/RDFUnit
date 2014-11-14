@@ -180,7 +180,6 @@
                                 <configuration>
                                     <verbose>true</verbose>
                                     <deb>${basedir}/target/${project.build.finalName}-${project.version}.deb</deb>
-                                    <controlDir>${basedir}/debian</controlDir>
                                     <dataSet>
                                         <data>
                                             <src>${basedir}/target/rdfunit-cli.jar</src>
@@ -191,7 +190,7 @@
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${project.basedir}/debian/rdfunit</src>
+                                            <src>${project.basedir}/src/deb/control/rdfunit</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
