@@ -45,6 +45,9 @@ public class RDFUnitConfiguration {
     /* Dereference testing (if different from datasetURI) */
     private String customDereferenceURI = null;
 
+    /* used to cache the test source when we initially do stats for auto loading test cases */
+    private Source testSource = null;
+
     /* Use text directly as a source */
     private String customTextSource = null;
     private SerializationFormat customTextFormat = null;
@@ -152,6 +155,10 @@ public class RDFUnitConfiguration {
 
     public Source getTestSource() {
 
+        if (testSource != null) {
+            return testSource;
+        }
+
         if (endpointURI != null && !endpointURI.isEmpty()) {
             // return a SPARQL Endpoint source
             EndpointTestSource endpointSource = new EndpointTestSource(
@@ -166,17 +173,19 @@ public class RDFUnitConfiguration {
             endpointSource.setPagination(this.endpointQueryPagination);
             endpointSource.setQueryLimit(this.endpointQueryLimit);
 
-            return endpointSource;
+            testSource = endpointSource;
+            return testSource;
         }
 
         // Return a text source
         if (customTextSource != null) {
             RDFReader textReader = RDFReaderFactory.createReaderFromText(customTextSource, customTextFormat.getName());
-            return new DumpTestSource(
+            testSource =  new DumpTestSource(
                     CacheUtils.getAutoPrefixForURI(datasetURI),
                     datasetURI,
                     textReader,
                     getAllSchemata());
+            return testSource;
         }
 
         // return a DumpSource
@@ -185,11 +194,12 @@ public class RDFUnitConfiguration {
         if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
             tmp_customDereferenceURI = customDereferenceURI;
         }
-        return new DumpTestSource(
+        testSource = new DumpTestSource(
                 CacheUtils.getAutoPrefixForURI(datasetURI),
                 datasetURI,
                 tmp_customDereferenceURI,
                 getAllSchemata());
+        return testSource;
     }
 
     public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
