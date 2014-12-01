@@ -262,7 +262,7 @@ rutt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
         ?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context> .
-        FILTER ( NOT EXISTS { ?resource rdf:Type/rdfs:subClassOf+ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString>  } )
+        FILTER NOT EXISTS { ?resource rdf:type/rdfs:subClassOf+ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString>  }
         # previous:
        #       {?resource a <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CStringImpl>}
        #         UNION
