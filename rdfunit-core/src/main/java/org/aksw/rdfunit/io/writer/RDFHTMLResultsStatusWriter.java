@@ -29,7 +29,7 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
     }
 
     @Override
-    protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) {
+    protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
 
@@ -75,7 +75,7 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RDFWriterException(e);
         } finally {
             if (qe != null) {
                 qe.close();

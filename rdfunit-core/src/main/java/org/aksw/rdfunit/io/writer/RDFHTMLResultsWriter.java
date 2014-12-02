@@ -55,7 +55,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
 
     protected abstract StringBuffer getResultsHeader();
 
-    protected abstract StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI);
+    protected abstract StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI)  throws RDFWriterException;
 
     private StringBuffer getHeader() {
         StringBuffer header = new StringBuffer();
@@ -73,7 +73,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
         return new StringBuffer("</body></html>");
     }
 
-    private Collection<String> getTestExecutionURI(QueryExecutionFactory qef) {
+    private Collection<String> getTestExecutionURI(QueryExecutionFactory qef) throws RDFWriterException {
         ArrayList<String> executionURIs = new ArrayList<>();
         String sparql =
                 PrefixNSService.getSparqlPrefixDecl() +
@@ -92,7 +92,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RDFWriterException(e);
         } finally {
             if (qe != null) {
                 qe.close();
@@ -191,7 +191,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
         return stats;
     }
 
-    private StringBuffer getTestExecutionResults(QueryExecutionFactory qef, String testExecution) {
+    private StringBuffer getTestExecutionResults(QueryExecutionFactory qef, String testExecution) throws RDFWriterException {
         StringBuffer results = new StringBuffer();
         results.append("<h3>Results</h3>");
         results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\"><thead>");
