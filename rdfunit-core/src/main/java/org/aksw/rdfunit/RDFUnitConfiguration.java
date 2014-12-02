@@ -10,10 +10,12 @@ import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.DatasetStatistics;
 
+import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -193,7 +195,16 @@ public class RDFUnitConfiguration {
 
         if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
             tmp_customDereferenceURI = customDereferenceURI;
+            if (customDereferenceURI.equals("-")) {
+                testSource = new DumpTestSource(
+                        CacheUtils.getAutoPrefixForURI(datasetURI),
+                        datasetURI,
+                        new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE"),  // TODO make format configurable
+                        getAllSchemata());
+                return testSource;
+            }
         }
+
         testSource = new DumpTestSource(
                 CacheUtils.getAutoPrefixForURI(datasetURI),
                 datasetURI,
