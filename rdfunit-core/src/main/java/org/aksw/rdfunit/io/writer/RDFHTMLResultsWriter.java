@@ -101,9 +101,9 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
         return executionURIs;
     }
 
-    private StringBuffer getTestExecutionStats(QueryExecutionFactory qef, String testExecution) {
+    private StringBuffer getTestExecutionStats(QueryExecutionFactory qef, String testExecution) throws RDFWriterException {
         StringBuffer stats = new StringBuffer();
-        stats.append("<h2>TestExecution: " + testExecution + "</h2>");
+        stats.append("<h2>TestExecution: ").append(testExecution).append("</h2>");
         //TODO for some reason, using the "testExecution" URI does not work :/
         String sparql =
                 PrefixNSService.getSparqlPrefixDecl() +
@@ -170,7 +170,7 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RDFWriterException(e);
         } finally {
             if (qe != null) {
                 qe.close();
@@ -178,15 +178,15 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
         }
 
         stats.append("<dl class=\"dl-horizontal\">");
-        stats.append("<dt>Dataset</dt><dd> " + source + "</dd>");
-        stats.append("<dt>Test suite</dt><dd>" + used + "</dd>");
-        stats.append("<dt>Test execution started</dt><dd> " + startedAtTime + "</dd>");
-        stats.append("<dt>-ended</dt><dd> " + endedAtTime + "</dd>");
-        stats.append("<dt>Total test cases</dt><dd> " + testsRun + "</dd>");
-        stats.append("<dt>Succeeded</dt><dd> " + testsSuceedded + "</dd>");
-        stats.append("<dt>Failed</dt><dd> " + testsFailed + "</dd>");
-        stats.append("<dt>Timeout / Error </dt><dd> T:" + testsTimeout + " / E: " + testsError + "</dd>");
-        stats.append("<dt>Violation instances</dt><dd> " + totalIndividualErrors + "</dd>");
+        stats.append("<dt>Dataset</dt><dd> ").append(source).append("</dd>");
+        stats.append("<dt>Test suite</dt><dd>").append(used).append("</dd>");
+        stats.append("<dt>Test execution started</dt><dd> ").append(startedAtTime).append("</dd>");
+        stats.append("<dt>-ended</dt><dd> ").append(endedAtTime).append("</dd>");
+        stats.append("<dt>Total test cases</dt><dd> ").append(testsRun).append("</dd>");
+        stats.append("<dt>Succeeded</dt><dd> ").append(testsSuceedded).append("</dd>");
+        stats.append("<dt>Failed</dt><dd> ").append(testsFailed).append("</dd>");
+        stats.append("<dt>Timeout / Error </dt><dd> T:").append(testsTimeout).append(" / E: ").append(testsError).append("</dd>");
+        stats.append("<dt>Violation instances</dt><dd> ").append(totalIndividualErrors).append("</dd>");
         stats.append("</dl>");
         return stats;
     }

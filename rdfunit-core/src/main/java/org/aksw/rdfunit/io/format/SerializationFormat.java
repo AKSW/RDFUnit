@@ -135,8 +135,7 @@ public class SerializationFormat {
         SerializationFormat that = (SerializationFormat) o;
 
         if (!extension.equals(that.extension)) return false;
-        if (!type.equals(that.type)) return false;
-        return name.equals(that.name);
+        return type.equals(that.type) && name.equals(that.name);
 
     }
 

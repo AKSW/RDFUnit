@@ -381,12 +381,11 @@ public final class TestUtils {
             string2hash.append(binding.getValueAsString());
         }
         String md5Hash = TestUtils.getHashFromString(string2hash.toString());
-        if (md5Hash == null) {
-            testURI += JenaUUID.generate().asString();
+        if (md5Hash.isEmpty()) {
+            return testURI + JenaUUID.generate().asString();
         } else {
-            testURI += md5Hash;
+            return testURI + md5Hash;
         }
-        return testURI;
     }
 
     // Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
@@ -399,9 +398,7 @@ public final class TestUtils {
                 sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {
-            throw new RuntimeException("Cannot calculate MD5 hash for :" + str, e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (java.security.NoSuchAlgorithmException | UnsupportedEncodingException e) {
             throw new RuntimeException("Cannot calculate MD5 hash for :" + str, e);
         }
     }

@@ -28,7 +28,7 @@ public class DatasetOverviewResults {
     /*
     * reset all variables
     * */
-    public void reset() {
+    public final void reset() {
         successfullTests = 0;
         failedTests = 0;
         timeoutTests = 0;

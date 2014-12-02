@@ -64,7 +64,7 @@ public class RDFStreamReader extends RDFReader {
     public static String getFormatFromExtension(String filename) {
         String format = "TURTLE";
         try {
-            int index = filename.lastIndexOf(".");
+            int index = filename.lastIndexOf('.');
             String extension = filename.substring(index+1, filename.length() );
             SerializationFormat f = FormatService.getInputFormat(extension);
             if (f != null) {

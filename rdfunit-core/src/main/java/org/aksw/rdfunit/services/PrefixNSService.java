@@ -107,7 +107,7 @@ public final class PrefixNSService {
         BidiMap<String, String> dualMap = new DualHashBidiMap<>();
         Model prefixModel = ModelFactory.createDefaultModel();
 
-        try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl");) {
+        try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl")) {
             prefixModel.read(is, null, "TURTLE");
         } catch (Exception e) {
             throw new RuntimeException("Cannot read prefixes.ttl from resources", e);
@@ -129,7 +129,7 @@ public final class PrefixNSService {
     private static String createSparqlPrefixes() {
         StringBuilder sparqlPrefixes = new StringBuilder();
         for (Map.Entry<String, String> entry : MapInstance.prefixNsBidiMap.entrySet()) {
-            sparqlPrefixes.append(" PREFIX " + entry.getKey() + ": <" + entry.getValue() + "> \n");
+            sparqlPrefixes.append(" PREFIX ").append(entry.getKey()).append(": <").append(entry.getValue()).append("> \n");
         }
         return sparqlPrefixes.toString();
     }

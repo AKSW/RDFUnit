@@ -58,14 +58,12 @@ public class RDFFileWriter extends RDFWriter {
 
         if (createParentDirectories) {
             File parentF = file.getParentFile();
-            if (parentF != null && !parentF.exists()) {
-                if (!parentF.mkdirs()) {
-                    throw new RDFWriterException("Error writing file: Cannot create new directory structure for file: " + filename);
-                }
+            if (parentF != null && !parentF.exists() && !parentF.mkdirs()) {
+                throw new RDFWriterException("Error writing file: Cannot create new directory structure for file: " + filename);
             }
         }
 
-        try (OutputStream fos = new FileOutputStream(file);) {
+        try (OutputStream fos = new FileOutputStream(file)) {
 
             Model model = SparqlUtils.getModelFromQueryFactory(qef);
             PrefixNSService.setNSPrefixesInModel(model);

@@ -69,6 +69,7 @@ public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
                         rowClass = "info";
                         break;
                     default:
+                        break;
                 }
                 String row = String.format(template,
                         rowClass,

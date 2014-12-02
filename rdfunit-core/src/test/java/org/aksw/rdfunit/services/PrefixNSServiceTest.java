@@ -15,7 +15,7 @@ public class PrefixNSServiceTest {
     @Test
     public void testGetPrefix() throws Exception {
         Model prefixModel = ModelFactory.createDefaultModel();
-        try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl");) {
+        try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl")) {
             prefixModel.read(is, null, "TURTLE");
         } catch (Exception e) {
             throw new RuntimeException("Cannot init prefixes");
