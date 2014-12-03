@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Main class used to load & instantiate patterns and provide access to Test Generators
+ * Main class used to load and instantiate patterns and provide access to Test Generators
  *
  * @author Dimitris Kontokostas
  * @since 9/20/13 5:59 PM

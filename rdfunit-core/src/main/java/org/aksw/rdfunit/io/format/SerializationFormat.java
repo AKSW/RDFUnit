@@ -67,7 +67,7 @@ public class SerializationFormat {
     }
 
     /**
-     * Checks if this format is an input format (or input & output) and matches one of the synonyms
+     * Checks if this format is an input format (or input and output) and matches one of the synonyms
      *
      * @param format the format e.g. "nt"
      * @return the boolean true if the format matches or false if it doesn't
@@ -78,7 +78,7 @@ public class SerializationFormat {
     }
 
     /**
-     * Checks if this format is an output format (or input & output) and matches one of the synonyms
+     * Checks if this format is an output format (or input and output) and matches one of the synonyms
      *
      * @param format the format e.g. "nt"
      * @return the boolean true if the format matches or false if it doesn't

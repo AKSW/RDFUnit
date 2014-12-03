@@ -11,42 +11,42 @@ import org.aksw.rdfunit.services.PrefixNSService;
 public enum RLOGLevel {
 
     /**
-     * ERROR -> The ERROR level designates error events that might still allow the application to continue running.
+     * ERROR: The ERROR level designates error events that might still allow the application to continue running.
      */
     ERROR,
 
     /**
-     * TRACE -> The DEBUG Level designates fine-grained informational events that are most useful to debug an application.
+     * TRACE: The DEBUG Level designates fine-grained informational events that are most useful to debug an application.
      */
     DEBUG,
 
     /**
-     * OFF -> The OFF has the highest possible rank and is intended to turn off logging.
+     * OFF: The OFF has the highest possible rank and is intended to turn off logging.
      */
     OFF,
 
     /**
-     * FATAL -> The FATAL level designates very severe error events that will presumably lead the application to abort.
+     * FATAL: The FATAL level designates very severe error events that will presumably lead the application to abort.
      */
     FATAL,
 
     /**
-     * WARN -> The WARN level designates potentially harmful situations.
+     * WARN: The WARN level designates potentially harmful situations.
      */
     WARN,
 
     /**
-     * TRACE -> The TRACE Level designates finer-grained informational events than the DEBUG.
+     * TRACE: The TRACE Level designates finer-grained informational events than the DEBUG.
      */
     TRACE,
 
     /**
-     * INFO -> The INFO level designates informational messages that highlight the progress of the application at coarse-grained level.
+     * INFO: The INFO level designates informational messages that highlight the progress of the application at coarse-grained level.
      */
     INFO,
 
     /**
-     * ALL -> The ALL has the lowest possible rank and is intended to turn on all logging.
+     * ALL: The ALL has the lowest possible rank and is intended to turn on all logging.
      */
     ALL;
 
