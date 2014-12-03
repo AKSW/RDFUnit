@@ -17,6 +17,7 @@ import java.util.*;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:57 PM
+ * @version $Id: $Id
  */
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
@@ -46,6 +47,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         Resource resource = super.serialize(model, testExecutionURI)
@@ -66,6 +68,11 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
         return resource;
     }
 
+    /**
+     * <p>Getter for the field <code>variableAnnotationsMap</code>.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<ResultAnnotation, Set<RDFNode>> getVariableAnnotationsMap() {
         return variableAnnotationsMap;
     }

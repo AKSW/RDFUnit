@@ -31,14 +31,23 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
+ * <p>ValidateCLI class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 11/19/13 10:49 AM
+ * @version $Id: $Id
  */
 public class ValidateCLI {
     private static final Logger log = LoggerFactory.getLogger(ValidateCLI.class);
 
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @throws java.lang.Exception if any.
+     */
     public static void main(String[] args) throws Exception {
 
         CommandLine commandLine = ValidateUtils.parseArguments(args);

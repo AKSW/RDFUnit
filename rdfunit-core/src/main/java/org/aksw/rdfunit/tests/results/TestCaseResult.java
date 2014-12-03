@@ -17,6 +17,7 @@ import java.util.Calendar;
  *
  * @author Dimitris Kontokostas
  * @since 1 /2/14 3:44 PM
+ * @version $Id: $Id
  */
 public abstract class TestCaseResult {
     private final TestCase testCase;

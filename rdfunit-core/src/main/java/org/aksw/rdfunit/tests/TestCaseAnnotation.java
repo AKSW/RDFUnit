@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * <p>TestCaseAnnotation class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 1/3/14 3:40 PM
+ * @version $Id: $Id
  */
 public class TestCaseAnnotation {
     private final TestGenerationType generated;
@@ -28,6 +31,18 @@ public class TestCaseAnnotation {
     private final Collection<ResultAnnotation> resultAnnotations;
     private final Collection<ResultAnnotation> variableAnnotations;
 
+    /**
+     * <p>Constructor for TestCaseAnnotation.</p>
+     *
+     * @param generated a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
+     * @param autoGeneratorURI a {@link java.lang.String} object.
+     * @param appliesTo a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.
+     * @param sourceUri a {@link java.lang.String} object.
+     * @param references a {@link java.util.Collection} object.
+     * @param description a {@link java.lang.String} object.
+     * @param testCaseLogLevel a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
+     * @param resultAnnotations a {@link java.util.Collection} object.
+     */
     public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
         this.generated = generated;
         this.autoGeneratorURI = autoGeneratorURI;
@@ -42,6 +57,13 @@ public class TestCaseAnnotation {
         this.variableAnnotations = findVariableAnnotations();
     }
 
+    /**
+     * <p>serialize.</p>
+     *
+     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     */
     public Resource serialize(Resource resource, Model model) {
         resource
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("dcterms:description")), description)
@@ -66,22 +88,47 @@ public class TestCaseAnnotation {
         return resource;
     }
 
+    /**
+     * <p>Getter for the field <code>generated</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
+     */
     public TestGenerationType getGenerated() {
         return generated;
     }
 
+    /**
+     * <p>Getter for the field <code>autoGeneratorURI</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getAutoGeneratorURI() {
         return autoGeneratorURI;
     }
 
+    /**
+     * <p>Getter for the field <code>appliesTo</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.
+     */
     public TestAppliesTo getAppliesTo() {
         return appliesTo;
     }
 
+    /**
+     * <p>Getter for the field <code>sourceUri</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSourceUri() {
         return sourceUri;
     }
 
+    /**
+     * <p>Getter for the field <code>references</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<String> getReferences() {
         return references;
     }
@@ -132,18 +179,38 @@ public class TestCaseAnnotation {
         return variableAnnotations;
     }
 
+    /**
+     * <p>Getter for the field <code>testCaseLogLevel</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
+     */
     public RLOGLevel getTestCaseLogLevel() {
         return testCaseLogLevel;
     }
 
+    /**
+     * <p>Getter for the field <code>resultAnnotations</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<ResultAnnotation> getResultAnnotations() {
         return resultAnnotations;
     }
 
+    /**
+     * <p>Getter for the field <code>variableAnnotations</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<ResultAnnotation> getVariableAnnotations() {
         return variableAnnotations;
     }
 
+    /**
+     * <p>Getter for the field <code>description</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDescription() {
         return description;
     }

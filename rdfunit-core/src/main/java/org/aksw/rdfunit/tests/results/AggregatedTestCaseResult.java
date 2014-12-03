@@ -15,6 +15,7 @@ import org.aksw.rdfunit.tests.TestCase;
  * @author Dimitris Kontokostas
  *         Description
  * @since 1 /2/14 3:44 PM
+ * @version $Id: $Id
  */
 public class AggregatedTestCaseResult extends StatusTestCaseResult {
     private final long errorCount;
@@ -47,6 +48,7 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
         this.prevalenceCount = prevalenceCount;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
@@ -75,6 +77,7 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
         return prevalenceCount;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + getTestCase().getAbrTestURI();

@@ -3,9 +3,12 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
+ * <p>TestCaseResultStatus class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Describes a test case status result
  * @since 9/25/13 9:05 AM
+ * @version $Id: $Id
  */
 public enum TestCaseResultStatus {
 
@@ -21,12 +24,15 @@ public enum TestCaseResultStatus {
     private static final String schemaPrefix = "rut";
 
     /**
+     * <p>getUri.</p>
+     *
      * @return a full URI/IRI as a String
      */
     public String getUri() {
         return PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus" + name();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return getUri();
@@ -49,6 +55,12 @@ public enum TestCaseResultStatus {
         return null;
     }
 
+    /**
+     * <p>resolve.</p>
+     *
+     * @param value a long.
+     * @return a {@link org.aksw.rdfunit.enums.TestCaseResultStatus} object.
+     */
     public static TestCaseResultStatus resolve(long value) {
         if (value == -2) {
             return Error;

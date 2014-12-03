@@ -3,10 +3,13 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
+ * <p>RLOGLevel class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Defines all available log levels
  *         Copied from NLP2RDF (https://github.com/NLP2RDF/software/blob/master/java-maven/core/jena/src/main/java/org/nlp2rdf/core/vocab/RLOGIndividuals.java)
  * @since 6/17/14 9:49 AM
+ * @version $Id: $Id
  */
 public enum RLOGLevel {
 
@@ -56,12 +59,15 @@ public enum RLOGLevel {
     private static final String schemaPrefix = "rlog";
 
     /**
+     * <p>getUri.</p>
+     *
      * @return a full URI/IRI as a String
      */
     public String getUri() {
         return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return getUri();

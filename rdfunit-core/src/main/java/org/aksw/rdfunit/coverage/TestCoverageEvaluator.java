@@ -13,9 +13,12 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 /**
+ * <p>TestCoverageEvaluator class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Calculates test coverage based on www paper
  * @since 10/8/13 9:06 PM
+ * @version $Id: $Id
  */
 public class TestCoverageEvaluator {
     private static final Logger log = LoggerFactory.getLogger(TestCoverageEvaluator.class);
@@ -55,6 +58,14 @@ public class TestCoverageEvaluator {
         return inClause.toString();
     }
 
+    /**
+     * <p>calculateCoverage.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param propertiesFile a {@link java.lang.String} object.
+     * @param classFile a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
+     */
     public void calculateCoverage(QueryExecutionFactory qef, String propertiesFile, String classFile) throws IOException {
 
         String line;

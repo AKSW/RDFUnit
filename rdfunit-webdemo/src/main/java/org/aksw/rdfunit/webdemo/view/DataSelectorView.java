@@ -39,6 +39,9 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
     private volatile boolean isReady = false;
 
 
+    /**
+     * <p>Constructor for DataSelectorView.</p>
+     */
     public DataSelectorView() {
         initLayout();
     }
@@ -114,6 +117,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setMessage(String message, boolean isError) {
 
@@ -187,36 +191,43 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean isReady() {
         return isReady;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setReady(boolean isReady) {
         this.isReady = isReady;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setPreviousItem(WorkflowItem item) {
         previous = item;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setNextItem(WorkflowItem item) {
         next = item;
     }
 
+    /** {@inheritDoc} */
     @Override
     public WorkflowItem getPreviousItem() {
         return previous;
     }
 
+    /** {@inheritDoc} */
     @Override
     public WorkflowItem getNextItem() {
         return next;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean execute() {
         DataSelectorView.this.setMessage("Loading...", false);

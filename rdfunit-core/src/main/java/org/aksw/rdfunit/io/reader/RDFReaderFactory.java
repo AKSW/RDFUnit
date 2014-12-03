@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * <p>RDFReaderFactory class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 11/14/13 9:01 AM
+ * @version $Id: $Id
  */
 public final class RDFReaderFactory {
 
@@ -24,6 +27,13 @@ public final class RDFReaderFactory {
 //        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
 //    }
 
+    /**
+     * <p>createFileOrDereferenceReader.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
         Collection<RDFReader> readers = new ArrayList<>();
@@ -36,10 +46,23 @@ public final class RDFReaderFactory {
 
     }
 
+    /**
+     * <p>createResourceReader.</p>
+     *
+     * @param resource a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader createResourceReader(String resource) {
         return new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource), RDFStreamReader.getFormatFromExtension(resource));
     }
 
+    /**
+     * <p>createFileOrResourceReader.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param resource a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader createFileOrResourceReader(String filename, String resource) {
         Collection<RDFReader> readers = new ArrayList<>();
         readers.add(new RDFStreamReader(filename));
@@ -67,6 +90,13 @@ public final class RDFReaderFactory {
         return new RDFFirstSuccessReader(readers);
     }
 
+    /**
+     * <p>createReaderFromText.</p>
+     *
+     * @param text a {@link java.lang.String} object.
+     * @param format a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader createReaderFromText(String text, String format) {
         InputStream is;
         try {

@@ -16,9 +16,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * <p>RDFUnitUtils class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 9/24/13 11:25 AM
+ * @version $Id: $Id
  */
 public final class RDFUnitUtils {
     private static final Logger log = LoggerFactory.getLogger(RDFUnitUtils.class);
@@ -26,6 +29,11 @@ public final class RDFUnitUtils {
     private RDFUnitUtils() {
     }
 
+    /**
+     * <p>fillSchemaServiceFromFile.</p>
+     *
+     * @param additionalCSV a {@link java.lang.String} object.
+     */
     public static void fillSchemaServiceFromFile(String additionalCSV) {
 
         try (InputStream inputStream = new FileInputStream(additionalCSV)) {
@@ -35,6 +43,11 @@ public final class RDFUnitUtils {
         }
     }
 
+    /**
+     * <p>fillSchemaServiceFromFile.</p>
+     *
+     * @param additionalCSV a {@link java.io.InputStream} object.
+     */
     public static void fillSchemaServiceFromFile(InputStream additionalCSV) {
 
         int count = 0;
@@ -86,6 +99,9 @@ public final class RDFUnitUtils {
         }
     }
 
+    /**
+     * <p>fillSchemaServiceFromLOV.</p>
+     */
     public static void fillSchemaServiceFromLOV() {
 
         Source lov = new EndpointTestSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
@@ -150,11 +166,24 @@ public final class RDFUnitUtils {
         log.info("Loaded " + count + " schema declarations from LOV SPARQL Endpoint");
     }
 
+    /**
+     * <p>fileExists.</p>
+     *
+     * @param path a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean fileExists(String path) {
         File f = new File(path);
         return f.exists();
     }
 
+    /**
+     * <p>getFirstItemInCollection.</p>
+     *
+     * @param collection a {@link java.util.Collection} object.
+     * @param <T> a T object.
+     * @return a T object.
+     */
     public static <T> T getFirstItemInCollection(Collection<T> collection) {
         //noinspection LoopStatementThatDoesntLoop
         for (T item : collection) {
@@ -163,6 +192,13 @@ public final class RDFUnitUtils {
         return null;
     }
 
+    /**
+     * <p>isURI.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     * @return a boolean.
+     * @since 0.7.2
+     */
     public static boolean isURI(String uri) {
         try {
             new URL(uri);

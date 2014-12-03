@@ -5,19 +5,28 @@ import com.hp.hpl.jena.rdf.model.Model;
 import java.util.Collection;
 
 /**
+ * <p>RDFFirstSuccessReader class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 11/14/13 8:51 AM
+ * @version $Id: $Id
  */
 public class RDFFirstSuccessReader extends RDFReader {
 
     private final Collection<RDFReader> readers;
 
+    /**
+     * <p>Constructor for RDFFirstSuccessReader.</p>
+     *
+     * @param readers a {@link java.util.Collection} object.
+     */
     public RDFFirstSuccessReader(Collection<RDFReader> readers) {
         super();
         this.readers = readers;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
         StringBuilder message = new StringBuilder();

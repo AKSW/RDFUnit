@@ -13,6 +13,7 @@ import java.net.URL;
  * @author Dimitris Kontokostas
  *         Description
  * @since 11 /14/13 8:48 AM
+ * @version $Id: $Id
  */
 public class RDFDereferenceLimitReader extends RDFReader {
 
@@ -55,6 +56,7 @@ public class RDFDereferenceLimitReader extends RDFReader {
         this.strict = strict;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
         // Check for size

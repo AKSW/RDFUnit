@@ -9,25 +9,40 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 /**
+ * <p>RDFHTMLResultsRlogWriter class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 4/23/14 8:55 AM
+ * @version $Id: $Id
  */
 public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
 
+    /**
+     * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public RDFHTMLResultsRlogWriter(String filename) {
         super(filename);
     }
 
+    /**
+     * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
+     *
+     * @param outputStream a {@link java.io.OutputStream} object.
+     */
     public RDFHTMLResultsRlogWriter(OutputStream outputStream) {
         super(outputStream);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsHeader() {
         return new StringBuffer("<tr><th>Level</th><th>Message</th><th>Resource</th><th>Test Case</th></tr>");
     }
 
+    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
         StringBuffer results = new StringBuffer();

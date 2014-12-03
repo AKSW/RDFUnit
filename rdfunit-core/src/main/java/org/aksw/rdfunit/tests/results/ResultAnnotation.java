@@ -11,6 +11,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
  * Holds a test case result annotation that will be used when we generate individual results
  *
  * @author Dimitris Kontokostas
+ * @version $Id: $Id
  */
 public final class ResultAnnotation {
     private final String annotationProperty;
@@ -72,6 +73,7 @@ public final class ResultAnnotation {
         return annotationValue;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,6 +95,7 @@ public final class ResultAnnotation {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = annotationProperty.hashCode();

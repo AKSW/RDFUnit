@@ -13,24 +13,38 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * <p>Abstract RDFHTMLResultsWriter class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Writes results in HTML format
  * @since 11/14/13 1:04 PM
+ * @version $Id: $Id
  */
 public abstract class RDFHTMLResultsWriter extends RDFWriter {
     private final OutputStream outputStream;
 
 
+    /**
+     * <p>Constructor for RDFHTMLResultsWriter.</p>
+     *
+     * @param outputStream a {@link java.io.OutputStream} object.
+     */
     public RDFHTMLResultsWriter(OutputStream outputStream) {
         super();
         this.outputStream = outputStream;
     }
 
+    /**
+     * <p>Constructor for RDFHTMLResultsWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public RDFHTMLResultsWriter(String filename) {
         super();
         this.outputStream = RDFStreamWriter.getOutputStreamFromFilename(filename);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void write(QueryExecutionFactory qef) throws RDFWriterException {
         final Collection<String> testExecutionURIs = getTestExecutionURI(qef);
@@ -53,8 +67,21 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
         }
     }
 
+    /**
+     * <p>getResultsHeader.</p>
+     *
+     * @return a {@link java.lang.StringBuffer} object.
+     */
     protected abstract StringBuffer getResultsHeader();
 
+    /**
+     * <p>getResultsList.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param testExecutionURI a {@link java.lang.String} object.
+     * @return a {@link java.lang.StringBuffer} object.
+     * @throws org.aksw.rdfunit.io.writer.RDFWriterException if any.
+     */
     protected abstract StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI)  throws RDFWriterException;
 
     private StringBuffer getHeader() {

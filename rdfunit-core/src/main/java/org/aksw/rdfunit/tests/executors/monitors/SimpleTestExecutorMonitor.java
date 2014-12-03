@@ -29,6 +29,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 5/6/14 2:49 PM
+ * @version $Id: $Id
  */
 public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
@@ -87,6 +88,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void testingStarted(Source dataset, TestSuite testSuite) {
         testedDataset = dataset;
@@ -105,11 +107,13 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void singleTestStarted(TestCase test) {
         counter++;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void singleTestExecuted(TestCase test, TestCaseResultStatus status, Collection<TestCaseResult> results) {
 
@@ -170,6 +174,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void testingFinished() {
         // Set testing end time
@@ -243,10 +248,22 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         return overviewResults;
     }
 
+    /**
+     * <p>Setter for the field <code>userID</code>.</p>
+     *
+     * @param userID a {@link java.lang.String} object.
+     * @since 0.7.2
+     */
     public void setUserID(String userID) {
         this.userID = userID;
     }
 
+    /**
+     * <p>Setter for the field <code>executionType</code>.</p>
+     *
+     * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @since 0.7.2
+     */
     public void setExecutionType(TestCaseExecutionType executionType) {
         this.executionType = executionType;
     }

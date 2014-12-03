@@ -14,6 +14,7 @@ import java.util.Map;
  *
  * @author Dimitris Kontokostas
  * @since 10/1/13 7:06 PM
+ * @version $Id: $Id
  */
 public final class PrefixNSService {
 
@@ -46,6 +47,12 @@ public final class PrefixNSService {
         return MapInstance.prefixNsBidiMap.get(prefix);
     }
 
+    /**
+     * <p>getPrefixFromNS.</p>
+     *
+     * @param namespace a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getPrefixFromNS(final String namespace) {
         return MapInstance.prefixNsBidiMap.getKey(namespace);
     }
@@ -59,6 +66,11 @@ public final class PrefixNSService {
         model.setNsPrefixes(getPrefixMap());
     }
 
+    /**
+     * <p>getSparqlPrefixDecl.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSparqlPrefixDecl() {
         return DeclInstance.sparqlPrefixDecl;
     }
@@ -102,6 +114,11 @@ public final class PrefixNSService {
         return Collections.unmodifiableMap(MapInstance.prefixNsBidiMap);
     }
 
+    /**
+     * <p>createPrefixNsBidiMap.</p>
+     *
+     * @return a {@link org.apache.commons.collections4.BidiMap} object.
+     */
     protected static BidiMap<String, String> createPrefixNsBidiMap() {
 
         BidiMap<String, String> dualMap = new DualHashBidiMap<>();

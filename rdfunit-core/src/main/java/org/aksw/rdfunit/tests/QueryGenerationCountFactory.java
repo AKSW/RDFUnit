@@ -9,13 +9,16 @@ import org.aksw.rdfunit.services.PrefixNSService;
  *
  * @author Dimitris Kontokostas
  * @since 7/25/14 10:07 PM
+ * @version $Id: $Id
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
+    /** {@inheritDoc} */
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
         return getSparqlQuery(testCase).toString();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         Query query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +

@@ -12,6 +12,7 @@ import java.util.Collections;
  *
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:14 PM
+ * @version $Id: $Id
  */
 public final class Pattern {
     private final String id;
@@ -21,6 +22,16 @@ public final class Pattern {
     private final Collection<PatternParameter> parameters;
     private final Collection<ResultAnnotation> annotations;
 
+    /**
+     * <p>Constructor for Pattern.</p>
+     *
+     * @param id a {@link java.lang.String} object.
+     * @param description a {@link java.lang.String} object.
+     * @param sparqlWherePattern a {@link java.lang.String} object.
+     * @param sparqlPatternPrevalence a {@link java.lang.String} object.
+     * @param parameters a {@link java.util.Collection} object.
+     * @param annotations a {@link java.util.Collection} object.
+     */
     public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, Collection<PatternParameter> parameters, Collection<ResultAnnotation> annotations) {
 
         assert id != null;
@@ -42,6 +53,11 @@ public final class Pattern {
         this.annotations = annotations;
     }
 
+    /**
+     * <p>isValid.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isValid() {
         if (getParameters() == null || getParameters().size() == 0) {
             return false;
@@ -68,6 +84,9 @@ public final class Pattern {
     /**
      * Goes through all external annotations and if it finds a literal value with %%XX%%
      * it replaces it with the binding value
+     *
+     * @param bindings a {@link java.util.Collection} object.
+     * @return a {@link java.util.Collection} object.
      */
     public Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
         Collection<ResultAnnotation> finalAnnotations = new ArrayList<>();
@@ -87,18 +106,38 @@ public final class Pattern {
         return finalAnnotations;
     }
 
+    /**
+     * <p>Getter for the field <code>id</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * <p>Getter for the field <code>description</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * <p>Getter for the field <code>sparqlWherePattern</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSparqlWherePattern() {
         return sparqlWherePattern;
     }
 
+    /**
+     * <p>Getter for the field <code>sparqlPatternPrevalence</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSparqlPatternPrevalence() {
         return sparqlPatternPrevalence;
     }
@@ -127,6 +166,7 @@ public final class Pattern {
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,6 +184,7 @@ public final class Pattern {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = id.hashCode();

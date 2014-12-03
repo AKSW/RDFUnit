@@ -17,8 +17,8 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:54 PM
+ * @version $Id: $Id
  */
-
 public class EndpointTestSource extends Source {
 
 
@@ -51,10 +51,25 @@ public class EndpointTestSource extends Source {
     private final String sparqlEndpoint;
     private final Collection<String> sparqlGraph;
 
+    /**
+     * <p>Constructor for EndpointTestSource.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     */
     public EndpointTestSource(String prefix, String uri) {
         this(prefix, uri, uri, new ArrayList<String>(), null);
     }
 
+    /**
+     * <p>Constructor for EndpointTestSource.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @param sparqlEndpoint a {@link java.lang.String} object.
+     * @param sparqlGraph a {@link java.util.Collection} object.
+     * @param schemata a {@link java.util.Collection} object.
+     */
     public EndpointTestSource(String prefix, String uri, String sparqlEndpoint, Collection<String> sparqlGraph, Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.sparqlEndpoint = sparqlEndpoint;
@@ -64,15 +79,22 @@ public class EndpointTestSource extends Source {
         }
     }
 
+    /**
+     * <p>Constructor for EndpointTestSource.</p>
+     *
+     * @param source a {@link org.aksw.rdfunit.sources.EndpointTestSource} object.
+     */
     public EndpointTestSource(EndpointTestSource source) {
         this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraphs(), source.getReferencesSchemata());
     }
 
+    /** {@inheritDoc} */
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.Dataset;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected QueryExecutionFactory initQueryFactory() {
 
@@ -112,42 +134,92 @@ public class EndpointTestSource extends Source {
         return qef;
     }
 
+    /**
+     * <p>Getter for the field <code>sparqlEndpoint</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSparqlEndpoint() {
         return sparqlEndpoint;
     }
 
+    /**
+     * <p>getSparqlGraphs.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<String> getSparqlGraphs() {
         return sparqlGraph;
     }
 
+    /**
+     * <p>Setter for the field <code>cacheTTL</code>.</p>
+     *
+     * @param cacheTTL a long.
+     */
     public void setCacheTTL(long cacheTTL) {
         this.cacheTTL = cacheTTL;
     }
 
+    /**
+     * <p>Setter for the field <code>queryDelay</code>.</p>
+     *
+     * @param queryDelay a long.
+     */
     public void setQueryDelay(long queryDelay) {
         this.queryDelay = queryDelay;
     }
 
+    /**
+     * <p>Setter for the field <code>queryLimit</code>.</p>
+     *
+     * @param queryLimit a long.
+     */
     public void setQueryLimit(long queryLimit) {
         this.queryLimit = queryLimit;
     }
 
+    /**
+     * <p>Setter for the field <code>pagination</code>.</p>
+     *
+     * @param pagination a long.
+     */
     public void setPagination(long pagination) {
         this.pagination = pagination;
     }
 
+    /**
+     * <p>Getter for the field <code>cacheTTL</code>.</p>
+     *
+     * @return a long.
+     */
     public long getCacheTTL() {
         return cacheTTL;
     }
 
+    /**
+     * <p>Getter for the field <code>queryDelay</code>.</p>
+     *
+     * @return a long.
+     */
     public long getQueryDelay() {
         return queryDelay;
     }
 
+    /**
+     * <p>Getter for the field <code>queryLimit</code>.</p>
+     *
+     * @return a long.
+     */
     public long getQueryLimit() {
         return queryLimit;
     }
 
+    /**
+     * <p>Getter for the field <code>pagination</code>.</p>
+     *
+     * @return a long.
+     */
     public long getPagination() {
         return pagination;
     }

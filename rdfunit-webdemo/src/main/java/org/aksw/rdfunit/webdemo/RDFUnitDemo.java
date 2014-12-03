@@ -19,6 +19,9 @@ import javax.servlet.annotation.WebServlet;
 
 /**
  * The main Vaadin UI entry Class
+ *
+ * @author jim
+ * @version $Id: $Id
  */
 @SuppressWarnings("WeakerAccess")
 @Theme("rdfunit")
@@ -44,6 +47,7 @@ public class RDFUnitDemo extends UI {
      * After UI class is created, init() is executed. You should build and wire
      * up your user interface here.
      */
+    /** {@inheritDoc} */
     protected void init(VaadinRequest request) {
 
 

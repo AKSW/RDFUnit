@@ -9,6 +9,7 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
  *
  * @author Dimitris Kontokostas
  * @since 11 /14/13 12:59 PM
+ * @version $Id: $Id
  */
 public abstract class RDFWriter {
 
@@ -16,7 +17,7 @@ public abstract class RDFWriter {
      * Writes a model into a destination. This function delegates to {@code write(QueryExecutionFactory qef)}
      *
      * @param model the model
-     * @throws RDFWriterException the triple writer exception
+     * @throws org.aksw.rdfunit.io.writer.RDFWriterException the triple writer exception
      */
     public void write(Model model) throws RDFWriterException {
         write(new QueryExecutionFactoryModel(model));
@@ -27,7 +28,7 @@ public abstract class RDFWriter {
      * abstract class that writes a {@code QueryExecutionFactory} to a destination
      *
      * @param qef a QueryExecutionFactory
-     * @throws RDFWriterException the triple writer exception
+     * @throws org.aksw.rdfunit.io.writer.RDFWriterException the triple writer exception
      */
     public abstract void write(QueryExecutionFactory qef) throws RDFWriterException;
 }

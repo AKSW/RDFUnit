@@ -32,9 +32,12 @@ import java.util.Collection;
 
 
 /**
+ * <p>TestUtils class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Various utility test functions for tests
  * @since 9/24/13 10:59 AM
+ * @version $Id: $Id
  */
 public final class TestUtils {
     private static final Logger log = LoggerFactory.getLogger(TestUtils.class);
@@ -42,6 +45,12 @@ public final class TestUtils {
     private TestUtils() {
     }
 
+    /**
+     * <p>instantiateTestGeneratorsFromModel.</p>
+     *
+     * @param queryFactory a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
 
@@ -83,6 +92,13 @@ public final class TestUtils {
 
     }
 
+    /**
+     * <p>instantiateTestsFromAG.</p>
+     *
+     * @param autoGenerators a {@link java.util.Collection} object.
+     * @param source a {@link org.aksw.rdfunit.sources.Source} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, Source source) {
         Collection<TestCase> tests = new ArrayList<>();
 
@@ -94,6 +110,12 @@ public final class TestUtils {
 
     }
 
+    /**
+     * <p>instantiateTestsFromModel.</p>
+     *
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<TestCase> instantiateTestsFromModel(Model model) {
         try {
             return instantiateTestsFromModel(model, false);
@@ -103,6 +125,14 @@ public final class TestUtils {
         throw new RuntimeException("Unexpected exception...");
     }
 
+    /**
+     * <p>instantiateTestsFromModel.</p>
+     *
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param strict a boolean.
+     * @return a {@link java.util.Collection} object.
+     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
+     */
     public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) throws TestCaseInstantiationException {
         Collection<TestCase> tests = new ArrayList<>();
         QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
@@ -157,6 +187,14 @@ public final class TestUtils {
         return tests;
     }
 
+    /**
+     * <p>instantiateSingleManualTestFromModel.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param testURI a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.tests.ManualTestCase} object.
+     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
+     */
     public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
         String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
@@ -224,6 +262,14 @@ public final class TestUtils {
         throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
     }
 
+    /**
+     * <p>instantiateSinglePatternTestFromModel.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param testURI a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.tests.PatternBasedTestCase} object.
+     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
+     */
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
         String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
@@ -295,6 +341,12 @@ public final class TestUtils {
         throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
     }
 
+    /**
+     * <p>writeTestsToFile.</p>
+     *
+     * @param tests a {@link java.util.Collection} object.
+     * @param testCache a {@link org.aksw.rdfunit.io.writer.RDFWriter} object.
+     */
     public static void writeTestsToFile(Collection<TestCase> tests, RDFWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests) {
@@ -308,6 +360,13 @@ public final class TestUtils {
         }
     }
 
+    /**
+     * <p>getReferencesFromTestCase.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param testURI a {@link java.lang.String} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
 
         Collection<String> references = new ArrayList<>();
@@ -333,6 +392,14 @@ public final class TestUtils {
         return references;
     }
 
+    /**
+     * <p>getBindingsFromTestCase.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param testURI a {@link java.lang.String} object.
+     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
 
         Collection<Binding> bindings = new ArrayList<>();
@@ -374,6 +441,15 @@ public final class TestUtils {
         return bindings;
     }
 
+    /**
+     * <p>generateTestURI.</p>
+     *
+     * @param sourcePrefix a {@link java.lang.String} object.
+     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param bindings a {@link java.util.Collection} object.
+     * @param generatorURI a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String generateTestURI(String sourcePrefix, Pattern pattern, Collection<Binding> bindings, String generatorURI) {
         String testURI = PrefixNSService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         StringBuilder string2hash = new StringBuilder(generatorURI);
@@ -389,6 +465,13 @@ public final class TestUtils {
     }
 
     // Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
+    /**
+     * <p>getHashFromString.</p>
+     *
+     * @param str a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @since 0.7.2
+     */
     public static String getHashFromString(String str) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");

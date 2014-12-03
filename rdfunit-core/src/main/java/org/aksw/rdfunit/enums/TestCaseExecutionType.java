@@ -1,9 +1,12 @@
 package org.aksw.rdfunit.enums;
 
 /**
+ * <p>TestCaseExecutionType class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Defines the different types of results / execution we support
  * @since 2/2/14 3:37 PM
+ * @version $Id: $Id
  */
 public enum TestCaseExecutionType {
     /**

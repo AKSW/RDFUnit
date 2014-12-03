@@ -4,19 +4,28 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.NotFoundException;
 
 /**
+ * <p>RDFDereferenceReader class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 11/14/13 8:48 AM
+ * @version $Id: $Id
  */
 public class RDFDereferenceReader extends RDFReader {
 
     private final String uri;
 
+    /**
+     * <p>Constructor for RDFDereferenceReader.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     */
     public RDFDereferenceReader(String uri) {
         super();
         this.uri = uri;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
         try {

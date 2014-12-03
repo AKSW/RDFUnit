@@ -3,9 +3,12 @@ package org.aksw.rdfunit.io.format;
 import java.util.Collection;
 
 /**
+ * <p>FormatService class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Static service that contains all the supported formats for input/output
  * @since 6/18/14 7:23 PM
+ * @version $Id: $Id
  */
 public final class FormatService {
 

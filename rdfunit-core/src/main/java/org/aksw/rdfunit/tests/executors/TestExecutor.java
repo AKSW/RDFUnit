@@ -22,6 +22,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 9 /30/13 11:11 AM
+ * @version $Id: $Id
  */
 public abstract class TestExecutor {
     private static final Logger log = LoggerFactory.getLogger(TestExecutor.class);
@@ -42,6 +43,8 @@ public abstract class TestExecutor {
 
     /**
      * Instantiates a new Test executor.
+     *
+     * @param queryGenerationFactory a {@link org.aksw.rdfunit.tests.QueryGenerationFactory} object.
      */
     public TestExecutor(QueryGenerationFactory queryGenerationFactory) {
         this.queryGenerationFactory = queryGenerationFactory;
@@ -60,7 +63,7 @@ public abstract class TestExecutor {
      * @param source   the source
      * @param testCase the test case
      * @return the java . util . collection
-     * @throws TestCaseExecutionException the test case execution exception
+     * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException the test case execution exception
      */
     abstract protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException;
 

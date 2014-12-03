@@ -10,9 +10,12 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 /**
+ * <p>RDFFileWriter class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Writes a Model to a file
  * @since 11/14/13 1:01 PM
+ * @version $Id: $Id
  */
 public class RDFFileWriter extends RDFWriter {
     private final String filename;
@@ -22,18 +25,44 @@ public class RDFFileWriter extends RDFWriter {
     private final boolean overwrite;
 
 
+    /**
+     * <p>Constructor for RDFFileWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public RDFFileWriter(String filename) {
         this(filename, "TURTLE", false, true, true);
     }
 
+    /**
+     * <p>Constructor for RDFFileWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param filetype a {@link java.lang.String} object.
+     */
     public RDFFileWriter(String filename, String filetype) {
         this(filename, filetype, false, true, true);
     }
 
+    /**
+     * <p>Constructor for RDFFileWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param skipIfExists a boolean.
+     */
     public RDFFileWriter(String filename, boolean skipIfExists) {
         this(filename, "TURTLE", skipIfExists, true, true);
     }
 
+    /**
+     * <p>Constructor for RDFFileWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param filetype a {@link java.lang.String} object.
+     * @param skipIfExists a boolean.
+     * @param createParentDirectories a boolean.
+     * @param overwrite a boolean.
+     */
     public RDFFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {
         super();
         this.filename = filename;
@@ -43,6 +72,7 @@ public class RDFFileWriter extends RDFWriter {
         this.overwrite = overwrite;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void write(QueryExecutionFactory qef) throws RDFWriterException {
 

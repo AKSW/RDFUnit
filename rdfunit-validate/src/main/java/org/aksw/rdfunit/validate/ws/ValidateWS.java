@@ -29,9 +29,12 @@ import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
+ * <p>ValidateWS class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Validation as a web service
  * @since 6/13/14 1:50 PM
+ * @version $Id: $Id
  */
 public class ValidateWS extends RDFUnitWebService {
     private static final Logger log = LoggerFactory.getLogger(ValidateWS.class);
@@ -41,6 +44,7 @@ public class ValidateWS extends RDFUnitWebService {
     private final String testFolder = dataFolder + "tests/";
     private Collection<TestAutoGenerator> autogenerators;
 
+    /** {@inheritDoc} */
     @Override
     public void init() throws ServletException {
         RDFUnitUtils.fillSchemaServiceFromLOV();
@@ -54,6 +58,7 @@ public class ValidateWS extends RDFUnitWebService {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected synchronized TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset) {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
@@ -63,6 +68,7 @@ public class ValidateWS extends RDFUnitWebService {
         return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, autogenerators);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
@@ -78,6 +84,7 @@ public class ValidateWS extends RDFUnitWebService {
         return testExecutorMonitor.getModel();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
         String[] arguments = convertArgumentsToStringArray(httpServletRequest);
@@ -105,6 +112,7 @@ public class ValidateWS extends RDFUnitWebService {
         return configuration;
     }
 
+    /** {@inheritDoc} */
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setContentType("text/html");
         PrintWriter printWriter = httpServletResponse.getWriter();
@@ -132,6 +140,7 @@ public class ValidateWS extends RDFUnitWebService {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void destroy() {
         // do nothing.

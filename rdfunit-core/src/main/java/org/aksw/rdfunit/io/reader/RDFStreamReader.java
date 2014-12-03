@@ -10,14 +10,22 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
+ * <p>RDFStreamReader class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Reads a model from an InputStream (or a filename)
  * @since 11/14/13 8:37 AM
+ * @version $Id: $Id
  */
 public class RDFStreamReader extends RDFReader {
     private final InputStream inputStream;
     private final String format;
 
+    /**
+     * <p>Constructor for RDFStreamReader.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public RDFStreamReader(String filename) {
         this(getInputStreamFromFilename(filename), getFormatFromExtension(filename));
     }
@@ -26,16 +34,29 @@ public class RDFStreamReader extends RDFReader {
     //    this(inputStream, "TURTLE");
     //}
 
+    /**
+     * <p>Constructor for RDFStreamReader.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param format a {@link java.lang.String} object.
+     */
     public RDFStreamReader(String filename, String format) {
         this(getInputStreamFromFilename(filename), format);
     }
 
+    /**
+     * <p>Constructor for RDFStreamReader.</p>
+     *
+     * @param inputStream a {@link java.io.InputStream} object.
+     * @param format a {@link java.lang.String} object.
+     */
     public RDFStreamReader(InputStream inputStream, String format) {
         super();
         this.inputStream = inputStream;
         this.format = format;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
         try {
@@ -61,6 +82,12 @@ public class RDFStreamReader extends RDFReader {
         }
     }
 
+    /**
+     * <p>getFormatFromExtension.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getFormatFromExtension(String filename) {
         String format = "TURTLE";
         try {

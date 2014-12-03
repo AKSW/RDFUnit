@@ -10,6 +10,7 @@ import java.util.Map;
  *
  * @author Dimitris Kontokostas
  * @since 8/21/14 12:14 PM
+ * @version $Id: $Id
  */
 public final class Resources {
     private static class ResourcesInstance {

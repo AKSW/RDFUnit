@@ -9,25 +9,40 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 /**
+ * <p>RDFHTMLResultsAggregateWriter class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 4/23/14 8:55 AM
+ * @version $Id: $Id
  */
 public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
 
+    /**
+     * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public RDFHTMLResultsAggregateWriter(String filename) {
         super(filename);
     }
 
+    /**
+     * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
+     *
+     * @param outputStream a {@link java.io.OutputStream} object.
+     */
     public RDFHTMLResultsAggregateWriter(OutputStream outputStream) {
         super(outputStream);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsHeader() {
         return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>");
     }
 
+    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
         StringBuffer results = new StringBuffer();

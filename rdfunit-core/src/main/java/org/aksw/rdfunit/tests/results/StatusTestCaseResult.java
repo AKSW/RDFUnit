@@ -13,6 +13,7 @@ import org.aksw.rdfunit.tests.TestCase;
  *
  * @author Dimitris Kontokostas
  * @since 1 /6/14 3:26 PM
+ * @version $Id: $Id
  */
 public class StatusTestCaseResult extends TestCaseResult {
     private final TestCaseResultStatus status;
@@ -28,6 +29,7 @@ public class StatusTestCaseResult extends TestCaseResult {
         this.status = status;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)

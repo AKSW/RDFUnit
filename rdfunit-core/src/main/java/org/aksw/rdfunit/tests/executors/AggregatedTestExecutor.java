@@ -22,6 +22,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 4:05 PM
+ * @version $Id: $Id
  */
 public class AggregatedTestExecutor extends TestExecutor {
 
@@ -34,6 +35,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         super(queryGenerationFactory);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
         int total = -1, prevalence = -1;

@@ -13,6 +13,7 @@ import org.aksw.rdfunit.tests.TestCase;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:28 PM
+ * @version $Id: $Id
  */
 public class RLOGTestCaseResult extends TestCaseResult {
 
@@ -36,6 +37,7 @@ public class RLOGTestCaseResult extends TestCaseResult {
         this.logLevel = logLevel;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)

@@ -8,6 +8,7 @@ import java.util.Set;
  *
  * @author Dimitris Kontokostas
  * @since 6 /18/14 4:05 PM
+ * @version $Id: $Id
  */
 public class SerializationFormat {
     /**
@@ -40,6 +41,11 @@ public class SerializationFormat {
 
     /**
      * Constructor
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param type a {@link org.aksw.rdfunit.io.format.SerializationFormatType} object.
+     * @param extension a {@link java.lang.String} object.
+     * @param headerType a {@link java.lang.String} object.
      */
     public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType) {
         this(name, type, extension, headerType, new HashSet<String>());
@@ -127,6 +133,7 @@ public class SerializationFormat {
         return headerType;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +146,7 @@ public class SerializationFormat {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = name.hashCode();

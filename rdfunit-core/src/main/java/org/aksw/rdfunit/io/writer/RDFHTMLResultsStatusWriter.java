@@ -9,25 +9,40 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 /**
+ * <p>RDFHTMLResultsStatusWriter class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 4/23/14 8:55 AM
+ * @version $Id: $Id
  */
 public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
 
+    /**
+     * <p>Constructor for RDFHTMLResultsStatusWriter.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public RDFHTMLResultsStatusWriter(String filename) {
         super(filename);
     }
 
+    /**
+     * <p>Constructor for RDFHTMLResultsStatusWriter.</p>
+     *
+     * @param outputStream a {@link java.io.OutputStream} object.
+     */
     public RDFHTMLResultsStatusWriter(OutputStream outputStream) {
         super(outputStream);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsHeader() {
         return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Description</th></tr>");
     }
 
+    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
         StringBuffer results = new StringBuffer();
@@ -85,6 +100,12 @@ public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
         return results;
     }
 
+    /**
+     * <p>getStatusClass.</p>
+     *
+     * @param status a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     protected String getStatusClass(String status) {
 
         switch (status) {

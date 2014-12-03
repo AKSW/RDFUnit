@@ -9,16 +9,23 @@ import org.semarglproject.jena.rdf.rdfa.JenaRdfaReader;
  *
  * @author Dimitris Kontokostas
  * @since 11/14/13 8:48 AM
+ * @version $Id: $Id
  */
 public class RDFaReader extends RDFReader {
 
     private final String uri;
 
+    /**
+     * <p>Constructor for RDFaReader.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     */
     public RDFaReader(String uri) {
         super();
         this.uri = uri;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
         try {

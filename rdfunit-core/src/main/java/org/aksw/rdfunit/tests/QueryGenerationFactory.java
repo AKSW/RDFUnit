@@ -7,6 +7,7 @@ import com.hp.hpl.jena.query.Query;
  *
  * @author Dimitris Kontokostas
  * @since 7 /25/14 9:57 PM
+ * @version $Id: $Id
  */
 public interface QueryGenerationFactory {
 

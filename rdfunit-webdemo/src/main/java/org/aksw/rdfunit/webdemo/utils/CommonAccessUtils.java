@@ -11,6 +11,7 @@ import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
  *
  * @author Dimitris Kontokostas
  * @since 8/30/14 4:14 PM
+ * @version $Id: $Id
  */
 public class CommonAccessUtils {
 
@@ -31,6 +32,11 @@ public class CommonAccessUtils {
         }
     }
 
+    /**
+     * <p>getRDFUnit.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.RDFUnit} object.
+     */
     public static RDFUnit getRDFUnit() {
         return PatternsAndGenerators.getInstance();
     }
@@ -50,10 +56,16 @@ public class CommonAccessUtils {
 
     }
 
+    /**
+     * <p>initializeSchemaServices.</p>
+     */
     public static void initializeSchemaServices() {
         SchemaServices.initialize();
     }
 
+    /**
+     * <p>pushToClient.</p>
+     */
     public static void pushToClient() {
         try {
             UI.getCurrent().push();

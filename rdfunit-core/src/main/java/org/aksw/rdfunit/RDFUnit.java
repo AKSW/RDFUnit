@@ -22,6 +22,7 @@ import java.util.Collections;
  *
  * @author Dimitris Kontokostas
  * @since 9/20/13 5:59 PM
+ * @version $Id: $Id
  */
 public class RDFUnit {
 
@@ -31,18 +32,36 @@ public class RDFUnit {
     private volatile Collection<Pattern> patterns;
     private volatile QueryExecutionFactory patternQueryFactory;
 
+    /**
+     * <p>Constructor for RDFUnit.</p>
+     *
+     * @param baseDirectories a {@link java.util.Collection} object.
+     */
     public RDFUnit(Collection<String> baseDirectories) {
         this.baseDirectories = baseDirectories;
     }
 
+    /**
+     * <p>Constructor for RDFUnit.</p>
+     *
+     * @param baseDirectory a {@link java.lang.String} object.
+     */
     public RDFUnit(String baseDirectory) {
         this(Arrays.asList(baseDirectory));
     }
 
+    /**
+     * <p>Constructor for RDFUnit.</p>
+     */
     public RDFUnit() {
         this(new ArrayList<String>());
     }
 
+    /**
+     * <p>init.</p>
+     *
+     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     */
     public void init() throws RDFReaderException {
         Model model = ModelFactory.createDefaultModel();
         // Set the defined prefixes
@@ -72,6 +91,11 @@ public class RDFUnit {
         return patterns;
     }
 
+    /**
+     * <p>Getter for the field <code>autoGenerators</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public synchronized Collection<TestAutoGenerator> getAutoGenerators() {
         if (autoGenerators == null) {
             autoGenerators =
@@ -91,38 +115,88 @@ public class RDFUnit {
         return new RDFFirstSuccessReader(readers);
     }
 
+    /**
+     * <p>getPatternsReader.</p>
+     *
+     * @param baseDirectories a {@link java.util.Collection} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getPatternsReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "patterns.ttl");
     }
 
+    /**
+     * <p>getPatternsReader.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getPatternsReader() {
         return getPatternsReader(new ArrayList<String>());
     }
 
+    /**
+     * <p>getAutoGeneratorsOWLReader.</p>
+     *
+     * @param baseDirectories a {@link java.util.Collection} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsOWLReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl");
     }
 
+    /**
+     * <p>getAutoGeneratorsOWLReader.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsOWLReader() {
         return getAutoGeneratorsOWLReader(new ArrayList<String>());
     }
 
+    /**
+     * <p>getAutoGeneratorsDSPReader.</p>
+     *
+     * @param baseDirectories a {@link java.util.Collection} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsDSPReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsDSP.ttl");
     }
 
+    /**
+     * <p>getAutoGeneratorsDSPReader.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsDSPReader() {
         return getAutoGeneratorsDSPReader(new ArrayList<String>());
     }
 
+    /**
+     * <p>getAutoGeneratorsRSReader.</p>
+     *
+     * @param baseDirectories a {@link java.util.Collection} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsRSReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsRS.ttl");
     }
 
+    /**
+     * <p>getAutoGeneratorsRSReader.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsRSReader() {
         return getAutoGeneratorsRSReader(new ArrayList<String>());
     }
 
+    /**
+     * <p>getAutoGeneratorsALLReader.</p>
+     *
+     * @param baseDirectories a {@link java.util.Collection} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {
         Collection<RDFReader> readers = Arrays.asList(
                 getAutoGeneratorsOWLReader(baseDirectories),
@@ -133,6 +207,11 @@ public class RDFUnit {
         return new RDFMultipleReader(readers);
     }
 
+    /**
+     * <p>getAutoGeneratorsALLReader.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     */
     public static RDFReader getAutoGeneratorsALLReader() {
         return getAutoGeneratorsALLReader(new ArrayList<String>());
     }

@@ -20,6 +20,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:49 PM
+ * @version $Id: $Id
  */
 public class StatusTestExecutor extends TestExecutor {
     /**
@@ -31,6 +32,7 @@ public class StatusTestExecutor extends TestExecutor {
         super(queryGenerationFactory);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 

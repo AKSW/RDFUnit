@@ -8,6 +8,7 @@ import org.aksw.rdfunit.enums.PatternParameterConstraints;
  *
  * @author Dimitris Kontokostas
  * @since 9 /20/13 2:47 PM
+ * @version $Id: $Id
  */
 public final class PatternParameter {
     private final String uri;
@@ -21,6 +22,7 @@ public final class PatternParameter {
      * @param uri               the uri of the parameter
      * @param id                the parameter id
      * @param constrain         the constrain
+     * @param constraintPattern the constraint pattern (if exists)
      * @param constraintPattern the constraint pattern (if exists)
      */
     public PatternParameter(String uri, String id, PatternParameterConstraints constrain, String constraintPattern) {
@@ -74,6 +76,7 @@ public final class PatternParameter {
         return constraintPattern;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +92,7 @@ public final class PatternParameter {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = uri.hashCode();

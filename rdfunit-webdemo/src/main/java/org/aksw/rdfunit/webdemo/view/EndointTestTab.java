@@ -5,12 +5,14 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
+ * <p>EndointTestTab class.</p>
+ *
  * @author Dimitris Kontokostas
  *         This is a placeholder to keep the main content components
  *         TODO everything is clattered in here need to separate many things
  * @since 11/15/13 8:19 AM
+ * @version $Id: $Id
  */
-
 public class EndointTestTab extends VerticalLayout {
 
 
@@ -25,6 +27,9 @@ public class EndointTestTab extends VerticalLayout {
 
 
 
+    /**
+     * <p>Constructor for EndointTestTab.</p>
+     */
     public EndointTestTab() {
         initLayout();
     }

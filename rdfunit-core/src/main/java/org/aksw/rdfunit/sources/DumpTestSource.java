@@ -19,23 +19,53 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 2/6/14 9:32 AM
+ * @version $Id: $Id
  */
 public class DumpTestSource extends Source {
 
     private final RDFReader dumpReader;
 
+    /**
+     * <p>Constructor for DumpTestSource.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     */
     public DumpTestSource(String prefix, String uri) {
         this(prefix, uri, RDFReaderFactory.createDereferenceReader(uri), null);
     }
 
+    /**
+     * <p>Constructor for DumpTestSource.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @param location a {@link java.lang.String} object.
+     */
     public DumpTestSource(String prefix, String uri, String location) {
         this(prefix, uri, location, null);
     }
 
+    /**
+     * <p>Constructor for DumpTestSource.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @param location a {@link java.lang.String} object.
+     * @param schemata a {@link java.util.Collection} object.
+     */
     public DumpTestSource(String prefix, String uri, String location, Collection<SchemaSource> schemata) {
         this(prefix, uri, RDFReaderFactory.createDereferenceReader(location), schemata);
     }
 
+    /**
+     * <p>Constructor for DumpTestSource.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @param dumpReader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param schemata a {@link java.util.Collection} object.
+     */
     public DumpTestSource(String prefix, String uri, RDFReader dumpReader, Collection<SchemaSource> schemata) {
         super(prefix, uri);
         this.dumpReader = dumpReader;
@@ -44,11 +74,13 @@ public class DumpTestSource extends Source {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.Dataset;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected QueryExecutionFactory initQueryFactory() {
         OntModel dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());

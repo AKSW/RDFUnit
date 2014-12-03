@@ -19,10 +19,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * <p>TestAutoGenerator class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Takes a sparqlPattern and a SPARQL query and based on the data
  *         returned from that query we generate test cases
  * @since 9/20/13 2:48 PM
+ * @version $Id: $Id
  */
 public class TestAutoGenerator {
     private static final Logger log = LoggerFactory.getLogger(TestAutoGenerator.class);
@@ -33,6 +36,15 @@ public class TestAutoGenerator {
     private final Pattern pattern;
     private final Collection<ResultAnnotation> generatorAnnotations;
 
+    /**
+     * <p>Constructor for TestAutoGenerator.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     * @param description a {@link java.lang.String} object.
+     * @param query a {@link java.lang.String} object.
+     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param generatorAnnotations a {@link java.util.Collection} object.
+     */
     public TestAutoGenerator(String uri, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
         this.uri = uri;
         this.description = description;
@@ -43,6 +55,8 @@ public class TestAutoGenerator {
 
     /**
      * Checks if the the generator is valid (provides correct parameters)
+     *
+     * @return a boolean.
      */
     public boolean isValid() {
         Query q;
@@ -67,6 +81,12 @@ public class TestAutoGenerator {
         return true;
     }
 
+    /**
+     * <p>generate.</p>
+     *
+     * @param source a {@link org.aksw.rdfunit.sources.Source} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<TestCase> generate(Source source) {
         Collection<TestCase> tests = new ArrayList<>();
 
@@ -139,18 +159,38 @@ public class TestAutoGenerator {
         return tests;
     }
 
+    /**
+     * <p>Getter for the field <code>uri</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getUri() {
         return uri;
     }
 
+    /**
+     * <p>Getter for the field <code>description</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * <p>Getter for the field <code>query</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getQuery() {
         return query;
     }
 
+    /**
+     * <p>Getter for the field <code>pattern</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     */
     public Pattern getPattern() {
         return pattern;
     }

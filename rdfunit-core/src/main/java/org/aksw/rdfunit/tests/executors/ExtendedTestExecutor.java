@@ -25,6 +25,7 @@ import java.util.Set;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 6:13 PM
+ * @version $Id: $Id
  */
 public class ExtendedTestExecutor extends RLOGTestExecutor {
 
@@ -37,6 +38,7 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
         super(queryGenerationFactory);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
 

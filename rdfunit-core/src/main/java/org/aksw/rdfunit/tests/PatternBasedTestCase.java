@@ -12,9 +12,12 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.util.Collection;
 
 /**
+ * <p>PatternBasedTestCase class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 1/3/14 3:49 PM
+ * @version $Id: $Id
  */
 public class PatternBasedTestCase extends TestCase {
 
@@ -23,6 +26,15 @@ public class PatternBasedTestCase extends TestCase {
     private String sparqlWhereCache = null;
     private String sparqlPrevalenceCache = null;
 
+    /**
+     * <p>Constructor for PatternBasedTestCase.</p>
+     *
+     * @param testURI a {@link java.lang.String} object.
+     * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
+     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param bindings a {@link java.util.Collection} object.
+     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
+     */
     public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) throws TestCaseInstantiationException {
         super(testURI, annotation);
         this.pattern = pattern;
@@ -35,6 +47,7 @@ public class PatternBasedTestCase extends TestCase {
         validateQueries();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Resource serialize(Model model) {
 
@@ -53,6 +66,7 @@ public class PatternBasedTestCase extends TestCase {
         return resource;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getSparqlWhere() {
         if (sparqlWhereCache == null) {
@@ -61,6 +75,7 @@ public class PatternBasedTestCase extends TestCase {
         return sparqlWhereCache;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getSparqlPrevalence() {
         if (sparqlPrevalenceCache == null) {

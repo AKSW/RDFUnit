@@ -20,6 +20,7 @@ import java.util.Collection;
  * @author Dimitris Kontokostas
  *         Description
  * @since 9/23/13 11:09 AM
+ * @version $Id: $Id
  */
 public final class PatternUtils {
 

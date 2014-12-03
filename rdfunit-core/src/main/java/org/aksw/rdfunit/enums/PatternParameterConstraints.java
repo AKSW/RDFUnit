@@ -3,9 +3,12 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
+ * <p>PatternParameterConstraints class.</p>
+ *
  * @author Dimitris Kontokostas
  *         Enumerates the different parameter constrains
  * @since 9/25/13 10:35 AM
+ * @version $Id: $Id
  */
 public enum PatternParameterConstraints {
 
@@ -40,12 +43,15 @@ public enum PatternParameterConstraints {
     private static final String schemaPrefix = "rut";
 
     /**
+     * <p>getUri.</p>
+     *
      * @return a full URI/IRI as a String
      */
     public String getUri() {
         return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return getUri();

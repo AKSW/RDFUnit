@@ -19,23 +19,29 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * <p>Abstract RDFUnitWebService class.</p>
+ *
  * @author Dimitris Kontokostas
  *         A super class that can serve as an easy validation service based on RDFUnit
  * @since 6/18/14 8:52 AM
+ * @version $Id: $Id
  */
 public abstract class RDFUnitWebService extends HttpServlet {
 
+    /** {@inheritDoc} */
     @Override
     public void init() throws ServletException {
         super.init();
         // This function is executed on first run and can be used for initialization
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         handleRequestAndRespond(httpServletRequest, httpServletResponse);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         handleRequestAndRespond(httpServletRequest, httpServletResponse);
@@ -109,7 +115,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      *
      * @param httpServletRequest the HttpServletRequest
      * @return an initialized RDFUnitConfiguration object
-     * @throws ParameterException
+     * @throws org.aksw.rdfunit.validate.ParameterException if any.
      */
     abstract protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException;
 
@@ -129,24 +135,24 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @param dataset       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
      * @param testSuite     a TestSuite generated with getTestSuite()
      * @return a Model that contains the results of a validation
-     * @throws TestCaseExecutionException
+     * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
      */
     abstract protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException;
 
     /**
      * Prints a help message with the correct arguments one can use to call the service
      *
-     * @param httpServletResponse
-     * @throws IOException
+     * @param httpServletResponse a {@link javax.servlet.http.HttpServletResponse} object.
+     * @throws java.io.IOException if any.
      */
     abstract protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException;
 
     /**
      * Help function that writes a string to the output surrounded with <pre> </pre>
      *
-     * @param httpServletResponse
+     * @param httpServletResponse a {@link javax.servlet.http.HttpServletResponse} object.
      * @param message             the message we want to write
-     * @throws IOException
+     * @throws java.io.IOException if any.
      */
     protected void printMessage(HttpServletResponse httpServletResponse, String message) throws IOException {
         // Set response content type

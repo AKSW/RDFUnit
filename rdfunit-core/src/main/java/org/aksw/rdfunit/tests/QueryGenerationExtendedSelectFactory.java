@@ -14,8 +14,10 @@ import java.util.Set;
  *
  * @author Dimitris Kontokostas
  * @since 7/25/14 10:02 PM
+ * @version $Id: $Id
  */
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
+    /** {@inheritDoc} */
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
 
@@ -47,6 +49,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
         return sb.toString();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         return QueryFactory.create(this.getSparqlQueryAsString(testCase));

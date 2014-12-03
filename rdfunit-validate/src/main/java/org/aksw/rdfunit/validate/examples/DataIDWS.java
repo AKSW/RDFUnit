@@ -18,17 +18,22 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
+ * <p>DataIDWS class.</p>
+ *
  * @author Dimitris Kontokostas
  *         a DataID Validator
  * @since 6/18/14 10:13 AM
+ * @version $Id: $Id
  */
 public class DataIDWS extends RDFUnitWebService {
 
+    /** {@inheritDoc} */
     @Override
     public void init() throws ServletException {
         RDFUnitStaticWrapper.initWrapper("https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl");
     }
 
+    /** {@inheritDoc} */
     @Override
     protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
 
@@ -83,16 +88,19 @@ public class DataIDWS extends RDFUnitWebService {
         return configuration;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset) {
         return RDFUnitStaticWrapper.getTestSuite();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException {
         return RDFUnitStaticWrapper.validate(configuration.getTestCaseExecutionType(), dataset, testSuite);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         String helpMessage =
