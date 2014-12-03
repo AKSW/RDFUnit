@@ -71,7 +71,7 @@ public class RDFUnitStaticWrapper {
     private static RDFReader getOntologyReader() {
 
         // No locking here => possible deadock with getTestSuite()
-        // even if it's called twice, there is no harm & the overhead is negligible
+        // even if it's called twice, there is no harm and the overhead is negligible
         if (ontologyReader == null) {
 
             // Means initWrapper was not called
@@ -99,7 +99,7 @@ public class RDFUnitStaticWrapper {
     private static SchemaSource getOntologySource() {
 
         // No locking here => possible deadock with getTestSuite()
-        // even if it's called twice, there is no harm & the overhead is negligible
+        // even if it's called twice, there is no harm and the overhead is negligible
         if (ontologySource == null) {
 
             ontologySource = new SchemaSource("custom", ontologyURI, getOntologyReader());
@@ -241,7 +241,7 @@ public class RDFUnitStaticWrapper {
     }
 
     /**
-     * Static method that validates a Source. In this case the Source & TestSuite are provided as argument along with a RDFUnitCOnfiguration object
+     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitCOnfiguration object
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
@@ -257,7 +257,7 @@ public class RDFUnitStaticWrapper {
     }
 
     /**
-     * Static method that validates a Source. In this case the Source & TestSuite are provided as argument along with a RDFUnitCOnfiguration object
+     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitCOnfiguration object
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
