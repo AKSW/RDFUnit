@@ -148,7 +148,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
     abstract protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException;
 
     /**
-     * Help function that writes a string to the output surrounded with <pre> </pre>
+     * Help function that writes a string to the output surrounded with {@code <pre> </pre>}
      *
      * @param httpServletResponse a {@link javax.servlet.http.HttpServletResponse} object.
      * @param message             the message we want to write

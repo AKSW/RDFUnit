@@ -23,7 +23,6 @@ public final class PatternParameter {
      * @param id                the parameter id
      * @param constrain         the constrain
      * @param constraintPattern the constraint pattern (if exists)
-     * @param constraintPattern the constraint pattern (if exists)
      */
     public PatternParameter(String uri, String id, PatternParameterConstraints constrain, String constraintPattern) {
 

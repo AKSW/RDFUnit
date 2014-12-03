@@ -195,7 +195,6 @@ public class RDFUnitStaticWrapper {
      * Static method that validates an input model. You MUST call initWrapper once before calling this function
      *
      * @param input         the Model we want to validate
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
      * @param executionType What type of results we want
      * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
      * @return a new Model that contains the validation results. The results are according to executionType
@@ -212,7 +211,6 @@ public class RDFUnitStaticWrapper {
      * Used for testing only ATM
      *
      * @param input           the Model we want to validate
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
      * @param executionType   What type of results we want
      * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
      * @param overviewResults This is a way to get validation statistics
@@ -241,7 +239,7 @@ public class RDFUnitStaticWrapper {
     }
 
     /**
-     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitCOnfiguration object
+     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitConfiguration object
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
@@ -257,7 +255,7 @@ public class RDFUnitStaticWrapper {
     }
 
     /**
-     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitCOnfiguration object
+     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitConfiguration object
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
