@@ -367,7 +367,7 @@
                                 </goals>
                                 <configuration>
                                     <verbose>true</verbose>
-                                    <deb>${basedir}/target/${project.build.finalName}-${project.version}.deb</deb>
+                                    <deb>${basedir}/target/${project.build.finalName}_${project.version}.deb</deb>
                                     <dataSet>
                                         <data>
                                             <src>${project.build.directory}/${project.build.finalName}.war</src>
@@ -380,7 +380,7 @@
                                     </dataSet>
                                     <changesIn>${basedir}/debian/CHANGES.txt</changesIn>
                                     <changesSave>${basedir}/debian/CHANGES.txt</changesSave>
-                                    <changesOut>${project.build.directory}/${project.build.finalName}-${project.version}.changes</changesOut>
+                                    <changesOut>${project.build.directory}/${project.build.finalName}_${project.version}.changes</changesOut>
                                 </configuration>
                             </execution>
                         </executions>
