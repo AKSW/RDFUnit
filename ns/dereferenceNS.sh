@@ -1,3 +1,4 @@
+#!/bin/sh
 # RDF/XML
 rapper -i turtle -o rdfxml-abbrev core.ttl > core.rdf
 

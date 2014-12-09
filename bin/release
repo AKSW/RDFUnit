@@ -2,4 +2,4 @@
 
 MVN="mvn"
 
-$MVN clean install release:clean release:prepare release:perform
+${MVN} clean install release:clean release:prepare release:perform
