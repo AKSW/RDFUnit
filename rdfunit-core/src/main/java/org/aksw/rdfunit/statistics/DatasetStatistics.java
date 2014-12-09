@@ -66,11 +66,11 @@ public final class DatasetStatistics {
     private static final String iriListSPARQL = PrefixNSService.getSparqlPrefixDecl() +
             " select distinct ?iri {\n" +
             "  {  \n" +
-            "    select distinct ?s1 AS ?iri where {?s1 ?p1 ?o1} \n" +
+            "    select (?s1 AS ?iri) where {?s1 ?p1 ?o1} \n" +
             "  } UNION {\n" +
-            "    select distinct ?p2 AS ?iri where {?s2 ?p2 ?o2} \n" +
+            "    select (?p2 AS ?iri) where {?s2 ?p2 ?o2} \n" +
             "  } UNION {\n" +
-            "    select distinct ?o3 AS ?iri where {?s3 ?p3 ?o3} \n" +
+            "    select (?o3 AS ?iri) where {?s3 ?p3 ?o3. FILTER (isIRI(?o3))} \n" +
             "  }\n" +
             "} ";
 
