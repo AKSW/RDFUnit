@@ -60,6 +60,20 @@ public final class DatasetStatistics {
             "     ?s a ?stats . } " +
             " GROUP BY ?stats ";
 
+    /*
+    * SPARQL query to get all IRIs
+    * */
+    private static final String iriListSPARQL = PrefixNSService.getSparqlPrefixDecl() +
+            " select distinct ?iri {\n" +
+            "  {  \n" +
+            "    select distinct ?s1 AS ?iri where {?s1 ?p1 ?o1} \n" +
+            "  } UNION {\n" +
+            "    select distinct ?p2 AS ?iri where {?s2 ?p2 ?o2} \n" +
+            "  } UNION {\n" +
+            "    select distinct ?o3 AS ?iri where {?s3 ?p3 ?o3} \n" +
+            "  }\n" +
+            "} ";
+
     /**
      * Instantiates a new Dataset statistics.
      *
@@ -103,7 +117,7 @@ public final class DatasetStatistics {
      *
      * @return returns a string Set inside a Collection
      */
-    public Collection<String> getAllNamespaces() {
+    public Collection<String> getAllNamespacesOntology() {
         Set<String> namespaces = new HashSet<>();
 
         // property stats
@@ -119,17 +133,42 @@ public final class DatasetStatistics {
         return namespaces;
     }
 
+    public Collection<String> getAllNamespacesComplete() {
+        Set<String> namespaces = new HashSet<>();
+
+        Map<String, Integer> stats = new HashMap<>();
+
+        QueryExecution qe = null;
+        try {
+            qe = qef.createQueryExecution(iriListSPARQL);
+            ResultSet results = qe.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution qs = results.next();
+
+                String iri = qs.get("iri").toString();
+                namespaces.add(getNamespaceFromURI(iri));
+            }
+        } finally {
+            if (qe != null) {
+                qe.close();
+            }
+        }
+
+        return namespaces;
+    }
+
     private final Collection<String> excludePrefixes = Arrays.asList("rdf", "rdfs", "owl", "rdfa");
 
     /**
-     * Uses the getAllNamespaces() function and tries to match them to SchemaSource's
+     * Uses the getAllNamespacesOntology() function and tries to match them to SchemaSource's
      *
      * @return a Collection of SchemaSource's for all identified namespaces
      */
     public Collection<SchemaSource> getIdentifiedSchemata() {
         Collection<SchemaSource> sources = new ArrayList<>();
 
-        for (String namespace : getAllNamespaces()) {
+        for (String namespace : getAllNamespacesOntology()) {
 
             SchemaSource source = SchemaService.getSourceFromUri(namespace);
 

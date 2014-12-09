@@ -82,8 +82,8 @@ public class DatasetStatisticsTest {
 
     @Test
     public void testGetAllNamespaces() throws Exception {
-        Collection<String> ns = datasetStatistics.getAllNamespaces();
-        Collection<String> nsCount = datasetStatisticsCounts.getAllNamespaces();
+        Collection<String> ns = datasetStatistics.getAllNamespacesOntology();
+        Collection<String> nsCount = datasetStatisticsCounts.getAllNamespacesOntology();
 
         assertEquals("NS with counts should be equal without counts", ns.size(), nsCount.size());
         assertEquals("Should be 3", ns.size(), nsInPatterns);
