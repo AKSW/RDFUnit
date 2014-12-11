@@ -211,6 +211,12 @@ public class RDFUnitConfiguration {
     public TestSource getTestSource() {
 
         if (testSource != null) {
+            // When we use auto discovery of schemata we create a SchemaSource with no references
+            // After we identify the schemata we add them in the existing TestSource to avoid re-loading the source
+            Collection<SchemaSource> schemata = getAllSchemata();
+            if (testSource.getReferencesSchemata().isEmpty() && !schemata.isEmpty()) {
+                testSource.addReferencesSchemata(schemata);
+            }
             return testSource;
         }
 
