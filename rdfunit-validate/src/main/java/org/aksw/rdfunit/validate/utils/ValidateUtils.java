@@ -195,12 +195,9 @@ public class ValidateUtils {
             throw new ParameterException("both -A & -C does not make sense");
         }
 
-        // Get time to live cache option
+        // Get query time to live cache option
         String ttlStr = commandLine.getOptionValue("T");
         if (ttlStr != null) {
-            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
-                throw new ParameterException("-T works only with an endpoint");
-            }
             try {
                 // we set the cache in minutes
                 long ttl = 60l * 1000l * Long.parseLong(ttlStr);
@@ -211,12 +208,9 @@ public class ValidateUtils {
             }
         }
 
-        // Get endpoint delay option
+        // Get query delay option
         String delayStr = commandLine.getOptionValue("D");
         if (delayStr != null) {
-            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
-                throw new ParameterException("-D works only with an endpoint");
-            }
             try {
                 long delay = Long.parseLong(delayStr);
                 configuration.setEndpointQueryDelayMS(delay);
@@ -227,12 +221,9 @@ public class ValidateUtils {
         }
 
 
-        // Get endpoint pagination option
+        // Get query pagination option
         String paginationStr = commandLine.getOptionValue("P");
         if (paginationStr != null) {
-            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
-                throw new ParameterException("-P works only with an endpoint");
-            }
             try {
                 long pagination = Long.parseLong(paginationStr);
                 configuration.setEndpointQueryPagination(pagination);
@@ -245,9 +236,6 @@ public class ValidateUtils {
         // Get query Limit option
         String limitStr = commandLine.getOptionValue("L");
         if (limitStr != null) {
-            if (configuration.getEndpointURI() == null || configuration.getEndpointURI().isEmpty()) {
-                throw new ParameterException("-L works only with an endpoint");
-            }
             try {
                 long limit = Long.parseLong(limitStr);
                 configuration.setEndpointQueryLimit(limit);

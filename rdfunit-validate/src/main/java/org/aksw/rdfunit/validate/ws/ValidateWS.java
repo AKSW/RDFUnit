@@ -6,7 +6,7 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -60,7 +60,7 @@ public class ValidateWS extends RDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override
-    protected synchronized TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset) {
+    protected synchronized TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource dataset) {
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
                 configuration.isAutoTestsEnabled(),
                 configuration.isTestCacheEnabled(),
@@ -70,7 +70,7 @@ public class ValidateWS extends RDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override
-    protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException {
+    protected Model validate(final RDFUnitConfiguration configuration, final TestSource dataset, final TestSuite testSuite) throws TestCaseExecutionException {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
         if (testExecutor == null) {
             throw new TestCaseExecutionException(null, "Cannot initialize test executor. Exiting");
