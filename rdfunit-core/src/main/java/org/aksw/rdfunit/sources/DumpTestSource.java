@@ -21,7 +21,7 @@ import java.util.Collection;
  * @since 2/6/14 9:32 AM
  * @version $Id: $Id
  */
-public class DumpTestSource extends Source {
+public class DumpTestSource extends TestSource {
 
     private final RDFReader dumpReader;
 
@@ -68,6 +68,12 @@ public class DumpTestSource extends Source {
      */
     public DumpTestSource(String prefix, String uri, RDFReader dumpReader, Collection<SchemaSource> schemata) {
         super(prefix, uri);
+
+        cacheTTL = 0; // defaults to 0 unless overridden
+        queryDelay = 0; // defaults to 0 unless overridden
+        queryLimit = 0; // defaults to 0 unless overridden
+        pagination = 0; // defaults to 0 unless overridden
+
         this.dumpReader = dumpReader;
         if (schemata != null) {
             addReferencesSchemata(schemata);
@@ -108,6 +114,6 @@ public class DumpTestSource extends Source {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
         }
-        return new QueryExecutionFactoryModel(dumpModel);
+        return masqueradeQEF(new QueryExecutionFactoryModel(dumpModel));
     }
 }

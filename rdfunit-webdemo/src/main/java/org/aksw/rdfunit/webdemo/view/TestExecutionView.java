@@ -12,7 +12,7 @@ import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFStreamWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -406,7 +406,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 testExecutor.addTestExecutorMonitor(sessionMonitor);
                 RDFUnitDemoSession.setExecutorMonitor(sessionMonitor);
 
-                Source dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
+                TestSource dataset = RDFUnitDemoSession.getRDFUnitConfiguration().getTestSource();
 
                 RDFUnitDemoSession.getTestExecutor().execute(dataset, RDFUnitDemoSession.getTestSuite());
 
@@ -434,7 +434,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             private long total = 0;
 
             @Override
-            public void testingStarted(final Source source, final TestSuite testSuite) {
+            public void testingStarted(final TestSource testSource, final TestSuite testSuite) {
                 count = totalErrors = failTest = sucessTests = timeoutTests = 0;
                 total = testSuite.size();
 

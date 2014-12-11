@@ -13,6 +13,7 @@ import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
@@ -90,8 +91,8 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     /** {@inheritDoc} */
     @Override
-    public void testingStarted(Source dataset, TestSuite testSuite) {
-        testedDataset = dataset;
+    public void testingStarted(TestSource testSource, TestSuite testSuite) {
+        testedDataset = testSource;
         this.testSuite = testSuite;
 
         // init counters

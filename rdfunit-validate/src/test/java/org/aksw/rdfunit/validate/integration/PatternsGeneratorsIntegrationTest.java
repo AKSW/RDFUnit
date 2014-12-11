@@ -7,7 +7,7 @@ import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
@@ -136,7 +136,7 @@ public class PatternsGeneratorsIntegrationTest {
             for (TestCaseExecutionType executionType : TestCaseExecutionType.values()) {
 
                 // create new dataset for current entry
-                final Source modelSource = new DumpTestSource(
+                final TestSource modelSource = new DumpTestSource(
                         "test", // prefix
                         resource,
                         RDFReaderFactory.createResourceReader(resourcePrefix + resource),

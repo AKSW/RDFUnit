@@ -3,7 +3,7 @@ package org.aksw.rdfunit.tests.executors;
 import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -60,22 +60,22 @@ public abstract class TestExecutor {
     /**
      * Executes single test.
      *
-     * @param source   the source
+     * @param testSource   the source
      * @param testCase the test case
      * @return the java . util . collection
      * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException the test case execution exception
      */
-    abstract protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException;
+    abstract protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException;
 
 
     /**
      * Test execution for a Source against a TestSuite
      *
-     * @param source    the source we want to test
+     * @param testSource    the source we want to test
      * @param testSuite the test suite we test the source against
      * @return true if all TC executed successfully, false otherwise
      */
-    public boolean execute(Source source, TestSuite testSuite) {
+    public boolean execute(TestSource testSource, TestSuite testSuite) {
         // used to hold the whole status of the execution
         boolean success = true;
 
@@ -84,7 +84,7 @@ public abstract class TestExecutor {
 
         /*notify start of testing */
         for (TestExecutorMonitor monitor : progressMonitors) {
-            monitor.testingStarted(source, testSuite);
+            monitor.testingStarted(testSource, testSuite);
         }
 
         for (TestCase testCase : testSuite.getTestCases()) {
@@ -105,7 +105,7 @@ public abstract class TestExecutor {
             log.debug(testCase.getAbrTestURI() + " : started execution");
 
             try {
-                results = executeSingleTest(source, testCase);
+                results = executeSingleTest(testSource, testCase);
             } catch (TestCaseExecutionException e) {
                 status = e.getStatus();
             } catch (RuntimeException e) {

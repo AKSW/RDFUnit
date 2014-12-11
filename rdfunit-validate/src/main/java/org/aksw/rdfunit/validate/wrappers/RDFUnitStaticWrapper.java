@@ -9,6 +9,7 @@ import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -224,7 +225,7 @@ public class RDFUnitStaticWrapper {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
-        final Source modelSource = new DumpTestSource(
+        final TestSource modelSource = new DumpTestSource(
                 "custom", // prefix
                 inputURI,
                 new RDFModelReader(input), // the input model as a RDFReader
@@ -243,15 +244,15 @@ public class RDFUnitStaticWrapper {
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
-     * @param dataset               the dataset source we want to test
+     * @param testSource               the dataset source we want to test
      * @param testSuite             the list of test cases we want to test our Source against
      * @return a new Model that contains the validation results. The results are according to executionType
      */
-    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final Source dataset, final TestSuite testSuite) {
+    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
-        return validate(testCaseExecutionType, dataset, testSuite, overviewResults);
+        return validate(testCaseExecutionType, testSource, testSuite, overviewResults);
     }
 
     /**
@@ -259,12 +260,12 @@ public class RDFUnitStaticWrapper {
      * This function can also serve as standalone
      *
      * @param testCaseExecutionType execution type
-     * @param dataset               the dataset source we want to test
+     * @param testSource               the dataset source we want to test
      * @param testSuite             the list of test cases we want to test our Source against
      * @param overviewResults This is a way to get validation statistics
      * @return a new Model that contains the validation results. The results are according to executionType
      */
-    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final Source dataset, final TestSuite testSuite, DatasetOverviewResults overviewResults) {
+    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, DatasetOverviewResults overviewResults) {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
@@ -272,7 +273,7 @@ public class RDFUnitStaticWrapper {
 
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(testCaseExecutionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
-        testExecutor.execute(dataset, testSuite);
+        testExecutor.execute(testSource, testSuite);
         overviewResults.set(testExecutorMonitor.getOverviewResults());
 
         return testExecutorMonitor.getModel();

@@ -8,7 +8,7 @@ import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
@@ -37,13 +37,13 @@ public class AggregatedTestExecutor extends TestExecutor {
 
     /** {@inheritDoc} */
     @Override
-    protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
+    protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
         int total = -1, prevalence = -1;
 
         try {
             Query prevalenceQuery = testCase.getSparqlPrevalenceQuery();
             if (prevalenceQuery != null) {
-                prevalence = getCountNumber(source.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
+                prevalence = getCountNumber(testSource.getExecutionFactory(), testCase.getSparqlPrevalenceQuery(), "total");
             }
         } catch (QueryExceptionHTTP e) {
             if (SparqlUtils.checkStatusForTimeout(e)) {
@@ -56,7 +56,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         if (prevalence != 0) {
             // if prevalence !=0 calculate total
             try {
-                total = getCountNumber(source.getExecutionFactory(), queryGenerationFactory.getSparqlQuery(testCase), "total");
+                total = getCountNumber(testSource.getExecutionFactory(), queryGenerationFactory.getSparqlQuery(testCase), "total");
             } catch (QueryExceptionHTTP e) {
                 if (SparqlUtils.checkStatusForTimeout(e)) {
                     total = -1;

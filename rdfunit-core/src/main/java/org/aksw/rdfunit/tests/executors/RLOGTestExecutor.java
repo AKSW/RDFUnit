@@ -8,7 +8,7 @@ import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
@@ -39,13 +39,13 @@ public class RLOGTestExecutor extends TestExecutor {
 
     /** {@inheritDoc} */
     @Override
-    protected Collection<TestCaseResult> executeSingleTest(Source source, TestCase testCase) throws TestCaseExecutionException {
+    protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
 
         QueryExecution qe = null;
         try {
-            qe = source.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
+            qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
             ResultSet results = qe.execSelect();
 
             while (results.hasNext()) {

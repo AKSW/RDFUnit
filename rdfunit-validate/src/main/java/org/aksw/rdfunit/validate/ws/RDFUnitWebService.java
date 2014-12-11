@@ -7,7 +7,7 @@ import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.validate.ParameterException;
 
@@ -70,7 +70,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         }
         assert (configuration != null);
 
-        final Source dataset = configuration.getTestSource();
+        final TestSource dataset = configuration.getTestSource();
 
         final TestSuite testSuite = getTestSuite(configuration, dataset);
         assert (testSuite != null);
@@ -123,21 +123,21 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * Creates a TestSuite based on the RDFUnitConfiguration and the Source to be tested
      *
      * @param configuration an RDFUnitConfiguration object generated with getConfiguration
-     * @param dataset       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
+     * @param testSource       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
      * @return A TestSuite (list of test cases) for running against the tested Source
      */
-    abstract protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset);
+    abstract protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource testSource);
 
     /**
      * Executes the validation of a Sourse dataset against a TestSuite based on a RDFUnitConfiguration
      *
      * @param configuration an RDFUnitConfiguration object generated with getConfiguration
-     * @param dataset       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
+     * @param testSource       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
      * @param testSuite     a TestSuite generated with getTestSuite()
      * @return a Model that contains the results of a validation
      * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
      */
-    abstract protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException;
+    abstract protected Model validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException;
 
     /**
      * Prints a help message with the correct arguments one can use to call the service

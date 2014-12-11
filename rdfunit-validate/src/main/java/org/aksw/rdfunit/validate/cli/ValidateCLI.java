@@ -14,7 +14,7 @@ import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -100,7 +100,7 @@ public class ValidateCLI {
         // */
 
 
-        final Source dataset = configuration.getTestSource();
+        final TestSource dataset = configuration.getTestSource();
         /* </cliStuff> */
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
@@ -116,6 +116,7 @@ public class ValidateCLI {
         }
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
+        assert (testExecutor != null);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results

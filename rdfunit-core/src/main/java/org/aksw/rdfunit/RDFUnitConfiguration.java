@@ -42,16 +42,16 @@ public class RDFUnitConfiguration {
     /* SPARQL endpoint configuration */
     private String endpointURI = null;
     private Collection<String> endpointGraphs = null;
-    private long endpointQueryDelayMS = EndpointTestSource.QUERY_DELAY;
-    private long endpointQueryCacheTTL = EndpointTestSource.CACHE_TTL;
-    private long endpointQueryPagination = EndpointTestSource.PAGINATION;
-    private long endpointQueryLimit = EndpointTestSource.QUERY_LIMIT;
+    private long endpointQueryDelayMS = -1;
+    private long endpointQueryCacheTTL = -1;
+    private long endpointQueryPagination = -1;
+    private long endpointQueryLimit = -1;
 
     /* Dereference testing (if different from datasetURI) */
     private String customDereferenceURI = null;
 
     /* used to cache the test source when we initially do stats for auto loading test cases */
-    private Source testSource = null;
+    private TestSource testSource = null;
 
     /* Use text directly as a source */
     private String customTextSource = null;
@@ -112,40 +112,9 @@ public class RDFUnitConfiguration {
      * @param endpointGraphs a {@link java.util.Collection} object.
      */
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
-        setEndpointConfiguration(endpointURI, endpointGraphs, this.endpointQueryDelayMS, this.endpointQueryCacheTTL, this.endpointQueryPagination);
-    }
-
-    /**
-     * <p>setEndpointConfiguration.</p>
-     *
-     * @param endpointURI a {@link java.lang.String} object.
-     * @param endpointGraphs a {@link java.util.Collection} object.
-     * @param endpointDelayinMS a long.
-     * @param endpointCacheTTL a long.
-     * @param endpointPagination a long.
-     */
-    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointDelayinMS, long endpointCacheTTL, long endpointPagination) {
-        setEndpointConfiguration(endpointURI, endpointGraphs, endpointDelayinMS, endpointCacheTTL, endpointPagination, this.endpointQueryLimit);
-    }
-
-    /**
-     * <p>setEndpointConfiguration.</p>
-     *
-     * @param endpointURI a {@link java.lang.String} object.
-     * @param endpointGraphs a {@link java.util.Collection} object.
-     * @param endpointQueryDelayMS a long.
-     * @param endpointQueryCacheTTL a long.
-     * @param endpointQueryPagination a long.
-     * @param endpointQueryLimit a long.
-     */
-    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, long endpointQueryDelayMS, long endpointQueryCacheTTL, long endpointQueryPagination, long endpointQueryLimit) {
         this.endpointURI = endpointURI;
         this.endpointGraphs = new ArrayList<>();
         this.endpointGraphs.addAll(endpointGraphs);
-        this.endpointQueryDelayMS = endpointQueryDelayMS;
-        this.endpointQueryCacheTTL = endpointQueryCacheTTL;
-        this.endpointQueryPagination = endpointQueryPagination;
-        this.endpointQueryLimit = endpointQueryLimit;
     }
 
     /**
@@ -239,61 +208,68 @@ public class RDFUnitConfiguration {
      *
      * @return a {@link org.aksw.rdfunit.sources.Source} object.
      */
-    public Source getTestSource() {
+    public TestSource getTestSource() {
 
         if (testSource != null) {
             return testSource;
         }
 
+        String prefix = CacheUtils.getAutoPrefixForURI(datasetURI);
+
         if (endpointURI != null && !endpointURI.isEmpty()) {
             // return a SPARQL Endpoint source
-            EndpointTestSource endpointSource = new EndpointTestSource(
-                    CacheUtils.getAutoPrefixForURI(datasetURI),
+            testSource = new EndpointTestSource(
+                    prefix,
                     datasetURI,
                     endpointURI,
                     endpointGraphs,
                     getAllSchemata());
+        } else {
 
-            endpointSource.setQueryDelay(this.endpointQueryDelayMS);
-            endpointSource.setCacheTTL(this.endpointQueryCacheTTL);
-            endpointSource.setPagination(this.endpointQueryPagination);
-            endpointSource.setQueryLimit(this.endpointQueryLimit);
+            RDFReader dumpReader;
 
-            testSource = endpointSource;
-            return testSource;
-        }
-
-        // Return a text source
-        if (customTextSource != null) {
-            RDFReader textReader = RDFReaderFactory.createReaderFromText(customTextSource, customTextFormat.getName());
-            testSource =  new DumpTestSource(
-                    CacheUtils.getAutoPrefixForURI(datasetURI),
-                    datasetURI,
-                    textReader,
-                    getAllSchemata());
-            return testSource;
-        }
-
-        // return a DumpSource
-        String tmp_customDereferenceURI = datasetURI;
-
-        if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
-            tmp_customDereferenceURI = customDereferenceURI;
-            if (customDereferenceURI.equals("-")) {
-                testSource = new DumpTestSource(
-                        CacheUtils.getAutoPrefixForURI(datasetURI),
-                        datasetURI,
-                        new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE"),  // TODO make format configurable
-                        getAllSchemata());
-                return testSource;
+            // Return a text source
+            if (customTextSource != null) { // read from custom text
+                dumpReader = RDFReaderFactory.createReaderFromText(customTextSource, customTextFormat.getName());
             }
+            else {
+                // return a DumpSource
+                String tmp_customDereferenceURI = datasetURI;
+
+                if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
+                    tmp_customDereferenceURI = customDereferenceURI;
+                }
+
+                if (customDereferenceURI != null && customDereferenceURI.equals("-")) {
+                    // Read from standard input / pipe
+                    dumpReader = new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE");  // TODO make format configurable
+                } else {
+                    // dereference the source (check local file or remote)
+                    dumpReader = RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI);
+                }
+            }
+
+            // Set the DumpSource with the configured reader
+            testSource = new DumpTestSource(
+                    prefix,
+                    datasetURI,
+                    dumpReader,
+                    getAllSchemata());
         }
 
-        testSource = new DumpTestSource(
-                CacheUtils.getAutoPrefixForURI(datasetURI),
-                datasetURI,
-                tmp_customDereferenceURI,
-                getAllSchemata());
+        // Set TestSource configuration
+        if (this.endpointQueryCacheTTL != -1)
+            testSource.setCacheTTL(this.endpointQueryCacheTTL);
+
+        if (this.endpointQueryDelayMS != -1)
+            testSource.setQueryDelay(this.endpointQueryDelayMS);
+
+        if (this.endpointQueryPagination != -1)
+            testSource.setPagination(this.endpointQueryPagination);
+
+        if (this.endpointQueryLimit != -1)
+            testSource.setQueryLimit(this.endpointQueryLimit);
+
         return testSource;
     }
 

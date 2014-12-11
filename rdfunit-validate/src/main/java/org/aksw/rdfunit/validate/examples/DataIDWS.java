@@ -5,7 +5,7 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
@@ -90,14 +90,14 @@ public class DataIDWS extends RDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override
-    protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final Source dataset) {
+    protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource testSource) {
         return RDFUnitStaticWrapper.getTestSuite();
     }
 
     /** {@inheritDoc} */
     @Override
-    protected Model validate(final RDFUnitConfiguration configuration, final Source dataset, final TestSuite testSuite) throws TestCaseExecutionException {
-        return RDFUnitStaticWrapper.validate(configuration.getTestCaseExecutionType(), dataset, testSuite);
+    protected Model validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException {
+        return RDFUnitStaticWrapper.validate(configuration.getTestCaseExecutionType(), testSource, testSuite);
     }
 
     /** {@inheritDoc} */
