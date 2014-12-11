@@ -179,7 +179,6 @@
                                 </goals>
                                 <configuration>
                                     <verbose>true</verbose>
-                                    <deb>${basedir}/target/${project.build.finalName}_${project.version}.deb</deb>
                                     <dataSet>
                                         <data>
                                             <src>${basedir}/target/rdfunit-cli.jar</src>
@@ -212,8 +211,6 @@
                                     </dataSet>
                                     <changesIn>${basedir}/debian/CHANGES.txt</changesIn>
                                     <changesSave>${basedir}/debian/CHANGES.txt</changesSave>
-                                    <changesOut>${project.build.directory}/${project.build.finalName}_${project.version}.changes
-                                    </changesOut>
                                 </configuration>
                             </execution>
                         </executions>
