@@ -367,6 +367,9 @@
                                 </goals>
                                 <configuration>
                                     <verbose>true</verbose>
+                                    <snapshotExpand>true</snapshotExpand>
+                                    <snapshotEnv>${maven.build.timestamp}</snapshotEnv>
+                                    <verbose>true</verbose>
                                     <dataSet>
                                         <data>
                                             <src>${project.build.directory}/${project.build.finalName}.war</src>
