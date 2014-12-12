@@ -68,7 +68,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
                                                   FILTER (?T1 != ?T2)
                               }
                               FILTER (!isBlank(?T1))
-							  BIND (concat(str(?P1)," does not have defined range: ", str(?T1)) AS ?DESCRIPTION)}   """ ;
+							  BIND (concat(str(?P1)," is missing proper range") AS ?DESCRIPTION)}   """ ;
     rut:basedOnPattern rutp:RDFSRANGE-MISS ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -174,7 +174,7 @@ rutg:RDFSDOMAIN-MISS a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:domain constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ('?v1' as ?V1) ?DESCRIPTION where {
                              ?P1 rdfs:domain ?T1 .
-                             BIND (concat(str(?P1)," does not have rdfs:domain: ", str(?T1)) AS ?DESCRIPTION)
+                             BIND (concat(str(?P1)," is missing proper range") AS ?DESCRIPTION)
                              FILTER (!isBlank(?T1))
                              FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                              FILTER ( ?P1 NOT IN ( <http://www.w3.org/ns/rdfa#uri> , <http://www.w3.org/ns/rdfa#term> ))} """ ;
