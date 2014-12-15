@@ -415,5 +415,5 @@ rutt:dbo-TYPRODEP-personwithoutbirthdate
 		rut:parameter rutp:TYPRODEP-P1
 	] ;
     rut:testCaseLogLevel
-            rlog:ERROR ;
+            rlog:WARN ;
     .
