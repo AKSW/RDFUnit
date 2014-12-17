@@ -245,11 +245,13 @@ public final class TestUtils {
                                 resultAnnotations);
 
                 if (!results.hasNext()) {
-                    return new ManualTestCase(
+                    ManualTestCase tc = new ManualTestCase(
                             testURI,
                             annotation,
                             sparqlWhere,
                             sparqlPrevalence);
+                    new TestCaseValidator(tc).validate();
+                    return tc;
                 }
             }
 
@@ -325,11 +327,13 @@ public final class TestUtils {
                                 resultAnnotations);
 
                 if (!results.hasNext()) {
-                    return new PatternBasedTestCase(
+                    PatternBasedTestCase tc = new PatternBasedTestCase(
                             testURI,
                             annotation,
                             pattern,
                             bindings);
+                    new TestCaseValidator(tc).validate();
+                    return tc;
                 }
             }
         } finally {

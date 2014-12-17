@@ -4,7 +4,6 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -145,53 +144,7 @@ public abstract class TestCase implements Comparable<TestCase> {
         return testURI.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
     }
 
-    /**
-     * <p>validateQueries.</p>
-     *
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
-     */
-    public void validateQueries() throws TestCaseInstantiationException {
-        // TODO move this in a separate class
 
-        validateSPARQL(new QueryGenerationSelectFactory().getSparqlQueryAsString(this), "SPARQL");
-        validateSPARQL(new QueryGenerationExtendedSelectFactory().getSparqlQueryAsString(this), "SPARQL Extended");
-        validateSPARQL(new QueryGenerationCountFactory().getSparqlQueryAsString(this), "SPARQL Count");
-        validateSPARQL(new QueryGenerationAskFactory().getSparqlQueryAsString(this), "ASK");
-        if (!getSparqlPrevalence().trim().equals("")) { // Prevalence in not always defined
-            validateSPARQL(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence(), "prevalence");
-        }
-
-        Collection<String> vars = new QueryGenerationSelectFactory().getSparqlQuery(this).getResultVars();
-        // check for Resource & message
-        boolean hasResource = false;
-        for (String v : vars) {
-            if (v.equals("resource")) {
-                hasResource = true;
-            }
-
-        }
-        if (!hasResource) {
-            throw new TestCaseInstantiationException("?resource is not included in SELECT for Test: " + testURI);
-        }
-
-        // Message is allowed to exist either in SELECT or as a result annotation
-        if (annotation.getDescription().equals("")) {
-            throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testURI);
-        }
-
-        if (getLogLevel() == null) {
-            throw new TestCaseInstantiationException("No (or malformed) log level included for Test: " + testURI);
-        }
-    }
-
-    private void validateSPARQL(String sparql, String type) throws TestCaseInstantiationException {
-        try {
-            QueryFactory.create(sparql);
-        } catch (QueryParseException e) {
-            String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testURI + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
-            throw new TestCaseInstantiationException(message, e);
-        }
-    }
 
     /** {@inheritDoc} */
     @Override

@@ -150,6 +150,7 @@ public class TestAutoGenerator {
                         pattern,
                         bindings
                 );
+                new TestCaseValidator(tc).validate();
                 tests.add(tc);
             } catch (TestCaseInstantiationException e) {
                 log.error(e.getMessage(), e);

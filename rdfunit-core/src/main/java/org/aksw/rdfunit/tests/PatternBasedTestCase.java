@@ -44,7 +44,6 @@ public class PatternBasedTestCase extends TestCase {
         if (bindings.size() != pattern.getParameters().size()) {
             throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
         }
-        validateQueries();
     }
 
     /** {@inheritDoc} */

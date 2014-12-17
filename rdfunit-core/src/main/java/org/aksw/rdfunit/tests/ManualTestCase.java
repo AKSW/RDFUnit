@@ -32,7 +32,6 @@ public class ManualTestCase extends TestCase {
         super(testURI, annotation);
         this.sparqlWhere = sparqlWhere.trim();
         this.sparqlPrevalence = sparqlPrevalence.trim();
-        validateQueries();
     }
 
     /** {@inheritDoc} */
