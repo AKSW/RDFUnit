@@ -136,8 +136,6 @@ public final class DatasetStatistics {
     public Collection<String> getAllNamespacesComplete() {
         Set<String> namespaces = new HashSet<>();
 
-        Map<String, Integer> stats = new HashMap<>();
-
         QueryExecution qe = null;
         try {
             qe = qef.createQueryExecution(iriListSPARQL);
