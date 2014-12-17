@@ -17,8 +17,6 @@ public class PrefixNSServiceTest {
         Model prefixModel = ModelFactory.createDefaultModel();
         try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl")) {
             prefixModel.read(is, null, "TURTLE");
-        } catch (Exception e) {
-            throw new RuntimeException("Cannot init prefixes");
         }
         // Update Prefix Service
         Map<String, String> prefixes = prefixModel.getNsPrefixMap();
