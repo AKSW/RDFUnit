@@ -3,11 +3,9 @@ package org.aksw.rdfunit.Utils;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
@@ -102,30 +100,5 @@ public final class SparqlUtils {
 
         // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
         return httpCode == 408 || httpCode == 504 || httpCode == 524;
-    }
-
-    /**
-     * <p>getModelFromQueryFactory.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @throws java.lang.Exception if any.
-     */
-    public static Model getModelFromQueryFactory(QueryExecutionFactory qef) throws Exception {
-        if (qef instanceof QueryExecutionFactoryModel) {
-            return ((QueryExecutionFactoryModel) qef).getModel();
-        } else {
-            QueryExecution qe = null;
-            try {
-                qe = qef.createQueryExecution(" CONSTRUCT ?s ?p ?o WHERE { ?s ?p ?o } ");
-                return qe.execConstruct();
-            } catch (Exception e) {
-                throw e;
-            } finally {
-                if (qe != null) {
-                    qe.close();
-                }
-            }
-        }
     }
 }

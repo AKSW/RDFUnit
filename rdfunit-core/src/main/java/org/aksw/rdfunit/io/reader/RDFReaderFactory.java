@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 
@@ -79,7 +79,7 @@ public final class RDFReaderFactory {
      */
     public static RDFReader createDereferenceReader(String uri) {
         Collection<RDFReader> readers = new ArrayList<>();
-        if (RDFUnitUtils.isURI(uri)) {
+        if (IOUtils.isURI(uri)) {
             readers.add(new RDFDereferenceReader(uri));
             readers.add(new RDFaReader(uri));
         } else {

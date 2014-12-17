@@ -2,7 +2,7 @@ package org.aksw.rdfunit.io.writer;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.Utils.SparqlUtils;
+import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.FileNotFoundException;
@@ -48,7 +48,7 @@ public class RDFStreamWriter extends RDFWriter {
     @Override
     public void write(QueryExecutionFactory qef) throws RDFWriterException {
         try {
-            Model model = SparqlUtils.getModelFromQueryFactory(qef);
+            Model model = IOUtils.getModelFromQueryFactory(qef);
             PrefixNSService.setNSPrefixesInModel(model);
             model.write(outputStream, filetype);
 
