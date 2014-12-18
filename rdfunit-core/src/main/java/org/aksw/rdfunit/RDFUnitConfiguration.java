@@ -151,8 +151,21 @@ public class RDFUnitConfiguration {
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
+        setAutoSchemataFromQEF(qef,false);
+    }
+
+    /**
+     * <p>setAutoSchemataFromQEF.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     */
+    public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all) {
         DatasetStatistics datasetStatistics = new DatasetStatistics(qef, false);
-        this.schemas = datasetStatistics.getIdentifiedSchemata();
+        if (all) {
+            this.schemas = datasetStatistics.getIdentifiedSchemataAll();
+        } else {
+            this.schemas = datasetStatistics.getIdentifiedSchemataOntology();
+        }
     }
 
     /**

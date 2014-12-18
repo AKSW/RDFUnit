@@ -92,8 +92,8 @@ public class DatasetStatisticsTest {
 
     @Test
     public void testgetIdentifiedSchemata() throws Exception {
-        /*Collection<SchemaSource> schemata = */ datasetStatistics.getIdentifiedSchemata();
-        //Collection<SchemaSource> schemataCount = datasetStatisticsCounts.getIdentifiedSchemata();
+        /*Collection<SchemaSource> schemata = */ datasetStatistics.getIdentifiedSchemataOntology();
+        //Collection<SchemaSource> schemataCount = datasetStatisticsCounts.getIdentifiedSchemataOntology();
 
         // TODO: init SchemaService to get data
         //assertEquals("NS with counts should be equal without counts", schemata.size(), schemataCount.size());

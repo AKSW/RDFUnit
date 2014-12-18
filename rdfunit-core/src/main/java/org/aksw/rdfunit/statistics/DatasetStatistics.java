@@ -163,10 +163,24 @@ public final class DatasetStatistics {
      *
      * @return a Collection of SchemaSource's for all identified namespaces
      */
-    public Collection<SchemaSource> getIdentifiedSchemata() {
+    public Collection<SchemaSource> getIdentifiedSchemataOntology() {
+        return getIdentifiedSchemata(getAllNamespacesOntology());
+    }
+
+    /**
+     * Uses the getAllNamespacesOntology() function and tries to match them to SchemaSource's
+     *
+     * @return a Collection of SchemaSource's for all identified namespaces
+     */
+    public Collection<SchemaSource> getIdentifiedSchemataAll() {
+        return getIdentifiedSchemata(getAllNamespacesComplete());
+    }
+
+
+    private Collection<SchemaSource> getIdentifiedSchemata(Collection<String> namespaces) {
         Collection<SchemaSource> sources = new ArrayList<>();
 
-        for (String namespace : getAllNamespacesOntology()) {
+        for (String namespace : namespaces) {
 
             SchemaSource source = SchemaService.getSourceFromUri(namespace);
 
@@ -185,6 +199,8 @@ public final class DatasetStatistics {
 
         return sources;
     }
+
+
 
     /**
      * Gets namespace from uRI.
