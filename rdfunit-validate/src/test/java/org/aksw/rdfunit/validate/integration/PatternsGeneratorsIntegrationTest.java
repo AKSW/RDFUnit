@@ -61,6 +61,8 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsOWL.put("owl/OWLQCARDT_Wrong_Max.ttl", 2);
         testsWithErrorsOWL.put("owl/RDFLANGSTRING_Correct.ttl", 0);
         testsWithErrorsOWL.put("owl/RDFLANGSTRING_Wrong.ttl", 2);
+        testsWithErrorsOWL.put("owl/RDFSRANG_LIT_Correct.ttl", 0);
+        testsWithErrorsOWL.put("owl/RDFSRANG_LIT_Wrong.ttl", 4);
 
         RDFReader ontologyOWLReader = RDFReaderFactory.createResourceReader(resourcePrefix + "owl/ontology.ttl");
         SchemaSource ontologyOWLSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyOWLReader);

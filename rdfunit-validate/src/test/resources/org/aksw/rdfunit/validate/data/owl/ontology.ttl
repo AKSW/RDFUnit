@@ -208,3 +208,16 @@ ex:QCardMax2Class
 # rdf:langString
 ex:langStringProperty a rdf:property ;
 	rdfs:range rdf:langString .
+
+# non literal properties
+ex:literalP1 a owl:DatatypeProperty ;
+    rdfs:range xsd:string  .
+ex:literalP2 a rdf:Property ;
+    rdfs:range xsd:string .
+
+# non literal properties
+ex:nonLiteralP1 a owl:ObjectProperty .
+ex:nonLiteralP2 a rdf:Property ;
+    rdfs:range xsd:anyURI .
+ex:nonLiteralP3 a rdf:Property ;
+    rdfs:range ex:Person.
