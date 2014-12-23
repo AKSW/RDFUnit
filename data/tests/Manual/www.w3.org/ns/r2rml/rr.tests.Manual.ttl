@@ -31,8 +31,8 @@ rutt:rr-subjectmap-template-missing-class
                                        ^<http://www.w3.org/ns/r2rml#subjectMap>  ?subjectMap. # is part of a subjectMap
                              FILTER NOT EXISTS {?resource <http://www.w3.org/ns/r2rml#class> ?class. }}""" ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource <http://www.w3.org/ns/r2rml#template> ?template ;
-                                           ^<http://www.w3.org/ns/r2rml#subjectMap>  ?subjectMap. # is part of a subjectMap } """ ;
+                                 ?resource <http://www.w3.org/ns/r2rml#template> ?template .
+                                 ?resource ^<http://www.w3.org/ns/r2rml#subjectMap>  ?subjectMap. } # is part of a subjectMap """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty spin:violationPath ;
