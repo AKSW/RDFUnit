@@ -76,6 +76,7 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- jena-sparql-api -->
             <dependency>
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-core</artifactId>
@@ -100,18 +101,19 @@
                 <version>${jena-sparql-api-version}</version>
             </dependency>
 
+            <!-- jena -->
             <dependency>
                 <groupId>org.apache.jena</groupId>
                 <artifactId>jena-arq</artifactId>
                 <version>${org-apache-jena-version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.jena</groupId>
                 <artifactId>jena-core</artifactId>
                 <version>${org-apache-jena-version}</version>
             </dependency>
 
+            <!-- RDFa support -->
             <dependency>
                 <groupId>org.semarglproject</groupId>
                 <artifactId>semargl-jena</artifactId>
@@ -124,6 +126,7 @@
                 <version>4.0</version>
             </dependency>
 
+            <!-- logging -->
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
@@ -144,10 +147,41 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- Unit testing -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>1.7.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-core</artifactId>
+                <version>1.6.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>1.6.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>1.6.0</version>
                 <scope>test</scope>
             </dependency>
 
