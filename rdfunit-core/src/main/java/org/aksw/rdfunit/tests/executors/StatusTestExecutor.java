@@ -6,8 +6,8 @@ import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
+import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 

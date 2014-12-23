@@ -4,10 +4,10 @@ import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
+import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
@@ -44,7 +44,7 @@ public abstract class TestExecutor {
     /**
      * Instantiates a new Test executor.
      *
-     * @param queryGenerationFactory a {@link org.aksw.rdfunit.tests.QueryGenerationFactory} object.
+     * @param queryGenerationFactory a {@link org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory} object.
      */
     public TestExecutor(QueryGenerationFactory queryGenerationFactory) {
         this.queryGenerationFactory = queryGenerationFactory;
