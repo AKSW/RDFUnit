@@ -12,6 +12,13 @@ import org.aksw.rdfunit.services.PrefixNSService;
  * @version $Id: $Id
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
+
+    private final String selectClauseSimple = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE ";
+
+    private final String selectClauseGroupStart = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
+                                                   " SELECT ?resource WHERE ";
+    private final String selectClauseGroupEnd = "}";
+
     /** {@inheritDoc} */
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
@@ -22,7 +29,7 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         Query query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
-                        " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE " + testCase.getSparqlWhere()
+                        selectClauseSimple + testCase.getSparqlWhere()
         );
         if (!query.hasGroupBy()) {
             return query;
@@ -32,10 +39,9 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
         // This way we enclose the query in a sub-select and calculate the count () correctly
         // See https://issues.apache.org/jira/browse/JENA-766
         query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
-                        " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
-                        " SELECT ?resource WHERE "
+                        selectClauseGroupStart
                         + testCase.getSparqlWhere() +
-                        "}"
+                        selectClauseGroupEnd
         );
 
         return query;

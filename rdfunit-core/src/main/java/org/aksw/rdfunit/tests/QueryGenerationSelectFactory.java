@@ -12,11 +12,14 @@ import org.aksw.rdfunit.services.PrefixNSService;
  * @version $Id: $Id
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
+
+    private final String selectClause = " SELECT DISTINCT ?resource WHERE ";
+
     /** {@inheritDoc} */
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
         return PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resource WHERE " + testCase.getSparqlWhere();
+                selectClause + testCase.getSparqlWhere();
     }
 
     /** {@inheritDoc} */

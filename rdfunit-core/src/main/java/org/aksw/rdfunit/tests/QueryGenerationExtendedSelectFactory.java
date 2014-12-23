@@ -17,6 +17,15 @@ import java.util.Set;
  * @version $Id: $Id
  */
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
+
+    private final String selectDistinctResource = " SELECT DISTINCT ?resource ";
+
+    private final String resourceVar = "?resource";
+
+    private final String whereClause = " WHERE ";
+
+    private final String orderByResourceAsc = "  ORDER BY ASC(?resource) ";
+
     /** {@inheritDoc} */
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
@@ -24,10 +33,10 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
         StringBuilder sb = new StringBuilder();
 
         sb.append(PrefixNSService.getSparqlPrefixDecl());
-        sb.append(" SELECT DISTINCT ?resource ");
+        sb.append(selectDistinctResource);
 
         Set<String> existingVariables = new HashSet<>();
-        existingVariables.add("?resource");
+        existingVariables.add(resourceVar);
 
         // Add all defined variables in the query
         for (ResultAnnotation annotation : testCase.getVariableAnnotations()) {
@@ -43,9 +52,9 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
                 existingVariables.add(value);
             }
         }
-        sb.append("  WHERE ");
+        sb.append(whereClause);
         sb.append(testCase.getSparqlWhere());
-        sb.append("  ORDER BY ASC(?resource) ");
+        sb.append(orderByResourceAsc);
         return sb.toString();
     }
 
