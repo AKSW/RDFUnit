@@ -220,7 +220,7 @@
                         <arguments>-P!source-artifacts</arguments>
                         <useReleaseProfile>false</useReleaseProfile>
                         <tagNameFormat>v@{project.version}</tagNameFormat>
-                        <scmCommentPrefix>[maven-release-plugin] [ci build-cli] [ci build-webdemo]</scmCommentPrefix>
+                        <scmCommentPrefix>[maven-release-plugin] [ci build-cli] [ci build-webdemo] - </scmCommentPrefix>
                     </configuration>
                 </plugin>
 
