@@ -14,7 +14,7 @@ import org.aksw.rdfunit.tests.TestCase;
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
-    private final String selectClause = " SELECT DISTINCT ?resource WHERE ";
+    private static final String selectClause = " SELECT DISTINCT ?resource WHERE ";
 
     /** {@inheritDoc} */
     @Override

@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
 
-    private final String selectDistinctResource = " SELECT DISTINCT ?resource ";
+    private static final String selectDistinctResource = " SELECT DISTINCT ?resource ";
 
-    private final String resourceVar = "?resource";
+    private static final String resourceVar = "?resource";
 
-    private final String whereClause = " WHERE ";
+    private static final String whereClause = " WHERE ";
 
-    private final String orderByResourceAsc = "  ORDER BY ASC(?resource) ";
+    private static final String orderByResourceAsc = "  ORDER BY ASC(?resource) ";
 
     /** {@inheritDoc} */
     @Override

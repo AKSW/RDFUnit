@@ -14,11 +14,11 @@ import org.aksw.rdfunit.tests.TestCase;
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
 
-    private final String selectClauseSimple = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE ";
+    private static final String selectClauseSimple = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE ";
 
-    private final String selectClauseGroupStart = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
+    private static final String selectClauseGroupStart = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
                                                    " SELECT ?resource WHERE ";
-    private final String selectClauseGroupEnd = "}";
+    private static final String selectClauseGroupEnd = "}";
 
     /** {@inheritDoc} */
     @Override
