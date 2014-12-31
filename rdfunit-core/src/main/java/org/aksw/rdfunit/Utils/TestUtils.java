@@ -151,6 +151,8 @@ public final class TestUtils {
             String testURI = qs.get("testURI").toString();
             try {
                 ManualTestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
+                TestCaseValidator validator = new TestCaseValidator(tc);
+                validator.validate();
                 tests.add(tc);
             } catch (TestCaseInstantiationException e) {
                 log.error(e.getMessage(), e);

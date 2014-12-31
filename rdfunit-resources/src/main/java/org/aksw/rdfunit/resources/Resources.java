@@ -25,6 +25,7 @@ public final class Resources {
             r.put("nif", "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#");
             r.put("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#");
             r.put("skos", "http://www.w3.org/2004/02/skos/core#");
+            r.put("rr", "http://www.w3.org/ns/r2rml#");
 
 
             return Collections.unmodifiableMap(r);
