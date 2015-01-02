@@ -25,6 +25,8 @@ public class DumpTestSource extends TestSource {
 
     private final RDFReader dumpReader;
 
+    private final OntModel dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+
     /**
      * <p>Constructor for DumpTestSource.</p>
      *
@@ -59,6 +61,20 @@ public class DumpTestSource extends TestSource {
     }
 
     /**
+     * Instantiates a new Test source along with a collection os schemata.
+     *
+     * @param source the source
+     * @param referencesSchemata the references schemata
+     */
+    public DumpTestSource(DumpTestSource source, Collection<SchemaSource> referencesSchemata ) {
+        super(source);
+        this.addReferencesSchemata(referencesSchemata);
+
+        this.dumpReader = source.dumpReader;
+        this.dumpModel.add(source.dumpModel);
+    }
+
+    /**
      * <p>Constructor for DumpTestSource.</p>
      *
      * @param prefix a {@link java.lang.String} object.
@@ -89,13 +105,16 @@ public class DumpTestSource extends TestSource {
     /** {@inheritDoc} */
     @Override
     protected QueryExecutionFactory initQueryFactory() {
-        OntModel dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+
         // When we load the referenced schemata we do rdfs reasoning to avoid false errors
         // Many ontologies skip some domain / range statements and this way we add them
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF, ModelFactory.createDefaultModel());
         try {
             // Read & load the URI
-            dumpReader.read(dumpModel);
+            if (dumpModel.isEmpty()) {
+                // load the data only when the model is empty in case it is initialized with the "copy constructor"
+                dumpReader.read(dumpModel);
+            }
 
             if (dumpModel.isEmpty()) {
                 throw new IllegalArgumentException("Dump is empty");

@@ -6,8 +6,9 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 /**
@@ -24,7 +25,7 @@ public abstract class Source implements Comparable<Source> {
 
     private final String prefix;
     private final String uri;
-    private final Collection<SchemaSource> referencesSchemata;
+    private final Set<SchemaSource> referencesSchemata;
 
     private QueryExecutionFactory queryFactory = null;
 
@@ -37,7 +38,7 @@ public abstract class Source implements Comparable<Source> {
     public Source(String prefix, String uri) {
         this.prefix = prefix;
         this.uri = uri;
-        this.referencesSchemata = new ArrayList<>();
+        this.referencesSchemata = new LinkedHashSet<>();
     }
 
     /**

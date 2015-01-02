@@ -228,7 +228,7 @@ public class RDFUnitConfiguration {
             // After we identify the schemata we add them in the existing TestSource to avoid re-loading the source
             Collection<SchemaSource> schemata = getAllSchemata();
             if (testSource.getReferencesSchemata().isEmpty() && !schemata.isEmpty()) {
-                testSource.addReferencesSchemata(schemata);
+                testSource = TestSourceFactory.createTestSource(testSource, schemata);
             }
             return testSource;
         }

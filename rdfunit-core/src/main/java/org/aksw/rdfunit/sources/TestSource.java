@@ -6,6 +6,8 @@ import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.limit.QueryExecutionFactoryLimit;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 
+import java.util.Collection;
+
 /**
  * Description
  *
@@ -69,6 +71,23 @@ public abstract class TestSource extends Source {
      */
     public TestSource(Source source) {
         super(source);
+    }
+
+
+    /**
+     * Instantiates a new Test source along with a collection os schemata.
+     *
+     * @param source the source
+     * @param referencesSchemata the references schemata
+     */
+    public TestSource(TestSource source, Collection<SchemaSource> referencesSchemata ) {
+        super(source);
+        this.addReferencesSchemata(referencesSchemata);
+
+        this.cacheTTL = source.cacheTTL;
+        this.queryDelay = source.queryDelay;
+        this.queryLimit = source.queryLimit;
+        this.pagination = source.pagination;
     }
 
     /**

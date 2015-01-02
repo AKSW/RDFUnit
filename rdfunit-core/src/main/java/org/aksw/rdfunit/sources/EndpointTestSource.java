@@ -57,6 +57,21 @@ public class EndpointTestSource extends TestSource {
         this(source.getPrefix(), source.getUri(), source.getSparqlEndpoint(), source.getSparqlGraphs(), source.getReferencesSchemata());
     }
 
+    /**
+     * Instantiates a new Test source along with a collection os schemata.
+     *
+     * @param source the source
+     * @param referencesSchemata the references schemata
+     */
+    public EndpointTestSource(EndpointTestSource source, Collection<SchemaSource> referencesSchemata ) {
+        super(source);
+        this.addReferencesSchemata(referencesSchemata);
+
+        this.sparqlEndpoint = source.sparqlEndpoint;
+        this.sparqlGraph = new ArrayList<>(source.getSparqlGraphs());
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public TestAppliesTo getSourceType() {
