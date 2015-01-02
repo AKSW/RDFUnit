@@ -57,12 +57,13 @@ rutt:rr-predicateObjectMap-wrong-domain
                             FILTER (!isBlank(?T1))
                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                             FILTER NOT EXISTS {
-                                ?class rdf:type/rdfs:subClassOf* ?T1
+                                ?class (rdfs:subClassOf|(owl:equivalentClass|^owl:equivalentClass))* ?T1
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                           <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
+                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
+                                           <http://www.w3.org/ns/r2rml#predicateObjectMap> ?resource .
+                                 ?resource <http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty spin:violationPath ;
@@ -77,5 +78,62 @@ rutt:rr-predicateObjectMap-wrong-domain
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T1"""
+    ];
+	.
+
+rutt:rr-predicateObjectMap-missing-datatype
+    a       rut:ManualTestCase ;
+    dcterms:description "The predicate is defined as a datatype but no rr:datatype exists in the rr:objectMap";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
+                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
+                            ?predicate rdfs:range ?D1 . # we need the range of the predicate defined in the current graph
+
+                            FILTER EXISTS {
+                                {   # xsd datatypes
+                                    ?P1 rdfs:range ?D1 .
+                                    FILTER ( STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
+                                } UNION {
+                                    ?P1 rdfs:range ?D1 .
+                                    ?D1 rdf:type/rdfs:subClassOf* rdfs:Datatype .
+                                } UNION {
+                                    ?P1 rdfs:range ?D1 .
+                                    ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
+                                } UNION {
+                                    ?P1 rdfs:range ?D1 .
+                                    FILTER ( ?D1 in (rdf:Literal, rdf:langString) ) .
+                                } UNION {
+                                    ?P1 schema:rangeIncludes ?D1 .
+                                    ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
+                                    FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
+                                }
+                            }
+                            FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
+
+                            FILTER NOT EXISTS {
+                                ?resource <http://www.w3.org/ns/r2rml#datatype> ?something .
+                            }
+                        } """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
+                                           <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                                 ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . }  """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#datatype> ;
+	];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """?D1"""
     ];
 	.
