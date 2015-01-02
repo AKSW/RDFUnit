@@ -99,7 +99,7 @@ public class TestAutoGenerator {
 
             Collection<Binding> bindings = new ArrayList<>();
             Collection<String> references = new ArrayList<>();
-            String description = "";
+            String description;
 
             for (PatternParameter p : pattern.getParameters()) {
                 if (row.contains(p.getId())) {

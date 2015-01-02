@@ -58,7 +58,10 @@ public final class CacheUtils {
      * @return a {@link java.lang.String} object.
      */
     public static String getAutoPrefixForURI(String uri) {
-        return uri.replace("http://", "").replace("https://", "").replaceAll("[?\"'\\/<>*|:#,&]", "_");
+        return uri
+                .replace("http://", "")
+                .replace("https://", "")
+                .replaceAll("[?\"'\\/<>*|:#,&]", "_");
     }
 
     /**

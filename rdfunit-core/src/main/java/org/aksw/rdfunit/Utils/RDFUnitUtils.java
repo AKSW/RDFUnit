@@ -54,7 +54,7 @@ public final class RDFUnitUtils {
 
             try (BufferedReader in = new BufferedReader(new InputStreamReader(additionalCSV, "UTF-8"))) {
 
-                String line = null;
+                String line;
 
                 while ((line = in.readLine()) != null) {
                     // skip comments & empty lines

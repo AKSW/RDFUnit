@@ -154,7 +154,6 @@ public abstract class RDFHTMLResultsWriter extends RDFWriter {
 
             while (results.hasNext()) {
                 QuerySolution qs = results.next();
-                String s = qs.get("s").toString();
                 String property = qs.get("p").toString();
                 RDFNode n = qs.get("o");
                 String object = n.toString();
