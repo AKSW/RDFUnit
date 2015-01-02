@@ -39,3 +39,43 @@ rutt:rr-subjectmap-template-missing-class
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#subjectMap> ;
 	];
 	.
+
+
+rutt:rr-predicateObjectMap-wrong-domain
+    a       rut:ManualTestCase ;
+    dcterms:description "the rdfs:domain of the rr:predicate value should be the same (or a superclass)of the rr:class";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
+                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?resource .
+                            ?resource <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?predicate rdfs:domain ?T1 .
+                            FILTER (!isBlank(?T1))
+                            FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
+                            FILTER NOT EXISTS {
+                                ?class rdf:type/rdfs:subClassOf* ?T1
+                            }
+                        } """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                                 ?resource <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
+                                           <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#predicate> ;
+	];
+	rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?class"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """?T1"""
+    ];
+	.
