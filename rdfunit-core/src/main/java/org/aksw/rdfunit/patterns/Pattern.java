@@ -59,7 +59,7 @@ public final class Pattern {
      * @return a boolean.
      */
     public boolean isValid() {
-        if (getParameters() == null || getParameters().size() == 0) {
+        if (getParameters() == null || getParameters().isEmpty()) {
             return false;
         }
         //check if defined parameters exist is sparql

@@ -104,7 +104,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         overviewResults.setTotalTests(testSuite.size());
 
         if (loggingEnabled) {
-            log.info("Testing " + testedDataset.getUri());
+            log.info("Testing {}", testedDataset.getUri());
         }
     }
 
@@ -148,7 +148,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 statusResult = true;
 
                 if (loggingEnabled) {
-                    log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result.toString());
+                    log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result);
                 }
 
 

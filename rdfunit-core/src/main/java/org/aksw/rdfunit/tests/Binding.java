@@ -111,7 +111,7 @@ public class Binding {
     }
 
     private boolean validatePattern() {
-        if (parameter.getConstraintPattern().equals("")) {
+        if (parameter.getConstraintPattern().trim().isEmpty()) {
             return true;
         }
         // TODO Check the pattern

@@ -44,7 +44,7 @@ public class TestCoverageEvaluator {
             "   VALUES ( ?pattern )  { %%PATTERNS%%} }";
 
     private String generateInClause(Collection<String> patterns) {
-        StringBuilder inClause = new StringBuilder("");
+        StringBuilder inClause = new StringBuilder();
         //int count = 0;
         for (String s : patterns) {
             //if (count++ != 0) {
@@ -117,22 +117,22 @@ public class TestCoverageEvaluator {
             // Fdomain Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fDomPatterns)));
             double fDom = getCoverage(references, propertyCount, totalProperties);
-            log.info("Fdom Coverage: " + fDom);
+            log.info("Fdom Coverage: {}", fDom);
 
             // Frange Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fRangPatterns)));
             double fRang = getCoverage(references, propertyCount, totalProperties);
-            log.info("fRang Coverage: " + fRang);
+            log.info("fRang Coverage: {}", fRang);
 
             // Fdepend Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fDepPatterns)));
             double fDep = getCoverage(references, propertyCount, totalProperties);
-            log.info("fDep Coverage: " + fDep);
+            log.info("fDep Coverage: {}", fDep);
 
             // FCard Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCardPatterns)));
             double fCard = getCoverage(references, propertyCount, totalProperties);
-            log.info("fCard Coverage: " + fCard);
+            log.info("fCard Coverage: {}", fCard);
         } else {
             log.warn("No properties found in Source (probably source is empty)");
         }
@@ -141,12 +141,12 @@ public class TestCoverageEvaluator {
             // Fmem Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fMemPatterns)));
             double fMem = getCoverage(references, classCount, totalClasses);
-            log.info("fMem Coverage: " + fMem);
+            log.info("fMem Coverage: {}", fMem);
 
             // FCdep Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCDepPatterns)));
             double fCDep = getCoverage(references, classCount, totalClasses);
-            log.info("fCDep Coverage: " + fCDep);
+            log.info("fCDep Coverage: {}", fCDep);
         } else {
             log.warn("No Class usage found in Source");
         }

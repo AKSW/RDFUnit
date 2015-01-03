@@ -5,8 +5,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Description
@@ -50,9 +50,9 @@ public class IOUtils {
      */
     public static boolean isURI(String uri) {
         try {
-            new URL(uri);
+            new URI(uri);
             return true;
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException e) {
             return false;
         }
     }

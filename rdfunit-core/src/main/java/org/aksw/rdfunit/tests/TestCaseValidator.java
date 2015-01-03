@@ -37,7 +37,7 @@ public class TestCaseValidator {
         validateSPARQL(new QueryGenerationExtendedSelectFactory().getSparqlQueryAsString(testCase), "SPARQL Extended");
         validateSPARQL(new QueryGenerationCountFactory().getSparqlQueryAsString(testCase), "SPARQL Count");
         validateSPARQL(new QueryGenerationAskFactory().getSparqlQueryAsString(testCase), "ASK");
-        if (!testCase.getSparqlPrevalence().trim().equals("")) { // Prevalence in not always defined
+        if (!testCase.getSparqlPrevalence().trim().isEmpty()) { // Prevalence in not always defined
             validateSPARQL(PrefixNSService.getSparqlPrefixDecl() + testCase.getSparqlPrevalence(), "prevalence");
         }
 
@@ -45,7 +45,7 @@ public class TestCaseValidator {
         // check for Resource & message
         boolean hasResource = false;
         for (String v : vars) {
-            if (v.equals("resource")) {
+            if ("resource".equals(v)) {
                 hasResource = true;
             }
 
@@ -55,7 +55,7 @@ public class TestCaseValidator {
         }
 
         // Message is allowed to exist either in SELECT or as a result annotation
-        if (testCase.getResultMessage().equals("")) {
+        if (testCase.getResultMessage().trim().isEmpty()) {
             throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testCase.getTestURI());
         }
 

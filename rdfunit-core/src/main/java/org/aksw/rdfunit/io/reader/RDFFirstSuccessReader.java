@@ -41,7 +41,7 @@ public class RDFFirstSuccessReader extends RDFReader {
                 if (e.getMessage() != null) {
                     message.append(e.getMessage());
                 } else {
-                    message.append(e.toString());
+                    message.append(e);
                 }
             }
         }

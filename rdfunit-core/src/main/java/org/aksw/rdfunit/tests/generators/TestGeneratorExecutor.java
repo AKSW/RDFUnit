@@ -97,7 +97,7 @@ public class TestGeneratorExecutor {
                 break;
             }
 
-            log.info("Generating tests for: " + s.getUri());
+            log.info("Generating tests for: {}", s.getUri());
 
             //Generate auto tests from schema
             if (useAutoTests) {
@@ -138,14 +138,14 @@ public class TestGeneratorExecutor {
             Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
                     new RDFStreamReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
-            log.info(s.getUri() + " contains " + testsAutoCached.size() + " automatically created tests (loaded from cache)");
+            log.info("{} contains {} automatically created tests (loaded from cache)", s.getUri(), testsAutoCached.size());
 
         } catch (RDFReaderException e) {
             // cannot read from file  / generate
             Collection<TestCase> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RDFFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
-            log.info(s.getUri() + " contains " + testsAuto.size() + " automatically created tests");
+            log.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
         }
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -169,7 +169,7 @@ public class TestGeneratorExecutor {
                     ).read());
 
             tests.addAll(testsManuals);
-            log.info(s.getUri() + " contains " + testsManuals.size() + " manually created tests");
+            log.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
         } catch (RDFReaderException e) {
             // Do nothing, Manual tests do not exist
         }

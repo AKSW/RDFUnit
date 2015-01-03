@@ -60,7 +60,7 @@ public class RDFStreamReader extends RDFReader {
     @Override
     public void read(Model model) throws RDFReaderException {
         try {
-            if (format.equals("RDFA")) {
+            if ("RDFA".equals(format)) {
                 // Temporary solution until clearer solution found
                 JenaRdfaReader.inject();
             }

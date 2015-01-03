@@ -102,7 +102,7 @@ public abstract class TestExecutor {
 
             // Test case execution and debug logging
             long executionTimeStartInMS = System.currentTimeMillis();
-            log.debug(testCase.getAbrTestURI() + " : started execution");
+            log.debug("{} : started execution", testCase.getAbrTestURI());
 
             try {
                 results = executeSingleTest(testSource, testCase);
@@ -117,9 +117,9 @@ public abstract class TestExecutor {
             }
 
             long executionTimeEndInMS = System.currentTimeMillis();
-            log.debug(testCase.getAbrTestURI() + " : execution completed in " + (executionTimeEndInMS - executionTimeStartInMS) + "ms");
+            log.debug("{} : execution completed in {}ms", testCase.getAbrTestURI(), (executionTimeEndInMS - executionTimeStartInMS));
 
-            if (results.size() == 0) {
+            if (results.isEmpty()) {
                 status = TestCaseResultStatus.Success;
             } else if (results.size() > 1) {
                 status = TestCaseResultStatus.Fail;

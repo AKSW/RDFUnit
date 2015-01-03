@@ -259,7 +259,7 @@ public class RDFUnitConfiguration {
                     tmp_customDereferenceURI = customDereferenceURI;
                 }
 
-                if (customDereferenceURI != null && customDereferenceURI.equals("-")) {
+                if (customDereferenceURI != null && "-".equals(customDereferenceURI)) {
                     // Read from standard input / pipe
                     dumpReader = new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE");  // TODO make format configurable
                 } else {

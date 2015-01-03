@@ -61,19 +61,19 @@ public class TestAutoGenerator {
     public boolean isValid() {
         Query q;
         if (pattern == null) {
-            log.error(getUri() + " : Pattern " + getPattern() + " does not exist");
+            log.error("{} : Pattern {} does not exist", getUri(), getPattern());
             return false;
         }
         try {
             q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getQuery());
         } catch (Exception e) {
-            log.error(getUri() + " Cannot parse query:\n" + PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
+            log.error("{} Cannot parse query:\n{}", getUri(), PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
             return false;
         }
 
         Collection<Var> sv = q.getProjectVars();
         if (sv.size() != pattern.getParameters().size() + 1) {
-            log.error(getUri() + " Select variables are different than Pattern parameters");
+            log.error("{} Select variables are different than Pattern parameters", getUri());
             return false;
         }
 
@@ -108,27 +108,27 @@ public class TestAutoGenerator {
                     try {
                         b = new Binding(p, n);
                     } catch (BindingException e) {
-                        log.error("Non valid binding for parameter " + p.getId() + " in AutoGenerator: " + this.getUri());
+                        log.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), this.getUri(), e);
                         continue;
                     }
                     bindings.add(b);
-                    if (n.isResource() && !p.getId().equalsIgnoreCase("loglevel")) {
+                    if (n.isResource() && !"loglevel".equalsIgnoreCase(p.getId())) {
                         references.add(n.toString().trim().replace(" ", ""));
                     }
                 } else {
-                    log.error("Not bindings for parameter " + p.getId() + "  in AutoGenerator: " + this.getUri());
+                    log.error("Not bindings for parameter {} in AutoGenerator: {}", p.getId(), this.getUri());
                     break;
                 }
             }
             if (bindings.size() != getPattern().getParameters().size()) {
-                log.error("Bindings for pattern " + pattern.getId() + "  do not match in AutoGenerator: " + this.getUri());
+                log.error("Bindings for pattern {} do not match in AutoGenerator: {}", pattern.getId(), this.getUri());
                 continue;
             }
 
             if (row.get("DESCRIPTION") != null) {
                 description = row.get("DESCRIPTION").toString();
             } else {
-                log.error("No ?DESCRIPTION variable found in AutoGenerator: " + this.getUri());
+                log.error("No ?DESCRIPTION variable found in AutoGenerator: {}", this.getUri());
                 continue;
             }
 
