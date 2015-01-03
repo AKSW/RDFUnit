@@ -25,8 +25,5 @@ public class PrefixNSServiceTest {
             String uri = PrefixNSService.getNSFromPrefix(entry.getKey());
             assertEquals("All prefixed should be initialized", uri, entry.getValue());
         }
-
-        // The size should be the same
-        assertEquals("mismatch in size of prefixes", prefixes.size(), PrefixNSService.createPrefixNsBidiMap().size());
     }
 }

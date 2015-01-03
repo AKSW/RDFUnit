@@ -23,10 +23,49 @@ public final class PrefixNSService {
      */
     private static class MapInstance {
         private static final BidiMap<String, String> prefixNsBidiMap = createPrefixNsBidiMap();
+
+
+        /**
+         * <p>createPrefixNsBidiMap.</p>
+         *
+         * @return a {@link org.apache.commons.collections4.BidiMap} object.
+         */
+        private static BidiMap<String, String> createPrefixNsBidiMap() {
+
+            BidiMap<String, String> dualMap = new DualHashBidiMap<>();
+            Model prefixModel = ModelFactory.createDefaultModel();
+
+            try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl")) {
+                prefixModel.read(is, null, "TURTLE");
+            } catch (Exception e) {
+                throw new RuntimeException("Cannot read prefixes.ttl from resources", e);
+            }
+
+            // Update Prefix Service
+            Map<String, String> prf = prefixModel.getNsPrefixMap();
+            for (Map.Entry<String, String> entry : prf.entrySet()) {
+                // Use local filed and NOT accessor method (synchronized)
+                dualMap.put(entry.getKey(), entry.getValue());
+            }
+
+            return dualMap;
+        }
     }
 
     private static class DeclInstance {
         private static final String sparqlPrefixDecl = createSparqlPrefixes();
+
+
+        /**
+         * We use an external prefix map to avoid concurrency issues
+         */
+        private static String createSparqlPrefixes() {
+            StringBuilder sparqlPrefixes = new StringBuilder();
+            for (Map.Entry<String, String> entry : MapInstance.prefixNsBidiMap.entrySet()) {
+                sparqlPrefixes.append(" PREFIX ").append(entry.getKey()).append(": <").append(entry.getValue()).append("> \n");
+            }
+            return sparqlPrefixes.toString();
+        }
     }
 
     private PrefixNSService() {
@@ -114,40 +153,5 @@ public final class PrefixNSService {
         return Collections.unmodifiableMap(MapInstance.prefixNsBidiMap);
     }
 
-    /**
-     * <p>createPrefixNsBidiMap.</p>
-     *
-     * @return a {@link org.apache.commons.collections4.BidiMap} object.
-     */
-    protected static BidiMap<String, String> createPrefixNsBidiMap() {
 
-        BidiMap<String, String> dualMap = new DualHashBidiMap<>();
-        Model prefixModel = ModelFactory.createDefaultModel();
-
-        try (InputStream is = PrefixNSService.class.getResourceAsStream("/org/aksw/rdfunit/prefixes.ttl")) {
-            prefixModel.read(is, null, "TURTLE");
-        } catch (Exception e) {
-            throw new RuntimeException("Cannot read prefixes.ttl from resources", e);
-        }
-
-        // Update Prefix Service
-        Map<String, String> prf = prefixModel.getNsPrefixMap();
-        for (Map.Entry<String, String> entry : prf.entrySet()) {
-            // Use local filed and NOT accessor method (synchronized)
-            dualMap.put(entry.getKey(), entry.getValue());
-        }
-
-        return dualMap;
-    }
-
-    /**
-     * We use an external prefix map to avoid concurrency issues
-     */
-    private static String createSparqlPrefixes() {
-        StringBuilder sparqlPrefixes = new StringBuilder();
-        for (Map.Entry<String, String> entry : MapInstance.prefixNsBidiMap.entrySet()) {
-            sparqlPrefixes.append(" PREFIX ").append(entry.getKey()).append(": <").append(entry.getValue()).append("> \n");
-        }
-        return sparqlPrefixes.toString();
-    }
 }
