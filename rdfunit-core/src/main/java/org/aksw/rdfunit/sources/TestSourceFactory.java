@@ -8,7 +8,10 @@ import java.util.Collection;
  * @author Dimitris Kontokostas
  * @since 1/2/15 7:57 PM
  */
-public class TestSourceFactory {
+public final class TestSourceFactory {
+    private TestSourceFactory() {
+    }
+
     public static TestSource createTestSource(TestSource source, Collection<SchemaSource> schemata) {
         if (source instanceof DumpTestSource) {
             return new DumpTestSource((DumpTestSource) source, schemata);

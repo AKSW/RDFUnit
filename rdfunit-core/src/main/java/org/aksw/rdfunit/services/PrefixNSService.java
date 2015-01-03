@@ -21,7 +21,7 @@ public final class PrefixNSService {
     /**
      * Dual map that maps prefixes to namespaces (lazy init)
      */
-    private static class MapInstance {
+    private static final class MapInstance {
         private static final BidiMap<String, String> prefixNsBidiMap = createPrefixNsBidiMap();
 
 

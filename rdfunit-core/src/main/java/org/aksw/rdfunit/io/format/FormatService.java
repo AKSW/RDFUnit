@@ -18,7 +18,7 @@ public final class FormatService {
     /**
      * keeps all the available formats we define (lazy init)
      */
-    private static class Instance {
+    private static final class Instance {
         private static final Collection<SerializationFormat> serializationFormats = SerialiazationFormatFactory.getAllFormats();
     }
 

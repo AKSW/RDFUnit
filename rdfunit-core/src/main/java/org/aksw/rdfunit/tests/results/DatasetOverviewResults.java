@@ -54,15 +54,15 @@ public class DatasetOverviewResults {
      * @param results a {@link org.aksw.rdfunit.tests.results.DatasetOverviewResults} object.
      */
     public void set(DatasetOverviewResults results) {
-        this.totalTests = results.totalTests;
-        this.successfullTests = results.successfullTests;
-        this.failedTests = results.failedTests;
-        this.timeoutTests = results.timeoutTests;
-        this.errorTests = results.errorTests;
-        this.individualErrors = results.individualErrors;
+        this.totalTests = results.getTotalTests();
+        this.successfullTests = results.getSuccessfullTests();
+        this.failedTests = results.getFailedTests();
+        this.timeoutTests = results.getTimeoutTests();
+        this.errorTests = results.getErrorTests();
+        this.individualErrors = results.getIndividualErrors();
 
-        this.startTime = results.startTime;
-        this.endTime = results.endTime;
+        this.startTime = results.getStartTime();
+        this.endTime = results.getEndTime();
     }
 
 

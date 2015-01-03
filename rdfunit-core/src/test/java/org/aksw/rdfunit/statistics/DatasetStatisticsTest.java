@@ -21,7 +21,7 @@ public class DatasetStatisticsTest {
 
     /* number of defined NS in patterns.ttl*/
     private static final int nsInPatterns = 3;
-    private static final Integer zero = Integer.valueOf(0);
+    private static final Integer zero = 0;
 
 
     @Before

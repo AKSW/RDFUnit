@@ -14,7 +14,7 @@ import org.junit.Test;
  */
 public class PatternUtilsTest {
 
-    QueryExecutionFactory qef;
+    private QueryExecutionFactory qef;
 
     @Before
     public void setUp() throws Exception {
