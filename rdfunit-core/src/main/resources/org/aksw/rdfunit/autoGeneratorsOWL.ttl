@@ -95,7 +95,7 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
 	                                ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
 	                            } UNION {
                                     ?P1 rdfs:range ?D1 .
-                                    FILTER ( ?D1 in (rdf:Literal, rdf:langString) ) .
+                                    FILTER ( ?D1 in (rdfs:Literal, rdf:langString) ) .
                                 } UNION {
                                     ?P1 schema:rangeIncludes ?D1 .
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
@@ -163,7 +163,7 @@ rutg:RDFSRANGENL a rut:TestGenerator ;
 	                                FILTER ( ?C2 IN (rdfs:Class, owl:Class))
 	                                FILTER NOT EXISTS {
 	                                    ?C1 rdf:type/rdfs:subClassOf* ?C2 .
-	                                    FILTER ( ?C2 IN (rdf:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
+	                                    FILTER ( ?C2 IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
 	                                }
 	                            } UNION {
 	                                ?P1 rdf:type/rdfs:subClassOf* ?P2 .
