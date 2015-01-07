@@ -25,7 +25,7 @@ public class DumpTestSource extends TestSource {
 
     private final RDFReader dumpReader;
 
-    private final OntModel dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+    private final OntModel dumpModel;
 
     /**
      * <p>Constructor for DumpTestSource.</p>
@@ -71,7 +71,7 @@ public class DumpTestSource extends TestSource {
         this.addReferencesSchemata(referencesSchemata);
 
         this.dumpReader = source.dumpReader;
-        this.dumpModel.add(source.dumpModel);
+        this.dumpModel  = source.dumpModel;
     }
 
     /**
@@ -94,6 +94,8 @@ public class DumpTestSource extends TestSource {
         if (schemata != null) {
             addReferencesSchemata(schemata);
         }
+
+        dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
     }
 
     /** {@inheritDoc} */
