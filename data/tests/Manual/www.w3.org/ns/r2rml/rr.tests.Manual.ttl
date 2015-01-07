@@ -62,7 +62,7 @@ rutt:rr-predicateObjectMap-wrong-domain
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?resource /<http://www.w3.org/ns/r2rml#class> ?class
+                            ?resource <http://www.w3.org/ns/r2rml#class> ?class .
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                             ?predicate rdfs:domain ?T1 .
                             FILTER (!isBlank(?T1))
@@ -74,7 +74,7 @@ rutt:rr-predicateObjectMap-wrong-domain
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                                 ?resource /<http://www.w3.org/ns/r2rml#class> ?class
+                                 ?resource <http://www.w3.org/ns/r2rml#class> ?class .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
