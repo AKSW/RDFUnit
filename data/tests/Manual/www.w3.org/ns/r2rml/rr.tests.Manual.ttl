@@ -27,17 +27,27 @@ rutt:rr-subjectmap-template-missing-class
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-                             ?resource <http://www.w3.org/ns/r2rml#template> ?template ;
-                                       ^<http://www.w3.org/ns/r2rml#subjectMap>  ?subjectMap. # is part of a subjectMap
-                             FILTER NOT EXISTS {?resource <http://www.w3.org/ns/r2rml#class> ?class. }}""" ;
+                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
+                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                             ?predicate rdfs:domain ?T1 .
+                             FILTER (!isBlank(?T1))
+                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
+                             FILTER NOT EXISTS { ?resource <http://www.w3.org/ns/r2rml#class> ?class}}""" ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource <http://www.w3.org/ns/r2rml#template> ?template .
-                                 ?resource ^<http://www.w3.org/ns/r2rml#subjectMap>  ?subjectMap. } # is part of a subjectMap """ ;
-	rut:resultAnnotation [
+                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
+                                    <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate . } """ ;
+rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty spin:violationPath ;
-	   rut:annotationValue <http://www.w3.org/ns/r2rml#subjectMap> ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
 	];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """?T1"""
+    ];
 	.
 
 
