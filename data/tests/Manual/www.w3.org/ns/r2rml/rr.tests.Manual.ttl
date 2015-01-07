@@ -50,9 +50,10 @@ rutt:rr-predicateObjectMap-wrong-domain
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?resource .
-                            ?resource <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
+                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                            ?resource /<http://www.w3.org/ns/r2rml#class> ?class
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                             ?predicate rdfs:domain ?T1 .
                             FILTER (!isBlank(?T1))
                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
@@ -61,13 +62,14 @@ rutt:rr-predicateObjectMap-wrong-domain
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                           <http://www.w3.org/ns/r2rml#predicateObjectMap> ?resource .
-                                 ?resource <http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
+                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
+                                           <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                                 ?resource /<http://www.w3.org/ns/r2rml#class> ?class
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty spin:violationPath ;
-	   rut:annotationValue <http://www.w3.org/ns/r2rml#predicate> ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
 	];
 	rut:resultAnnotation [
         a rut:ResultAnnotation ;
