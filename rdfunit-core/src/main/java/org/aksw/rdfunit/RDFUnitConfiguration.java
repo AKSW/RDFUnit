@@ -151,7 +151,7 @@ public class RDFUnitConfiguration {
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
-        setAutoSchemataFromQEF(qef,false);
+        setAutoSchemataFromQEF(qef,true);
     }
 
     /**

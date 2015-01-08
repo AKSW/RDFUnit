@@ -4,9 +4,11 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.SourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -194,6 +196,7 @@ public final class DatasetStatistics {
                 sources.add(source);
             } else {
                 log.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
+                sources.add(SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(namespace), namespace));
             }
         }
 
