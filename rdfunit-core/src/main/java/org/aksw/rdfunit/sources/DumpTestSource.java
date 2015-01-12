@@ -72,6 +72,11 @@ public class DumpTestSource extends TestSource {
 
         this.dumpReader = source.dumpReader;
         this.dumpModel  = source.dumpModel;
+
+        this.cacheTTL = source.cacheTTL;
+        this.queryDelay = source.queryDelay;
+        this.queryLimit = source.queryLimit;
+        this.pagination = source.pagination;
     }
 
     /**

@@ -275,7 +275,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
 
 rutt:rr-predicateObjectMap-constant-should-be-IRI
     a       rut:ManualTestCase ;
-    dcterms:description "The predicate is defined as a Literal but it is maped to a constant with  rr:termType rr:IRI";
+    dcterms:description "The predicate is defined as an object but it is maped to a constant without the  rr:termType rr:IRI";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
