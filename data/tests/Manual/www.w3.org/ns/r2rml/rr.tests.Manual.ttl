@@ -286,9 +286,9 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
 	.
 
 
-rutt:rr-predicateObjectMap-constant-should-be-IRI
+rutt:rr-predicateObjectMap-should-be-IRI
     a       rut:ManualTestCase ;
-    dcterms:description "The predicate is defined as an object but it is maped to a constant without the  rr:termType rr:IRI";
+    dcterms:description "The predicate is defined as an object but it is maped without the rr:termType rr:IRI";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
@@ -299,7 +299,6 @@ rutt:rr-predicateObjectMap-constant-should-be-IRI
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
-                            ?resource <http://www.w3.org/ns/r2rml#constant> ?constant .
                             ?predicate rdfs:range ?D1 . # we need the range of the predicate defined in the current graph
 
                             FILTER EXISTS {
@@ -333,8 +332,7 @@ rutt:rr-predicateObjectMap-constant-should-be-IRI
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
-                                 ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .
-                                 ?resource <http://www.w3.org/ns/r2rml#constant> ?constant .}  """ ;
+                                 ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .}  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty spin:violationPath ;
