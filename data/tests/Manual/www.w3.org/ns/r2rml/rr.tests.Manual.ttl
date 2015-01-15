@@ -33,7 +33,9 @@ rutt:rr-subjectmap-template-missing-class
                              ?predicate rdfs:domain ?T1 .
                              FILTER (!isBlank(?T1))
                              FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
-                             FILTER NOT EXISTS { ?resource <http://www.w3.org/ns/r2rml#class> ?class}}""" ;
+                             # make sure type is not defined dynamically
+                             FILTER NOT EXISTS { ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }
+                             FILTER NOT EXISTS { ?resource <http://www.w3.org/ns/r2rml#class> ?class}} """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                     <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
@@ -62,14 +64,25 @@ rutt:rr-predicateObjectMap-wrong-domain
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?resource <http://www.w3.org/ns/r2rml#class> ?class .
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+
+                            {   # get the class defined in a normal way
+                                ?resource <http://www.w3.org/ns/r2rml#class> ?class .
+
+                            } UNION {
+                                # get the class defined in a dynamic map
+                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
+                                            <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?class .
+                            }
+
                             ?predicate rdfs:domain ?T1 .
                             FILTER (!isBlank(?T1))
                             FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                             FILTER NOT EXISTS {
                                 ?class (rdfs:subClassOf|(owl:equivalentClass|^owl:equivalentClass))* ?T1
                             }
+
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
