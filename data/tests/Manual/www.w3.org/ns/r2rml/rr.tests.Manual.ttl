@@ -18,6 +18,10 @@
 @prefix ruts:  <http://rdfunit.aksw.org/data/testsuite#> .
 
 
+####### R2RML manual test cases used to catch data errors directly on the mapping document ########
+## in general all ontologies should be loaded along with the data, even for URIs used as objects ##
+
+
 rutt:rr-subjectmap-template-missing-class
     a       rut:ManualTestCase ;
     dcterms:description "A rr.subjectMap with an rr:template should have a rr:class defined";
@@ -342,5 +346,120 @@ rutt:rr-predicateObjectMap-should-be-IRI
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue <http://www.w3.org/ns/r2rml#IRI>
+    ];
+	.
+
+
+rutt:rr-produces-disjoint-class-errors
+    a       rut:ManualTestCase ;
+    dcterms:description "A mapping defines classes that are disjoint to each other";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource .
+
+                            # get rr class 1
+                            {   # get the class defined in a normal way
+                                ?resource <http://www.w3.org/ns/r2rml#class> ?T1 .
+                            } UNION {
+                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
+                                            <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T1 .
+                            }
+
+                            # get rr class 2
+                            {   # get the class defined in a normal way
+                                ?resource <http://www.w3.org/ns/r2rml#class> ?T2 .
+                            } UNION {
+                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
+                                            <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T2 .
+                            }
+                            # make sure we have >2 classes
+                            FILTER ( ?T1 != ?T2 )
+
+                            # get the ontology disjoint axioms
+                            {
+                                ?T1 owl:disjointWith ?T2 .
+                            } UNION {
+                                ?T2 owl:disjointWith ?T1 .
+                            } UNION {
+                                ?r a owl:AllDisjointClasses ;
+                                    owl:members ?T1 ;
+                                    owl:members ?T2 .
+                            }
+                        } """ ;
+    rut:sparqlPrevalence """  """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
+	];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?T1""","""?T2"""
+    ];
+	.
+
+rutt:rr-produces-range-errors
+    a       rut:ManualTestCase ;
+    dcterms:description "A mapping defines classes that are disjoint to each other";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                            ?mappingTo <http://www.w3.org/ns/r2rml#subjectMap> ?resource .
+
+                            {   # get the class defined in a normal way
+                                ?resource <http://www.w3.org/ns/r2rml#class> ?T1 .
+                            } UNION {
+                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
+                                            <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T1 .
+                            }
+
+                            ?mappingFrom <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?objM .
+                            ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
+
+                            ?predicate rdfs:range ?T2 .
+
+                            FILTER NOT EXISTS {
+                                ?T2 (rdfs:subClassOf|(owl:equivalentClass|^owl:equivalentClass))* ?T1 .
+                            }
+                        } """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                             ?mappingTo <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
+
+                             {   # get the class defined in a normal way
+                                 ?resource <http://www.w3.org/ns/r2rml#class> ?T1 .
+                             } UNION {
+                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                 ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
+                                             <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T1 .
+                             }
+
+                             ?mappingFrom <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?objM .
+                             ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
+
+                             ?predicate rdfs:range ?T2 .  }""" ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
+	];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:missingValue ;
+        rut:annotationValue """?T2"""
     ];
 	.
