@@ -56,7 +56,7 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>2.11.2-60-SNAPSHOT</jena-sparql-api-version>
+        <jena-sparql-api-version>2.11.2-59</jena-sparql-api-version>
         <org-apache-jena-version>2.11.2</org-apache-jena-version>
     </properties>
 
