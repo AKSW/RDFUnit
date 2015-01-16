@@ -394,7 +394,7 @@ rutt:rr-produces-disjoint-class-errors
 
 rutt:rr-produces-range-errors
     a       rut:ManualTestCase ;
-    dcterms:description "A mapping defines classes that are disjoint to each other";
+    dcterms:description "A mapping wrongly defines the range";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
@@ -449,4 +449,58 @@ rutt:rr-produces-range-errors
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T2"""
     ];
+	.
+
+
+rutt:rr-language-missing
+    a       rut:ManualTestCase ;
+    dcterms:description "A property is defined as rdf:langString but no language is given";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                                    <http://www.w3.org/ns/r2rml#objectMap> ?resource .
+
+                            ?P1 rdfs:range rdf:langString .
+
+                            FILTER NOT EXISTS {
+                                ?resource <http://www.w3.org/ns/r2rml#language> ?lang
+                            }
+                        } """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                                    <http://www.w3.org/ns/r2rml#objectMap> ?resource .}""" ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#language> ;
+	];
+	.
+
+
+rutt:rr-deprecated-property
+    a       rut:ManualTestCase ;
+    dcterms:description "A property is used but defined as deprecated";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:source <http://www.w3.org/ns/r2rml#> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                                    <http://www.w3.org/ns/r2rml#objectMap> ?resource .
+
+                            ?P1 rdf:type/rdfs:subClassOf* owl:deprecatedProperty .
+                        } """ ;
+    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                                    <http://www.w3.org/ns/r2rml#objectMap> ?resource .}""" ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationValue <http://www.w3.org/ns/r2rml#language> ;
+	];
 	.
