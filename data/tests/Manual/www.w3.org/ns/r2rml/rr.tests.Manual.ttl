@@ -40,7 +40,7 @@ rutt:rr-subjectmap-template-missing-class
                              # make sure type is not defined dynamically
                              FILTER NOT EXISTS { ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }
                              FILTER NOT EXISTS { ?resource <http://www.w3.org/ns/r2rml#class> ?class}} """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                     <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate . } """ ;
@@ -88,7 +88,7 @@ rutt:rr-predicateObjectMap-wrong-domain
                             }
 
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?resource <http://www.w3.org/ns/r2rml#class> ?class .
@@ -121,9 +121,8 @@ rutt:rr-predicateObjectMap-missing-datatype
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
-                            ?predicate rdfs:range ?D1 . # we need the range of the predicate defined in the current graph
 
                             FILTER EXISTS {
                                 {   # xsd datatypes
@@ -150,7 +149,7 @@ rutt:rr-predicateObjectMap-missing-datatype
                                 ?resource <http://www.w3.org/ns/r2rml#datatype> ?something .
                             }
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
@@ -172,7 +171,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
     dcterms:description "The predicate is defined as a datatype but rr:datatype does not match the definition";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#objectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
@@ -208,7 +207,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
                                 ?datatype rdfs:subClassOf* ?D1
                             }
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
@@ -235,7 +234,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
     dcterms:description "The predicate is defined as a Literal but it is maped to a constant with  rr:termType rr:IRI";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#objectMap>, <http://www.w3.org/ns/r2rml#constant>, <http://www.w3.org/ns/r2rml#termType> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
@@ -266,7 +265,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
                                 FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
                             }
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .
                                  ?resource <http://www.w3.org/ns/r2rml#constant> ?constant .}  """ ;
@@ -288,15 +287,13 @@ rutt:rr-predicateObjectMap-should-be-IRI
     dcterms:description "The predicate is defined as an object but it is maped without the rr:termType rr:IRI";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#objectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
-
-                            ?resourse <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template> ?val
-
+                            ?resource <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template>|<http://www.w3.org/ns/r2rml#column> ?val .
 
                             FILTER EXISTS {
                                 {   # xsd datatypes
@@ -304,8 +301,10 @@ rutt:rr-predicateObjectMap-should-be-IRI
                                 } UNION {
                                     ?P1 rdfs:range ?C1 .
                                     ?C1 rdf:type/rdfs:subClassOf* ?C2.
-                                    FILTER ( ?C2 IN (rdfs:Class, owl:Class))
-                                    FILTER ( ?C2 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
+                                    FILTER ( ?C1 IN (rdfs:Class, owl:Class)
+                                            || ?C2 IN (rdfs:Class, owl:Class))
+                                    FILTER ( ?C1 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty)
+                                            && ?C2 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
                                 } UNION {
                                     ?P1 rdf:type/rdfs:subClassOf* ?P2 .
                                     FILTER (?P2 IN ( owl:ObjectProperty, owl:InverseFunctionalProperty, owl:IrreflexiveProperty, owl:inverseOf, owl:propertyChainAxiom,
@@ -321,9 +320,10 @@ rutt:rr-predicateObjectMap-should-be-IRI
                                 ?resource <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#IRI>
                             }
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
-                                 ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .}  """ ;
+                                 ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .
+                                 ?resource <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template>|<http://www.w3.org/ns/r2rml#column> ?val .}  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty spin:violationPath ;
@@ -342,7 +342,7 @@ rutt:rr-produces-disjoint-class-errors
     dcterms:description "A mapping defines classes that are disjoint to each other";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references  <http://www.w3.org/ns/r2rml#subjectMap>, <http://www.w3.org/ns/r2rml#class> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
@@ -397,7 +397,7 @@ rutt:rr-produces-range-errors
     dcterms:description "A mapping wrongly defines the range";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#subjectMap>, <http://www.w3.org/ns/r2rml#class> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
@@ -422,7 +422,7 @@ rutt:rr-produces-range-errors
                                 ?T2 (rdfs:subClassOf|(owl:equivalentClass|^owl:equivalentClass))* ?T1 .
                             }
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                              ?mappingTo <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
 
                              {   # get the class defined in a normal way
@@ -457,7 +457,7 @@ rutt:rr-language-missing
     dcterms:description "A property is defined as rdf:langString but no language is given";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references <http://www.w3.org/ns/r2rml#predicateObjectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
@@ -470,7 +470,7 @@ rutt:rr-language-missing
                                 ?resource <http://www.w3.org/ns/r2rml#language> ?lang
                             }
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                              ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?resource .}""" ;
 	rut:resultAnnotation [
@@ -486,7 +486,7 @@ rutt:rr-deprecated-property
     dcterms:description "A property is used but defined as deprecated";
     rut:appliesTo rut:Schema ;
     rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
+    rut:references <http://www.w3.org/ns/r2rml#predicateObjectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
@@ -495,7 +495,7 @@ rutt:rr-deprecated-property
 
                             ?P1 rdf:type/rdfs:subClassOf* owl:deprecatedProperty .
                         } """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
+    rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                              ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?resource .}""" ;
 	rut:resultAnnotation [
