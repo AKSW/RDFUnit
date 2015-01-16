@@ -56,7 +56,7 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>2.11.2-59</jena-sparql-api-version>
+        <jena-sparql-api-version>2.11.2-60-SNAPSHOT</jena-sparql-api-version>
         <org-apache-jena-version>2.11.2</org-apache-jena-version>
     </properties>
 
@@ -135,14 +135,14 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.9</version>
+                <version>1.7.10</version>
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.9</version>
+                <version>1.7.10</version>
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
@@ -157,31 +157,31 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
-                <version>1.10.17</version>
+                <version>1.10.19</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>1.7.0</version>
+                <version>1.7.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-core</artifactId>
-                <version>1.6.0</version>
+                <version>1.6.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-module-junit4</artifactId>
-                <version>1.6.0</version>
+                <version>1.6.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-api-mockito</artifactId>
-                <version>1.6.0</version>
+                <version>1.6.1</version>
                 <scope>test</scope>
             </dependency>
 

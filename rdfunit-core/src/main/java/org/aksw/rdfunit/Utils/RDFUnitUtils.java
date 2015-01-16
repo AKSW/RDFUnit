@@ -102,7 +102,7 @@ public final class RDFUnitUtils {
      */
     public static void fillSchemaServiceFromLOV() {
 
-        Source lov = new EndpointTestSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
+        Source lov = new EndpointTestSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/dataset/lov/sparql", new ArrayList<String>(), null);
 
         QueryExecution qe = null;
         int count = 0;
