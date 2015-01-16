@@ -38,7 +38,7 @@ rutt:rr-subjectmap-template-missing-class
                              FILTER (!isBlank(?T1))
                              FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                              # make sure type is not defined dynamically
-                             FILTER NOT EXISTS { ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }
+                             FILTER NOT EXISTS { ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }
                              FILTER NOT EXISTS { ?resource <http://www.w3.org/ns/r2rml#class> ?class}} """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
@@ -75,7 +75,7 @@ rutt:rr-predicateObjectMap-wrong-domain
 
                             } UNION {
                                 # get the class defined in a dynamic map
-                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
                                 ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
                                             <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?class .
                             }
@@ -144,7 +144,7 @@ rutt:rr-predicateObjectMap-missing-datatype
                                     FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
                                 }
                             }
-                            FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
+                            FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI>, <http://www.w3.org/2001/XMLSchema#string> ))
 
                             FILTER NOT EXISTS {
                                 ?resource <http://www.w3.org/ns/r2rml#datatype> ?something .
@@ -239,12 +239,11 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
-                            ?resource <http://www.w3.org/ns/r2rml#constant> ?constant .
-                            ?predicate rdfs:range ?D1 . # we need the range of the predicate defined in the current graph
+                            ?resource <http://www.w3.org/ns/r2rml#constant> ?constant ;
+                                      <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#IRI> .
+
 
                             FILTER EXISTS {
                                 {   # xsd datatypes
@@ -264,16 +263,10 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
                                     FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
                                 }
-                            }
-                            FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
-
-                            FILTER EXISTS {
-                                ?resource <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#IRI>
+                                FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                           <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .
                                  ?resource <http://www.w3.org/ns/r2rml#constant> ?constant .}  """ ;
@@ -299,24 +292,20 @@ rutt:rr-predicateObjectMap-should-be-IRI
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
-                            ?predicate rdfs:range ?D1 . # we need the range of the predicate defined in the current graph
+
+                            ?resourse <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template> ?val
+
 
                             FILTER EXISTS {
                                 {   # xsd datatypes
                                     ?P1 rdfs:range <http://www.w3.org/2001/XMLSchema#anyURI> .
                                 } UNION {
-                                    ?P1 rdfs:range ?D1 .
-                                    ?D1 a ?C1 .
-                                    ?C1 a ?C2 .
+                                    ?P1 rdfs:range ?C1 .
+                                    ?C1 rdf:type/rdfs:subClassOf* ?C2.
                                     FILTER ( ?C2 IN (rdfs:Class, owl:Class))
-                                    FILTER NOT EXISTS {
-                                        ?C1 rdf:type/rdfs:subClassOf* ?C2 .
-                                        FILTER ( ?C2 IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
-                                    }
+                                    FILTER ( ?C2 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
                                 } UNION {
                                     ?P1 rdf:type/rdfs:subClassOf* ?P2 .
                                     FILTER (?P2 IN ( owl:ObjectProperty, owl:InverseFunctionalProperty, owl:IrreflexiveProperty, owl:inverseOf, owl:propertyChainAxiom,
@@ -326,15 +315,13 @@ rutt:rr-predicateObjectMap-should-be-IRI
                                     FILTER NOT EXISTS {?D1 rdf:type|rdfs:subClassOf+ schema:DataType .}
                                 }
                             }
-                            FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
+
 
                             FILTER NOT EXISTS {
                                 ?resource <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#IRI>
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                           <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource .}  """ ;
 	rut:resultAnnotation [
@@ -365,7 +352,7 @@ rutt:rr-produces-disjoint-class-errors
                             {   # get the class defined in a normal way
                                 ?resource <http://www.w3.org/ns/r2rml#class> ?T1 .
                             } UNION {
-                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
                                 ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
                                             <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T1 .
                             }
@@ -374,7 +361,7 @@ rutt:rr-produces-disjoint-class-errors
                             {   # get the class defined in a normal way
                                 ?resource <http://www.w3.org/ns/r2rml#class> ?T2 .
                             } UNION {
-                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
                                 ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
                                             <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T2 .
                             }
@@ -419,12 +406,12 @@ rutt:rr-produces-range-errors
                             {   # get the class defined in a normal way
                                 ?resource <http://www.w3.org/ns/r2rml#class> ?T1 .
                             } UNION {
-                                ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
                                 ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
                                             <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T1 .
                             }
 
-                            ?mappingFrom <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                            ?mappingFrom <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?objM .
                             ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
@@ -441,12 +428,12 @@ rutt:rr-produces-range-errors
                              {   # get the class defined in a normal way
                                  ?resource <http://www.w3.org/ns/r2rml#class> ?T1 .
                              } UNION {
-                                 ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
+                                 ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap> ?classPoMap .
                                  ?classPoMap <http://www.w3.org/ns/r2rml#predicate> rdf:type ;
                                              <http://www.w3.org/ns/r2rml#objectMap>/<http://www.w3.org/ns/r2rml#constant> ?T1 .
                              }
 
-                             ?mappingFrom <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                             ?mappingFrom <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                              ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                              ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?objM .
                              ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
