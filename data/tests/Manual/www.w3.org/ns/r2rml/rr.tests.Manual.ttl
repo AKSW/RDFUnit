@@ -64,7 +64,7 @@ rutt:rr-predicateObjectMap-wrong-domain
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
@@ -117,7 +117,7 @@ rutt:rr-predicateObjectMap-missing-datatype
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#class> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
@@ -173,7 +173,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#predicateObjectMap>, <http://www.w3.org/ns/r2rml#objectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
@@ -236,7 +236,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#objectMap>, <http://www.w3.org/ns/r2rml#constant>, <http://www.w3.org/ns/r2rml#termType> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
@@ -289,7 +289,7 @@ rutt:rr-predicateObjectMap-should-be-IRI
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#objectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
@@ -344,7 +344,7 @@ rutt:rr-produces-disjoint-class-errors
     rut:generated rut:ManuallyGenerated ;
     rut:references  <http://www.w3.org/ns/r2rml#subjectMap>, <http://www.w3.org/ns/r2rml#class> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource .
 
@@ -399,7 +399,7 @@ rutt:rr-produces-range-errors
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#rr:predicate>, <http://www.w3.org/ns/r2rml#subjectMap>, <http://www.w3.org/ns/r2rml#class> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mappingTo <http://www.w3.org/ns/r2rml#subjectMap> ?resource .
 
@@ -459,7 +459,7 @@ rutt:rr-language-missing
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://www.w3.org/ns/r2rml#predicateObjectMap> ;
     rut:source <http://www.w3.org/ns/r2rml#> ;
-    rut:testCaseLogLevel rlog:WARN ;
+    rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?resource .
