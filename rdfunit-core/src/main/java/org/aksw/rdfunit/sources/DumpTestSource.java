@@ -71,7 +71,8 @@ public class DumpTestSource extends TestSource {
         this.addReferencesSchemata(referencesSchemata);
 
         this.dumpReader = source.dumpReader;
-        this.dumpModel  = source.dumpModel;
+        this.dumpModel  = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF, ModelFactory.createDefaultModel());
+        this.dumpModel.add(source.dumpModel);
 
         this.cacheTTL = source.cacheTTL;
         this.queryDelay = source.queryDelay;
@@ -100,7 +101,7 @@ public class DumpTestSource extends TestSource {
             addReferencesSchemata(schemata);
         }
 
-        dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+        dumpModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF, ModelFactory.createDefaultModel());
     }
 
     /** {@inheritDoc} */
@@ -136,6 +137,7 @@ public class DumpTestSource extends TestSource {
             // Here we add the ontologies in the dump mode
             // Note that the ontologies have reasoning enabled but not the dump source
             dumpModel.add(ontModel);
+            dumpModel.add(dumpModel);
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
