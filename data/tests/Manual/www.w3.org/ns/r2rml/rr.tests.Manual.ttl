@@ -119,8 +119,7 @@ rutt:rr-predicateObjectMap-missing-datatype
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
-                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
 
@@ -175,8 +174,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
-                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
-                                      <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
+                            ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?resource . # rr:objectMap
                             ?resource <http://www.w3.org/ns/r2rml#datatype> ?datatype .
