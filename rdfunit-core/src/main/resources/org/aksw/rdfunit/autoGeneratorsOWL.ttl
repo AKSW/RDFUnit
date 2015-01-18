@@ -466,6 +466,7 @@ rutg:OWLQCARD a rut:TestGenerator ;
                                 owl:onClass ?T2 ;
                                 owl:qualifiedCardinality ?v .
                              FILTER (?v > 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLQCARDT ;
     rut:resultAnnotation [
@@ -484,6 +485,7 @@ rutg:OWLQCARDEX a rut:TestGenerator ;
                                 owl:onClass ?T2 ;
                                 owl:qualifiedCardinality ?v .
                              FILTER (?v > 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " (is 0) for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPROTYPEDEP ;
     rut:resultAnnotation [
@@ -502,6 +504,7 @@ rutg:OWLQCARD0 a rut:TestGenerator ;
 	                             owl:onClass ?T2 ;
 	                             owl:qualifiedCardinality ?v .
                              FILTER (?v = 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("qualifiedCardinality of ",  str(?P1)," different from ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TRIPLEDR ;
     rut:resultAnnotation [
@@ -520,6 +523,7 @@ rutg:OWLQCARD-MIN a rut:TestGenerator ;
                                 owl:onClass ?T2 ;
                                 owl:minQualifiedCardinality ?v .
                              FILTER (?v > 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLQCARDT ;
     rut:resultAnnotation [
@@ -538,6 +542,7 @@ rutg:OWLQCARDEX-MIN a rut:TestGenerator ;
                                 owl:onClass ?T2 ;
                                 owl:minQualifiedCardinality ?v .
                              FILTER (?v > 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPROTYPEDEP ;
     rut:resultAnnotation [
@@ -556,6 +561,7 @@ rutg:OWLQCARD-MAX a rut:TestGenerator ;
                                 owl:onClass ?T2 ;
                                 owl:maxQualifiedCardinality ?v .
                              FILTER (?v > 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
     rut:basedOnPattern rutp:OWLQCARDT ;
     rut:resultAnnotation [
@@ -574,6 +580,7 @@ rutg:OWLQCARD-MAX0 a rut:TestGenerator ;
                                 owl:onClass ?T2 ;
                                 owl:maxQualifiedCardinality ?v .
                              FILTER (?v = 0 && !isBlank(?T1)) .
+                             FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPROTYPEDEP ;
     rut:resultAnnotation [
