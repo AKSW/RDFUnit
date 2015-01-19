@@ -38,8 +38,9 @@ rutt:rr-subjectmap-template-missing-class
                              FILTER (!isBlank(?T1))
                              FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
                              # make sure type is not defined dynamically
-                             FILTER NOT EXISTS { ?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }
-                             FILTER NOT EXISTS { ?resource <http://www.w3.org/ns/r2rml#class> ?class}} """ ;
+                             FILTER NOT EXISTS { 
+                                 { ?resource <http://www.w3.org/ns/r2rml#class> ?class} UNION
+                                {?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }} """ ;
     rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                     <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
@@ -437,17 +438,22 @@ rutt:rr-produces-range-errors
                              ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
 
                              ?predicate rdfs:range ?T2 .  }""" ;
-	rut:resultAnnotation [
-	   a rut:ResultAnnotation ;
-	   rut:annotationProperty spin:violationPath ;
-	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
-	];
+    rut:resultAnnotation [
+       a rut:ResultAnnotation ;
+       rut:annotationProperty spin:violationPath ;
+       rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?T1"""
+    ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T2"""
     ];
-	.
+    .
 
 
 rutt:rr-language-missing
