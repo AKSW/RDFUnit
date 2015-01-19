@@ -40,7 +40,7 @@ rutt:rr-subjectmap-template-missing-class
                              # make sure type is not defined dynamically
                              FILTER NOT EXISTS { 
                                  { ?resource <http://www.w3.org/ns/r2rml#class> ?class} UNION
-                                {?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }} """ ;
+                                {?mapping <http://www.w3.org/ns/r2rml#predicateObjectMap>/<http://www.w3.org/ns/r2rml#predicate> rdf:type . }} }""" ;
     rut:sparqlPrevalence """ SELECT (count(distinct ?resource) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?resource ;
                                     <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
