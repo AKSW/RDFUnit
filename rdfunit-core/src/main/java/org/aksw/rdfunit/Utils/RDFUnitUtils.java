@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -102,7 +102,7 @@ public final class RDFUnitUtils {
      */
     public static void fillSchemaServiceFromLOV() {
 
-        Source lov = new EndpointTestSource("lov", "http://lov.okfn.org", "http://lov.okfn.org/endpoint/lov", new ArrayList<String>(), null);
+        Source lov = new EndpointTestSource("lov", "http://lov.okfn.org", "http://helium.okfnlabs.org:3030/lov/sparql", Arrays.asList("http://lov.okfn.org/dataset/lov"), null);
 
         QueryExecution qe = null;
         int count = 0;
