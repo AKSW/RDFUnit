@@ -7,6 +7,7 @@
 .idea
 *.deb
 *.changes
+*jar-with-dependencies.jar
 target
 pom.xml.releaseBackup
 dependency-reduced-pom.xml
