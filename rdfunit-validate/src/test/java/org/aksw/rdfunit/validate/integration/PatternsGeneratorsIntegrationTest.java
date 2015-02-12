@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.Utils.TestUtils;
+import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
@@ -68,7 +68,7 @@ public class PatternsGeneratorsIntegrationTest {
         SchemaSource ontologyOWLSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyOWLReader);
 
         TestSuite testSuite = new TestSuite(
-                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyOWLSource));
+                TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyOWLSource));
 
         testMap(testsWithErrorsOWL, testSuite, ontologyOWLSource);
     }
@@ -91,7 +91,7 @@ public class PatternsGeneratorsIntegrationTest {
         SchemaSource ontologyRSSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyRSReader);
 
         TestSuite testSuite = new TestSuite(
-                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyRSSource));
+                TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyRSSource));
 
         testMap(testsWithErrorsRS, testSuite, ontologyRSSource);
     }
@@ -121,7 +121,7 @@ public class PatternsGeneratorsIntegrationTest {
 
 
         TestSuite testSuite = new TestSuite(
-                TestUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyDSPSource));
+                TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyDSPSource));
 
         testMap(testsWithErrorsDSP, testSuite, ontologyDSPSource);
     }

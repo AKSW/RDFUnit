@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.Utils.PatternUtils;
-import org.aksw.rdfunit.Utils.TestUtils;
+import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
@@ -100,7 +100,7 @@ public class RDFUnit {
         if (autoGenerators == null) {
             autoGenerators =
                     Collections.unmodifiableCollection(
-                            TestUtils.instantiateTestGeneratorsFromModel(patternQueryFactory));
+                            TestGeneratorUtils.instantiateTestGeneratorsFromModel(patternQueryFactory));
         }
         return autoGenerators;
     }
