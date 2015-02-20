@@ -3,6 +3,7 @@ package org.aksw.rdfunit.validate.wrappers;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
@@ -145,7 +146,7 @@ public class RDFUnitStaticWrapper {
                         return testSuite; // do not execute further
                     }
 
-                    Collection<TestCase> autoTestCases = TestUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
+                    Collection<TestCase> autoTestCases = TestGeneratorUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
 
                     Collection<TestCase> allTestCases = new ArrayList<>();
                     allTestCases.addAll(autoTestCases);
