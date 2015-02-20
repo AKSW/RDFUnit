@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.generators;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
+import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
@@ -142,7 +143,7 @@ public class TestGeneratorExecutor {
 
         } catch (RDFReaderException e) {
             // cannot read from file  / generate
-            Collection<TestCase> testsAuto = TestUtils.instantiateTestsFromAG(autoGenerators, s);
+            Collection<TestCase> testsAuto = TestGeneratorUtils.instantiateTestsFromAG(autoGenerators, s);
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RDFFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
             log.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
