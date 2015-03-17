@@ -101,7 +101,7 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
                                     FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
                                 }    }
-                                FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>, <http://www.w3.org/2001/XMLSchema#anyURI> ))
+                                FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url> ))
                                 BIND (concat(str(?P1)," does not contain a literal value (", str(?D1) , ")") AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
     rut:resultAnnotation [
@@ -136,7 +136,7 @@ rutg:RDFSRANGED a rut:TestGenerator ;
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
-                              } FILTER ( ?D1 NOT IN ( rdfs:Literal, xsd:string, xsd:anyURI, schema:Text, schema:URL, <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>) )
+                              } FILTER ( ?D1 NOT IN ( rdfs:Literal, xsd:string, schema:Text, schema:URL, <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>) )
                               BIND (concat(str(?P1)," does not have datatype: ", str(?D1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:RDFSRANGED ;
     rut:resultAnnotation [
@@ -154,9 +154,7 @@ rutg:RDFSRANGED a rut:TestGenerator ;
 rutg:RDFSRANGENL a rut:TestGenerator ;
     dcterms:description """Check all defined URIs if they are indeed URIs"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 (' ' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where { {
-                                {   # xsd datatypes
-	                                ?P1 rdfs:range <http://www.w3.org/2001/XMLSchema#anyURI> .
-	                            } UNION {
+                                {
 	                                ?P1 rdfs:range ?D1 .
 	                                ?D1 a ?C1 .
 	                                ?C1 a ?C2 .
