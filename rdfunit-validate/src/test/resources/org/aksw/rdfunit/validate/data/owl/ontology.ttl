@@ -217,7 +217,5 @@ ex:literalP2 a rdf:Property ;
 
 # non literal properties
 ex:nonLiteralP1 a owl:ObjectProperty .
-ex:nonLiteralP2 a rdf:Property ;
-    rdfs:range xsd:anyURI .
 ex:nonLiteralP3 a rdf:Property ;
     rdfs:range ex:Person.
