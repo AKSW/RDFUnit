@@ -9,7 +9,6 @@
 
 ex:correct1
 	ex:nonLiteralP1 <http://example.com> ;
-	ex:nonLiteralP2 <http://example.com> ;
 	ex:nonLiteralP3 <http://example.com/person> ;
 	.
 
