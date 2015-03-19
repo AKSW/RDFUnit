@@ -58,7 +58,10 @@ public class ValidateCLI {
 
 
         String dataFolder = commandLine.getOptionValue("f", "../data/");
-        RDFUnitUtils.fillSchemaServiceFromLOV();
+
+        if (!commandLine.hasOption('v')) { // explicitely do not use LOV
+            RDFUnitUtils.fillSchemaServiceFromLOV();
+        }
         //TODO hack until we fix this, configuration tries to laod schemas so they must be initialized before
         RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
         //RDFUnitUtils.fillSchemaServiceFromFile(configuration.getDataFolder() + "schemaDecl.csv");
