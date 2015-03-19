@@ -154,8 +154,8 @@ public final class RDFUnitUtils {
                 count++;
             }
         } catch (Exception e) {
-            //TODO log error about lov
-        } finally {
+            log.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
+        }finally {
             if (qe != null) {
                 qe.close();
             }

@@ -75,6 +75,7 @@ public class ValidateUtils {
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit). " +
                 "If none exists, bundled versions will be loaded.'");
+        cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
 
         return cliOptions;
     }

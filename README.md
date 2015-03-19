@@ -41,3 +41,6 @@ $ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>
 ```
 
 Where you define your own schemas and we pick up from step 3. You can also use prefixes directly (e.g. `-s foaf,skos`) we can get everything that is defined in [LOV](http://lov.okfn.org).
+
+
+[![Java profiler](http://www.ej-technologies.com/images/product_banners/jprofiler_small.png)](http://www.ej-technologies.com/products/jprofiler/overview.html)

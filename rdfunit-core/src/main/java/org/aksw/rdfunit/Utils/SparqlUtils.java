@@ -8,6 +8,8 @@ import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +24,8 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public final class SparqlUtils {
+    private static final Logger log = LoggerFactory.getLogger(SparqlUtils.class);
+
 
     private SparqlUtils() {
     }
@@ -56,7 +60,8 @@ public final class SparqlUtils {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error in sparql query",e);
+            log.debug(sparql);
         } finally {
             if (qe != null) {
                 qe.close();

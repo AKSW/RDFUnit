@@ -9,7 +9,6 @@
 
 ex:error1
 	ex:nonLiteralP1 "25" ;              # 1 error
-	ex:nonLiteralP2 "some lang text" ;  # 1 error
 	.
 
 ex:error2
