@@ -57,7 +57,7 @@ public class TestGeneratorExecutor {
         this.useManualTests = useManualTests;
 
         // no auto && no manual tests do not make sense
-        assert (!useAutoTests && !useManualTests);
+        assert (useAutoTests || useManualTests);
 
         // no auto && cache does not make sense TODO fix this
         assert (!useAutoTests && loadFromCache);
