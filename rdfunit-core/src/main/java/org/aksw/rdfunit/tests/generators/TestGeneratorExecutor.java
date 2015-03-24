@@ -60,7 +60,7 @@ public class TestGeneratorExecutor {
         assert (useAutoTests || useManualTests);
 
         // no auto && cache does not make sense TODO fix this
-        assert (!useAutoTests && loadFromCache);
+        assert (useAutoTests || !loadFromCache);
     }
 
     private final Collection<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<>();
