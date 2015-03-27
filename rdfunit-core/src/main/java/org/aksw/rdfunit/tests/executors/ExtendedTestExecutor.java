@@ -56,7 +56,10 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
 
                 QuerySolution qs = results.next();
 
-                String resource = qs.get("resource").toString();
+                String resource = "";
+                if (!qs.get("resource").isLiteral()) {
+                    resource = qs.get("resource").toString();
+                }
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {
                     message = qs.get("message").toString();

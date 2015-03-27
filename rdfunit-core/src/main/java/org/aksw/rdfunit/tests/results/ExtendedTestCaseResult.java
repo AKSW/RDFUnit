@@ -52,8 +52,11 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
     public Resource serialize(Model model, String testExecutionURI) {
         Resource resource = super.serialize(model, testExecutionURI)
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:ExtendedTestCaseResult")))
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("spin:ConstraintViolation")))
-                .addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("spin:violationRoot")), model.createResource(getResource()));
+                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("spin:ConstraintViolation")));
+
+        if (!getResource().isEmpty()) {
+            resource.addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("spin:violationRoot")), model.createResource(getResource()));
+        }
 
         for (ResultAnnotation annotation : getTestCase().getResultAnnotations()) {
             annotation.serializeAsResult(resource, model);
