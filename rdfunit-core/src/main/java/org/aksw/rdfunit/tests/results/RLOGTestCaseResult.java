@@ -40,17 +40,13 @@ public class RLOGTestCaseResult extends TestCaseResult {
     /** {@inheritDoc} */
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
-        Resource resource =  super.serialize(model, testExecutionURI)
+        return super.serialize(model, testExecutionURI)
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:RLOGTestCaseResult")))
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rlog:Entry")))
+                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:resource")), model.createResource(getResource()))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:message")), getMessage())
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:level")), model.createResource(getLogLevel().getUri()))
                 ;
-
-        if (!getResource().isEmpty()) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:resource")), model.createResource(getResource()));
-        }
-        return resource;
     }
 
     /**
