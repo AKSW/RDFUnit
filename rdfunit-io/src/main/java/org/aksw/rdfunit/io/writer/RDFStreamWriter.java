@@ -3,7 +3,7 @@ package org.aksw.rdfunit.io.writer;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.io.IOUtils;
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 /**
  * Holds a test case result annotation that will be used when we generate individual results

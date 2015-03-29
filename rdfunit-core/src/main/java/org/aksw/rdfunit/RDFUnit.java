@@ -9,8 +9,8 @@ import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.ArrayList;
 import java.util.Arrays;

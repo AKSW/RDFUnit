@@ -19,6 +19,11 @@
 
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-resources</artifactId>
         </dependency>
 
@@ -46,15 +51,6 @@
             <artifactId>jena-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.semarglproject</groupId>
-            <artifactId>semargl-jena</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

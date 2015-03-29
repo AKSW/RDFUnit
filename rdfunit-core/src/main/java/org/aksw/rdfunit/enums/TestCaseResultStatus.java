@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.enums;
 
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 /**
  * <p>TestCaseResultStatus class.</p>

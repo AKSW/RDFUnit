@@ -3,11 +3,11 @@ package org.aksw.rdfunit.tests;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QueryParseException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationAskFactory;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationCountFactory;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationExtendedSelectFactory;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.Collection;
 

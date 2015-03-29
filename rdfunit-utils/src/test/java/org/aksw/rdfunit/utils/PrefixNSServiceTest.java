@@ -1,13 +1,12 @@
-package org.aksw.rdfunit.services;
+package org.aksw.rdfunit.utils;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 public class PrefixNSServiceTest {
 
@@ -23,7 +22,7 @@ public class PrefixNSServiceTest {
         for (Map.Entry<String, String> entry : prefixes.entrySet()) {
             // All entries should match
             String uri = PrefixNSService.getNSFromPrefix(entry.getKey());
-            assertEquals("All prefixed should be initialized", uri, entry.getValue());
+            Assert.assertEquals("All prefixed should be initialized", uri, entry.getValue());
         }
     }
 }

@@ -12,6 +12,7 @@
 
     <modules>
         <module>rdfunit-utils</module>
+        <module>rdfunit-io</module>
         <module>rdfunit-core</module>
         <module>rdfunit-resources</module>
         <module>rdfunit-validate</module>
@@ -67,6 +68,12 @@
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
                 <artifactId>rdfunit-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-io</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

@@ -1,8 +1,9 @@
-package org.aksw.rdfunit.io.writer;
+package org.aksw.rdfunit.Utils;
 
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.aksw.rdfunit.io.writer.*;
 
 import java.io.OutputStream;
 

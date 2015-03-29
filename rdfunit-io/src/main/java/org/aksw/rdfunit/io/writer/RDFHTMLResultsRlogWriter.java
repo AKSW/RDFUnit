@@ -4,7 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.io.OutputStream;
 
