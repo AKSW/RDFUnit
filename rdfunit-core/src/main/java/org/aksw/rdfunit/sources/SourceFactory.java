@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.utils.StringUtils;
 
 /**
  * <p>SourceFactory class.</p>
@@ -94,7 +94,7 @@ public final class SourceFactory {
      */
     public static SchemaSource createSchemaSourceFromText(String namespace, String text, String format) {
 
-        String uri = namespace + TestUtils.getHashFromString(text);
+        String uri = namespace + StringUtils.getHashFromString(text);
         String prefix = CacheUtils.getAutoPrefixForURI(uri);
 
         return new SchemaSource(prefix, uri, uri, RDFReaderFactory.createReaderFromText(text, format));

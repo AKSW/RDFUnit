@@ -5,7 +5,6 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.TestSource;
@@ -14,6 +13,7 @@ import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
+import org.aksw.rdfunit.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,7 +59,7 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
 
                 String resource = qs.get("resource").toString();
                 if (qs.get("resource").isLiteral()) {
-                    resource = TestUtils.getHashFromString(resource);
+                    resource = StringUtils.getHashFromString(resource);
                 }
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {

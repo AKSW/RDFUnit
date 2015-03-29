@@ -22,10 +22,10 @@ import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.*;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
+import org.aksw.rdfunit.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -396,7 +396,7 @@ public final class TestUtils {
         for (Binding binding : bindings) {
             string2hash.append(binding.getValueAsString());
         }
-        String md5Hash = TestUtils.getHashFromString(string2hash.toString());
+        String md5Hash = StringUtils.getHashFromString(string2hash.toString());
         if (md5Hash.isEmpty()) {
             return testURI + JenaUUID.generate().asString();
         } else {
@@ -404,26 +404,5 @@ public final class TestUtils {
         }
     }
 
-    // Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
-    /**
-     * <p>getHashFromString.</p>
-     *
-     * @param str a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     * @since 0.7.2
-     */
-    public static String getHashFromString(String str) {
-        try {
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
-            byte[] array = md.digest(str.getBytes("UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (byte anArray : array) {
-                sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            throw new RuntimeException("Cannot calculate MD5 hash for :" + str, e);
-        }
-    }
 
 }
