@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.validate.examples;
+package org.aksw.rdfunit.examples;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnitConfiguration;

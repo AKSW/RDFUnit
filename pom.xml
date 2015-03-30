@@ -17,6 +17,7 @@
         <module>rdfunit-resources</module>
         <module>rdfunit-validate</module>
         <module>rdfunit-webdemo</module>
+        <module>rdfunit-examples</module>
     </modules>
 
     <issueManagement>
@@ -86,6 +87,12 @@
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
                 <artifactId>rdfunit-resources</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-validate</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
