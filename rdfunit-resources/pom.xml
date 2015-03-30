@@ -28,6 +28,12 @@
                             <outputDirectory>${basedir}/src/main/resources/org/aksw/rdfunit</outputDirectory>
                             <resources>
                                 <resource>
+                                    <directory>../configuration</directory>
+                                    <includes>
+                                        <include>prefixes.ttl</include>
+                                    </includes>
+                                </resource>
+                                <resource>
                                     <directory>../data</directory>
                                     <includes>
                                         <include>schemaDecl.csv</include>
