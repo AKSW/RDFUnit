@@ -1,3 +1,8 @@
+# Here we store all the default generators for RS that will be used by RDFUnit
+# on each build this file will be copied in
+# <root>/rdfunit-resources/src/main/resources/org/aksw/rdfunit/*
+# and will be used as a java resource
+
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rut: <http://rdfunit.aksw.org/ns/core#> .
 @prefix rutg: <http://rdfunit.aksw.org/data/generators#> .

@@ -30,7 +30,7 @@
                                 <resource>
                                     <directory>../configuration</directory>
                                     <includes>
-                                        <include>prefixes.ttl</include>
+                                        <include>*.ttl</include>
                                     </includes>
                                 </resource>
                                 <resource>
