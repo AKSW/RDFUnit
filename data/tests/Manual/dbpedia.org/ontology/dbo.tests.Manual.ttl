@@ -12,25 +12,6 @@
 @prefix spin: <http://spinrdf.org/spin#> .
 
 
-# rdfs:label should exist once for every language (in DBpedia.org we load 20 languages)
-rutt:dbo-CARD-rdfslabelforeachlanguage
-    a       rut:PatternBasedTestCase ;
-    dcterms:description "One rdfs:label per lang per resource" ;
-    rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:ONELANGGLOBAL ;
-    rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-    rut:source <http://dbpedia.org/ontology/> ;
-    rut:binding
-	[ a     rut:Binding ;
-        rut:bindingValue <http://www.w3.org/2000/01/rdf-schema#label> ;
-		rut:parameter rutp:ONELANGGLOBAL-P1
-	] ;
-	rut:testCaseLogLevel
-		rlog:ERROR ;
-	.
-
-
 
 # dbo:deathDate after dbo:birthDate
 rutt:dbo-COMP-birthdeatdate
@@ -359,35 +340,6 @@ rutt:dbo-PVT-deathdatebirthdate
     rut:testCaseLogLevel
                   rlog:WARN .
 
-
-# Resource cannot have a foaf property if it is not an owl:Thing
-rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
-    a       rut:PatternBasedTestCase ;
-    dcterms:description "foaf:name does not have owl:Thing as rdfs:domain (error in imported dataset)" ;
-    rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:RDFSDOMAIN ;
-    rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://www.w3.org/2002/07/owl#Thing> ;
-                rut:parameter rutp:RDFSDOMAIN-T1
-              ] ;
-    rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue "?v1" ;
-                rut:parameter rutp:RDFSDOMAIN-V1
-              ] ;
-    rut:binding
-              [ a       rut:Binding ;
-                rut:bindingValue <http://xmlns.com/foaf/0.1/name> ;
-                rut:parameter rutp:RDFSDOMAIN-P1
-              ] ;
-    rut:generated rut:ManuallyGenerated ;
-    rut:references <http://xmlns.com/foaf/0.1/name> ;
-    rut:references <http://www.w3.org/2002/07/owl#Thing> ;
-    rut:source <http://dbpedia.org/ontology/> ;
-    rut:testCaseLogLevel
-              rlog:ERROR ;
-    .
 
 # dbo:Person without a dbo:birthDate
 rutt:dbo-TYPRODEP-personwithoutbirthdate

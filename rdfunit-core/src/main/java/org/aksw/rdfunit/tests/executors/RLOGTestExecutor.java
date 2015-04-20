@@ -13,6 +13,7 @@ import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
+import org.aksw.rdfunit.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,6 +54,9 @@ public class RLOGTestExecutor extends TestExecutor {
                 QuerySolution qs = results.next();
 
                 String resource = qs.get("resource").toString();
+                if (qs.get("resource").isLiteral()) {
+                    resource = StringUtils.getHashFromString(resource);
+                }
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {
                     message = qs.get("message").toString();
