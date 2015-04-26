@@ -288,3 +288,33 @@ rutt:dbpedia-org-TYPDEP-foafdbpediaperson
         ] ;
     rut:testCaseLogLevel
                   rlog:WARN .
+
+
+# Resource cannot have a foaf property if it is not an owl:Thing
+rutt:dbo-RDFSDOMAIN-foafpropertyowlthing
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "foaf:name does not have owl:Thing as rdfs:domain (error in imported dataset)" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:RDFSDOMAIN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2002/07/owl#Thing> ;
+                rut:parameter rutp:RDFSDOMAIN-T1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "?v1" ;
+                rut:parameter rutp:RDFSDOMAIN-V1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://xmlns.com/foaf/0.1/name> ;
+                rut:parameter rutp:RDFSDOMAIN-P1
+              ] ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://xmlns.com/foaf/0.1/name> ;
+    rut:references <http://www.w3.org/2002/07/owl#Thing> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:testCaseLogLevel
+              rlog:ERROR ;
+    .

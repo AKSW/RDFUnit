@@ -7,8 +7,8 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.ArrayList;
 import java.util.Collection;

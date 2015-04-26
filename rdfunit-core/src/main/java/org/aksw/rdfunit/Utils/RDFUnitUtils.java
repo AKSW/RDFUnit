@@ -1,16 +1,12 @@
 package org.aksw.rdfunit.Utils;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.EndpointTestSource;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.utils.LOVEntry;
+import org.aksw.rdfunit.utils.LOVUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -102,66 +98,14 @@ public final class RDFUnitUtils {
      */
     public static void fillSchemaServiceFromLOV() {
 
-        Source lov = new EndpointTestSource("lov", "http://lov.okfn.org", "http://helium.okfnlabs.org:3030/lov/sparql", Arrays.asList("http://lov.okfn.org/dataset/lov"), null);
-
-        QueryExecution qe = null;
-        int count = 0;
-
-
-        try {
-            // Example from http://lov.okfn.org/endpoint/lov
-            qe = lov.getExecutionFactory().createQueryExecution(
-                    "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n" +
-                            "PREFIX dcterms:<http://purl.org/dc/terms/>\n" +
-                            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>\n" +
-                            "PREFIX owl:<http://www.w3.org/2002/07/owl#>\n" +
-                            "PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n" +
-                            "PREFIX foaf:<http://xmlns.com/foaf/0.1/>\n" +
-                            "PREFIX void:<http://rdfs.org/ns/void#>\n" +
-                            "PREFIX bibo:<http://purl.org/ontology/bibo/>\n" +
-                            "PREFIX vann:<http://purl.org/vocab/vann/>\n" +
-                            "PREFIX voaf:<http://purl.org/vocommons/voaf#>\n" +
-                            "PREFIX frbr:<http://purl.org/vocab/frbr/core#>\n" +
-                            "PREFIX lov:<http://lov.okfn.org/dataset/lov/lov#>\n" +
-                            "\n" +
-                            "SELECT ?vocabURI ?vocabPrefix ?vocabNamespace ?definedBy\n" +
-                            "WHERE{\n" +
-                            "\t?vocabURI a voaf:Vocabulary.\n" +
-                            "\t?vocabURI vann:preferredNamespacePrefix ?vocabPrefix.\n" +
-                            "\t?vocabURI vann:preferredNamespaceUri ?vocabNamespace.\n" +
-                            "\tOPTIONAL {?vocabURI rdfs:isDefinedBy ?definedBy.}\n" +
-                            "} \n" +
-                            "ORDER BY ?vocabPrefix ");
-
-
-            ResultSet rs = qe.execSelect();
-            while (rs.hasNext()) {
-                QuerySolution row = rs.next();
-
-                String prefix = row.get("vocabPrefix").toString();
-                String vocab = row.get("vocabURI").toString();
-                String ns = row.get("vocabNamespace").toString();
-                String definedBy = ns; // default
-                if (ns == null || ns.isEmpty()) {
-                    ns = vocab;
-                }
-
-                if (row.get("definedBy") != null) {
-                    definedBy = row.get("definedBy").toString();
-                }
-                SchemaService.addSchemaDecl(prefix, ns, definedBy);
-                count++;
-            }
-        } catch (Exception e) {
-            log.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
-        }finally {
-            if (qe != null) {
-                qe.close();
-            }
+        int count = SchemaService.getSize();
+        for (LOVEntry entry : LOVUtils.getAllLOVEntries()) {
+            SchemaService.addSchemaDecl(entry.getPrefix(), entry.getVocabularyNamespace(), entry.getVocabularyDefinedBy());
         }
 
-        log.info("Loaded " + count + " schema declarations from LOV SPARQL Endpoint");
+        count = SchemaService.getSize() - count;
+
+        log.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
     }
 
     /**

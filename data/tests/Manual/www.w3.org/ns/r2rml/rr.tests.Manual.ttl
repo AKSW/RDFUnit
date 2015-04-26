@@ -109,6 +109,11 @@ rutt:rr-predicateObjectMap-wrong-domain
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T1"""
     ];
+#    rut:resultAnnotation [
+#        a rut:ResultAnnotation ;
+#        rut:annotationProperty spin:predicaate ;
+#        rut:annotationValue """?predicate"""
+#    ];
 	.
 
 rutt:rr-predicateObjectMap-missing-datatype
