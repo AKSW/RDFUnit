@@ -13,49 +13,49 @@ public interface WorkflowItem {
      *
      * @return true / false
      */
-    public boolean isReady();
+    boolean isReady();
 
     /**
      * Sets ready state to an item.
      *
      * @param isReady isReady boolean
      */
-    public void setReady(boolean isReady);
+    void setReady(boolean isReady);
 
     /**
      * Sets the previous item in the workflow chain
      *
      * @param item the item
      */
-    public void setPreviousItem(WorkflowItem item);
+    void setPreviousItem(WorkflowItem item);
 
     /**
      * Sets the next item in the workflow chain
      *
      * @param item the item
      */
-    public void setNextItem(WorkflowItem item);
+    void setNextItem(WorkflowItem item);
 
     /**
      * Gets the previous item in the workflow chain
      *
      * @return the previous item
      */
-    public WorkflowItem getPreviousItem();
+    WorkflowItem getPreviousItem();
 
     /**
      * Gets the next item in the workflow chain
      *
      * @return the next item
      */
-    public WorkflowItem getNextItem();
+    WorkflowItem getNextItem();
 
     /**
      * Execute boolean.
      *
      * @return the boolean
      */
-    public boolean execute();
+    boolean execute();
 
     /**
      * Set a message to be written on the item.
@@ -63,6 +63,6 @@ public interface WorkflowItem {
      * @param message the message
      * @param isError true if the message is an error message
      */
-    public void setMessage(String message, boolean isError);
+    void setMessage(String message, boolean isError);
 
 }

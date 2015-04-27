@@ -47,7 +47,7 @@ public final class LOVUtils {
         QueryExecutionFactory qef = new QueryExecutionFactoryHttp(getLovEndpointURI(), Arrays.asList(LOVUtils.getLovGraph()));
 
 
-        try (QueryExecution qe = qef.createQueryExecution(getLOVSparqlQuery());) {
+        try (QueryExecution qe = qef.createQueryExecution(getLOVSparqlQuery())) {
 
             ResultSet rs = qe.execSelect();
             while (rs.hasNext()) {
