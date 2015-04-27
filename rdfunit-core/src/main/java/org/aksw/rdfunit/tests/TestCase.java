@@ -164,9 +164,8 @@ public abstract class TestCase implements Comparable<TestCase> {
 
         TestCase testCase = (TestCase) o;
 
-        if (!testURI.equals(testCase.testURI)) return false;
+        return testURI.equals(testCase.testURI);
 
-        return true;
     }
 
     /** {@inheritDoc} */

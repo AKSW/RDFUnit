@@ -86,9 +86,8 @@ public final class PatternParameter {
         if (constrain != that.constrain) return false;
         if (!constraintPattern.equals(that.constraintPattern)) return false;
         if (!id.equals(that.id)) return false;
-        if (!uri.equals(that.uri)) return false;
+        return uri.equals(that.uri);
 
-        return true;
     }
 
     /** {@inheritDoc} */
