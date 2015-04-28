@@ -5,10 +5,10 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
+import org.aksw.rdfunit.utils.PrefixNSService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
