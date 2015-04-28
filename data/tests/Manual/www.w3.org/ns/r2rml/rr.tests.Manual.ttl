@@ -55,6 +55,11 @@ rut:resultAnnotation [
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T1"""
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?predicate"""
+    ];
 	.
 
 
@@ -109,11 +114,11 @@ rutt:rr-predicateObjectMap-wrong-domain
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T1"""
     ];
-#    rut:resultAnnotation [
-#        a rut:ResultAnnotation ;
-#        rut:annotationProperty spin:predicaate ;
-#        rut:annotationValue """?predicate"""
-#    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?predicate"""
+    ];
 	.
 
 rutt:rr-predicateObjectMap-missing-datatype
@@ -168,6 +173,11 @@ rutt:rr-predicateObjectMap-missing-datatype
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?D1"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?P1"""
     ];
 	.
 
@@ -231,6 +241,11 @@ rutt:rr-predicateObjectMap-incorrect-datatype
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?D1"""
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?P1"""
+    ];
 	.
 
 rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
@@ -283,6 +298,11 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
         rut:annotationProperty spin:violationValue ;
         rut:annotationValue <http://www.w3.org/ns/r2rml#IRI>
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?P1"""
+    ];
 	.
 
 
@@ -309,6 +329,7 @@ rutt:rr-predicateObjectMap-should-be-IRI
                                             || ?C2 IN (rdfs:Class, owl:Class))
                                     FILTER ( ?C1 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty)
                                             && ?C2 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
+                                    FILTER ( ! STRSTARTS(str(?D1), "http://www.w3.org/2001/XMLSchema#") ).
                                 } UNION {
                                     ?P1 rdf:type/rdfs:subClassOf* ?P2 .
                                     FILTER (?P2 IN ( owl:ObjectProperty, owl:InverseFunctionalProperty, owl:IrreflexiveProperty, owl:inverseOf, owl:propertyChainAxiom,
@@ -337,6 +358,11 @@ rutt:rr-predicateObjectMap-should-be-IRI
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue <http://www.w3.org/ns/r2rml#IRI>
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?P1"""
     ];
 	.
 
@@ -458,6 +484,11 @@ rutt:rr-produces-range-errors
         rut:annotationProperty spin:missingValue ;
         rut:annotationValue """?T2"""
     ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?predicate"""
+    ];
     .
 
 
@@ -487,6 +518,11 @@ rutt:rr-language-missing
 	   rut:annotationProperty spin:violationPath ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#language> ;
 	];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?P1"""
+    ];
 	.
 
 
@@ -512,4 +548,9 @@ rutt:rr-deprecated-property
 	   rut:annotationProperty spin:violationPath ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#language> ;
 	];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rdf:predicate ;
+        rut:annotationValue """?P1"""
+    ];
 	.
