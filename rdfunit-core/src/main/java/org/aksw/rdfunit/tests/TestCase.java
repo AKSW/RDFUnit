@@ -9,8 +9,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.Collection;
 
@@ -164,9 +164,8 @@ public abstract class TestCase implements Comparable<TestCase> {
 
         TestCase testCase = (TestCase) o;
 
-        if (!testURI.equals(testCase.testURI)) return false;
+        return testURI.equals(testCase.testURI);
 
-        return true;
     }
 
     /** {@inheritDoc} */

@@ -34,6 +34,8 @@ public final class SchemaService {
     private SchemaService() {
     }
 
+    public static int getSize() {return schemata.size();}
+
     /**
      * <p>addSchemaDecl.</p>
      *

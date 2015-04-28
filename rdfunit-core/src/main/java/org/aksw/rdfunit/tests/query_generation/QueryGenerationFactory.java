@@ -18,7 +18,7 @@ public interface QueryGenerationFactory {
      * @param testCase the test case
      * @return the sparql query as string
      */
-    public abstract String getSparqlQueryAsString(TestCase testCase);
+    String getSparqlQueryAsString(TestCase testCase);
 
     /**
      * Gets a TestCase and returns an appropriate sparql query as Jena Query
@@ -26,6 +26,6 @@ public interface QueryGenerationFactory {
      * @param testCase the test case
      * @return the sparql query
      */
-    public abstract Query getSparqlQuery(TestCase testCase);
+    Query getSparqlQuery(TestCase testCase);
 }
 

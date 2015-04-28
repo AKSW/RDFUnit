@@ -6,8 +6,8 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.io.reader.RDFDereferenceLimitReader;
+import org.aksw.rdfunit.utils.StringUtils;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.DataOption;
@@ -243,7 +243,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
             uri = text.trim();
         }
         else {
-            uri = "http://rdfunit.aksw.org/CustomSource#"+ TestUtils.getHashFromString(text);
+            uri = "http://rdfunit.aksw.org/CustomSource#"+ StringUtils.getHashFromString(text);
         }
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(uri, RDFUnitDemoSession.getBaseDir());
 

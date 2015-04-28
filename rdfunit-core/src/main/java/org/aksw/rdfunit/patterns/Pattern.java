@@ -179,9 +179,8 @@ public final class Pattern {
         if (!id.equals(pattern.id)) return false;
         if (!parameters.equals(pattern.parameters)) return false;
         if (!sparqlPatternPrevalence.equals(pattern.sparqlPatternPrevalence)) return false;
-        if (!sparqlWherePattern.equals(pattern.sparqlWherePattern)) return false;
+        return sparqlWherePattern.equals(pattern.sparqlWherePattern);
 
-        return true;
     }
 
     /** {@inheritDoc} */

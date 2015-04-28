@@ -7,8 +7,8 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
+import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.Collection;
 
