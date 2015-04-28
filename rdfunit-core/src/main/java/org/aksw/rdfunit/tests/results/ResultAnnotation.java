@@ -88,11 +88,8 @@ public final class ResultAnnotation {
         if (!annotationProperty.equals(that.annotationProperty)) {
             return false;
         }
-        if (!annotationValue.equals(that.annotationValue)) {
-            return false;
-        }
+        return annotationValue.equals(that.annotationValue);
 
-        return true;
     }
 
     /** {@inheritDoc} */

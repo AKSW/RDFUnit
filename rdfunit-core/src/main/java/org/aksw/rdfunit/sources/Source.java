@@ -91,9 +91,8 @@ public abstract class Source implements Comparable<Source> {
 
         Source source = (Source) o;
 
-        if (!uri.equals(source.uri)) return false;
+        return uri.equals(source.uri);
 
-        return true;
     }
 
     /** {@inheritDoc} */
