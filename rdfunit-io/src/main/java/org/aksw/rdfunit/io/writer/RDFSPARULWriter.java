@@ -10,7 +10,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public class RDFSPARULWriter extends RDFWriter {
+public class RDFSPARULWriter extends AbstractRDFWriter implements RDFWriter {
     /** {@inheritDoc} */
     @Override
     public void write(QueryExecutionFactory qef) throws RDFWriterException {

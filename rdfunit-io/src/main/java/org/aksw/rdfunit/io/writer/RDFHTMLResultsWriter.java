@@ -20,7 +20,7 @@ import java.util.Collection;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class RDFHTMLResultsWriter extends RDFWriter {
+public abstract class RDFHTMLResultsWriter extends AbstractRDFWriter implements RDFWriter  {
     private final OutputStream outputStream;
 
 

@@ -10,7 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  * @since 5/7/14 3:36 PM
  * @version $Id: $Id
  */
-public class RDFModelReader extends RDFReader {
+public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
 
     private final Model model;
 
