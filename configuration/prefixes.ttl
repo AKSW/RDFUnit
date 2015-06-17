@@ -24,5 +24,7 @@
 @prefix rutr: <http://rdfunit.aksw.org/data/results#> .
 @prefix ruts: <http://rdfunit.aksw.org/data/testsuite#> .
 
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
 
 
