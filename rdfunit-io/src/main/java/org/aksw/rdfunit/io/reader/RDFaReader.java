@@ -11,7 +11,7 @@ import org.semarglproject.jena.rdf.rdfa.JenaRdfaReader;
  * @since 11/14/13 8:48 AM
  * @version $Id: $Id
  */
-public class RDFaReader extends RDFReader {
+public class RDFaReader extends AbstractRDFReader implements RDFReader {
 
     private final String uri;
 

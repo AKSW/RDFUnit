@@ -9,3 +9,4 @@
 
 exdsp:error1 exdsp:PropValueClass exdsp:Anything .  # no range in exdsp:Anything 1 error
 
+exdsp:Anything exdsp:p1 exdsp:something .

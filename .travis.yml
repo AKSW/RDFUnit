@@ -2,7 +2,7 @@ env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "H83RF/FQlVTAWgx4ilU1d3aT0WJv2UA6O+KUSfwDP2GcP4paI8xkOKoijFGmb8rbWqh5LmzRVfX/Gm/8FpvwCk8YpE+20qCQ/j/4RDjYgL8v5eDuNaTNcGSBdlHFSNxhNllEEZvGm7t48dNiwSz5cL/4zcxoDSat/0gYXYGkBpo="
+   - secure: "NL/phgmDhcrvMZ5FO6IOkwxJXZmOtNLFf9cFPEeY0Ei0PawSvCH4MiqF2eZdsf+pP0VpQqitTqDgrRPCGWqDdzCVGvbpPYWsV+T1iFEeX1b3FDaSgpjLg1CGVqbtgmOeap1UYVu0cmfDg2lZe/7ncNDTIjAwiXKAW4EaLJXBklA="
 
 language: java
 jdk:
@@ -31,5 +31,6 @@ addons:
       name: "AKSW/RDFUnit"
       description: "RDFUnit Unit Testing suite"
     notification_email: jimkont@gmail.com
-    build_command:   "mvn clean install"
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
     branch_pattern: coverity_scan

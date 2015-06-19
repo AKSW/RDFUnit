@@ -346,9 +346,14 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                     return false;
 
                 }
-                String oficialFormat = FormatService.getInputFormat(format).getName();
-                SchemaSource source = SourceFactory.createSchemaSourceFromText("http://rdfunit.aksw.org/CustomConstraint#", text, oficialFormat);
-                configuration.setSchemata(Arrays.asList(source));
+                try {
+                    String oficialFormat = FormatService.getInputFormat(format).getName();
+                    SchemaSource source = SourceFactory.createSchemaSourceFromText("http://rdfunit.aksw.org/CustomConstraint#", text, oficialFormat);
+                    configuration.setSchemata(Arrays.asList(source));
+                } catch (NullPointerException e) {
+                    this.setMessage("Unknown error, try again", true);
+                    return false;
+                }
                 break;
 
             default:

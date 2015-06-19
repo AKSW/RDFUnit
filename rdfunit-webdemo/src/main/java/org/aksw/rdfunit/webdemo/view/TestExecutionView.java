@@ -237,7 +237,14 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                             return;
                         }
 
-                        String resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
+                        String resultFormat = "";
+                        try {
+                            resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
+                        } catch (NullPointerException e) {
+                            Notification.show("Error occurred in format selection", Notification.Type.ERROR_MESSAGE);
+                            log.error("Error occurred in format selection", e);
+                            return;
+                        }
 
                         //OutputStream to get the results as string and display
                         final ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -253,8 +260,8 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                             String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
                             new RDFFileWriter(fileLocation, "TURTLE").write(monitor.getModel());
                         } catch (RDFWriterException e) {
-                            Notification.show("Error Occurred in Serialization", Notification.Type.ERROR_MESSAGE);
-                            log.error("Error Occurred in Serialization", e);
+                            Notification.show("Error occurred in Serialization", Notification.Type.ERROR_MESSAGE);
+                            log.error("Error occurred in Serialization", e);
                         }
 
                         final VerticalLayout inner = new VerticalLayout();

@@ -11,7 +11,7 @@ import com.hp.hpl.jena.shared.NotFoundException;
  * @since 11/14/13 8:48 AM
  * @version $Id: $Id
  */
-public class RDFDereferenceReader extends RDFReader {
+public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader {
 
     private final String uri;
 

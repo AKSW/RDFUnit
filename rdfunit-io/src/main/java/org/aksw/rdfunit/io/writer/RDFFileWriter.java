@@ -17,7 +17,7 @@ import java.io.OutputStream;
  * @since 11/14/13 1:01 PM
  * @version $Id: $Id
  */
-public class RDFFileWriter extends RDFWriter {
+public class RDFFileWriter extends AbstractRDFWriter implements RDFWriter {
     private final String filename;
     private final String filetype;
     private final boolean skipIfExists;
