@@ -17,7 +17,7 @@ import java.io.InputStream;
  * @since 11/14/13 8:37 AM
  * @version $Id: $Id
  */
-public class RDFStreamReader extends RDFReader {
+public class RDFStreamReader extends AbstractRDFReader implements RDFReader  {
     private final InputStream inputStream;
     private final String format;
 

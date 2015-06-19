@@ -10,5 +10,7 @@
 ex:error1 a ex:Athlete ;
 	ex:livesIn ex:Athens .  # no range 1 error
 
+ex:Athens ex:p1 ex:v1 .
+
 ex:error2 ex:multRanges ex:AnyValue. # 1 error TODO not supported yet (multiple range)
 

@@ -12,7 +12,7 @@ import org.aksw.rdfunit.io.writer.RDFWriterException;
  * @since 11/14/13 1:09 PM
  * @version $Id: $Id
  */
-public class RDFReadAndCacheReader extends RDFReader {
+public class RDFReadAndCacheReader extends AbstractRDFReader implements RDFReader  {
     private final RDFReader reader;
     private final RDFWriter writer;
 
