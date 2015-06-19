@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RDFStreamReaderTest {
 
+    @SuppressWarnings("PublicField")
     @Rule
     public ExpectedException exception = ExpectedException.none();
 

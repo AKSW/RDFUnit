@@ -123,9 +123,9 @@ public class DumpTestSource extends TestSource {
                 dumpReader.read(dumpModel);
             }
 
-            if (dumpModel.isEmpty()) {
-                throw new IllegalArgumentException("Dump is empty");
-            }
+            //if (dumpModel.isEmpty()) {
+            //    throw new IllegalArgumentException("Dump is empty");
+            //}
             //Load all the related ontologies as well (for more consistent querying
             for (Source src : getReferencesSchemata()) {
                 QueryExecutionFactory qef = src.getExecutionFactory();
