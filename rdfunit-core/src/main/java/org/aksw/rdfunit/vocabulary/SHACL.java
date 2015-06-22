@@ -20,6 +20,7 @@ public final class SHACL {
     public static final Resource Function = resource("Function");
 
     //properties
+    public static final Property argument = property("argument");
     public static final Property cachable = property("cachable");
     public static final Property datatype = property("datatype");
     public static final Property defaultValue = property("defaultValue");

@@ -17,30 +17,32 @@ import org.aksw.rdfunit.vocabulary.SHACL;
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
  */
-public class ArgumentWriter implements ElementWriter {
+public final class ArgumentWriter implements ElementWriter {
 
     private final Argument argument;
 
-    public ArgumentWriter(Argument argument) {
+    private ArgumentWriter(Argument argument) {
         this.argument = argument;
     }
+
+    public static ArgumentWriter createArgumentWriter(Argument argument) {return new ArgumentWriter(argument);}
 
     @Override
     public Resource write(Model model) {
         Resource resource;
 
         // keep the original resource if exists
-        resource = argument.getResource().isPresent() ? model.createResource(argument.getResource().get()) : model.createResource();
+        resource = argument.getResource().isPresent() ? argument.getResource().get() : model.createResource();
 
         // rdf:type sh:Argument
         resource.addProperty(RDF.type, SHACL.Argument);
 
+        // sh:predicate sh:argX
+        resource.addProperty(SHACL.predicate, argument.getPredicate()) ;
+
         // rdfs:comment
         if (!argument.getComment().isEmpty())
             resource.addProperty(RDFS.comment, argument.getComment());
-
-        // sh:predicate sh:argX
-        resource.addProperty(SHACL.predicate, argument.getPredicate()) ;
 
         // default value
         if (argument.getDefaultValue().isPresent()) {
