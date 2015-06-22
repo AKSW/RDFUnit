@@ -13,7 +13,7 @@ RDFUnit - RDF Unit Testing Suite
 **Presentations**: http://www.slideshare.net/jimkont  <br/>
 **Brief Overview**: https://github.com/AKSW/RDFUnit/wiki/Overview
 
-RDFUnit is implemented on top of the [Test-Driven Data Validation Ontology](rdfunit.aksw.org/ns/core#) and designed to read and produce RDF that complies to that ontology only.
+RDFUnit is implemented on top of the [Test-Driven Data Validation Ontology](http://rdfunit.aksw.org/ns/core#) and designed to read and produce RDF that complies to that ontology only.
 The main components that RDFUnit reads are 
 [TestCases (manual & automatic), TestSuites](https://github.com/AKSW/RDFUnit/wiki/TestCases), 
 [Patterns & TestAutoGenerators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators). 
