@@ -9,6 +9,7 @@ import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 /**
  * <p>Binding class.</p>
@@ -86,7 +87,7 @@ public class Binding {
      */
     public Resource writeToModel(Model model) {
         return model.createResource()
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:Binding")))
+                .addProperty(RDF.type, RDFUNITv.Binding)
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:parameter")), model.createResource(parameter.getUri()))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:bindingValue")), value);
 

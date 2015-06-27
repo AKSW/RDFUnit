@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.elements.implementations;
 
+import com.google.common.base.Optional;
+import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.elements.interfaces.Argument;
 import org.aksw.rdfunit.elements.interfaces.Function;
 
@@ -18,13 +20,54 @@ public final class FunctionImpl implements Function {
     private final Function superFunction;
     private final List<Argument> arguments;
     private final String sparqlString;
+    private final Resource returnType;
+
+    private FunctionImpl(FunctionImpl.Builder builder) {
+        comment = builder.comment;
+        isCachable = builder.isCachable;
+        superFunction = builder.superFunction;
+        arguments = builder.arguments;
+        sparqlString = builder.sparqlString;
+        returnType = builder.returnType;
+    }
+
+    @Override
+    public String getComment() {
+        return comment;
+    }
+
+    @Override
+    public Optional<Resource> getReturnType() {
+        return Optional.fromNullable(returnType);
+    }
+
+    @Override
+    public boolean isCachable() {
+        return isCachable;
+    }
+
+    @Override
+    public List<Argument> getArguments() {
+        return arguments;
+    }
+
+    @Override
+    public String getSparqlString() {
+        return sparqlString;
+    }
+
+    @Override
+    public Optional<Resource> getResource() {
+        return null;
+    }
 
     public static class Builder {
-        private String comment;
+        private String comment = "";
         private boolean isCachable = false;
-        private Function superFunction;
+        private Function superFunction = null;
         private List<Argument> arguments = new ArrayList<>();
-        private String sparqlString;
+        private String sparqlString = "";
+        private Resource returnType = null;
 
         public Builder setComment(String val) {
             comment = val;
@@ -46,41 +89,23 @@ public final class FunctionImpl implements Function {
             return this;
         }
 
+        public Builder addArguments(Argument val) {
+            arguments.add(val);
+            return this;
+        }
+
+        public Builder setSPARQLString(String val) {
+            sparqlString = val;
+            return this;
+        }
+
+        public Builder setReturnTyp(Resource val) {
+            returnType = val;
+            return this;
+        }
+
         public  FunctionImpl build() {
             return new FunctionImpl(this);
         }
-    }
-
-    private FunctionImpl(Builder builder) {
-        comment = builder.comment;
-        isCachable = builder.isCachable;
-        superFunction = builder.superFunction;
-        arguments = builder.arguments;
-        sparqlString = builder.sparqlString;
-    }
-
-    @Override
-    public String getComment() {
-        return comment;
-    }
-
-    @Override
-    public String getXSDDataType() {
-        return null;
-    }
-
-    @Override
-    public boolean isCachable() {
-        return isCachable;
-    }
-
-    @Override
-    public List<Argument> getArguments() {
-        return arguments;
-    }
-
-    @Override
-    public String getSparqlString() {
-        return sparqlString;
     }
 }

@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.elements.readers;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.elements.interfaces.Argument;
 import org.aksw.rdfunit.elements.writers.ArgumentWriter;
@@ -47,7 +46,7 @@ public class ArgumentReaderTest {
 
         //now write it back to another model
         ArgumentWriter argumentWriter = ArgumentWriter.createArgumentWriter(arg1);
-        Resource resourceWritten = argumentWriter.write(ModelFactory.createDefaultModel());
+        Resource resourceWritten = argumentWriter.write();
 
         // read again
         Argument arg2 = argumentReader.read(resourceWritten);

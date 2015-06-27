@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.elements.writers;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -28,11 +27,11 @@ public final class ArgumentWriter implements ElementWriter {
     public static ArgumentWriter createArgumentWriter(Argument argument) {return new ArgumentWriter(argument);}
 
     @Override
-    public Resource write(Model model) {
+    public Resource write() {
         Resource resource;
 
         // keep the original resource if exists
-        resource = argument.getResource().isPresent() ? argument.getResource().get() : model.createResource();
+        resource = argument.getResource().isPresent() ? argument.getResource().get() : ResourceFactory.createResource();
 
         // rdf:type sh:Argument
         resource.addProperty(RDF.type, SHACL.Argument);

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertFalse;
  */
 public class ArgumentImplTest {
 
-    private final Resource element = ResourceFactory.createResource("http://example.com/Argument1");
+    private final Resource element = ResourceFactory.createResource("http://example.com/argument/11");
     private final Resource predicate = ResourceFactory.createResource(SHACL.namespace + "arg1");
 
     private final Argument argDef = new ArgumentImpl.Builder(element, predicate).build();
