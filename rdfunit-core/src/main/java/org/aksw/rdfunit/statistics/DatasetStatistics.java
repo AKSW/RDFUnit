@@ -4,9 +4,6 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.services.SchemaService;
-import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.utils.PrefixNSService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,67 +38,6 @@ public abstract class DatasetStatistics {
 
     public DatasetStatistics() {
     }
-
-    /**
-     * Uses the getAllNamespacesOntology() function and tries to match them to SchemaSource's
-     *
-     * @return a Collection of SchemaSource's for all identified namespaces
-     */
-    public Collection<SchemaSource> getIdentifiedSchemataOntology() {
-        return getIdentifiedSchemata(getAllNamespacesOntology());
-    }
-
-    /**
-     * Uses the getAllNamespacesOntology() function and tries to match them to SchemaSource's
-     *
-     * @return a Collection of SchemaSource's for all identified namespaces
-     */
-    public Collection<SchemaSource> getIdentifiedSchemataAll() {
-        return getIdentifiedSchemata(getAllNamespacesComplete());
-    }
-
-
-    private Collection<SchemaSource> getIdentifiedSchemata(Collection<String> namespaces) {
-        Collection<SchemaSource> sources = new ArrayList<>();
-
-        for (String namespace : namespaces) {
-
-            SchemaSource source = SchemaService.getSourceFromUri(namespace);
-
-            // If not null, get it from SchemaService
-            if (source != null) {
-
-                // Skip some schemas that don't add anything
-                if (excludePrefixes.contains(source.getPrefix())) {
-                    continue;
-                }
-                sources.add(source);
-            } else {
-                log.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
-            }
-        }
-
-        return sources;
-    }
-
-
-
-    /**
-     * Gets namespace from uRI.
-     *
-     * @param uri the uri
-     * @return the namespace from uRI
-     */
-    protected String getNamespaceFromURI(String uri) {
-        String breakChar = "/";
-        if (uri.contains("#")) {
-            breakChar = "#";
-        }
-
-        int pos = Math.min(uri.lastIndexOf(breakChar), uri.length());
-        return uri.substring(0, pos + 1);
-    }
-
 
     /**
      * Gets stats.
