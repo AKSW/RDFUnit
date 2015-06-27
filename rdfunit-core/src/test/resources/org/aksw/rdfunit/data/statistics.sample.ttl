@@ -1,0 +1,34 @@
+@prefix ex1: <http://example.com/1#> .
+@prefix ex2: <http://example.com/2#> .
+@prefix ex3: <http://example.com/3#> .
+@prefix ex4: <http://example.com/4#> .
+@prefix ex5: <http://example.com/5#> .
+
+@prefix exc1: <http://example.com/c1#> .
+@prefix exc2: <http://example.com/c2#> .
+@prefix exc3: <http://example.com/c3#> .
+@prefix exc4: <http://example.com/c4#> .
+@prefix exc5: <http://example.com/c5#> .
+
+@prefix exp1: <http://example.com/p1#> .
+@prefix exp2: <http://example.com/p2#> .
+@prefix exp3: <http://example.com/p3#> .
+@prefix exp4: <http://example.com/p4#> .
+@prefix exp5: <http://example.com/p5#> .
+
+#classes
+ex1:c1 a exc1:Person .
+ex1:c1 a exc1:Person  .
+ex2:c2 a exc2:Person2  .
+ex2:c2 a exc2:Person2   .
+
+#properties
+ex1:p1 exp1:p1 ex1:p12 .
+ex1:p1 exp1:p1 ex1:p13 .
+ex2:p2 exp2:p2 ex2:p22 .
+ex2:p2 exp2:p2 ex2:p23 .
+
+#all IRIs
+ex3:a3 exp3:p3 ex3:a3  .
+ex4:a4 exp4:p4 ex4:a4  .
+ex5:a5 exp5:p5 ex5:a5  .
