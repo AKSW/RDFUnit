@@ -24,6 +24,11 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
         this.model = model;
     }
 
+    @Override
+    public Model read() throws RDFReaderException {
+        return model;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
