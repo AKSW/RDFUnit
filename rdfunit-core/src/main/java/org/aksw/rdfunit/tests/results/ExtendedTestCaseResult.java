@@ -55,10 +55,6 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("spin:ConstraintViolation")))
                 .addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("spin:violationRoot")), model.createResource(getResource()));
 
-        for (ResultAnnotation annotation : getTestCase().getResultAnnotations()) {
-            annotation.serializeAsResult(resource, model);
-        }
-
         for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {
             for (RDFNode rdfNode : vaEntry.getValue()) {
                 resource.addProperty(ResourceFactory.createProperty(vaEntry.getKey().getAnnotationProperty()), rdfNode);
