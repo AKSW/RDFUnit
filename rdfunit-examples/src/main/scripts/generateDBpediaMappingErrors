@@ -1,0 +1,14 @@
+#!/bin/bash
+
+FOLDER="$*"
+MAIN_CLS="org.aksw.rdfunit.examples.DBpediaMappingValidator"
+
+mvn -pl rdfunit-examples -am install \
+  -Dmaven.test.skip=true \
+  -Dmaven.javadoc.skip=true \
+  -Dsource.skip=true
+
+cd rdfunit-examples/
+mvn exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$FOLDER"
+
+cd - > /dev/null
