@@ -13,7 +13,7 @@ import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
-import org.aksw.rdfunit.statistics.DatasetStatistics;
+import org.aksw.rdfunit.statistics.NamespaceStatistics;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import java.util.Collection;
  *         Holds a configuration for a complete test
  *         TODO: Got too big, maybe break it down a bit
  *         TODO: Got really really big!!!
- * @since 11/15/13 11:50 AM
  * @version $Id: $Id
+ * @since 11/15/13 11:50 AM
  */
 public class RDFUnitConfiguration {
 
@@ -108,7 +108,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>setEndpointConfiguration.</p>
      *
-     * @param endpointURI a {@link java.lang.String} object.
+     * @param endpointURI    a {@link java.lang.String} object.
      * @param endpointGraphs a {@link java.util.Collection} object.
      */
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
@@ -129,7 +129,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Setter for the field <code>customTextSource</code>.</p>
      *
-     * @param text a {@link java.lang.String} object.
+     * @param text   a {@link java.lang.String} object.
      * @param format a {@link java.lang.String} object.
      * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
      */
@@ -151,7 +151,7 @@ public class RDFUnitConfiguration {
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
-        setAutoSchemataFromQEF(qef,false);
+        setAutoSchemataFromQEF(qef, false);
     }
 
     /**
@@ -160,12 +160,19 @@ public class RDFUnitConfiguration {
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all) {
-        DatasetStatistics datasetStatistics = new DatasetStatistics(qef, false);
+        setAutoSchemataFromQEF(qef, all, true);
+    }
+
+    public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all, boolean limitToKnown) {
+
+        NamespaceStatistics namespaceStatistics;
         if (all) {
-            this.schemas = datasetStatistics.getIdentifiedSchemataAll();
+            namespaceStatistics = limitToKnown ? NamespaceStatistics.createCompleteNSStatisticsKnown() : NamespaceStatistics.createCompleteNSStatisticsAll();
         } else {
-            this.schemas = datasetStatistics.getIdentifiedSchemataOntology();
+            namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown() : NamespaceStatistics.createOntologyNSStatisticsAll();
         }
+        assert namespaceStatistics != null;
+        this.schemas = namespaceStatistics.getNamespaces(qef);
     }
 
     /**
@@ -250,8 +257,7 @@ public class RDFUnitConfiguration {
             // Return a text source
             if (customTextSource != null) { // read from custom text
                 dumpReader = RDFReaderFactory.createReaderFromText(customTextSource, customTextFormat.getName());
-            }
-            else {
+            } else {
                 // return a DumpSource
                 String tmp_customDereferenceURI = datasetURI;
 
@@ -259,13 +265,7 @@ public class RDFUnitConfiguration {
                     tmp_customDereferenceURI = customDereferenceURI;
                 }
 
-                if (customDereferenceURI != null && "-".equals(customDereferenceURI)) {
-                    // Read from standard input / pipe
-                    dumpReader = new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE");  // TODO make format configurable
-                } else {
-                    // dereference the source (check local file or remote)
-                    dumpReader = RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI);
-                }
+                dumpReader = customDereferenceURI != null && "-".equals(customDereferenceURI) ? new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE") : RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI);
             }
 
             // Set the DumpSource with the configured reader
