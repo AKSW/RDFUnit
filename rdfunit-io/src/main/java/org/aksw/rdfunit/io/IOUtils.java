@@ -25,7 +25,7 @@ public final class IOUtils {
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @throws java.lang.Exception if any.
      */
-    public static Model getModelFromQueryFactory(QueryExecutionFactory qef) throws Exception {
+    public static Model getModelFromQueryFactory(QueryExecutionFactory qef) {
         if (qef instanceof QueryExecutionFactoryModel) {
             return ((QueryExecutionFactoryModel) qef).getModel();
         } else {
@@ -33,8 +33,6 @@ public final class IOUtils {
             try {
                 qe = qef.createQueryExecution(" CONSTRUCT ?s ?p ?o WHERE { ?s ?p ?o } ");
                 return qe.execConstruct();
-            } catch (Exception e) {
-                throw e;
             } finally {
                 if (qe != null) {
                     qe.close();
