@@ -23,7 +23,6 @@ public final class IOUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @throws java.lang.Exception if any.
      */
     public static Model getModelFromQueryFactory(QueryExecutionFactory qef) {
         if (qef instanceof QueryExecutionFactoryModel) {
