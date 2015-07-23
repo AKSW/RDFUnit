@@ -267,9 +267,25 @@ public class RDFUnitStaticWrapper {
      * @return a new Model that contains the validation results. The results are according to executionType
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, DatasetOverviewResults overviewResults) {
+        return validate(testCaseExecutionType, testSource, testSuite, "http://localhost", overviewResults);
+    }
+
+    /**
+     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitConfiguration object
+     * This function can also serve as standalone
+     *
+     * @param testCaseExecutionType execution type
+     * @param testSource               the dataset source we want to test
+     * @param testSuite             the list of test cases we want to test our Source against
+     * @param agentID             an identifier that will be set in the execution provenance data as prov:wasStartedBy
+     * @param overviewResults This is a way to get validation statistics
+     * @return a new Model that contains the validation results. The results are according to executionType
+     */
+    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, final String agentID, DatasetOverviewResults overviewResults) {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
+        testExecutorMonitor.setUserID(agentID);
         testExecutorMonitor.setExecutionType(testCaseExecutionType);
 
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(testCaseExecutionType);
