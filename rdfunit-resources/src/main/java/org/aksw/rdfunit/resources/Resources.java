@@ -26,6 +26,7 @@ public final class Resources {
             r.put("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#");
             r.put("skos", "http://www.w3.org/2004/02/skos/core#");
             r.put("rr", "http://www.w3.org/ns/r2rml#");
+            r.put("dataid", "http://dataid.dbpedia.org/ns/core#");
 
 
             return Collections.unmodifiableMap(r);
