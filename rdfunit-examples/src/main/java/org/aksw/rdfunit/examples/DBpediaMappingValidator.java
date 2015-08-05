@@ -9,6 +9,7 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.DumpTestSource;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -16,10 +17,8 @@ import org.aksw.rdfunit.tests.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -35,9 +34,9 @@ public class DBpediaMappingValidator {
 
     private static final String dbpediaOntology = mappingServer + "/server/ontology/dbpedia.owl";
     private static final String rmlManualTests = "/org/aksw/rdfunit/tests/Manual/www.w3.org/ns/r2rml/rr.tests.Manual.ttl";
-    //private static final Collection<String> languages = Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
+    private static final Collection<String> languages = Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
     // 2014 languages
-    private static final Collection<String> languages = Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
+    //private static final Collection<String> languages = Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
     //private static final Collection<String> languages = Arrays.asList("el", "bg");
 
     private static final String sparqlQuery = PrefixNSService.getSparqlPrefixDecl() +
@@ -68,7 +67,7 @@ public class DBpediaMappingValidator {
     }
 
     private TestSource getMappingSource() {
-        return new DumpTestSource("dbp-mappings", "http://mappings.dbpedia.org", getRMLReader(), Collections.EMPTY_LIST);
+        return new DumpTestSource("dbp-mappings", "http://mappings.dbpedia.org", getRMLReader(), new ArrayList<SchemaSource>());
 
     }
 
@@ -178,16 +177,31 @@ public class DBpediaMappingValidator {
         }
 
         // get folder name
-        String folder = "";
+        String folder = "./";
         if (args.length == 1) {
             folder = args[0];
+            if (!folder.endsWith("/")) {
+                 folder = folder + "/";
+            }
         }
-        final String filename = folder + "errors.json";
 
-        //write json to filename
-        try (Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(filename), "UTF-8"));) {
-            out.write(new DBpediaMappingValidator().validateAndGetJson());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
+        final String filenameDefault = folder + "errors.json";
+        final String filenameArchive = folder + "/archive/errors." + timeStamp + ".json";
+        // create folder if it does not exists
+        File archivedFolder = new File(folder+"/archive/");
+        archivedFolder.mkdirs();
+
+        final String json = new DBpediaMappingValidator().validateAndGetJson();
+
+        //write json to filenameDefault
+        try (Writer outDeafault = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(filenameDefault), "UTF-8"));
+             Writer outArchive = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(filenameArchive), "UTF-8"))
+        ) {
+            outDeafault.write(json);
+            outArchive.write(json);
         }
 
     }
