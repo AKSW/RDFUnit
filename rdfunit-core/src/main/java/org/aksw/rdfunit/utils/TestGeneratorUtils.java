@@ -40,7 +40,7 @@ public final class TestGeneratorUtils {
     public static Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
         Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
 
-        String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
+        String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
                 " ?generator " +
                 "    a rut:TestGenerator ; " +

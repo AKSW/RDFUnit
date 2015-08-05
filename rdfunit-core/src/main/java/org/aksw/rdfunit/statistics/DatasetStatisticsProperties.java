@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.statistics;
 
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * Description

@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * <p>ManualTestCase class.</p>

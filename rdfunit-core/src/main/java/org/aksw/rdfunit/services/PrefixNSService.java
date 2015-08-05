@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.utils;
+package org.aksw.rdfunit.services;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;

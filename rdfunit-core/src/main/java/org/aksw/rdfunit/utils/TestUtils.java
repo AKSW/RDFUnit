@@ -71,7 +71,7 @@ public final class TestUtils {
 
         // Get all manual tests
 
-        String manualTestsSelectSparql = PrefixNSService.getSparqlPrefixDecl() +
+        String manualTestsSelectSparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?testURI WHERE {" +
                 " ?testURI a rut:ManualTestCase }";
 
@@ -97,7 +97,7 @@ public final class TestUtils {
 
         // Get all pattern based tests
 
-        String patternTestsSelectSparql = PrefixNSService.getSparqlPrefixDecl() +
+        String patternTestsSelectSparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?testURI WHERE {" +
                 " ?testURI a rut:PatternBasedTestCase } ";
 
@@ -131,7 +131,7 @@ public final class TestUtils {
      */
     public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
-        String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
+        String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    dcterms:description  ?description ;" +
@@ -208,7 +208,7 @@ public final class TestUtils {
      */
     public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
-        String sparqlSelect = PrefixNSService.getSparqlPrefixDecl() +
+        String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
                 "    dcterms:description ?description ;" +
@@ -234,7 +234,7 @@ public final class TestUtils {
                 String source = qs.get("source").toString();
                 RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
                 String patternURI = qs.get("basedOnPattern").toString();
-                Pattern pattern = PatternService.getPattern(PrefixNSService.getLocalName(patternURI, "rutp"));
+                Pattern pattern = PatternService.getPattern(org.aksw.rdfunit.services.PrefixNSService.getLocalName(patternURI, "rutp"));
                 if (pattern == null) {
                     throw new TestCaseInstantiationException("Pattern does not exists for TC: " + testURI);
                 }
@@ -291,7 +291,7 @@ public final class TestUtils {
             t.serialize(model);
         }
         try {
-            PrefixNSService.setNSPrefixesInModel(model);
+            org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);
             testCache.write(model);
         } catch (RDFWriterException e) {
             log.error("Cannot cache tests: " + e.getMessage());
@@ -309,7 +309,7 @@ public final class TestUtils {
 
         Collection<String> references = new ArrayList<>();
 
-        String sparqlReferencesSelect = PrefixNSService.getSparqlPrefixDecl() +
+        String sparqlReferencesSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?references WHERE { " +
                 " <" + testURI + "> rut:references ?references . }";
 
@@ -342,7 +342,7 @@ public final class TestUtils {
 
         Collection<Binding> bindings = new ArrayList<>();
 
-        String sparqlReferencesSelect = PrefixNSService.getSparqlPrefixDecl() +
+        String sparqlReferencesSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?parameter ?value WHERE { " +
                 " <" + testURI + "> rut:binding ?binding ." +
                 " ?binding rut:bindingValue ?value ;" +
@@ -389,7 +389,7 @@ public final class TestUtils {
      * @return a {@link java.lang.String} object.
      */
     public static String generateTestURI(String sourcePrefix, Pattern pattern, Collection<Binding> bindings, String generatorURI) {
-        String testURI = PrefixNSService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
+        String testURI = org.aksw.rdfunit.services.PrefixNSService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         StringBuilder string2hash = new StringBuilder(generatorURI);
         for (Binding binding : bindings) {
             string2hash.append(binding.getValueAsString());

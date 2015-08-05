@@ -6,8 +6,8 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
-import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.ArrayList;
 import java.util.Collection;

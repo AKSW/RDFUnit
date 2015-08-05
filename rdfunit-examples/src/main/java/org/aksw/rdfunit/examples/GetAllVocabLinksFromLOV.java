@@ -10,9 +10,9 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.utils.PrefixNSService;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 
 import java.io.FileOutputStream;

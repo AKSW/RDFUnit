@@ -35,7 +35,7 @@ public final class PatternUtils {
      */
     public static Collection<Pattern> instantiatePatternsFromModel(QueryExecutionFactory queryFactory) {
 
-        final String sparqlSelectPatterns = PrefixNSService.getSparqlPrefixDecl() +
+        final String sparqlSelectPatterns = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 "SELECT distinct ?sparqlPattern WHERE { " +
                 " ?sparqlPattern a rut:Pattern . }";
 
@@ -74,7 +74,7 @@ public final class PatternUtils {
      * @return the pattern object
      */
     public static Pattern getPattern(QueryExecutionFactory queryFactory, String patternURI) {
-        final String sparqlSelectPattern = PrefixNSService.getSparqlPrefixDecl() +
+        final String sparqlSelectPattern = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 "SELECT distinct ?sparqlPattern ?id ?desc ?sparql ?sparqlPrev ?variable WHERE { " +
                 "  <" + patternURI + "> a rut:Pattern ; " +
                 "  dcterms:identifier ?id ; " +
@@ -128,7 +128,7 @@ public final class PatternUtils {
      */
     private static Collection<PatternParameter> getPatternParameters(QueryExecutionFactory queryFactory, String patternURI) {
 
-        final String sparqlSelectParameters = PrefixNSService.getSparqlPrefixDecl() +
+        final String sparqlSelectParameters = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT distinct ?parameterURI ?id ?constraint ?constraintPattern WHERE { " +
                 " %%PATTERN%%  rut:parameter ?parameterURI . " +
                 " ?parameterURI a rut:Parameter . " +

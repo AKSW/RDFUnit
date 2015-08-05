@@ -8,7 +8,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.patterns.PatternParameter;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * <p>Binding class.</p>

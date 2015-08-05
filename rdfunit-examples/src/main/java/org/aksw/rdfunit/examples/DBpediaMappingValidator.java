@@ -7,12 +7,12 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.ExtendedTestCaseResult;
-import org.aksw.rdfunit.utils.PrefixNSService;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 
