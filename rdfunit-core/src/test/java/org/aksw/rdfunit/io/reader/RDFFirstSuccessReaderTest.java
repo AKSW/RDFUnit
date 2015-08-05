@@ -27,7 +27,7 @@ public class RDFFirstSuccessReaderTest {
         } catch (RDFReaderException e) {
         }
 
-        rdfReaders.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/io/empty.ttl"));
+        rdfReaders.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/empty.ttl"));
 
         reader = new RDFFirstSuccessReader(rdfReaders);
         try {
