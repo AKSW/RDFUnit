@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.sources;
 
-import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.StringUtils;
 
 /**

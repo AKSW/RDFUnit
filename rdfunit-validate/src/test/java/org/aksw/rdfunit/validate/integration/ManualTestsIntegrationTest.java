@@ -1,11 +1,11 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.resources.Resources;
+import org.aksw.rdfunit.utils.CacheUtils;
+import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 import org.junit.After;
 import org.junit.Before;

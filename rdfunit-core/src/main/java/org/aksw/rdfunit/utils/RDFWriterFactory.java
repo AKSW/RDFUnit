@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.Utils;
+package org.aksw.rdfunit.utils;
 
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.format.FormatService;

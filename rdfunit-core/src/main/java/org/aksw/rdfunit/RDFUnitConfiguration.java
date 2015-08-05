@@ -1,8 +1,6 @@
 package org.aksw.rdfunit;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
@@ -14,6 +12,8 @@ import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.NamespaceStatistics;
+import org.aksw.rdfunit.utils.CacheUtils;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;

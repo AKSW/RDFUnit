@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.Utils;
+package org.aksw.rdfunit.utils;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;

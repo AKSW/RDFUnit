@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.Utils;
+package org.aksw.rdfunit.utils;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -8,7 +8,6 @@ import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
-import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.ArrayList;
 import java.util.Collection;

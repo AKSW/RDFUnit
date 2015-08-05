@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
@@ -10,6 +9,7 @@ import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
+import org.aksw.rdfunit.utils.TestGeneratorUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 import org.junit.After;
 import org.junit.Before;

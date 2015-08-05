@@ -2,9 +2,6 @@ package org.aksw.rdfunit.validate.wrappers;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.TestGeneratorUtils;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.sources.DumpTestSource;
@@ -17,6 +14,9 @@ import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
+import org.aksw.rdfunit.utils.CacheUtils;
+import org.aksw.rdfunit.utils.TestGeneratorUtils;
+import org.aksw.rdfunit.utils.TestUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

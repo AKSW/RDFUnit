@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.Utils;
+package org.aksw.rdfunit.utils;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -7,7 +7,6 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
-import org.aksw.rdfunit.utils.PrefixNSService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

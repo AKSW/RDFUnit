@@ -2,8 +2,8 @@ package org.aksw.rdfunit.webdemo.utils;
 
 import com.vaadin.ui.UI;
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 
 /**
