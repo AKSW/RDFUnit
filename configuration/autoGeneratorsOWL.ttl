@@ -237,6 +237,8 @@ rutg:OWLDISJC1 a rut:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?DESCRIPTION WHERE {
                              ?T1 owl:disjointWith ?T2 .
+                             FILTER (!isBlank(?T1))
+                             FILTER (!isBlank(?T2))
                              FILTER NOT EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              BIND ( concat("Class ", str(?T1)," is owl:disjointWith with ", str(?T2)) AS ?DESCRIPTION) } """ ;
     rut:basedOnPattern rutp:OWLDISJC ;
@@ -254,6 +256,8 @@ rutg:OWLDISJC2 a rut:TestGenerator ;
     dcterms:description """Generate all owl:disjointWith constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?DESCRIPTION WHERE {
                              ?T1 owl:disjointWith ?T2 .
+                             FILTER (!isBlank(?T1))
+                             FILTER (!isBlank(?T2))
                              FILTER EXISTS { ?T2 owl:disjointWith ?T1 .  }
                              FILTER (str(?T1) < str(?T2) ).
                              BIND ( concat("Class ", str(?T1)," is owl:disjointWith with ", str(?T2)) AS ?DESCRIPTION) } """ ;
@@ -274,6 +278,8 @@ rutg:OWLALLDISJC a rut:TestGenerator ;
                              ?r rdf:type    owl:AllDisjointClasses ;
                                 owl:members ?T1 ;
                                 owl:members ?T2 .
+                             FILTER (!isBlank(?T1))
+                             FILTER (!isBlank(?T2))
                              FILTER (str(?T1) < str(?T2) ).
                              BIND ( concat("Class ", str(?T1)," is owl:members of an owl:AllDisjointClasses with ", str(?T2)) AS ?DESCRIPTION) } """ ;
     rut:basedOnPattern rutp:OWLDISJC ;
@@ -328,7 +334,9 @@ rutg:OWLALLDISJP a rut:TestGenerator ;
 rutg:OWLCOMPL a rut:TestGenerator ;
     dcterms:description """Generate all owl:complementOf constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?T2 ?DESCRIPTION WHERE {
-                             ?T1 owl:complementOf ?T2 . 
+                             ?T1 owl:complementOf ?T2 .
+                             FILTER (!isBlank(?T1))
+                             FILTER (!isBlank(?T2))
 							 BIND ( concat(str(?T1)," is owl:complementOf with ", str(?T2)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLDISJC ;
     rut:resultAnnotation [
@@ -568,6 +576,7 @@ rutg:OWLQCARD-MAX a rut:TestGenerator ;
                                 owl:onProperty ?P1 ;
                                 owl:onClass ?T2 ;
                                 owl:maxQualifiedCardinality ?v .
+
                              FILTER (?v > 0 && !isBlank(?T1)) .
                              FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class )) .
 							 BIND ( concat("QualifiedCardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
