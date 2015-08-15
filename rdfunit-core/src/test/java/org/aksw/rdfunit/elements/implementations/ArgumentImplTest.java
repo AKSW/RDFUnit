@@ -4,8 +4,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.XSD;
-import org.aksw.rdfunit.elements.ValueKind;
 import org.aksw.rdfunit.elements.interfaces.Argument;
+import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.junit.Test;
 

@@ -3,9 +3,9 @@ package org.aksw.rdfunit.elements.readers;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import org.aksw.rdfunit.elements.ValueKind;
 import org.aksw.rdfunit.elements.implementations.ArgumentImpl;
 import org.aksw.rdfunit.elements.interfaces.Argument;
+import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.vocabulary.SHACL;
 
 import static com.google.common.base.Preconditions.checkNotNull;

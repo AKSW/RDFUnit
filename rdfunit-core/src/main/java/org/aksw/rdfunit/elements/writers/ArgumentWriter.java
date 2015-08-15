@@ -6,8 +6,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import org.aksw.rdfunit.elements.ValueKind;
 import org.aksw.rdfunit.elements.interfaces.Argument;
+import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.vocabulary.SHACL;
 
 /**

@@ -3,7 +3,7 @@ package org.aksw.rdfunit.elements.interfaces;
 import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
-import org.aksw.rdfunit.elements.ValueKind;
+import org.aksw.rdfunit.enums.ValueKind;
 
 /**
  * Interface for SHACL Arguments
