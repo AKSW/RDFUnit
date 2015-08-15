@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.elements.implementations;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.elements.interfaces.Argument;
@@ -107,5 +108,27 @@ public final class FunctionImpl implements Function {
         public  FunctionImpl build() {
             return new FunctionImpl(this);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(comment, isCachable, superFunction, arguments, sparqlString, returnType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final FunctionImpl other = (FunctionImpl) obj;
+        return Objects.equal(this.comment, other.comment)
+                && Objects.equal(this.isCachable, other.isCachable)
+                && Objects.equal(this.superFunction, other.superFunction)
+                && Objects.equal(this.arguments, other.arguments)
+                && Objects.equal(this.sparqlString, other.sparqlString)
+                && Objects.equal(this.returnType, other.returnType);
     }
 }

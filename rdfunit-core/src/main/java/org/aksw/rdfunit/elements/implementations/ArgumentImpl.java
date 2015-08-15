@@ -23,55 +23,6 @@ public final class ArgumentImpl implements Argument {
     private final RDFNode defaultValue;
     private final boolean isOptional;
 
-    public static class Builder {
-        private final Resource element;
-        private final Resource predicate;
-        private String comment = "";
-        private Resource valueType = null;
-        private ValueKind valueKind = null;
-        private RDFNode defaultValue = null;
-        private boolean isOptional = false;
-
-
-        public Builder(Resource element, Resource predicate) {
-
-            assert predicate != null;
-
-            this.element = element;
-            this.predicate = predicate;
-        }
-
-        public Builder(Resource predicate) {
-            this(null, predicate);
-        }
-
-        public Builder setComment(String val) {
-            this.comment = val;
-            return this;
-        }
-
-        public Builder setOptional(boolean val) {
-            this.isOptional = val;
-            return this;
-        }
-
-        public Builder setValueType(Resource val1, ValueKind val2) {
-            this.valueType = val1;
-            this.valueKind = val2;
-            return this;
-        }
-
-        public Builder setDefaultValue(RDFNode val) {
-            this.defaultValue = val;
-            return this;
-        }
-
-        public ArgumentImpl build() {
-            return new ArgumentImpl(this);
-        }
-
-    }
-
     private ArgumentImpl(Builder builder) {
         this.element = builder.element;
         this.predicate = builder.predicate;
@@ -139,6 +90,55 @@ public final class ArgumentImpl implements Argument {
                 && Objects.equal(this.valueKind, other.valueKind)
                 && Objects.equal(this.defaultValue, other.defaultValue)
                 && Objects.equal(this.isOptional, other.isOptional);
+    }
+
+    public static class Builder {
+        private final Resource element;
+        private final Resource predicate;
+        private String comment = "";
+        private Resource valueType = null;
+        private ValueKind valueKind = null;
+        private RDFNode defaultValue = null;
+        private boolean isOptional = false;
+
+
+        public Builder(Resource element, Resource predicate) {
+
+            assert predicate != null;
+
+            this.element = element;
+            this.predicate = predicate;
+        }
+
+        public Builder(Resource predicate) {
+            this(null, predicate);
+        }
+
+        public Builder setComment(String val) {
+            this.comment = val;
+            return this;
+        }
+
+        public Builder setOptional(boolean val) {
+            this.isOptional = val;
+            return this;
+        }
+
+        public Builder setValueType(Resource val1, ValueKind val2) {
+            this.valueType = val1;
+            this.valueKind = val2;
+            return this;
+        }
+
+        public Builder setDefaultValue(RDFNode val) {
+            this.defaultValue = val;
+            return this;
+        }
+
+        public ArgumentImpl build() {
+            return new ArgumentImpl(this);
+        }
+
     }
 
 }
