@@ -63,6 +63,31 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+            <!--plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-jar-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <formats>jar</formats>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.aksw.rdfunit.examples.DBpediaMappingValidator</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>DBpediaMappingValidator</finalName>
+                </configuration>
+            </plugin-->
         </plugins>
     </build>
 
