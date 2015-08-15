@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.elements;
+package org.aksw.rdfunit.enums;
 
 /**
  * Description
