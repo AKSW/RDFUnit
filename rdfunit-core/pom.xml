@@ -4,23 +4,13 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.4-SNAPSHOT</version>
+        <version>0.7.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>rdfunit-core</artifactId>
     <name>RDFUnit - Core</name>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-utils</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-io</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
@@ -51,6 +41,15 @@
             <artifactId>jena-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.semarglproject</groupId>
+            <artifactId>semargl-jena</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

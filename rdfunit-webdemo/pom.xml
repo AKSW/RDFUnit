@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.4-SNAPSHOT</version>
+        <version>0.7.6-SNAPSHOT</version>
     </parent>
     <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
@@ -12,8 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.4.6</vaadin.version>
-        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+        <vaadin.version>7.5.2</vaadin.version>
     </properties>
     <repositories>
         <repository>
@@ -174,7 +173,7 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin.plugin.version}</version>
+                <version>${vaadin.version}</version>
                 <configuration>
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                     <!-- <runTarget>mobilemail</runTarget> -->

@@ -6,8 +6,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.utils.PrefixNSService;
 
 import java.util.*;
 
@@ -54,10 +54,6 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:ExtendedTestCaseResult")))
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("spin:ConstraintViolation")))
                 .addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("spin:violationRoot")), model.createResource(getResource()));
-
-        for (ResultAnnotation annotation : getTestCase().getResultAnnotations()) {
-            annotation.serializeAsResult(resource, model);
-        }
 
         for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {
             for (RDFNode rdfNode : vaEntry.getValue()) {

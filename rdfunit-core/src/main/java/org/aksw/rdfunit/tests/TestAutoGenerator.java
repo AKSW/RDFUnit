@@ -3,15 +3,15 @@ package org.aksw.rdfunit.tests;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.core.Var;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

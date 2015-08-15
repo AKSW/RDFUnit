@@ -1,5 +1,3 @@
 #!/bin/bash
 
-MVN="mvn"
-
-${MVN} clean install release:clean release:prepare release:perform
+mvn clean install release:clean release:prepare release:perform

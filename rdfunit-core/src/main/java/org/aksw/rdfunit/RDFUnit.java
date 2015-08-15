@@ -4,13 +4,13 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.Utils.PatternUtils;
-import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.utils.PatternUtils;
+import org.aksw.rdfunit.utils.TestGeneratorUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

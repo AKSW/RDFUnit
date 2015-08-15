@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.4-SNAPSHOT</version>
+        <version>0.7.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>rdfunit-examples</artifactId>
@@ -63,6 +63,31 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+            <!--plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-jar-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <formats>jar</formats>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.aksw.rdfunit.examples.DBpediaMappingValidator</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>DBpediaMappingValidator</finalName>
+                </configuration>
+            </plugin-->
         </plugins>
     </build>
 

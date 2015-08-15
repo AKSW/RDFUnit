@@ -88,6 +88,10 @@ public class DumpTestSource extends TestSource {
      * @param schemata a {@link java.util.Collection} object.
      */
     public DumpTestSource(String prefix, String uri, RDFReader dumpReader, Collection<SchemaSource> schemata) {
+        this(prefix, uri, dumpReader, schemata, OntModelSpec.OWL_DL_MEM);    //OntModelSpec.RDFS_MEM_RDFS_INF
+    }
+
+    public DumpTestSource(String prefix, String uri, RDFReader dumpReader, Collection<SchemaSource> schemata, OntModelSpec ontoSpec) {
         super(prefix, uri);
 
         cacheTTL = 0; // defaults to 0 unless overridden
@@ -100,7 +104,7 @@ public class DumpTestSource extends TestSource {
             addReferencesSchemata(schemata);
         }
 
-        dumpModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+        dumpModel = ModelFactory.createOntologyModel(ontoSpec, ModelFactory.createDefaultModel());
     }
 
     /** {@inheritDoc} */
@@ -117,7 +121,9 @@ public class DumpTestSource extends TestSource {
         // Many ontologies skip some domain / range statements and this way we add them
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF, ModelFactory.createDefaultModel());
         try {
-            // Read & load the URI
+
+            // load the data only when the model is empty in case it is initialized with the "copy constructor"
+            // This sppeds up the process on very big in-memory datasets
             if (dumpModel.isEmpty()) {
                 // load the data only when the model is empty in case it is initialized with the "copy constructor"
                 dumpReader.read(dumpModel);

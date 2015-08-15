@@ -1,8 +1,5 @@
 package org.aksw.rdfunit.tests.generators;
 
-import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.TestGeneratorUtils;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
@@ -14,6 +11,9 @@ import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
+import org.aksw.rdfunit.utils.CacheUtils;
+import org.aksw.rdfunit.utils.TestGeneratorUtils;
+import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

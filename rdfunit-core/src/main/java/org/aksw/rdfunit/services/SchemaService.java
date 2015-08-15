@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.services;
 
-import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SourceFactory;
+import org.aksw.rdfunit.utils.CacheUtils;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 

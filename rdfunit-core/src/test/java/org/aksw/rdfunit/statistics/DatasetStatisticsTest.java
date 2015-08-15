@@ -2,41 +2,36 @@ package org.aksw.rdfunit.statistics;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RDFReader;
-import org.junit.After;
+import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.junit.Before;
-import org.junit.Test;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class DatasetStatisticsTest {
+public abstract class DatasetStatisticsTest {
 
-    private DatasetStatistics datasetStatistics;
-    private DatasetStatistics datasetStatisticsCounts;
-
-    /* number of defined NS in patterns.ttl*/
-    private static final int nsInPatterns = 3;
-    private static final Integer zero = 0;
-
+    protected QueryExecutionFactory qef;
 
     @Before
     public void setUp() throws Exception {
-        RDFReader patternReader = RDFUnit.getPatternsReader();
-        QueryExecutionFactory qef = new QueryExecutionFactoryModel(patternReader.read());
-        datasetStatistics = new DatasetStatistics(qef, false);
-        datasetStatisticsCounts = new DatasetStatistics(qef, true);
+        RDFReader reader = RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
+        qef = new QueryExecutionFactoryModel(reader.read());
     }
 
-    @After
-    public void tearDown() throws Exception {
+    protected abstract int getExteptedItems();
 
+    protected abstract DatasetStatistics getStatisticsObject();
+
+    protected Map<String, Integer> executeBasicTest() {
+        Map<String, Integer> stats = getStatisticsObject().getStatisticsMap(qef);
+        assertEquals(getExteptedItems(), stats.size());
+
+        return stats;
     }
 
+    /*
     @Test
     public void testGetPropertyStats() throws Exception {
         Map<String, Integer> pStats = datasetStatistics.getPropertyStats();
@@ -92,32 +87,14 @@ public class DatasetStatisticsTest {
 
     @Test
     public void testgetIdentifiedSchemata() throws Exception {
-        /*Collection<SchemaSource> schemata = */ datasetStatistics.getIdentifiedSchemataOntology();
+        //Collection<SchemaSource> schemata =  datasetStatistics.getIdentifiedSchemataOntology();
         //Collection<SchemaSource> schemataCount = datasetStatisticsCounts.getIdentifiedSchemataOntology();
 
         // TODO: init SchemaService to get data
         //assertEquals("NS with counts should be equal without counts", schemata.size(), schemataCount.size());
         //assertEquals("Should be 3", schemata.size(), nsInPatterns);
 
-    }
+    }  */
 
-    @Test
-    public void testGetNamespaceFromURI() throws Exception {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("http://example.com/property", "http://example.com/");
-        examples.put("http://example.com#property", "http://example.com#");
-        examples.put("http://www.w3.org/2004/02/skos/core#broader", "http://www.w3.org/2004/02/skos/core#");
 
-        for (Map.Entry<String, String> entry : examples.entrySet()) {
-            String namespace = entry.getValue();
-            assertEquals("All prefixed should be initialized", namespace, datasetStatistics.getNamespaceFromURI(entry.getKey()));
-            // test both in case there is a conflict
-            assertEquals("All prefixed should be initialized", namespace, datasetStatisticsCounts.getNamespaceFromURI(entry.getKey()));
-        }
-    }
-
-    @Test
-    public void testGetStats() throws Exception {
-
-    }
 }
