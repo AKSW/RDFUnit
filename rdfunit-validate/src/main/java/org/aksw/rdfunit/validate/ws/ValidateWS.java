@@ -3,10 +3,10 @@ package org.aksw.rdfunit.validate.ws;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
+import org.aksw.rdfunit.elements.implementations.TestAutoGeneratorImpl;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
@@ -42,7 +42,7 @@ public class ValidateWS extends RDFUnitWebService {
     // TODO: pass dataFolder in configuration initialization
     private final String dataFolder = "data/";
     private final String testFolder = dataFolder + "tests/";
-    private Collection<TestAutoGenerator> autogenerators;
+    private Collection<TestAutoGeneratorImpl> autogenerators;
 
     /** {@inheritDoc} */
     @Override

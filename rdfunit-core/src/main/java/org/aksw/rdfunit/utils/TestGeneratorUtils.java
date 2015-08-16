@@ -4,10 +4,10 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.elements.implementations.TestAutoGeneratorImpl;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.sources.Source;
-import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +37,8 @@ public final class TestGeneratorUtils {
      * @param queryFactory a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @return a {@link java.util.Collection} object.
      */
-    public static Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
-        Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
+    public static Collection<TestAutoGeneratorImpl> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
+        Collection<TestAutoGeneratorImpl> autoGenerators = new ArrayList<>();
 
         String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT ?generator ?desc ?query ?patternID WHERE { " +
@@ -64,7 +64,7 @@ public final class TestGeneratorUtils {
             // Get annotations from TAG URI
             Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator);
 
-            TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
+            TestAutoGeneratorImpl tag = new TestAutoGeneratorImpl(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid()) {
                 autoGenerators.add(tag);
             } else {
@@ -85,10 +85,10 @@ public final class TestGeneratorUtils {
      * @param source a {@link org.aksw.rdfunit.sources.Source} object.
      * @return a {@link java.util.Collection} object.
      */
-    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, Source source) {
+    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGeneratorImpl> autoGenerators, Source source) {
         Collection<TestCase> tests = new ArrayList<>();
 
-        for (TestAutoGenerator tag : autoGenerators) {
+        for (TestAutoGeneratorImpl tag : autoGenerators) {
             tests.addAll(tag.generate(source));
         }
 

@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.elements.implementations;
 
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -11,6 +11,7 @@ import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.tests.*;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,8 @@ import java.util.Collection;
  * @since 9/20/13 2:48 PM
  * @version $Id: $Id
  */
-public class TestAutoGenerator {
-    private static final Logger log = LoggerFactory.getLogger(TestAutoGenerator.class);
+public class TestAutoGeneratorImpl {
+    private static final Logger log = LoggerFactory.getLogger(TestAutoGeneratorImpl.class);
 
     private final String uri;
     private final String description;
@@ -45,7 +46,7 @@ public class TestAutoGenerator {
      * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
      * @param generatorAnnotations a {@link java.util.Collection} object.
      */
-    public TestAutoGenerator(String uri, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
+    public TestAutoGeneratorImpl(String uri, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
         this.uri = uri;
         this.description = description;
         this.query = query;
