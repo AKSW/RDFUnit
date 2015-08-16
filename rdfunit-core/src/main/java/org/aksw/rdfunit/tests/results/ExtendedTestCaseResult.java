@@ -3,8 +3,8 @@ package org.aksw.rdfunit.tests.results;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
@@ -57,7 +57,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
         for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {
             for (RDFNode rdfNode : vaEntry.getValue()) {
-                resource.addProperty(ResourceFactory.createProperty(vaEntry.getKey().getAnnotationProperty()), rdfNode);
+                resource.addProperty(vaEntry.getKey().getAnnotationProperty(), rdfNode);
             }
         }
 

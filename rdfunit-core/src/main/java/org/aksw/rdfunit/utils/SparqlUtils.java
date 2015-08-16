@@ -6,7 +6,8 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.tests.results.ResultAnnotation;
+import org.aksw.rdfunit.elements.implementations.ResultAnnotationImpl;
+import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +56,7 @@ public final class SparqlUtils {
                 QuerySolution qs = results.next();
                 String annotationProperty = qs.get("annotationProperty").toString();
                 RDFNode annotationValue = qs.get("annotationValue");
-                annotations.add(new ResultAnnotation(annotationProperty, annotationValue));
+                annotations.add(new ResultAnnotationImpl.Builder(annotationProperty).setValueRDFUnit(annotationValue).build());
             }
 
         } catch (Exception e) {

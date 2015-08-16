@@ -1,13 +1,17 @@
 package org.aksw.rdfunit.tests;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.elements.writers.ResultAnnotationWriter;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.tests.results.ResultAnnotation;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.aksw.rdfunit.vocabulary.RLOG;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,11 +82,13 @@ public class TestCaseAnnotation {
         }
 
         for (ResultAnnotation annotation : resultAnnotations) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultAnnotation")), annotation.serializeAsTestCase(model));
+            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write();
+            resource.addProperty(RDFUNITv.resultAnnotation, annRes);
         }
 
         for (ResultAnnotation annotation : variableAnnotations) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultAnnotation")), annotation.serializeAsTestCase(model));
+            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write();
+            resource.addProperty(RDFUNITv.resultAnnotation, annRes);
         }
 
         return resource;
@@ -143,13 +149,14 @@ public class TestCaseAnnotation {
 
         ResultAnnotation pointer = null;
         for (ResultAnnotation annotation : resultAnnotations) {
-            if (annotation.getAnnotationProperty().equals(PrefixNSService.getURIFromAbbrev("rlog:level"))) {
+            Property p = RLOG.level;
+            if (annotation.getAnnotationProperty().toString().equals(RLOG.level.toString())) {
                 pointer = annotation;
             }
         }
         if (pointer != null) {
             if (logLevel == null) {// Get new value only if testCaseLogLevel doesn't exists
-                logLevel = RLOGLevel.resolve(pointer.getAnnotationValue().toString());
+                logLevel = RLOGLevel.resolve(pointer.getAnnotationValue().get().toString());
             }
             resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
         }
@@ -166,8 +173,7 @@ public class TestCaseAnnotation {
 
         ResultAnnotation pointer = null;
         for (ResultAnnotation annotation : resultAnnotations) {
-            String value = annotation.getAnnotationValue().toString().trim();
-            if (value.startsWith("?")) {
+            if (annotation.getAnnotationVarName().isPresent()) {
                 pointer = annotation;
                 variableAnnotations.add(annotation);
             }

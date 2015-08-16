@@ -18,6 +18,8 @@ public final class SHACL {
     //Classes
     public static final Resource Argument = resource("Argument");
     public static final Resource Function = resource("Function");
+    public static final Resource ResultAnnotation = resource("ResultAnnotation");
+
 
     //properties
     public static final Property argument = property("argument");
@@ -32,9 +34,9 @@ public final class SHACL {
 
 
 
-    //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
+    public static final Property annotationProperty = property("annotationProperty");
+    public static final Property annotationVarName = property("annotationVarName");
+    public static final Property annotationValue = property("annotationValue");
     //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");

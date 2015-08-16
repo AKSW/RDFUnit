@@ -2,11 +2,11 @@ package org.aksw.rdfunit.tests.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.aksw.rdfunit.vocabulary.RLOG;
 
 /**
  * The type RLOG test case result.
@@ -41,11 +41,11 @@ public class RLOGTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:RLOGTestCaseResult")))
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rlog:Entry")))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:resource")), model.createResource(getResource()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:message")), getMessage())
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rlog:level")), model.createResource(getLogLevel().getUri()))
+                .addProperty(RDF.type, RDFUNITv.RLOGTestCaseResult)
+                .addProperty(RDF.type, RLOG.Entry)
+                .addProperty(RLOG.resource, model.createResource(getResource()))
+                .addProperty(RLOG.message, getMessage())
+                .addProperty(RLOG.level, model.createResource(getLogLevel().getUri()))
                 ;
     }
 

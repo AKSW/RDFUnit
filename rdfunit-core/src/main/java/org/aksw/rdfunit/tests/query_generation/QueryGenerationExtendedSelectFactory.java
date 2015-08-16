@@ -2,9 +2,9 @@ package org.aksw.rdfunit.tests.query_generation;
 
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
+import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,12 +41,12 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
 
         // Add all defined variables in the query
         for (ResultAnnotation annotation : testCase.getVariableAnnotations()) {
-            String value = annotation.getAnnotationValue().toString().trim();
+            String value = annotation.getAnnotationVarName().get().trim();
 
             // if variable is not redefined don't add it again
             // This is needed if the same variable takes part in different annotations
             if (!existingVariables.contains(value)) {
-                sb.append(" ");
+                sb.append(" ?");
                 sb.append(value);
                 sb.append(" ");
 

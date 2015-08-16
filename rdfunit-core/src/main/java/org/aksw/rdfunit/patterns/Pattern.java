@@ -1,7 +1,8 @@
 package org.aksw.rdfunit.patterns;
 
+import org.aksw.rdfunit.elements.implementations.ResultAnnotationImpl;
+import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.tests.Binding;
-import org.aksw.rdfunit.tests.results.ResultAnnotation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -93,11 +94,11 @@ public final class Pattern {
 
         for (ResultAnnotation externalAnnotation : annotations) {
             ResultAnnotation sanitizedAnnotation = externalAnnotation;
-            if (externalAnnotation.getAnnotationValue().isLiteral()) {
-                String value = externalAnnotation.getAnnotationValue().toString();
+            if (externalAnnotation.getAnnotationValue().isPresent() && externalAnnotation.getAnnotationValue().get().isLiteral()) {
+                String value = externalAnnotation.getAnnotationValue().get().toString();
                 for (Binding binding : bindings) {
                     if (value.equals("%%" + binding.getParameterId() + "%%")) {
-                        sanitizedAnnotation = new ResultAnnotation(externalAnnotation.getAnnotationProperty(), binding.getValue());
+                        sanitizedAnnotation = new ResultAnnotationImpl.Builder(externalAnnotation.getAnnotationProperty()).setValueRDFUnit(binding.getValue()).build();
                     }
                 }
             }

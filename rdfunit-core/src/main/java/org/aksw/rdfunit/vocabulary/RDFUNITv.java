@@ -17,11 +17,18 @@ public final class RDFUNITv {
 
     //Classes
     public static final Resource Binding = resource("Binding");
+    public static final Resource ResultAnnotation = resource("ResultAnnotation");
+    public static final Resource RLOGTestCaseResult = resource("RLOGTestCaseResult");
+
 
     //properties
-    public static final Resource binding = property("binding");
-    public static final Resource bindingValue = property("bindingValue");
-    public static final Resource parameter = property("parameter");
+    public static final Property binding = property("binding");
+    public static final Property bindingValue = property("bindingValue");
+    public static final Property parameter = property("parameter");
+    public static final Property annotationProperty = property("annotationProperty");
+    public static final Property annotationValue = property("annotationValue");
+    public static final Property resultAnnotation = property("resultAnnotation");
+
 
 
 
