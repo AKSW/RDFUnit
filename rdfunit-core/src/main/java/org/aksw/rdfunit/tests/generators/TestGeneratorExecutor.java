@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.tests.generators;
 
-import org.aksw.rdfunit.elements.implementations.TestAutoGeneratorImpl;
+import org.aksw.rdfunit.elements.interfaces.TestAutoGenerator;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
@@ -82,7 +82,7 @@ public class TestGeneratorExecutor {
      * @param autoGenerators a {@link java.util.Collection} object.
      * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
      */
-    public TestSuite generateTestSuite(String testFolder, Source dataset, Collection<TestAutoGeneratorImpl> autoGenerators) {
+    public TestSuite generateTestSuite(String testFolder, Source dataset, Collection<TestAutoGenerator> autoGenerators) {
 
         Collection<SchemaSource> sources = dataset.getReferencesSchemata();
 
@@ -124,7 +124,7 @@ public class TestGeneratorExecutor {
         return new TestSuite(allTests);
     }
 
-    private Collection<TestCase> generateAutoTestsForSchemaSource(String testFolder, SchemaSource s, Collection<TestAutoGeneratorImpl> autoGenerators) {
+    private Collection<TestCase> generateAutoTestsForSchemaSource(String testFolder, SchemaSource s, Collection<TestAutoGenerator> autoGenerators) {
         Collection<TestCase> tests = new ArrayList<>();
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
