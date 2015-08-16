@@ -15,7 +15,7 @@ import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
  * @since 8/15/15 4:37 PM
  */
 
-public class ResultAnnotationImpl implements ResultAnnotation {
+public final class ResultAnnotationImpl implements ResultAnnotation {
 
     private final Resource element;
     private final Property property;

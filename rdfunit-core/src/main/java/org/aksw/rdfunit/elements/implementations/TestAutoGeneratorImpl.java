@@ -31,7 +31,7 @@ import java.util.Collection;
  * @since 9/20/13 2:48 PM
  * @version $Id: $Id
  */
-public class TestAutoGeneratorImpl implements TestAutoGenerator{
+public final class  TestAutoGeneratorImpl implements TestAutoGenerator{
     private static final Logger log = LoggerFactory.getLogger(TestAutoGeneratorImpl.class);
 
     private final Resource element;

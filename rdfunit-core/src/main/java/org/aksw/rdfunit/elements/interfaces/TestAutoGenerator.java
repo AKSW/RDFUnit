@@ -56,6 +56,6 @@ public interface TestAutoGenerator extends Element {
      * TODO: move this function to a standalone class
      * @return a boolean.
      */
-    public boolean isValid();
+    boolean isValid();
 
 }
