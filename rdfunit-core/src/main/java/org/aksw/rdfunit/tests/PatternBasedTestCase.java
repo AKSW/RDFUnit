@@ -78,8 +78,13 @@ public class PatternBasedTestCase extends TestCase {
     /** {@inheritDoc} */
     @Override
     public String getSparqlPrevalence() {
-        if (sparqlPrevalenceCache == null) {
-            sparqlPrevalenceCache = instantiateBindings(bindings, pattern.getSparqlPatternPrevalence()).trim();
+        if (sparqlPrevalenceCache == null ) {
+            if (pattern.getSparqlPatternPrevalence().isPresent()) {
+                sparqlPrevalenceCache = instantiateBindings(bindings, pattern.getSparqlPatternPrevalence().get()).trim();
+            }
+            else {
+                sparqlPrevalenceCache = "";
+            }
         }
         return sparqlPrevalenceCache;
     }

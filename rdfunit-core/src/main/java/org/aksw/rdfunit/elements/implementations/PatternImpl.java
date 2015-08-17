@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.elements.implementations;
 
+import com.google.common.base.Optional;
+import com.hp.hpl.jena.rdf.model.Resource;
+import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.tests.Binding;
@@ -8,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Defines an RDFUnitL Pattern
  *
@@ -15,8 +20,8 @@ import java.util.Collections;
  * @since 9/16/13 1:14 PM
  * @version $Id: $Id
  */
-public final class PatternImpl {
-    private final String iri;
+public final class PatternImpl implements Pattern {
+    private final Resource element;
     private final String id;
     private final String description;
     private final String sparqlWherePattern;
@@ -24,44 +29,25 @@ public final class PatternImpl {
     private final Collection<PatternParameter> parameters;
     private final Collection<ResultAnnotation> annotations;
 
-    /**
-     * <p>Constructor for Pattern.</p>
-     *
-     * @param id a {@link String} object.
-     * @param description a {@link String} object.
-     * @param sparqlWherePattern a {@link String} object.
-     * @param sparqlPatternPrevalence a {@link String} object.
-     * @param parameters a {@link Collection} object.
-     * @param annotations a {@link Collection} object.
-     */
-    public PatternImpl(String iri, String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, Collection<PatternParameter> parameters, Collection<ResultAnnotation> annotations) {
-        assert iri != null;
-        this.iri = iri;
+    private PatternImpl(Builder builder) {
 
-        assert id != null;
-        this.id = id;
-
-        assert description != null;
-        this.description = description;
-
-        assert sparqlWherePattern != null;
-        this.sparqlWherePattern = sparqlWherePattern;
-
-        assert sparqlPatternPrevalence != null;
-        this.sparqlPatternPrevalence = sparqlPatternPrevalence;
-
-        assert parameters != null;
-        this.parameters = parameters;
-
-        assert annotations != null;
-        this.annotations = annotations;
+        this.element = checkNotNull(builder.element);
+        String name = element.getURI();
+        this.id = checkNotNull(builder.id, "ID is required in Pattern %s", name);
+        this.description = checkNotNull(builder.description, "Description is required in Pattern %s", name);
+        this.sparqlWherePattern = checkNotNull(builder.sparqlWherePattern, "SPARQL Where pattern is required in Pattern %s", name);
+        this.sparqlPatternPrevalence = builder.sparqlPatternPrevalence;
+        this.parameters = checkNotNull(builder.parameters);
+        this.annotations = checkNotNull(builder.annotations);
     }
 
-    /**
-     * <p>isValid.</p>
-     *
-     * @return a boolean.
-     */
+
+    @Override
+    public Optional<Resource> getResource() {
+        return null;
+    }
+
+    @Override
     public boolean isValid() {
         if (getParameters() == null || getParameters().isEmpty()) {
             return false;
@@ -85,13 +71,7 @@ public final class PatternImpl {
     } */
 
 
-    /**
-     * Goes through all external annotations and if it finds a literal value with %%XX%%
-     * it replaces it with the binding value
-     *
-     * @param bindings a {@link Collection} object.
-     * @return a {@link Collection} object.
-     */
+    @Override
     public Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
         Collection<ResultAnnotation> finalAnnotations = new ArrayList<>();
 
@@ -110,101 +90,93 @@ public final class PatternImpl {
         return finalAnnotations;
     }
 
-    /**
-     * <p>Getter for the field <code>iri</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
+    @Override
     public String getIRI() {
-        return iri;
+        return element.getURI();
     }
 
-    /**
-     * <p>Getter for the field <code>id</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
+    @Override
     public String getId() {
         return id;
     }
 
-    /**
-     * <p>Getter for the field <code>description</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
+    @Override
     public String getDescription() {
         return description;
     }
 
-    /**
-     * <p>Getter for the field <code>sparqlWherePattern</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
+    @Override
     public String getSparqlWherePattern() {
         return sparqlWherePattern;
     }
 
-    /**
-     * <p>Getter for the field <code>sparqlPatternPrevalence</code>.</p>
-     *
-     * @return a {@link String} object.
-     */
-    public String getSparqlPatternPrevalence() {
-        return sparqlPatternPrevalence;
+    @Override
+    public Optional<String> getSparqlPatternPrevalence() {
+        return Optional.fromNullable(sparqlPatternPrevalence);
     }
 
-    /**
-     * Returns the Pattern Parameters as an immutable Collection
-     *
-     * @return the pattern parameters as an Collections.unmodifiableCollection()
-     */
+    @Override
     public Collection<PatternParameter> getParameters() {
         return Collections.unmodifiableCollection(parameters);
     }
 
-    /**
-     * Returns a parameter object from a parameter URI
-     *
-     * @param parameterURI the parameter uRI
-     * @return the parameter object or null if it does not exists
-     */
-    public PatternParameter getParameter(String parameterURI) {
+    @Override
+    public Optional<PatternParameter> getParameter(String parameterURI) {
         for (PatternParameter parameter : parameters) {
             if (parameter.getUri().equals(parameterURI)) {
-                return parameter;
+                return Optional.of(parameter);
             }
         }
-        return null;
+        return Optional.absent();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PatternImpl)) return false;
+    public static class Builder{
+        private Resource element;
+        private String id;
+        private String description;
+        private String sparqlWherePattern;
+        private String sparqlPatternPrevalence;
+        private Collection<PatternParameter> parameters;
+        private Collection<ResultAnnotation> annotations;
 
-        PatternImpl pattern = (PatternImpl) o;
+        public Builder setElement(Resource element) {
+            this.element = element;
+            return this;
+        }
 
-        if (!annotations.equals(pattern.annotations)) return false;
-        if (!description.equals(pattern.description)) return false;
-        if (!id.equals(pattern.id)) return false;
-        if (!parameters.equals(pattern.parameters)) return false;
-        if (!sparqlPatternPrevalence.equals(pattern.sparqlPatternPrevalence)) return false;
-        return sparqlWherePattern.equals(pattern.sparqlWherePattern);
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
 
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setSparqlWherePattern(String sparqlWherePattern) {
+            this.sparqlWherePattern = sparqlWherePattern;
+            return this;
+        }
+
+        public Builder setSparqlPatternPrevalence(String sparqlPatternPrevalence) {
+            if (sparqlPatternPrevalence != null && !sparqlPatternPrevalence.trim().isEmpty()) {
+                this.sparqlPatternPrevalence = sparqlPatternPrevalence;
+            }
+            return this;
+        }
+
+        public Builder setParameters(Collection<PatternParameter> parameters) {
+            this.parameters = parameters;
+            return this;
+        }
+
+        public Builder setAnnotations(Collection<ResultAnnotation> annotations) {
+            this.annotations = annotations;
+            return this;
+        }
+
+        public Pattern build() {return new PatternImpl(this);}
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + description.hashCode();
-        result = 31 * result + sparqlWherePattern.hashCode();
-        result = 31 * result + sparqlPatternPrevalence.hashCode();
-        result = 31 * result + parameters.hashCode();
-        result = 31 * result + annotations.hashCode();
-        return result;
-    }
 }

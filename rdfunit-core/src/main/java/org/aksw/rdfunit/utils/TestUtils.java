@@ -357,7 +357,7 @@ public final class TestUtils {
                 QuerySolution qs = results.next();
 
                 String parameterURI = qs.get("parameter").toString();
-                PatternParameter parameter = pattern.getParameter(parameterURI);
+                PatternParameter parameter = pattern.getParameter(parameterURI).orNull();
                 if (parameter == null) {
                     log.error("Test instantiation error: Pattern " + pattern.getId() + " does not contain parameter " + parameterURI + " in TestCase: " + testURI);
                     continue;

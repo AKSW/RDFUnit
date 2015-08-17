@@ -3,11 +3,12 @@ package org.aksw.rdfunit.utils;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.elements.implementations.PatternImpl;
 import org.aksw.rdfunit.elements.implementations.PatternParameterImpl;
 import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.elements.interfaces.PatternParameter;
-import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -92,18 +93,21 @@ public final class PatternUtils {
             if (results.hasNext()) {
                 QuerySolution qs = results.next();
 
-                String id = qs.get("id").toString();
-                String desc = qs.get("desc").toString();
-                String sparql = qs.get("sparql").toString();
-                String sparqlPrev = qs.get("sparqlPrev").toString();
+                PatternImpl.Builder patternBuilder = new PatternImpl.Builder();
+
+                patternBuilder.setElement(ResourceFactory.createResource(patternURI));
+                patternBuilder.setId(qs.get("id").toString());
+                patternBuilder.setDescription(qs.get("desc").toString());
+                patternBuilder.setSparqlWherePattern(qs.get("sparql").toString());
+                patternBuilder.setSparqlPatternPrevalence(qs.get("sparqlPrev").toString());
 
                 // Get pattern parameters
-                Collection<PatternParameter> parameters = getPatternParameters(queryFactory, patternURI);
+                patternBuilder.setParameters(getPatternParameters(queryFactory, patternURI));
 
                 // Get annotations from TAG URI
-                Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
+                patternBuilder.setAnnotations(SparqlUtils.getResultAnnotations(queryFactory, patternURI));
 
-                pattern = new Pattern(patternURI, id, desc, sparql, sparqlPrev, parameters, annotations);
+                pattern = patternBuilder.build();
 
                 // if not valid OR if multiple results returns something is wrong
                 if (!pattern.isValid() || results.hasNext()) {
