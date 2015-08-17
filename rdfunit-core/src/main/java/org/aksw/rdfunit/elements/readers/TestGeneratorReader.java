@@ -3,7 +3,6 @@ package org.aksw.rdfunit.elements.readers;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DCTerms;
-import org.aksw.rdfunit.elements.implementations.FunctionImpl;
 import org.aksw.rdfunit.elements.implementations.TestGeneratorImpl;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.elements.interfaces.TestGenerator;
@@ -31,9 +30,7 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
 
     @Override
     public TestGenerator read(Resource resource) {
-        checkNotNull(resource);
-
-        FunctionImpl.Builder functonBuilder = new FunctionImpl.Builder();
+        checkNotNull(resource, "Cannot read a TestGenerator from a null resource");
 
         String description = null;
         String query = null;

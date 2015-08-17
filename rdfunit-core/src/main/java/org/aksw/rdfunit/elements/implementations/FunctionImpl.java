@@ -16,6 +16,7 @@ import java.util.List;
  * @since 6/17/15 3:48 PM
  */
 public final class FunctionImpl implements Function {
+    private final Resource element;
     private final String comment;
     private final boolean isCachable;
     private final Function superFunction;
@@ -24,12 +25,13 @@ public final class FunctionImpl implements Function {
     private final Resource returnType;
 
     private FunctionImpl(FunctionImpl.Builder builder) {
-        comment = builder.comment;
-        isCachable = builder.isCachable;
-        superFunction = builder.superFunction;
-        arguments = builder.arguments;
-        sparqlString = builder.sparqlString;
-        returnType = builder.returnType;
+        this.element = builder.element;
+        this.comment = builder.comment;
+        this.isCachable = builder.isCachable;
+        this.superFunction = builder.superFunction;
+        this.arguments = builder.arguments;
+        this.sparqlString = builder.sparqlString;
+        this.returnType = builder.returnType;
     }
 
     @Override
@@ -59,16 +61,25 @@ public final class FunctionImpl implements Function {
 
     @Override
     public Optional<Resource> getResource() {
-        return null;
+        return Optional.fromNullable(element);
     }
 
     public static class Builder {
+        private final Resource element;
         private String comment = "";
         private boolean isCachable = false;
         private Function superFunction = null;
         private List<Argument> arguments = new ArrayList<>();
         private String sparqlString = "";
         private Resource returnType = null;
+
+        public Builder(Resource element) {
+            this.element = element;
+        }
+
+        public Builder() {
+            this(null);
+        }
 
         public Builder setComment(String val) {
             comment = val;
