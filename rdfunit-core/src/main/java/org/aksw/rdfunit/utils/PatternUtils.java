@@ -4,10 +4,10 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.elements.implementations.PatternParameterImpl;
 import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
-import org.aksw.rdfunit.enums.PatternParameterConstraints;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -148,19 +148,21 @@ public final class PatternUtils {
 
                 QuerySolution parSol = rs.next();
 
-                String parameterURI = parSol.get("parameterURI").toString();
-                String parameterID = parSol.get("id").toString();
-                String constrainStr = "";
+                PatternParameterImpl.Builder patternParameterBuilder = new PatternParameterImpl.Builder();
+
+                patternParameterBuilder.setElement(parSol.get("parameterURI").asResource());
+                patternParameterBuilder.setID(parSol.get("id").toString());
+
                 if (parSol.contains("constrain")) {
-                    constrainStr = parSol.get("constrain").toString();
-                }
-                String constrainPat = "";
-                if (parSol.contains("constraintPattern")) {
-                    constrainPat = parSol.get("constraintPattern").toString();
+                    patternParameterBuilder.setPatternParameterConstraints(parSol.get("constrain").toString());
                 }
 
-                PatternParameterConstraints constrain = PatternParameterConstraints.resolve(constrainStr);
-                parameters.add(new PatternParameter(parameterURI, parameterID, constrain, constrainPat));
+                if (parSol.contains("constraintPattern")) {
+                    patternParameterBuilder.setContraintPattern(parSol.get("constraintPattern").toString());
+                }
+
+
+                parameters.add(patternParameterBuilder.build());
             }
         } finally {
             if (qe != null) {

@@ -31,6 +31,7 @@ public class TestGeneratorReaderTest {
 
     @Before
     public void setUp() throws Exception {
+        // Needed to resolve the patterns
         RDFUnit rdfUnit = new RDFUnit();
         rdfUnit.init();
     }

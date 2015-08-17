@@ -94,7 +94,7 @@ public class Binding {
     }
 
     private boolean validateType() {
-        PatternParameterConstraints pc = parameter.getConstrain();
+        PatternParameterConstraints pc = parameter.getConstraint();
         if (pc.equals(PatternParameterConstraints.None)) {
             return true;
         }
@@ -112,7 +112,7 @@ public class Binding {
     }
 
     private boolean validatePattern() {
-        if (parameter.getConstraintPattern().trim().isEmpty()) {
+        if (!parameter.getConstraintPattern().isPresent()) {
             return true;
         }
         // TODO Check the pattern
