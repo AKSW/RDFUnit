@@ -13,7 +13,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,16 +23,11 @@ import static org.junit.Assert.assertTrue;
  * @since 8/17/15 4:05 PM
  */
 public class TestGeneratorReaderTest {
-    private Model model;
+
     private static final String baseResDir = "/org/aksw/rdfunit/";
     private static final String owlGen = baseResDir + "autoGeneratorsOWL.ttl";
-    private static final int owlGeneratorsNum = 34;
-
     private static final String dspGen = baseResDir + "autoGeneratorsDSP.ttl";
-    private static final int dspGeneratorsNum = 12;
-
     private static final String rsGen = baseResDir + "autoGeneratorsRS.ttl";
-    private static final int rsGeneratorsNum = 12;
 
     @Before
     public void setUp() throws Exception {
@@ -43,20 +37,20 @@ public class TestGeneratorReaderTest {
 
     @Test
     public void testOWLGenReader() throws Exception {
-        testCustom(RDFReaderFactory.createResourceReader(owlGen).read(), owlGeneratorsNum);
+        testCustom(RDFReaderFactory.createResourceReader(owlGen).read());
     }
 
     @Test
     public void testDSPGenReader() throws Exception {
-        testCustom(RDFReaderFactory.createResourceReader(dspGen).read(), dspGeneratorsNum);
+        testCustom(RDFReaderFactory.createResourceReader(dspGen).read());
     }
 
     @Test
     public void testRSGenReader() throws Exception {
-        testCustom(RDFReaderFactory.createResourceReader(dspGen).read(), rsGeneratorsNum);
+        testCustom(RDFReaderFactory.createResourceReader(dspGen).read());
     }
 
-    private void testCustom(Model model, int expectedSize) {
+    private void testCustom(Model model) {
         Collection<TestGenerator> autoGenerators = new ArrayList<>();
 
         for (Resource r: model.listResourcesWithProperty(RDF.type, RDFUNITv.TestGenerator).toList() ) {
@@ -64,8 +58,5 @@ public class TestGeneratorReaderTest {
             assertTrue("TAG" + r.getURI() + " is not valid", tag.isValid());
             autoGenerators.add(tag);
         }
-
-        assertEquals(expectedSize, autoGenerators.size());
     }
-
 }
