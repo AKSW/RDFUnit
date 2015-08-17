@@ -8,6 +8,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Description
  *
@@ -76,7 +78,7 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
 
         public Builder(Resource element, Property property) {
 
-            assert property != null;
+            checkNotNull(property);
 
             this.element = element;
             this.property = property;

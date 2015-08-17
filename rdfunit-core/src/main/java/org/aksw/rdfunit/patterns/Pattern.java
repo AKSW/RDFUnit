@@ -16,6 +16,7 @@ import java.util.Collections;
  * @version $Id: $Id
  */
 public final class Pattern {
+    private final String iri;
     private final String id;
     private final String description;
     private final String sparqlWherePattern;
@@ -33,7 +34,9 @@ public final class Pattern {
      * @param parameters a {@link java.util.Collection} object.
      * @param annotations a {@link java.util.Collection} object.
      */
-    public Pattern(String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, Collection<PatternParameter> parameters, Collection<ResultAnnotation> annotations) {
+    public Pattern(String iri, String id, String description, String sparqlWherePattern, String sparqlPatternPrevalence, Collection<PatternParameter> parameters, Collection<ResultAnnotation> annotations) {
+        assert iri != null;
+        this.iri = iri;
 
         assert id != null;
         this.id = id;
@@ -105,6 +108,15 @@ public final class Pattern {
             finalAnnotations.add(sanitizedAnnotation);
         }
         return finalAnnotations;
+    }
+
+    /**
+     * <p>Getter for the field <code>iri</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
+    public String getIRI() {
+        return iri;
     }
 
     /**

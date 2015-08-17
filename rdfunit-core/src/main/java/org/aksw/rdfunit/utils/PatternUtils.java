@@ -103,7 +103,7 @@ public final class PatternUtils {
                 // Get annotations from TAG URI
                 Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, patternURI);
 
-                pattern = new Pattern(id, desc, sparql, sparqlPrev, parameters, annotations);
+                pattern = new Pattern(patternURI, id, desc, sparql, sparqlPrev, parameters, annotations);
 
                 // if not valid OR if multiple results returns something is wrong
                 if (!pattern.isValid() || results.hasNext()) {

@@ -1,16 +1,13 @@
 package org.aksw.rdfunit.utils;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.elements.implementations.TestAutoGeneratorImpl;
-import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
-import org.aksw.rdfunit.elements.interfaces.TestAutoGenerator;
-import org.aksw.rdfunit.services.PatternService;
+import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.elements.interfaces.TestGenerator;
+import org.aksw.rdfunit.elements.readers.TestGeneratorReader;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,34 +36,11 @@ public final class TestGeneratorUtils {
      * @param queryFactory a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @return a {@link java.util.Collection} object.
      */
-    public static Collection<TestAutoGenerator> instantiateTestGeneratorsFromModel(QueryExecutionFactory queryFactory) {
-        Collection<TestAutoGenerator> autoGenerators = new ArrayList<>();
+    public static Collection<TestGenerator> instantiateTestGeneratorsFromModel(Model model) {
+        Collection<TestGenerator> autoGenerators = new ArrayList<>();
 
-        String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT ?generator ?desc ?query ?patternID WHERE { " +
-                " ?generator " +
-                "    a rut:TestGenerator ; " +
-                "    dcterms:description ?desc ; " +
-                "    rut:sparqlGenerator ?query ; " +
-                "    rut:basedOnPattern ?pattern . " +
-                " ?pattern dcterms:identifier ?patternID ." +
-                "} ";
-
-        QueryExecution qe = queryFactory.createQueryExecution(sparqlSelect);
-        ResultSet results = qe.execSelect();
-
-        while (results.hasNext()) {
-            QuerySolution qs = results.next();
-
-            Resource generator = qs.get("generator").asResource();
-            String description = qs.get("desc").toString();
-            String query = qs.get("query").toString();
-            String patternID = qs.get("patternID").toString();
-
-            // Get annotations from TAG URI
-            Collection<ResultAnnotation> annotations = SparqlUtils.getResultAnnotations(queryFactory, generator.getURI());
-
-            TestAutoGenerator tag =  TestAutoGeneratorImpl.createTAG(generator, description, query, PatternService.getPattern(patternID), annotations);
+        for (Resource r: model.listResourcesWithProperty(RDF.type, RDFUNITv.TestGenerator).toList() ) {
+            TestGenerator tag = TestGeneratorReader.createTestGeneratorReader().read(r);
             if (tag.isValid()) {
                 autoGenerators.add(tag);
             } else {
@@ -74,10 +48,8 @@ public final class TestGeneratorUtils {
                 System.exit(-1);
             }
         }
-        qe.close();
 
         return autoGenerators;
-
     }
 
     /**
@@ -87,10 +59,10 @@ public final class TestGeneratorUtils {
      * @param source a {@link org.aksw.rdfunit.sources.Source} object.
      * @return a {@link java.util.Collection} object.
      */
-    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, Source source) {
+    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestGenerator> autoGenerators, Source source) {
         Collection<TestCase> tests = new ArrayList<>();
 
-        for (TestAutoGenerator tag : autoGenerators) {
+        for (TestGenerator tag : autoGenerators) {
             tests.addAll(tag.generate(source));
         }
 

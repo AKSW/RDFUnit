@@ -12,7 +12,7 @@ import java.util.Collection;
  * @author Dimitris Kontokostas
  * @since 6/17/15 3:10 PM
  */
-public interface TestAutoGenerator extends Element {
+public interface TestGenerator extends Element {
 
     /**
      * <p>Getter for the field <code>uri</code>.</p>

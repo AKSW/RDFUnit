@@ -19,6 +19,7 @@ public final class RDFUNITv {
     public static final Resource Binding = resource("Binding");
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource RLOGTestCaseResult = resource("RLOGTestCaseResult");
+    public static final Resource TestGenerator = resource("TestGenerator");
 
 
     //properties
@@ -28,7 +29,8 @@ public final class RDFUNITv {
     public static final Property annotationProperty = property("annotationProperty");
     public static final Property annotationValue = property("annotationValue");
     public static final Property resultAnnotation = property("resultAnnotation");
-
+    public static final Property sparqlGenerator = property("sparqlGenerator");
+    public static final Property basedOnPattern = property("basedOnPattern");
 
 
 

@@ -2,9 +2,8 @@ package org.aksw.rdfunit;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.elements.interfaces.TestAutoGenerator;
+import org.aksw.rdfunit.elements.interfaces.TestGenerator;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
@@ -28,9 +27,9 @@ public class RDFUnit {
 
     private final Collection<String> baseDirectories;
 
-    private volatile Collection<TestAutoGenerator> autoGenerators;
+    private volatile Collection<TestGenerator> autoGenerators;
     private volatile Collection<Pattern> patterns;
-    private volatile QueryExecutionFactory patternQueryFactory;
+    private volatile QueryExecutionFactoryModel patternQueryFactory;
 
     /**
      * <p>Constructor for RDFUnit.</p>
@@ -78,7 +77,7 @@ public class RDFUnit {
 
         // Update pattern service
         for (Pattern pattern : getPatterns()) {
-            PatternService.addPattern(pattern.getId(), pattern);
+            PatternService.addPattern(pattern.getId(),pattern.getIRI(), pattern);
         }
     }
 
@@ -96,11 +95,11 @@ public class RDFUnit {
      *
      * @return a {@link java.util.Collection} object.
      */
-    public synchronized Collection<TestAutoGenerator> getAutoGenerators() {
+    public synchronized Collection<TestGenerator> getAutoGenerators() {
         if (autoGenerators == null) {
             autoGenerators =
                     Collections.unmodifiableCollection(
-                            TestGeneratorUtils.instantiateTestGeneratorsFromModel(patternQueryFactory));
+                            TestGeneratorUtils.instantiateTestGeneratorsFromModel(patternQueryFactory.getModel()));
         }
         return autoGenerators;
     }
