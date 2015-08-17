@@ -4,9 +4,9 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import org.aksw.rdfunit.elements.implementations.TestGeneratorImpl;
+import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.elements.interfaces.TestGenerator;
-import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 

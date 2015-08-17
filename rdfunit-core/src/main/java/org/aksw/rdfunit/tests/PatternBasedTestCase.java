@@ -5,8 +5,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
+import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
 
@@ -32,7 +32,7 @@ public class PatternBasedTestCase extends TestCase {
      *
      * @param testURI a {@link java.lang.String} object.
      * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
-     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param pattern a {@link Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */

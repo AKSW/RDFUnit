@@ -9,6 +9,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.elements.interfaces.Pattern;
+import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
@@ -17,8 +19,6 @@ import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
-import org.aksw.rdfunit.patterns.Pattern;
-import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.tests.*;
 import org.slf4j.Logger;
@@ -335,7 +335,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param pattern a {@link Pattern} object.
      * @return a {@link java.util.Collection} object.
      */
     public static Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
@@ -383,7 +383,7 @@ public final class TestUtils {
      * <p>generateTestURI.</p>
      *
      * @param sourcePrefix a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param pattern a {@link Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      * @param generatorURI a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.

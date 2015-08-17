@@ -5,13 +5,13 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.core.Var;
+import org.aksw.rdfunit.elements.interfaces.Pattern;
+import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.elements.interfaces.TestGenerator;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.patterns.Pattern;
-import org.aksw.rdfunit.patterns.PatternParameter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.*;
@@ -50,7 +50,7 @@ public final class TestGeneratorImpl implements TestGenerator {
      * @param element
      * @param description a {@link java.lang.String} object.
      * @param query a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @param pattern a {@link Pattern} object.
      * @param generatorAnnotations a {@link java.util.Collection} object.
      */
     private TestGeneratorImpl(Resource element, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {

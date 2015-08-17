@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.elements.interfaces;
 
-import org.aksw.rdfunit.patterns.Pattern;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.tests.TestCase;
 
@@ -38,7 +37,7 @@ public interface TestGenerator extends Element {
     /**
      * <p>Getter for the field <code>pattern</code>.</p>
      *
-     * @return a {@link org.aksw.rdfunit.patterns.Pattern} object.
+     * @return a {@link Pattern} object.
      */
     Pattern getTAGPattern();
 

@@ -1,7 +1,6 @@
-package org.aksw.rdfunit.patterns;
+package org.aksw.rdfunit.elements.interfaces;
 
 import org.aksw.rdfunit.elements.implementations.ResultAnnotationImpl;
-import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.tests.Binding;
 
 import java.util.ArrayList;

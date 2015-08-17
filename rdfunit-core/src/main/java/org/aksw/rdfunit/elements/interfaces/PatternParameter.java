@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.patterns;
+package org.aksw.rdfunit.elements.interfaces;
 
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 
