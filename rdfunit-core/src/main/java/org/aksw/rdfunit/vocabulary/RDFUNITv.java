@@ -17,6 +17,7 @@ public final class RDFUNITv {
 
     //Classes
     public static final Resource Binding = resource("Binding");
+    public static final Resource Pattern = resource("Pattern");
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource RLOGTestCaseResult = resource("RLOGTestCaseResult");
     public static final Resource TestGenerator = resource("TestGenerator");
@@ -35,6 +36,8 @@ public final class RDFUNITv {
     public static final Property basedOnPattern = property("basedOnPattern");
     public static final Property parameterConstraint = property("parameterConstraint");
     public static final Property constraintPattern = property("constraintPattern");
+    public static final Property sparqlWherePattern = property("sparqlWherePattern");
+    public static final Property sparqlPrevalencePattern = property("sparqlPrevalencePattern");
 
 
 

@@ -85,7 +85,7 @@ public class RDFUnit {
         if (patterns == null) {
             patterns =
                     Collections.unmodifiableCollection(
-                            PatternUtils.instantiatePatternsFromModel(patternQueryFactory));
+                            PatternUtils.instantiatePatternsFromModel(patternQueryFactory.getModel()));
         }
         return patterns;
     }
