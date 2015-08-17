@@ -17,7 +17,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Description
+ * TAG Reader test
+ * tries to read without error all defined generators
  *
  * @author Dimitris Kontokostas
  * @since 8/17/15 4:05 PM

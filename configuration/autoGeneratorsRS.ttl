@@ -99,7 +99,7 @@ rutg:OSLCVALUESHAPE a rut:TestGenerator ;
 
 # oslc:Exactly-one / oslc:One-or-many (must exist at least once)
 
-rutg:PSCARDEX a rut:TestGenerator ;
+rutg:OSLCCARDEX a rut:TestGenerator ;
     dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
 							 ?s a oslc:ResourceShape ;
@@ -117,7 +117,7 @@ rutg:PSCARDEX a rut:TestGenerator ;
     .
 
 #oslc:Exactly-one (ensure only one)
-rutg:RSCARD a rut:TestGenerator ;
+rutg:OSLCCARD a rut:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
 							 ?s a oslc:ResourceShape ;
@@ -134,7 +134,7 @@ rutg:RSCARD a rut:TestGenerator ;
     .
 
 # oslc:Zero-or-one
-rutg:RSGARD-MAX a rut:TestGenerator ;
+rutg:OSLCGARD-MAX a rut:TestGenerator ;
     dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
 							 ?s a oslc:ResourceShape ;
@@ -157,7 +157,7 @@ rutg:RSGARD-MAX a rut:TestGenerator ;
 
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
-rutg:RSRANGEL a rut:TestGenerator ;
+rutg:OSLCRANGEL a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
@@ -175,7 +175,7 @@ rutg:RSRANGEL a rut:TestGenerator ;
 	.
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
-rutg:RSRANGEC a rut:TestGenerator ;
+rutg:OSLCRANGEC a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {   # isLiteral instead of isIRI because of blank nodes
                              ?s a oslc:ResourceShape ;
@@ -193,7 +193,7 @@ rutg:RSRANGEC a rut:TestGenerator ;
 	.
 
 # Datatype range (TODO check domain as well / needs new pattern)
-rutg:RSRANGED a rut:TestGenerator ;
+rutg:OSLCRANGED a rut:TestGenerator ;
     dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
     rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
                              ?s a oslc:ResourceShape ;
@@ -211,7 +211,7 @@ rutg:RSRANGED a rut:TestGenerator ;
     .
 
 # Check for blank nodes (oslc:valueType oslc:LocalResource)
-rutg:RSRANGE-BLANK a rut:TestGenerator ;
+rutg:OSLCRANGE-BLANK a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('!' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
@@ -228,7 +228,7 @@ rutg:RSRANGE-BLANK a rut:TestGenerator ;
 	.
 
 # Check for non-blank nodes (oslc:valueType oslc:Resource => must not be a blank node)
-rutg:RSRANGE-RES a rut:TestGenerator ;
+rutg:OSLCRANGE-RES a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
@@ -250,7 +250,7 @@ rutg:RSRANGE-RES a rut:TestGenerator ;
 ############################
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
-rutg:RSALLOWEDVAL a rut:TestGenerator ;
+rutg:OSLCALLOWEDVAL a rut:TestGenerator ;
     dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
 	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {

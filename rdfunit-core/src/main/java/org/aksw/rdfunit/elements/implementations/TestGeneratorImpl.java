@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * <p>TestGenerator class.</p>
@@ -55,9 +56,12 @@ public final class TestGeneratorImpl implements TestGenerator {
     private TestGeneratorImpl(Resource element, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
 
         this.element = checkNotNull(element);
-        this.description = checkNotNull(description);
-        this.query = checkNotNull(query);
-        this.pattern = checkNotNull(pattern);
+        String tagName = element.getLocalName();
+
+        this.description = checkNotNull(description, "Description in %s should not be null", tagName);
+        this.query = checkNotNull(query, "Query in %s should not be null", tagName);
+        checkState(!query.trim().isEmpty(), "Query in %s should not be empty", tagName);
+        this.pattern = checkNotNull(pattern, "Pattern in %s should not be null", tagName);
         this.generatorAnnotations = checkNotNull(generatorAnnotations);
     }
 
