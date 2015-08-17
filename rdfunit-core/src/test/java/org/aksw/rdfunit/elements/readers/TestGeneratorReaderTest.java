@@ -55,7 +55,7 @@ public class TestGeneratorReaderTest {
         Collection<TestGenerator> autoGenerators = new ArrayList<>();
 
         for (Resource r: model.listResourcesWithProperty(RDF.type, RDFUNITv.TestGenerator).toList() ) {
-            TestGenerator tag = TestGeneratorReader.createTestGeneratorReader().read(r);
+            TestGenerator tag = TestGeneratorReader.create().read(r);
             assertTrue("TAG" + r.getURI() + " is not valid", tag.isValid());
             autoGenerators.add(tag);
         }

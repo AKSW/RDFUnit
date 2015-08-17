@@ -20,7 +20,7 @@ public final class ArgumentReader implements ElementReader<Argument> {
 
     private ArgumentReader(){}
 
-    public static ArgumentReader createArgumentReader() { return new ArgumentReader();}
+    public static ArgumentReader create() { return new ArgumentReader();}
 
     @Override
     public Argument read(Resource resource) {

@@ -41,7 +41,7 @@ public class ArgumentReaderTest {
 
         // read IRI from model
         Resource resource = model.getResource(resourceUri);
-        ArgumentReader argumentReader = ArgumentReader.createArgumentReader();
+        ArgumentReader argumentReader = ArgumentReader.create();
         Argument arg1 = argumentReader.read(resource);
 
         //now write it back to another model

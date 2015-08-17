@@ -25,7 +25,7 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
 
     private TestGeneratorReader(){}
 
-    public static TestGeneratorReader createTestGeneratorReader() { return new TestGeneratorReader();}
+    public static TestGeneratorReader create() { return new TestGeneratorReader();}
 
 
     @Override
@@ -56,7 +56,7 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
 
         //annotations
         for (Statement smt : resource.listProperties(RDFUNITv.resultAnnotation).toList()) {
-            generatorAnnotations.add(ResultAnnotationReader.createArgumentReader().read(smt.getResource()));
+            generatorAnnotations.add(ResultAnnotationReader.create().read(smt.getResource()));
         }
 
         return TestGeneratorImpl.createTAG(resource, description, query, pattern, generatorAnnotations);

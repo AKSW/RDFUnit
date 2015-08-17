@@ -40,7 +40,7 @@ public final class TestGeneratorUtils {
         Collection<TestGenerator> autoGenerators = new ArrayList<>();
 
         for (Resource r: model.listResourcesWithProperty(RDF.type, RDFUNITv.TestGenerator).toList() ) {
-            TestGenerator tag = TestGeneratorReader.createTestGeneratorReader().read(r);
+            TestGenerator tag = TestGeneratorReader.create().read(r);
             if (tag.isValid()) {
                 autoGenerators.add(tag);
             } else {

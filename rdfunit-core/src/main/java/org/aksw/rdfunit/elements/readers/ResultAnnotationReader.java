@@ -26,7 +26,7 @@ public final class ResultAnnotationReader implements ElementReader<ResultAnnotat
         this.varNameP = varNameP;
     }
 
-    public static ResultAnnotationReader createArgumentReader() { return createArgumentReaderRut(); }
+    public static ResultAnnotationReader create() { return createArgumentReaderRut(); }
     public static ResultAnnotationReader createArgumentReaderRut() {
         return new ResultAnnotationReader(RDFUNITv.annotationProperty, RDFUNITv.annotationValue, RDFUNITv.annotationValue);}
     public static ResultAnnotationReader createArgumentReaderShacl() {

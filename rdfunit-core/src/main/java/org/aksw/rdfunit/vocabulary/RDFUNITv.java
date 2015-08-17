@@ -20,6 +20,8 @@ public final class RDFUNITv {
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource RLOGTestCaseResult = resource("RLOGTestCaseResult");
     public static final Resource TestGenerator = resource("TestGenerator");
+    public static final Resource Parameter = resource("Parameter");
+
 
 
     //properties
@@ -31,6 +33,8 @@ public final class RDFUNITv {
     public static final Property resultAnnotation = property("resultAnnotation");
     public static final Property sparqlGenerator = property("sparqlGenerator");
     public static final Property basedOnPattern = property("basedOnPattern");
+    public static final Property parameterConstraint = property("parameterConstraint");
+    public static final Property constraintPattern = property("constraintPattern");
 
 
 

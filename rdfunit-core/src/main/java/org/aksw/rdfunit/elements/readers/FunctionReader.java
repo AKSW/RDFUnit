@@ -19,7 +19,7 @@ public final class FunctionReader implements ElementReader<Function> {
 
     private FunctionReader(){}
 
-    public static FunctionReader createFunctionReader() { return new FunctionReader();}
+    public static FunctionReader create() { return new FunctionReader();}
 
 
     @Override
@@ -50,7 +50,7 @@ public final class FunctionReader implements ElementReader<Function> {
 
         // arguments
         for (Statement smt : resource.listProperties(SHACL.argument).toList()) {
-            ArgumentReader argumentReader = ArgumentReader.createArgumentReader();
+            ArgumentReader argumentReader = ArgumentReader.create();
             functonBuilder.addArguments(argumentReader.read(smt.getObject().asResource()));
         }
 
