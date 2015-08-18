@@ -19,7 +19,7 @@ public enum SerializationFormatType {
     output,
 
     /**
-     * Input & Output format
+     * Input and Output format
      */
     inputAndOutput
 }

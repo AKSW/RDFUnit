@@ -26,8 +26,8 @@ import java.util.Collection;
  *         Holds a configuration for a complete test
  *         TODO: Got too big, maybe break it down a bit
  *         TODO: Got really really big!!!
- * @version $Id: $Id
- * @since 11/15/13 11:50 AM
+ * @version $Id : $Id
+ * @since 11 /15/13 11:50 AM
  */
 public class RDFUnitConfiguration {
 
@@ -83,8 +83,10 @@ public class RDFUnitConfiguration {
     /**
      * <p>Constructor for RDFUnitConfiguration.</p>
      *
-     * @param datasetURI a {@link java.lang.String} object.
-     * @param dataFolder a {@link java.lang.String} object.
+     * @param datasetURI a
+     * object.
+     * @param dataFolder a
+     * object.
      */
     public RDFUnitConfiguration(String datasetURI, String dataFolder) {
         this(datasetURI, dataFolder, dataFolder + "tests/");
@@ -93,9 +95,12 @@ public class RDFUnitConfiguration {
     /**
      * <p>Constructor for RDFUnitConfiguration.</p>
      *
-     * @param datasetURI a {@link java.lang.String} object.
-     * @param dataFolder a {@link java.lang.String} object.
-     * @param testFolder a {@link java.lang.String} object.
+     * @param datasetURI a
+     * object.
+     * @param dataFolder a
+     * object.
+     * @param testFolder a
+     * object.
      */
     public RDFUnitConfiguration(String datasetURI, String dataFolder, String testFolder) {
         this.datasetURI = datasetURI;
@@ -108,8 +113,10 @@ public class RDFUnitConfiguration {
     /**
      * <p>setEndpointConfiguration.</p>
      *
-     * @param endpointURI    a {@link java.lang.String} object.
-     * @param endpointGraphs a {@link java.util.Collection} object.
+     * @param endpointURI a
+     * object.
+     * @param endpointGraphs a
+     * object.
      */
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
         this.endpointURI = endpointURI;
@@ -120,7 +127,8 @@ public class RDFUnitConfiguration {
     /**
      * <p>Setter for the field <code>customDereferenceURI</code>.</p>
      *
-     * @param customDereferenceURI a {@link java.lang.String} object.
+     * @param customDereferenceURI a
+     * object.
      */
     public void setCustomDereferenceURI(String customDereferenceURI) {
         this.customDereferenceURI = customDereferenceURI;
@@ -129,9 +137,11 @@ public class RDFUnitConfiguration {
     /**
      * <p>Setter for the field <code>customTextSource</code>.</p>
      *
-     * @param text   a {@link java.lang.String} object.
-     * @param format a {@link java.lang.String} object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
+     * @param text a
+     * object.
+     * @param format a
+     * object.
+     * @throws UndefinedSerializationException if any.
      */
     public void setCustomTextSource(String text, String format) throws UndefinedSerializationException {
         this.customTextSource = text;
@@ -148,7 +158,8 @@ public class RDFUnitConfiguration {
     /**
      * <p>setAutoSchemataFromQEF.</p>
      *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param qef a
+     * object.
      */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
         setAutoSchemataFromQEF(qef, false);
@@ -157,12 +168,21 @@ public class RDFUnitConfiguration {
     /**
      * <p>setAutoSchemataFromQEF.</p>
      *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param qef a
+     * object.
+     * @param all the all
      */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all) {
         setAutoSchemataFromQEF(qef, all, true);
     }
 
+    /**
+     * Sets auto schemata from qEF.
+     *
+     * @param qef the qef
+     * @param all the all
+     * @param limitToKnown the limit to known
+     */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all, boolean limitToKnown) {
 
         NamespaceStatistics namespaceStatistics;
@@ -178,8 +198,9 @@ public class RDFUnitConfiguration {
     /**
      * <p>setSchemataFromPrefixes.</p>
      *
-     * @param schemaPrefixes a {@link java.util.Collection} object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSchemaException if any.
+     * @param schemaPrefixes a
+     * object.
+     * @throws UndefinedSchemaException if any.
      */
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
         this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
@@ -188,7 +209,8 @@ public class RDFUnitConfiguration {
     /**
      * <p>setSchemata.</p>
      *
-     * @param schemata a {@link java.util.Collection} object.
+     * @param schemata a
+     * object.
      */
     public void setSchemata(Collection<SchemaSource> schemata) {
         this.schemas = new ArrayList<>();
@@ -198,7 +220,8 @@ public class RDFUnitConfiguration {
     /**
      * <p>Setter for the field <code>enrichedSchema</code>.</p>
      *
-     * @param enrichedSchemaPrefix a {@link java.lang.String} object.
+     * @param enrichedSchemaPrefix a
+     * object.
      */
     public void setEnrichedSchema(String enrichedSchemaPrefix) {
         if (enrichedSchemaPrefix != null && !enrichedSchemaPrefix.isEmpty()) {
@@ -209,7 +232,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>getAllSchemata.</p>
      *
-     * @return a {@link java.util.Collection} object.
+     * @return a  object.
      */
     public Collection<SchemaSource> getAllSchemata() {
         Collection<SchemaSource> allSchemas = new ArrayList<>();
@@ -226,7 +249,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>testSource</code>.</p>
      *
-     * @return a {@link org.aksw.rdfunit.sources.Source} object.
+     * @return a  object.
      */
     public TestSource getTestSource() {
 
@@ -295,8 +318,9 @@ public class RDFUnitConfiguration {
     /**
      * <p>setOutputFormatTypes.</p>
      *
-     * @param outputNames a {@link java.util.Collection} object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
+     * @param outputNames a
+     * object.
+     * @throws UndefinedSerializationException if any.
      */
     public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
         outputFormats = new ArrayList<>();
@@ -373,7 +397,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>testCaseExecutionType</code>.</p>
      *
-     * @return a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @return a  object.
      */
     public TestCaseExecutionType getTestCaseExecutionType() {
         return testCaseExecutionType;
@@ -382,7 +406,8 @@ public class RDFUnitConfiguration {
     /**
      * <p>Setter for the field <code>testCaseExecutionType</code>.</p>
      *
-     * @param testCaseExecutionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @param testCaseExecutionType a
+     * object.
      */
     public void setTestCaseExecutionType(TestCaseExecutionType testCaseExecutionType) {
         this.testCaseExecutionType = testCaseExecutionType;
@@ -409,7 +434,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>dataFolder</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a  object.
      */
     public String getDataFolder() {
         return dataFolder;
@@ -418,7 +443,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>testFolder</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a  object.
      */
     public String getTestFolder() {
         return testFolder;
@@ -427,7 +452,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>prefix</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a  object.
      */
     public String getPrefix() {
         return prefix;
@@ -436,7 +461,8 @@ public class RDFUnitConfiguration {
     /**
      * <p>Setter for the field <code>prefix</code>.</p>
      *
-     * @param prefix a {@link java.lang.String} object.
+     * @param prefix a
+     * object.
      */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
@@ -445,7 +471,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>datasetURI</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a  object.
      */
     public String getDatasetURI() {
         return datasetURI;
@@ -454,7 +480,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>endpointURI</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a  object.
      */
     public String getEndpointURI() {
         return endpointURI;
@@ -463,7 +489,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>endpointGraphs</code>.</p>
      *
-     * @return a {@link java.util.Collection} object.
+     * @return a  object.
      */
     public Collection<String> getEndpointGraphs() {
         return endpointGraphs;
@@ -472,7 +498,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>customDereferenceURI</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a  object.
      */
     public String getCustomDereferenceURI() {
         return customDereferenceURI;
@@ -481,7 +507,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>enrichedSchema</code>.</p>
      *
-     * @return a {@link org.aksw.rdfunit.sources.EnrichedSchemaSource} object.
+     * @return a  object.
      */
     public EnrichedSchemaSource getEnrichedSchema() {
         return enrichedSchema;
@@ -490,7 +516,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>Getter for the field <code>outputFormats</code>.</p>
      *
-     * @return a {@link java.util.Collection} object.
+     * @return a  object.
      */
     public Collection<SerializationFormat> getOutputFormats() {
         return outputFormats;
@@ -499,7 +525,7 @@ public class RDFUnitConfiguration {
     /**
      * <p>geFirstOutputFormat.</p>
      *
-     * @return a {@link org.aksw.rdfunit.io.format.SerializationFormat} object.
+     * @return a  object.
      */
     public SerializationFormat geFirstOutputFormat() {
         return RDFUnitUtils.getFirstItemInCollection(outputFormats);
