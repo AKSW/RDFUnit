@@ -175,8 +175,8 @@ rutg:OSLCRANGEL a rut:TestGenerator ;
 	.
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
-rutg:OSLCRANGEC a rut:TestGenerator ;
-    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+rutg:OSLCRANGEI a rut:TestGenerator ;
+    dcterms:description """Check all defined IRIs if they are indeed literals"""@en ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {   # isLiteral instead of isIRI because of blank nodes
                              ?s a oslc:ResourceShape ;
                                 oslc:describes ?T1 ; # we work only on typed classes
