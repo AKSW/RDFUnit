@@ -22,7 +22,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class PatternParameterReaderTest {
 
-    @Parameterized.Parameters(name= "{index}: Pattern: {0}")
+    @Parameterized.Parameters(name= "{index}: Pattern Parameter: {0}")
     public static Collection<Object[]> resources() throws Exception {
         Model model = RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/patterns.ttl").read();
         Collection<Object[]> parameters = new ArrayList<>();
