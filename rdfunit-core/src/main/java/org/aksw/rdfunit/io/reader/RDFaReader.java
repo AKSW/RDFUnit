@@ -1,6 +1,9 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.riot.LangBuilder;
+import org.apache.jena.riot.RDFDataMgr;
 import org.semarglproject.jena.rdf.rdfa.JenaRdfaReader;
 
 /**
@@ -36,5 +39,25 @@ public class RDFaReader extends AbstractRDFReader implements RDFReader {
         catch (Exception e) {
             throw new RDFReaderException(e);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        try {
+            // Init RDFa Reader
+            JenaRdfaReader.inject();
+            RDFDataMgr.read(dataset, uri, null, LangBuilder.create("RDFA","text/html").build());
+        }
+        catch (Exception e) {
+            throw new RDFReaderException(e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "RDFaReader{" +
+                "uri='" + uri + '\'' +
+                '}';
     }
 }

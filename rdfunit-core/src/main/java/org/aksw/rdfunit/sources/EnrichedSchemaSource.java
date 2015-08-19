@@ -11,17 +11,19 @@ import org.aksw.rdfunit.io.reader.RDFReader;
  * @since 9/16/13 1:53 PM
  * @version $Id: $Id
  */
-public class EnrichedSchemaSource extends SchemaSource {
+public class EnrichedSchemaSource extends SchemaSource implements Source{
 
-    /**
-     * <p>Constructor for EnrichedSchemaSource.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     * @param schemaReader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
-     */
-    public EnrichedSchemaSource(String prefix, String uri, RDFReader schemaReader) {
-        super(prefix, uri, schemaReader);
+
+    EnrichedSchemaSource(SourceConfig sourceConfig, RDFReader schemaReader) {
+        super(sourceConfig, schemaReader);
+    }
+
+    EnrichedSchemaSource(SourceConfig sourceConfig, String schema, RDFReader schemaReader) {
+        super(sourceConfig, schema, schemaReader);
+    }
+
+    EnrichedSchemaSource(SchemaSource source) {
+        super(source);
     }
 
     /** {@inheritDoc} */

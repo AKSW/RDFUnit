@@ -5,6 +5,7 @@
 *.project
 *.settings
 .idea
+.idea/*
 *.deb
 *.changes
 *jar-with-dependencies.jar

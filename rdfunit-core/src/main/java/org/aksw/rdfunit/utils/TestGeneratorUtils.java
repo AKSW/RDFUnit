@@ -60,6 +60,7 @@ public final class TestGeneratorUtils {
      * @return a {@link java.util.Collection} object.
      */
     public static Collection<TestCase> instantiateTestsFromAG(Collection<TestGenerator> autoGenerators, Source source) {
+    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, SchemaSource source) {
         Collection<TestCase> tests = new ArrayList<>();
 
         for (TestGenerator tag : autoGenerators) {

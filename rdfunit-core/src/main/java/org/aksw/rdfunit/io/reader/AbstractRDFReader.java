@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.DatasetFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
@@ -23,4 +25,14 @@ public abstract class AbstractRDFReader implements RDFReader {
     }
 
 
+    @Override
+    public Dataset readDataset() throws RDFReaderException {
+        try {
+            Dataset dataset = DatasetFactory.createMem();
+            readDataset(dataset);
+            return dataset;
+        } catch (Exception e) {
+            throw new RDFReaderException(e);
+        }
+    }
 }

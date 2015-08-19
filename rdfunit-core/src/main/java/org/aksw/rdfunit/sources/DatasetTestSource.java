@@ -2,9 +2,11 @@ package org.aksw.rdfunit.sources;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.DatasetFactory;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactoryDataset;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,25 +25,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2/6/14 9:32 AM
  * @version $Id: $Id
  */
-public class DumpTestSource extends AbstractTestSource implements TestSource {
-    protected static final Logger log = LoggerFactory.getLogger(DumpTestSource.class);
+public class DatasetTestSource extends AbstractTestSource implements TestSource {
+    protected static final Logger log = LoggerFactory.getLogger(DatasetTestSource.class);
 
     private final RDFReader dumpReader;
 
-    private final OntModel dumpModel;
+    private final Dataset dumpDataset;
 
-    DumpTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader, OntModel model) {
+
+    DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader, Dataset dataset) {
         super(sourceConfig, queryingConfig, referenceSchemata);
         this.dumpReader = checkNotNull(dumpReader);
-        dumpModel = checkNotNull(model);
+        this.dumpDataset = checkNotNull(dataset);
     }
 
-    DumpTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader) {
-        this(sourceConfig, queryingConfig, referenceSchemata, dumpReader, ModelFactory.createOntologyModel( OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel()));  //OntModelSpec.RDFS_MEM_RDFS_INF
+    DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader) {
+        this(sourceConfig, queryingConfig, referenceSchemata, dumpReader, DatasetFactory.createMem());  //OntModelSpec.RDFS_MEM_RDFS_INF
     }
 
-    DumpTestSource(DumpTestSource dumpTestSource, Collection<SchemaSource> referenceSchemata) {
-        this(dumpTestSource.sourceConfig, dumpTestSource.queryingConfig, referenceSchemata, dumpTestSource.dumpReader, dumpTestSource.dumpModel);
+    DatasetTestSource(DatasetTestSource datasetTestSource, Collection<SchemaSource> referenceSchemata) {
+        this(datasetTestSource.sourceConfig, datasetTestSource.queryingConfig, referenceSchemata, datasetTestSource.dumpReader, datasetTestSource.dumpDataset);
     }
 
     @Override
@@ -54,9 +57,9 @@ public class DumpTestSource extends AbstractTestSource implements TestSource {
 
             // load the data only when the model is empty in case it is initialized with the "copy constructor"
             // This sppeds up the process on very big in-memory datasets
-            if (dumpModel.isEmpty()) {
+            if (dumpDataset.getDefaultModel().isEmpty() && !dumpDataset.listNames().hasNext() ) {
                 // load the data only when the model is empty in case it is initialized with the "copy constructor"
-                dumpReader.read(dumpModel);
+                dumpReader.readDataset(dumpDataset);
             }
 
             //if (dumpModel.isEmpty()) {
@@ -68,13 +71,11 @@ public class DumpTestSource extends AbstractTestSource implements TestSource {
             }
             // Here we add the ontologies in the dump mode
             // Note that the ontologies have reasoning enabled but not the dump source
-            dumpModel.add(ontModel);
+            dumpDataset.setDefaultModel(ontModel.union(dumpDataset.getDefaultModel()));
         } catch (Exception e) {
             log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
         }
-        return masqueradeQEF(new QueryExecutionFactoryModel(dumpModel), this);
+        return masqueradeQEF(new QueryExecutionFactoryDataset(dumpDataset), this);
     }
-
-
 }

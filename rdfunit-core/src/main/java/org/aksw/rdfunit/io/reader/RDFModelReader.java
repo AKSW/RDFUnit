@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 
 /**
@@ -33,5 +34,18 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
     @Override
     public void read(Model model) throws RDFReaderException {
         model.add(this.model);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        throw new RDFReaderException("Not implemented yet");
+    }
+
+    @Override
+    public String toString() {
+        return "RDFModelReader{" +
+                "model=" + model +
+                '}';
     }
 }

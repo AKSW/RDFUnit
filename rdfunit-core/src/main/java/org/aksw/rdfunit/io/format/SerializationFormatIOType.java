@@ -7,7 +7,7 @@ package org.aksw.rdfunit.io.format;
  * @author Dimitris Kontokostas
  * @since 6/18/14 6:50 PM
  */
-public enum SerializationFormatType {
+public enum SerializationFormatIOType {
     /**
      * Only input format
      */
@@ -19,7 +19,7 @@ public enum SerializationFormatType {
     output,
 
     /**
-     * Input & Output format
+     * Input and Output format
      */
     inputAndOutput
 }

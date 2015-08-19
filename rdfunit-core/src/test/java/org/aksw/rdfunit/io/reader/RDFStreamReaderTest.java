@@ -1,42 +1,63 @@
 package org.aksw.rdfunit.io.reader;
 
-import org.junit.Rule;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.vocabulary.OWL;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+@RunWith(Parameterized.class)
 
 public class RDFStreamReaderTest {
 
-    @SuppressWarnings("PublicField")
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+    private static Model model;
+
+    @Before
+    public void setUp() throws Exception {
+        model = ModelFactory.createDefaultModel();
+        model.add(
+                ResourceFactory.createResource("http://rdfunit.aksw.org"),
+                OWL.sameAs,
+                ResourceFactory.createResource("http://dbpedia.org/resource/Cool")
+        );
+    }
+
+
+    @Parameterized.Parameters(name= "{index}: file: {0}")
+    public static Collection<Object[]> resources() throws Exception {
+
+        String baseResDir = "/org/aksw/rdfunit/data/";
+        return Arrays.asList(new Object[][] {
+                { baseResDir + "onetriple.nq"},
+                { baseResDir + "onetriple.nt"},
+                { baseResDir + "onetriple.rdf"},
+                { baseResDir + "onetriple.rj"},
+                { baseResDir + "onetriple.trig"},
+                { baseResDir + "onetriple.ttl"},
+        });
+    }
+
+    @Parameterized.Parameter
+    public String resourceName;
+
 
 
     @Test
-    public void checkInit() {
-        // The following should not throw an exception
-        new RDFStreamReader("");
-        new RDFStreamReader(RDFStreamReaderTest.class.getResourceAsStream(""), "TURTLE");
+    public void testReader() throws Exception{
+        Model readModel = RDFReaderFactory.createResourceReader(resourceName).read();
+        assertTrue("Models not the same", model.isIsomorphicWith(readModel));
+
     }
 
-    @Test
-    public void testGetFormatFromExtension() throws Exception {
-        Map<String, String> testVals = new HashMap<>();
-        testVals.put("asdf.ttl", "TURTLE");
-        testVals.put("asdf.nt", "N-TRIPLE");
-        testVals.put("asdf.n3", "N3");
-        testVals.put("asdf.jsonld", "JSON-LD");
-        testVals.put("asdf.rj", "RDF/JSON");
-        testVals.put("asdf.rdf", "RDF/XML");
 
-        for (Map.Entry<String, String> entry: testVals.entrySet()) {
-            assertEquals("Should be equal", entry.getValue(), RDFStreamReader.getFormatFromExtension(entry.getKey()));
-        }
-    }
 
 
 }

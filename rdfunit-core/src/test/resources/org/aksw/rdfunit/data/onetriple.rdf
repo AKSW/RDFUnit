@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:dbp="http://dbpedia.org/resource/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://rdfunit.aksw.org">
+  <rdf:Description rdf:about="http://rdfunit.aksw.org">
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Cool"/>
+  </rdf:Description>
+</rdf:RDF>

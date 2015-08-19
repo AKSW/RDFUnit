@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.io.format;
 
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFLanguages;
+
 import java.util.Collection;
 
 /**
@@ -50,5 +53,33 @@ public final class FormatService {
             }
         }
         return null;
+    }
+
+    /**
+     * <p>getFormatFromExtension.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
+    public static String getFormatFromExtension(String filename) {
+        String format = "TURTLE";
+        try {
+            // try to get if from Jena first
+            String extension = "";
+            Lang jenaLang = RDFLanguages.filenameToLang(filename);
+            if (jenaLang != null) {
+                extension = jenaLang.getFileExtensions().get(0);
+            } else {
+                int index = filename.lastIndexOf('.');
+                extension = filename.substring(index + 1, filename.length());
+            }
+            SerializationFormat f = FormatService.getInputFormat(extension);
+            if (f != null) {
+                format = f.getName();
+            }
+        } catch (Exception e) {
+            return "TURTLE";
+        }
+        return format;
     }
 }

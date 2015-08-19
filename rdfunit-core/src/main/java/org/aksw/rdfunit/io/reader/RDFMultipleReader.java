@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import java.util.Collection;
@@ -39,5 +40,27 @@ public class RDFMultipleReader extends AbstractRDFReader implements RDFReader  {
         }
 
 
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+
+        for (RDFReader r : readers) {
+            try {
+                r.readDataset(dataset);
+            } catch (RDFReaderException e) {
+                throw new RDFReaderException("Cannot read from reader: " + e.getMessage());
+            }
+        }
+
+
+    }
+
+    @Override
+    public String toString() {
+        return "RDFMultipleReader{" +
+                "readers=" + readers +
+                '}';
     }
 }

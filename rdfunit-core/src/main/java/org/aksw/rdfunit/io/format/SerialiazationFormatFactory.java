@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.io.format;
 
+import com.google.common.collect.Sets;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,6 +28,7 @@ public final class SerialiazationFormatFactory {
     public static Collection<SerializationFormat> getAllFormats() {
         ArrayList<SerializationFormat> serializationFormats = new ArrayList<>();
 
+        // single graph formats
         serializationFormats.add(createTurtle());
         serializationFormats.add(createN3());
         serializationFormats.add(createNTriples());
@@ -36,6 +39,11 @@ public final class SerialiazationFormatFactory {
         serializationFormats.add(createRDFXMLOut());
         serializationFormats.add(createRDFa());
         serializationFormats.add(createHTML());
+
+        // dataset formats
+        serializationFormats.add(createNQads());
+        serializationFormats.add(createTriG());
+        serializationFormats.add(createTriX());
 
 
         return serializationFormats;
@@ -49,10 +57,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createHTML() {
         // HTML -> only output
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("html", "htm"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("html", "htm"));
         return new SerializationFormat(
-                "html", SerializationFormatType.output, "html", "text/html", currentSynonyms);
+                "html", SerializationFormatIOType.output, SerializationFormatGraphType.singleGraph, "html", "text/html", currentSynonyms);
 
     }
 
@@ -63,10 +70,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createTurtle() {
         // Turtle -> input & output
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("turtle", "ttl"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("turtle", "ttl"));
         return new SerializationFormat(
-                "TURTLE", SerializationFormatType.inputAndOutput, "ttl", "text/turtle", currentSynonyms);
+                "TURTLE", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.singleGraph, "ttl", "text/turtle", currentSynonyms);
 
     }
 
@@ -77,9 +83,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createN3() {
         // N3 -> input & output
-        HashSet<String> currentSynonyms = new HashSet<>();
+        HashSet<String> currentSynonyms = Sets.newHashSet();
         return new SerializationFormat(
-                "N3", SerializationFormatType.inputAndOutput, "n3", "rdf+n3", currentSynonyms);
+                "N3", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.singleGraph, "n3", "rdf+n3", currentSynonyms);
     }
 
     /**
@@ -89,10 +95,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createNTriples() {
         // ntriples -> input & output
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("n-triple", "n-triples", "ntriple", "ntriples", "nt"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("n-triple", "n-triples", "ntriple", "ntriples", "nt"));
         return new SerializationFormat(
-                "N-TRIPLE", SerializationFormatType.inputAndOutput, "nt", "application/n-triples", currentSynonyms);
+                "N-TRIPLE", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.singleGraph, "nt", "application/n-triples", currentSynonyms);
 
     }
 
@@ -103,10 +108,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createJsonLD() {
         // JSON-LD -> input & output
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("JSON-LD", "JSONLD", "JSON/LD"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("JSON-LD", "JSONLD", "JSON/LD"));
         return new SerializationFormat(
-                "JSON-LD", SerializationFormatType.inputAndOutput, "jsonld", "application/ld+json", currentSynonyms);
+                "JSON-LD", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.singleGraph, "jsonld", "application/ld+json", currentSynonyms);
     }
 
     /**
@@ -116,10 +120,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createRDFJson() {
         // RDF/JSON -> input & output
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDF/JSON", "RDF-JSON", "RDFJSON", "RJ"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("RDF/JSON", "RDF-JSON", "RDFJSON", "RJ"));
         return new SerializationFormat(
-                "RDF/JSON", SerializationFormatType.inputAndOutput, "rj", "application/rdf+json", currentSynonyms);
+                "RDF/JSON", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.singleGraph, "rj", "application/rdf+json", currentSynonyms);
     }
 
     /**
@@ -129,10 +132,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createRDFXMLAbbrevOut() {
         // RDF/XML-ABBREV -> output only
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXMLABBREV"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXMLABBREV"));
         return new SerializationFormat(
-                "RDF/XML-ABBREV", SerializationFormatType.output, "rdf", "application/rdf+xml", currentSynonyms);
+                "RDF/XML-ABBREV", SerializationFormatIOType.output, SerializationFormatGraphType.singleGraph, "rdf", "application/rdf+xml", currentSynonyms);
     }
 
     /**
@@ -142,10 +144,9 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createRDFXMLOut() {
         // RDF/XML -> output (split it to disambiguate abbrev)
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDF/XML", "RDF-XML", "RDFXML"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("RDF/XML", "RDF-XML", "RDFXML"));
         return new SerializationFormat(
-                "RDF/XML", SerializationFormatType.output, "rdf", "application/rdf+xml", currentSynonyms);
+                "RDF/XML", SerializationFormatIOType.output, SerializationFormatGraphType.singleGraph, "rdf", "application/rdf+xml", currentSynonyms);
 
     }
 
@@ -156,10 +157,10 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createRDFXMLIn() {
         // RDF/XML -> input
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV", "RDF", "XML"));
+
+        HashSet<String> currentSynonyms = Sets.newHashSet("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV", "RDF", "XML");
         return new SerializationFormat(
-                "RDF/XML", SerializationFormatType.input, "rdf", "application/rdf+xml", currentSynonyms);
+                "RDF/XML", SerializationFormatIOType.input, SerializationFormatGraphType.singleGraph, "rdf", "application/rdf+xml", currentSynonyms);
 
     }
 
@@ -171,10 +172,53 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createRDFa() {
         // RDF/XML -> input
-        HashSet<String> currentSynonyms = new HashSet<>();
-        currentSynonyms.addAll(Arrays.asList("RDFa", "html", "htm"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("RDFa", "html", "htm"));
         return new SerializationFormat(
-                "RDFA", SerializationFormatType.input, "html", "text/html", currentSynonyms);
+                "RDFA", SerializationFormatIOType.input, SerializationFormatGraphType.singleGraph, "html", "text/html", currentSynonyms);
 
     }
+
+    /**
+     * <p>createNQads.</p>
+     *
+     * @return a new N-Quads format for input only
+     * @since 0.7.2
+     */
+    public static SerializationFormat createNQads() {
+        // RDF/XML -> input
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("nq", "nquads", "n-quads", "nquad", "n-quad"));
+        return new SerializationFormat(
+                "NQuads", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.dataset, "nq", "text/n-quads", currentSynonyms);
+
+    }
+
+    /**
+     * <p>createTriX.</p>
+     *
+     * @return a new N-Quads format for input only
+     * @since 0.7.2
+     */
+    public static SerializationFormat createTriX() {
+        // RDF/XML -> input
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("trix"));
+        return new SerializationFormat(
+                "TriX", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.dataset, "trix", "application/trix", currentSynonyms);
+
+    }
+
+    /**
+     * <p>createTriX.</p>
+     *
+     * @return a new N-Quads format for input only
+     * @since 0.7.2
+     */
+    public static SerializationFormat createTriG() {
+        // RDF/XML -> input
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("trig"));
+        return new SerializationFormat(
+                "TriG", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.dataset, "trix", "application/x-trig", currentSynonyms);
+
+    }
+
+
 }

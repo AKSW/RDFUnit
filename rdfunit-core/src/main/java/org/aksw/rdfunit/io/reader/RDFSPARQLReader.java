@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 
 /**
@@ -33,5 +34,20 @@ public class RDFSPARQLReader extends AbstractRDFReader implements RDFReader  {
     public void read(Model model) throws RDFReaderException {
         //TODO implement
         throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        //TODO implement
+        throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
+    }
+
+    @Override
+    public String toString() {
+        return "RDFSPARQLReader{" +
+                "endpoint='" + endpoint + '\'' +
+                ", graph='" + graph + '\'' +
+                '}';
     }
 }

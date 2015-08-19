@@ -120,9 +120,11 @@ public class ValidateUtils {
         }
 
         //Endpoint initialization
-        String endpointURI = commandLine.getOptionValue("e");
-        Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
-        configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
+        if (commandLine.hasOption('e')) {
+            String endpointURI = commandLine.getOptionValue("e");
+            Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
+            configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
+        }
 
         if (commandLine.hasOption("s")) {
             try {

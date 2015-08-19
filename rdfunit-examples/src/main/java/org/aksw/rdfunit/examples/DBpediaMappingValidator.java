@@ -8,9 +8,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.ExtendedTestCaseResult;
@@ -67,7 +67,7 @@ public class DBpediaMappingValidator {
     }
 
     private TestSource getMappingSource() {
-        return new DumpTestSource("dbp-mappings", "http://mappings.dbpedia.org", getRMLReader(), new ArrayList<SchemaSource>());
+        return TestSourceFactory.createDumpTestSource("dbp-mappings", "http://mappings.dbpedia.org", getRMLReader(), new ArrayList<SchemaSource>());
 
     }
 

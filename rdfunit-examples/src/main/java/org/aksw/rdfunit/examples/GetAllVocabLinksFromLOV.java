@@ -10,6 +10,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -30,7 +31,7 @@ public class GetAllVocabLinksFromLOV {
         RDFUnitUtils.fillSchemaServiceFromLOV();
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RULE_INF, ModelFactory.createDefaultModel());
         for (SchemaSource schema : SchemaService.getSourceListAll(false,null)){
-            QueryExecutionFactory qef = schema.getExecutionFactory();
+            QueryExecutionFactory qef = new QueryExecutionFactoryModel(schema.getModel());
 
             String queryString = PrefixNSService.getSparqlPrefixDecl() +
                     " SELECT DISTINCT ?s ?p ?o WHERE { " +

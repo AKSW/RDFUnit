@@ -4,10 +4,10 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
-import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -19,7 +19,6 @@ import org.aksw.rdfunit.utils.TestGeneratorUtils;
 import org.aksw.rdfunit.utils.TestUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -104,7 +103,7 @@ public class RDFUnitStaticWrapper {
         // even if it's called twice, there is no harm and the overhead is negligible
         if (ontologySource == null) {
 
-            ontologySource = new SchemaSource("custom", ontologyURI, getOntologyReader());
+            ontologySource = SchemaSourceFactory.createSchemaSourceSimple("custom", ontologyURI, getOntologyReader());
         }
         return ontologySource;
     }
@@ -121,7 +120,7 @@ public class RDFUnitStaticWrapper {
 
 
                     // Initialize the nif Source
-                    Source ontologySource = getOntologySource();
+                    SchemaSource ontologySource = getOntologySource();
 
                     // Set up the manual nif test cases (from resource)
                     RDFReader manualTestCaseReader = RDFReaderFactory.createResourceReader(
@@ -226,13 +225,13 @@ public class RDFUnitStaticWrapper {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
-        final TestSource modelSource = new DumpTestSource(
-                "custom", // prefix
-                inputURI,
-                new RDFModelReader(input), // the input model as a RDFReader
-                Arrays.asList(  // List of associated ontologies (these will be loaded in the testing model)
-                        getOntologySource())
-        );
+        final TestSource modelSource = new TestSourceBuilder()
+                .setPrefixUri("custom", inputURI)
+                .setImMemDataset()
+                .setInMemReader(new RDFModelReader(input))
+                .setReferenceSchemata(getOntologySource())
+                .build();
+
 
         testExecutor.execute(modelSource, getTestSuite());
         overviewResults.set(testExecutorMonitor.getOverviewResults());
