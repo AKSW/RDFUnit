@@ -40,4 +40,11 @@ public class RDFMultipleReader extends AbstractRDFReader implements RDFReader  {
 
 
     }
+
+    @Override
+    public String toString() {
+        return "RDFMultipleReader{" +
+                "readers=" + readers +
+                '}';
+    }
 }

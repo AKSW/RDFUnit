@@ -34,4 +34,11 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
     public void read(Model model) throws RDFReaderException {
         model.add(this.model);
     }
+
+    @Override
+    public String toString() {
+        return "RDFModelReader{" +
+                "model=" + model +
+                '}';
+    }
 }

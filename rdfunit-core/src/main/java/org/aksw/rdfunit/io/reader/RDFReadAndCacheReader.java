@@ -39,4 +39,12 @@ public class RDFReadAndCacheReader extends AbstractRDFReader implements RDFReade
 
         }
     }
+
+    @Override
+    public String toString() {
+        return "RDFReadAndCacheReader{" +
+                "reader=" + reader +
+                ", writer=" + writer +
+                '}';
+    }
 }

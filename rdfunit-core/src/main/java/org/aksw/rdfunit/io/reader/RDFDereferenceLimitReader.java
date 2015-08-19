@@ -91,4 +91,13 @@ public class RDFDereferenceLimitReader extends AbstractRDFReader implements RDFR
                 conn.disconnect();
         }
     }
+
+    @Override
+    public String toString() {
+        return "RDFDereferenceLimitReader{" +
+                "uri='" + uri + '\'' +
+                ", limitInBytes=" + limitInBytes +
+                ", strict=" + strict +
+                '}';
+    }
 }

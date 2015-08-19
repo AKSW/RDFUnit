@@ -43,4 +43,11 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
             throw new RDFReaderException(e);
         }
     }
+
+    @Override
+    public String toString() {
+        return "RDFDereferenceReader{" +
+                "uri='" + uri + '\'' +
+                '}';
+    }
 }

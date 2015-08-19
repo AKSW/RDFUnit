@@ -37,4 +37,11 @@ public class RDFaReader extends AbstractRDFReader implements RDFReader {
             throw new RDFReaderException(e);
         }
     }
+
+    @Override
+    public String toString() {
+        return "RDFaReader{" +
+                "uri='" + uri + '\'' +
+                '}';
+    }
 }

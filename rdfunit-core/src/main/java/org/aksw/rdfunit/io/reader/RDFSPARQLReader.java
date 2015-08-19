@@ -34,4 +34,12 @@ public class RDFSPARQLReader extends AbstractRDFReader implements RDFReader  {
         //TODO implement
         throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
     }
+
+    @Override
+    public String toString() {
+        return "RDFSPARQLReader{" +
+                "endpoint='" + endpoint + '\'' +
+                ", graph='" + graph + '\'' +
+                '}';
+    }
 }

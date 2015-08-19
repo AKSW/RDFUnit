@@ -102,4 +102,12 @@ public class RDFStreamReader extends AbstractRDFReader implements RDFReader  {
         }
         return format;
     }
+
+    @Override
+    public String toString() {
+        return "RDFStreamReader{" +
+                "inputStream=" + inputStream +
+                ", format=" + format +
+                '}';
+    }
 }

@@ -48,4 +48,11 @@ public class RDFFirstSuccessReader extends AbstractRDFReader implements RDFReade
 
         throw new RDFReaderException("Cannot read from any reader: " + message.toString());
     }
+
+    @Override
+    public String toString() {
+        return "RDFFirstSuccessReader{" +
+                "readers=" + readers +
+                '}';
+    }
 }
