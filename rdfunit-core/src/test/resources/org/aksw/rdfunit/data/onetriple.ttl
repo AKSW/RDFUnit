@@ -1,0 +1,5 @@
+@prefix : <http://rdfunit.aksw.org> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dbp: <http://dbpedia.org/resource/> .
+
+: owl:sameAs dbp:Cool.

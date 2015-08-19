@@ -66,7 +66,7 @@ public class RDFStreamReader extends AbstractRDFReader implements RDFReader  {
                 // Temporary solution until clearer solution found
                 JenaRdfaReader.inject();
             }
-            model.read(inputStream, null, format);
+            RDFDataMgr.read(model, inputStream, null, RDFLanguages.nameToLang(format));
         } catch (Exception e) {
             throw new RDFReaderException(e.getMessage(), e);
         }
