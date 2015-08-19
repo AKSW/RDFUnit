@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.io.reader;
 
 import org.aksw.rdfunit.io.IOUtils;
+import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 
@@ -53,7 +54,7 @@ public final class RDFReaderFactory {
      * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
      */
     public static RDFReader createResourceReader(String resource) {
-        return new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource), RDFStreamReader.getFormatFromExtension(resource));
+        return new RDFStreamReader(RDFReaderFactory.class.getResourceAsStream(resource), FormatService.getFormatFromExtension(resource));
     }
 
     /**

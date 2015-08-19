@@ -5,6 +5,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.NotFoundException;
 import org.apache.jena.riot.RDFDataMgr;
 
+import java.io.File;
+
 /**
  * <p>RDFDereferenceReader class.</p>
  *
@@ -24,14 +26,18 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
      */
     public RDFDereferenceReader(String uri) {
         super();
-        this.uri = uri;
+        File file = new File(uri);
+        if (file.exists()) {
+            this.uri = file.getAbsolutePath();
+        } else {
+            this.uri = uri;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
         try {
-            //TODO check for relative file names and convert to absolute paths
             model.read(uri);
 
             // Not found
@@ -50,8 +56,7 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
     @Override
     public void readDataset(Dataset dataset) throws RDFReaderException {
         try {
-            //TODO check for relative file names and convert to absolute paths
-            RDFDataMgr.read(dataset, uri);
+            RDFDataMgr.loadDataset(uri);
 
             // Not found
         } catch (NotFoundException e) {
