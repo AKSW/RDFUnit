@@ -6,6 +6,7 @@ import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.NamespaceStatistics;
@@ -250,6 +251,15 @@ public class RDFUnitConfiguration {
         if (customDereferenceURI != null && "-".equals(customDereferenceURI)) {
             testSourceBuilder.setInMemFromPipe();
         }
+        if (getEndpointURI() == null || getEndpointURI().isEmpty()) {
+            String tmp_customDereferenceURI = datasetURI;
+            if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
+                tmp_customDereferenceURI = customDereferenceURI;
+            }
+            testSourceBuilder.setInMemReader(RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI));
+        }
+
+
 
 
         // Set TestSource configuration

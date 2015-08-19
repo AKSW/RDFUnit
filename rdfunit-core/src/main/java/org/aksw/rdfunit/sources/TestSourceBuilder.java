@@ -77,11 +77,15 @@ public class TestSourceBuilder {
 
     public TestSourceBuilder setInMemReader(RDFReader reader) {
         this.inMemReader = reader;
+        if (queryingConfig == null) {
+            queryingConfig = QueryingConfig.createInMemory();
+        }
         return this;
     }
 
     public TestSourceBuilder setInMemFromPipe() {
         this.inMemReader = new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE");
+        setImMemSingle();
         return this;
     }
 
@@ -130,13 +134,19 @@ public class TestSourceBuilder {
 
     public TestSource build() {
         checkNotNull(sourceConfig);
-        checkNotNull(referenceSchemata);
-        checkNotNull(queryingConfig);
+        checkNotNull(referenceSchemata, "Referenced schemata not set in TestSourceBuilder");
 
         if (testSourceType.equals(TestSourceType.Endpoint)) {
+            if (queryingConfig == null) {
+                queryingConfig = QueryingConfig.createEndpoint();
+            }
             checkNotNull(sparqlEndpoint);
             checkNotNull(endpointGraphs);
             return new EndpointTestSource (sourceConfig, queryingConfig, referenceSchemata, sparqlEndpoint, endpointGraphs);
+        }
+
+        if (queryingConfig == null) {
+            queryingConfig = QueryingConfig.createEndpoint();
         }
 
         checkNotNull(inMemReader);
