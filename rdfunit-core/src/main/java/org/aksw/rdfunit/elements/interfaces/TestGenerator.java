@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.elements.interfaces;
 
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.tests.TestCase;
 
 import java.util.Collection;
@@ -48,7 +48,7 @@ public interface TestGenerator extends Element {
      * @param source a {@link org.aksw.rdfunit.sources.Source} object.
      * @return a {@link java.util.Collection} object.
      */
-    Collection<TestCase> generate(Source source);
+    Collection<TestCase> generate(SchemaSource source);
 
     /**
      * Checks if the the generator is valid (provides correct parameters)

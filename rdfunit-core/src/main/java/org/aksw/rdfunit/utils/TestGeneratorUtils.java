@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.elements.interfaces.TestGenerator;
 import org.aksw.rdfunit.elements.readers.TestGeneratorReader;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.slf4j.Logger;
@@ -29,13 +29,6 @@ public final class TestGeneratorUtils {
     private TestGeneratorUtils() {
     }
 
-
-    /**
-     * <p>instantiateTestGeneratorsFromModel.</p>
-     *
-     * @param queryFactory a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @return a {@link java.util.Collection} object.
-     */
     public static Collection<TestGenerator> instantiateTestGeneratorsFromModel(Model model) {
         Collection<TestGenerator> autoGenerators = new ArrayList<>();
 
@@ -59,8 +52,7 @@ public final class TestGeneratorUtils {
      * @param source a {@link org.aksw.rdfunit.sources.Source} object.
      * @return a {@link java.util.Collection} object.
      */
-    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestGenerator> autoGenerators, Source source) {
-    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, SchemaSource source) {
+    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestGenerator> autoGenerators, SchemaSource source) {
         Collection<TestCase> tests = new ArrayList<>();
 
         for (TestGenerator tag : autoGenerators) {

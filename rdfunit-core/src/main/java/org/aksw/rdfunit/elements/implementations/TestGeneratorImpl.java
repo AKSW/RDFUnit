@@ -5,6 +5,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.core.Var;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
@@ -13,7 +14,7 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.tests.*;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
@@ -99,11 +100,11 @@ public final class TestGeneratorImpl implements TestGenerator {
     }
 
     @Override
-    public Collection<TestCase> generate(Source source) {
+    public Collection<TestCase> generate(SchemaSource source) {
         Collection<TestCase> tests = new ArrayList<>();
 
         Query q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getTAGQuery());
-        QueryExecution qe = source.getExecutionFactory().createQueryExecution(q);
+        QueryExecution qe = new QueryExecutionFactoryModel(source.getModel()).createQueryExecution(q);
         ResultSet rs = qe.execSelect();
 
         while (rs.hasNext()) {
