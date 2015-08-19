@@ -1,7 +1,9 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.NotFoundException;
+import org.apache.jena.riot.RDFDataMgr;
 
 /**
  * <p>RDFDereferenceReader class.</p>
@@ -31,6 +33,25 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
         try {
             //TODO check for relative file names and convert to absolute paths
             model.read(uri);
+
+            // Not found
+        } catch (NotFoundException e) {
+            throw new RDFReaderException("'" + uri + "' not found", e);
+        }
+
+        //org.apache.jena.riot.RiotException -> if wrong format, i.e. turtle instead of RDF/XML
+
+        catch (Exception e) {
+            throw new RDFReaderException(e);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        try {
+            //TODO check for relative file names and convert to absolute paths
+            RDFDataMgr.read(dataset, uri);
 
             // Not found
         } catch (NotFoundException e) {

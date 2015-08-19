@@ -1,8 +1,11 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFLanguages;
 import org.semarglproject.jena.rdf.rdfa.JenaRdfaReader;
 
 import java.io.FileInputStream;
@@ -65,6 +68,21 @@ public class RDFStreamReader extends AbstractRDFReader implements RDFReader  {
                 JenaRdfaReader.inject();
             }
             model.read(inputStream, null, format);
+        } catch (Exception e) {
+            throw new RDFReaderException(e.getMessage(), e);
+        }
+
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        try {
+            if ("RDFA".equals(format)) {
+                // Temporary solution until clearer solution found
+                JenaRdfaReader.inject();
+            }
+            RDFDataMgr.read(dataset, inputStream, null, RDFLanguages.nameToLang(format));
         } catch (Exception e) {
             throw new RDFReaderException(e.getMessage(), e);
         }

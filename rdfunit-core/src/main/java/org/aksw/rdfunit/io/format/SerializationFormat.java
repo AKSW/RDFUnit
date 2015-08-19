@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.io.format;
 
+import com.google.common.base.Objects;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,10 +19,16 @@ public class SerializationFormat {
     private final String name;
 
     /**
-     * Accorting to {@code SerializationFormatType} this can be an
+     * Accorting to {@code SerializationFormatIOType} this can be an
      * input / output or input & output serialization format
      */
-    private final SerializationFormatType type;
+    private final SerializationFormatIOType ioType;
+
+    /**
+     * Accorting to {@code SerializationFormatGraphType} this can be an
+     * single graph or dataset
+     */
+    private final SerializationFormatGraphType graphType;
 
     /**
      * The default extension e.g. "ttl" for turtle
@@ -43,26 +51,27 @@ public class SerializationFormat {
      * Constructor
      *
      * @param name a {@link java.lang.String} object.
-     * @param type a {@link org.aksw.rdfunit.io.format.SerializationFormatType} object.
+     * @param ioType a {@link SerializationFormatIOType} object.
      * @param extension a {@link java.lang.String} object.
      * @param headerType a {@link java.lang.String} object.
      */
-    public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType) {
-        this(name, type, extension, headerType, new HashSet<String>());
+    public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType) {
+        this(name, ioType, graphType, extension, headerType, new HashSet<String>());
     }
 
     /**
      * Constructor
      *
      * @param name       the name
-     * @param type       the type
+     * @param ioType       the type
      * @param extension  the extension
      * @param headerType the header type
      * @param synonyms   the synonyms
      */
-    public SerializationFormat(String name, SerializationFormatType type, String extension, String headerType, Set<String> synonyms) {
+    public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType, Set<String> synonyms) {
         this.name = name;
-        this.type = type;
+        this.ioType = ioType;
+        this.graphType = graphType;
         this.extension = extension;
         this.headerType = headerType;
         // Convert all to lowercase
@@ -79,7 +88,7 @@ public class SerializationFormat {
      * @return the boolean true if the format matches or false if it doesn't
      */
     public boolean isAcceptedAsInput(String format) {
-        return isAcceptedAsAny(format, SerializationFormatType.output);
+        return isAcceptedAsAny(format, SerializationFormatIOType.output);
 
     }
 
@@ -90,12 +99,12 @@ public class SerializationFormat {
      * @return the boolean true if the format matches or false if it doesn't
      */
     public boolean isAcceptedAsOutput(String format) {
-        return isAcceptedAsAny(format, SerializationFormatType.input);
+        return isAcceptedAsAny(format, SerializationFormatIOType.input);
 
     }
 
-    private boolean isAcceptedAsAny(String format, SerializationFormatType formatType) {
-        return !type.equals(formatType) && containsFormatName(format);
+    private boolean isAcceptedAsAny(String format, SerializationFormatIOType formatType) {
+        return !ioType.equals(formatType) && containsFormatName(format);
     }
 
     /**
@@ -133,24 +142,25 @@ public class SerializationFormat {
         return headerType;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SerializationFormat)) return false;
-
-        SerializationFormat that = (SerializationFormat) o;
-
-        if (!extension.equals(that.extension)) return false;
-        return type.equals(that.type) && name.equals(that.name);
-
-    }
-
-    /** {@inheritDoc} */
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + extension.hashCode();
-        return result;
+        return Objects.hashCode(name, ioType, graphType, extension, headerType, synonyms);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final SerializationFormat other = (SerializationFormat) obj;
+        return Objects.equal(this.name, other.name)
+                && Objects.equal(this.ioType, other.ioType)
+                && Objects.equal(this.graphType, other.graphType)
+                && Objects.equal(this.extension, other.extension)
+                && Objects.equal(this.headerType, other.headerType)
+                && Objects.equal(this.synonyms, other.synonyms);
     }
 }

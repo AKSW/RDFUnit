@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 
 /**
@@ -26,4 +27,8 @@ public interface RDFReader {
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     void read(Model model) throws RDFReaderException;
+
+    Dataset readDataset() throws RDFReaderException ;
+
+    void readDataset(Dataset dataset) throws RDFReaderException ;
 }

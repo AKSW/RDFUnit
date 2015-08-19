@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
@@ -35,6 +36,19 @@ public class RDFReadAndCacheReader extends AbstractRDFReader implements RDFReade
         //If read succeeds try to write
         try {
             writer.write(model);
+        } catch (RDFWriterException e) {
+
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        reader.readDataset(dataset);
+        //If read succeeds try to write
+        try {
+            //TODO change this
+            writer.write(dataset.getDefaultModel());
         } catch (RDFWriterException e) {
 
         }

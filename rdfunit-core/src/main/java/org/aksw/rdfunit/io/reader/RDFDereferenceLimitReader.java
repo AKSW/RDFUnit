@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import java.io.IOException;
@@ -67,6 +68,19 @@ public class RDFDereferenceLimitReader extends AbstractRDFReader implements RDFR
 
         // continue with a normal Dereference Reader
         RDFReaderFactory.createDereferenceReader(uri).read(model);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void readDataset(Dataset dataset) throws RDFReaderException {
+        // Check for size
+        long size = getUriSize(uri);
+        if (size > limitInBytes || !strict || size < 0) {
+            throw new RDFReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
+        }
+
+        // continue with a normal Dereference Reader
+        RDFReaderFactory.createDereferenceReader(uri).readDataset(dataset);
     }
 
     /**
