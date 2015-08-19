@@ -80,7 +80,7 @@ public final class RDFReaderFactory {
      */
     public static RDFReader createDereferenceReader(String uri) {
         Collection<RDFReader> readers = new ArrayList<>();
-        if (IOUtils.isURI(uri)) {
+        if (!IOUtils.isFile(uri)) {
             readers.add(new RDFDereferenceReader(uri));
             readers.add(new RDFaReader(uri));
         } else {

@@ -38,7 +38,7 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
     @Override
     public void read(Model model) throws RDFReaderException {
         try {
-            model.read(uri);
+            RDFDataMgr.read(model, uri);
 
             // Not found
         } catch (NotFoundException e) {
@@ -56,7 +56,7 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
     @Override
     public void readDataset(Dataset dataset) throws RDFReaderException {
         try {
-            RDFDataMgr.loadDataset(uri);
+            RDFDataMgr.read(dataset, uri);
 
             // Not found
         } catch (NotFoundException e) {

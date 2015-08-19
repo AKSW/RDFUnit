@@ -5,6 +5,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -55,5 +56,15 @@ public final class IOUtils {
         } catch (URISyntaxException e) {
             return false;
         }
+    }
+
+    /**
+     * <p>isFile.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @return a boolean.
+     */
+    public static boolean isFile(String filename) {
+        return new File(filename).exists();
     }
 }
