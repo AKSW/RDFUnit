@@ -18,16 +18,8 @@ public class SerializationFormat {
      */
     private final String name;
 
-    /**
-     * Accorting to {@code SerializationFormatIOType} this can be an
-     * input / output or input & output serialization format
-     */
     private final SerializationFormatIOType ioType;
 
-    /**
-     * Accorting to {@code SerializationFormatGraphType} this can be an
-     * single graph or dataset
-     */
     private final SerializationFormatGraphType graphType;
 
     /**
@@ -162,5 +154,21 @@ public class SerializationFormat {
                 && Objects.equal(this.extension, other.extension)
                 && Objects.equal(this.headerType, other.headerType)
                 && Objects.equal(this.synonyms, other.synonyms);
+    }
+
+    /**
+     * Accorting to {@code SerializationFormatIOType} this can be an
+     * input / output or input & output serialization format
+     */
+    public SerializationFormatIOType getIoType() {
+        return ioType;
+    }
+
+    /**
+     * Accorting to {@code SerializationFormatGraphType} this can be an
+     * single graph or dataset
+     */
+    public SerializationFormatGraphType getGraphType() {
+        return graphType;
     }
 }

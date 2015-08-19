@@ -5,7 +5,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.services.PatternService;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.results.ResultAnnotation;
@@ -85,7 +85,7 @@ public final class TestGeneratorUtils {
      * @param source a {@link org.aksw.rdfunit.sources.Source} object.
      * @return a {@link java.util.Collection} object.
      */
-    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, Source source) {
+    public static Collection<TestCase> instantiateTestsFromAG(Collection<TestAutoGenerator> autoGenerators, SchemaSource source) {
         Collection<TestCase> tests = new ArrayList<>();
 
         for (TestAutoGenerator tag : autoGenerators) {

@@ -11,7 +11,6 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -42,7 +41,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     final private Model model;
     final private String executionUUID;
 
-    private Source testedDataset;
+    private TestSource testedDataset;
     private TestSuite testSuite;
     private TestCaseExecutionType executionType;
 

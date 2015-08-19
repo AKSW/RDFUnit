@@ -14,9 +14,9 @@ import org.aksw.rdfunit.utils.StringUtils;
  * @since 10/3/13 6:45 PM
  * @version $Id: $Id
  */
-public final class SourceFactory {
+public final class SchemaSourceFactory {
 
-    private SourceFactory() {
+    private SchemaSourceFactory() {
     }
 
     /**
@@ -43,7 +43,7 @@ public final class SourceFactory {
     public static SchemaSource createSchemaSourceFromCache(String baseFolder, String prefix, String uri, String schema) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.Schema, prefix, uri);
         RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, schema);
-        return new SchemaSource(prefix, uri, schema, reader);
+        return createSchemaSourceSimple(prefix, uri, schema, reader);
     }
 
     /**
@@ -66,8 +66,7 @@ public final class SourceFactory {
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
     public static SchemaSource createSchemaSourceDereference(String prefix, String uri, String schema) {
-        RDFReader reader = RDFReaderFactory.createDereferenceReader(schema);
-        return new SchemaSource(prefix, uri, schema, reader);
+        return createSchemaSourceSimple(prefix, uri, schema, RDFReaderFactory.createDereferenceReader(schema));
     }
 
     /**
@@ -81,7 +80,7 @@ public final class SourceFactory {
     public static EnrichedSchemaSource createEnrichedSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.EnrichedSchema, prefix, uri);
         RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
-        return new EnrichedSchemaSource(prefix, uri, reader);
+        return new EnrichedSchemaSource(new SourceConfig(prefix, uri), reader);
     }
 
     /**
@@ -97,6 +96,21 @@ public final class SourceFactory {
         String uri = namespace + StringUtils.getHashFromString(text);
         String prefix = CacheUtils.getAutoPrefixForURI(uri);
 
-        return new SchemaSource(prefix, uri, uri, RDFReaderFactory.createReaderFromText(text, format));
+        return createSchemaSourceSimple(prefix, uri, RDFReaderFactory.createReaderFromText(text, format));
+    }
+
+    public static SchemaSource createSchemaSourceSimple(String prefix, String uri, RDFReader reader) {
+
+        return createSchemaSourceSimple(prefix, uri, uri, reader);
+    }
+
+    public static SchemaSource createSchemaSourceSimple(String prefix, String uri, String schema, RDFReader reader) {
+
+        return new SchemaSource(new SourceConfig(prefix, uri), schema, reader);
+    }
+
+    public static SchemaSource copySchemaSource(SchemaSource schemaSource) {
+
+        return new SchemaSource(schemaSource);
     }
 }

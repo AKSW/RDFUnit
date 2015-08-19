@@ -12,6 +12,7 @@ import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.slf4j.Logger;
@@ -61,10 +62,10 @@ final class SchemaSelectorComponent extends VerticalLayout {
                 SchemaSource s = null;
                 if (tokenId != null) {
                     if (tokenId instanceof SchemaSource) {
-                        s = new SchemaSource((SchemaSource) tokenId);
+                        s = SchemaSourceFactory.copySchemaSource((SchemaSource) tokenId);
                     }
                     if (tokenId instanceof String) {
-                        s = new SchemaSource(SchemaService.getSourceFromPrefix(RDFUnitDemoSession.getBaseDir(), (String) tokenId));
+                        s = SchemaSourceFactory.copySchemaSource(SchemaService.getSourceFromPrefix(RDFUnitDemoSession.getBaseDir(), (String) tokenId));
                     }
                 }
 
@@ -81,7 +82,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
                                 tokenId != null ? tokenId.toString() : "", this));
                     } else {
                         // it's in the 'address book', just add
-                        addToken(new SchemaSource(s));
+                        addToken(SchemaSourceFactory.copySchemaSource(s));
                     }
                 }
             }
@@ -194,7 +195,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
                             prefix = prefixField.getValue();
                             uri = uriField.getValue();
                             if (!(prefix == null || uri == null || prefix.isEmpty() || uri.isEmpty())) {
-                                SchemaSource source = new SchemaSource(prefix, uri, RDFReaderFactory.createDereferenceReader(uri));
+                                SchemaSource source = SchemaSourceFactory.createSchemaSourceSimple(prefix, uri, RDFReaderFactory.createDereferenceReader(uri));
                                 ((BeanItemContainer) f.getContainerDataSource())
                                         .addBean(source);
                                 f.addToken(source);

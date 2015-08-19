@@ -4,9 +4,10 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 import org.aksw.rdfunit.utils.TestGeneratorUtils;
@@ -16,7 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +65,7 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsOWL.put("owl/RDFSRANG_LIT_Wrong.ttl", 3);
 
         RDFReader ontologyOWLReader = RDFReaderFactory.createResourceReader(resourcePrefix + "owl/ontology.ttl");
-        SchemaSource ontologyOWLSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyOWLReader);
+        SchemaSource ontologyOWLSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyOWLReader);
 
         TestSuite testSuite = new TestSuite(
                 TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyOWLSource));
@@ -88,7 +88,7 @@ public class PatternsGeneratorsIntegrationTest {
 
 
         RDFReader ontologyRSReader = RDFReaderFactory.createResourceReader(resourcePrefix + "rs/rs_constraints.ttl");
-        SchemaSource ontologyRSSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyRSReader);
+        SchemaSource ontologyRSSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyRSReader);
 
         TestSuite testSuite = new TestSuite(
                 TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyRSSource));
@@ -117,7 +117,7 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsDSP.put("dsp/literal_Wrong.ttl", 4);
 
         RDFReader ontologyDSPReader = RDFReaderFactory.createResourceReader(resourcePrefix + "dsp/dsp_constraints.ttl");
-        SchemaSource ontologyDSPSource = new SchemaSource("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
+        SchemaSource ontologyDSPSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
 
 
         TestSuite testSuite = new TestSuite(
@@ -138,12 +138,12 @@ public class PatternsGeneratorsIntegrationTest {
             for (TestCaseExecutionType executionType : TestCaseExecutionType.values()) {
 
                 // create new dataset for current entry
-                final TestSource modelSource = new DumpTestSource(
-                        "test", // prefix
-                        resource,
-                        RDFReaderFactory.createResourceReader(resourcePrefix + resource),
-                        Arrays.asList(ontologySource)
-                );
+                final TestSource modelSource = new TestSourceBuilder()
+                        .setImMemSingle()
+                        .setPrefixUri("test", resource)
+                        .setInMemReader(RDFReaderFactory.createResourceReader(resourcePrefix + resource))
+                        .setReferenceSchemata(ontologySource)
+                        .build();
 
                 RDFUnitStaticWrapper.validate(executionType, modelSource, testSuite, overviewResults);
 

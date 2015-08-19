@@ -7,6 +7,7 @@ import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestAutoGenerator;
 import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
@@ -82,7 +83,7 @@ public class TestGeneratorExecutor {
      * @param autoGenerators a {@link java.util.Collection} object.
      * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
      */
-    public TestSuite generateTestSuite(String testFolder, Source dataset, Collection<TestAutoGenerator> autoGenerators) {
+    public TestSuite generateTestSuite(String testFolder, TestSource dataset, Collection<TestAutoGenerator> autoGenerators) {
 
         Collection<SchemaSource> sources = dataset.getReferencesSchemata();
 

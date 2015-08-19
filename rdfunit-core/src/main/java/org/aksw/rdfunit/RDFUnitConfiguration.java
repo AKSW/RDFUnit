@@ -6,16 +6,12 @@ import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.NamespaceStatistics;
 import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 
-import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -40,8 +36,6 @@ public class RDFUnitConfiguration {
     private final String testFolder;
 
     /* SPARQL endpoint configuration */
-    private String endpointURI = null;
-    private Collection<String> endpointGraphs = null;
     private long endpointQueryDelayMS = -1;
     private long endpointQueryCacheTTL = -1;
     private long endpointQueryPagination = -1;
@@ -52,10 +46,7 @@ public class RDFUnitConfiguration {
 
     /* used to cache the test source when we initially do stats for auto loading test cases */
     private TestSource testSource = null;
-
-    /* Use text directly as a source */
-    private String customTextSource = null;
-    private SerializationFormat customTextFormat = null;
+    private TestSourceBuilder testSourceBuilder = new TestSourceBuilder();
 
     /* list of schemas for testing a dataset */
     private Collection<SchemaSource> schemas = null;
@@ -119,9 +110,7 @@ public class RDFUnitConfiguration {
      * object.
      */
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
-        this.endpointURI = endpointURI;
-        this.endpointGraphs = new ArrayList<>();
-        this.endpointGraphs.addAll(endpointGraphs);
+        this.testSourceBuilder.setEndpoint(endpointURI, endpointGraphs);
     }
 
     /**
@@ -131,6 +120,7 @@ public class RDFUnitConfiguration {
      * object.
      */
     public void setCustomDereferenceURI(String customDereferenceURI) {
+        this.testSourceBuilder.setImMemFromUri(customDereferenceURI);
         this.customDereferenceURI = customDereferenceURI;
     }
 
@@ -144,15 +134,7 @@ public class RDFUnitConfiguration {
      * @throws UndefinedSerializationException if any.
      */
     public void setCustomTextSource(String text, String format) throws UndefinedSerializationException {
-        this.customTextSource = text;
-        this.customTextFormat = FormatService.getInputFormat(format);
-        if (this.customTextFormat == null) {
-            throw new UndefinedSerializationException(format);
-        }
-
-        //Clear endpoint / custom dereference
-        this.endpointURI = null;
-        this.customDereferenceURI = null;
+        testSourceBuilder.setInMemFromCustomText(text, format);
     }
 
     /**
@@ -225,7 +207,7 @@ public class RDFUnitConfiguration {
      */
     public void setEnrichedSchema(String enrichedSchemaPrefix) {
         if (enrichedSchemaPrefix != null && !enrichedSchemaPrefix.isEmpty()) {
-            enrichedSchema = SourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedSchemaPrefix, datasetURI);
+            enrichedSchema = SchemaSourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedSchemaPrefix, datasetURI);
         }
     }
 
@@ -263,54 +245,27 @@ public class RDFUnitConfiguration {
             return testSource;
         }
 
-        String prefix = CacheUtils.getAutoPrefixForURI(datasetURI);
-
-        if (endpointURI != null && !endpointURI.isEmpty()) {
-            // return a SPARQL Endpoint source
-            testSource = new EndpointTestSource(
-                    prefix,
-                    datasetURI,
-                    endpointURI,
-                    endpointGraphs,
-                    getAllSchemata());
-        } else {
-
-            RDFReader dumpReader;
-
-            // Return a text source
-            if (customTextSource != null) { // read from custom text
-                dumpReader = RDFReaderFactory.createReaderFromText(customTextSource, customTextFormat.getName());
-            } else {
-                // return a DumpSource
-                String tmp_customDereferenceURI = datasetURI;
-
-                if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
-                    tmp_customDereferenceURI = customDereferenceURI;
-                }
-
-                dumpReader = customDereferenceURI != null && "-".equals(customDereferenceURI) ? new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE") : RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI);
-            }
-
-            // Set the DumpSource with the configured reader
-            testSource = new DumpTestSource(
-                    prefix,
-                    datasetURI,
-                    dumpReader,
-                    getAllSchemata());
+        testSourceBuilder.setPrefixUri(prefix, datasetURI);
+        testSourceBuilder.setReferenceSchemata(getAllSchemata());
+        if (customDereferenceURI != null && "-".equals(customDereferenceURI)) {
+            testSourceBuilder.setInMemFromPipe();
         }
+
 
         // Set TestSource configuration
         if (this.endpointQueryCacheTTL != -1)
-            testSource.setCacheTTL(this.endpointQueryCacheTTL);
+            testSourceBuilder.setCacheTTL(this.endpointQueryCacheTTL);
 
         if (this.endpointQueryDelayMS != -1)
-            testSource.setQueryDelay(this.endpointQueryDelayMS);
+            testSourceBuilder.setQueryDelay(this.endpointQueryDelayMS);
 
         if (this.endpointQueryPagination != -1)
-            testSource.setPagination(this.endpointQueryPagination);
+            testSourceBuilder.setPagination(this.endpointQueryPagination);
 
         if (this.endpointQueryLimit != -1)
-            testSource.setQueryLimit(this.endpointQueryLimit);
+            testSourceBuilder.setQueryLimit(this.endpointQueryLimit);
+
+        testSource = testSourceBuilder.build();
 
         return testSource;
     }
@@ -483,7 +438,7 @@ public class RDFUnitConfiguration {
      * @return a  object.
      */
     public String getEndpointURI() {
-        return endpointURI;
+        return testSourceBuilder.getSparqlEndpoint();
     }
 
     /**
@@ -492,7 +447,7 @@ public class RDFUnitConfiguration {
      * @return a  object.
      */
     public Collection<String> getEndpointGraphs() {
-        return endpointGraphs;
+        return testSourceBuilder.getEndpointGraphs();
     }
 
     /**
