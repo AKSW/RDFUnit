@@ -12,6 +12,7 @@ import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -34,6 +35,9 @@ public final class PatternReader implements ElementReader<Pattern> {
 
         patternBuilder.setElement(resource);
 
+        int count = 0; // used to count duplicates
+
+
         /**
 
          private final String description;
@@ -44,22 +48,30 @@ public final class PatternReader implements ElementReader<Pattern> {
          */
 
         // get ID
+        count = 0;
         for (Statement smt : resource.listProperties(DCTerms.identifier).toList()) {
+            checkArgument(count++ == 0, "Cannot have more than one identifier in Pattern %s", resource.getURI());
             patternBuilder.setId(smt.getObject().asLiteral().getString());
         }
 
         // description
+        count = 0;
         for (Statement smt : resource.listProperties(DCTerms.description).toList()) {
+            checkArgument(count++ == 0, "Cannot have more than one description in Pattern %s", resource.getURI());
             patternBuilder.setDescription(smt.getObject().asLiteral().getString());
         }
 
         // SPARQL where
+        count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlWherePattern).toList()) {
+            checkArgument(count++ == 0, "Cannot have more than one SPARQL query in Pattern %s", resource.getURI());
             patternBuilder.setSparqlWherePattern(smt.getObject().asLiteral().getString());
         }
 
         // SPARQL prevalence
+        count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlPrevalencePattern).toList()) {
+            checkArgument(count++ == 0, "Cannot have more than one prevalence query in Pattern %s", resource.getURI());
             patternBuilder.setSparqlPatternPrevalence(smt.getObject().asLiteral().getString());
         }
 
