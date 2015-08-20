@@ -40,7 +40,7 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
     /** {@inheritDoc} */
     @Override
     public void readDataset(Dataset dataset) throws RDFReaderException {
-        throw new RDFReaderException("Not implemented yet");
+        dataset.setDefaultModel(dataset.getDefaultModel().union(read()));
     }
 
     /** {@inheritDoc} */
