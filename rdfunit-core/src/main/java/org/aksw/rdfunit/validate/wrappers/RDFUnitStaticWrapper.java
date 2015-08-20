@@ -29,7 +29,7 @@ import java.util.Collection;
  * @since 6/17/14 8:30 PM
  * @version $Id: $Id
  */
-public class RDFUnitStaticWrapper {
+public final class RDFUnitStaticWrapper {
 
     private static volatile RDFReader ontologyReader = null;
     private static volatile SchemaSource ontologySource = null;
@@ -186,47 +186,6 @@ public class RDFUnitStaticWrapper {
      *
      * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param inputURI a {@link java.lang.String} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model input, final String inputURI) {
@@ -237,48 +196,7 @@ public class RDFUnitStaticWrapper {
      * Static method that validates an input model. You MUST call initWrapper once before calling this function
      *
      * @param input         the Model we want to validate
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
      * @param executionType What type of results we want
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
      * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
      * @return a new Model that contains the validation results. The results are according to executionType
      */
@@ -294,48 +212,7 @@ public class RDFUnitStaticWrapper {
      * Used for testing only ATM
      *
      * @param input           the Model we want to validate
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
      * @param executionType   What type of results we want
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
      * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
      * @param overviewResults This is a way to get validation statistics
      * @return a new Model that contains the validation results. The results are according to executionType
