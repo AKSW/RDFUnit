@@ -43,9 +43,10 @@ public class SerializationFormat {
      * Constructor
      *
      * @param name a {@link java.lang.String} object.
-     * @param ioType a {@link SerializationFormatIOType} object.
+     * @param ioType a {@link org.aksw.rdfunit.io.format.SerializationFormatIOType} object.
      * @param extension a {@link java.lang.String} object.
      * @param headerType a {@link java.lang.String} object.
+     * @param graphType a {@link org.aksw.rdfunit.io.format.SerializationFormatGraphType} object.
      */
     public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType) {
         this(name, ioType, graphType, extension, headerType, new HashSet<String>());
@@ -59,6 +60,7 @@ public class SerializationFormat {
      * @param extension  the extension
      * @param headerType the header type
      * @param synonyms   the synonyms
+     * @param graphType a {@link org.aksw.rdfunit.io.format.SerializationFormatGraphType} object.
      */
     public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType, Set<String> synonyms) {
         this.name = name;
@@ -134,11 +136,13 @@ public class SerializationFormat {
         return headerType;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hashCode(name, ioType, graphType, extension, headerType, synonyms);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -159,6 +163,8 @@ public class SerializationFormat {
     /**
      * Accorting to {@code SerializationFormatIOType} this can be an
      * input / output or input & output serialization format
+     *
+     * @return a {@link org.aksw.rdfunit.io.format.SerializationFormatIOType} object.
      */
     public SerializationFormatIOType getIoType() {
         return ioType;
@@ -167,6 +173,8 @@ public class SerializationFormat {
     /**
      * Accorting to {@code SerializationFormatGraphType} this can be an
      * single graph or dataset
+     *
+     * @return a {@link org.aksw.rdfunit.io.format.SerializationFormatGraphType} object.
      */
     public SerializationFormatGraphType getGraphType() {
         return graphType;

@@ -106,6 +106,7 @@ public class RDFDereferenceLimitReader extends AbstractRDFReader implements RDFR
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "RDFDereferenceLimitReader{" +

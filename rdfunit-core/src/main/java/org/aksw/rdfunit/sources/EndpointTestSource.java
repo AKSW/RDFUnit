@@ -12,6 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Describes a SPARQL Endpoint source
  *
  * @author Dimitris Kontokostas
+ * @version $Id: $Id
  */
 public class EndpointTestSource extends AbstractTestSource implements TestSource {
 

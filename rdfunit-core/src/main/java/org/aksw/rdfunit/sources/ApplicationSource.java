@@ -19,11 +19,13 @@ public class ApplicationSource implements Source {
         this.sourceConfig = new SourceConfig(prefix, uri);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getPrefix() {
         return sourceConfig.getPrefix();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getUri() {
         return sourceConfig.getUri();

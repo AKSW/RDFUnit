@@ -16,11 +16,17 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 12/17/14 5:07 PM
+ * @version $Id: $Id
  */
 public class TestCaseValidator {
 
     private final TestCase testCase;
 
+    /**
+     * <p>Constructor for TestCaseValidator.</p>
+     *
+     * @param testCase a {@link org.aksw.rdfunit.tests.TestCase} object.
+     */
     public TestCaseValidator(TestCase testCase) {
         this.testCase = testCase;
     }

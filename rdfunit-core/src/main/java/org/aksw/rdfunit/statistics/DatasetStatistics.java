@@ -48,15 +48,6 @@ public abstract class DatasetStatistics {
     public DatasetStatistics() {
     }
 
-    /**
-     * Gets stats.
-     *
-     * @param sparqlQuery the sparql query
-     * @return the stats
-     */
-/*
-    * helper function to get any stats
-    * */
     private Map<String, Integer> getStats(String sparqlQuery, QueryExecutionFactory qef) {
         Map<String, Integer> stats = new HashMap<>();
 

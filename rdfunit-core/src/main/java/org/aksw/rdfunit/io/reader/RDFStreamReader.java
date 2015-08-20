@@ -99,6 +99,7 @@ public class RDFStreamReader extends AbstractRDFReader implements RDFReader  {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "RDFStreamReader{" +

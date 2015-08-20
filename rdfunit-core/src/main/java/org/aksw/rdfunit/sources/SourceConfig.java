@@ -19,10 +19,20 @@ class SourceConfig {
         this.uri = checkNotNull(uri);
     }
 
+    /**
+     * <p>Getter for the field <code>prefix</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getPrefix() {
         return prefix;
     }
 
+    /**
+     * <p>Getter for the field <code>uri</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getUri() {
         return uri;
     }

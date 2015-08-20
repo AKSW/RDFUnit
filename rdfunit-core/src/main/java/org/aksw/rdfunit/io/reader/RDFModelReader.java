@@ -25,6 +25,7 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
         this.model = model;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Model read() throws RDFReaderException {
         return model;
@@ -42,6 +43,7 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
         throw new RDFReaderException("Not implemented yet");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "RDFModelReader{" +

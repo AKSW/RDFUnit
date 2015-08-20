@@ -26,6 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class DatasetTestSource extends AbstractTestSource implements TestSource {
+    /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(DatasetTestSource.class);
 
     private final RDFReader dumpReader;
@@ -47,6 +48,7 @@ public class DatasetTestSource extends AbstractTestSource implements TestSource 
         this(datasetTestSource.sourceConfig, datasetTestSource.queryingConfig, referenceSchemata, datasetTestSource.dumpReader, datasetTestSource.dumpDataset);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected QueryExecutionFactory initQueryFactory() {
 

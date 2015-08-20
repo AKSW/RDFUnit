@@ -7,6 +7,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
  *
  * @author Dimitris Kontokostas
  * @since 6/27/15 1:02 PM
+ * @version $Id: $Id
  */
 public class DatasetStatisticsClassesCount extends DatasetStatistics {
 
@@ -19,6 +20,7 @@ public class DatasetStatisticsClassesCount extends DatasetStatistics {
             "     ?s a ?stats . } " +
             " GROUP BY ?stats ";
 
+    /** {@inheritDoc} */
     @Override
     public String getStatisticsQuery() {
         return classStatsSPARQLwithCounts;

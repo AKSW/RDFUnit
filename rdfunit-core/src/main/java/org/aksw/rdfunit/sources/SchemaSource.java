@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
  * <p>SchemaSource class.</p>
  *
  * @author Dimitris Kontokostas
- *         Description
  * @since 9/16/13 1:51 PM
  * @version $Id: $Id
  */
 public class SchemaSource implements Source {
+    /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(SchemaSource.class);
 
 
@@ -45,21 +45,30 @@ public class SchemaSource implements Source {
         this.schemaReader = source.schemaReader;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getPrefix() {
         return sourceConfig.getPrefix();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getUri() {
         return sourceConfig.getUri();
     }
 
+    /** {@inheritDoc} */
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.Schema;
     }
 
+    /**
+     * <p>Getter for the field <code>model</code>.</p>
+     *
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @since 0.7.6
+     */
     public synchronized Model getModel() {
         if (model.isEmpty())
         try {
@@ -73,7 +82,7 @@ public class SchemaSource implements Source {
     /**
      * <p>Getter for the field <code>schema</code>.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getSchema() {
         return schema;
