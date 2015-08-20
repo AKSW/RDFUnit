@@ -174,24 +174,7 @@
                 <version>3.1.0</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-core</artifactId>
-                <version>1.6.2</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-junit4</artifactId>
-                <version>1.6.2</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito</artifactId>
-                <version>1.6.2</version>
-                <scope>test</scope>
-            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -306,29 +289,24 @@
                         </execution>
                     </executions>
                 </plugin>
-
-                <!--
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.12.1</version>
+                    <groupId>com.github.github</groupId>
+                    <artifactId>site-maven-plugin</artifactId>
+                    <version>0.12</version>
+                    <configuration>
+                        <message>Generated site for ${project.artifactId} ${project.version}</message>
+                        <path>maven</path>
+                        <merge>true</merge>
+                    </configuration>
                     <executions>
                         <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <encoding>UTF-8</encoding>
-                                <consoleOutput>true</consoleOutput>
-                                <failsOnError>false</failsOnError>
-                            </configuration>
                             <goals>
-                                <goal>check</goal>
+                                <goal>site</goal>
                             </goals>
+                            <phase>site-deploy</phase>
                         </execution>
                     </executions>
                 </plugin>
-                -->
-
             </plugins>
 
     </build>
