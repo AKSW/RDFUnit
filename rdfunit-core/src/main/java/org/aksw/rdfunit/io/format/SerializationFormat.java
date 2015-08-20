@@ -162,7 +162,7 @@ public class SerializationFormat {
 
     /**
      * Accorting to {@code SerializationFormatIOType} this can be an
-     * input / output or input & output serialization format
+     * input / output or input and output serialization format
      *
      * @return a {@link org.aksw.rdfunit.io.format.SerializationFormatIOType} object.
      */
