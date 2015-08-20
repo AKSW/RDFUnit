@@ -7,25 +7,19 @@ import org.aksw.rdfunit.resources.Resources;
 import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.fail;
 
-@Category(IntegrationTest.class)
 public class ManualTestsIntegrationTest {
-
-    private static final Map<String, Integer> testsWithErrors = new HashMap<>();
-    private static final String emptyResource = "/org/aksw/rdfunit/validate/data/empty.ttl";
-
 
     @Before
     public void setUp() throws Exception {
+
+        String emptyResource = "/org/aksw/rdfunit/validate/data/empty.ttl";
 
         // Load test ontology from resource (empty in this case)
         RDFUnitStaticWrapper.initWrapper("", emptyResource);
@@ -37,10 +31,6 @@ public class ManualTestsIntegrationTest {
             fail("Cannot read patterns and/or pattern generators");
         }
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test

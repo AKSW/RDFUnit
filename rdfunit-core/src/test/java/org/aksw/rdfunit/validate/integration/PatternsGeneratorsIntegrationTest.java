@@ -15,14 +15,12 @@ import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-@Category(IntegrationTest.class)
 public class PatternsGeneratorsIntegrationTest {
 
     private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
