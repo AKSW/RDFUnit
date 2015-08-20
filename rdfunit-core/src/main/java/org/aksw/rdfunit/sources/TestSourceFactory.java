@@ -36,4 +36,13 @@ public final class TestSourceFactory {
                 .setReferenceSchemata(referenceSchemata)
                 .build();
     }
+
+    public static TestSource createDatasetTestSource(String prefix, String uri, RDFReader dumpReader, Collection<SchemaSource> referenceSchemata) {
+        return new TestSourceBuilder()
+                .setImMemDataset()
+                .setPrefixUri(prefix, uri)
+                .setInMemReader(dumpReader)
+                .setReferenceSchemata(referenceSchemata)
+                .build();
+    }
 }
