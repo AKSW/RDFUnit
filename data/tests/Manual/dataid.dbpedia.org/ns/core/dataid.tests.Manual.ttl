@@ -11,3 +11,252 @@
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 @prefix spin: <http://spinrdf.org/spin#> .
 @prefix dataid: <http://dataid.dbpedia.org/ns/core#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+
+rutt:dataid-dataset-CARD-recom-label
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for rdfs:label = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references rdfs:label ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue rdfs:label ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1";
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-licenseName
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for dataid:licenseName = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dataid:licenseName ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:licenseName ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1" ;
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-language
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for dcterms:language = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dcterms:language ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dcterms:language ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1" ;
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-triples
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for void:triples = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references void:triples ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue void:triples ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1" ;
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-rootResource
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for void:rootResource = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references void:rootResource ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue void:rootResource ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1";
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-latestVersion
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for dataid:latestVersion = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dataid:latestVersion ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:latestVersion ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1" ;
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-previousVersion
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for dataid:previousVersion = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dataid:previousVersion ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:previousVersion ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1";
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .
+
+rutt:dataid-dataset-CARD-recom-modified
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "recommandation for dcterms:modified = 1" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dcterms:modified ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dcterms:modified ;
+            rut:parameter rutp:OWLCARDT-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Dataset ;
+            rut:parameter rutp:OWLCARDT-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "!=" ;
+            rut:parameter rutp:OWLCARDT-OP
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue "1" ;
+            rut:parameter rutp:OWLCARDT-V1
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:INFO .

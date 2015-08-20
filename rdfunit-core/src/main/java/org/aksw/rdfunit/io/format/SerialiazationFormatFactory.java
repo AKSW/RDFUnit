@@ -29,6 +29,7 @@ public final class SerialiazationFormatFactory {
         serializationFormats.add(createTurtle());
         serializationFormats.add(createN3());
         serializationFormats.add(createNTriples());
+        serializationFormats.add(createNQuads());
         serializationFormats.add(createJsonLD());
         serializationFormats.add(createRDFJson());
         serializationFormats.add(createRDFXMLAbbrevOut());
@@ -93,6 +94,20 @@ public final class SerialiazationFormatFactory {
         currentSynonyms.addAll(Arrays.asList("n-triple", "n-triples", "ntriple", "ntriples", "nt"));
         return new SerializationFormat(
                 "N-TRIPLE", SerializationFormatType.inputAndOutput, "nt", "application/n-triples", currentSynonyms);
+
+    }
+
+    /**
+     * <p>createNQuads.</p>
+     *
+     * @return a new NQUADS format for input/output
+     */
+    public static SerializationFormat createNQuads() {
+        // nquads -> input & output
+        HashSet<String> currentSynonyms = new HashSet<>();
+        currentSynonyms.addAll(Arrays.asList("n-nquads", "n-quads", "nquads", "nquads", "nq"));
+        return new SerializationFormat(
+                "N-QUADS", SerializationFormatType.inputAndOutput, "nt", "application/n-triples", currentSynonyms);
 
     }
 

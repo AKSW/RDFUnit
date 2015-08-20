@@ -66,6 +66,7 @@ public final class TestGeneratorUtils {
 
             TestAutoGenerator tag = new TestAutoGenerator(generator, description, query, PatternService.getPattern(patternID), annotations);
             if (tag.isValid()) {
+                log.warn("AutoGenerator is valid: " + tag.getUri());
                 autoGenerators.add(tag);
             } else {
                 log.error("AutoGenerator not valid: " + tag.getUri());

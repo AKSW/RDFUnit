@@ -41,6 +41,7 @@ public class RDFUnitStaticWrapper {
      */
     private static volatile String ontologyURI = null;
     private static volatile String ontologyResourceURI = null;
+    private static volatile String ontologyPrefix = null;
 
     private RDFUnitStaticWrapper() {
     }
@@ -50,8 +51,8 @@ public class RDFUnitStaticWrapper {
      *
      * @param _ontologyURI The ontology URI/IRI (for dereferencing)
      */
-    public static void initWrapper(String _ontologyURI) {
-        initWrapper(_ontologyURI, null);
+    public static void initWrapper(String prefix, String _ontologyURI) {
+        initWrapper(prefix, _ontologyURI, null);
     }
 
     /**
@@ -60,7 +61,8 @@ public class RDFUnitStaticWrapper {
      * @param _ontologyURI         The ontology URI/IRI (for dereferencing)
      * @param _ontologyResourceURI The resource URI of the ontology (if the ontology is stored in resources) give null if not applicable
      */
-    public static void initWrapper(String _ontologyURI, String _ontologyResourceURI) {
+    public static void initWrapper(String prefix, String _ontologyURI, String _ontologyResourceURI) {
+        ontologyPrefix = prefix;
         ontologyURI = _ontologyURI;
         ontologyResourceURI = _ontologyResourceURI;
     }
@@ -83,10 +85,10 @@ public class RDFUnitStaticWrapper {
 
             // Reader the ontology either from a resource or, if it fails, dereference it from the URI
             Collection<RDFReader> nifReaderList = new ArrayList<>();
-            if (ontologyResourceURI != null) {
-                nifReaderList.add(RDFReaderFactory.createResourceReader(ontologyResourceURI));
-            }
-            nifReaderList.add(RDFReaderFactory.createDereferenceReader(ontologyURI));
+                if (ontologyResourceURI != null) {
+                    nifReaderList.add(RDFReaderFactory.createDereferenceReader(ontologyResourceURI));
+                }
+                nifReaderList.add(RDFReaderFactory.createDereferenceReader(ontologyURI));
 
             ontologyReader = new RDFFirstSuccessReader(nifReaderList);
         }
@@ -104,7 +106,7 @@ public class RDFUnitStaticWrapper {
         // even if it's called twice, there is no harm and the overhead is negligible
         if (ontologySource == null) {
 
-            ontologySource = new SchemaSource("custom", ontologyURI, getOntologyReader());
+            ontologySource = new SchemaSource(ontologyPrefix, ontologyURI, getOntologyReader());
         }
         return ontologySource;
     }
@@ -121,11 +123,23 @@ public class RDFUnitStaticWrapper {
 
 
                     // Initialize the nif Source
-                    Source ontologySource = getOntologySource();
+                    Source ontologySource =getOntologySource();
 
                     // Set up the manual nif test cases (from resource)
                     RDFReader manualTestCaseReader = RDFReaderFactory.createResourceReader(
                                     CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", ontologySource));
+
+
+                    // Generate test cases from ontology (do this every time in case ontology changes)
+                    RDFUnit rdfunit = new RDFUnit();
+                    try {
+                        rdfunit.init();
+                    } catch (RDFReaderException e) {
+                        //TODO
+                        // fatal error / send only manual test cases
+                        //testSuite = new TestSuite(manualTestCases);  -> does not worksince init has to be run before manual test cases
+                        return testSuite; // do not execute further
+                    }
 
                     // Instantiate manual test cases
                     Collection<TestCase> manualTestCases;
@@ -136,17 +150,9 @@ public class RDFUnitStaticWrapper {
                         manualTestCases = new ArrayList<>();
                     }
 
-                    // Generate test cases from ontology (do this every time in case ontology changes)
-                    RDFUnit rdfunit = new RDFUnit();
-                    try {
-                        rdfunit.init();
-                    } catch (RDFReaderException e) {
-                        // fatal error / send only manual test cases
-                        testSuite = new TestSuite(manualTestCases);
-                        return testSuite; // do not execute further
-                    }
 
-                    Collection<TestCase> autoTestCases = TestGeneratorUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
+                    //TODO undo
+                    Collection<TestCase> autoTestCases = new ArrayList<>();//TestGeneratorUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
 
                     Collection<TestCase> allTestCases = new ArrayList<>();
                     allTestCases.addAll(autoTestCases);
@@ -283,7 +289,7 @@ public class RDFUnitStaticWrapper {
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, final String agentID, DatasetOverviewResults overviewResults) {
 
-        final boolean enableRDFUnitLogging = false;
+        final boolean enableRDFUnitLogging = true;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
         testExecutorMonitor.setUserID(agentID);
         testExecutorMonitor.setExecutionType(testCaseExecutionType);
