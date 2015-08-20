@@ -86,7 +86,7 @@ public abstract class AbstractTestSource implements TestSource {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized QueryExecutionFactory getExecutionFactory() {
+    public QueryExecutionFactory getExecutionFactory() {
         if (queryFactory == null) {
             queryFactory = initQueryFactory();
         }

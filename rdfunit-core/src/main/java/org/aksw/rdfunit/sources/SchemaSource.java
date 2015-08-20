@@ -69,7 +69,7 @@ public class SchemaSource implements Source {
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @since 0.7.6
      */
-    public synchronized Model getModel() {
+    public Model getModel() {
         if (model.isEmpty())
         try {
             schemaReader.read(model);
