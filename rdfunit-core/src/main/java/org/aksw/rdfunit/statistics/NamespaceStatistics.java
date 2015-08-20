@@ -15,6 +15,7 @@ import java.util.*;
  *
  * @author Dimitris Kontokostas
  * @since 6/27/15 1:20 PM
+ * @version $Id: $Id
  */
 public final class NamespaceStatistics {
 
@@ -31,22 +32,42 @@ public final class NamespaceStatistics {
         this.skipUnknownNamespaces = skipUnknownNamespaces;
     }
 
+    /**
+     * <p>createOntologyNSStatisticsKnown.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.statistics.NamespaceStatistics} object.
+     */
     public static NamespaceStatistics createOntologyNSStatisticsKnown() {
         Collection<DatasetStatistics> datasetStatistics = Arrays.asList(new DatasetStatisticsClasses(), new DatasetStatisticsProperties());
         return new NamespaceStatistics(datasetStatistics, true);
     }
 
+    /**
+     * <p>createOntologyNSStatisticsAll.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.statistics.NamespaceStatistics} object.
+     */
     public static NamespaceStatistics createOntologyNSStatisticsAll() {
         Collection<DatasetStatistics> datasetStatistics = Arrays.asList(new DatasetStatisticsClasses(), new DatasetStatisticsProperties());
         return new NamespaceStatistics(datasetStatistics, false);
     }
 
+    /**
+     * <p>createCompleteNSStatisticsKnown.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.statistics.NamespaceStatistics} object.
+     */
     public static NamespaceStatistics createCompleteNSStatisticsKnown() {
         Collection<DatasetStatistics> datasetStatistics = new ArrayList<>();
         datasetStatistics.add(new DatasetStatisticsAllIris());
         return new NamespaceStatistics(datasetStatistics, true);
     }
 
+    /**
+     * <p>createCompleteNSStatisticsAll.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.statistics.NamespaceStatistics} object.
+     */
     public static NamespaceStatistics createCompleteNSStatisticsAll() {
         Collection<DatasetStatistics> datasetStatistics = new ArrayList<>();
         datasetStatistics.add(new DatasetStatisticsAllIris());
@@ -54,6 +75,12 @@ public final class NamespaceStatistics {
     }
 
 
+    /**
+     * <p>getNamespaces.</p>
+     *
+     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<SchemaSource> getNamespaces(QueryExecutionFactory qef) {
 
         Set<String> namespaces = new HashSet<>();

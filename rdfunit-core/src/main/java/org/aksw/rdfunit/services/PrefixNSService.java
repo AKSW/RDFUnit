@@ -52,7 +52,7 @@ public final class PrefixNSService {
         }
     }
 
-    private static class DeclInstance {
+    private static final class DeclInstance {
         private static final String sparqlPrefixDecl = createSparqlPrefixes();
 
 

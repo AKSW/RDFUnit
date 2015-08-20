@@ -34,6 +34,11 @@ public final class SchemaService {
     private SchemaService() {
     }
 
+    /**
+     * <p>getSize.</p>
+     *
+     * @return a int.
+     */
     public static int getSize() {return schemata.size();}
 
     /**

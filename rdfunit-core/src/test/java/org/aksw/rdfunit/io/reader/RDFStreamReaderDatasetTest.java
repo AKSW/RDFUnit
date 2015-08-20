@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 public class RDFStreamReaderDatasetTest {
 
-    private static Dataset dataset;
+    private Dataset dataset;
 
     @Before
     public void setUp() throws Exception {

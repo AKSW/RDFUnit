@@ -10,9 +10,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  *
  * @author Dimitris Kontokostas
  * @since 5/28/15 8:39 PM
+ * @version $Id: $Id
  */
 public abstract class AbstractRDFReader implements RDFReader {
 
+    /** {@inheritDoc} */
     @Override
     public Model read() throws RDFReaderException {
         try {
@@ -25,6 +27,7 @@ public abstract class AbstractRDFReader implements RDFReader {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public Dataset readDataset() throws RDFReaderException {
         try {

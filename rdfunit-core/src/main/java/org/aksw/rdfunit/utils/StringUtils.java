@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author Dimitris Kontokostas
  * @since 3/29/15 5:00 PM
+ * @version $Id: $Id
  */
 public final class StringUtils {
     private StringUtils() {}
@@ -15,8 +16,8 @@ public final class StringUtils {
      * Generates a sha-256 hash from a string
      * Taken from http://stackoverflow.com/questions/415953/generate-md5-hash-in-java
      *
-     * @param str a {@link String} object.
-     * @return a {@link String} object.
+     * @param str a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      * @since 0.7.2
      */
     public static String getHashFromString(String str) {

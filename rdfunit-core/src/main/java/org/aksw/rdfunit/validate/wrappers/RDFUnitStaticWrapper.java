@@ -29,7 +29,7 @@ import java.util.Collection;
  * @since 6/17/14 8:30 PM
  * @version $Id: $Id
  */
-public class RDFUnitStaticWrapper {
+public final class RDFUnitStaticWrapper {
 
     private static volatile RDFReader ontologyReader = null;
     private static volatile SchemaSource ontologySource = null;

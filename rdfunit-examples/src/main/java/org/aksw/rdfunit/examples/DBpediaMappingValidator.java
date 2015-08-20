@@ -26,6 +26,7 @@ import java.util.*;
  *
  * @author Dimitris Kontokostas
  * @since 6/30/15 4:15 PM
+ * @version $Id: $Id
  */
 public class DBpediaMappingValidator {
 
@@ -78,10 +79,22 @@ public class DBpediaMappingValidator {
         return new TestSuite(tests);
     }
 
+    /**
+     * <p>validateAllMappings.</p>
+     *
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     */
     public Model validateAllMappings() throws RDFReaderException {
         return RDFUnitStaticWrapper.validate(TestCaseExecutionType.extendedTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
     }
 
+    /**
+     * <p>getErrorListFromModel.</p>
+     *
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link java.util.List} object.
+     */
     public List<MappingDomainError> getErrorListFromModel(Model model) {
         QueryExecution qe = null;
         List<MappingDomainError> mappingDomainErrors = new ArrayList<>();
@@ -112,6 +125,12 @@ public class DBpediaMappingValidator {
         return mappingDomainErrors;
     }
 
+    /**
+     * <p>getErrorsAsMap.</p>
+     *
+     * @param mappingDomainErrors a {@link java.util.Collection} object.
+     * @return a {@link java.util.Map} object.
+     */
     public Map<String, List<MappingDomainError>> getErrorsAsMap(Collection<MappingDomainError> mappingDomainErrors) {
         Map<String, List<MappingDomainError>> errorsAsMap = new HashMap<>();
         for (MappingDomainError error : mappingDomainErrors) {
@@ -127,6 +146,12 @@ public class DBpediaMappingValidator {
         return errorsAsMap;
     }
 
+    /**
+     * <p>convertToJson.</p>
+     *
+     * @param errorLangMap a {@link java.util.Map} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String convertToJson(Map<String, List<MappingDomainError>> errorLangMap) {
         StringBuilder builder = new StringBuilder();
 
@@ -159,6 +184,12 @@ public class DBpediaMappingValidator {
     }
 
 
+    /**
+     * <p>validateAndGetJson.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     */
     public String validateAndGetJson() throws RDFReaderException {
         Model model = validateAllMappings();
 
@@ -169,6 +200,12 @@ public class DBpediaMappingValidator {
         return convertToJson(getErrorsAsMap(errors));
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @throws java.lang.Exception if any.
+     */
     public static void main(String[] args) throws Exception {
 
 

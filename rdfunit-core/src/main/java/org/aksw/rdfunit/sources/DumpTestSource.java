@@ -24,6 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class DumpTestSource extends AbstractTestSource implements TestSource {
+    /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(DumpTestSource.class);
 
     private final RDFReader dumpReader;
@@ -44,6 +45,7 @@ public class DumpTestSource extends AbstractTestSource implements TestSource {
         this(dumpTestSource.sourceConfig, dumpTestSource.queryingConfig, referenceSchemata, dumpTestSource.dumpReader, dumpTestSource.dumpModel);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected QueryExecutionFactory initQueryFactory() {
 

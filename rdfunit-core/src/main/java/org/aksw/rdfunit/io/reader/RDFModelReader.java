@@ -25,6 +25,7 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
         this.model = model;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Model read() throws RDFReaderException {
         return model;
@@ -39,9 +40,10 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
     /** {@inheritDoc} */
     @Override
     public void readDataset(Dataset dataset) throws RDFReaderException {
-        throw new RDFReaderException("Not implemented yet");
+        dataset.setDefaultModel(dataset.getDefaultModel().union(read()));
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "RDFModelReader{" +

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 public class RDFStreamReaderTest {
 
-    private static Model model;
+    private Model model;
 
     @Before
     public void setUp() throws Exception {

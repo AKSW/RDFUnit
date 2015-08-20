@@ -2,6 +2,10 @@ package org.aksw.rdfunit.utils;
 
 /**
  * Encapsulates an LOV Entry
+ *
+ * @author jim
+ * @version $Id: $Id
+ * @since 0.7.6
  */
 public final class LOVEntry implements Comparable<LOVEntry>{
 
@@ -72,6 +76,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
         return vocabularyDefinedBy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,6 +87,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
         return prefix.equals(lovEntry.prefix);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = prefix.hashCode();
@@ -91,6 +97,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
         return result;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "LOVEntry{" +
@@ -99,6 +106,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
                 '}';
     }
 
+    /** {@inheritDoc} */
     @Override
     public int compareTo(LOVEntry o) {
         return this.prefix.compareTo(o.getPrefix());

@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
  *
  * @author Dimitris Kontokostas
  * @since 12/17/14 4:48 PM
+ * @version $Id: $Id
  */
 public final class IOUtils {
     private IOUtils() {

@@ -18,6 +18,7 @@ import java.util.List;
  *
  * @author Dimitris Kontokostas
  * @since 3 /31/15 4:15 PM
+ * @version $Id: $Id
  */
 public final class LOVUtils {
 
@@ -41,6 +42,11 @@ public final class LOVUtils {
     private LOVUtils(){}
 
 
+    /**
+     * <p>getAllLOVEntries.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public static List<LOVEntry> getAllLOVEntries() {
 
         List<LOVEntry> lovEntries = new LinkedList<>();

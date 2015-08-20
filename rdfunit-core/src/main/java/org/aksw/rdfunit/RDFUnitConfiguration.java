@@ -132,7 +132,7 @@ public class RDFUnitConfiguration {
      * object.
      * @param format a
      * object.
-     * @throws UndefinedSerializationException if any.
+     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
      */
     public void setCustomTextSource(String text, String format) throws UndefinedSerializationException {
         testSourceBuilder.setInMemFromCustomText(text, format);
@@ -183,7 +183,7 @@ public class RDFUnitConfiguration {
      *
      * @param schemaPrefixes a
      * object.
-     * @throws UndefinedSchemaException if any.
+     * @throws org.aksw.rdfunit.exceptions.UndefinedSchemaException if any.
      */
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
         this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
@@ -285,7 +285,7 @@ public class RDFUnitConfiguration {
      *
      * @param outputNames a
      * object.
-     * @throws UndefinedSerializationException if any.
+     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
      */
     public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
         outputFormats = new ArrayList<>();

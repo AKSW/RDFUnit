@@ -99,16 +99,39 @@ public final class SchemaSourceFactory {
         return createSchemaSourceSimple(prefix, uri, RDFReaderFactory.createReaderFromText(text, format));
     }
 
+    /**
+     * <p>createSchemaSourceSimple.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
+     */
     public static SchemaSource createSchemaSourceSimple(String prefix, String uri, RDFReader reader) {
 
         return createSchemaSourceSimple(prefix, uri, uri, reader);
     }
 
+    /**
+     * <p>createSchemaSourceSimple.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @param uri a {@link java.lang.String} object.
+     * @param schema a {@link java.lang.String} object.
+     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
+     */
     public static SchemaSource createSchemaSourceSimple(String prefix, String uri, String schema, RDFReader reader) {
 
         return new SchemaSource(new SourceConfig(prefix, uri), schema, reader);
     }
 
+    /**
+     * <p>copySchemaSource.</p>
+     *
+     * @param schemaSource a {@link org.aksw.rdfunit.sources.SchemaSource} object.
+     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
+     */
     public static SchemaSource copySchemaSource(SchemaSource schemaSource) {
 
         return new SchemaSource(schemaSource);

@@ -70,6 +70,7 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "RDFDereferenceReader{" +

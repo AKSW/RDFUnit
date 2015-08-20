@@ -43,6 +43,7 @@ public class RDFSPARQLReader extends AbstractRDFReader implements RDFReader  {
         throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "RDFSPARQLReader{" +

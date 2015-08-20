@@ -28,7 +28,19 @@ public interface RDFReader {
      */
     void read(Model model) throws RDFReaderException;
 
+    /**
+     * <p>readDataset.</p>
+     *
+     * @return a {@link com.hp.hpl.jena.query.Dataset} object.
+     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     */
     Dataset readDataset() throws RDFReaderException ;
 
+    /**
+     * <p>readDataset.</p>
+     *
+     * @param dataset a {@link com.hp.hpl.jena.query.Dataset} object.
+     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     */
     void readDataset(Dataset dataset) throws RDFReaderException ;
 }
