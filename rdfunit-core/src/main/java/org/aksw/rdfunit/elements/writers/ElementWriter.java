@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.elements.writers;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
@@ -16,5 +17,5 @@ public interface ElementWriter {
      *
      * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      */
-    Resource write();
+    Resource write(Model model);
 }

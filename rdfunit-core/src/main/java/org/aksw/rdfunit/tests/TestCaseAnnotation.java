@@ -82,12 +82,12 @@ public class TestCaseAnnotation {
         }
 
         for (ResultAnnotation annotation : resultAnnotations) {
-            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write();
+            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write(model);
             resource.addProperty(RDFUNITv.resultAnnotation, annRes);
         }
 
         for (ResultAnnotation annotation : variableAnnotations) {
-            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write();
+            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write(model);
             resource.addProperty(RDFUNITv.resultAnnotation, annRes);
         }
 

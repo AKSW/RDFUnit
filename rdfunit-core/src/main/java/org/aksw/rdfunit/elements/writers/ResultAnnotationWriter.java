@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.elements.writers;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -60,11 +60,8 @@ public final class ResultAnnotationWriter implements ElementWriter {
 
     /** {@inheritDoc} */
     @Override
-    public Resource write() {
-        Resource resource;
-
-        // keep the original resource if exists
-        resource = resultAnnotation.getResource().isPresent() ? resultAnnotation.getResource().get() : ResourceFactory.createResource();
+    public Resource write(Model model) {
+        Resource resource = ElementWriterUtils.copyElementResourceInModel(resultAnnotation, model);;
 
         // rdf:type sh:AnnotationProperty
         resource.addProperty(RDF.type, annotationClazz);

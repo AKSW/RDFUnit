@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.elements.writers;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.elements.interfaces.Function;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -32,12 +32,8 @@ public final class FunctionWriter implements ElementWriter {
 
     /** {@inheritDoc} */
     @Override
-    public Resource write() {
-
-        // keep the original resource if exists
-        Resource resource = function.getResource().isPresent() ?
-                function.getResource().get() :
-                ResourceFactory.createResource();
+    public Resource write(Model model) {
+        Resource resource = ElementWriterUtils.copyElementResourceInModel(function, model);
 
         // rdf:type sh:Argument
         resource.addProperty(RDF.type, SHACL.Function);

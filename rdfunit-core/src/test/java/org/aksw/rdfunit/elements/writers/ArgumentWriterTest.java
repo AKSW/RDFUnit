@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.elements.writers;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.elements.interfaces.Argument;
@@ -43,7 +44,8 @@ public class ArgumentWriterTest {
     @Test
     public void testRead() throws Exception {
         Argument argument = ArgumentReader.create().read(resource);
-        Resource rs = ArgumentWriter.createArgumentWriter(argument).write();
+        Model model = ModelFactory.createDefaultModel();
+        Resource rs = ArgumentWriter.createArgumentWriter(argument).write(model);
 
         assertTrue(resource.equals(rs));
     }
