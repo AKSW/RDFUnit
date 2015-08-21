@@ -14,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 6:04 PM
+ * @version $Id: $Id
  */
 public final class ArgumentImpl implements Argument {
 
@@ -35,47 +36,56 @@ public final class ArgumentImpl implements Argument {
         this.isOptional = builder.isOptional;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return Optional.fromNullable(element);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getComment() {
         return comment;
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean isOptional() {
         return isOptional;
     }
 
+    /** {@inheritDoc} */
     @Override
     public RDFNode getPredicate() {
         return predicate;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getValueType() {
         return Optional.fromNullable(valueType);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<ValueKind> getValueKind() {
         return Optional.fromNullable(valueKind);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<RDFNode> getDefaultValue() {
         return Optional.fromNullable(defaultValue);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hashCode(element, predicate, comment, valueType, valueKind, defaultValue, isOptional);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

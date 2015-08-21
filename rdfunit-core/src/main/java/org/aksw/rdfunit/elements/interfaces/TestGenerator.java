@@ -10,6 +10,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 3:10 PM
+ * @version $Id: $Id
  */
 public interface TestGenerator extends Element {
 
@@ -37,7 +38,7 @@ public interface TestGenerator extends Element {
     /**
      * <p>Getter for the field <code>pattern</code>.</p>
      *
-     * @return a {@link Pattern} object.
+     * @return a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
      */
     Pattern getTAGPattern();
 
@@ -53,6 +54,7 @@ public interface TestGenerator extends Element {
     /**
      * Checks if the the generator is valid (provides correct parameters)
      * TODO: move this function to a standalone class
+     *
      * @return a boolean.
      */
     boolean isValid();

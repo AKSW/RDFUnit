@@ -66,15 +66,27 @@ public final class TestGeneratorImpl implements TestGenerator {
         this.generatorAnnotations = checkNotNull(generatorAnnotations);
     }
 
+    /**
+     * <p>createTAG.</p>
+     *
+     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param description a {@link java.lang.String} object.
+     * @param query a {@link java.lang.String} object.
+     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @param generatorAnnotations a {@link java.util.Collection} object.
+     * @return a {@link org.aksw.rdfunit.elements.interfaces.TestGenerator} object.
+     */
     public static TestGenerator createTAG(Resource element, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
         return new TestGeneratorImpl(element,description,query,pattern,generatorAnnotations);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return Optional.fromNullable(element);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isValid() {
         Query q;
@@ -99,6 +111,7 @@ public final class TestGeneratorImpl implements TestGenerator {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Collection<TestCase> generate(SchemaSource source) {
         Collection<TestCase> tests = new ArrayList<>();
@@ -173,21 +186,25 @@ public final class TestGeneratorImpl implements TestGenerator {
         return tests;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getTAGUri() {
         return element.getURI();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getTAGDescription() {
         return description;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getTAGQuery() {
         return query;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Pattern getTAGPattern() {
         return pattern;

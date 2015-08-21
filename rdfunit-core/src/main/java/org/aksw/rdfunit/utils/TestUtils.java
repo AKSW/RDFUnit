@@ -335,7 +335,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @param pattern a {@link Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
      * @return a {@link java.util.Collection} object.
      */
     public static Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
@@ -383,7 +383,7 @@ public final class TestUtils {
      * <p>generateTestURI.</p>
      *
      * @param sourcePrefix a {@link java.lang.String} object.
-     * @param pattern a {@link Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      * @param generatorURI a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.

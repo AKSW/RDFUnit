@@ -15,13 +15,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
+ * @version $Id: $Id
  */
 public final class ArgumentReader implements ElementReader<Argument> {
 
     private ArgumentReader(){}
 
+    /**
+     * <p>create.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.elements.readers.ArgumentReader} object.
+     */
     public static ArgumentReader create() { return new ArgumentReader();}
 
+    /** {@inheritDoc} */
     @Override
     public Argument read(Resource resource) {
         checkNotNull(resource);

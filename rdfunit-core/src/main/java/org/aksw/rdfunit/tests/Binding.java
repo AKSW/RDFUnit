@@ -26,7 +26,7 @@ public class Binding {
     /**
      * <p>Constructor for Binding.</p>
      *
-     * @param parameter a {@link PatternParameter} object.
+     * @param parameter a {@link org.aksw.rdfunit.elements.interfaces.PatternParameter} object.
      * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
      * @throws org.aksw.rdfunit.exceptions.BindingException if any.
      */

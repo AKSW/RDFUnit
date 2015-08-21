@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  *
  * @author Dimitris Kontokostas
  * @since 8 /15/15 4:26 PM
+ * @version $Id: $Id
  */
 public interface ResultAnnotation extends Element{
     /**

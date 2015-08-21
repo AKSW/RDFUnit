@@ -29,6 +29,12 @@ public final class TestGeneratorUtils {
     private TestGeneratorUtils() {
     }
 
+    /**
+     * <p>instantiateTestGeneratorsFromModel.</p>
+     *
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link java.util.Collection} object.
+     */
     public static Collection<TestGenerator> instantiateTestGeneratorsFromModel(Model model) {
         Collection<TestGenerator> autoGenerators = new ArrayList<>();
 

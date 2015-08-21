@@ -14,14 +14,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
+ * @version $Id: $Id
  */
 public final class FunctionReader implements ElementReader<Function> {
 
     private FunctionReader(){}
 
+    /**
+     * <p>create.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.elements.readers.FunctionReader} object.
+     */
     public static FunctionReader create() { return new FunctionReader();}
 
 
+    /** {@inheritDoc} */
     @Override
     public Function read(Resource resource) {
         checkNotNull(resource);

@@ -20,13 +20,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
+ * @version $Id: $Id
  */
 public final class PatternReader implements ElementReader<Pattern> {
 
     private PatternReader(){}
 
+    /**
+     * <p>create.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.elements.readers.PatternReader} object.
+     */
     public static PatternReader create() { return new PatternReader();}
 
+    /** {@inheritDoc} */
     @Override
     public Pattern read(Resource resource) {
         checkNotNull(resource);

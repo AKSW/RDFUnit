@@ -32,7 +32,7 @@ public class PatternBasedTestCase extends TestCase {
      *
      * @param testURI a {@link java.lang.String} object.
      * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
-     * @param pattern a {@link Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */

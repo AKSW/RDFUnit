@@ -63,11 +63,13 @@ public final class PatternParameterImpl implements PatternParameter {
         return Optional.fromNullable(constraintPattern);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hashCode(element, id, constraint, constraintPattern);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

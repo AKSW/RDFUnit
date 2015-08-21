@@ -10,8 +10,8 @@ import org.aksw.rdfunit.enums.ValueKind;
  *
  * @author Dimitris Kontokostas
  * @since 6 /17/15 3:15 PM
+ * @version $Id: $Id
  */
-
 public interface Argument extends Element{
 
     /**

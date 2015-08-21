@@ -42,11 +42,13 @@ public final class PatternImpl implements Pattern {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isValid() {
         if (getParameters() == null || getParameters().isEmpty()) {
@@ -71,6 +73,7 @@ public final class PatternImpl implements Pattern {
     } */
 
 
+    /** {@inheritDoc} */
     @Override
     public Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
         Collection<ResultAnnotation> finalAnnotations = new ArrayList<>();
@@ -90,36 +93,43 @@ public final class PatternImpl implements Pattern {
         return finalAnnotations;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getIRI() {
         return element.getURI();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getId() {
         return id;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getSparqlWherePattern() {
         return sparqlWherePattern;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<String> getSparqlPatternPrevalence() {
         return Optional.fromNullable(sparqlPatternPrevalence);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Collection<PatternParameter> getParameters() {
         return Collections.unmodifiableCollection(parameters);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<PatternParameter> getParameter(String parameterURI) {
         for (PatternParameter parameter : parameters) {

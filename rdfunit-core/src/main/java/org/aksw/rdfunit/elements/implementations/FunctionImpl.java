@@ -14,6 +14,7 @@ import java.util.List;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 3:48 PM
+ * @version $Id: $Id
  */
 public final class FunctionImpl implements Function {
     private final Resource element;
@@ -34,31 +35,37 @@ public final class FunctionImpl implements Function {
         this.returnType = builder.returnType;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getComment() {
         return comment;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getReturnType() {
         return Optional.fromNullable(returnType);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isCachable() {
         return isCachable;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<Argument> getArguments() {
         return arguments;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getSparqlString() {
         return sparqlString;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return Optional.fromNullable(element);
@@ -121,11 +128,13 @@ public final class FunctionImpl implements Function {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hashCode(comment, isCachable, superFunction, arguments, sparqlString, returnType);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

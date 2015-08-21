@@ -12,6 +12,7 @@ import org.apache.commons.lang.NotImplementedException;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
+ * @version $Id: $Id
  */
 public final class FunctionWriter implements ElementWriter {
 
@@ -21,8 +22,15 @@ public final class FunctionWriter implements ElementWriter {
         this.function = function;
     }
 
+    /**
+     * <p>createArgumentWriter.</p>
+     *
+     * @param function a {@link org.aksw.rdfunit.elements.interfaces.Function} object.
+     * @return a {@link org.aksw.rdfunit.elements.writers.FunctionWriter} object.
+     */
     public static FunctionWriter createArgumentWriter(Function function) {return new FunctionWriter(function);}
 
+    /** {@inheritDoc} */
     @Override
     public Resource write() {
 

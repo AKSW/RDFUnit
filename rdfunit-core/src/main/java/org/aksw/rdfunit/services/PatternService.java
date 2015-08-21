@@ -27,7 +27,8 @@ public final class PatternService {
      * <p>addPattern.</p>
      *
      * @param id a {@link java.lang.String} object.
-     * @param pattern a {@link Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @param iri a {@link java.lang.String} object.
      */
     public static void addPattern(String id, String iri, Pattern pattern) {
         idPatterns.put(id, pattern);
@@ -38,7 +39,8 @@ public final class PatternService {
      * <p>getPatternFromID.</p>
      *
      * @param id a {@link java.lang.String} object.
-     * @return a {@link Pattern} object.
+     * @return a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @since 0.7.7
      */
     public static Pattern getPatternFromID(String id) {
         return idPatterns.get(id);
@@ -49,7 +51,8 @@ public final class PatternService {
      * <p>getPatternFromID.</p>
      *
      * @param iri a {@link java.lang.String} object.
-     * @return a {@link Pattern} object.
+     * @return a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @since 0.7.7
      */
     public static Pattern getPatternFromIRI(String iri) {
         return iriPatterns.get(iri);

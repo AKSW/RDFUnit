@@ -15,6 +15,7 @@ import org.aksw.rdfunit.vocabulary.SHACL;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
+ * @version $Id: $Id
  */
 public final class ArgumentWriter implements ElementWriter {
 
@@ -24,8 +25,15 @@ public final class ArgumentWriter implements ElementWriter {
         this.Argument = argument;
     }
 
+    /**
+     * <p>createArgumentWriter.</p>
+     *
+     * @param argument a {@link org.aksw.rdfunit.elements.interfaces.Argument} object.
+     * @return a {@link org.aksw.rdfunit.elements.writers.ArgumentWriter} object.
+     */
     public static ArgumentWriter createArgumentWriter(Argument argument) {return new ArgumentWriter(argument);}
 
+    /** {@inheritDoc} */
     @Override
     public Resource write() {
         Resource resource;
