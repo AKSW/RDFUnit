@@ -7,7 +7,7 @@ import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ public class ValidateUtilsTest {
         String args = "";
         RDFUnitConfiguration configuration = null;
         CommandLine commandLine = null;
-        CommandLineParser cliParser = new GnuParser();
+        CommandLineParser cliParser = new DefaultParser();
 
         // Set two dummy schemas for testing
         SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
