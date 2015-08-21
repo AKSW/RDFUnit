@@ -18,10 +18,10 @@ import org.aksw.rdfunit.vocabulary.SHACL;
  */
 public final class ArgumentWriter implements ElementWriter {
 
-    private final Argument argument;
+    private final Argument Argument;
 
     private ArgumentWriter(Argument argument) {
-        this.argument = argument;
+        this.Argument = argument;
     }
 
     public static ArgumentWriter createArgumentWriter(Argument argument) {return new ArgumentWriter(argument);}
@@ -31,31 +31,31 @@ public final class ArgumentWriter implements ElementWriter {
         Resource resource;
 
         // keep the original resource if exists
-        resource = argument.getResource().isPresent() ? argument.getResource().get() : ResourceFactory.createResource();
+        resource = Argument.getResource().isPresent() ? Argument.getResource().get() : ResourceFactory.createResource();
 
         // rdf:type sh:Argument
         resource.addProperty(RDF.type, SHACL.Argument);
 
         // sh:predicate sh:argX
-        resource.addProperty(SHACL.predicate, argument.getPredicate()) ;
+        resource.addProperty(SHACL.predicate, Argument.getPredicate()) ;
 
         // rdfs:comment
-        if (!argument.getComment().isEmpty())
-            resource.addProperty(RDFS.comment, argument.getComment());
+        if (!Argument.getComment().isEmpty())
+            resource.addProperty(RDFS.comment, Argument.getComment());
 
         // default value
-        if (argument.getDefaultValue().isPresent()) {
-            resource.addProperty(SHACL.defaultValue, argument.getDefaultValue().get()) ;
+        if (Argument.getDefaultValue().isPresent()) {
+            resource.addProperty(SHACL.defaultValue, Argument.getDefaultValue().get()) ;
         }
 
         // get  valueType / Datatype
-        if (argument.getValueType().isPresent() && argument.getValueKind().isPresent()) {
-            Property property = (argument.getValueKind().get().equals(ValueKind.DATATYPE)) ? SHACL.datatype : SHACL.valueType ;
-            resource.addProperty(property, argument.getValueType().get()) ;
+        if (Argument.getValueType().isPresent() && Argument.getValueKind().isPresent()) {
+            Property property = (Argument.getValueKind().get().equals(ValueKind.DATATYPE)) ? SHACL.datatype : SHACL.valueType ;
+            resource.addProperty(property, Argument.getValueType().get()) ;
         }
 
         //Optional
-        if (argument.isOptional()) {
+        if (Argument.isOptional()) {
             resource.addProperty(SHACL.optional, ResourceFactory.createTypedLiteral("true", XSDDatatype.XSDboolean)) ;
         }
         return resource;

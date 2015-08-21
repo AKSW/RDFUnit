@@ -25,15 +25,11 @@ public class ArgumentImplTest {
     private final Resource element = ResourceFactory.createResource("http://example.com/argument/11");
     private final Resource predicate = ResourceFactory.createResource(SHACL.namespace + "arg1");
 
-    private final Argument argDef = new ArgumentImpl.Builder(element, predicate).build();
+    private final Argument argDef = new ArgumentImpl.Builder(element).setPredicate(predicate).build();
 
     @Test
     public void testGetResource() throws Exception {
         assertEquals(argDef.getResource().get(), element);
-
-        ArgumentImpl arg2 = new ArgumentImpl.Builder(predicate).build();
-        assertFalse(arg2.getResource().isPresent());
-
     }
 
     @Test
@@ -41,7 +37,7 @@ public class ArgumentImplTest {
         assert argDef.getComment().isEmpty();
 
         final String comment = "asdf";
-        ArgumentImpl arg2 = new ArgumentImpl.Builder(predicate).setComment(comment).build();
+        ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setComment(comment).build();
         assert arg2.getComment().equals(comment);
 
     }
@@ -51,10 +47,10 @@ public class ArgumentImplTest {
 
         assertFalse(argDef.isOptional());
 
-        ArgumentImpl arg2 = new ArgumentImpl.Builder(predicate).setOptional(true).build();
+        ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setOptional(true).build();
         assertTrue(arg2.isOptional());
 
-        ArgumentImpl arg3 = new ArgumentImpl.Builder(predicate).setOptional(false).build();
+        ArgumentImpl arg3 = new ArgumentImpl.Builder(element).setPredicate(predicate).setOptional(false).build();
         assertFalse(arg3.isOptional());
     }
 
@@ -68,12 +64,12 @@ public class ArgumentImplTest {
         assertFalse(argDef.getValueType().isPresent());
 
         Resource valueType = XSD.xstring;
-        ArgumentImpl arg2 = new ArgumentImpl.Builder(predicate).setValueType(valueType, ValueKind.DATATYPE).build();
+        ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setValueType(valueType, ValueKind.DATATYPE).build();
 
         assertEquals(arg2.getValueType().get(), valueType);
         assertEquals(arg2.getValueKind().get(), ValueKind.DATATYPE);
 
-        ArgumentImpl arg3 = new ArgumentImpl.Builder(predicate).setValueType(valueType, ValueKind.IRI).build();
+        ArgumentImpl arg3 = new ArgumentImpl.Builder(element).setPredicate(predicate).setValueType(valueType, ValueKind.IRI).build();
 
         assertEquals(arg3.getValueKind().get(), ValueKind.IRI);
 
@@ -89,7 +85,7 @@ public class ArgumentImplTest {
         assertFalse(argDef.getDefaultValue().isPresent());
 
         RDFNode node = ResourceFactory.createResource("http://example.com");
-        ArgumentImpl arg2 = new ArgumentImpl.Builder(predicate).setDefaultValue(node).build();
+        ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setDefaultValue(node).build();
 
         assertEquals(arg2.getDefaultValue().get(), node);
 

@@ -7,6 +7,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.elements.interfaces.Argument;
 import org.aksw.rdfunit.enums.ValueKind;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Description
  *
@@ -24,9 +26,9 @@ public final class ArgumentImpl implements Argument {
     private final boolean isOptional;
 
     private ArgumentImpl(Builder builder) {
-        this.element = builder.element;
-        this.predicate = builder.predicate;
-        this.comment = builder.comment;
+        this.element = checkNotNull(builder.element);
+        this.predicate = checkNotNull(builder.predicate);
+        this.comment = checkNotNull(builder.comment);
         this.valueType = builder.valueType;
         this.valueKind = builder.valueKind;
         this.defaultValue = builder.defaultValue;
@@ -93,8 +95,8 @@ public final class ArgumentImpl implements Argument {
     }
 
     public static class Builder {
-        private final Resource element;
-        private final Resource predicate;
+        private Resource element;
+        private Resource predicate;
         private String comment = "";
         private Resource valueType = null;
         private ValueKind valueKind = null;
@@ -102,16 +104,13 @@ public final class ArgumentImpl implements Argument {
         private boolean isOptional = false;
 
 
-        public Builder(Resource element, Resource predicate) {
-
-            assert predicate != null;
-
-            this.element = element;
-            this.predicate = predicate;
+        public Builder(Resource element) {
+            this.element = checkNotNull(element);
         }
 
-        public Builder(Resource predicate) {
-            this(null, predicate);
+        public Builder setPredicate(Resource predicate) {
+            this.predicate = predicate;
+            return this;
         }
 
         public Builder setComment(String val) {

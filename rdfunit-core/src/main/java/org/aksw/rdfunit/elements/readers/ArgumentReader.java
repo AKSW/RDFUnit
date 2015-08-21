@@ -26,11 +26,11 @@ public final class ArgumentReader implements ElementReader<Argument> {
     public Argument read(Resource resource) {
         checkNotNull(resource);
 
-        ArgumentImpl.Builder argumentBuilder = null;
+        ArgumentImpl.Builder argumentBuilder = new ArgumentImpl.Builder(resource);
 
         // get predicate
         for (Statement smt : resource.listProperties(SHACL.predicate).toList()) {
-            argumentBuilder = new ArgumentImpl.Builder(resource, smt.getObject().asResource());
+            argumentBuilder = argumentBuilder.setPredicate(smt.getObject().asResource());
         }
 
         checkNotNull(argumentBuilder);
