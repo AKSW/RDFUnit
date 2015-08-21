@@ -9,9 +9,7 @@ import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -29,12 +27,13 @@ public class ArgumentImplTest {
 
     @Test
     public void testGetResource() throws Exception {
-        assertEquals(argDef.getResource().get(), element);
+        assertThat(argDef.getResource().get())
+                .isEqualTo(element);
     }
 
     @Test
     public void testGetComment() throws Exception {
-        assert argDef.getComment().isEmpty();
+        assertThat(argDef.getComment()).isEmpty();
 
         final String comment = "asdf";
         ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setComment(comment).build();
@@ -45,13 +44,16 @@ public class ArgumentImplTest {
     @Test
     public void testIsOptional() throws Exception {
 
-        assertFalse(argDef.isOptional());
+        assertThat(argDef.isOptional())
+                .isFalse();
 
         ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setOptional(true).build();
-        assertTrue(arg2.isOptional());
+        assertThat(arg2.isOptional())
+                .isTrue();
 
         ArgumentImpl arg3 = new ArgumentImpl.Builder(element).setPredicate(predicate).setOptional(false).build();
-        assertFalse(arg3.isOptional());
+        assertThat(arg3.isOptional())
+                .isFalse();
     }
 
     @Test
@@ -61,33 +63,39 @@ public class ArgumentImplTest {
 
     @Test
     public void testGetValueType() throws Exception {
-        assertFalse(argDef.getValueType().isPresent());
+        assertThat(argDef.getValueType().isPresent()).isFalse();
 
         Resource valueType = XSD.xstring;
         ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setValueType(valueType, ValueKind.DATATYPE).build();
 
-        assertEquals(arg2.getValueType().get(), valueType);
-        assertEquals(arg2.getValueKind().get(), ValueKind.DATATYPE);
+        assertThat(arg2.getValueType().get())
+                .isEqualTo(valueType);
+        assertThat(arg2.getValueKind().get())
+                .isEqualTo(ValueKind.DATATYPE);
 
         ArgumentImpl arg3 = new ArgumentImpl.Builder(element).setPredicate(predicate).setValueType(valueType, ValueKind.IRI).build();
 
-        assertEquals(arg3.getValueKind().get(), ValueKind.IRI);
+        assertThat(arg3.getValueKind().get())
+                .isEqualTo(ValueKind.IRI);
 
     }
 
     @Test
     public void testGetValueKind() throws Exception {
-        assertFalse(argDef.getValueKind().isPresent());
+        assertThat(argDef.getValueKind().isPresent())
+                .isFalse();
     }
 
     @Test
     public void testGetDefaultValue() throws Exception {
-        assertFalse(argDef.getDefaultValue().isPresent());
+        assertThat(argDef.getDefaultValue().isPresent())
+                .isFalse();
 
         RDFNode node = ResourceFactory.createResource("http://example.com");
         ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setDefaultValue(node).build();
 
-        assertEquals(arg2.getDefaultValue().get(), node);
+        assertThat(arg2.getDefaultValue().get())
+                .isEqualTo(node);
 
     }
 }
