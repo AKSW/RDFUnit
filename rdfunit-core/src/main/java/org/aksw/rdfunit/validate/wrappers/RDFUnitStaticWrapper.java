@@ -22,10 +22,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * <p>RDFUnitStaticWrapper class.</p>
+ * RDFUnit Wrapper for a single ontology + manual test cases
  *
  * @author Dimitris Kontokostas
- *         RDFUnit Wrapper for a single ontology + manual test cases
  * @since 6/17/14 8:30 PM
  * @version $Id: $Id
  */
@@ -181,11 +180,11 @@ public final class RDFUnitStaticWrapper {
         return validate(input, executionType, "custom");
     }
 
+
     /**
      * <p>validate.</p>
      *
      * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @param inputURI a {@link java.lang.String} object.
      * @param inputURI a {@link java.lang.String} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
@@ -193,14 +192,14 @@ public final class RDFUnitStaticWrapper {
         return validate(input, TestCaseExecutionType.rlogTestCaseResult, inputURI);
     }
 
+
     /**
-     * Static method that validates an input model. You MUST call initWrapper once before calling this function
+     * <p>validate.</p>
      *
-     * @param input         the Model we want to validate
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @param executionType What type of results we want
-     * @param inputURI      A URI/IRI that defines the input source (for reporting purpose only)
-     * @return a new Model that contains the validation results. The results are according to executionType
+     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @param inputURI a {@link java.lang.String} object.
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model input, final TestCaseExecutionType executionType, final String inputURI) {
 
@@ -209,16 +208,15 @@ public final class RDFUnitStaticWrapper {
         return validate(input, executionType, inputURI, overviewResults);
     }
 
+
     /**
-     * Static method that validates an input model. You MUST call initWrapper once before calling this function
-     * Used for testing only ATM
+     * <p>validate.</p>
      *
-     * @param input           the Model we want to validate
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param executionType   What type of results we want
-     * @param inputURI        A URI/IRI that defines the input source (for reporting purpose only)
-     * @param overviewResults This is a way to get validation statistics
-     * @return a new Model that contains the validation results. The results are according to executionType
+     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @param inputURI a {@link java.lang.String} object.
+     * @param overviewResults a {@link org.aksw.rdfunit.tests.results.DatasetOverviewResults} object.
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model input, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
 
@@ -242,14 +240,14 @@ public final class RDFUnitStaticWrapper {
         return testExecutorMonitor.getModel();
     }
 
+
     /**
-     * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitConfiguration object
-     * This function can also serve as standalone
+     * <p>validate.</p>
      *
-     * @param testCaseExecutionType execution type
-     * @param testSource               the dataset source we want to test
-     * @param testSuite             the list of test cases we want to test our Source against
-     * @return a new Model that contains the validation results. The results are according to executionType
+     * @param testCaseExecutionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @param testSource a {@link org.aksw.rdfunit.sources.TestSource} object.
+     * @param testSuite a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {
 
