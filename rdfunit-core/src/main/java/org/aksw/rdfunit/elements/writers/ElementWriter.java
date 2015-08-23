@@ -16,6 +16,7 @@ public interface ElementWriter {
      * <p>write.</p>
      *
      * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     Resource write(Model model);
 }

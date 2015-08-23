@@ -13,6 +13,13 @@ import org.aksw.rdfunit.elements.interfaces.Element;
 final class ElementWriterUtils {
     private ElementWriterUtils() {}
 
+    /**
+     * <p>copyElementResourceInModel.</p>
+     *
+     * @param element a {@link org.aksw.rdfunit.elements.interfaces.Element} object.
+     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     */
     public static Resource copyElementResourceInModel(Element element, Model model) {
         if (element.getResource().isPresent() && !element.getResource().get().isAnon()) {
             return model.createResource(element.getResource().get().getURI());
