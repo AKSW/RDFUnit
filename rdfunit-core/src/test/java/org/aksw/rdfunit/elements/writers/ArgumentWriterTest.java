@@ -15,7 +15,8 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 /**
  * Description
@@ -43,10 +44,17 @@ public class ArgumentWriterTest {
 
     @Test
     public void testRead() throws Exception {
+        // read the Argument
         Argument argument = ArgumentReader.create().read(resource);
-        Model model = ModelFactory.createDefaultModel();
-        Resource rs = ArgumentWriter.createArgumentWriter(argument).write(model);
 
-        assertTrue(resource.equals(rs));
+        // write in new model
+        Model m1 = ModelFactory.createDefaultModel();
+        Resource r1 = ArgumentWriter.createArgumentWriter(argument).write(m1);
+        // reread
+        Argument argument2 = ArgumentReader.create().read(r1);
+        Model m2 = ModelFactory.createDefaultModel();
+        Resource r2 = ArgumentWriter.createArgumentWriter(argument2).write(m2);
+
+        assertThat(m1.isIsomorphicWith(m2));
     }
 }
