@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
- * Describes an annotation on a Shape or RDFUnit tests, patterns & generators
+ * Describes an annotation on a Shape or RDFUnit tests, patterns and generators
  *
  * @author Dimitris Kontokostas
  * @since 8 /15/15 4:26 PM
