@@ -17,6 +17,8 @@ branches:
     - coverity_scan
 install: /bin/true
 script: "mvn clean install"
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
 notifications:
   email:
     recipients:
