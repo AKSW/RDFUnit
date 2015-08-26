@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AbstractTestSourceTest {
 
-    private static AbstractTestSource abstractTestSource;
-    private static QueryingConfig queryingConfig;
-    private static SourceConfig sourceConfig;
+    private AbstractTestSource abstractTestSource;
+    private QueryingConfig queryingConfig;
+    private SourceConfig sourceConfig;
 
     private static final long TESTCacheTTL = 111;
     private static final long TESTQueryDelay = 222;
@@ -30,7 +30,7 @@ public class AbstractTestSourceTest {
 
     private static final String TESTSourcePrefix = "prefix";
     private static final String TESTSourceURI = "http://example.com";
-    private static final Collection<SchemaSource> TESTReferenceSchemata = Collections.EMPTY_LIST;
+    private static final Collection<SchemaSource> TESTReferenceSchemata = Collections.emptyList();
 
     @Before
     public void setUp() throws Exception {
@@ -63,13 +63,13 @@ public class AbstractTestSourceTest {
     @Test
     public void testGetPrefix() throws Exception {
         assertThat(abstractTestSource.getPrefix())
-                .isEqualTo(TESTSourcePrefix);
+                .isEqualTo(sourceConfig.getPrefix());
     }
 
     @Test
     public void testGetUri() throws Exception {
         assertThat(abstractTestSource.getUri())
-                .isEqualTo(TESTSourceURI);
+                .isEqualTo(sourceConfig.getUri());
     }
 
     @Test
