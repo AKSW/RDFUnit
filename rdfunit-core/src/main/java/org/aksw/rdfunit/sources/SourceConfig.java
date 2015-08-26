@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.sources;
 
+import com.google.common.base.Objects;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -35,5 +37,23 @@ class SourceConfig {
      */
     public String getUri() {
         return uri;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(prefix, uri);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final SourceConfig other = (SourceConfig) obj;
+        return Objects.equal(this.prefix, other.prefix)
+                && Objects.equal(this.uri, other.uri);
     }
 }

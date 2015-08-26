@@ -28,7 +28,7 @@ public abstract class AbstractTestSource implements TestSource {
 
     protected final SourceConfig sourceConfig;
     protected final QueryingConfig queryingConfig;
-    protected final Collection<SchemaSource> referenceSchemata;
+    private final Collection<SchemaSource> referenceSchemata;
 
     private QueryExecutionFactory queryFactory = null;
 
@@ -104,32 +104,50 @@ public abstract class AbstractTestSource implements TestSource {
 
         QueryExecutionFactory qef = originalQEF;
 
-        // Add delay in order to be nice to the remote server (delay in milli seconds)
-        if (queryingConfig.getQueryDelay() > 0) {
-            qef = new QueryExecutionFactoryDelay(qef, queryingConfig.getQueryDelay());
-        }
+        qef = masqueradeQueryDelayOrOriginal(qef);
 
-        if (queryingConfig.getCacheTTL() > 0) {
+        qef = masqueradeCacheTTLOrOriginal(testSource, qef);
 
-            try {
-                qef = CacheUtilsH2.createQueryExecutionFactory(qef, "./cache/sparql/" + testSource.getPrefix(), false, queryingConfig.getCacheTTL());
-                log.debug("Cache for endpoint set up: " + testSource.getUri());
-            } catch (Exception e) {
-                log.debug("Could not instantiate cache for Endpoint" + testSource.getUri(), e);
-            }
-        }
+        qef = masqueradePaginationOrOriginal(qef);
 
-        // Add pagination
-        if (queryingConfig.getPagination() > 0) {
-            qef = new QueryExecutionFactoryPaginated(qef, queryingConfig.getPagination());
-        }
-
-        if (queryingConfig.getQueryLimit() > 0) {
-            qef = new QueryExecutionFactoryLimit(qef, true, queryingConfig.getQueryLimit());
-        }
+        qef = masqueradeQueryLimitOrOriginal(qef);
 
         return qef;
     }
+
+    private QueryExecutionFactory masqueradeQueryDelayOrOriginal(QueryExecutionFactory qef) {
+        if (queryingConfig.getQueryDelay() > 0) {
+            return new QueryExecutionFactoryDelay(qef, queryingConfig.getQueryDelay());
+        }
+        return qef;
+    }
+
+    private QueryExecutionFactory masqueradeCacheTTLOrOriginal(TestSource testSource, QueryExecutionFactory qef) {
+        if (queryingConfig.getCacheTTL() > 0) {
+
+            try {
+                return CacheUtilsH2.createQueryExecutionFactory(qef, "./cache/sparql/" + testSource.getPrefix(), false, queryingConfig.getCacheTTL());
+            } catch (Exception e) {
+                log.warn("Could not instantiate cache for Endpoint {}", testSource.getUri(), e);
+            }
+        }
+        return qef;
+    }
+
+    private QueryExecutionFactory masqueradePaginationOrOriginal(QueryExecutionFactory qef) {
+        if (queryingConfig.getPagination() > 0) {
+            return new QueryExecutionFactoryPaginated(qef, queryingConfig.getPagination());
+        }
+        return qef;
+    }
+
+    private QueryExecutionFactory masqueradeQueryLimitOrOriginal(QueryExecutionFactory qef) {
+        if (queryingConfig.getQueryLimit() > 0) {
+            return new QueryExecutionFactoryLimit(qef, true, queryingConfig.getQueryLimit());
+        }
+        return qef;
+    }
+
 
     /**
      * <p>getCacheTTL.</p>

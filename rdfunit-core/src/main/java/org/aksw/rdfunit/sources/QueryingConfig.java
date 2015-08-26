@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.sources;
 
+import com.google.common.base.Objects;
+
 /**
  * Querying configuration for a TestSource
  *
@@ -46,7 +48,7 @@ final class QueryingConfig {
      *
      * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
      */
-    public static QueryingConfig create() {
+    private static QueryingConfig create() {
         return new QueryingConfig(CACHE_TTL, QUERY_DELAY, QUERY_LIMIT, PAGINATION);
     }
 
@@ -130,10 +132,12 @@ final class QueryingConfig {
         return queryDelay;
     }
 
+
     /**
      * The Query limit.
      *
      * @return a long.
+
      */
     public long getQueryLimit() {
         return queryLimit;
@@ -146,5 +150,26 @@ final class QueryingConfig {
      */
     public long getPagination() {
         return pagination;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cacheTTL, queryDelay, queryLimit, pagination);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final QueryingConfig other = (QueryingConfig) obj;
+        return Objects.equal(this.cacheTTL, other.cacheTTL)
+                && Objects.equal(this.queryDelay, other.queryDelay)
+                && Objects.equal(this.queryLimit, other.queryLimit)
+                && Objects.equal(this.pagination, other.pagination);
     }
 }
