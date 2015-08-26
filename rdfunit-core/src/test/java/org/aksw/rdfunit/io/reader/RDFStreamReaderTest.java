@@ -42,11 +42,12 @@ public class RDFStreamReaderTest {
                 { baseResDir + "onetriple.rj"},
                 { baseResDir + "onetriple.trig"},
                 { baseResDir + "onetriple.ttl"},
+                //{ baseResDir + "onetriple.html"},
         });
     }
 
     @Parameterized.Parameter
-    public String resourceName;
+    private String resourceName;
 
 
 

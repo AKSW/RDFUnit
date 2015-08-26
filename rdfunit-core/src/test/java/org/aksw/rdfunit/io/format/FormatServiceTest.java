@@ -40,6 +40,9 @@ public class FormatServiceTest {
         assertEquals(FormatService.getInputFormat("rdfxml"), SerialiazationFormatFactory.createRDFXMLIn());
         assertEquals(FormatService.getInputFormat("RDF/XML-ABBREV"), SerialiazationFormatFactory.createRDFXMLIn());
 
+        // RDFa
+        assertEquals(FormatService.getInputFormat("RDFA"), SerialiazationFormatFactory.createRDFa());
+
     }
 
     @Test
@@ -75,6 +78,7 @@ public class FormatServiceTest {
         testVals.put("asdf.nq", "NQuads");
         testVals.put("asdf.trix", "TriX");
         testVals.put("asdf.trig", "TriG");
+        testVals.put("asdf.html", "RDFA");
 
         for (Map.Entry<String, String> entry: testVals.entrySet()) {
             assertEquals("Should be equal", entry.getValue(), FormatService.getFormatFromExtension(entry.getKey()));
