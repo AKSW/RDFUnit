@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.tests.query_generation;
 
 import com.hp.hpl.jena.query.Query;
-import org.aksw.rdfunit.tests.TestCase;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 
 /**
  * Factory that returns ASK queries

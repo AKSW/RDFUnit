@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 

@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.elements.implementations;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -8,9 +8,11 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.tests.TestCaseAnnotation;
 
 import java.util.Collection;
 
@@ -22,7 +24,7 @@ import java.util.Collection;
  * @since 9/23/13 6:31 AM
  * @version $Id: $Id
  */
-public abstract class TestCase implements Comparable<TestCase> {
+public abstract class AbstractTestCaseImpl implements TestCase, Comparable<AbstractTestCaseImpl> {
 
     private final String testURI;
     private final TestCaseAnnotation annotation;
@@ -30,11 +32,11 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>Constructor for TestCase.</p>
      *
-     * @param testURI a {@link java.lang.String} object.
-     * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
+     * @param testURI a {@link String} object.
+     * @param annotation a {@link TestCaseAnnotation} object.
+     * @throws TestCaseInstantiationException if any.
      */
-    public TestCase(String testURI, TestCaseAnnotation annotation) throws TestCaseInstantiationException {
+    public AbstractTestCaseImpl(String testURI, TestCaseAnnotation annotation) throws TestCaseInstantiationException {
         this.testURI = testURI;
         this.annotation = annotation;
         // Validate on subclasses
@@ -43,7 +45,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getUnitTestModel.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link Model} object.
      */
     public Model getUnitTestModel() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
@@ -54,22 +56,22 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getSparqlWhere.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link String} object.
      */
     public abstract String getSparqlWhere();
 
     /**
      * <p>getSparqlPrevalence.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link String} object.
      */
     public abstract String getSparqlPrevalence();
 
     /**
      * <p>serialize.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param model a {@link Model} object.
+     * @return a {@link Resource} object.
      */
     public Resource serialize(Model model) {
 
@@ -82,7 +84,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getResultMessage.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link String} object.
      */
     public String getResultMessage() {
         return annotation.getDescription();
@@ -91,7 +93,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getLogLevel.</p>
      *
-     * @return a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
+     * @return a {@link RLOGLevel} object.
      */
     public RLOGLevel getLogLevel() {
         return annotation.getTestCaseLogLevel();
@@ -100,7 +102,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getResultAnnotations.</p>
      *
-     * @return a {@link java.util.Collection} object.
+     * @return a {@link Collection} object.
      */
     public Collection<ResultAnnotation> getResultAnnotations() {
         return annotation.getResultAnnotations();
@@ -109,7 +111,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getVariableAnnotations.</p>
      *
-     * @return a {@link java.util.Collection} object.
+     * @return a {@link Collection} object.
      */
     public Collection<ResultAnnotation> getVariableAnnotations() {
         return annotation.getVariableAnnotations();
@@ -118,7 +120,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getSparqlPrevalenceQuery.</p>
      *
-     * @return a {@link com.hp.hpl.jena.query.Query} object.
+     * @return a {@link Query} object.
      */
     public Query getSparqlPrevalenceQuery() {
         if (getSparqlPrevalence().trim().isEmpty())
@@ -129,7 +131,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>Getter for the field <code>testURI</code>.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link String} object.
      */
     public String getTestURI() {
         return testURI;
@@ -138,7 +140,7 @@ public abstract class TestCase implements Comparable<TestCase> {
     /**
      * <p>getAbrTestURI.</p>
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link String} object.
      */
     public String getAbrTestURI() {
         return testURI.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
@@ -148,7 +150,7 @@ public abstract class TestCase implements Comparable<TestCase> {
 
     /** {@inheritDoc} */
     @Override
-    public int compareTo(TestCase o) {
+    public int compareTo(AbstractTestCaseImpl o) {
         if (o == null) {
             return -1;
         }
@@ -160,9 +162,9 @@ public abstract class TestCase implements Comparable<TestCase> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TestCase)) return false;
+        if (!(o instanceof AbstractTestCaseImpl)) return false;
 
-        TestCase testCase = (TestCase) o;
+        AbstractTestCaseImpl testCase = (AbstractTestCaseImpl) o;
 
         return testURI.equals(testCase.testURI);
 

@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.tests.executors;
 
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;

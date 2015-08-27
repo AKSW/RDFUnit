@@ -2,6 +2,7 @@ package org.aksw.rdfunit.tests;
 
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QueryParseException;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationAskFactory;
@@ -25,7 +26,7 @@ public class TestCaseValidator {
     /**
      * <p>Constructor for TestCaseValidator.</p>
      *
-     * @param testCase a {@link org.aksw.rdfunit.tests.TestCase} object.
+     * @param testCase a {@link TestCase} object.
      */
     public TestCaseValidator(TestCase testCase) {
         this.testCase = testCase;

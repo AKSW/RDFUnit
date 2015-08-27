@@ -5,9 +5,9 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.tests.TestCase;
 
 import java.util.*;
 

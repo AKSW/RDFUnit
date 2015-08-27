@@ -1,11 +1,12 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.elements.implementations;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.tests.TestCaseAnnotation;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 /**
  * <p>ManualTestCase class.</p>
@@ -15,7 +16,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
  * @since 1/3/14 3:57 PM
  * @version $Id: $Id
  */
-public class ManualTestCase extends TestCase {
+public class ManualTestCaseImpl extends AbstractTestCaseImpl implements TestCase {
     private final String sparqlWhere;
     private final String sparqlPrevalence;
 
@@ -28,7 +29,7 @@ public class ManualTestCase extends TestCase {
      * @param sparqlPrevalence a {@link java.lang.String} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public ManualTestCase(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) throws TestCaseInstantiationException {
+    public ManualTestCaseImpl(String testURI, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) throws TestCaseInstantiationException {
         super(testURI, annotation);
         this.sparqlWhere = sparqlWhere.trim();
         this.sparqlPrevalence = sparqlPrevalence.trim();
@@ -41,9 +42,9 @@ public class ManualTestCase extends TestCase {
         Resource resource = super.serialize(model);
 
         resource
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:ManualTestCase")))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:sparqlWhere")), getSparqlWhere())
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:sparqlPrevalence")), getSparqlPrevalence());
+                .addProperty(RDF.type, RDFUNITv.ManualTestCase)
+                .addProperty(RDFUNITv.sparqlWhere, getSparqlWhere())
+                .addProperty(RDFUNITv.sparqlPrevalence, getSparqlPrevalence());
 
         return resource;
     }

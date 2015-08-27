@@ -9,9 +9,12 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.elements.implementations.ManualTestCaseImpl;
+import org.aksw.rdfunit.elements.implementations.PatternBasedTestCaseImpl;
 import org.aksw.rdfunit.elements.interfaces.Pattern;
 import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -20,7 +23,9 @@ import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.services.PatternService;
-import org.aksw.rdfunit.tests.*;
+import org.aksw.rdfunit.tests.Binding;
+import org.aksw.rdfunit.tests.TestCaseAnnotation;
+import org.aksw.rdfunit.tests.TestCaseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,7 +87,7 @@ public final class TestUtils {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
             try {
-                ManualTestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
+                ManualTestCaseImpl tc = instantiateSingleManualTestFromModel(qef, testURI);
                 TestCaseValidator validator = new TestCaseValidator(tc);
                 validator.validate();
                 tests.add(tc);
@@ -108,7 +113,7 @@ public final class TestUtils {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
             try {
-                PatternBasedTestCase tc = instantiateSinglePatternTestFromModel(qef, testURI);
+                PatternBasedTestCaseImpl tc = instantiateSinglePatternTestFromModel(qef, testURI);
                 tests.add(tc);
             } catch (TestCaseInstantiationException e) {
                 log.error(e.getMessage(), e);
@@ -126,10 +131,10 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.tests.ManualTestCase} object.
+     * @return a {@link ManualTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public static ManualTestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
+    public static ManualTestCaseImpl instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
         String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
@@ -179,7 +184,7 @@ public final class TestUtils {
                                 resultAnnotations);
 
                 if (!results.hasNext()) {
-                    ManualTestCase tc = new ManualTestCase(
+                    ManualTestCaseImpl tc = new ManualTestCaseImpl(
                             testURI,
                             annotation,
                             sparqlWhere,
@@ -203,10 +208,10 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.tests.PatternBasedTestCase} object.
+     * @return a {@link PatternBasedTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public static PatternBasedTestCase instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
+    public static PatternBasedTestCaseImpl instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
         String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
@@ -261,7 +266,7 @@ public final class TestUtils {
                                 resultAnnotations);
 
                 if (!results.hasNext()) {
-                    PatternBasedTestCase tc = new PatternBasedTestCase(
+                    PatternBasedTestCaseImpl tc = new PatternBasedTestCaseImpl(
                             testURI,
                             annotation,
                             pattern,

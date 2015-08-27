@@ -1,14 +1,16 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.elements.implementations;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import org.aksw.rdfunit.elements.interfaces.Pattern;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.tests.Binding;
+import org.aksw.rdfunit.tests.TestCaseAnnotation;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import java.util.Collection;
 
@@ -20,7 +22,7 @@ import java.util.Collection;
  * @since 1/3/14 3:49 PM
  * @version $Id: $Id
  */
-public class PatternBasedTestCase extends TestCase {
+public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements TestCase {
 
     private final Pattern pattern;
     private final Collection<Binding> bindings;
@@ -36,7 +38,7 @@ public class PatternBasedTestCase extends TestCase {
      * @param bindings a {@link java.util.Collection} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public PatternBasedTestCase(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) throws TestCaseInstantiationException {
+    public PatternBasedTestCaseImpl(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) throws TestCaseInstantiationException {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
@@ -54,13 +56,13 @@ public class PatternBasedTestCase extends TestCase {
         Resource resource = super.serialize(model);
 
         resource
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:PatternBasedTestCase")))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:basedOnPattern")), model.createResource(PrefixNSService.getURIFromAbbrev("rutp:" + pattern.getId())))
+                .addProperty(RDF.type, RDFUNITv.PatternBasedTestCase)
+                .addProperty(RDFUNITv.basedOnPattern, pattern.getIRI())
                 .addProperty(RDFS.comment, "FOR DEBUGGING ONLY: SPARQL Query: \n" + new QueryGenerationSelectFactory().getSparqlQueryAsString(this) + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
 
 
         for (Binding binding : bindings) {
-            resource.addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:binding")), binding.writeToModel(model));
+            resource.addProperty(RDFUNITv.binding, binding.writeToModel(model));
         }
 
         return resource;

@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.elements.interfaces;
 
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.tests.TestCase;
 
 import java.util.Collection;
 

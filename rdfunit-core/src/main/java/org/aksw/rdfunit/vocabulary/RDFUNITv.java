@@ -30,6 +30,10 @@ public final class RDFUNITv {
     public static final Resource TestGenerator = resource("TestGenerator");
     /** Constant <code>Parameter</code> */
     public static final Resource Parameter = resource("Parameter");
+    /** Constant <code>PatternBasedTestCase</code> */
+    public static final Resource PatternBasedTestCase = resource("PatternBasedTestCase");
+    /** Constant <code>ManualTestCase</code> */
+    public static final Resource ManualTestCase = resource("ManualTestCase");
 
 
 
@@ -58,6 +62,10 @@ public final class RDFUNITv {
     public static final Property sparqlWherePattern = property("sparqlWherePattern");
     /** Constant <code>sparqlPrevalencePattern</code> */
     public static final Property sparqlPrevalencePattern = property("sparqlPrevalencePattern");
+    /** Constant <code>sparqlWhere</code> */
+    public static final Property sparqlWhere = property("sparqlWhere");
+    /** Constant <code>sparqlPrevalence</code> */
+    public static final Property sparqlPrevalence = property("sparqlPrevalence");
 
 
 

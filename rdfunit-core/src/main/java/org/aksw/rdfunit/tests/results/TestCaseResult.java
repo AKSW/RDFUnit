@@ -7,8 +7,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.tests.TestCase;
 
 import java.util.Calendar;
 
