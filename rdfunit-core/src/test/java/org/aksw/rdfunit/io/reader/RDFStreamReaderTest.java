@@ -47,7 +47,7 @@ public class RDFStreamReaderTest {
     }
 
     @Parameterized.Parameter
-    private String resourceName;
+    public String resourceName;
 
 
 
