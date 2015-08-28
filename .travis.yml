@@ -16,7 +16,7 @@ branches:
     - dev
     - coverity_scan
 install: /bin/true
-script: "mvn clean install"
+script: "mvn clean install -Dgpg.skip=true"
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
 notifications:
