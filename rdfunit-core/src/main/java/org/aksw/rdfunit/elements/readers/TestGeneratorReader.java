@@ -50,14 +50,14 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
         //description
         for (Statement smt : resource.listProperties(DCTerms.description).toList()) {
             checkArgument(count++ == 0, "Cannot have more than one descriptions in TestGenerator %s", resource.getURI());
-            description = smt.getObject().toString();
+            description = smt.getObject().asLiteral().getLexicalForm();
         }
 
         //query
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlGenerator).toList()) {
             checkArgument(count++ == 0, "Cannot have more than one SPARQL queries in TestGenerator %s", resource.getURI());
-            query = smt.getObject().asLiteral().toString();
+            query = smt.getObject().asLiteral().getLexicalForm();
         }
 
         //pattern IRI

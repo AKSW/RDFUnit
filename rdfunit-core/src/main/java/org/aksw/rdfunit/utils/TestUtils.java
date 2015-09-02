@@ -161,8 +161,8 @@ public final class TestUtils {
                 String generated = qs.get("generated").toString();
                 String source = qs.get("source").toString();
                 RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
-                String sparqlWhere = qs.get("sparqlWhere").toString();
-                String sparqlPrevalence = qs.get("sparqlPrevalence").toString();
+                String sparqlWhere = qs.get("sparqlWhere").asLiteral().getLexicalForm();
+                String sparqlPrevalence = qs.get("sparqlPrevalence").asLiteral().getLexicalForm();
                 Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
                 String testGenerator = "";
                 if (qs.contains("testGenerator")) {

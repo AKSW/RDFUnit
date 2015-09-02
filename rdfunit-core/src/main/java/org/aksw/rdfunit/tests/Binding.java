@@ -57,7 +57,7 @@ public class Binding {
             return "<" + value.toString().trim().replace(" ", "") + ">";
 
         } else {
-            return value.toString();
+            return value.asLiteral().getLexicalForm();
         }
     }
 

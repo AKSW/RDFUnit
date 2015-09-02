@@ -65,21 +65,21 @@ public final class PatternReader implements ElementReader<Pattern> {
         count = 0;
         for (Statement smt : resource.listProperties(DCTerms.description).toList()) {
             checkArgument(count++ == 0, "Cannot have more than one description in Pattern %s", resource.getURI());
-            patternBuilder.setDescription(smt.getObject().asLiteral().getString());
+            patternBuilder.setDescription(smt.getObject().asLiteral().getLexicalForm());
         }
 
         // SPARQL where
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlWherePattern).toList()) {
             checkArgument(count++ == 0, "Cannot have more than one SPARQL query in Pattern %s", resource.getURI());
-            patternBuilder.setSparqlWherePattern(smt.getObject().asLiteral().getString());
+            patternBuilder.setSparqlWherePattern(smt.getObject().asLiteral().getLexicalForm());
         }
 
         // SPARQL prevalence
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlPrevalencePattern).toList()) {
             checkArgument(count++ == 0, "Cannot have more than one prevalence query in Pattern %s", resource.getURI());
-            patternBuilder.setSparqlPatternPrevalence(smt.getObject().asLiteral().getString());
+            patternBuilder.setSparqlPatternPrevalence(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //parameters

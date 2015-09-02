@@ -25,7 +25,7 @@ rutg:DSPSTANDALONE a rut:TestGenerator ;
 							 ?s a dsp:DescriptionTemplate ;
                                 dsp:standalone "true"^^xsd:boolean ;
                                 dsp:resourceClass ?T1 .
-							 BIND ( concat("Instances of class ",  str(?T1)," are not allowed to have any properties") AS ?DESCRIPTION)} """ ;
+							 BIND ( concat('Instances of class ',  str(?T1),' are not allowed to have any properties') AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -58,7 +58,7 @@ rutg:DSPM-OCCURS-MIN a rut:TestGenerator ;
 							?templ dsp:minOccur ?v;
                                 dsp:property ?P1 .
                             FILTER (?v > 0)
-							BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+							BIND ( concat('Cardinality of ',  str(?P1),' lower than ', str(?v), ' for type ', str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -99,7 +99,7 @@ rutg:DSPCGARD-MAX a rut:TestGenerator ;
 	                          ?templ dsp:maxOccur ?v;
 	                             dsp:property ?P1 .
 	                          FILTER (?v > 0 ) .
-							  BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION) .} """ ;
+							  BIND ( concat('Cardinality of ',  str(?P1),' higher than ', str(?v), ' for type ', str(?T1)) AS ?DESCRIPTION) .} """ ;
     rut:basedOnPattern rutp:OWLCARDT ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -117,7 +117,7 @@ rutg:DSPCARD-MAX0 a rut:TestGenerator ;
 	                          ?templ dsp:maxOccur ?v;
 	                             dsp:property ?P1 .
                               FILTER (?v = 0) .
-							  BIND ( concat("Cardinality of ",  str(?P1)," higher than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+							  BIND ( concat('Cardinality of ',  str(?P1),' higher than ', str(?v), ' for type ', str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:TYPRODEP ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -151,7 +151,7 @@ rutg:DSPRANGEC a rut:TestGenerator ;
                                 FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
                                                     FILTER (?T1 != ?T2)
                                 }
-	                            BIND (concat(str(?P1)," has different range from: ", str(?T1)) AS ?DESCRIPTION)} """ ;
+	                            BIND (concat(str(?P1),' has different range from: ', str(?T1)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:RDFSRANGE ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -180,7 +180,7 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
                                                     FILTER (?T1 != ?T2)
                                 }
 
-                                BIND (concat(str(?P1)," does not have defined range: ", str(?T1)) AS ?DESCRIPTION)}  """ ;
+                                BIND (concat(str(?P1),' does not have defined range: ', str(?T1)) AS ?DESCRIPTION)}  """ ;
     rut:basedOnPattern rutp:RDFSRANGE-MISS ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -206,7 +206,7 @@ rutg:DSPLITERAL a rut:TestGenerator ;
                                 ?s dsp:statementTemplate/dsp:literalConstraint ?x .
 
                                 FILTER NOT EXISTS {?s dsp:resourceClass ?x}
-	                            BIND (concat(str(?P1)," should be a literal") AS ?DESCRIPTION)} """ ;
+	                            BIND (concat(str(?P1),' should be a literal') AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -263,8 +263,8 @@ rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
 
                                 FILTER NOT EXISTS {?s dsp:resourceClass ?x}
 
-	                            FILTER ( str(?lang) = "mandatory" )
-	                            BIND (concat(str(?P1)," does not have language defined") AS ?DESCRIPTION)} """ ;
+	                            FILTER ( str(?lang) = 'mandatory' )
+	                            BIND (concat(str(?P1),' does not have language defined') AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:CHECKLANG ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -282,8 +282,8 @@ rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
 
                                 FILTER NOT EXISTS {?s dsp:resourceClass ?x}
 
-	                            FILTER ( str(?lang) = "disallowed" )
-	                            BIND (concat(str(?P1)," language is disallowed") AS ?DESCRIPTION)} """ ;
+	                            FILTER ( str(?lang) = 'disallowed' )
+	                            BIND (concat(str(?P1),' language is disallowed') AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:CHECKLANG ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
@@ -307,7 +307,7 @@ rutg:DSPLANG a rut:TestGenerator ;
                                 #FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:literalConstraint/dsp:language ?lang2 .
                                 #                    FILTER (?lang != ?lang2)}
 
-	                            BIND (concat(str(?P1)," language is different from: ", str(?lang)) AS ?DESCRIPTION)} """ ;
+	                            BIND (concat(str(?P1),' language is different from: ', str(?lang)) AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:CHECKLANG ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
