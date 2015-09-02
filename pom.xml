@@ -201,7 +201,7 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy nexus-staging:release site site-deploy</goals>
+                    <goals>deploy nexus-staging:release</goals> <!-- ADD  site site-deploy -->
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <scmCommentPrefix>[maven-release-plugin] [ci build-cli] [ci build-webdemo] -</scmCommentPrefix>
                 </configuration>
