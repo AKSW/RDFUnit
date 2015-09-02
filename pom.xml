@@ -57,8 +57,8 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>2.12.1-8</jena-sparql-api-version>
-        <org-apache-jena-version>2.12.1</org-apache-jena-version>
+        <jena-sparql-api-version>2.13.0-4</jena-sparql-api-version>
+        <org-apache-jena-version>2.13.0</org-apache-jena-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
 
@@ -89,24 +89,28 @@
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-core</artifactId>
                 <version>${jena-sparql-api-version}</version>
+                <scope>compile</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-cache-h2</artifactId>
                 <version>${jena-sparql-api-version}</version>
+                <scope>compile</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-resources</artifactId>
                 <version>${jena-sparql-api-version}</version>
+                <scope>compile</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.aksw.jena-sparql-api</groupId>
                 <artifactId>jena-sparql-api-server</artifactId>
                 <version>${jena-sparql-api-version}</version>
+                <scope>compile</scope>
             </dependency>
 
             <!-- jena -->
@@ -181,22 +185,6 @@
         </dependencies>
     </dependencyManagement>
 
-
-    <repositories>
-        <repository>
-            <id>maven.aksw.internal</id>
-            <name>University Leipzig, AKSW Maven2 Repository</name>
-            <url>http://maven.aksw.org/repository/internal</url>
-        </repository>
-
-        <!--repository>
-            <id>maven.aksw.snapshots</id>
-            <name>University Leipzig, AKSW Maven2 Repository</name>
-            <url>http://maven.aksw.org/repository/snapshots</url>
-        </repository-->
-
-    </repositories>
-
     <build>
             <plugins>
 
@@ -209,10 +197,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.2</version>
-                    <goals>deploy site site-deploy</goals>
                     <configuration>
+                        <goals>deploy site site-deploy</goals>
                         <tagNameFormat>v@{project.version}</tagNameFormat>
                         <scmCommentPrefix>[maven-release-plugin] [ci build-cli] [ci build-webdemo] - </scmCommentPrefix>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
                     </configuration>
                 </plugin>
 
