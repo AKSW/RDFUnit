@@ -245,6 +245,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                    <skipStaging>true</skipStaging>
+                    <skipRemoteStaging>true</skipRemoteStaging>
+                    <skipLocalStaging>true</skipLocalStaging>
                 </configuration>
             </plugin>
             <plugin>
