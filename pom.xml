@@ -8,14 +8,15 @@
     <packaging>pom</packaging>
     <version>0.7.17-SNAPSHOT</version>
     <name>RDFUnit - Parent</name>
+    <description>A RDF Testing Suite</description>
     <url>http://github.org/AKSW/RDFUnit</url>
 
     <modules>
         <module>rdfunit-core</module>
         <module>rdfunit-resources</module>
-        <module>rdfunit-validate</module>
         <module>rdfunit-webdemo</module>
         <module>rdfunit-examples</module>
+        <module>rdfunit-validate</module>
     </modules>
 
     <issueManagement>
