@@ -33,7 +33,7 @@ public class DataIDWS extends RDFUnitWebService {
     public void init() throws ServletException {
         RDFUnitTestSuiteGenerator testSuiteGenerator =
                 new RDFUnitTestSuiteGenerator.Builder()
-                .addSchemaURI("https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl").build();
+                .addSchemaURI("dataid", "https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl").build();
         RDFUnitStaticValidator.initWrapper(testSuiteGenerator);
     }
 

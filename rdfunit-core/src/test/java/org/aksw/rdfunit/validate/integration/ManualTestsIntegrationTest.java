@@ -24,7 +24,7 @@ public class ManualTestsIntegrationTest {
 
         // Load test ontology from resource (empty in this case)
         RDFUnitStaticValidator.initWrapper(
-                new RDFUnitTestSuiteGenerator.Builder().addLocalResource(emptyResource).build());
+                new RDFUnitTestSuiteGenerator.Builder().addLocalResource("custom", emptyResource).build());
 
         RDFUnit rdfunit = new RDFUnit();
         try {

@@ -96,25 +96,25 @@ public final class RDFUnitTestSuiteGenerator {
             return this;
         }
 
-        public Builder addSchemaURI(String schemaUri) {
+        public Builder addSchemaURI(String prefix, String schemaUri) {
             checkNotNull(schemaUri);
 
-            SchemaSource schemaSource = createSource(schemaUri, RDFReaderFactory.createResourceReader(schemaUri));
+            SchemaSource schemaSource = createSource(prefix, schemaUri, RDFReaderFactory.createResourceReader(schemaUri));
             schemas.add(schemaSource);
 
             return this;
         }
 
-        public Builder addLocalResource(String localResource) {
+        public Builder addLocalResource(String prefix, String localResource) {
             checkNotNull(localResource);
 
-            SchemaSource schemaSource = createSource(localResource, RDFReaderFactory.createResourceReader(localResource));
+            SchemaSource schemaSource = createSource(prefix, localResource, RDFReaderFactory.createResourceReader(localResource));
             schemas.add(schemaSource);
 
             return this;
         }
 
-        public Builder addLocalResourceOrSchemaURI(String localResource, String schemaUri) {
+        public Builder addLocalResourceOrSchemaURI(String prefix, String localResource, String schemaUri) {
             checkNotNull(localResource);
             checkNotNull(schemaUri);
 
@@ -124,7 +124,7 @@ public final class RDFUnitTestSuiteGenerator {
                             RDFReaderFactory.createDereferenceReader(schemaUri)
                     ));
 
-            SchemaSource schemaSource = createSource(schemaUri, schemaReader);
+            SchemaSource schemaSource = createSource(prefix, schemaUri, schemaReader);
             schemas.add(schemaSource);
 
             return this;
@@ -134,8 +134,8 @@ public final class RDFUnitTestSuiteGenerator {
             return new RDFUnitTestSuiteGenerator(schemas, enableAutoTests, enableManualTests);
         }
 
-        private SchemaSource createSource(String schemaUri, RDFReader schemaReader) {
-            return SchemaSourceFactory.createSchemaSourceSimple(schemaUri, schemaReader);
+        private SchemaSource createSource(String prefix, String schemaUri, RDFReader schemaReader) {
+            return SchemaSourceFactory.createSchemaSourceSimple(prefix, schemaUri, schemaReader);
         }
 
 
