@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 
 /**
  * <p>TestGeneratorExecutor class.</p>
@@ -58,10 +60,10 @@ public class TestGeneratorExecutor {
         this.useManualTests = useManualTests;
 
         // no auto && no manual tests do not make sense
-        assert (useAutoTests || useManualTests);
+        checkArgument(useAutoTests || useManualTests);
 
         // no auto && cache does not make sense TODO fix this
-        assert (useAutoTests || !loadFromCache);
+        checkArgument(useAutoTests || !loadFromCache);
     }
 
     private final Collection<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<>();

@@ -30,6 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * <p>ValidateCLI class.</p>
  *
@@ -77,7 +79,7 @@ public class ValidateCLI {
                 displayHelpAndExit();
             }
         }
-        assert (configuration != null);
+        checkNotNull (configuration );
 
         if (!RDFUnitUtils.fileExists(configuration.getDataFolder())) {
             log.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
@@ -119,7 +121,7 @@ public class ValidateCLI {
         }
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
-        assert (testExecutor != null);
+        checkNotNull(testExecutor);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results

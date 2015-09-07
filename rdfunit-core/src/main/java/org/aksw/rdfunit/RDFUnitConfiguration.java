@@ -16,6 +16,8 @@ import org.aksw.rdfunit.utils.RDFUnitUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * <p>RDFUnitConfiguration class.</p>
  *
@@ -174,7 +176,7 @@ public class RDFUnitConfiguration {
         } else {
             namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown() : NamespaceStatistics.createOntologyNSStatisticsAll();
         }
-        assert namespaceStatistics != null;
+        checkNotNull(namespaceStatistics);
         this.schemas = namespaceStatistics.getNamespaces(qef);
     }
 

@@ -37,7 +37,8 @@ public class ArgumentImplTest {
 
         final String comment = "asdf";
         ArgumentImpl arg2 = new ArgumentImpl.Builder(element).setPredicate(predicate).setComment(comment).build();
-        assert arg2.getComment().equals(comment);
+        assertThat(arg2.getComment())
+                .isEqualTo(comment);
 
     }
 
@@ -58,7 +59,8 @@ public class ArgumentImplTest {
 
     @Test
     public void testGetPredicate() throws Exception {
-        assert argDef.getPredicate().equals(predicate);
+        assertThat(argDef.getPredicate())
+                .isEqualTo(predicate);
     }
 
     @Test

@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * A simple test executor monitor. This is used in the CLI version
  *
@@ -141,7 +143,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
             //Get item
             TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
-            assert (result != null);
+            checkNotNull(result);
 
             if (result instanceof StatusTestCaseResult) {
                 statusResult = true;

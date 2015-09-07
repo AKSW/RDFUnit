@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The Extended Test Executor extends RLOG Executor but provides richer error metadata
  * TODO: At the moment this is partially
@@ -79,7 +81,7 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                 }
 
                 // result must be initialized by now
-                assert result != null;
+                checkNotNull(result);
 
                 for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : result.getVariableAnnotationsMap().entrySet()) {
                     // Get the variable name

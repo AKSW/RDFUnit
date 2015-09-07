@@ -17,6 +17,8 @@ import org.aksw.rdfunit.utils.SparqlUtils;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Test Executor that extends StatusExecutor and in addition reports error counts and prevalence for every test case
  *
@@ -75,8 +77,8 @@ public class AggregatedTestExecutor extends TestExecutor {
 
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
 
-        assert (query != null);
-        assert (var != null);
+        checkNotNull(query);
+        checkNotNull(var);
 
         int result = 0;
         QueryExecution qe = null;
