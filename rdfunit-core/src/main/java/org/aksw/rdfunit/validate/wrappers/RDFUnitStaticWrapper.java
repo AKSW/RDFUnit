@@ -152,13 +152,14 @@ public class RDFUnitStaticWrapper {
 
 
                     //TODO undo
-                    Collection<TestCase> autoTestCases = new ArrayList<>();//TestGeneratorUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
+                    Collection<TestCase> autoTestCases = TestGeneratorUtils.instantiateTestsFromAG(rdfunit.getAutoGenerators(), ontologySource);
 
                     Collection<TestCase> allTestCases = new ArrayList<>();
                     allTestCases.addAll(autoTestCases);
                     allTestCases.addAll(manualTestCases);
 
                     testSuite = new TestSuite(allTestCases);
+
                 }
             }
         }
@@ -289,7 +290,7 @@ public class RDFUnitStaticWrapper {
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, final String agentID, DatasetOverviewResults overviewResults) {
 
-        final boolean enableRDFUnitLogging = true;
+        final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
         testExecutorMonitor.setUserID(agentID);
         testExecutorMonitor.setExecutionType(testCaseExecutionType);

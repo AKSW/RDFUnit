@@ -9,254 +9,295 @@
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
 @prefix dataid: <http://dataid.dbpedia.org/ns/core#> .
-@prefix void: <http://rdfs.org/ns/void#> .
+@prefix void:   <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
 
-rutt:dataid-dataset-CARD-recom-label
+ rutt:dataid-dataset-CARD-recom-label
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for rdfs:label = 1" ;
+    dcterms:description "rdfs:label is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references rdfs:label ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue rdfs:label ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:bindingValue prov:Entity ;
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1";
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
 
-rutt:dataid-dataset-CARD-recom-licenseName
+ rutt:dataid-dataset-CARD-recom-licenseName
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for dataid:licenseName = 1" ;
+    dcterms:description "dataid:licenseName is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references dataid:licenseName ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dataid:licenseName ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1" ;
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
 
-rutt:dataid-dataset-CARD-recom-language
+ rutt:dataid-dataset-CARD-recom-language
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for dcterms:language = 1" ;
+    dcterms:description "dcterms:language is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references dcterms:language ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dcterms:language ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1" ;
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
 
-rutt:dataid-dataset-CARD-recom-triples
+ rutt:dataid-dataset-CARD-recom-triples
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for void:triples = 1" ;
+    dcterms:description "void:triples is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references void:triples ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue void:triples ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:bindingValue dataid:Linkset ;
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1" ;
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
 
-rutt:dataid-dataset-CARD-recom-rootResource
+ rutt:dataid-dataset-CARD-recom-rootResource
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for void:rootResource = 1" ;
+    dcterms:description "void:rootResource is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references void:rootResource ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue void:rootResource ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1";
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
 
-rutt:dataid-dataset-CARD-recom-latestVersion
+ rutt:dataid-dataset-CARD-recom-previousVersion
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for dataid:latestVersion = 1" ;
+    dcterms:description "dataid:previousVersion is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
-    rut:generated rut:ManuallyGenerated ;
-    rut:references dataid:latestVersion ;
-    rut:source <http://dataid.dbpedia.org/ns/core#> ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue dataid:latestVersion ;
-            rut:parameter rutp:OWLCARDT-P1
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1" ;
-            rut:parameter rutp:OWLCARDT-V1
-        ] ;
-    rut:testCaseLogLevel
-                  rlog:INFO .
-
-rutt:dataid-dataset-CARD-recom-previousVersion
-    a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for dataid:previousVersion = 1" ;
-    rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references dataid:previousVersion ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dataid:previousVersion ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1";
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
 
-rutt:dataid-dataset-CARD-recom-modified
+ rutt:dataid-dataset-CARD-recom-modified
     a       rut:PatternBasedTestCase ;
-    dcterms:description "recommandation for dcterms:modified = 1" ;
+    dcterms:description "dcterms:modified is recommended" ;
     rut:appliesTo rut:Schema ;
-    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:basedOnPattern rutp:TYPRODEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references dcterms:modified ;
     rut:source <http://dataid.dbpedia.org/ns/core#> ;
     rut:binding
         [ a     rut:Binding ;
             rut:bindingValue dcterms:modified ;
-            rut:parameter rutp:OWLCARDT-P1
+            rut:parameter rutp:TYPRODEP-P1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue dataid:Dataset ;
-            rut:parameter rutp:OWLCARDT-T1
+            rut:bindingValue prov:Entity ;
+            rut:parameter rutp:TYPRODEP-T1
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue "!=" ;
-            rut:parameter rutp:OWLCARDT-OP
-        ] ;
-    rut:binding
-        [ a     rut:Binding ;
-            rut:bindingValue "1" ;
-            rut:parameter rutp:OWLCARDT-V1
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
         ] ;
     rut:testCaseLogLevel
-                  rlog:INFO .
+                  rlog:WARN .
+
+   rutt:dataid-dataset-CARD-recom-issued
+      a       rut:PatternBasedTestCase ;
+      dcterms:description "dcterms:issued is recommended" ;
+      rut:appliesTo rut:Schema ;
+      rut:basedOnPattern rutp:TYPRODEP ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references dcterms:issued ;
+      rut:source <http://dataid.dbpedia.org/ns/core#> ;
+      rut:binding
+          [ a     rut:Binding ;
+              rut:bindingValue dcterms:issued ;
+              rut:parameter rutp:TYPRODEP-P1
+          ] ;
+      rut:binding
+          [ a     rut:Binding ;
+              rut:bindingValue prov:Entity ;
+              rut:parameter rutp:TYPRODEP-T1
+          ] ;
+      rut:binding
+          [ a     rut:Binding ;
+              rut:bindingValue 'NOT' ;
+              rut:parameter rutp:TYPRODEP-NOT
+          ] ;
+      rut:testCaseLogLevel
+                    rlog:WARN .
+
+ rutt:dataid-dataset-CARD-recom-description
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "dcterms:description is recommended" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dcterms:description ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dcterms:description ;
+            rut:parameter rutp:TYPRODEP-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue prov:Entity ;
+            rut:parameter rutp:TYPRODEP-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:WARN .
+
+ rutt:dataid-dataset-CARD-recom-mediaType
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "dcat:mediaType is recommended" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dcat:mediaType ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dcat:mediaType ;
+            rut:parameter rutp:TYPRODEP-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Distribution ;
+            rut:parameter rutp:TYPRODEP-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:WARN .
+
+
+ rutt:dataid-dataset-CARD-recom-previousLinksetVersion
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "dataid:previousLinksetVersion is recommended" ;
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references dataid:previousLinksetVersion ;
+    rut:source <http://dataid.dbpedia.org/ns/core#> ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:previousLinksetVersion ;
+            rut:parameter rutp:TYPRODEP-P1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue dataid:Linkset ;
+            rut:parameter rutp:TYPRODEP-T1
+        ] ;
+    rut:binding
+        [ a     rut:Binding ;
+            rut:bindingValue 'NOT' ;
+            rut:parameter rutp:TYPRODEP-NOT
+        ] ;
+    rut:testCaseLogLevel
+                  rlog:WARN .

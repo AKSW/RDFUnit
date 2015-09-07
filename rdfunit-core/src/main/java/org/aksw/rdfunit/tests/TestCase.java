@@ -116,6 +116,13 @@ public abstract class TestCase implements Comparable<TestCase> {
     }
 
     /**
+     *
+     * @return Uri of the auto generator
+     */
+    public String getAutoGeneratorURI() { return annotation.getAutoGeneratorURI(); }
+
+
+    /**
      * <p>getSparqlPrevalenceQuery.</p>
      *
      * @return a {@link com.hp.hpl.jena.query.Query} object.
