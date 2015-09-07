@@ -107,4 +107,8 @@ public final class RDFReaderFactory {
         }
         return new RDFStreamReader(is, format);
     }
+
+    public static RDFReader createEmptyReader() {
+        return RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/empty.ttl");
+    }
 }

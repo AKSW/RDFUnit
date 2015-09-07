@@ -53,7 +53,7 @@ public final class RDFUnitTestSuiteGenerator {
                         // fatal error
                     }
 
-                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", null, schemas);
+                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RDFReaderFactory.createEmptyReader(), schemas);
 
                     TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
                             enableAutoTests,
