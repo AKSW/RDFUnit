@@ -8,7 +8,8 @@ import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.validate.ParameterException;
-import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
+import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
+import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.aksw.rdfunit.validate.ws.RDFUnitWebService;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,10 @@ public class DataIDWS extends RDFUnitWebService {
     /** {@inheritDoc} */
     @Override
     public void init() throws ServletException {
-        RDFUnitStaticWrapper.initWrapper("https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl");
+        RDFUnitTestSuiteGenerator testSuiteGenerator =
+                new RDFUnitTestSuiteGenerator.Builder()
+                .addSchemaURI("https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl").build();
+        RDFUnitStaticValidator.initWrapper(testSuiteGenerator);
     }
 
     /** {@inheritDoc} */
@@ -91,13 +95,13 @@ public class DataIDWS extends RDFUnitWebService {
     /** {@inheritDoc} */
     @Override
     protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource testSource) {
-        return RDFUnitStaticWrapper.getTestSuite();
+        return RDFUnitStaticValidator.getTestSuite();
     }
 
     /** {@inheritDoc} */
     @Override
     protected Model validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException {
-        return RDFUnitStaticWrapper.validate(configuration.getTestCaseExecutionType(), testSource, testSuite);
+        return RDFUnitStaticValidator.validate(configuration.getTestCaseExecutionType(), testSource, testSuite);
     }
 
     /** {@inheritDoc} */

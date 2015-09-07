@@ -99,6 +99,19 @@ public final class SchemaSourceFactory {
         return createSchemaSourceSimple(prefix, uri, RDFReaderFactory.createReaderFromText(text, format));
     }
 
+
+    /**
+     * <p>createSchemaSourceSimple.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
+     */
+    public static SchemaSource createSchemaSourceSimple(String uri, RDFReader reader) {
+
+        return createSchemaSourceSimple(CacheUtils.getAutoPrefixForURI(uri), uri, uri, reader);
+    }
+
     /**
      * <p>createSchemaSourceSimple.</p>
      *

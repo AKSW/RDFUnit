@@ -11,7 +11,7 @@ import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 import org.aksw.rdfunit.utils.TestGeneratorUtils;
-import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
+import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -143,7 +143,7 @@ public class PatternsGeneratorsIntegrationTest {
                         .setReferenceSchemata(ontologySource)
                         .build();
 
-                RDFUnitStaticWrapper.validate(executionType, modelSource, testSuite, overviewResults);
+                RDFUnitStaticValidator.validate(executionType, modelSource, testSuite, overviewResults);
 
                 // For status results we don't get violation instances
                 if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {

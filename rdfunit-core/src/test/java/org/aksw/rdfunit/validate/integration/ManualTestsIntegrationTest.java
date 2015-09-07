@@ -6,7 +6,8 @@ import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.resources.Resources;
 import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.TestUtils;
-import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
+import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
+import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,8 @@ public class ManualTestsIntegrationTest {
         String emptyResource = "/org/aksw/rdfunit/validate/data/empty.ttl";
 
         // Load test ontology from resource (empty in this case)
-        RDFUnitStaticWrapper.initWrapper("", emptyResource);
+        RDFUnitStaticValidator.initWrapper(
+                new RDFUnitTestSuiteGenerator.Builder().addLocalResource(emptyResource).build());
 
         RDFUnit rdfunit = new RDFUnit();
         try {

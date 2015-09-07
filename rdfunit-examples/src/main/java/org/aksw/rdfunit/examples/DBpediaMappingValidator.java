@@ -15,7 +15,7 @@ import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.utils.TestUtils;
-import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticWrapper;
+import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -86,7 +86,7 @@ public class DBpediaMappingValidator {
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     public Model validateAllMappings() throws RDFReaderException {
-        return RDFUnitStaticWrapper.validate(TestCaseExecutionType.extendedTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
+        return RDFUnitStaticValidator.validate(TestCaseExecutionType.extendedTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
     }
 
     /**
