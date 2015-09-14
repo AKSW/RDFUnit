@@ -1,9 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.vocabulary.OWL;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,12 +19,7 @@ public class RDFStreamReaderTest {
 
     @Before
     public void setUp() throws Exception {
-        model = ModelFactory.createDefaultModel();
-        model.add(
-                ResourceFactory.createResource("http://rdfunit.aksw.org"),
-                OWL.sameAs,
-                ResourceFactory.createResource("http://dbpedia.org/resource/Cool")
-        );
+        model = ReaderTestUtils.createOneTripleModel();
     }
 
 
