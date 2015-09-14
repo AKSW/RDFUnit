@@ -26,8 +26,8 @@ import java.util.Collection;
  */
 public abstract class AbstractTestCaseImpl implements TestCase, Comparable<AbstractTestCaseImpl> {
 
-    private final String testURI;
-    private final TestCaseAnnotation annotation;
+    protected final String testURI;
+    protected final TestCaseAnnotation annotation;
 
     /**
      * <p>Constructor for TestCase.</p>

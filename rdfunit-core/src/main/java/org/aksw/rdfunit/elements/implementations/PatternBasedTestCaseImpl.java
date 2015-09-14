@@ -91,6 +91,10 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
         return sparqlPrevalenceCache;
     }
 
+    public String getAutoGeneratorURI() {
+        return annotation.getAutoGeneratorURI();
+    }
+
     private String instantiateBindings(Collection<Binding> bindings, String query) {
         String sparql = query;
         for (Binding b : bindings) {
