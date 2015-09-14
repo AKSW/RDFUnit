@@ -197,4 +197,19 @@ public class DatasetOverviewResults {
     public void setEndTime() {
         this.endTime = new XSDDateTime(Calendar.getInstance());
     }
+
+
+    @Override
+    public String toString() {
+        return "DatasetOverviewResults{" +
+                "totalTests=" + totalTests +
+                ", successfullTests=" + successfullTests +
+                ", failedTests=" + failedTests +
+                ", timeoutTests=" + timeoutTests +
+                ", errorTests=" + errorTests +
+                ", individualErrors=" + individualErrors +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }
