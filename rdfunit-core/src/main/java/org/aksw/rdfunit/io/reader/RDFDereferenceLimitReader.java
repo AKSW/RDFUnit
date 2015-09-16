@@ -60,11 +60,7 @@ public class RDFDereferenceLimitReader extends AbstractRDFReader implements RDFR
     /** {@inheritDoc} */
     @Override
     public void read(Model model) throws RDFReaderException {
-        // Check for size
-        long size = getUriSize(uri);
-        if (size > limitInBytes || !strict || size < 0) {
-            throw new RDFReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
-        }
+        checkUriSizeOrThrowExceprion();
 
         // continue with a normal Dereference Reader
         RDFReaderFactory.createDereferenceReader(uri).read(model);
@@ -73,14 +69,18 @@ public class RDFDereferenceLimitReader extends AbstractRDFReader implements RDFR
     /** {@inheritDoc} */
     @Override
     public void readDataset(Dataset dataset) throws RDFReaderException {
-        // Check for size
+        checkUriSizeOrThrowExceprion();
+
+        // continue with a normal Dereference Reader
+        RDFReaderFactory.createDereferenceReader(uri).readDataset(dataset);
+    }
+
+
+    private void checkUriSizeOrThrowExceprion() throws RDFReaderException {
         long size = getUriSize(uri);
         if (size > limitInBytes || !strict || size < 0) {
             throw new RDFReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
         }
-
-        // continue with a normal Dereference Reader
-        RDFReaderFactory.createDereferenceReader(uri).readDataset(dataset);
     }
 
     /**
