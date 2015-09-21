@@ -1,5 +1,10 @@
 package org.aksw.rdfunit.validate.wrappers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RDFFirstSuccessReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
@@ -11,11 +16,6 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,7 +34,8 @@ public final class RDFUnitTestSuiteGenerator {
 
     private TestSuite testSuite = null;
 
-    private RDFUnitTestSuiteGenerator(Collection<SchemaSource> schemas, boolean enableAutoTests, boolean enableManualTests) {
+    private RDFUnitTestSuiteGenerator(Collection<SchemaSource> schemas, boolean enableAutoTests, boolean
+            enableManualTests) {
         this.enableAutoTests = enableAutoTests;
         this.enableManualTests = enableManualTests;
         this.schemas = Collections.unmodifiableCollection(checkNotNull(schemas));
@@ -53,13 +54,15 @@ public final class RDFUnitTestSuiteGenerator {
                         // fatal error
                     }
 
-                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RDFReaderFactory.createEmptyReader(), schemas);
+                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy",
+                            RDFReaderFactory.createEmptyReader(), schemas);
 
                     TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
                             enableAutoTests,
                             false,
                             enableManualTests);
-                    testSuite = testGeneratorExecutor.generateTestSuite("", dummyTestSource, rdfunit.getAutoGenerators());
+                    testSuite = testGeneratorExecutor.generateTestSuite("", dummyTestSource, rdfunit
+                            .getAutoGenerators());
 
                 }
             }
@@ -87,10 +90,12 @@ public final class RDFUnitTestSuiteGenerator {
             enableAutoTests = false;
             return this;
         }
+
         public Builder enableManualtests() {
             enableManualTests = true;
             return this;
         }
+
         public Builder disableManualtests() {
             enableManualTests = false;
             return this;
@@ -99,7 +104,8 @@ public final class RDFUnitTestSuiteGenerator {
         public Builder addSchemaURI(String prefix, String schemaUri) {
             checkNotNull(schemaUri);
 
-            SchemaSource schemaSource = createSource(prefix, schemaUri, RDFReaderFactory.createResourceReader(schemaUri));
+            SchemaSource schemaSource = createSource(prefix, schemaUri, RDFReaderFactory.createResourceReader
+                    (schemaUri));
             schemas.add(schemaSource);
 
             return this;
@@ -108,7 +114,8 @@ public final class RDFUnitTestSuiteGenerator {
         public Builder addLocalResource(String prefix, String localResource) {
             checkNotNull(localResource);
 
-            SchemaSource schemaSource = createSource(prefix, localResource, RDFReaderFactory.createResourceReader(localResource));
+            SchemaSource schemaSource = createSource(prefix, localResource, RDFReaderFactory.createResourceReader
+                    (localResource));
             schemas.add(schemaSource);
 
             return this;
@@ -127,6 +134,11 @@ public final class RDFUnitTestSuiteGenerator {
             SchemaSource schemaSource = createSource(prefix, schemaUri, schemaReader);
             schemas.add(schemaSource);
 
+            return this;
+        }
+
+        public Builder addSchemaURI(String prefix, String schemaUri, RDFReader rdfReader) {
+            schemas.add(createSource(prefix, checkNotNull(schemaUri), checkNotNull(rdfReader)));
             return this;
         }
 
