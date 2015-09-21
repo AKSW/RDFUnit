@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
@@ -50,6 +51,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
             throw new InitializationError("@Ontology annotation is required!");
         }
 
+        checkAnnotatedMethods();
+
         final Ontology ontology = testClass.getAnnotation(Ontology.class);
         final RDFReader ontologyReader;
         try {
@@ -67,6 +70,19 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
         for (TestCase t : testCaseCollection) {
             for (FrameworkMethod m : annotatedMethods) {
                 testCases.add(new RdfUnitJunitTestCase(m, t));
+            }
+        }
+    }
+
+    private void checkAnnotatedMethods() throws InitializationError {
+        List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(InputModel.class);
+        if(inputModelMethods.isEmpty()) {
+            throw new InitializationError("At least one method with @InputModel annotation is required!");
+        }
+
+        for(FrameworkMethod m : inputModelMethods) {
+            if(!m.getReturnType().equals(Model.class)) {
+                throw new InitializationError("Methods marked @InputModel must return com.hp.hpl.jena.rdf.model.Model");
             }
         }
     }
