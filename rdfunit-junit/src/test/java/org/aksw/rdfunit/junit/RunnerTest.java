@@ -53,14 +53,13 @@ public class RunnerTest {
 
     @RunWith(RdfUnitJunitRunner.class)
     @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
-//    @InputModels(uris={"https://raw.githubusercontent.com/RDFLib/rdflib/master/examples/foaf.rdf"})
     public static class TestRunner {
 
         @InputModel
         public Model getInputData() {
             return ModelFactory
                     .createDefaultModel()
-                    .read("https://raw.githubusercontent.com/RDFLib/rdflib/master/examples/foaf.rdf");
+                    .read("file:src/test/resources/inputmodels/foaf.rdf");
         }
 
     }

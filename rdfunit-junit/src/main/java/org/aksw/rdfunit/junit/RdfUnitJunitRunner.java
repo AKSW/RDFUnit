@@ -26,7 +26,9 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
+    private Model controlledVocabulary = null;
     private Model ontologyModel;
+    private Object testCaseInstance;
 
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
@@ -35,7 +37,34 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         checkInputModelAnnotatedMethods();
 
         createOntologyModel();
+
+        setControlledVocabulary();
+
         generateRdfUnitTestCases();
+    }
+
+    private void setControlledVocabulary() throws InitializationError {
+        final List<FrameworkMethod> annotatedMethods = getTestClass().getAnnotatedMethods(ControlledVocabulary.class);
+        if (annotatedMethods.isEmpty()) {
+            return;
+        }
+        if (annotatedMethods.size() > 1) {
+            throw new InitializationError("Only one method annotated with @ControlledVocabulary allowed!");
+        }
+        try {
+            final FrameworkMethod controlledVocabularyMethod = annotatedMethods.get(0);
+            if (!controlledVocabularyMethod.getReturnType().equals(Model.class)) {
+                throw new InitializationError(
+                        String.format(
+                                "Method annotated with @ControlledVocabulary must return a %s!",
+                                Model.class.getCanonicalName()
+                        )
+                );
+            }
+            controlledVocabulary = (Model) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance());
+        } catch (Throwable e) {
+            throw new InitializationError(e);
+        }
     }
 
     private void checkOntologyAnnotation() throws InitializationError {
@@ -62,34 +91,57 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
-        final Map<FrameworkMethod, Model> inputModels = getInputModels();
         final SchemaSource schemaSourceFromOntology = createSchemaSourceFromOntology();
-        for (TestCase t : createTestCases()) {
-            for (Map.Entry<FrameworkMethod, Model> e : inputModels.entrySet()) {
-                testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey()));
+        final Collection<TestCase> testCases = createTestCases();
+        for (Map.Entry<FrameworkMethod, Model> e :
+                getTestMethodsToInputModelsMergedWithControlledVocabulary().entrySet()) {
+            for (TestCase t : testCases) {
+                this.testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey()));
             }
         }
+    }
+
+    private Map<FrameworkMethod, Model> getTestMethodsToInputModelsMergedWithControlledVocabulary() throws
+            InitializationError {
+        if (controlledVocabulary == null) {
+            return getInputModels();
+        }
+        final Map<FrameworkMethod, Model> testMethodsToMergedModels = new LinkedHashMap<>();
+        for (Map.Entry<FrameworkMethod, Model> e : getInputModels().entrySet()) {
+            testMethodsToMergedModels.put(
+                    e.getKey(),
+                    ModelFactory.createDefaultModel().add(e.getValue()).add(controlledVocabulary)
+            );
+        }
+        return testMethodsToMergedModels;
     }
 
     private void createOntologyModel() {
         ontologyModel = ModelFactory.createDefaultModel().read(getOntology().uri());
     }
 
-    private Object createTestCaseInstance() throws InitializationError {
-        final Object testInstance;
-        try {
-            testInstance = getTestClass().getJavaClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new InitializationError(e);
+    private synchronized Object getTestCaseInstance() throws InitializationError {
+        if (testCaseInstance == null) {
+            try {
+                testCaseInstance = getTestClass().getJavaClass().newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new InitializationError(e);
+            }
         }
-        return testInstance;
+        return testCaseInstance;
     }
 
     private Map<FrameworkMethod, Model> getInputModels() throws InitializationError {
         final Map<FrameworkMethod, Model> inputModels = new LinkedHashMap<>();
         for (FrameworkMethod m : getInputModelMethods()) {
             try {
-                inputModels.put(m, (Model) m.getMethod().invoke(createTestCaseInstance()));
+                final Model inputModel = (Model) m.getMethod().invoke(getTestCaseInstance());
+                if (inputModel == null) {
+                    throw new InitializationError(
+                            String.format("@InputModel: %s returned null!", m.getMethod().getName())
+                    );
+                }
+                inputModels.put(m, inputModel);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new InitializationError(e);
             }
@@ -115,6 +167,10 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     private Ontology getOntology() {
         return getTestClass().getAnnotation(Ontology.class);
+    }
+
+    Model getControlledVocabularyModel() {
+        return controlledVocabulary;
     }
 
     @Override
