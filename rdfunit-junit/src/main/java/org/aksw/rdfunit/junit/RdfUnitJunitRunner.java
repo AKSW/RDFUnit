@@ -16,20 +16,23 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.StatusTestExecutor;
-import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
+import org.aksw.rdfunit.tests.query_generation.QueryGenerationAskFactory;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.Statement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJunitTestCase> {
 
@@ -68,7 +71,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
         final List<FrameworkMethod> annotatedMethods = getTestClass().getAnnotatedMethods(InputModel.class);
         for (TestCase t : createTestCases()) {
             for (FrameworkMethod m : annotatedMethods) {
-                testCases.add(new RdfUnitJunitTestCase(m, t));
+                testCases.add(new RdfUnitJunitTestCase(m, t, getOntology().uri()));
             }
         }
     }
@@ -85,9 +88,10 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
         final RDFReader ontologyReader;
 
         try (final InputStream in = getOntologyUrl().openStream()) {
-            ontologyReader = new RDFModelReader(ModelFactory.createDefaultModel().read(in, getOntology
-                    ()
-                    .format()));
+            ontologyReader = new RDFModelReader(ModelFactory.createDefaultModel().read(
+                    in,
+                    getOntology().format())
+            );
         } catch (IOException e) {
             throw new InitializationError(e);
         }
@@ -119,14 +123,23 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
     }
 
     @Override
-    protected void runChild(RdfUnitJunitRunner.RdfUnitJunitTestCase child, RunNotifier notifier) {
+    protected void runChild(final RdfUnitJunitRunner.RdfUnitJunitTestCase child, RunNotifier notifier) {
         try {
             final Object testInstance = getTestClass().getJavaClass().newInstance();
-            new RdfUnitJunitStatusTestExecutor().runTest(
-                    child.getTestCase(),
-                    child.getInputModel(testInstance)
-            );
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
+            final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
+            final Statement statement = new Statement() {
+
+                @Override
+                public void evaluate() throws Throwable {
+                    assertThat(
+                            child.getTestCase().getResultMessage(),
+                            child.runTest(testInstance, rdfUnitJunitStatusTestExecutor)
+                    );
+                }
+            };
+
+            this.runLeaf(statement, describeChild(child), notifier);
+        } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException(e);
         }
     }
@@ -134,20 +147,26 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
     private static final class RdfUnitJunitStatusTestExecutor extends StatusTestExecutor {
 
         public RdfUnitJunitStatusTestExecutor() {
-            super(new QueryGenerationSelectFactory());
+            super(new QueryGenerationAskFactory());
         }
 
-        public void runTest(TestCase testCase, Model inputModel) {
+        public boolean runTest(TestCase testCase, Model inputModel, String uri) {
+
+            RDFReader ontologyReader = new RDFModelReader(ModelFactory.createDefaultModel().read(uri));
+            final SchemaSource schemaSource =
+                    SchemaSourceFactory.createSchemaSourceSimple("custom", uri, ontologyReader);
+
             final TestSource modelSource = new TestSourceBuilder()
                     .setPrefixUri("custom", "rdfunit")
                     .setInMemReader(new RDFModelReader(inputModel))
+                    .setReferenceSchemata(schemaSource)
                     .build();
 
             final boolean success = this.execute(
                     modelSource,
                     new TestSuite(Collections.singleton(testCase))
             );
-            assertTrue(success);
+            return success;
         }
 
     }
@@ -155,8 +174,11 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
     public static final class RdfUnitJunitTestCase {
         private final FrameworkMethod inputModelProvider;
         private final TestCase testCase;
+        private final String uri;
+        private Description description;
 
-        public RdfUnitJunitTestCase(FrameworkMethod inputModelProvider, TestCase testCase) {
+        public RdfUnitJunitTestCase(FrameworkMethod inputModelProvider, TestCase testCase, String uri) {
+            this.uri = uri;
             this.inputModelProvider = checkNotNull(inputModelProvider);
             this.testCase = checkNotNull(testCase);
         }
@@ -169,9 +191,23 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
             return testCase;
         }
 
+        public String getUri() {
+            return uri;
+        }
+
         public Model getInputModel(Object instance) throws IllegalAccessException, InvocationTargetException {
             return (Model) getInputModelProvider().getMethod().invoke(instance);
         }
+
+        private boolean runTest(Object testInstance, RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor)
+                throws IllegalAccessException, InvocationTargetException {
+            return rdfUnitJunitStatusTestExecutor.runTest(
+                    getTestCase(),
+                    getInputModel(testInstance),
+                    getUri()
+            );
+        }
+
     }
 
 }
