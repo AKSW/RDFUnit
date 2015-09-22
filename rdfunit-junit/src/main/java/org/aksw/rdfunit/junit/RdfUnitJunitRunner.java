@@ -55,16 +55,19 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
     }
 
     private void checkInputModelAnnotatedMethods() throws InitializationError {
-        List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(InputModel.class);
-        if (inputModelMethods.isEmpty()) {
-            throw new InitializationError("At least one method with @InputModel annotation is required!");
-        }
-
-        for (FrameworkMethod m : inputModelMethods) {
+        for (FrameworkMethod m : getInputModelMethods()) {
             if (!m.getReturnType().equals(Model.class)) {
                 throw new InitializationError("Methods marked @InputModel must return com.hp.hpl.jena.rdf.model.Model");
             }
         }
+    }
+
+    private List<FrameworkMethod> getInputModelMethods() throws InitializationError {
+        List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(InputModel.class);
+        if (inputModelMethods.isEmpty()) {
+            throw new InitializationError("At least one method with @InputModel annotation is required!");
+        }
+        return inputModelMethods;
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
@@ -73,10 +76,26 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
         final SchemaSource schemaSource =
                 SchemaSourceFactory.createSchemaSourceSimple("custom", uri, ontologyReader);
 
-        final List<FrameworkMethod> annotatedMethods = getTestClass().getAnnotatedMethods(InputModel.class);
+        final List<FrameworkMethod> inputModelMethods = getInputModelMethods();
+        final Object testInstance;
+        try {
+            testInstance = getTestClass().getJavaClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new InitializationError(e);
+        }
+        final List<Model> inputModels = new ArrayList<>();
+        for (FrameworkMethod m : inputModelMethods) {
+            try {
+                final Model inputModel = (Model) m.getMethod().invoke(testInstance);
+                inputModels.add(inputModel);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new InitializationError(e);
+            }
+        }
+
         for (TestCase t : createTestCases()) {
-            for (FrameworkMethod m : annotatedMethods) {
-                testCases.add(new RdfUnitJunitTestCase(m, t, schemaSource));
+            for (Model m : inputModels) {
+                testCases.add(new RdfUnitJunitTestCase(t, schemaSource, m));
             }
         }
     }
@@ -129,24 +148,18 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
 
     @Override
     protected void runChild(final RdfUnitJunitRunner.RdfUnitJunitTestCase child, RunNotifier notifier) {
-        try {
-            final Object testInstance = getTestClass().getJavaClass().newInstance();
-            final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
-            final Statement statement = new Statement() {
+        final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
+        final Statement statement = new Statement() {
 
-                @Override
-                public void evaluate() throws Throwable {
-                    assertThat(
-                            child.getTestCase().getResultMessage(),
-                            child.runTest(testInstance, rdfUnitJunitStatusTestExecutor)
-                    );
-                }
-            };
-
-            this.runLeaf(statement, describeChild(child), notifier);
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
-        }
+            @Override
+            public void evaluate() throws Throwable {
+                assertThat(
+                        child.getTestCase().getResultMessage(),
+                        child.runTest(rdfUnitJunitStatusTestExecutor)
+                );
+            }
+        };
+        this.runLeaf(statement, describeChild(child), notifier);
     }
 
     private static final class RdfUnitJunitStatusTestExecutor extends StatusTestExecutor {
@@ -162,48 +175,43 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
                     .setReferenceSchemata(schemaSource)
                     .build();
 
-            final boolean success = this.execute(
+            return this.execute(
                     modelSource,
                     new TestSuite(Collections.singleton(testCase))
             );
-            return success;
         }
 
     }
 
     public static final class RdfUnitJunitTestCase {
 
-        private final FrameworkMethod inputModelProvider;
         private final TestCase testCase;
         private final SchemaSource schemaSource;
+        private final Model inputModel;
 
-        public RdfUnitJunitTestCase(FrameworkMethod inputModelProvider, TestCase testCase, SchemaSource schemaSource) {
+        public RdfUnitJunitTestCase(TestCase testCase, SchemaSource schemaSource, Model inputModel) {
             this.schemaSource = schemaSource;
-            this.inputModelProvider = checkNotNull(inputModelProvider);
+            this.inputModel = inputModel;
             this.testCase = checkNotNull(testCase);
-        }
-
-        public FrameworkMethod getInputModelProvider() {
-            return inputModelProvider;
         }
 
         public TestCase getTestCase() {
             return testCase;
         }
 
-        public Model getInputModel(Object instance) throws IllegalAccessException, InvocationTargetException {
-            return (Model) getInputModelProvider().getMethod().invoke(instance);
+        public Model getInputModel() throws IllegalAccessException, InvocationTargetException {
+            return inputModel;
         }
 
         public SchemaSource getSchemaSource() {
             return schemaSource;
         }
 
-        private boolean runTest(Object testInstance, RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor)
+        private boolean runTest(RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor)
                 throws IllegalAccessException, InvocationTargetException {
             return rdfUnitJunitStatusTestExecutor.runTest(
                     getTestCase(),
-                    getInputModel(testInstance),
+                    getInputModel(),
                     getSchemaSource()
             );
         }
