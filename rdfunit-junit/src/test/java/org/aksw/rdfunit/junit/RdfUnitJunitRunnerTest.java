@@ -33,7 +33,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI, format = "RDF")
+    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class RdfUnitTest {
         @InputModel
         public Model inputModel() { return null; }

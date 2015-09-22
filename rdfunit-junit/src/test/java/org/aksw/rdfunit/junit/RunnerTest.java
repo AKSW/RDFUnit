@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.junit.runner.RunWith;
 
 @RunWith(RdfUnitJunitRunner.class)
-@Ontology(uri=Constants.FOAF_ONTOLOGY_URI, format="rdf")
+@Ontology(uri=Constants.FOAF_ONTOLOGY_URI)
 public class RunnerTest {
 
     @InputModel

@@ -16,9 +16,4 @@ public @interface Ontology {
      */
     String uri();
 
-    /**
-     * @return the format for the target ontology
-     */
-    String format() default "TTL";
-
 }
