@@ -68,10 +68,15 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
+        final String uri = getOntology().uri();
+        RDFReader ontologyReader = new RDFModelReader(ModelFactory.createDefaultModel().read(uri));
+        final SchemaSource schemaSource =
+                SchemaSourceFactory.createSchemaSourceSimple("custom", uri, ontologyReader);
+
         final List<FrameworkMethod> annotatedMethods = getTestClass().getAnnotatedMethods(InputModel.class);
         for (TestCase t : createTestCases()) {
             for (FrameworkMethod m : annotatedMethods) {
-                testCases.add(new RdfUnitJunitTestCase(m, t, getOntology().uri()));
+                testCases.add(new RdfUnitJunitTestCase(m, t, schemaSource));
             }
         }
     }
@@ -150,12 +155,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
             super(new QueryGenerationAskFactory());
         }
 
-        public boolean runTest(TestCase testCase, Model inputModel, String uri) {
-
-            RDFReader ontologyReader = new RDFModelReader(ModelFactory.createDefaultModel().read(uri));
-            final SchemaSource schemaSource =
-                    SchemaSourceFactory.createSchemaSourceSimple("custom", uri, ontologyReader);
-
+        public boolean runTest(TestCase testCase, Model inputModel, SchemaSource schemaSource) {
             final TestSource modelSource = new TestSourceBuilder()
                     .setPrefixUri("custom", "rdfunit")
                     .setInMemReader(new RDFModelReader(inputModel))
@@ -172,13 +172,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
     }
 
     public static final class RdfUnitJunitTestCase {
+
         private final FrameworkMethod inputModelProvider;
         private final TestCase testCase;
-        private final String uri;
-        private Description description;
+        private final SchemaSource schemaSource;
 
-        public RdfUnitJunitTestCase(FrameworkMethod inputModelProvider, TestCase testCase, String uri) {
-            this.uri = uri;
+        public RdfUnitJunitTestCase(FrameworkMethod inputModelProvider, TestCase testCase, SchemaSource schemaSource) {
+            this.schemaSource = schemaSource;
             this.inputModelProvider = checkNotNull(inputModelProvider);
             this.testCase = checkNotNull(testCase);
         }
@@ -191,12 +191,12 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
             return testCase;
         }
 
-        public String getUri() {
-            return uri;
-        }
-
         public Model getInputModel(Object instance) throws IllegalAccessException, InvocationTargetException {
             return (Model) getInputModelProvider().getMethod().invoke(instance);
+        }
+
+        public SchemaSource getSchemaSource() {
+            return schemaSource;
         }
 
         private boolean runTest(Object testInstance, RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor)
@@ -204,7 +204,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitRunner.RdfUnitJ
             return rdfUnitJunitStatusTestExecutor.runTest(
                     getTestCase(),
                     getInputModel(testInstance),
-                    getUri()
+                    getSchemaSource()
             );
         }
 
