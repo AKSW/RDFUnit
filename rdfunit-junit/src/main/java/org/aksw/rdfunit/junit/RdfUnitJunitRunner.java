@@ -15,17 +15,12 @@ import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
-import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
-import org.junit.runners.model.Statement;
-
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
@@ -141,21 +136,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     @Override
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
-        final Statement statement = new Statement() {
-
-            @Override
-            public void evaluate() throws Throwable {
-                final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(child);
-                final StringBuilder b = new StringBuilder();
-                b.append(child.getTestCase().getResultMessage()).append(":\n");
-                for (TestCaseResult t : testCaseResults) {
-                    RLOGTestCaseResult r = (RLOGTestCaseResult) t;
-                    b.append("\t").append(r.getResource()).append("\n");
-                }
-                assertThat(b.toString(), testCaseResults.isEmpty());
-            }
-        };
-        this.runLeaf(statement, describeChild(child), notifier);
+        this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
     }
 
 }
+
