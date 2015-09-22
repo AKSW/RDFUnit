@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.junit;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.junit.BeforeClass;
@@ -34,8 +37,23 @@ public class RunnerTest {
         assertThat(mockRunListener.getTestsFailed()).isGreaterThan(0);
     }
 
+    @Test
+    public void methodNamesMatchPattern() {
+        for (Description d : mockRunListener.getDescriptions()) {
+            assertThat(d.getMethodName()).matches("\\[getInputData\\] .*");
+        }
+    }
+
+    @Test
+    public void failuresMatchPattern() {
+        for (Failure f : mockRunListener.getFailures()) {
+            assertThat(f.getDescription().getMethodName()).matches("\\[getInputData\\] .*");
+        }
+    }
+
     @RunWith(RdfUnitJunitRunner.class)
     @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
+//    @InputModels(uris={"https://raw.githubusercontent.com/RDFLib/rdflib/master/examples/foaf.rdf"})
     public static class TestRunner {
 
         @InputModel
@@ -48,25 +66,34 @@ public class RunnerTest {
     }
 
     private static class MockRunListener extends RunListener {
-        private int testsFailed;
-        private int testsFinished;
+
+        private final List<Description> descriptions = new ArrayList<>();
+        private final List<Failure> failures = new ArrayList<>();
 
         @Override
         public void testFinished(Description description) throws Exception {
-            testsFinished++;
+            descriptions.add(description);
         }
 
         @Override
         public void testFailure(Failure failure) throws Exception {
-            testsFailed++;
+            failures.add(failure);
+        }
+
+        public List<Description> getDescriptions() {
+            return descriptions;
+        }
+
+        public List<Failure> getFailures() {
+            return failures;
         }
 
         public int getTestsFailed() {
-            return testsFailed;
+            return failures.size();
         }
 
         public int getTestsFinished() {
-            return testsFinished;
+            return descriptions.size();
         }
     }
 }

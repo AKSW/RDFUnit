@@ -4,7 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -63,11 +65,11 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
-        final List<Model> inputModels = getInputModels();
+        final Map<FrameworkMethod, Model> inputModels = getInputModels();
         final SchemaSource schemaSourceFromOntology = createSchemaSourceFromOntology();
         for (TestCase t : createTestCases()) {
-            for (Model m : inputModels) {
-                testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, m));
+            for (Map.Entry<FrameworkMethod, Model> e : inputModels.entrySet()) {
+                testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey()));
             }
         }
     }
@@ -86,11 +88,11 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return testInstance;
     }
 
-    private List<Model> getInputModels() throws InitializationError {
-        final List<Model> inputModels = new ArrayList<>();
+    private Map<FrameworkMethod, Model> getInputModels() throws InitializationError {
+        final Map<FrameworkMethod, Model> inputModels = new LinkedHashMap<>();
         for (FrameworkMethod m : getInputModelMethods()) {
             try {
-                inputModels.add((Model) m.getMethod().invoke(createTestCaseInstance()));
+                inputModels.put(m, (Model) m.getMethod().invoke(createTestCaseInstance()));
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new InitializationError(e);
             }
@@ -125,7 +127,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     @Override
     protected Description describeChild(RdfUnitJunitTestCase child) {
-        return Description.createTestDescription(this.getTestClass().getJavaClass(), "RdfUnitJunitRunner");
+        return Description.createTestDescription(
+                child.getFrameworkMethod().getDeclaringClass(),
+                String.format(
+                        "[%s] %s",
+                        child.getFrameworkMethod().getMethod().getName(),
+                        child.getTestCase().getAbrTestURI()
+                )
+        );
     }
 
     @Override
