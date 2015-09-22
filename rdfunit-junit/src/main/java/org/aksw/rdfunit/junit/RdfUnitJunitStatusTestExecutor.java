@@ -1,22 +1,23 @@
 package org.aksw.rdfunit.junit;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
+import java.util.Collection;
 
+import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
-import org.aksw.rdfunit.tests.TestSuite;
-import org.aksw.rdfunit.tests.executors.StatusTestExecutor;
-import org.aksw.rdfunit.tests.query_generation.QueryGenerationAskFactory;
+import org.aksw.rdfunit.tests.executors.RLOGTestExecutor;
+import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
+import org.aksw.rdfunit.tests.results.TestCaseResult;
 
-final class RdfUnitJunitStatusTestExecutor extends StatusTestExecutor {
+final class RdfUnitJunitStatusTestExecutor extends RLOGTestExecutor {
 
     public RdfUnitJunitStatusTestExecutor() {
-        super(new QueryGenerationAskFactory());
+        super(new QueryGenerationSelectFactory());
     }
 
-    boolean runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase)
+    Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase)
             throws IllegalAccessException, InvocationTargetException {
         final TestSource modelSource = new TestSourceBuilder()
                 .setPrefixUri("custom", "rdfunit")
@@ -24,9 +25,12 @@ final class RdfUnitJunitStatusTestExecutor extends StatusTestExecutor {
                 .setReferenceSchemata(rdfUnitJunitTestCase.getSchemaSource())
                 .build();
 
-        return this.execute(
-                modelSource,
-                new TestSuite(Collections.singleton(rdfUnitJunitTestCase.getTestCase()))
-        );
+        try {
+            return this.executeSingleTest(modelSource, rdfUnitJunitTestCase
+                    .getTestCase());
+        } catch (TestCaseExecutionException e) {
+            /// Should never happen (TM)
+            throw new RuntimeException(e);
+        }
     }
 }

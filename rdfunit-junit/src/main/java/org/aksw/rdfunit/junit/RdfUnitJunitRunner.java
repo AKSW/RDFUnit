@@ -15,6 +15,8 @@ import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
+import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
+import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -143,10 +145,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
             @Override
             public void evaluate() throws Throwable {
-                assertThat(
-                        child.getTestCase().getResultMessage(),
-                        rdfUnitJunitStatusTestExecutor.runTest(child)
-                );
+                final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(child);
+                final StringBuilder b = new StringBuilder();
+                b.append(child.getTestCase().getResultMessage()).append(":\n");
+                for (TestCaseResult t : testCaseResults) {
+                    RLOGTestCaseResult r = (RLOGTestCaseResult) t;
+                    b.append("\t").append(r.getResource()).append("\n");
+                }
+                assertThat(b.toString(), testCaseResults.isEmpty());
             }
         };
         this.runLeaf(statement, describeChild(child), notifier);
