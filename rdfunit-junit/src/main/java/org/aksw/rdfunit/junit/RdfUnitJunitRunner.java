@@ -24,6 +24,9 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
+import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
+import static org.aksw.rdfunit.junit.InitializationSupport.checkState;
+
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     public static final Class<Model> INPUT_DATA_RETURN_TYPE = Model.class;
@@ -46,76 +49,32 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         generateRdfUnitTestCases();
     }
 
-    private void setControlledVocabulary() throws InitializationError {
-        final List<FrameworkMethod> controlledVocabularyAnnotatedMethods =
-                getTestClass().getAnnotatedMethods(ControlledVocabulary.class);
-        if (controlledVocabularyAnnotatedMethods.isEmpty()) {
-            return;
-        }
-        if (controlledVocabularyAnnotatedMethods.size() > 1) {
-            throw new InitializationError(
-                    String.format(
-                            "Only one method annotated with @%s allowed!",
-                            ControlledVocabulary.class.getSimpleName()
-                    )
-            );
-        }
-        try {
-            final FrameworkMethod controlledVocabularyMethod = controlledVocabularyAnnotatedMethods.get(0);
-            if (!controlledVocabularyMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
-                throw new InitializationError(
-                        String.format(
-                                "Method annotated with @%s must return a %s!",
-                                ControlledVocabulary.class.getSimpleName(),
-                                INPUT_DATA_RETURN_TYPE.getCanonicalName()
-                        )
-                );
-            }
-            controlledVocabulary = (Model) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance());
-            if (controlledVocabulary == null) {
-                throw new InitializationError(
-                        String.format("Method %s annotated with @%s returned null!",
-                                controlledVocabularyMethod.getMethod().getName(),
-                                ControlledVocabulary.class.getSimpleName()
-                        )
-                );
-            }
-        } catch (Throwable e) {
-            throw new InitializationError(e);
-        }
-    }
-
     private void checkSchemaAnnotation() throws InitializationError {
-        if (getTestClass().getJavaClass().isAnnotationPresent(Schema.class)) {
-            return;
-        }
-        throw new InitializationError(String.format("@%s annotation is required!", Schema.class.getSimpleName()));
+        checkState(
+                getTestClass().getJavaClass().isAnnotationPresent(Schema.class),
+                "@%s annotation is required!",
+                Schema.class.getSimpleName()
+        );
     }
 
     private void checkInputModelAnnotatedMethods() throws InitializationError {
         for (FrameworkMethod m : getInputModelMethods()) {
-            if (!m.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
-                throw new InitializationError(
-                        String.format(
-                                "Methods marked @%s must return %s",
-                                TestInput.class.getSimpleName(),
-                                INPUT_DATA_RETURN_TYPE.getCanonicalName()
-                        )
-                );
-            }
+            checkState(
+                    m.getReturnType().equals(INPUT_DATA_RETURN_TYPE),
+                    "Methods marked @%s must return %s",
+                    TestInput.class.getSimpleName(),
+                    INPUT_DATA_RETURN_TYPE.getCanonicalName()
+            );
         }
     }
 
     private List<FrameworkMethod> getInputModelMethods() throws InitializationError {
-        List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(TestInput.class);
-        if (inputModelMethods.isEmpty()) {
-            throw new InitializationError(
-                    String.format(
-                            "At least one method with @%s annotation is required!",
-                            TestInput.class.getSimpleName()
-                    )
-            );
-        }
+        final List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(TestInput.class);
+        checkState(
+                !inputModelMethods.isEmpty(),
+                "At least one method with @%s annotation is required!",
+                TestInput.class.getSimpleName()
+        );
         return inputModelMethods;
     }
 
@@ -150,16 +109,47 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return testCaseInstance;
     }
 
+    private void setControlledVocabulary() throws InitializationError {
+        final List<FrameworkMethod> controlledVocabularyAnnotatedMethods =
+                getTestClass().getAnnotatedMethods(ControlledVocabulary.class);
+        if (controlledVocabularyAnnotatedMethods.isEmpty()) {
+            return;
+        }
+        checkState(
+                controlledVocabularyAnnotatedMethods.size() <= 1,
+                "At most one method annotated with @%s allowed!",
+                ControlledVocabulary.class.getSimpleName()
+        );
+        try {
+            final FrameworkMethod controlledVocabularyMethod = controlledVocabularyAnnotatedMethods.get(0);
+            checkState(
+                    controlledVocabularyMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE),
+                    "Method annotated with @%s must return a %s!",
+                    ControlledVocabulary.class.getSimpleName(),
+                    INPUT_DATA_RETURN_TYPE.getCanonicalName()
+            );
+            controlledVocabulary =
+                    checkNotNull(
+                            (Model) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance()),
+                            "Method %s annotated with @%s returned null!",
+                            controlledVocabularyMethod.getMethod().getName(),
+                            ControlledVocabulary.class.getSimpleName()
+                    );
+        } catch (Throwable e) {
+            throw new InitializationError(e);
+        }
+    }
+
     private Map<FrameworkMethod, Model> getInputModels() throws InitializationError {
         final Map<FrameworkMethod, Model> inputModels = new LinkedHashMap<>();
         for (FrameworkMethod m : getInputModelMethods()) {
             try {
-                final Model inputModel = (Model) m.getMethod().invoke(getTestCaseInstance());
-                if (inputModel == null) {
-                    throw new InitializationError(
-                            String.format("@TestInput: %s returned null!", m.getMethod().getName())
-                    );
-                }
+                final Model inputModel = checkNotNull(
+                        (Model) m.getMethod().invoke(getTestCaseInstance()),
+                        "@%s: %s returned null!",
+                        TestInput.class.getSimpleName(),
+                        m.getMethod().getName()
+                );
                 inputModels.put(m, ModelFactory.createDefaultModel().add(inputModel).add(controlledVocabulary));
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new InitializationError(e);
@@ -214,4 +204,5 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
 }
+
 
