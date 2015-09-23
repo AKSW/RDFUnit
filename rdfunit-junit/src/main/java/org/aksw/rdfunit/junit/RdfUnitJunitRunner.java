@@ -15,6 +15,8 @@ import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
+import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -100,8 +102,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         final SchemaSource schemaSourceFromOntology = createSchemaSourceFromOntology();
         final Collection<TestCase> testCases = createTestCases();
         for (Map.Entry<FrameworkMethod, Model> e : getInputModels().entrySet()) {
+            final TestSource modelSource = new TestSourceBuilder()
+                    .setPrefixUri("custom", "rdfunit")
+                    .setInMemReader(new RDFModelReader(e.getValue()))
+                    .setReferenceSchemata(schemaSourceFromOntology)
+                    .build();
             for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey()));
+                this.testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey(), modelSource));
             }
         }
     }
