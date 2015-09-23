@@ -17,7 +17,6 @@
         <module>rdfunit-validate</module>
         <!--module>rdfunit-webdemo</module--> <!-- removed from aggregation, kept as inheritance -->
         <module>rdfunit-examples</module>
-        <module>rdfunit-junit</module>
 
     </modules>
 
