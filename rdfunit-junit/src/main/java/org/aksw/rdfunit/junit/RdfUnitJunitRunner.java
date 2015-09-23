@@ -40,7 +40,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         super(testClass);
 
         checkSchemaAnnotation();
-        checkInputModelAnnotatedMethods();
+        checkTestInputAnnotatedMethods();
 
         createOntologyModel();
 
@@ -57,8 +57,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         );
     }
 
-    private void checkInputModelAnnotatedMethods() throws InitializationError {
-        for (FrameworkMethod m : getInputModelMethods()) {
+    private void checkTestInputAnnotatedMethods() throws InitializationError {
+        for (FrameworkMethod m : getTestInputMethods()) {
             checkState(
                     m.getReturnType().equals(INPUT_DATA_RETURN_TYPE),
                     "Methods marked @%s must return %s",
@@ -68,14 +68,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private List<FrameworkMethod> getInputModelMethods() throws InitializationError {
-        final List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(TestInput.class);
+    private List<FrameworkMethod> getTestInputMethods() throws InitializationError {
+        final List<FrameworkMethod> testInputMethods = getTestClass().getAnnotatedMethods(TestInput.class);
         checkState(
-                !inputModelMethods.isEmpty(),
+                !testInputMethods.isEmpty(),
                 "At least one method with @%s annotation is required!",
                 TestInput.class.getSimpleName()
         );
-        return inputModelMethods;
+        return testInputMethods;
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
@@ -142,7 +142,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     private Map<FrameworkMethod, Model> getInputModels() throws InitializationError {
         final Map<FrameworkMethod, Model> inputModels = new LinkedHashMap<>();
-        for (FrameworkMethod m : getInputModelMethods()) {
+        for (FrameworkMethod m : getTestInputMethods()) {
             try {
                 final Model inputModel = checkNotNull(
                         (Model) m.getMethod().invoke(getTestCaseInstance()),
