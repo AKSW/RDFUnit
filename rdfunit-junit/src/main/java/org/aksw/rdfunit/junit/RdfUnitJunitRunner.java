@@ -36,7 +36,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     public static final Class<?> INPUT_DATA_RETURN_TYPE = RDFReader.class;
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
-    private RDFReader controlledVocabulary = new RDFModelReader(ModelFactory.createDefaultModel());
+    private RDFReader additionalData = new RDFModelReader(ModelFactory.createDefaultModel());
     private RDFReader schemaReader;
     private Object testCaseInstance;
     private Map<FrameworkMethod, RDFReader> testInputReaders;
@@ -51,7 +51,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
         setUpSchemaReader();
 
-        setControlledVocabulary();
+        setAdditionalData();
 
         generateRdfUnitTestCases();
     }
@@ -125,31 +125,31 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return testCaseInstance;
     }
 
-    private void setControlledVocabulary() throws InitializationError {
-        final List<FrameworkMethod> controlledVocabularyAnnotatedMethods =
-                getTestClass().getAnnotatedMethods(ControlledVocabulary.class);
-        if (controlledVocabularyAnnotatedMethods.isEmpty()) {
+    private void setAdditionalData() throws InitializationError {
+        final List<FrameworkMethod> additionalDataAnnotatedMethods =
+                getTestClass().getAnnotatedMethods(AdditionalData.class);
+        if (additionalDataAnnotatedMethods.isEmpty()) {
             return;
         }
         checkState(
-                controlledVocabularyAnnotatedMethods.size() <= 1,
+                additionalDataAnnotatedMethods.size() <= 1,
                 "At most one method annotated with @%s allowed!",
-                ControlledVocabulary.class.getSimpleName()
+                AdditionalData.class.getSimpleName()
         );
         try {
-            final FrameworkMethod controlledVocabularyMethod = controlledVocabularyAnnotatedMethods.get(0);
+            final FrameworkMethod additionalDataMethod = additionalDataAnnotatedMethods.get(0);
             checkState(
-                    controlledVocabularyMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE),
+                    additionalDataMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE),
                     "Method annotated with @%s must return a %s!",
-                    ControlledVocabulary.class.getSimpleName(),
+                    AdditionalData.class.getSimpleName(),
                     INPUT_DATA_RETURN_TYPE.getCanonicalName()
             );
-            controlledVocabulary =
+            additionalData =
                     checkNotNull(
-                            (RDFReader) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance()),
+                            (RDFReader) additionalDataMethod.invokeExplosively(getTestCaseInstance()),
                             "Method %s annotated with @%s returned null!",
-                            controlledVocabularyMethod.getMethod().getName(),
-                            ControlledVocabulary.class.getSimpleName()
+                            additionalDataMethod.getMethod().getName(),
+                            AdditionalData.class.getSimpleName()
                     );
         } catch (Throwable e) {
             throw new InitializationError(e);
@@ -159,7 +159,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private Map<FrameworkMethod, RDFReader> getCombinedReaders() throws InitializationError {
         final Map<FrameworkMethod, RDFReader> multiReaders = new LinkedHashMap<>();
         for (Map.Entry<FrameworkMethod, RDFReader> e : testInputReaders.entrySet()) {
-            multiReaders.put(e.getKey(), new RDFMultipleReader(asList(e.getValue(), controlledVocabulary)));
+            multiReaders.put(e.getKey(), new RDFMultipleReader(asList(e.getValue(), additionalData)));
         }
         return multiReaders;
     }
@@ -200,8 +200,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return getTestClass().getAnnotation(Schema.class);
     }
 
-    RDFReader getControlledVocabularyModel() {
-        return controlledVocabulary;
+    RDFReader getAdditionalDataModel() {
+        return additionalData;
     }
 
     @Override

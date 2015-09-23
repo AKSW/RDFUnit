@@ -50,7 +50,7 @@ public class RdfUnitJunitRunnerTest {
     @Test
     public void returnsVocabulary() throws InitializationError {
         final RdfUnitJunitRunner rdfUnitJunitRunner = new RdfUnitJunitRunner(ControlledVocabularyTest.class);
-        assertThat(rdfUnitJunitRunner.getControlledVocabularyModel()).isSameAs(CONTROLLED_VOCABULARY);
+        assertThat(rdfUnitJunitRunner.getAdditionalDataModel()).isSameAs(CONTROLLED_VOCABULARY);
     }
 
     @Test(expected = InitializationError.class)
@@ -98,7 +98,7 @@ public class RdfUnitJunitRunnerTest {
             return newEmptyModelRdfReader();
         }
 
-        @ControlledVocabulary
+        @AdditionalData
         public RDFReader vocabulary() {
             return CONTROLLED_VOCABULARY;
         }
@@ -112,12 +112,12 @@ public class RdfUnitJunitRunnerTest {
             return newEmptyModelRdfReader();
         }
 
-        @ControlledVocabulary
+        @AdditionalData
         public RDFReader vocabulary1() {
             return CONTROLLED_VOCABULARY;
         }
 
-        @ControlledVocabulary
+        @AdditionalData
         public RDFReader vocabulary2() {
             return CONTROLLED_VOCABULARY;
         }
@@ -132,7 +132,7 @@ public class RdfUnitJunitRunnerTest {
             return newEmptyModelRdfReader();
         }
 
-        @ControlledVocabulary
+        @AdditionalData
         public void vocabulary1() {
         }
 
