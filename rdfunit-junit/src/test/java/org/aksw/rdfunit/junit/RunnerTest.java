@@ -3,8 +3,9 @@ package org.aksw.rdfunit.junit;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.rdfunit.io.reader.RDFModelReader;
+import org.aksw.rdfunit.io.reader.RDFReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -56,10 +57,10 @@ public class RunnerTest {
     public static class TestRunner {
 
         @TestInput
-        public Model getInputData() {
-            return ModelFactory
+        public RDFReader getInputData() {
+            return new RDFModelReader(ModelFactory
                     .createDefaultModel()
-                    .read("inputmodels/foaf.rdf");
+                    .read("inputmodels/foaf.rdf"));
         }
 
     }

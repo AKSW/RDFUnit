@@ -12,7 +12,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
+import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
@@ -24,23 +26,28 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
+import static java.util.Arrays.asList;
+
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 import static org.aksw.rdfunit.junit.InitializationSupport.checkState;
 
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
-    public static final Class<Model> INPUT_DATA_RETURN_TYPE = Model.class;
+    public static final Class<?> INPUT_DATA_RETURN_TYPE = RDFReader.class;
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
-    private Model controlledVocabulary = ModelFactory.createDefaultModel();
-    private Model ontologyModel;
+    private RDFReader controlledVocabulary = new RDFModelReader(ModelFactory.createDefaultModel());
+    private RDFReader ontologyModel;
     private Object testCaseInstance;
+    private Map<FrameworkMethod, RDFReader> testInputReaders;
 
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
 
         checkSchemaAnnotation();
         checkTestInputAnnotatedMethods();
+
+        setUpTestInputReaders();
 
         createOntologyModel();
 
@@ -81,21 +88,30 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private void generateRdfUnitTestCases() throws InitializationError {
         final SchemaSource schemaSourceFromOntology = createSchemaSourceFromOntology();
         final Collection<TestCase> testCases = createTestCases();
-        for (Map.Entry<FrameworkMethod, Model> e : getInputModels().entrySet()) {
+        for (Map.Entry<FrameworkMethod, RDFReader> e : getCombinedReaders().entrySet()) {
             final TestSource modelSource = new TestSourceBuilder()
                     // FIXME why do we need at least one source config? If we omit this, it will break...
                     .setPrefixUri("custom", "rdfunit")
-                    .setInMemReader(new RDFModelReader(e.getValue()))
+                    .setInMemReader(e.getValue())
                     .setReferenceSchemata(schemaSourceFromOntology)
                     .build();
+            final Model testInputModel = getTestInputModel(e.getKey());
             for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, e.getValue(), e.getKey(), modelSource));
+                this.testCases.add(new RdfUnitJunitTestCase(t, e.getValue(), e.getKey(), modelSource, testInputModel));
             }
         }
     }
 
+    private Model getTestInputModel(FrameworkMethod method) throws InitializationError {
+        try {
+            return testInputReaders.get(method).read();
+        } catch (RDFReaderException e1) {
+            throw new InitializationError(e1);
+        }
+    }
+
     private void createOntologyModel() {
-        ontologyModel = ModelFactory.createDefaultModel().read(getOntology().uri());
+        ontologyModel = new RDFModelReader(ModelFactory.createDefaultModel().read(getOntology().uri()));
     }
 
     private synchronized Object getTestCaseInstance() throws InitializationError {
@@ -130,7 +146,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
             );
             controlledVocabulary =
                     checkNotNull(
-                            (Model) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance()),
+                            (RDFReader) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance()),
                             "Method %s annotated with @%s returned null!",
                             controlledVocabularyMethod.getMethod().getName(),
                             ControlledVocabulary.class.getSimpleName()
@@ -140,22 +156,29 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private Map<FrameworkMethod, Model> getInputModels() throws InitializationError {
-        final Map<FrameworkMethod, Model> inputModels = new LinkedHashMap<>();
+    private Map<FrameworkMethod, RDFReader> getCombinedReaders() throws InitializationError {
+        final Map<FrameworkMethod, RDFReader> multiReaders = new LinkedHashMap<>();
+        for (Map.Entry<FrameworkMethod, RDFReader> e : testInputReaders.entrySet()) {
+            multiReaders.put(e.getKey(), new RDFMultipleReader(asList(e.getValue(), controlledVocabulary)));
+        }
+        return multiReaders;
+    }
+
+    private void setUpTestInputReaders() throws InitializationError {
+        testInputReaders = new LinkedHashMap<>();
         for (FrameworkMethod m : getTestInputMethods()) {
             try {
-                final Model inputModel = checkNotNull(
-                        (Model) m.getMethod().invoke(getTestCaseInstance()),
+                final RDFReader testInputReader = checkNotNull(
+                        (RDFReader) m.getMethod().invoke(getTestCaseInstance()),
                         "@%s: %s returned null!",
                         TestInput.class.getSimpleName(),
                         m.getMethod().getName()
                 );
-                inputModels.put(m, ModelFactory.createDefaultModel().add(inputModel).add(controlledVocabulary));
+                testInputReaders.put(m, testInputReader);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new InitializationError(e);
             }
         }
-        return inputModels;
     }
 
     private SchemaSource createSchemaSourceFromOntology() {
@@ -170,14 +193,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private RDFReader getRdfReaderForOntology() {
-        return new RDFModelReader(ontologyModel);
+        return ontologyModel;
     }
 
     private Schema getOntology() {
         return getTestClass().getAnnotation(Schema.class);
     }
 
-    Model getControlledVocabularyModel() {
+    RDFReader getControlledVocabularyModel() {
         return controlledVocabulary;
     }
 

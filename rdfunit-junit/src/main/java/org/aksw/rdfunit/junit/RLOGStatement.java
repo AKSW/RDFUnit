@@ -26,7 +26,7 @@ class RLOGStatement extends Statement {
         final Collection<RLOGTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {
             RLOGTestCaseResult r = (RLOGTestCaseResult) t;
-            boolean resourceIsPartOfInputModel = testCase.getInputModel().contains(
+            boolean resourceIsPartOfInputModel = testCase.getTestInputModel().contains(
                     ResourceFactory.createResource(r.getResource()), null);
             if (!resourceIsPartOfInputModel) {
                 continue;

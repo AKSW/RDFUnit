@@ -2,6 +2,8 @@ package org.aksw.rdfunit.junit;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.rdfunit.io.reader.RDFModelReader;
+import org.aksw.rdfunit.io.reader.RDFReader;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RdfUnitJunitRunnerTest {
 
-    public static final Model CONTROLLED_VOCABULARY = ModelFactory.createDefaultModel();
+    public static final RDFReader CONTROLLED_VOCABULARY = newEmptyModelRdfReader();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -35,25 +37,9 @@ public class RdfUnitJunitRunnerTest {
         assertThat(underTest.testCount()).isGreaterThan(1);
     }
 
-    @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
-    public static class RdfUnitTest {
-        @TestInput
-        public Model inputModel() { return ModelFactory.createDefaultModel(); }
-    }
-
-
-
     @Test(expected = InitializationError.class)
     public void inputModelNull() throws InitializationError {
         new RdfUnitJunitRunner(RdfUnitWithNullTestInputTest.class);
-    }
-
-    @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
-    public static class RdfUnitWithNullTestInputTest {
-        @TestInput
-        public Model inputModel() { return null; }
     }
 
     @Test(expected = InitializationError.class)
@@ -61,15 +47,46 @@ public class RdfUnitJunitRunnerTest {
         new RdfUnitJunitRunner(RDFUnitMissingOntologyAnnotation.class);
     }
 
-    @RunWith(RdfUnitJunitRunner.class)
-    public static class RDFUnitMissingOntologyAnnotation {
-    }
-
-
     @Test
     public void returnsVocabulary() throws InitializationError {
         final RdfUnitJunitRunner rdfUnitJunitRunner = new RdfUnitJunitRunner(ControlledVocabularyTest.class);
         assertThat(rdfUnitJunitRunner.getControlledVocabularyModel()).isSameAs(CONTROLLED_VOCABULARY);
+    }
+
+    @Test(expected = InitializationError.class)
+    public void returnsTwoVocabulariesNotAllowed() throws InitializationError {
+        new RdfUnitJunitRunner(TwoControlledVocabulariesNotAllowedTest.class);
+    }
+
+    @Test(expected = InitializationError.class)
+    public void vocabularyWithWrongReturnTypeNotAllowed() throws InitializationError {
+        new RdfUnitJunitRunner(VocabularyWithWrongReturnTypeNotAllowedTest.class);
+    }
+
+    private static RDFReader newEmptyModelRdfReader() {
+        return new RDFModelReader(ModelFactory.createDefaultModel());
+    }
+
+    @RunWith(RdfUnitJunitRunner.class)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    public static class RdfUnitTest {
+        @TestInput
+        public RDFReader inputModel() {
+            return newEmptyModelRdfReader();
+        }
+    }
+
+    @RunWith(RdfUnitJunitRunner.class)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    public static class RdfUnitWithNullTestInputTest {
+        @TestInput
+        public Model inputModel() {
+            return null;
+        }
+    }
+
+    @RunWith(RdfUnitJunitRunner.class)
+    public static class RDFUnitMissingOntologyAnnotation {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
@@ -77,41 +94,33 @@ public class RdfUnitJunitRunnerTest {
     public static class ControlledVocabularyTest {
 
         @TestInput
-        public Model inputModel() { return ModelFactory.createDefaultModel(); }
+        public RDFReader inputModel() {
+            return newEmptyModelRdfReader();
+        }
 
         @ControlledVocabulary
-        public Model vocabulary() {
+        public RDFReader vocabulary() {
             return CONTROLLED_VOCABULARY;
         }
-    }
-
-
-    @Test(expected = InitializationError.class)
-    public void returnsTwoVocabulariesNotAllowed() throws InitializationError {
-        new RdfUnitJunitRunner(TwoControlledVocabulariesNotAllowedTest.class);
     }
 
     @RunWith(RdfUnitJunitRunner.class)
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class TwoControlledVocabulariesNotAllowedTest {
         @TestInput
-        public Model inputModel() { return ModelFactory.createDefaultModel(); }
+        public RDFReader inputModel() {
+            return newEmptyModelRdfReader();
+        }
 
         @ControlledVocabulary
-        public Model vocabulary1() {
+        public RDFReader vocabulary1() {
             return CONTROLLED_VOCABULARY;
         }
 
         @ControlledVocabulary
-        public Model vocabulary2() {
+        public RDFReader vocabulary2() {
             return CONTROLLED_VOCABULARY;
         }
-    }
-
-
-    @Test(expected = InitializationError.class)
-    public void vocabularyWithWrongReturnTypeNotAllowed() throws InitializationError {
-        new RdfUnitJunitRunner(VocabularyWithWrongReturnTypeNotAllowedTest.class);
     }
 
     @RunWith(RdfUnitJunitRunner.class)
@@ -119,10 +128,13 @@ public class RdfUnitJunitRunnerTest {
     public static class VocabularyWithWrongReturnTypeNotAllowedTest {
 
         @TestInput
-        public Model inputModel() { return ModelFactory.createDefaultModel(); }
+        public RDFReader inputModel() {
+            return newEmptyModelRdfReader();
+        }
 
         @ControlledVocabulary
-        public void vocabulary1() {}
+        public void vocabulary1() {
+        }
 
     }
 
