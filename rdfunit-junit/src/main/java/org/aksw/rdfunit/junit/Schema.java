@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Ontology {
+public @interface Schema {
 
     /**
      * @return the URI defining the target ontology

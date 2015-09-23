@@ -36,9 +36,9 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class RdfUnitTest {
-        @InputModel
+        @TestInput
         public Model inputModel() { return ModelFactory.createDefaultModel(); }
     }
 
@@ -46,13 +46,13 @@ public class RdfUnitJunitRunnerTest {
 
     @Test(expected = InitializationError.class)
     public void inputModelNull() throws InitializationError {
-        new RdfUnitJunitRunner(RdfUnitWithNullInputModelTest.class);
+        new RdfUnitJunitRunner(RdfUnitWithNullTestInputTest.class);
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
-    public static class RdfUnitWithNullInputModelTest {
-        @InputModel
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    public static class RdfUnitWithNullTestInputTest {
+        @TestInput
         public Model inputModel() { return null; }
     }
 
@@ -73,10 +73,10 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class ControlledVocabularyTest {
 
-        @InputModel
+        @TestInput
         public Model inputModel() { return ModelFactory.createDefaultModel(); }
 
         @ControlledVocabulary
@@ -92,9 +92,9 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class TwoControlledVocabulariesNotAllowedTest {
-        @InputModel
+        @TestInput
         public Model inputModel() { return ModelFactory.createDefaultModel(); }
 
         @ControlledVocabulary
@@ -115,10 +115,10 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class VocabularyWithWrongReturnTypeNotAllowedTest {
 
-        @InputModel
+        @TestInput
         public Model inputModel() { return ModelFactory.createDefaultModel(); }
 
         @ControlledVocabulary

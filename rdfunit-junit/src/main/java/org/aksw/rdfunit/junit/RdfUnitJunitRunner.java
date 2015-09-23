@@ -26,6 +26,7 @@ import org.junit.runners.model.InitializationError;
 
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
+    public static final Class<Model> INPUT_DATA_RETURN_TYPE = Model.class;
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
     private Model controlledVocabulary = ModelFactory.createDefaultModel();
@@ -35,7 +36,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
 
-        checkOntologyAnnotation();
+        checkSchemaAnnotation();
         checkInputModelAnnotatedMethods();
 
         createOntologyModel();
@@ -46,28 +47,37 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void setControlledVocabulary() throws InitializationError {
-        final List<FrameworkMethod> annotatedMethods = getTestClass().getAnnotatedMethods(ControlledVocabulary.class);
-        if (annotatedMethods.isEmpty()) {
+        final List<FrameworkMethod> controlledVocabularyAnnotatedMethods =
+                getTestClass().getAnnotatedMethods(ControlledVocabulary.class);
+        if (controlledVocabularyAnnotatedMethods.isEmpty()) {
             return;
         }
-        if (annotatedMethods.size() > 1) {
-            throw new InitializationError("Only one method annotated with @ControlledVocabulary allowed!");
+        if (controlledVocabularyAnnotatedMethods.size() > 1) {
+            throw new InitializationError(
+                    String.format(
+                            "Only one method annotated with @%s allowed!",
+                            ControlledVocabulary.class.getSimpleName()
+                    )
+            );
         }
         try {
-            final FrameworkMethod controlledVocabularyMethod = annotatedMethods.get(0);
-            if (!controlledVocabularyMethod.getReturnType().equals(Model.class)) {
+            final FrameworkMethod controlledVocabularyMethod = controlledVocabularyAnnotatedMethods.get(0);
+            if (!controlledVocabularyMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
                 throw new InitializationError(
                         String.format(
-                                "Method annotated with @ControlledVocabulary must return a %s!",
-                                Model.class.getCanonicalName()
+                                "Method annotated with @%s must return a %s!",
+                                ControlledVocabulary.class.getSimpleName(),
+                                INPUT_DATA_RETURN_TYPE.getCanonicalName()
                         )
                 );
             }
             controlledVocabulary = (Model) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance());
-            if(controlledVocabulary == null) {
+            if (controlledVocabulary == null) {
                 throw new InitializationError(
-                        String.format("@ControlledVocabulary: %s returned null!", controlledVocabularyMethod
-                                .getMethod().getName())
+                        String.format("Method %s annotated with @%s returned null!",
+                                controlledVocabularyMethod.getMethod().getName(),
+                                ControlledVocabulary.class.getSimpleName()
+                        )
                 );
             }
         } catch (Throwable e) {
@@ -75,25 +85,36 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private void checkOntologyAnnotation() throws InitializationError {
-        if (getTestClass().getJavaClass().isAnnotationPresent(Ontology.class)) {
+    private void checkSchemaAnnotation() throws InitializationError {
+        if (getTestClass().getJavaClass().isAnnotationPresent(Schema.class)) {
             return;
         }
-        throw new InitializationError("@Ontology annotation is required!");
+        throw new InitializationError(String.format("@%s annotation is required!", Schema.class.getSimpleName()));
     }
 
     private void checkInputModelAnnotatedMethods() throws InitializationError {
         for (FrameworkMethod m : getInputModelMethods()) {
-            if (!m.getReturnType().equals(Model.class)) {
-                throw new InitializationError("Methods marked @InputModel must return com.hp.hpl.jena.rdf.model.Model");
+            if (!m.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
+                throw new InitializationError(
+                        String.format(
+                                "Methods marked @%s must return %s",
+                                TestInput.class.getSimpleName(),
+                                INPUT_DATA_RETURN_TYPE.getCanonicalName()
+                        )
+                );
             }
         }
     }
 
     private List<FrameworkMethod> getInputModelMethods() throws InitializationError {
-        List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(InputModel.class);
+        List<FrameworkMethod> inputModelMethods = getTestClass().getAnnotatedMethods(TestInput.class);
         if (inputModelMethods.isEmpty()) {
-            throw new InitializationError("At least one method with @InputModel annotation is required!");
+            throw new InitializationError(
+                    String.format(
+                            "At least one method with @%s annotation is required!",
+                            TestInput.class.getSimpleName()
+                    )
+            );
         }
         return inputModelMethods;
     }
@@ -103,6 +124,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         final Collection<TestCase> testCases = createTestCases();
         for (Map.Entry<FrameworkMethod, Model> e : getInputModels().entrySet()) {
             final TestSource modelSource = new TestSourceBuilder()
+                    // FIXME why do we need at least one source config? If we omit this, it will break...
                     .setPrefixUri("custom", "rdfunit")
                     .setInMemReader(new RDFModelReader(e.getValue()))
                     .setReferenceSchemata(schemaSourceFromOntology)
@@ -135,7 +157,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                 final Model inputModel = (Model) m.getMethod().invoke(getTestCaseInstance());
                 if (inputModel == null) {
                     throw new InitializationError(
-                            String.format("@InputModel: %s returned null!", m.getMethod().getName())
+                            String.format("@TestInput: %s returned null!", m.getMethod().getName())
                     );
                 }
                 inputModels.put(m, ModelFactory.createDefaultModel().add(inputModel).add(controlledVocabulary));
@@ -161,8 +183,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return new RDFModelReader(ontologyModel);
     }
 
-    private Ontology getOntology() {
-        return getTestClass().getAnnotation(Ontology.class);
+    private Schema getOntology() {
+        return getTestClass().getAnnotation(Schema.class);
     }
 
     Model getControlledVocabularyModel() {

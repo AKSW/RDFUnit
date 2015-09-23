@@ -52,10 +52,10 @@ public class RunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Ontology(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class TestRunner {
 
-        @InputModel
+        @TestInput
         public Model getInputData() {
             return ModelFactory
                     .createDefaultModel()
