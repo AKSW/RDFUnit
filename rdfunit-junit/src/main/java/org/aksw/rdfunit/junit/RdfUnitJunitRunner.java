@@ -37,7 +37,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
     private RDFReader controlledVocabulary = new RDFModelReader(ModelFactory.createDefaultModel());
-    private RDFReader ontologyModel;
+    private RDFReader schemaReader;
     private Object testCaseInstance;
     private Map<FrameworkMethod, RDFReader> testInputReaders;
 
@@ -49,7 +49,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
         setUpTestInputReaders();
 
-        createOntologyModel();
+        setUpSchemaReader();
 
         setControlledVocabulary();
 
@@ -86,14 +86,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
-        final SchemaSource schemaSourceFromOntology = createSchemaSourceFromOntology();
+        final SchemaSource schemaSource = createSchemaSourceFromSchema();
         final Collection<TestCase> testCases = createTestCases();
         for (Map.Entry<FrameworkMethod, RDFReader> e : getCombinedReaders().entrySet()) {
             final TestSource modelSource = new TestSourceBuilder()
                     // FIXME why do we need at least one source config? If we omit this, it will break...
                     .setPrefixUri("custom", "rdfunit")
                     .setInMemReader(e.getValue())
-                    .setReferenceSchemata(schemaSourceFromOntology)
+                    .setReferenceSchemata(schemaSource)
                     .build();
             final Model testInputModel = getTestInputModel(e.getKey());
             for (TestCase t : testCases) {
@@ -110,8 +110,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private void createOntologyModel() {
-        ontologyModel = new RDFModelReader(ModelFactory.createDefaultModel().read(getOntology().uri()));
+    private void setUpSchemaReader() {
+        schemaReader = new RDFModelReader(ModelFactory.createDefaultModel().read(getSchema().uri()));
     }
 
     private synchronized Object getTestCaseInstance() throws InitializationError {
@@ -181,22 +181,22 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private SchemaSource createSchemaSourceFromOntology() {
-        return SchemaSourceFactory.createSchemaSourceSimple("custom", getOntology().uri(), getRdfReaderForOntology());
+    private SchemaSource createSchemaSourceFromSchema() {
+        return SchemaSourceFactory.createSchemaSourceSimple("custom", getSchema().uri(), getSchemaReader());
     }
 
     private Collection<TestCase> createTestCases() throws InitializationError {
         return new RDFUnitTestSuiteGenerator.Builder()
-                .addSchemaURI("custom", getOntology().uri(), getRdfReaderForOntology())
+                .addSchemaURI("custom", getSchema().uri(), getSchemaReader())
                 .enableAutotests()
                 .build().getTestSuite().getTestCases();
     }
 
-    private RDFReader getRdfReaderForOntology() {
-        return ontologyModel;
+    private RDFReader getSchemaReader() {
+        return schemaReader;
     }
 
-    private Schema getOntology() {
+    private Schema getSchema() {
         return getTestClass().getAnnotation(Schema.class);
     }
 
