@@ -32,7 +32,7 @@ public final class RDFUnitTestSuiteGenerator {
     private final boolean enableAutoTests;
     private final boolean enableManualTests;
 
-    private TestSuite testSuite = null;
+    private volatile TestSuite testSuite = null;
 
     private RDFUnitTestSuiteGenerator(Collection<SchemaSource> schemas, boolean enableAutoTests, boolean enableManualTests) {
         this.enableAutoTests = enableAutoTests;

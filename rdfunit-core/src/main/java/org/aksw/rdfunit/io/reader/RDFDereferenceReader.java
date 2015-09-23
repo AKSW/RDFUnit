@@ -3,6 +3,7 @@ package org.aksw.rdfunit.io.reader;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.NotFoundException;
+import org.aksw.rdfunit.io.IOUtils;
 import org.apache.jena.riot.RDFDataMgr;
 
 import java.io.File;
@@ -26,9 +27,8 @@ public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader
      */
     public RDFDereferenceReader(String uri) {
         super();
-        File file = new File(uri);
-        if (file.exists()) {
-            this.uri = file.getAbsolutePath();
+        if (IOUtils.isFile(uri)) {
+            this.uri = new File(uri).getAbsolutePath();
         } else {
             this.uri = uri;
         }

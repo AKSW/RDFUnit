@@ -45,7 +45,7 @@ public final class PatternImpl implements Pattern {
     /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
-        return null;
+        return Optional.fromNullable(element);
     }
 
     /** {@inheritDoc} */
