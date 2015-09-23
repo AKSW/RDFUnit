@@ -6,6 +6,7 @@ import java.util.List;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -25,6 +26,8 @@ public class RunnerTest {
     @BeforeClass
     public static void addNotifierListener() {
         notifier.addListener(mockRunListener);
+
+        assertThat(TestRunner.beforeClassCalled).isEqualTo(0);
         Request.aClass(TestRunner.class).getRunner().run(notifier);
     }
 
@@ -52,9 +55,32 @@ public class RunnerTest {
         }
     }
 
+    @Test
+    public void beforeClassMethodIsCalledOnce() {
+        assertThat(TestRunner.beforeClassCalled).isEqualTo(1);
+    }
+
+    @Test
+    public void afterClassMethodIsCalledOnce() {
+        assertThat(TestRunner.afterClassCalled).isEqualTo(1);
+    }
+
     @RunWith(RdfUnitJunitRunner.class)
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class TestRunner {
+
+        private static int beforeClassCalled = 0;
+        private static int afterClassCalled = 0;
+
+        @BeforeClass
+        public static void beforeClass() {
+            beforeClassCalled++;
+        }
+
+        @AfterClass
+        public static void afterClass() {
+            afterClassCalled++;
+        }
 
         @TestInput
         public RDFReader getInputData() {

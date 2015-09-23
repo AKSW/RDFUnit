@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rdfunit-junit</artifactId>
+    <name>RDFUnit - JUnit Integration</name>
 
     <dependencies>
         <dependency>
