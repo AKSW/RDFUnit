@@ -13,26 +13,28 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class RLOGStatement extends Statement {
 
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor;
-    private final RdfUnitJunitTestCase child;
+    private final RdfUnitJunitTestCase testCase;
 
-    RLOGStatement(RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor, RdfUnitJunitTestCase child) {
+    RLOGStatement(RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor, RdfUnitJunitTestCase testCase) {
         this.rdfUnitJunitStatusTestExecutor = rdfUnitJunitStatusTestExecutor;
-        this.child = child;
+        this.testCase = testCase;
     }
 
     @Override
     public void evaluate() throws Throwable {
-        final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(child);
+        final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(testCase);
         final Collection<RLOGTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {
             RLOGTestCaseResult r = (RLOGTestCaseResult) t;
-            if (!child.getInputModel().contains(ResourceFactory.createResource(r.getResource()), null)) {
+            boolean resourceIsPartOfInputModel = testCase.getInputModel().contains(
+                    ResourceFactory.createResource(r.getResource()), null);
+            if (!resourceIsPartOfInputModel) {
                 continue;
             }
             remainingResults.add(r);
         }
         final StringBuilder b = new StringBuilder();
-        b.append(child.getTestCase().getResultMessage()).append(":\n");
+        b.append(testCase.getTestCase().getResultMessage()).append(":\n");
         for (RLOGTestCaseResult r : remainingResults) {
             b.append("\t").append(r.getResource()).append("\n");
         }

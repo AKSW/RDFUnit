@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.tests.executors;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.elements.interfaces.TestCase;
@@ -10,9 +13,6 @@ import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.utils.SparqlUtils;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 
 /**

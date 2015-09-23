@@ -26,7 +26,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
-    private Model controlledVocabulary = null;
+    private Model controlledVocabulary = ModelFactory.createDefaultModel();
     private Model ontologyModel;
     private Object testCaseInstance;
 
@@ -62,6 +62,12 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                 );
             }
             controlledVocabulary = (Model) controlledVocabularyMethod.invokeExplosively(getTestCaseInstance());
+            if(controlledVocabulary == null) {
+                throw new InitializationError(
+                        String.format("@ControlledVocabulary: %s returned null!", controlledVocabularyMethod
+                                .getMethod().getName())
+                );
+            }
         } catch (Throwable e) {
             throw new InitializationError(e);
         }
@@ -93,27 +99,11 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private void generateRdfUnitTestCases() throws InitializationError {
         final SchemaSource schemaSourceFromOntology = createSchemaSourceFromOntology();
         final Collection<TestCase> testCases = createTestCases();
-        for (Map.Entry<FrameworkMethod, Model> e :
-                getTestMethodsToInputModelsMergedWithControlledVocabulary().entrySet()) {
+        for (Map.Entry<FrameworkMethod, Model> e : getInputModels().entrySet()) {
             for (TestCase t : testCases) {
                 this.testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey()));
             }
         }
-    }
-
-    private Map<FrameworkMethod, Model> getTestMethodsToInputModelsMergedWithControlledVocabulary() throws
-            InitializationError {
-        if (controlledVocabulary == null) {
-            return getInputModels();
-        }
-        final Map<FrameworkMethod, Model> testMethodsToMergedModels = new LinkedHashMap<>();
-        for (Map.Entry<FrameworkMethod, Model> e : getInputModels().entrySet()) {
-            testMethodsToMergedModels.put(
-                    e.getKey(),
-                    ModelFactory.createDefaultModel().add(e.getValue()).add(controlledVocabulary)
-            );
-        }
-        return testMethodsToMergedModels;
     }
 
     private void createOntologyModel() {
@@ -141,7 +131,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                             String.format("@InputModel: %s returned null!", m.getMethod().getName())
                     );
                 }
-                inputModels.put(m, inputModel);
+                inputModels.put(m, ModelFactory.createDefaultModel().add(inputModel).add(controlledVocabulary));
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new InitializationError(e);
             }
@@ -150,8 +140,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private SchemaSource createSchemaSourceFromOntology() {
-        final String uri = getOntology().uri();
-        return SchemaSourceFactory.createSchemaSourceSimple("custom", uri, getRdfReaderForOntology());
+        return SchemaSourceFactory.createSchemaSourceSimple("custom", getOntology().uri(), getRdfReaderForOntology());
     }
 
     private Collection<TestCase> createTestCases() throws InitializationError {
