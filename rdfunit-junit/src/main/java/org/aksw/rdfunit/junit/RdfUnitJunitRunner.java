@@ -108,7 +108,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                     .setReferenceSchemata(schemaSourceFromOntology)
                     .build();
             for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, schemaSourceFromOntology, e.getValue(), e.getKey(), modelSource));
+                this.testCases.add(new RdfUnitJunitTestCase(t, e.getValue(), e.getKey(), modelSource));
             }
         }
     }
