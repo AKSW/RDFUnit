@@ -26,9 +26,7 @@ class RLOGStatement extends Statement {
         final Collection<RLOGTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {
             RLOGTestCaseResult r = (RLOGTestCaseResult) t;
-            boolean resourceIsPartOfInputModel = testCase.getTestInputModel().contains(
-                    ResourceFactory.createResource(r.getResource()), null);
-            if (!resourceIsPartOfInputModel) {
+            if (!resourceIsPartOfInputModel(r)) {
                 continue;
             }
             remainingResults.add(r);
@@ -39,6 +37,11 @@ class RLOGStatement extends Statement {
             b.append("\t").append(r.getResource()).append("\n");
         }
         assertThat(b.toString(), remainingResults.isEmpty());
+    }
+
+    private boolean resourceIsPartOfInputModel(RLOGTestCaseResult r) {
+        return testCase.getTestInputModel().contains(
+                ResourceFactory.createResource(r.getResource()), null);
     }
 
 }
