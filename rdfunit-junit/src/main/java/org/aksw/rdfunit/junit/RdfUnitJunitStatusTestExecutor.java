@@ -20,7 +20,6 @@ final class RdfUnitJunitStatusTestExecutor extends RLOGTestExecutor {
     Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase)
             throws IllegalAccessException, InvocationTargetException {
         final TestSource modelSource = new TestSourceBuilder()
-                .setPrefixUri("custom", "rdfunit")
                 .setInMemReader(new RDFModelReader(rdfUnitJunitTestCase.getInputModel()))
                 .setReferenceSchemata(rdfUnitJunitTestCase.getSchemaSource())
                 .build();

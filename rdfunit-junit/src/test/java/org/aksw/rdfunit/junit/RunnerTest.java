@@ -59,7 +59,7 @@ public class RunnerTest {
         public Model getInputData() {
             return ModelFactory
                     .createDefaultModel()
-                    .read("file:src/test/resources/inputmodels/foaf.rdf");
+                    .read("inputmodels/foaf.rdf");
         }
 
     }
