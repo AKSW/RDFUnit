@@ -28,7 +28,7 @@ import static org.aksw.rdfunit.junit.InitializationSupport.checkState;
 /**
  * <p>RdfUnitJunitRunner class.</p>
  *
- * @author jim
+ * @author Michael Leuthold
  * @version $Id: $Id
  */
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {

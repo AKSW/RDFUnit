@@ -8,6 +8,12 @@ import org.aksw.rdfunit.tests.results.TestCaseResult;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
+
 final class RdfUnitJunitStatusTestExecutor extends RLOGTestExecutor {
 
     /**

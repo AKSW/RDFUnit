@@ -10,6 +10,11 @@ import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 class RLOGStatement extends Statement {
 
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor;

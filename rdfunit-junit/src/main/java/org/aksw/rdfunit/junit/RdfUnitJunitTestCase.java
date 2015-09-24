@@ -10,6 +10,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 final class RdfUnitJunitTestCase {
 
     private final TestCase testCase;

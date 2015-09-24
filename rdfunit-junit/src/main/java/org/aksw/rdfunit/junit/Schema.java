@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 /**
  * <p>Schema class.</p>
  *
- * @author jim
+ * @author Michael Leuthold
  * @version $Id: $Id
  */
 @Retention(RetentionPolicy.RUNTIME)

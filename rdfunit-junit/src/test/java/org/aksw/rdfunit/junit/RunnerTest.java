@@ -1,8 +1,5 @@
 package org.aksw.rdfunit.junit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
@@ -16,8 +13,16 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 public class RunnerTest {
 
     private static final RunNotifier notifier = new RunNotifier();

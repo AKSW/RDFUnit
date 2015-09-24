@@ -13,6 +13,11 @@ import org.junit.runners.model.InitializationError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 public class RdfUnitJunitRunnerTest {
 
     public static final RDFReader CONTROLLED_VOCABULARY = newEmptyModelRdfReader();
