@@ -2,7 +2,6 @@ package org.aksw.rdfunit.junit;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
@@ -58,6 +57,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         generateRdfUnitTestCases();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
@@ -265,16 +265,6 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
         this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
     }
-
-	/** {@inheritDoc} */
-	@Override
-	protected void collectInitializationErrors(List<Throwable> errors) {
-		super.collectInitializationErrors(errors);
-		
-		verifySchemaAnnotation(errors);
-		verifyTestInputAnnotatedMethods(errors);
-		
-	}
 
 }
 
