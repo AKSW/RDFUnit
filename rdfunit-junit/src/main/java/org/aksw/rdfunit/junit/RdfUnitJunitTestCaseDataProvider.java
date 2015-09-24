@@ -65,16 +65,8 @@ final class RdfUnitJunitTestCaseDataProvider {
         initialized = true;
     }
 
-    public RDFReader getTestInputReader() {
-        return testInputReader;
-    }
-
     public Model getTestInputModel() {
         return testInputModel;
-    }
-
-    public RDFMultipleReader getCombinedReader() {
-        return combinedReader;
     }
 
     public TestSource getModelSource() {
