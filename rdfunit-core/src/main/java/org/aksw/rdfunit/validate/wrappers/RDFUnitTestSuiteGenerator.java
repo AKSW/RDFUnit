@@ -130,6 +130,11 @@ public final class RDFUnitTestSuiteGenerator {
             return this;
         }
 
+        public Builder addSchemaURI(String prefix, String schemaUri, RDFReader rdfReader) {
+            schemas.add(createSource(prefix, checkNotNull(schemaUri), checkNotNull(rdfReader)));
+            return this;
+        }
+
         public RDFUnitTestSuiteGenerator build() {
             return new RDFUnitTestSuiteGenerator(schemas, enableAutoTests, enableManualTests);
         }
