@@ -160,15 +160,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                     .setInMemReader(e.getValue())
                     .setReferenceSchemata(schemaSource)
                     .build();
-            Model result;
+            final Model testInputModel;
             try {
-                result = testInputReaders.get(e.getKey()).read();
+                testInputModel = testInputReaders.get(e.getKey()).read();
             } catch (RDFReaderException e1) {
                 throw new InitializationError(e1);
             }
-            final Model testInputModel = result;
             for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, e.getValue(), e.getKey(), modelSource, testInputModel));
+                this.testCases.add(new RdfUnitJunitTestCase(t, e.getKey(), modelSource, testInputModel));
             }
         }
     }

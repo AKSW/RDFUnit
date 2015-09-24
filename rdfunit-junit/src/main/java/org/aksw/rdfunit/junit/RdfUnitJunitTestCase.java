@@ -18,13 +18,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 final class RdfUnitJunitTestCase {
 
     private final TestCase testCase;
-    private final RDFReader combinedReader;
     private final FrameworkMethod testInputMethod;
     private final TestSource modelSource;
     private final Model testInputModel;
 
-    RdfUnitJunitTestCase(TestCase testCase, RDFReader combinedReader, FrameworkMethod testInputMethod, TestSource modelSource, Model testInputModel) {
-        this.combinedReader = combinedReader;
+    RdfUnitJunitTestCase(TestCase testCase, FrameworkMethod testInputMethod, TestSource modelSource, Model testInputModel) {
         this.testInputMethod = testInputMethod;
         this.modelSource = modelSource;
         this.testInputModel = testInputModel;
@@ -33,10 +31,6 @@ final class RdfUnitJunitTestCase {
 
     TestCase getTestCase() {
         return testCase;
-    }
-
-    RDFReader getInputReader() throws IllegalAccessException, InvocationTargetException {
-        return combinedReader;
     }
 
     /**
