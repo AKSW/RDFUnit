@@ -9,6 +9,8 @@ package org.aksw.rdfunit;
 public final class Resources {
     private Resources() {}
 
+    public static final String ONTOLOGY = "/org/aksw/rdfunit/ns/core.ttl";
+
     public static final String PATTERNS = "/org/aksw/rdfunit/configuration/patterns.ttl";
     public static final String PREFIXES = "/org/aksw/rdfunit/configuration/prefixes.ttl";
 
