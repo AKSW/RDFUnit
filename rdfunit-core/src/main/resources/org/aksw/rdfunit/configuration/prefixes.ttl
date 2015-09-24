@@ -1,8 +1,3 @@
-# Here we store all the default prefixes that will be used by RDFUnit
-# on each build this file will be copied in
-# <root>/rdfunit-resources/src/main/resources/org/aksw/rdfunit/
-# and will be used as a java resource
-
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
