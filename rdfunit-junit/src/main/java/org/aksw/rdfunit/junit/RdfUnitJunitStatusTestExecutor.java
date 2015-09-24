@@ -27,6 +27,8 @@ final class RdfUnitJunitStatusTestExecutor extends RLOGTestExecutor {
             throws IllegalAccessException, InvocationTargetException {
 
         try {
+            rdfUnitJunitTestCase.prepareForExecution();
+
             return this.executeSingleTest(
                     rdfUnitJunitTestCase.getModelSource(),
                     rdfUnitJunitTestCase.getTestCase()

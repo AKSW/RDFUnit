@@ -1,16 +1,11 @@
 package org.aksw.rdfunit.junit;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
-import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -18,10 +13,10 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-
-import static java.util.Arrays.asList;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 
@@ -33,7 +28,9 @@ import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
  */
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
-    /** Constant <code>INPUT_DATA_RETURN_TYPE</code> */
+    /**
+     * Constant <code>INPUT_DATA_RETURN_TYPE</code>
+     */
     public static final Class<?> INPUT_DATA_RETURN_TYPE = RDFReader.class;
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
@@ -55,7 +52,9 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         generateRdfUnitTestCases();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
@@ -133,41 +132,15 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
-        final Map<FrameworkMethod, RDFReader> testInputReaders = new LinkedHashMap<>();
-        for (FrameworkMethod m : getTestInputMethods()) {
-            try {
-                final RDFReader testInputReader = checkNotNull(
-                        (RDFReader) m.getMethod().invoke(getTestCaseInstance()),
-                        "@%s: %s returned null!",
-                        TestInput.class.getSimpleName(),
-                        m.getMethod().getName()
-                );
-                testInputReaders.put(m, testInputReader);
-            } catch (IllegalAccessException | InvocationTargetException e1) {
-                throw new InitializationError(e1);
-            }
-        }
         final SchemaSource schemaSource = createSchemaSourceFromSchema();
+        final Object testCaseInstance = getTestCaseInstance();
         final Collection<TestCase> testCases = createTestCases();
-        final Map<FrameworkMethod, RDFReader> combinedReaders = new LinkedHashMap<>();
-        for (Map.Entry<FrameworkMethod, RDFReader> e1 : testInputReaders.entrySet()) {
-            combinedReaders.put(e1.getKey(), new RDFMultipleReader(asList(e1.getValue(), additionalData)));
-        }
-        for (Map.Entry<FrameworkMethod, RDFReader> e : combinedReaders.entrySet()) {
-            final TestSource modelSource = new TestSourceBuilder()
-                    // FIXME why do we need at least one source config? If we omit this, it will break...
-                    .setPrefixUri("custom", "rdfunit")
-                    .setInMemReader(e.getValue())
-                    .setReferenceSchemata(schemaSource)
-                    .build();
-            final Model testInputModel;
-            try {
-                testInputModel = testInputReaders.get(e.getKey()).read();
-            } catch (RDFReaderException e1) {
-                throw new InitializationError(e1);
-            }
+        for (FrameworkMethod testInputMethod : getTestInputMethods()) {
+            final RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider = new
+                    RdfUnitJunitTestCaseDataProvider(testInputMethod, testCaseInstance, schemaSource,
+                    additionalData);
             for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, e.getKey(), modelSource, testInputModel));
+                this.testCases.add(new RdfUnitJunitTestCase(t, testInputMethod, rdfUnitJunitTestCaseDataProvider));
             }
         }
     }
@@ -229,13 +202,17 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return additionalData;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected List<RdfUnitJunitTestCase> getChildren() {
         return Collections.unmodifiableList(testCases);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Description describeChild(RdfUnitJunitTestCase child) {
         return Description.createTestDescription(
@@ -248,7 +225,9 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         );
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
         this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);

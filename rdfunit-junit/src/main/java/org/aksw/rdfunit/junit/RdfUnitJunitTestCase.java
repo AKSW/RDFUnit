@@ -1,17 +1,14 @@
 package org.aksw.rdfunit.junit;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.TestSource;
 import org.junit.runners.model.FrameworkMethod;
-
-import java.lang.reflect.InvocationTargetException;
+import org.junit.runners.model.InitializationError;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- *
  * @author Michael Leuthold
  * @version $Id: $Id
  */
@@ -19,13 +16,12 @@ final class RdfUnitJunitTestCase {
 
     private final TestCase testCase;
     private final FrameworkMethod testInputMethod;
-    private final TestSource modelSource;
-    private final Model testInputModel;
+    private final RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider;
 
-    RdfUnitJunitTestCase(TestCase testCase, FrameworkMethod testInputMethod, TestSource modelSource, Model testInputModel) {
+    RdfUnitJunitTestCase(TestCase testCase, FrameworkMethod testInputMethod, RdfUnitJunitTestCaseDataProvider
+            rdfUnitJunitTestCaseDataProvider) {
         this.testInputMethod = testInputMethod;
-        this.modelSource = modelSource;
-        this.testInputModel = testInputModel;
+        this.rdfUnitJunitTestCaseDataProvider = rdfUnitJunitTestCaseDataProvider;
         this.testCase = checkNotNull(testCase);
     }
 
@@ -48,7 +44,7 @@ final class RdfUnitJunitTestCase {
      * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
      */
     public TestSource getModelSource() {
-        return modelSource;
+        return this.rdfUnitJunitTestCaseDataProvider.getModelSource();
     }
 
     /**
@@ -57,6 +53,15 @@ final class RdfUnitJunitTestCase {
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public Model getTestInputModel() {
-        return testInputModel;
+        return this.rdfUnitJunitTestCaseDataProvider.getTestInputModel();
+    }
+
+    public void prepareForExecution() {
+        try {
+            this.rdfUnitJunitTestCaseDataProvider.initialize();
+        } catch (InitializationError initializationError) {
+            throw new RuntimeException(initializationError);
+        }
+
     }
 }
