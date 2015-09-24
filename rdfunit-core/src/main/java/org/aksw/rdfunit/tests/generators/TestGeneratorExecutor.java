@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.tests.generators;
 
-import org.aksw.rdfunit.elements.interfaces.TestCase;
-import org.aksw.rdfunit.elements.interfaces.TestGenerator;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.sources.TestSource;

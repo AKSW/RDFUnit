@@ -137,7 +137,6 @@ final class QueryingConfig {
      * The Query limit.
      *
      * @return a long.
-
      */
     public long getQueryLimit() {
         return queryLimit;
@@ -153,11 +152,13 @@ final class QueryingConfig {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hashCode(cacheTTL, queryDelay, queryLimit, pagination);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -2,9 +2,9 @@ package org.aksw.rdfunit.tests.executors;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.tests.results.StatusTestCaseResult;

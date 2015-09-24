@@ -1,12 +1,14 @@
 package org.aksw.rdfunit.junit;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 @Documented
+/**
+ * <p>TestInput class.</p>
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface TestInput {}

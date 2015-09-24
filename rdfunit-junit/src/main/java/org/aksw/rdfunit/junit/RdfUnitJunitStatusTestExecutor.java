@@ -1,15 +1,24 @@
 package org.aksw.rdfunit.junit;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.tests.executors.RLOGTestExecutor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
+
 final class RdfUnitJunitStatusTestExecutor extends RLOGTestExecutor {
 
+    /**
+     * <p>Constructor for RdfUnitJunitStatusTestExecutor.</p>
+     */
     public RdfUnitJunitStatusTestExecutor() {
         super(new QueryGenerationSelectFactory());
     }

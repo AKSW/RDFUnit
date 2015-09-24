@@ -1,15 +1,20 @@
 package org.aksw.rdfunit.junit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.tests.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.junit.runners.model.Statement;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 class RLOGStatement extends Statement {
 
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor;
@@ -20,6 +25,7 @@ class RLOGStatement extends Statement {
         this.testCase = testCase;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void evaluate() throws Throwable {
         final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(testCase);

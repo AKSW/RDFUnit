@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.services;
 
-import org.aksw.rdfunit.elements.interfaces.Pattern;
+import org.aksw.rdfunit.model.interfaces.Pattern;
 
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +27,7 @@ public final class PatternService {
      * <p>addPattern.</p>
      *
      * @param id a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @param iri a {@link java.lang.String} object.
      */
     public static void addPattern(String id, String iri, Pattern pattern) {
@@ -39,7 +39,7 @@ public final class PatternService {
      * <p>getPatternFromID.</p>
      *
      * @param id a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @return a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @since 0.7.7
      */
     public static Pattern getPatternFromID(String id) {
@@ -51,7 +51,7 @@ public final class PatternService {
      * <p>getPatternFromID.</p>
      *
      * @param iri a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @return a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @since 0.7.7
      */
     public static Pattern getPatternFromIRI(String iri) {

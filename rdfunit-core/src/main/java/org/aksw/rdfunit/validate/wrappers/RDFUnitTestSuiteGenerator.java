@@ -24,6 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 9/7/15 10:13 AM
+ * @version $Id: $Id
  */
 public final class RDFUnitTestSuiteGenerator {
 
@@ -40,6 +41,11 @@ public final class RDFUnitTestSuiteGenerator {
         this.schemas = Collections.unmodifiableCollection(checkNotNull(schemas));
     }
 
+    /**
+     * <p>Getter for the field <code>testSuite</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     */
     public TestSuite getTestSuite() {
         if (testSuite == null) {
             synchronized (RDFUnitStaticValidator.class) {
@@ -67,6 +73,11 @@ public final class RDFUnitTestSuiteGenerator {
         return testSuite;
     }
 
+    /**
+     * <p>Getter for the field <code>schemas</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<SchemaSource> getSchemas() {
         return schemas;
     }

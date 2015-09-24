@@ -1,15 +1,20 @@
 package org.aksw.rdfunit.junit;
 
-import java.lang.reflect.InvocationTargetException;
-
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.TestSource;
 import org.junit.runners.model.FrameworkMethod;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ *
+ * @author Michael Leuthold
+ * @version $Id: $Id
+ */
 final class RdfUnitJunitTestCase {
 
     private final TestCase testCase;
@@ -34,14 +39,29 @@ final class RdfUnitJunitTestCase {
         return combinedReader;
     }
 
+    /**
+     * <p>Getter for the field <code>frameworkMethod</code>.</p>
+     *
+     * @return a {@link org.junit.runners.model.FrameworkMethod} object.
+     */
     public FrameworkMethod getFrameworkMethod() {
         return frameworkMethod;
     }
 
+    /**
+     * <p>Getter for the field <code>modelSource</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
+     */
     public TestSource getModelSource() {
         return modelSource;
     }
 
+    /**
+     * <p>Getter for the field <code>testInputModel</code>.</p>
+     *
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     */
     public Model getTestInputModel() {
         return testInputModel;
     }

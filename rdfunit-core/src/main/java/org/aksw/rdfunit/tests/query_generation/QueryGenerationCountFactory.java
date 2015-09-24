@@ -2,7 +2,7 @@ package org.aksw.rdfunit.tests.query_generation;
 
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**

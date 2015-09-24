@@ -27,11 +27,21 @@ public final class RDFUnitStaticValidator {
     private RDFUnitStaticValidator() {
     }
 
+    /**
+     * <p>initWrapper.</p>
+     *
+     * @param testSuiteGenerator a {@link org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator} object.
+     */
     public static void initWrapper(RDFUnitTestSuiteGenerator testSuiteGenerator) {
         checkNotNull(testSuiteGenerator);
         RDFUnitStaticValidator.testSuiteGenerator = testSuiteGenerator;
     }
 
+    /**
+     * <p>getTestSuite.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     */
     public static TestSuite getTestSuite() {
         return testSuiteGenerator.getTestSuite();
     }
@@ -41,64 +51,64 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>validate.</p>
      *
-     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
-    public static Model validate(final Model input) {
-        return validate(input, TestCaseExecutionType.rlogTestCaseResult);
+    public static Model validate(final Model inputModel) {
+        return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult);
     }
 
 
     /**
      * <p>validate.</p>
      *
-     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
-    public static Model validate(final Model input, final TestCaseExecutionType executionType) {
-        return validate(input, executionType, "custom");
+    public static Model validate(final Model inputModel, final TestCaseExecutionType executionType) {
+        return validate(inputModel, executionType, "custom");
     }
 
 
     /**
      * <p>validate.</p>
      *
-     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param inputURI a {@link java.lang.String} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
-    public static Model validate(final Model input, final String inputURI) {
-        return validate(input, TestCaseExecutionType.rlogTestCaseResult, inputURI);
+    public static Model validate(final Model inputModel, final String inputURI) {
+        return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult, inputURI);
     }
 
 
     /**
      * <p>validate.</p>
      *
-     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
-    public static Model validate(final Model input, final TestCaseExecutionType executionType, final String inputURI) {
+    public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) {
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
-        return validate(input, executionType, inputURI, overviewResults);
+        return validate(inputModel, executionType, inputURI, overviewResults);
     }
 
 
     /**
      * <p>validate.</p>
      *
-     * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
      * @param overviewResults a {@link org.aksw.rdfunit.tests.results.DatasetOverviewResults} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
-    public static Model validate(final Model input, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
+    public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
@@ -109,7 +119,7 @@ public final class RDFUnitStaticValidator {
         final TestSource modelSource = new TestSourceBuilder()
                 .setPrefixUri("custom", inputURI)
                 .setImMemDataset()
-                .setInMemReader(new RDFModelReader(input))
+                .setInMemReader(new RDFModelReader(inputModel))
                 .setReferenceSchemata(testSuiteGenerator.getSchemas())
                 .build();
 

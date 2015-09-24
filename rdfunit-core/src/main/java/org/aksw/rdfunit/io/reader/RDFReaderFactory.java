@@ -108,6 +108,12 @@ public final class RDFReaderFactory {
         return new RDFStreamReader(is, format);
     }
 
+    /**
+     * <p>createEmptyReader.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @since 0.7.19
+     */
     public static RDFReader createEmptyReader() {
         return RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/empty.ttl");
     }
