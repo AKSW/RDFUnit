@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.junit;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.TestSource;
 import org.junit.runners.model.FrameworkMethod;
 

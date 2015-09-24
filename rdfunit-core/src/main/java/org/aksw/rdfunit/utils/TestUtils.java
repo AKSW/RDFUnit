@@ -9,12 +9,6 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.elements.implementations.ManualTestCaseImpl;
-import org.aksw.rdfunit.elements.implementations.PatternBasedTestCaseImpl;
-import org.aksw.rdfunit.elements.interfaces.Pattern;
-import org.aksw.rdfunit.elements.interfaces.PatternParameter;
-import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -22,6 +16,12 @@ import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.model.implementations.ManualTestCaseImpl;
+import org.aksw.rdfunit.model.implementations.PatternBasedTestCaseImpl;
+import org.aksw.rdfunit.model.interfaces.Pattern;
+import org.aksw.rdfunit.model.interfaces.PatternParameter;
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.tests.Binding;
 import org.aksw.rdfunit.tests.TestCaseAnnotation;
@@ -131,7 +131,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.elements.implementations.ManualTestCaseImpl} object.
+     * @return a {@link org.aksw.rdfunit.model.implementations.ManualTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public static ManualTestCaseImpl instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
@@ -208,7 +208,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.elements.implementations.PatternBasedTestCaseImpl} object.
+     * @return a {@link org.aksw.rdfunit.model.implementations.PatternBasedTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public static PatternBasedTestCaseImpl instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
@@ -340,7 +340,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @return a {@link java.util.Collection} object.
      */
     public static Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
@@ -388,7 +388,7 @@ public final class TestUtils {
      * <p>generateTestURI.</p>
      *
      * @param sourcePrefix a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.elements.interfaces.Pattern} object.
+     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      * @param generatorURI a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.

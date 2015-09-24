@@ -5,8 +5,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**

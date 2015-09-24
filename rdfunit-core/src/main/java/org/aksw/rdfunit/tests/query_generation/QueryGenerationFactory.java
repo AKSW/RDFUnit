@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.tests.query_generation;
 
 import com.hp.hpl.jena.query.Query;
-import org.aksw.rdfunit.elements.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 
 /**
  * Abstract Factory that takes a test case and transforms it to a valid SPARQL QUery

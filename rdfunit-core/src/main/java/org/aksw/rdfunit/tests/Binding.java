@@ -5,9 +5,9 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.elements.interfaces.PatternParameter;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.exceptions.BindingException;
+import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -26,7 +26,7 @@ public class Binding {
     /**
      * <p>Constructor for Binding.</p>
      *
-     * @param parameter a {@link org.aksw.rdfunit.elements.interfaces.PatternParameter} object.
+     * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
      * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
      * @throws org.aksw.rdfunit.exceptions.BindingException if any.
      */

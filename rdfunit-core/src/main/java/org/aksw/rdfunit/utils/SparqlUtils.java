@@ -6,8 +6,8 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.elements.implementations.ResultAnnotationImpl;
-import org.aksw.rdfunit.elements.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.model.implementations.ResultAnnotationImpl;
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

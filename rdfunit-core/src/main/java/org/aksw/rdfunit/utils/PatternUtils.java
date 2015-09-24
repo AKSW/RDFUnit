@@ -3,8 +3,8 @@ package org.aksw.rdfunit.utils;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.elements.interfaces.Pattern;
-import org.aksw.rdfunit.elements.readers.PatternReader;
+import org.aksw.rdfunit.model.interfaces.Pattern;
+import org.aksw.rdfunit.model.readers.PatternReader;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import java.util.ArrayList;
