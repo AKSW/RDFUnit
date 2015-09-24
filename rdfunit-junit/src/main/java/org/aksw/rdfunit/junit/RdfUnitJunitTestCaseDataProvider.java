@@ -17,14 +17,12 @@ import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 
 final class RdfUnitJunitTestCaseDataProvider {
 
-    private boolean initialized = false;
-    private FrameworkMethod testInputMethod;
+    private final FrameworkMethod testInputMethod;
     private final Object testCaseInstance;
     private final SchemaSource schemaSource;
     private final RDFReader additionalData;
-    private RDFReader testInputReader;
+    private boolean initialized = false;
     private Model testInputModel;
-    private RDFMultipleReader combinedReader;
     private TestSource modelSource;
 
     public RdfUnitJunitTestCaseDataProvider(
@@ -43,6 +41,7 @@ final class RdfUnitJunitTestCaseDataProvider {
         if (initialized)
             return;
 
+        final RDFReader testInputReader;
         try {
             testInputReader = checkNotNull(
                     (RDFReader) testInputMethod.getMethod().invoke(testCaseInstance),
@@ -58,7 +57,7 @@ final class RdfUnitJunitTestCaseDataProvider {
         } catch (RDFReaderException e1) {
             throw new InitializationError(e1);
         }
-        combinedReader = new RDFMultipleReader(asList(testInputReader,
+        final RDFMultipleReader combinedReader = new RDFMultipleReader(asList(testInputReader,
                 additionalData));
         modelSource = new TestSourceBuilder()
                 // FIXME why do we need at least one source config? If we omit this, it will break...
