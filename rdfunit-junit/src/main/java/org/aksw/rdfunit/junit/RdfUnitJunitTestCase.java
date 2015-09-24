@@ -19,13 +19,13 @@ final class RdfUnitJunitTestCase {
 
     private final TestCase testCase;
     private final RDFReader combinedReader;
-    private final FrameworkMethod frameworkMethod;
+    private final FrameworkMethod testInputMethod;
     private final TestSource modelSource;
     private final Model testInputModel;
 
-    RdfUnitJunitTestCase(TestCase testCase, RDFReader combinedReader, FrameworkMethod frameworkMethod, TestSource modelSource, Model testInputModel) {
+    RdfUnitJunitTestCase(TestCase testCase, RDFReader combinedReader, FrameworkMethod testInputMethod, TestSource modelSource, Model testInputModel) {
         this.combinedReader = combinedReader;
-        this.frameworkMethod = frameworkMethod;
+        this.testInputMethod = testInputMethod;
         this.modelSource = modelSource;
         this.testInputModel = testInputModel;
         this.testCase = checkNotNull(testCase);
@@ -40,12 +40,12 @@ final class RdfUnitJunitTestCase {
     }
 
     /**
-     * <p>Getter for the field <code>frameworkMethod</code>.</p>
+     * <p>Getter for the field <code>testInputMethod</code>.</p>
      *
      * @return a {@link org.junit.runners.model.FrameworkMethod} object.
      */
-    public FrameworkMethod getFrameworkMethod() {
-        return frameworkMethod;
+    public FrameworkMethod getTestInputMethod() {
+        return testInputMethod;
     }
 
     /**

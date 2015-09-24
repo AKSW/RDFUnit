@@ -40,7 +40,6 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private RDFReader additionalData = new RDFModelReader(ModelFactory.createDefaultModel());
     private RDFReader schemaReader;
     private Object testCaseInstance;
-    private Map<FrameworkMethod, RDFReader> testInputReaders;
 
     /**
      * <p>Constructor for RdfUnitJunitRunner.</p>
@@ -51,7 +50,6 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
 
-        setUpTestInputReaders();
         setUpSchemaReader();
         setAdditionalData();
         generateRdfUnitTestCases();
@@ -135,27 +133,43 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
+        final Map<FrameworkMethod, RDFReader> testInputReaders = new LinkedHashMap<>();
+        for (FrameworkMethod m : getTestInputMethods()) {
+            try {
+                final RDFReader testInputReader = checkNotNull(
+                        (RDFReader) m.getMethod().invoke(getTestCaseInstance()),
+                        "@%s: %s returned null!",
+                        TestInput.class.getSimpleName(),
+                        m.getMethod().getName()
+                );
+                testInputReaders.put(m, testInputReader);
+            } catch (IllegalAccessException | InvocationTargetException e1) {
+                throw new InitializationError(e1);
+            }
+        }
         final SchemaSource schemaSource = createSchemaSourceFromSchema();
         final Collection<TestCase> testCases = createTestCases();
-        for (Map.Entry<FrameworkMethod, RDFReader> e : getCombinedReaders().entrySet()) {
+        final Map<FrameworkMethod, RDFReader> combinedReaders = new LinkedHashMap<>();
+        for (Map.Entry<FrameworkMethod, RDFReader> e1 : testInputReaders.entrySet()) {
+            combinedReaders.put(e1.getKey(), new RDFMultipleReader(asList(e1.getValue(), additionalData)));
+        }
+        for (Map.Entry<FrameworkMethod, RDFReader> e : combinedReaders.entrySet()) {
             final TestSource modelSource = new TestSourceBuilder()
                     // FIXME why do we need at least one source config? If we omit this, it will break...
                     .setPrefixUri("custom", "rdfunit")
                     .setInMemReader(e.getValue())
                     .setReferenceSchemata(schemaSource)
                     .build();
-            final Model testInputModel = getTestInputModel(e.getKey());
+            Model result;
+            try {
+                result = testInputReaders.get(e.getKey()).read();
+            } catch (RDFReaderException e1) {
+                throw new InitializationError(e1);
+            }
+            final Model testInputModel = result;
             for (TestCase t : testCases) {
                 this.testCases.add(new RdfUnitJunitTestCase(t, e.getValue(), e.getKey(), modelSource, testInputModel));
             }
-        }
-    }
-
-    private Model getTestInputModel(FrameworkMethod method) throws InitializationError {
-        try {
-            return testInputReaders.get(method).read();
-        } catch (RDFReaderException e1) {
-            throw new InitializationError(e1);
         }
     }
 
@@ -193,31 +207,6 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private Map<FrameworkMethod, RDFReader> getCombinedReaders() throws InitializationError {
-        final Map<FrameworkMethod, RDFReader> multiReaders = new LinkedHashMap<>();
-        for (Map.Entry<FrameworkMethod, RDFReader> e : testInputReaders.entrySet()) {
-            multiReaders.put(e.getKey(), new RDFMultipleReader(asList(e.getValue(), additionalData)));
-        }
-        return multiReaders;
-    }
-
-    private void setUpTestInputReaders() throws InitializationError {
-        testInputReaders = new LinkedHashMap<>();
-        for (FrameworkMethod m : getTestInputMethods()) {
-            try {
-                final RDFReader testInputReader = checkNotNull(
-                        (RDFReader) m.getMethod().invoke(getTestCaseInstance()),
-                        "@%s: %s returned null!",
-                        TestInput.class.getSimpleName(),
-                        m.getMethod().getName()
-                );
-                testInputReaders.put(m, testInputReader);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new InitializationError(e);
-            }
-        }
-    }
-
     private SchemaSource createSchemaSourceFromSchema() {
         return SchemaSourceFactory.createSchemaSourceSimple("custom", getSchema().uri(), getSchemaReader());
     }
@@ -251,10 +240,10 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     @Override
     protected Description describeChild(RdfUnitJunitTestCase child) {
         return Description.createTestDescription(
-                child.getFrameworkMethod().getDeclaringClass(),
+                child.getTestInputMethod().getDeclaringClass(),
                 String.format(
                         "[%s] %s",
-                        child.getFrameworkMethod().getMethod().getName(),
+                        child.getTestInputMethod().getMethod().getName(),
                         child.getTestCase().getAbrTestURI()
                 )
         );
