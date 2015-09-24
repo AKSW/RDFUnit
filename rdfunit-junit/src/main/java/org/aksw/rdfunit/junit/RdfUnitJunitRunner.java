@@ -10,7 +10,6 @@ import java.util.Map;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-
 import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFMultipleReader;
@@ -28,8 +27,8 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
 import static java.util.Arrays.asList;
+
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
-import static org.aksw.rdfunit.junit.InitializationSupport.checkState;
 
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
@@ -44,47 +43,86 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
 
-
         setUpTestInputReaders();
         setUpSchemaReader();
         setAdditionalData();
         generateRdfUnitTestCases();
     }
 
+    @Override
+    protected void collectInitializationErrors(List<Throwable> errors) {
+        super.collectInitializationErrors(errors);
+
+        verifySchemaAnnotation(errors);
+        verifyTestInputAnnotatedMethods(errors);
+        verifyAtMostOneAdditionalDataMethodWithMatchingReturnType(errors);
+    }
+
     private void verifySchemaAnnotation(List<Throwable> errors) {
-    	if(!getTestClass().getJavaClass().isAnnotationPresent(Schema.class)) {
-    		errors.add(new Exception(
-    				String.format(
-    		                "@%s annotation is required!",
-    		                Schema.class.getSimpleName())));
-    	}
+        if (!getTestClass().getJavaClass().isAnnotationPresent(Schema.class)) {
+            errors.add(new Exception(
+                    String.format(
+                            "@%s annotation is required!",
+                            Schema.class.getSimpleName())));
+        }
     }
 
     private void verifyTestInputAnnotatedMethods(List<Throwable> errors) {
-    	List<FrameworkMethod> testInputMethods = getTestInputMethods();
-    	
-    	if(testInputMethods.isEmpty()) {
-    		errors.add(new Exception(String.format(
-    				"At least one method with @%s annotation is required!",
+        List<FrameworkMethod> testInputMethods = getTestInputMethods();
+
+        if (testInputMethods.isEmpty()) {
+            errors.add(new Exception(String.format(
+                    "At least one method with @%s annotation is required!",
                     TestInput.class.getSimpleName()
-    				)));
-    	}
-    	
+            )));
+        }
+
         for (FrameworkMethod m : testInputMethods) {
-        	if(!m.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
-        		errors.add(new Exception(String.format(
-        				"Method %s marked @%s must return %s",
-        				m.getName(),
+            if (!m.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
+                errors.add(new Exception(String.format(
+                        "Method %s marked @%s must return %s",
+                        m.getName(),
                         TestInput.class.getSimpleName(),
-                        INPUT_DATA_RETURN_TYPE.getCanonicalName()	
-        				)));
-        	}
+                        INPUT_DATA_RETURN_TYPE.getCanonicalName()
+                )));
+            }
+        }
+    }
+
+    private void verifyAtMostOneAdditionalDataMethodWithMatchingReturnType(List<Throwable> errors) {
+        final List<FrameworkMethod> additionalDataAnnotatedMethods = getTestClass().getAnnotatedMethods
+                (AdditionalData.class);
+        if (additionalDataAnnotatedMethods.isEmpty()) {
+            return;
+        }
+        if (additionalDataAnnotatedMethods.size() > 1) {
+            errors.add(new Exception(
+                            String.format(
+                                    "At most one method annotated with @%s allowed!",
+                                    AdditionalData.class.getSimpleName()
+                            )
+                    )
+            );
+        }
+
+        for (FrameworkMethod additionalDataMethod : additionalDataAnnotatedMethods) {
+            if (!additionalDataMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
+                errors.add(
+                        new Exception(
+                                String.format(
+                                        "Method %s annotated with @%s must return a %s!",
+                                        additionalDataMethod.getName(),
+                                        AdditionalData.class.getSimpleName(),
+                                        INPUT_DATA_RETURN_TYPE.getCanonicalName()
+                                )
+                        )
+                );
+            }
         }
     }
 
     private List<FrameworkMethod> getTestInputMethods() {
-        final List<FrameworkMethod> testInputMethods = getTestClass().getAnnotatedMethods(TestInput.class);
-        return testInputMethods;
+        return getTestClass().getAnnotatedMethods(TestInput.class);
     }
 
     private void generateRdfUnitTestCases() throws InitializationError {
@@ -128,24 +166,12 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private void setAdditionalData() throws InitializationError {
-        final List<FrameworkMethod> additionalDataAnnotatedMethods =
-                getTestClass().getAnnotatedMethods(AdditionalData.class);
-        if (additionalDataAnnotatedMethods.isEmpty()) {
-            return;
-        }
-        checkState(
-                additionalDataAnnotatedMethods.size() <= 1,
-                "At most one method annotated with @%s allowed!",
-                AdditionalData.class.getSimpleName()
-        );
         try {
-            final FrameworkMethod additionalDataMethod = additionalDataAnnotatedMethods.get(0);
-            checkState(
-                    additionalDataMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE),
-                    "Method annotated with @%s must return a %s!",
-                    AdditionalData.class.getSimpleName(),
-                    INPUT_DATA_RETURN_TYPE.getCanonicalName()
-            );
+            final List<FrameworkMethod> annotatedMethods = getTestClass().getAnnotatedMethods(AdditionalData.class);
+            if (annotatedMethods.isEmpty()) {
+                return;
+            }
+            final FrameworkMethod additionalDataMethod = annotatedMethods.get(0);
             additionalData =
                     checkNotNull(
                             (RDFReader) additionalDataMethod.invokeExplosively(getTestCaseInstance()),
@@ -227,15 +253,6 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
         this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
     }
-
-	@Override
-	protected void collectInitializationErrors(List<Throwable> errors) {
-		super.collectInitializationErrors(errors);
-		
-		verifySchemaAnnotation(errors);
-		verifyTestInputAnnotatedMethods(errors);
-		
-	}
 
 }
 
