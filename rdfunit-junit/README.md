@@ -10,7 +10,7 @@ RDFUnit-JUnit Integration provides an interface to JUnit via a dedicated Runner 
 @Schema(uri = "ontologies/foaf.rdf")
 public static class TestRunner {
 
-    @ControlledVocabulary
+    @AdditionalData
     public RDFReader getCVs() {
         return new RDFModelReader(ModelFactory
                 .createDefaultModel()
@@ -29,7 +29,7 @@ public static class TestRunner {
 
 ### What the RdfUnitJunitRunner will do:
 
-1. Validate the Test-Class: `@Schema` and `@TestInput` must be declared; `@ControlledVocabulary` is optional
+1. Validate the Test-Class: `@Schema` and `@TestInput` must be declared; `@AdditionalData` is optional
 2. Run the Test Generators against the Schema (can be local file or dereferencable URI)
 3. Create generated TestCases for each `@TestInput`
 4. Run tests individually hooked into the JUnit-Runtime
