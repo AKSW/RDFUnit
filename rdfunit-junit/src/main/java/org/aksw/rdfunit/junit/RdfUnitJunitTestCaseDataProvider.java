@@ -27,14 +27,19 @@ final class RdfUnitJunitTestCaseDataProvider {
     private RDFMultipleReader combinedReader;
     private TestSource modelSource;
 
-    public RdfUnitJunitTestCaseDataProvider(FrameworkMethod testInputMethod, Object testCaseInstance, SchemaSource schemaSource, RDFReader additionalData) {
+    public RdfUnitJunitTestCaseDataProvider(
+            FrameworkMethod testInputMethod,
+            Object testCaseInstance,
+            SchemaSource schemaSource,
+            RDFReader additionalData
+    ) {
         this.testInputMethod = testInputMethod;
         this.testCaseInstance = testCaseInstance;
         this.schemaSource = schemaSource;
         this.additionalData = additionalData;
     }
 
-    public void initialize() throws InitializationError {
+    void initialize() throws InitializationError {
         if (initialized)
             return;
 
@@ -71,5 +76,9 @@ final class RdfUnitJunitTestCaseDataProvider {
 
     public TestSource getModelSource() {
         return modelSource;
+    }
+
+    public FrameworkMethod getTestInputMethod() {
+        return testInputMethod;
     }
 }

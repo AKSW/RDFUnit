@@ -15,12 +15,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 final class RdfUnitJunitTestCase {
 
     private final TestCase testCase;
-    private final FrameworkMethod testInputMethod;
     private final RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider;
 
-    RdfUnitJunitTestCase(TestCase testCase, FrameworkMethod testInputMethod, RdfUnitJunitTestCaseDataProvider
-            rdfUnitJunitTestCaseDataProvider) {
-        this.testInputMethod = testInputMethod;
+    RdfUnitJunitTestCase(TestCase testCase, RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider) {
         this.rdfUnitJunitTestCaseDataProvider = rdfUnitJunitTestCaseDataProvider;
         this.testCase = checkNotNull(testCase);
     }
@@ -35,7 +32,7 @@ final class RdfUnitJunitTestCase {
      * @return a {@link org.junit.runners.model.FrameworkMethod} object.
      */
     public FrameworkMethod getTestInputMethod() {
-        return testInputMethod;
+        return this.rdfUnitJunitTestCaseDataProvider.getTestInputMethod();
     }
 
     /**

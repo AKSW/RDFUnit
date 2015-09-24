@@ -140,7 +140,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                     RdfUnitJunitTestCaseDataProvider(testInputMethod, testCaseInstance, schemaSource,
                     additionalData);
             for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, testInputMethod, rdfUnitJunitTestCaseDataProvider));
+                this.testCases.add(new RdfUnitJunitTestCase(t, rdfUnitJunitTestCaseDataProvider));
             }
         }
     }
