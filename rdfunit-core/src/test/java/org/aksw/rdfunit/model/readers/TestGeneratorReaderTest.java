@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.RDFUnit;
+import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
@@ -42,15 +43,10 @@ public class TestGeneratorReaderTest {
     @Parameterized.Parameters(name= "{index}: TestGenerator: {0}")
     public static Collection<Object[]> resources() throws Exception {
 
-        String baseResDir = "/org/aksw/rdfunit/";
-        String owlGen = baseResDir + "autoGeneratorsOWL.ttl";
-        String dspGen = baseResDir + "autoGeneratorsDSP.ttl";
-        String rsGen = baseResDir + "autoGeneratorsRS.ttl";
-
         Model model = new RDFMultipleReader(Arrays.asList(
-                RDFReaderFactory.createResourceReader(owlGen),
-                RDFReaderFactory.createResourceReader(dspGen),
-                RDFReaderFactory.createResourceReader(rsGen)
+                RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL),
+                RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS),
+                RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP)
         )).read();
 
         Collection<Object[]> parameters = new ArrayList<>();

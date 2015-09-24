@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -29,7 +30,7 @@ public class PatternReaderTest {
 
     @Parameters(name= "{index}: Pattern: {0}")
     public static Collection<Object[]> resources() throws Exception {
-        Model model = RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/patterns.ttl").read();
+        Model model = RDFReaderFactory.createResourceReader(Resources.PATTERNS).read();
         Collection<Object[]> parameters = new ArrayList<>();
         for (Resource resource: model.listResourcesWithProperty(RDF.type, RDFUNITv.Pattern).toList()) {
             parameters.add(new Object[] {resource});

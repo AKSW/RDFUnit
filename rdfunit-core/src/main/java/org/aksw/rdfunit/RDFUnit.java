@@ -110,7 +110,7 @@ public class RDFUnit {
             String normalizedBaseDir = (baseDirectory.endsWith("/") ? baseDirectory : baseDirectory + "/");
             readers.add(new RDFStreamReader(normalizedBaseDir + relativeName));
         }
-        readers.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/" + relativeName));
+        readers.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/configuration/" + relativeName));
         return new RDFFirstSuccessReader(readers);
     }
 

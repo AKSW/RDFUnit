@@ -191,7 +191,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     }
 
     private SchemaSource createSchemaSourceFromSchema() {
-        return SchemaSourceFactory.createSchemaSourceSimple("custom", getSchema().uri(), getSchemaReader());
+        return SchemaSourceFactory.createSchemaSourceSimple(getSchema().uri(), getSchemaReader());
     }
 
     private Collection<TestCase> createTestCases() throws InitializationError {

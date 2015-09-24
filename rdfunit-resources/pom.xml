@@ -28,15 +28,8 @@
                             <outputDirectory>${basedir}/src/main/resources/org/aksw/rdfunit</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>../configuration</directory>
-                                    <includes>
-                                        <include>*.ttl</include>
-                                    </includes>
-                                </resource>
-                                <resource>
                                     <directory>../data</directory>
                                     <includes>
-                                        <include>schemaDecl.csv</include>
                                         <include>tests/Manual/**</include>
                                     </includes>
                                 </resource>
@@ -61,6 +54,8 @@
                         <fileset>
                             <directory>${basedir}/src/main/resources/org/aksw/rdfunit/</directory>
                             <includes>
+                                <include>*.ttl</include>
+                                <include>ns/core.ttl</include>
                                 <include>schemaDecl.csv</include>
                                 <include>tests/Manual/**</include>
                             </includes>
