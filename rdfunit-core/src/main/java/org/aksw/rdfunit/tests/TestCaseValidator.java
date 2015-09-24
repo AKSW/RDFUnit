@@ -26,7 +26,7 @@ public class TestCaseValidator {
     /**
      * <p>Constructor for TestCaseValidator.</p>
      *
-     * @param testCase a {@link TestCase} object.
+     * @param testCase a {@link org.aksw.rdfunit.elements.interfaces.TestCase} object.
      */
     public TestCaseValidator(TestCase testCase) {
         this.testCase = testCase;

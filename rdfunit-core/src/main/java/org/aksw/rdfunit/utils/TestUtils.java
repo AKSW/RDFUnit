@@ -131,7 +131,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @return a {@link ManualTestCaseImpl} object.
+     * @return a {@link org.aksw.rdfunit.elements.implementations.ManualTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public static ManualTestCaseImpl instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
@@ -208,7 +208,7 @@ public final class TestUtils {
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param testURI a {@link java.lang.String} object.
-     * @return a {@link PatternBasedTestCaseImpl} object.
+     * @return a {@link org.aksw.rdfunit.elements.implementations.PatternBasedTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public static PatternBasedTestCaseImpl instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {

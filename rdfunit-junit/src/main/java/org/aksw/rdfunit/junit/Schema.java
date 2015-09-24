@@ -1,12 +1,14 @@
 package org.aksw.rdfunit.junit;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 @Documented
+/**
+ * <p>Schema class.</p>
+ *
+ * @author jim
+ * @version $Id: $Id
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Schema {

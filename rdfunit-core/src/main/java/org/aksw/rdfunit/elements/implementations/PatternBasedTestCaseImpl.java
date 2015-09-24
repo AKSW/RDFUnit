@@ -91,6 +91,12 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
         return sparqlPrevalenceCache;
     }
 
+    /**
+     * <p>getAutoGeneratorURI.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     * @since 0.7.19
+     */
     public String getAutoGeneratorURI() {
         return annotation.getAutoGeneratorURI();
     }

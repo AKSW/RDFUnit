@@ -1,16 +1,7 @@
 package org.aksw.rdfunit.junit;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-
 import org.aksw.rdfunit.elements.interfaces.TestCase;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFMultipleReader;
@@ -27,12 +18,22 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+
 import static java.util.Arrays.asList;
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 import static org.aksw.rdfunit.junit.InitializationSupport.checkState;
 
+/**
+ * <p>RdfUnitJunitRunner class.</p>
+ *
+ * @author jim
+ * @version $Id: $Id
+ */
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
+    /** Constant <code>INPUT_DATA_RETURN_TYPE</code> */
     public static final Class<?> INPUT_DATA_RETURN_TYPE = RDFReader.class;
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
@@ -41,6 +42,12 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private Object testCaseInstance;
     private Map<FrameworkMethod, RDFReader> testInputReaders;
 
+    /**
+     * <p>Constructor for RdfUnitJunitRunner.</p>
+     *
+     * @param testClass a {@link java.lang.Class} object.
+     * @throws org.junit.runners.model.InitializationError if any.
+     */
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
 
@@ -206,11 +213,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return additionalData;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected List<RdfUnitJunitTestCase> getChildren() {
         return Collections.unmodifiableList(testCases);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Description describeChild(RdfUnitJunitTestCase child) {
         return Description.createTestDescription(
@@ -223,11 +232,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         );
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
         this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
     }
 
+	/** {@inheritDoc} */
 	@Override
 	protected void collectInitializationErrors(List<Throwable> errors) {
 		super.collectInitializationErrors(errors);

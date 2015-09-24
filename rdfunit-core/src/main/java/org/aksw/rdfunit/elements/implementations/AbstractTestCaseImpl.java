@@ -32,9 +32,9 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>Constructor for TestCase.</p>
      *
-     * @param testURI a {@link String} object.
-     * @param annotation a {@link TestCaseAnnotation} object.
-     * @throws TestCaseInstantiationException if any.
+     * @param testURI a {@link java.lang.String} object.
+     * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
+     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public AbstractTestCaseImpl(String testURI, TestCaseAnnotation annotation) throws TestCaseInstantiationException {
         this.testURI = testURI;
@@ -45,7 +45,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getUnitTestModel.</p>
      *
-     * @return a {@link Model} object.
+     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public Model getUnitTestModel() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
@@ -56,22 +56,21 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getSparqlWhere.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public abstract String getSparqlWhere();
 
     /**
      * <p>getSparqlPrevalence.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public abstract String getSparqlPrevalence();
 
     /**
-     * <p>serialize.</p>
+     * {@inheritDoc}
      *
-     * @param model a {@link Model} object.
-     * @return a {@link Resource} object.
+     * <p>serialize.</p>
      */
     public Resource serialize(Model model) {
 
@@ -84,7 +83,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getResultMessage.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getResultMessage() {
         return annotation.getDescription();
@@ -93,7 +92,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getLogLevel.</p>
      *
-     * @return a {@link RLOGLevel} object.
+     * @return a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
      */
     public RLOGLevel getLogLevel() {
         return annotation.getTestCaseLogLevel();
@@ -102,7 +101,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getResultAnnotations.</p>
      *
-     * @return a {@link Collection} object.
+     * @return a {@link java.util.Collection} object.
      */
     public Collection<ResultAnnotation> getResultAnnotations() {
         return annotation.getResultAnnotations();
@@ -111,7 +110,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getVariableAnnotations.</p>
      *
-     * @return a {@link Collection} object.
+     * @return a {@link java.util.Collection} object.
      */
     public Collection<ResultAnnotation> getVariableAnnotations() {
         return annotation.getVariableAnnotations();
@@ -120,7 +119,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getSparqlPrevalenceQuery.</p>
      *
-     * @return a {@link Query} object.
+     * @return a {@link com.hp.hpl.jena.query.Query} object.
      */
     public Query getSparqlPrevalenceQuery() {
         if (getSparqlPrevalence().trim().isEmpty())
@@ -131,7 +130,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>Getter for the field <code>testURI</code>.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getTestURI() {
         return testURI;
@@ -140,7 +139,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     /**
      * <p>getAbrTestURI.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getAbrTestURI() {
         return testURI.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");

@@ -27,11 +27,21 @@ public final class RDFUnitStaticValidator {
     private RDFUnitStaticValidator() {
     }
 
+    /**
+     * <p>initWrapper.</p>
+     *
+     * @param testSuiteGenerator a {@link org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator} object.
+     */
     public static void initWrapper(RDFUnitTestSuiteGenerator testSuiteGenerator) {
         checkNotNull(testSuiteGenerator);
         RDFUnitStaticValidator.testSuiteGenerator = testSuiteGenerator;
     }
 
+    /**
+     * <p>getTestSuite.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     */
     public static TestSuite getTestSuite() {
         return testSuiteGenerator.getTestSuite();
     }
@@ -66,6 +76,7 @@ public final class RDFUnitStaticValidator {
      *
      * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param inputURI a {@link java.lang.String} object.
+     * @param inputURI a {@link java.lang.String} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model input, final String inputURI) {
@@ -77,6 +88,7 @@ public final class RDFUnitStaticValidator {
      * <p>validate.</p>
      *
      * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputURI a {@link java.lang.String} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
@@ -93,6 +105,7 @@ public final class RDFUnitStaticValidator {
      * <p>validate.</p>
      *
      * @param input a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputURI a {@link java.lang.String} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
      * @param overviewResults a {@link org.aksw.rdfunit.tests.results.DatasetOverviewResults} object.
