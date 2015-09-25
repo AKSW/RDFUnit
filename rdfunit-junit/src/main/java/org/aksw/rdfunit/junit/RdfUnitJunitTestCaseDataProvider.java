@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.junit;
 
+import java.lang.reflect.InvocationTargetException;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
@@ -10,10 +12,7 @@ import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static java.util.Arrays.asList;
-import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 
 final class RdfUnitJunitTestCaseDataProvider {
 
@@ -38,31 +37,35 @@ final class RdfUnitJunitTestCaseDataProvider {
     }
 
     void initialize() throws InitializationError {
-        if (initialized)
+        if (initialized) {
             return;
+        }
 
         final RDFReader testInputReader;
         try {
-            testInputReader = checkNotNull(
-                    (RDFReader) testInputMethod.getMethod().invoke(testCaseInstance),
-                    "@%s: %s returned null!",
-                    TestInput.class.getSimpleName(),
-                    testInputMethod.getMethod().getName()
-            );
+            testInputReader = (RDFReader) testInputMethod.getMethod().invoke(testCaseInstance);
         } catch (IllegalAccessException | InvocationTargetException e1) {
             throw new InitializationError(e1);
         }
+        if (testInputReader == null) {
+            throw new NullPointerException(String.format(
+                    "@%s: %s returned null!",
+                    TestInput.class.getSimpleName(),
+                    testInputMethod.getMethod().getName()
+            ));
+        }
+
         try {
             testInputModel = testInputReader.read();
-        } catch (RDFReaderException e1) {
-            throw new InitializationError(e1);
+        } catch (RDFReaderException readerException) {
+            throw new RuntimeException(readerException);
         }
-        final RDFMultipleReader combinedReader = new RDFMultipleReader(asList(testInputReader,
-                additionalData));
         modelSource = new TestSourceBuilder()
                 // FIXME why do we need at least one source config? If we omit this, it will break...
                 .setPrefixUri("custom", "rdfunit")
-                .setInMemReader(combinedReader)
+                .setInMemReader(
+                        new RDFMultipleReader(asList(testInputReader, additionalData))
+                )
                 .setReferenceSchemata(schemaSource)
                 .build();
 

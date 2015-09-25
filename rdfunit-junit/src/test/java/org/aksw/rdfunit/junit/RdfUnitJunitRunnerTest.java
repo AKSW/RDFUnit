@@ -14,7 +14,6 @@ import org.junit.runners.model.InitializationError;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- *
  * @author Michael Leuthold
  * @version $Id: $Id
  */
@@ -26,6 +25,10 @@ public class RdfUnitJunitRunnerTest {
     public ExpectedException exception = ExpectedException.none();
 
     private RdfUnitJunitRunner underTest;
+
+    private static RDFReader newEmptyModelRdfReader() {
+        return new RDFModelReader(ModelFactory.createDefaultModel());
+    }
 
     @Before
     public void setup() throws InitializationError {
@@ -42,9 +45,14 @@ public class RdfUnitJunitRunnerTest {
         assertThat(underTest.testCount()).isGreaterThan(1);
     }
 
-    @Test(expected = InitializationError.class)
-    public void inputModelNull() throws InitializationError {
+    @Test
+    public void testInputReturningNullDoesNotThrowIntializationError() throws InitializationError {
         new RdfUnitJunitRunner(RdfUnitWithNullTestInputTest.class);
+    }
+
+    @Test(expected = InitializationError.class)
+    public void testInputReturningWrongTypeThrowsIntializationError() throws InitializationError {
+        new RdfUnitJunitRunner(RdfUnitWithWrongTestInputReturnTypeTest.class);
     }
 
     @Test(expected = InitializationError.class)
@@ -68,16 +76,21 @@ public class RdfUnitJunitRunnerTest {
         new RdfUnitJunitRunner(VocabularyWithWrongReturnTypeNotAllowedTest.class);
     }
 
-    private static RDFReader newEmptyModelRdfReader() {
-        return new RDFModelReader(ModelFactory.createDefaultModel());
-    }
-
     @RunWith(RdfUnitJunitRunner.class)
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class RdfUnitTest {
         @TestInput
-        public RDFReader inputModel() {
+        public RDFReader testInput() {
             return newEmptyModelRdfReader();
+        }
+    }
+
+    @RunWith(RdfUnitJunitRunner.class)
+    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    public static class RdfUnitWithWrongTestInputReturnTypeTest {
+        @TestInput
+        public Model testInput() {
+            return ModelFactory.createDefaultModel();
         }
     }
 
@@ -85,7 +98,7 @@ public class RdfUnitJunitRunnerTest {
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class RdfUnitWithNullTestInputTest {
         @TestInput
-        public Model inputModel() {
+        public RDFReader testInput() {
             return null;
         }
     }
@@ -99,7 +112,7 @@ public class RdfUnitJunitRunnerTest {
     public static class ControlledVocabularyTest {
 
         @TestInput
-        public RDFReader inputModel() {
+        public RDFReader testInput() {
             return newEmptyModelRdfReader();
         }
 
@@ -113,7 +126,7 @@ public class RdfUnitJunitRunnerTest {
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class TwoControlledVocabulariesNotAllowedTest {
         @TestInput
-        public RDFReader inputModel() {
+        public RDFReader testInput() {
             return newEmptyModelRdfReader();
         }
 
@@ -133,7 +146,7 @@ public class RdfUnitJunitRunnerTest {
     public static class VocabularyWithWrongReturnTypeNotAllowedTest {
 
         @TestInput
-        public RDFReader inputModel() {
+        public RDFReader testInput() {
             return newEmptyModelRdfReader();
         }
 
