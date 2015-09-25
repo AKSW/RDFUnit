@@ -11,6 +11,7 @@ import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Request;
@@ -89,6 +90,11 @@ public class RunnerTest {
         assertThat(returningMockReader.getException()).isInstanceOf(RuntimeException.class);
     }
 
+    @Test
+    public void ignoredMethodIsNeverCalled() {
+        assertThat(TestRunner.ignoredTestInputMethodNotCalled).isTrue();
+    }
+
     private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
         return FluentIterable.from(mockRunListener.getFailures())
                 .filter(new Predicate<Failure>() {
@@ -107,6 +113,7 @@ public class RunnerTest {
 
         private static int beforeClassCalled = 0;
         private static int afterClassCalled = 0;
+        private static boolean ignoredTestInputMethodNotCalled = true;
 
         @BeforeClass
         public static void beforeClass() {
@@ -141,6 +148,12 @@ public class RunnerTest {
             return mockReader;
         }
 
+        @TestInput
+        @Ignore
+        public RDFReader ignoredTestInput() {
+            ignoredTestInputMethodNotCalled = false;
+            return new RDFModelReader(ModelFactory.createDefaultModel());
+        }
     }
 
     private static class MockRunListener extends RunListener {
