@@ -1,8 +1,14 @@
 package org.aksw.rdfunit.junit;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,13 +19,11 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- *
  * @author Michael Leuthold
  * @version $Id: $Id
  */
@@ -28,11 +32,13 @@ public class RunnerTest {
     private static final RunNotifier notifier = new RunNotifier();
     private static final MockRunListener mockRunListener = new MockRunListener();
 
+
     @BeforeClass
-    public static void addNotifierListener() {
+    public static void addNotifierListener() throws RDFReaderException {
         notifier.addListener(mockRunListener);
 
         assertThat(TestRunner.beforeClassCalled).isEqualTo(0);
+
         Request.aClass(TestRunner.class).getRunner().run(notifier);
     }
 
@@ -49,14 +55,15 @@ public class RunnerTest {
     @Test
     public void methodNamesMatchPattern() {
         for (Description d : mockRunListener.getDescriptions()) {
-            assertThat(d.getMethodName()).matches("\\[getInputData\\] .*");
+            assertThat(d.getMethodName()).matches("\\[(getInputData|returningNull|returningMockReader)\\] .*");
         }
     }
 
     @Test
     public void failuresMatchPattern() {
         for (Failure f : mockRunListener.getFailures()) {
-            assertThat(f.getDescription().getMethodName()).matches("\\[getInputData\\] .*");
+            assertThat(f.getDescription().getMethodName()).matches("\\[" +
+                    "(getInputData|returningNull|returningMockReader)\\] .*");
         }
     }
 
@@ -68,6 +75,30 @@ public class RunnerTest {
     @Test
     public void afterClassMethodIsCalledOnce() {
         assertThat(TestRunner.afterClassCalled).isEqualTo(1);
+    }
+
+    @Test
+    public void returningNullMethodThrowsRuntimeExceptionWithNPE() {
+        final Failure returningNull = findFirstFailureWhereDescriptionContains("returningNull");
+        assertThat(returningNull.getException()).isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    public void returningMockReaderMethodThrowsRuntimeExceptionWithNPE() {
+        final Failure returningMockReader = findFirstFailureWhereDescriptionContains("returningMockReader");
+        assertThat(returningMockReader.getException()).isInstanceOf(RuntimeException.class);
+    }
+
+    private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
+        return FluentIterable.from(mockRunListener.getFailures())
+                .filter(new Predicate<Failure>() {
+
+                    @Override
+                    public boolean apply(Failure failure) {
+                        return failure.getDescription().getDisplayName().contains(containedInDescription);
+                    }
+                })
+                .first().orNull();
     }
 
     @RunWith(RdfUnitJunitRunner.class)
@@ -92,6 +123,22 @@ public class RunnerTest {
             return new RDFModelReader(ModelFactory
                     .createDefaultModel()
                     .read("inputmodels/foaf.rdf"));
+        }
+
+        @TestInput
+        public RDFReader returningNull() {
+            return null;
+        }
+
+        @TestInput
+        public RDFReader returningMockReader() {
+            RDFReader mockReader = mock(RDFReader.class);
+            try {
+                when(mockReader.read()).thenThrow(new RDFReaderException("Failed to read (mock)!"));
+            } catch (RDFReaderException e) {
+                throw new RuntimeException(e);
+            }
+            return mockReader;
         }
 
     }
