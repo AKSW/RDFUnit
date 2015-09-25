@@ -1,5 +1,10 @@
 package org.aksw.rdfunit.junit;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
@@ -7,16 +12,12 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
+import org.junit.Ignore;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 
@@ -225,12 +226,21 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         );
     }
 
+    @Override
+    protected boolean isIgnored(RdfUnitJunitTestCase child) {
+        return child.getTestInputMethod().getAnnotation(Ignore.class) != null;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
-        this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
+        if(isIgnored(child)) {
+            notifier.fireTestIgnored(describeChild(child));
+        } else {
+            this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
+        }
     }
 
 }
