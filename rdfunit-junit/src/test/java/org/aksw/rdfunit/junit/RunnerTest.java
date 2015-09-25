@@ -32,15 +32,12 @@ public class RunnerTest {
     private static final RunNotifier notifier = new RunNotifier();
     private static final MockRunListener mockRunListener = new MockRunListener();
 
-    private static RDFReader mockReader = mock(RDFReader.class);
 
     @BeforeClass
     public static void addNotifierListener() throws RDFReaderException {
         notifier.addListener(mockRunListener);
 
         assertThat(TestRunner.beforeClassCalled).isEqualTo(0);
-
-        when(mockReader.read()).thenThrow(new RuntimeException("Failed to read (mock)!"));
 
         Request.aClass(TestRunner.class).getRunner().run(notifier);
     }
@@ -135,6 +132,12 @@ public class RunnerTest {
 
         @TestInput
         public RDFReader returningMockReader() {
+            RDFReader mockReader = mock(RDFReader.class);
+            try {
+                when(mockReader.read()).thenThrow(new RDFReaderException("Failed to read (mock)!"));
+            } catch (RDFReaderException e) {
+                throw new RuntimeException(e);
+            }
             return mockReader;
         }
 
