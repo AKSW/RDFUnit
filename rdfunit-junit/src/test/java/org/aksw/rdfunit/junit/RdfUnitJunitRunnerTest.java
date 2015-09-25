@@ -153,7 +153,6 @@ public class RdfUnitJunitRunnerTest {
         @AdditionalData
         public void vocabulary1() {
         }
-
     }
 
 }
