@@ -13,7 +13,7 @@
 
     <modules>
         <module>rdfunit-core</module>
-        <module>rdfunit-resources</module>
+        <module>rdfunit-manual-tests</module>
         <module>rdfunit-validate</module>
         <!--module>rdfunit-webdemo</module--> <!-- removed from aggregation, kept as inheritance -->
         <module>rdfunit-examples</module>

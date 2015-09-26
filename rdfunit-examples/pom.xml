@@ -24,7 +24,8 @@
 
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-resources</artifactId>
+            <artifactId>rdfunit-manual-tests</artifactId>
+            <version>0.7.20-SNAPSHOT</version>
         </dependency>
 
         <dependency>

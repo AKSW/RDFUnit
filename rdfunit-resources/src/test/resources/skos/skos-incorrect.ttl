@@ -1,8 +1,0 @@
-@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
-
-
-# skos pref label (single label per language)
-<skosPrefLabel> 
-	skos:prefLabel "example1"@en ;
-	skos:prefLabel "example2"@en ;
-.

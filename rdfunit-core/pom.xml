@@ -13,11 +13,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-resources</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.aksw.jena-sparql-api</groupId>
             <artifactId>jena-sparql-api-core</artifactId>
         </dependency>
@@ -60,6 +55,8 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
+        <!-- testing -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -70,6 +67,13 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- Test-only dependency to unit test the manual tests -->
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-manual-tests</artifactId>
+            <version>0.7.20-SNAPSHOT</version>
         </dependency>
 
 
