@@ -7,7 +7,7 @@ package org.aksw.rdfunit.prefix;
  * @version $Id: $Id
  * @since 0.7.6
  */
-public final class LOVEntry implements Comparable<LOVEntry>{
+public final class SchemaEntry implements Comparable<SchemaEntry>{
 
     private final String prefix; // prefix is a unique identifier for all entries
     private final String vocabularyURI;
@@ -22,7 +22,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
      * @param vocabularyNamespace the vocabulary namespace
      * @param vocabularyDefinedBy the vocabulary defined by
      */
-    public LOVEntry(String prefix, String vocabularyURI, String vocabularyNamespace, String vocabularyDefinedBy) {
+    public SchemaEntry(String prefix, String vocabularyURI, String vocabularyNamespace, String vocabularyDefinedBy) {
         this.prefix = prefix;
         this.vocabularyURI = vocabularyURI;
         this.vocabularyNamespace = vocabularyNamespace;
@@ -36,7 +36,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
      * @param vocabularyURI the vocabulary uRI
      * @param vocabularyNamespace the vocabulary namespace
      */
-    public LOVEntry(String prefix, String vocabularyURI, String vocabularyNamespace) {
+    public SchemaEntry(String prefix, String vocabularyURI, String vocabularyNamespace) {
         this(prefix, vocabularyURI, vocabularyNamespace, vocabularyNamespace);
     }
 
@@ -82,7 +82,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LOVEntry lovEntry = (LOVEntry) o;
+        SchemaEntry lovEntry = (SchemaEntry) o;
 
         return prefix.equals(lovEntry.prefix);
     }
@@ -108,7 +108,7 @@ public final class LOVEntry implements Comparable<LOVEntry>{
 
     /** {@inheritDoc} */
     @Override
-    public int compareTo(LOVEntry o) {
+    public int compareTo(SchemaEntry o) {
         return this.prefix.compareTo(o.getPrefix());
     }
 }

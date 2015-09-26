@@ -20,9 +20,9 @@ import java.util.List;
  * @since 3 /31/15 4:15 PM
  * @version $Id: $Id
  */
-public final class LOVUtils {
+public final class LOVEndpoint {
 
-    private static final Logger log = LoggerFactory.getLogger(LOVUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(LOVEndpoint.class);
 
     private static final String lovEndpointURI = "http://lov.okfn.org/dataset/lov/sparql";
     private static final String lovGraph = "http://lov.okfn.org/dataset/lov";
@@ -39,7 +39,7 @@ public final class LOVUtils {
             "} \n" +
             "ORDER BY ?vocabPrefix ";
 
-    private LOVUtils(){}
+    public LOVEndpoint(){}
 
 
     /**
@@ -47,13 +47,13 @@ public final class LOVUtils {
      *
      * @return a {@link java.util.List} object.
      */
-    public static List<LOVEntry> getAllLOVEntries() {
+    public List<SchemaEntry> getAllLOVEntries() {
 
-        List<LOVEntry> lovEntries = new LinkedList<>();
-        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(getLovEndpointURI(), Arrays.asList(LOVUtils.getLovGraph()));
+        List<SchemaEntry> lovEntries = new LinkedList<>();
+        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(lovEndpointURI, Arrays.asList(lovGraph));
 
 
-        try (QueryExecution qe = qef.createQueryExecution(getLOVSparqlQuery())) {
+        try (QueryExecution qe = qef.createQueryExecution(lovSparqlQuery)) {
 
             ResultSet rs = qe.execSelect();
             while (rs.hasNext()) {
@@ -70,7 +70,7 @@ public final class LOVUtils {
                 if (row.get("definedBy") != null) {
                     definedBy = row.get("definedBy").asLiteral().getLexicalForm();
                 }
-                lovEntries.add(new LOVEntry(prefix, vocab, ns, definedBy));
+                lovEntries.add(new SchemaEntry(prefix, vocab, ns, definedBy));
             }
         } catch (Exception e) {
             log.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
@@ -78,34 +78,4 @@ public final class LOVUtils {
 
         return lovEntries;
     }
-
-
-    /**
-     * Gets the lOV sparql query.
-     *
-     * @return the lOV sparql query
-     */
-    public static String getLOVSparqlQuery() {
-        return lovSparqlQuery;
-    }
-
-    /**
-     * Gets lov endpoint uRI.
-     *
-     * @return the lov endpoint uRI
-     */
-    public static String getLovEndpointURI() {
-        return lovEndpointURI;
-    }
-
-    /**
-     * Gets lov graph.
-     *
-     * @return the lov graph
-     */
-    public static String getLovGraph() {
-        return lovGraph;
-    }
-
-
 }

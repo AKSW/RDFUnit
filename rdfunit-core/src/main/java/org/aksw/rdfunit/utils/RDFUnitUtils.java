@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.utils;
 
-import org.aksw.rdfunit.prefix.LOVEntry;
-import org.aksw.rdfunit.prefix.LOVUtils;
+import org.aksw.rdfunit.prefix.LOVEndpoint;
+import org.aksw.rdfunit.prefix.SchemaEntry;
 import org.aksw.rdfunit.services.SchemaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +99,7 @@ public final class RDFUnitUtils {
     public static void fillSchemaServiceFromLOV() {
 
         int count = SchemaService.getSize();
-        for (LOVEntry entry : LOVUtils.getAllLOVEntries()) {
+        for (SchemaEntry entry : new LOVEndpoint().getAllLOVEntries()) {
             SchemaService.addSchemaDecl(entry.getPrefix(), entry.getVocabularyNamespace(), entry.getVocabularyDefinedBy());
         }
 
@@ -108,16 +108,7 @@ public final class RDFUnitUtils {
         log.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
     }
 
-    /**
-     * <p>fileExists.</p>
-     *
-     * @param path a {@link java.lang.String} object.
-     * @return a boolean.
-     */
-    public static boolean fileExists(String path) {
-        File f = new File(path);
-        return f.exists();
-    }
+
 
     /**
      * <p>getFirstItemInCollection.</p>

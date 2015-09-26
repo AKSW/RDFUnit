@@ -6,9 +6,9 @@ import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
-import org.aksw.rdfunit.utils.RDFWriterFactory;
 import org.aksw.rdfunit.validate.ParameterException;
 
 import javax.servlet.ServletException;
