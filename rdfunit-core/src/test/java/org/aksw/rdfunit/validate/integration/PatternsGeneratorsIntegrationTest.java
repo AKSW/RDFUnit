@@ -9,8 +9,8 @@ import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.TestSuite;
+import org.aksw.rdfunit.tests.generators.TestGeneratorTCInstantiator;
 import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
-import org.aksw.rdfunit.utils.TestGeneratorUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.junit.After;
 import org.junit.Before;
@@ -66,7 +66,7 @@ public class PatternsGeneratorsIntegrationTest {
         SchemaSource ontologyOWLSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyOWLReader);
 
         TestSuite testSuite = new TestSuite(
-                TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyOWLSource));
+                new TestGeneratorTCInstantiator(rdfUnit.getAutoGenerators(), ontologyOWLSource).generate());
 
         testMap(testsWithErrorsOWL, testSuite, ontologyOWLSource);
     }
@@ -89,7 +89,7 @@ public class PatternsGeneratorsIntegrationTest {
         SchemaSource ontologyRSSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyRSReader);
 
         TestSuite testSuite = new TestSuite(
-                TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyRSSource));
+                new TestGeneratorTCInstantiator(rdfUnit.getAutoGenerators(), ontologyRSSource).generate());
 
         testMap(testsWithErrorsRS, testSuite, ontologyRSSource);
     }
@@ -119,7 +119,7 @@ public class PatternsGeneratorsIntegrationTest {
 
 
         TestSuite testSuite = new TestSuite(
-                TestGeneratorUtils.instantiateTestsFromAG(rdfUnit.getAutoGenerators(), ontologyDSPSource));
+                new TestGeneratorTCInstantiator(rdfUnit.getAutoGenerators(), ontologyDSPSource).generate());
 
         testMap(testsWithErrorsDSP, testSuite, ontologyDSPSource);
     }

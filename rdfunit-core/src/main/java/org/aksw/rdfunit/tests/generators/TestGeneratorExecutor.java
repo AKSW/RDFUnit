@@ -13,7 +13,6 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.utils.CacheUtils;
-import org.aksw.rdfunit.utils.TestGeneratorUtils;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,7 +145,7 @@ public class TestGeneratorExecutor {
 
         } catch (RDFReaderException e) {
             // cannot read from file  / generate
-            Collection<TestCase> testsAuto = TestGeneratorUtils.instantiateTestsFromAG(autoGenerators, s);
+            Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RDFFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
             log.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());

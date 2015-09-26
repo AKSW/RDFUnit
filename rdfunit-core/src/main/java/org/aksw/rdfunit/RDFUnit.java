@@ -7,9 +7,9 @@ import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.readers.PatternBatchReader;
+import org.aksw.rdfunit.model.readers.TestGeneratorBatchReader;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.utils.TestGeneratorUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +99,7 @@ public class RDFUnit {
         if (autoGenerators == null) {
             autoGenerators =
                     Collections.unmodifiableCollection(
-                            TestGeneratorUtils.instantiateTestGeneratorsFromModel(patternQueryFactory.getModel()));
+                            TestGeneratorBatchReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
         }
         return autoGenerators;
     }
