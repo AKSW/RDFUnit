@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.utils;
+package org.aksw.rdfunit.prefix;
 
 /**
  * Encapsulates an LOV Entry

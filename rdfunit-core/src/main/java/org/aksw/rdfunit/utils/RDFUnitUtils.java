@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.utils;
 
+import org.aksw.rdfunit.prefix.LOVEntry;
+import org.aksw.rdfunit.prefix.LOVUtils;
 import org.aksw.rdfunit.services.SchemaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

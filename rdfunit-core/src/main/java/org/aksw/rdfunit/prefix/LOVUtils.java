@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.utils;
+package org.aksw.rdfunit.prefix;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -59,16 +59,16 @@ public final class LOVUtils {
             while (rs.hasNext()) {
                 QuerySolution row = rs.next();
 
-                String prefix = row.get("vocabPrefix").toString();
-                String vocab = row.get("vocabURI").toString();
-                String ns = row.get("vocabNamespace").toString();
+                String prefix = row.get("vocabPrefix").asLiteral().getLexicalForm();
+                String vocab = row.get("vocabURI").asLiteral().getLexicalForm();
+                String ns = row.get("vocabNamespace").asLiteral().getLexicalForm();
                 String definedBy = ns; // default
                 if (ns == null || ns.isEmpty()) {
                     ns = vocab;
                 }
 
                 if (row.get("definedBy") != null) {
-                    definedBy = row.get("definedBy").toString();
+                    definedBy = row.get("definedBy").asLiteral().getLexicalForm();
                 }
                 lovEntries.add(new LOVEntry(prefix, vocab, ns, definedBy));
             }
