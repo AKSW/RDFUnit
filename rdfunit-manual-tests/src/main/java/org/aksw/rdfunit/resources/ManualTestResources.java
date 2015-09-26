@@ -12,7 +12,7 @@ import java.util.Map;
  * @since 8/21/14 12:14 PM
  * @version $Id: $Id
  */
-public final class Resources {
+public final class ManualTestResources {
     private static class ResourcesInstance {
         private static final Map<String, String> resources = create();
 

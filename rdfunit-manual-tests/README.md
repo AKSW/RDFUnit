@@ -13,4 +13,4 @@ We'd be more that happy to accept your pull requests ;)
 
 ### Notes
 This module is used from `rdfunit-validate` module on a complete RDFUnit run configuration. 
-`rdfunit-core` does not depend on this module so if you are using RDFUnit as a library you will have to explicitely mark it as a dependency.
+`rdfunit-core` does not include resources of this module so if you are using RDFUnit as a library you will have to explicitely mark it as a dependency.
