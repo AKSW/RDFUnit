@@ -6,9 +6,9 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
+import org.aksw.rdfunit.model.readers.PatternBatchReader;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.utils.PatternUtils;
 import org.aksw.rdfunit.utils.TestGeneratorUtils;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class RDFUnit {
         if (patterns == null) {
             patterns =
                     Collections.unmodifiableCollection(
-                            PatternUtils.instantiatePatternsFromModel(patternQueryFactory.getModel()));
+                            PatternBatchReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
         }
         return patterns;
     }
