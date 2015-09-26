@@ -3,7 +3,7 @@ package org.aksw.rdfunit.validate.integration;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.resources.Resources;
+import org.aksw.rdfunit.resources.ManualTestResources;
 import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
@@ -38,7 +38,7 @@ public class ManualTestsIntegrationTest {
     @Test
     public void testManualTestCases() throws Exception {
 
-        for (Map.Entry<String, String> entry : Resources.getInstance().entrySet()) {
+        for (Map.Entry<String, String> entry : ManualTestResources.getInstance().entrySet()) {
             String prefix = entry.getKey();
             String uri = entry.getValue();
             String resource = "/org/aksw/rdfunit/tests/" + "Manual/" + CacheUtils.getCacheFolderForURI(uri) + prefix + "." + "tests" + "." + "Manual" + ".ttl";
