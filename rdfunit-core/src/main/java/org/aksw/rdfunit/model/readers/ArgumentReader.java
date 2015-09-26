@@ -4,7 +4,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import org.aksw.rdfunit.enums.ValueKind;
-import org.aksw.rdfunit.model.implementations.ArgumentImpl;
+import org.aksw.rdfunit.model.impl.ArgumentImpl;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.vocabulary.SHACL;
 

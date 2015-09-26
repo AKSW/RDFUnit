@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model.implementations;
+package org.aksw.rdfunit.model.impl;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;

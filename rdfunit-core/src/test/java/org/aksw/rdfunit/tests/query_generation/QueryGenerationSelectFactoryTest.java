@@ -4,7 +4,7 @@ package org.aksw.rdfunit.tests.query_generation;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.model.implementations.ManualTestCaseImpl;
+import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.junit.Before;

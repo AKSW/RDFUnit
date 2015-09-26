@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model.implementations;
+package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;

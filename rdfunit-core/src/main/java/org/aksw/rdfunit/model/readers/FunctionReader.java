@@ -3,7 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import org.aksw.rdfunit.model.implementations.FunctionImpl;
+import org.aksw.rdfunit.model.impl.FunctionImpl;
 import org.aksw.rdfunit.model.interfaces.Function;
 import org.aksw.rdfunit.vocabulary.SHACL;
 

@@ -3,7 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DCTerms;
-import org.aksw.rdfunit.model.implementations.TestGeneratorImpl;
+import org.aksw.rdfunit.model.impl.TestGeneratorImpl;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
