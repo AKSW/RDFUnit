@@ -8,7 +8,9 @@ import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,5 +79,38 @@ public final class LOVEndpoint {
         }
 
         return lovEntries;
+    }
+
+    public void writeAllLOVEntriesToFile(String filename)  {
+
+        List<SchemaEntry> lovEntries = getAllLOVEntries();
+        Collections.sort(lovEntries);
+        String header =
+                "#This file is auto-generated from the (amazing) LOV service" +
+                "# if you don't want to load this use the available CLI / code options " +
+                "# To override some of it's entries use the schemaDecl.csv";
+
+
+        try (Writer out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("outfilename"), "UTF-8")) ){
+
+            out.write(header);
+            out.write("\n");
+
+            for (SchemaEntry entry: lovEntries) {
+                out.write(entry.getPrefix());
+                out.write(',');
+                out.write(entry.getVocabularyURI());
+                if (!entry.getVocabularyDefinedBy().isEmpty()) {
+                    out.write(',');
+                    out.write(entry.getVocabularyDefinedBy());
+                }
+                out.write('\n');
+            }
+        } catch (UnsupportedEncodingException e) {
+        } catch (IOException e) {
+        }
+
+
     }
 }

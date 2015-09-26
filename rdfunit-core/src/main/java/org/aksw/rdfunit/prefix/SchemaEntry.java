@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.prefix;
 
+import com.google.common.base.Objects;
+
 /**
  * Encapsulates an LOV Entry
  *
@@ -76,33 +78,33 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
         return vocabularyDefinedBy;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SchemaEntry lovEntry = (SchemaEntry) o;
-
-        return prefix.equals(lovEntry.prefix);
-    }
-
-    /** {@inheritDoc} */
     @Override
     public int hashCode() {
-        int result = prefix.hashCode();
-        result = 31 * result + vocabularyURI.hashCode();
-        result = 31 * result + vocabularyNamespace.hashCode();
-        result = 31 * result + vocabularyDefinedBy.hashCode();
-        return result;
+        return Objects.hashCode(prefix, vocabularyURI, vocabularyNamespace, vocabularyDefinedBy);
     }
 
-    /** {@inheritDoc} */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final SchemaEntry other = (SchemaEntry) obj;
+        return Objects.equal(this.prefix, other.prefix)
+                && Objects.equal(this.vocabularyURI, other.vocabularyURI)
+                && Objects.equal(this.vocabularyNamespace, other.vocabularyNamespace)
+                && Objects.equal(this.vocabularyDefinedBy, other.vocabularyDefinedBy);
+    }
+
     @Override
     public String toString() {
-        return "LOVEntry{" +
+        return "SchemaEntry{" +
                 "prefix='" + prefix + '\'' +
                 ", vocabularyURI='" + vocabularyURI + '\'' +
+                ", vocabularyNamespace='" + vocabularyNamespace + '\'' +
+                ", vocabularyDefinedBy='" + vocabularyDefinedBy + '\'' +
                 '}';
     }
 
