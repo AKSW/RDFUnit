@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -38,7 +39,16 @@ public final class PatternImpl implements Pattern {
         this.sparqlWherePattern = checkNotNull(builder.sparqlWherePattern, "SPARQL Where pattern is required in Pattern %s", name);
         this.sparqlPatternPrevalence = builder.sparqlPatternPrevalence;
         this.parameters = checkNotNull(builder.parameters);
+        checkArgument(!parameters.isEmpty(), "Pattern %s must have at least one parameter", name);
         this.annotations = checkNotNull(builder.annotations);
+
+        //check if defined parameters exist is sparql
+        for (PatternParameter p : getParameters()) {
+            boolean exists = sparqlWherePattern.contains("%%" + p.getId() + "%%");
+
+            checkArgument(exists, "In Pattern %s parameter %s does not exist in query", name, p.getId());
+        }
+;
     }
 
 
@@ -47,31 +57,6 @@ public final class PatternImpl implements Pattern {
     public Optional<Resource> getResource() {
         return Optional.fromNullable(element);
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isValid() {
-        if (getParameters() == null || getParameters().isEmpty()) {
-            return false;
-        }
-        //check if defined parameters exist is sparql
-        for (PatternParameter p : getParameters()) {
-            if (!getSparqlWherePattern().contains("%%" + p.getId() + "%%")) {
-                return false;
-            }
-        }
-        // TODO search if we need more parameters
-        return true;
-    }
-
-    /*
-    * Checks if all given arguments exist in the patters and the opposite
-    *
-    private boolean validateArguments() {
-        //TODO implement this method
-        return true;
-    } */
-
 
     /** {@inheritDoc} */
     @Override

@@ -16,8 +16,6 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.Assert.assertTrue;
-
 /**
  * Description
  *
@@ -45,6 +43,5 @@ public class PatternReaderTest {
     @Test
     public void testRead() throws Exception {
         Pattern pattern = PatternReader.create().read(resource);
-        assertTrue(pattern.isValid());
     }
 }

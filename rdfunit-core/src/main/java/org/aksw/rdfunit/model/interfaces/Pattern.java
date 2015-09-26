@@ -14,14 +14,6 @@ import java.util.Collection;
  */
 public interface Pattern extends Element{
 
-    /**
-     * <p>isValid.</p>
-     * TODO:Move to another class
-     *
-     * @return a boolean.
-     */
-    boolean isValid();
-
     /*
     * Checks if all given arguments exist in the patters and the opposite
     *
