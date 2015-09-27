@@ -5,13 +5,12 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.exceptions.BindingException;
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
+import org.aksw.rdfunit.model.impl.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.*;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.tests.Binding;
-import org.aksw.rdfunit.tests.TestCaseAnnotation;
 import org.aksw.rdfunit.tests.TestCaseValidator;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
@@ -90,7 +89,7 @@ public class TestGeneratorTCInstantiator {
                 }
 
 
-                try {
+
                     Collection<ResultAnnotation> patternBindedAnnotations = tgPattern.getBindedAnnotations(bindings);
                     patternBindedAnnotations.addAll(tg.getTAGAnnotations());
                     PatternBasedTestCaseImpl tc = new PatternBasedTestCaseImpl(
@@ -109,9 +108,7 @@ public class TestGeneratorTCInstantiator {
                     );
                     new TestCaseValidator(tc).validate();
                     tests.add(tc);
-                } catch (TestCaseInstantiationException e) {
-                    log.error(e.getMessage(), e);
-                }
+
 
             }
         }

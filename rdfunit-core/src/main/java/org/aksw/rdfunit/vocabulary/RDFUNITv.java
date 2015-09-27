@@ -37,6 +37,7 @@ public final class RDFUNITv {
 
 
 
+
     //properties
     /** Constant <code>binding</code> */
     public static final Property binding = property("binding");
@@ -67,7 +68,12 @@ public final class RDFUNITv {
     /** Constant <code>sparqlPrevalence</code> */
     public static final Property sparqlPrevalence = property("sparqlPrevalence");
 
-
+    public static final Property appliesTo = property("appliesTo");
+    public static final Property generated = property("generated");
+    public static final Property source = property("source");
+    public static final Property testCaseLogLevel = property("testCaseLogLevel");
+    public static final Property testGenerator = property("testGenerator");
+    public static final Property references = property("references");
 
     private RDFUNITv() {
 

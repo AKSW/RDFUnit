@@ -8,11 +8,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.tests.TestCaseAnnotation;
 
 import java.util.Collection;
 
@@ -33,10 +31,10 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
      * <p>Constructor for TestCase.</p>
      *
      * @param testURI a {@link java.lang.String} object.
-     * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
+     * @param annotation a {@link TestCaseAnnotation} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public AbstractTestCaseImpl(String testURI, TestCaseAnnotation annotation) throws TestCaseInstantiationException {
+    public AbstractTestCaseImpl(String testURI, TestCaseAnnotation annotation) {
         this.testURI = testURI;
         this.annotation = annotation;
         // Validate on subclasses

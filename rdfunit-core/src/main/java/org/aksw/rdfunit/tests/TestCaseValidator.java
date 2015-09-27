@@ -2,7 +2,6 @@ package org.aksw.rdfunit.tests;
 
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QueryParseException;
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationAskFactory;
@@ -37,7 +36,7 @@ public class TestCaseValidator {
      *
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public void validate() throws TestCaseInstantiationException {
+    public void validate() {
         // TODO move this in a separate class
 
         validateSPARQL(new QueryGenerationSelectFactory().getSparqlQueryAsString(testCase), "SPARQL");
@@ -58,27 +57,27 @@ public class TestCaseValidator {
 
         }
         if (!hasResource) {
-            throw new TestCaseInstantiationException("?resource is not included in SELECT for Test: " + testCase.getTestURI());
+           // throw new TestCaseInstantiationException("?resource is not included in SELECT for Test: " + testCase.getTestURI());
         }
 
         // Message is allowed to exist either in SELECT or as a result annotation
         if (testCase.getResultMessage().trim().isEmpty()) {
-            throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testCase.getTestURI());
+            //throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testCase.getTestURI());
         }
 
         if (testCase.getLogLevel() == null) {
-            throw new TestCaseInstantiationException("No (or malformed) log level included for Test: " + testCase.getTestURI());
+            //throw new TestCaseInstantiationException("No (or malformed) log level included for Test: " + testCase.getTestURI());
         }
     }
 
 
 
-    private void validateSPARQL(String sparql, String type) throws TestCaseInstantiationException {
+    private void validateSPARQL(String sparql, String type)  {
         try {
             QueryFactory.create(sparql);
         } catch (QueryParseException e) {
             String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testCase.getTestURI() + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
-            throw new TestCaseInstantiationException(message, e);
+            //throw new TestCaseInstantiationException(message, e);
         }
     }
 }

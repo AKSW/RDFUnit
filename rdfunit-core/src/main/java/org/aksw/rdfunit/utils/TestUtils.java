@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
@@ -16,15 +17,15 @@ import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
-import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
+import org.aksw.rdfunit.model.impl.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.readers.ManualTestCaseReader;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.tests.Binding;
-import org.aksw.rdfunit.tests.TestCaseAnnotation;
 import org.aksw.rdfunit.tests.TestCaseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +88,7 @@ public final class TestUtils {
             QuerySolution qs = results.next();
             String testURI = qs.get("testURI").toString();
             try {
-                ManualTestCaseImpl tc = instantiateSingleManualTestFromModel(qef, testURI);
+                TestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
                 TestCaseValidator validator = new TestCaseValidator(tc);
                 validator.validate();
                 tests.add(tc);
@@ -134,8 +135,13 @@ public final class TestUtils {
      * @return a {@link org.aksw.rdfunit.model.impl.ManualTestCaseImpl} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public static ManualTestCaseImpl instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
+    public static TestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
 
+        Model m = ((QueryExecutionFactoryModel) qef).getModel();
+        Resource resource = m.getResource(testURI) ;
+
+        return ManualTestCaseReader.create().read(resource);
+                                   /*
         String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
                 " <" + testURI + "> " +
@@ -172,8 +178,8 @@ public final class TestUtils {
                 // Get annotations from Test URI
                 Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
 
-                TestCaseAnnotation annotation =
-                        new TestCaseAnnotation(
+                TestCaseAnnotation annotation = TestCaseAnnotationReader.create().read(resource);
+                        /*new TestCaseAnnotation(
                                 TestGenerationType.resolve(generated),
                                 testGenerator,
                                 TestAppliesTo.resolve(appliesTo),
@@ -182,8 +188,8 @@ public final class TestUtils {
                                 description,
                                 testCaseLogLevel,
                                 resultAnnotations);
-
-                if (!results.hasNext()) {
+                          */
+           /*     if (!results.hasNext()) {
                     ManualTestCaseImpl tc = new ManualTestCaseImpl(
                             testURI,
                             annotation,
@@ -201,6 +207,7 @@ public final class TestUtils {
         }
 
         throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
+        */
     }
 
     /**

@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -15,6 +15,8 @@ import org.aksw.rdfunit.vocabulary.RLOG;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * <p>TestCaseAnnotation class.</p>
@@ -48,14 +50,14 @@ public class TestCaseAnnotation {
      * @param resultAnnotations a {@link java.util.Collection} object.
      */
     public TestCaseAnnotation(TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
-        this.generated = generated;
+        this.generated = checkNotNull(generated);
         this.autoGeneratorURI = autoGeneratorURI;
-        this.appliesTo = appliesTo;
-        this.sourceUri = sourceUri;
-        this.references = references;
-        this.description = description;
+        this.appliesTo = checkNotNull(appliesTo);
+        this.sourceUri = checkNotNull(sourceUri);
+        this.references = checkNotNull(references);
+        this.description = checkNotNull(description);
         this.resultAnnotations = new ArrayList<>();
-        this.resultAnnotations.addAll(resultAnnotations);
+        this.resultAnnotations.addAll(checkNotNull(resultAnnotations));
         // need to instantiate result annotations first
         this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel);
         this.variableAnnotations = findVariableAnnotations();

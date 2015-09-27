@@ -4,11 +4,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.tests.Binding;
-import org.aksw.rdfunit.tests.TestCaseAnnotation;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -33,19 +31,19 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
      * <p>Constructor for PatternBasedTestCase.</p>
      *
      * @param testURI a {@link java.lang.String} object.
-     * @param annotation a {@link org.aksw.rdfunit.tests.TestCaseAnnotation} object.
+     * @param annotation a {@link TestCaseAnnotation} object.
      * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
-    public PatternBasedTestCaseImpl(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) throws TestCaseInstantiationException {
+    public PatternBasedTestCaseImpl(String testURI, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) {
         super(testURI, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
 
         // validate
         if (bindings.size() != pattern.getParameters().size()) {
-            throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
+           // throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
         }
     }
 
