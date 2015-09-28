@@ -1,42 +1,47 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.model.interfaces;
 
+import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
-import org.aksw.rdfunit.exceptions.BindingException;
-import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * <p>Binding class.</p>
- *
+ * TODO: make this an interface and move to Impl
  * @author Dimitris Kontokostas
  *         Holds a parameter binding between a pattern parameter and a test instance
  * @since 9/30/13 8:28 AM
  * @version $Id: $Id
  */
-public class Binding {
+public class Binding implements Element {
+    private final Resource resource;
     private final PatternParameter parameter;
     private final RDFNode value;
 
     /**
      * <p>Constructor for Binding.</p>
      *
-     * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
-     * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
+     *
+     * @param resource
+     * @param parameter a {@link PatternParameter} object.
+     * @param value a {@link RDFNode} object.
      * @throws org.aksw.rdfunit.exceptions.BindingException if any.
      */
-    public Binding(PatternParameter parameter, RDFNode value) throws BindingException {
-        this.parameter = parameter;
-        this.value = value;
+    public Binding(Resource resource, PatternParameter parameter, RDFNode value) {
+        this.resource = resource;
+        this.parameter = checkNotNull(parameter, "parameter must not be null in Binding");
+        this.value = checkNotNull(value, "value must not be null in Binding");
 
         //Validate bibding
         if (!validateType()) {
-            throw new BindingException("Binding is of incorrect constraint type");
+            //throw new BindingException("Binding is of incorrect constraint type");
         }
     }
 
@@ -79,6 +84,11 @@ public class Binding {
         return parameter.getId();
     }
 
+
+    public PatternParameter getParameter() {
+        return parameter;
+    }
+
     /**
      * <p>writeToModel.</p>
      *
@@ -117,5 +127,10 @@ public class Binding {
         }
         // TODO Check the pattern
         return true;
+    }
+
+    @Override
+    public Optional<Resource> getResource() {
+        return Optional.fromNullable(resource);
     }
 }

@@ -6,6 +6,7 @@ import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.SHACL;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -57,14 +58,18 @@ public final class ResultAnnotationReader implements ElementReader<ResultAnnotat
         ResultAnnotationImpl.Builder resultAnBuilder = null;
 
         // get predicate
+        int count = 0;
         for (Statement smt : resource.listProperties(propertyP).toList()) {
+            checkArgument(++count == 1, "Cannot have more than one property in ResultAnnotation %s with value %s", resource.getURI(), smt.getObject().toString());
             resultAnBuilder = new ResultAnnotationImpl.Builder(ResourceFactory.createProperty(smt.getObject().asResource().getURI()));
         }
 
         checkNotNull(resultAnBuilder);
 
         //value
+        count = 0;
         for (Statement smt : resource.listProperties(valueP).toList()) {
+            checkArgument(++count == 1, "Cannot have more than one value in ResultAnnotation %s with value %s", resource.getURI(), smt.getObject().toString());
             RDFNode value = smt.getObject();
             if (!valueP.getNameSpace().equals(RDFUNITv.namespace) || !value.toString().startsWith("?")) {
                 resultAnBuilder.setValue(value);
@@ -72,7 +77,9 @@ public final class ResultAnnotationReader implements ElementReader<ResultAnnotat
         }
 
         //variable name
+        count = 0;
         for (Statement smt : resource.listProperties(varNameP).toList()) {
+            checkArgument(++count == 1, "Cannot have more than one variable name in ResultAnnotation %s with value %s", resource.getURI(), smt.getObject().toString());
             String varName = smt.getObject().toString();
             if (!valueP.getNameSpace().equals(RDFUNITv.namespace) || varName.startsWith("?")) {
                 resultAnBuilder.setVariableName(varName.startsWith("?") ? varName.substring(1) : varName);

@@ -1,15 +1,13 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.google.common.base.Optional;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.util.Collection;
@@ -24,31 +22,13 @@ import java.util.Collection;
  */
 public abstract class AbstractTestCaseImpl implements TestCase, Comparable<AbstractTestCaseImpl> {
 
-    protected final String testURI;
+    protected final Resource tcResource;
     protected final TestCaseAnnotation annotation;
 
-    /**
-     * <p>Constructor for TestCase.</p>
-     *
-     * @param testURI a {@link java.lang.String} object.
-     * @param annotation a {@link TestCaseAnnotation} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
-     */
-    public AbstractTestCaseImpl(String testURI, TestCaseAnnotation annotation) {
-        this.testURI = testURI;
+    public AbstractTestCaseImpl(Resource tcResource, TestCaseAnnotation annotation) {
+        this.tcResource = tcResource;
         this.annotation = annotation;
         // Validate on subclasses
-    }
-
-    /**
-     * <p>getUnitTestModel.</p>
-     *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     */
-    public Model getUnitTestModel() {
-        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
-        serialize(model);
-        return model;
     }
 
     /**
@@ -64,19 +44,6 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
      * @return a {@link java.lang.String} object.
      */
     public abstract String getSparqlPrevalence();
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>serialize.</p>
-     */
-    public Resource serialize(Model model) {
-
-        Resource resource = model.createResource(testURI);
-        annotation.serialize(resource, model);
-        return resource;
-
-    }
 
     /**
      * <p>getResultMessage.</p>
@@ -131,7 +98,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
      * @return a {@link java.lang.String} object.
      */
     public String getTestURI() {
-        return testURI;
+        return tcResource.getURI();
     }
 
     /**
@@ -140,7 +107,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
      * @return a {@link java.lang.String} object.
      */
     public String getAbrTestURI() {
-        return testURI.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
+        return getTestURI().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
     }
 
 
@@ -163,14 +130,14 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
 
         AbstractTestCaseImpl testCase = (AbstractTestCaseImpl) o;
 
-        return testURI.equals(testCase.testURI);
+        return tcResource.equals(testCase.tcResource);
 
     }
 
     /** {@inheritDoc} */
     @Override
     public int hashCode() {
-        return testURI.hashCode();
+        return tcResource.hashCode();
     }
 
     /** {@inheritDoc} */
@@ -179,4 +146,13 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
         return this.getTestURI();
     }
 
+    @Override
+    public Optional<Resource> getResource() {
+        return Optional.fromNullable(tcResource);
+    }
+
+    @Override
+    public TestCaseAnnotation getTestCaseAnnotation() {
+        return annotation;
+    }
 }

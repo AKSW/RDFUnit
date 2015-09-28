@@ -39,17 +39,17 @@ public final class PatternParameterReader implements ElementReader<PatternParame
 
         // get ID
         for (Statement smt : resource.listProperties(DCTerms.identifier).toList()) {
-            parameterBuilder.setID(smt.getObject().asLiteral().getString());
+            parameterBuilder.setID(smt.getObject().asLiteral().getLexicalForm());
         }
 
         // parameter constraints
         for (Statement smt : resource.listProperties(RDFUNITv.parameterConstraint).toList()) {
-            parameterBuilder.setPatternParameterConstraints(smt.getObject().asResource().toString());
+            parameterBuilder.setPatternParameterConstraints(smt.getObject().asResource().getURI());
         }
 
         //constraint pattern
         for (Statement smt : resource.listProperties(SHACL.defaultValue).toList()) {
-            parameterBuilder.setContraintPattern(smt.getObject().asLiteral().getString());
+            parameterBuilder.setContraintPattern(smt.getObject().asLiteral().getLexicalForm());
         }
 
         return parameterBuilder.build();

@@ -5,11 +5,11 @@ import org.aksw.rdfunit.io.reader.RDFFirstSuccessReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
-import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public final class RDFUnitTestSuiteGenerator {
     /**
      * <p>Getter for the field <code>testSuite</code>.</p>
      *
-     * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     * @return a {@link TestSuite} object.
      */
     public TestSuite getTestSuite() {
         if (testSuite == null) {

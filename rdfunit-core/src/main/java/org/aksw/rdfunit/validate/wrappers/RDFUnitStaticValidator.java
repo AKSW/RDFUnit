@@ -3,9 +3,9 @@ package org.aksw.rdfunit.validate.wrappers;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
-import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
@@ -40,7 +40,7 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>getTestSuite.</p>
      *
-     * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     * @return a {@link TestSuite} object.
      */
     public static TestSuite getTestSuite() {
         return testSuiteGenerator.getTestSuite();
@@ -136,7 +136,7 @@ public final class RDFUnitStaticValidator {
      *
      * @param testCaseExecutionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param testSource a {@link org.aksw.rdfunit.sources.TestSource} object.
-     * @param testSuite a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     * @param testSuite a {@link TestSuite} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {

@@ -1,36 +1,19 @@
 package org.aksw.rdfunit.utils;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.exceptions.BindingException;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
-import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
-import org.aksw.rdfunit.model.impl.TestCaseAnnotation;
+import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.Pattern;
-import org.aksw.rdfunit.model.interfaces.PatternParameter;
-import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.readers.ManualTestCaseReader;
-import org.aksw.rdfunit.services.PatternService;
-import org.aksw.rdfunit.tests.Binding;
-import org.aksw.rdfunit.tests.TestCaseValidator;
+import org.aksw.rdfunit.model.readers.TestCaseBatchReader;
+import org.aksw.rdfunit.model.writers.TestCaseWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -72,224 +55,9 @@ public final class TestUtils {
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) throws TestCaseInstantiationException {
-        Collection<TestCase> tests = new ArrayList<>();
-        QueryExecutionFactory qef = new QueryExecutionFactoryModel(model);
-
-        // Get all manual tests
-
-        String manualTestsSelectSparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a rut:ManualTestCase }";
-
-        QueryExecution qe = qef.createQueryExecution(manualTestsSelectSparql);
-        ResultSet results = qe.execSelect();
-
-        while (results.hasNext()) {
-            QuerySolution qs = results.next();
-            String testURI = qs.get("testURI").toString();
-            try {
-                TestCase tc = instantiateSingleManualTestFromModel(qef, testURI);
-                TestCaseValidator validator = new TestCaseValidator(tc);
-                validator.validate();
-                tests.add(tc);
-            } catch (TestCaseInstantiationException e) {
-                log.error(e.getMessage(), e);
-                if (strict) {
-                    throw new TestCaseInstantiationException(e.getMessage(), e);
-                }
-            }
-
-        }
-
-        // Get all pattern based tests
-
-        String patternTestsSelectSparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?testURI WHERE {" +
-                " ?testURI a rut:PatternBasedTestCase } ";
-
-        qe = qef.createQueryExecution(patternTestsSelectSparql);
-        results = qe.execSelect();
-
-        while (results.hasNext()) {
-            QuerySolution qs = results.next();
-            String testURI = qs.get("testURI").toString();
-            try {
-                PatternBasedTestCaseImpl tc = instantiateSinglePatternTestFromModel(qef, testURI);
-                tests.add(tc);
-            } catch (TestCaseInstantiationException e) {
-                log.error(e.getMessage(), e);
-                if (strict) {
-                    throw new TestCaseInstantiationException(e.getMessage(), e);
-                }
-            }
-        }
-
-        return tests;
+        return TestCaseBatchReader.create().getTestCasesFromModel(model);
     }
 
-    /**
-     * <p>instantiateSingleManualTestFromModel.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param testURI a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.model.impl.ManualTestCaseImpl} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
-     */
-    public static TestCase instantiateSingleManualTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
-
-        Model m = ((QueryExecutionFactoryModel) qef).getModel();
-        Resource resource = m.getResource(testURI) ;
-
-        return ManualTestCaseReader.create().read(resource);
-                                   /*
-        String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?sparqlWhere ?sparqlPrevalence ?testGenerator ?testCaseLogLevel WHERE { " +
-                " <" + testURI + "> " +
-                "    dcterms:description  ?description ;" +
-                "    rut:appliesTo        ?appliesTo ;" +
-                "    rut:generated        ?generated ;" +
-                "    rut:source           ?source ;" +
-                "    rut:testCaseLogLevel ?testCaseLogLevel ;" +
-                "    rut:sparqlWhere      ?sparqlWhere ;" +
-                "    rut:sparqlPrevalence ?sparqlPrevalence ." +
-                " OPTIONAL {<" + testURI + ">  rut:testGenerator ?testGenerator .}" +
-                "} ";
-        QueryExecution qe = null;
-        try {
-            qe = qef.createQueryExecution(sparqlSelect);
-            ResultSet results = qe.execSelect();
-
-            if (results.hasNext()) {
-                QuerySolution qs = results.next();
-
-                String description = qs.get("description").toString();
-                String appliesTo = qs.get("appliesTo").toString();
-                String generated = qs.get("generated").toString();
-                String source = qs.get("source").toString();
-                RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
-                String sparqlWhere = qs.get("sparqlWhere").asLiteral().getLexicalForm();
-                String sparqlPrevalence = qs.get("sparqlPrevalence").asLiteral().getLexicalForm();
-                Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
-                String testGenerator = "";
-                if (qs.contains("testGenerator")) {
-                    testGenerator = qs.get("testGenerator").toString();
-                }
-
-                // Get annotations from Test URI
-                Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
-
-                TestCaseAnnotation annotation = TestCaseAnnotationReader.create().read(resource);
-                        /*new TestCaseAnnotation(
-                                TestGenerationType.resolve(generated),
-                                testGenerator,
-                                TestAppliesTo.resolve(appliesTo),
-                                source,
-                                referencesLst,
-                                description,
-                                testCaseLogLevel,
-                                resultAnnotations);
-                          */
-           /*     if (!results.hasNext()) {
-                    ManualTestCaseImpl tc = new ManualTestCaseImpl(
-                            testURI,
-                            annotation,
-                            sparqlWhere,
-                            sparqlPrevalence);
-                    new TestCaseValidator(tc).validate();
-                    return tc;
-                }
-            }
-
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
-        }
-
-        throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
-        */
-    }
-
-    /**
-     * <p>instantiateSinglePatternTestFromModel.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param testURI a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
-     */
-    public static PatternBasedTestCaseImpl instantiateSinglePatternTestFromModel(QueryExecutionFactory qef, String testURI) throws TestCaseInstantiationException {
-
-        String sparqlSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?description ?appliesTo ?generated ?source ?basedOnPattern ?testGenerator ?testCaseLogLevel WHERE { " +
-                " <" + testURI + "> " +
-                "    dcterms:description ?description ;" +
-                "    rut:appliesTo      ?appliesTo ;" +
-                "    rut:generated      ?generated ;" +
-                "    rut:source         ?source ;" +
-                "    rut:testCaseLogLevel ?testCaseLogLevel ;" +
-                "    rut:basedOnPattern ?basedOnPattern ;" +
-                " OPTIONAL {<" + testURI + ">  rut:testGenerator ?testGenerator .}" +
-                "} ";
-
-        QueryExecution qe = null;
-        try {
-            qe = qef.createQueryExecution(sparqlSelect);
-            ResultSet results = qe.execSelect();
-
-            if (results.hasNext()) {
-                QuerySolution qs = results.next();
-
-                String description = qs.get("description").toString();
-                String appliesTo = qs.get("appliesTo").toString();
-                String generated = qs.get("generated").toString();
-                String source = qs.get("source").toString();
-                RLOGLevel testCaseLogLevel = RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
-                String patternURI = qs.get("basedOnPattern").toString();
-                Pattern pattern = PatternService.getPatternFromID(org.aksw.rdfunit.services.PrefixNSService.getLocalName(patternURI, "rutp"));
-                if (pattern == null) {
-                    throw new TestCaseInstantiationException("Pattern does not exists for TC: " + testURI);
-                }
-
-                Collection<String> referencesLst = getReferencesFromTestCase(qef, testURI);
-                Collection<Binding> bindings = getBindingsFromTestCase(qef, testURI, pattern);
-                String testGenerator = "";
-                if (qs.contains("testGenerator")) {
-                    testGenerator = qs.get("testGenerator").toString();
-                }
-
-                // Get annotations from Test URI
-                Collection<ResultAnnotation> resultAnnotations = SparqlUtils.getResultAnnotations(qef, testURI);
-
-                TestCaseAnnotation annotation =
-                        new TestCaseAnnotation(
-                                TestGenerationType.resolve(generated),
-                                testGenerator,
-                                TestAppliesTo.resolve(appliesTo),
-                                source,
-                                referencesLst,
-                                description,
-                                testCaseLogLevel,
-                                resultAnnotations);
-
-                if (!results.hasNext()) {
-                    PatternBasedTestCaseImpl tc = new PatternBasedTestCaseImpl(
-                            testURI,
-                            annotation,
-                            pattern,
-                            bindings);
-                    new TestCaseValidator(tc).validate();
-                    return tc;
-                }
-            }
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
-        }
-
-        throw new TestCaseInstantiationException("No results for TC (probably incomplete): " + testURI);
-    }
 
     /**
      * <p>writeTestsToFile.</p>
@@ -300,7 +68,7 @@ public final class TestUtils {
     public static void writeTestsToFile(Collection<TestCase> tests, RDFWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests) {
-            t.serialize(model);
+            TestCaseWriter.createTestCaseWriter(t).write(model);
         }
         try {
             org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);
@@ -308,87 +76,6 @@ public final class TestUtils {
         } catch (RDFWriterException e) {
             log.error("Cannot cache tests: " + e.getMessage());
         }
-    }
-
-    /**
-     * <p>getReferencesFromTestCase.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param testURI a {@link java.lang.String} object.
-     * @return a {@link java.util.Collection} object.
-     */
-    public static Collection<String> getReferencesFromTestCase(QueryExecutionFactory qef, String testURI) {
-
-        Collection<String> references = new ArrayList<>();
-
-        String sparqlReferencesSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?references WHERE { " +
-                " <" + testURI + "> rut:references ?references . }";
-
-        QueryExecution qe = null;
-        try {
-            qe = qef.createQueryExecution(sparqlReferencesSelect);
-            ResultSet results = qe.execSelect();
-
-            while (results.hasNext()) {
-                QuerySolution qs = results.next();
-                references.add(qs.get("references").toString());
-            }
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
-        }
-        return references;
-    }
-
-    /**
-     * <p>getBindingsFromTestCase.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param testURI a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     * @return a {@link java.util.Collection} object.
-     */
-    public static Collection<Binding> getBindingsFromTestCase(QueryExecutionFactory qef, String testURI, Pattern pattern) {
-
-        Collection<Binding> bindings = new ArrayList<>();
-
-        String sparqlReferencesSelect = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?parameter ?value WHERE { " +
-                " <" + testURI + "> rut:binding ?binding ." +
-                " ?binding rut:bindingValue ?value ;" +
-                "          rut:parameter ?parameter }";
-
-        QueryExecution qe = null;
-        try {
-            qe = qef.createQueryExecution(sparqlReferencesSelect);
-            ResultSet results = qe.execSelect();
-
-            while (results.hasNext()) {
-                QuerySolution qs = results.next();
-
-                String parameterURI = qs.get("parameter").toString();
-                PatternParameter parameter = pattern.getParameter(parameterURI).orNull();
-                if (parameter == null) {
-                    log.error("Test instantiation error: Pattern " + pattern.getId() + " does not contain parameter " + parameterURI + " in TestCase: " + testURI);
-                    continue;
-                }
-
-                RDFNode value = qs.get("value");
-
-                try {
-                    bindings.add(new Binding(parameter, value));
-                } catch (BindingException e) {
-                    log.error("Non valid binding for parameter " + parameter.getId() + " in Test: " + testURI);
-                }
-            }
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
-        }
-        return bindings;
     }
 
     /**

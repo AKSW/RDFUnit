@@ -14,9 +14,10 @@ import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.writers.TestCaseWriter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
@@ -151,7 +152,7 @@ public class ValidateCLI {
             Model model = ModelFactory.createDefaultModel();
             PrefixNSService.setNSPrefixesInModel(model);
             for (TestCase ut : testSuite.getTestCases()) {
-                model.add(ut.getUnitTestModel());
+                TestCaseWriter.createTestCaseWriter(ut).write(model);
             }
 
             TestCoverageEvaluator tce = new TestCoverageEvaluator();

@@ -44,7 +44,7 @@ public final class ArgumentReader implements ElementReader<Argument> {
 
         //comment
         for (Statement smt : resource.listProperties(RDFS.comment).toList()) {
-            argumentBuilder.setComment(smt.getObject().toString());
+            argumentBuilder.setComment(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //default value

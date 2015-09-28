@@ -418,7 +418,12 @@ rutt:rr-produces-disjoint-class-errors
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationValue ;
-        rut:annotationValue """?T1""","""?T2"""
+        rut:annotationValue """?T1"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?T2"""
     ];
 	.
 

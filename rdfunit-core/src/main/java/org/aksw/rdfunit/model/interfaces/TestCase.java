@@ -1,8 +1,6 @@
 package org.aksw.rdfunit.model.interfaces;
 
 import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
 
 import java.util.Collection;
@@ -14,14 +12,7 @@ import java.util.Collection;
  * @since 9/23/13 6:31 AM
  * @version $Id: $Id
  */
-public interface TestCase {
-
-    /**
-     * <p>getUnitTestModel.</p>
-     *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     */
-    Model getUnitTestModel() ;
+public interface TestCase extends Element{
 
     /**
      * <p>getSparqlWhere.</p>
@@ -36,14 +27,6 @@ public interface TestCase {
      * @return a {@link java.lang.String} object.
      */
     String getSparqlPrevalence();
-
-    /**
-     * <p>serialize.</p>
-     *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
-     */
-    Resource serialize(Model model);
 
     /**
      * <p>getResultMessage.</p>
@@ -93,6 +76,8 @@ public interface TestCase {
      * @return a {@link java.lang.String} object.
      */
     String getAbrTestURI();
+
+    TestCaseAnnotation getTestCaseAnnotation();
 
 
 }

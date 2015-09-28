@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.model.interfaces;
 
 import com.google.common.base.Optional;
-import org.aksw.rdfunit.tests.Binding;
 
 import java.util.Collection;
 

@@ -6,8 +6,8 @@ import com.hp.hpl.jena.vocabulary.DCTerms;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.impl.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import java.util.ArrayList;
@@ -53,31 +53,31 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
 
         //description
         for (Statement smt : resource.listProperties(DCTerms.description).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one descriptions in TestCaseAnnotation %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one descriptions in TestCaseAnnotation %s", resource.getURI());
             description = smt.getObject().asLiteral().getLexicalForm();
         }
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.appliesTo).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one rut:appliesTo TestCaseAnnotation %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one rut:appliesTo TestCaseAnnotation %s", resource.getURI());
             appliesTo = TestAppliesTo.resolve( smt.getObject().asResource().getURI());
         }
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.source).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one rut:source TestCaseAnnotation %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one rut:source TestCaseAnnotation %s", resource.getURI());
             source = smt.getObject().asResource().getURI();
         }
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.generated).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one rut:generated TestCaseAnnotation %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one rut:generated TestCaseAnnotation %s", resource.getURI());
             generated = TestGenerationType.resolve( smt.getObject().asResource().getURI());
         }
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.testCaseLogLevel).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one rut:testCaseLogLevel TestCaseAnnotation %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one rut:testCaseLogLevel TestCaseAnnotation %s", resource.getURI());
             testCaseLogLevel = RLOGLevel.resolve( smt.getObject().asResource().getURI());
         }
 
@@ -92,7 +92,7 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
         }
 
         return new TestCaseAnnotation(
-                generated,
+                resource, generated,
                 testGenerator,
                 appliesTo,
                 source,

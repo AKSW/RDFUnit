@@ -4,7 +4,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.tests.TestSuite;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;

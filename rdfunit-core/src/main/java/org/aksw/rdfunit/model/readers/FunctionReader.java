@@ -37,7 +37,7 @@ public final class FunctionReader implements ElementReader<Function> {
 
         //comment
         for (Statement smt : resource.listProperties(RDFS.comment).toList()) {
-            functonBuilder.setComment(smt.getObject().toString());
+            functonBuilder.setComment(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //cachable
@@ -47,12 +47,12 @@ public final class FunctionReader implements ElementReader<Function> {
 
         //sparql string
         for (Statement smt : resource.listProperties(SHACL.sparql).toList()) {
-            functonBuilder.setSPARQLString(smt.getObject().asLiteral().toString());
+            functonBuilder.setSPARQLString(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //sparql string
         for (Statement smt : resource.listProperties(SHACL.returnType).toList()) {
-            functonBuilder.setSPARQLString(smt.getObject().asLiteral().toString());
+            functonBuilder.setSPARQLString(smt.getObject().asLiteral().getLexicalForm());
         }
 
         // arguments

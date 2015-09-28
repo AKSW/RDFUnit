@@ -3,8 +3,8 @@ package org.aksw.rdfunit.model.readers;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
-import org.aksw.rdfunit.model.impl.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -42,18 +42,18 @@ public final class ManualTestCaseReader implements ElementReader<TestCase> {
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlWhere).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one rut:sparqlWhere in Test %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one rut:sparqlWhere in Test %s", resource.getURI());
             sparqlWhere = smt.getObject().asLiteral().getLexicalForm();
         }
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlPrevalence).toList()) {
-            checkArgument(count++ == 0, "Cannot have more than one rut:sparqlPrevalence in Test %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one rut:sparqlPrevalence in Test %s", resource.getURI());
             sparqlPrevalence = smt.getObject().asLiteral().getLexicalForm();
         }
 
         TestCaseAnnotation annotation = TestCaseAnnotationReader.create().read(resource);
 
-        return new ManualTestCaseImpl(resource.getURI(), annotation, sparqlWhere, sparqlPrevalence);
+        return new ManualTestCaseImpl(resource, annotation, sparqlWhere, sparqlPrevalence);
     }
 }

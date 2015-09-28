@@ -204,7 +204,12 @@ rutp:OWLDISJC a rut:Pattern ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationValue ;
-        rut:annotationValue """%%T1%%""","""%%T2%%"""
+        rut:annotationValue """%%T1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """%%T2%%"""
     ];
     .
 
@@ -1174,7 +1179,12 @@ rutp:ONELANG a rut:Pattern ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationValue ;
-        rut:annotationValue """?c1""", """?c2"""
+        rut:annotationValue """?c1"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?c2"""
     ];
     .
 
@@ -1212,7 +1222,12 @@ rutp:ONELANGGLOBAL a rut:Pattern ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty spin:violationValue ;
-        rut:annotationValue """?c1""", """?c2"""
+        rut:annotationValue """?c1"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty spin:violationValue ;
+        rut:annotationValue """?c2"""
     ];
     .
 
