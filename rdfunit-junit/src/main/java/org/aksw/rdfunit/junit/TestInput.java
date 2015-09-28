@@ -11,4 +11,8 @@ import java.lang.annotation.*;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface TestInput {}
+public @interface TestInput {
+
+    String name() default "";
+
+}

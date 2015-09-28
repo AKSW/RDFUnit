@@ -220,10 +220,15 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                 child.getTestInputMethod().getDeclaringClass(),
                 String.format(
                         "[%s] %s",
-                        child.getTestInputMethod().getMethod().getName(),
+                        getTestInputBaseName(child.getTestInputMethod()),
                         child.getTestCase().getAbrTestURI()
                 )
         );
+    }
+
+    private String getTestInputBaseName(FrameworkMethod method) {
+        final String basename = method.getAnnotation(TestInput.class).name();
+        return basename.isEmpty() ? method.getName() : basename;
     }
 
     @Override

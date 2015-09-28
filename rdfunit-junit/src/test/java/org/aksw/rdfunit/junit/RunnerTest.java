@@ -90,11 +90,6 @@ public class RunnerTest {
         assertThat(returningMockReader.getException()).isInstanceOf(RuntimeException.class);
     }
 
-    @Test
-    public void ignoredMethodIsNeverCalled() {
-        assertThat(TestRunner.ignoredTestInputMethodNotCalled).isTrue();
-    }
-
     private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
         return FluentIterable.from(mockRunListener.getFailures())
                 .filter(new Predicate<Failure>() {
@@ -105,6 +100,23 @@ public class RunnerTest {
                     }
                 })
                 .first().orNull();
+    }
+
+    @Test
+    public void ignoredMethodIsNeverCalled() {
+        assertThat(TestRunner.ignoredTestInputMethodNotCalled).isTrue();
+    }
+
+    @Test
+    public void testInputNameValueIsUsed() {
+        int size = FluentIterable.from(mockRunListener.getIgnored())
+                .filter(new Predicate<Description>() {
+                    @Override
+                    public boolean apply(Description input) {
+                        return input.getDisplayName().contains("inputs name");
+                    }
+                }).size();
+        assertThat(size).isGreaterThan(0);
     }
 
     @RunWith(RdfUnitJunitRunner.class)
@@ -154,12 +166,19 @@ public class RunnerTest {
             ignoredTestInputMethodNotCalled = false;
             return new RDFModelReader(ModelFactory.createDefaultModel());
         }
+
+        @TestInput(name = "inputs name")
+        @Ignore
+        public RDFReader ignoredTestInputWithName() {
+            return new RDFModelReader(ModelFactory.createDefaultModel());
+        }
     }
 
     private static class MockRunListener extends RunListener {
 
         private final List<Description> descriptions = new ArrayList<>();
         private final List<Failure> failures = new ArrayList<>();
+        private final List<Description> ignored = new ArrayList<>();
 
         @Override
         public void testFinished(Description description) throws Exception {
@@ -169,6 +188,15 @@ public class RunnerTest {
         @Override
         public void testFailure(Failure failure) throws Exception {
             failures.add(failure);
+        }
+
+        @Override
+        public void testIgnored(Description description) throws Exception {
+            ignored.add(description);
+        }
+
+        public List<Description> getIgnored() {
+            return ignored;
         }
 
         public List<Description> getDescriptions() {
