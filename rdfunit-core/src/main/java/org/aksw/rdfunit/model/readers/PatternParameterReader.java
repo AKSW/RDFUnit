@@ -6,7 +6,6 @@ import com.hp.hpl.jena.vocabulary.DCTerms;
 import org.aksw.rdfunit.model.impl.PatternParameterImpl;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
-import org.aksw.rdfunit.vocabulary.SHACL;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -48,7 +47,7 @@ public final class PatternParameterReader implements ElementReader<PatternParame
         }
 
         //constraint pattern
-        for (Statement smt : resource.listProperties(SHACL.defaultValue).toList()) {
+        for (Statement smt : resource.listProperties(RDFUNITv.constraintPattern).toList()) {
             parameterBuilder.setContraintPattern(smt.getObject().asLiteral().getLexicalForm());
         }
 

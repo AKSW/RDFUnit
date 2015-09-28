@@ -69,7 +69,7 @@ public final class PatternImpl implements Pattern {
                 String value = externalAnnotation.getAnnotationValue().get().toString();
                 for (Binding binding : bindings) {
                     if (value.equals("%%" + binding.getParameterId() + "%%")) {
-                        sanitizedAnnotation = new ResultAnnotationImpl.Builder(externalAnnotation.getAnnotationProperty()).setValueRDFUnit(binding.getValue()).build();
+                        sanitizedAnnotation = new ResultAnnotationImpl.Builder(externalAnnotation.getResource().get(), externalAnnotation.getAnnotationProperty()).setValueRDFUnit(binding.getValue()).build();
                     }
                 }
             }
@@ -123,6 +123,11 @@ public final class PatternImpl implements Pattern {
             }
         }
         return Optional.absent();
+    }
+
+    @Override
+    public Collection<ResultAnnotation> getResultAnnotations() {
+        return annotations;
     }
 
     public static class Builder{

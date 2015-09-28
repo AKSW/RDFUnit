@@ -13,7 +13,7 @@
 
 rutp:RDFSRANGE a rut:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
-    dcterms:description """Emulates the rdfs:range constrain and checks when range is wrongly defined"""@en ;
+    dcterms:description """Emulates the rdfs:range constrain and checks when range is wrongly defined""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?s .
                                     FILTER EXISTS {
@@ -52,7 +52,7 @@ rutp:RDFSRANGE-T1 a rut:Parameter ;
 
 rutp:RDFSRANGE-MISS a rut:Pattern ;
     dcterms:identifier "RDFSRANGE-MISS" ;
-    dcterms:description """Emulates the rdfs:range constrain and checks if the range is not defined withing the dataset"""@en ;
+    dcterms:description """Emulates the rdfs:range constrain and checks if the range is not defined withing the dataset""" ;
     rut:sparqlWherePattern """ {
                                     ?s %%P1%% ?resource.
                                     FILTER EXISTS {
@@ -81,7 +81,7 @@ rutp:RDFSRANGE-MISS-P1 a rut:Parameter ;
 
 rutp:RDFSRANGED a rut:Pattern ;
     dcterms:identifier "RDFSRANGED" ;
-    dcterms:description """Emulates the rdfs:range (datatype) constrain."""@en ;
+    dcterms:description """Emulates the rdfs:range (datatype) constrain.""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c.
                                     FILTER (DATATYPE(?c) != %%D1%%)
@@ -117,7 +117,7 @@ rutp:RDFSRANGED-D1 a rut:Parameter ;
 
 rutp:RDFSDOMAIN a rut:Pattern ;
     dcterms:identifier "RDFSDOMAIN" ;
-    dcterms:description """Checks if the rdfs:domain is wrongly defined. It can be extended by using specific values in V1"""@en ;
+    dcterms:description """Checks if the rdfs:domain is wrongly defined. It can be extended by using specific values in V1""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER EXISTS {
@@ -155,7 +155,7 @@ rutp:RDFSDOMAIN-T1 a rut:Parameter ;
 
 rutp:RDFSDOMAIN-MISS a rut:Pattern ;
     dcterms:identifier "RDFSDOMAIN-MISS" ;
-    dcterms:description """Checks if the rdfs:domain is missing. It can be extended by using specific values in V1"""@en ;
+    dcterms:description """Checks if the rdfs:domain is missing. It can be extended by using specific values in V1""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {
@@ -188,12 +188,12 @@ rutp:RDFSDOMAIN-MISS-V1 a rut:Parameter ;
 
 rutp:OWLDISJC a rut:Pattern ;
     dcterms:identifier "OWLDISJC" ;
-    dcterms:description """Emulates the owl:disjointClass constrain"""@en ;
+    dcterms:description """Emulates the owl:disjointClass constrain""" ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type/rdfs:subClassOf* %%T1%% .
                                     ?resource rdf:type/rdfs:subClassOf* %%T2%% .
                                 } """ ;
-    rut:sparqlPrevalencePattern """  """ ;
+    # rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJC-T1 ;
     rut:parameter rutp:OWLDISJC-T2 ;
     rut:resultAnnotation [
@@ -227,12 +227,12 @@ rutp:OWLDISJC-T2 a rut:Parameter ;
 
 rutp:OWLDISJP a rut:Pattern ;
     dcterms:identifier "OWLDISJP" ;
-    dcterms:description """Emulates the owl:disjointProperty constrain"""@en ;
+    dcterms:description """Emulates the owl:disjointProperty constrain""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?v .
                                     ?resource %%P2%% ?v .
                                 } """ ;
-    rut:sparqlPrevalencePattern """  """ ;
+    # rut:sparqlPrevalencePattern """  """ ;
     rut:parameter rutp:OWLDISJP-P1 ;
     rut:parameter rutp:OWLDISJP-P2 ;
     rut:resultAnnotation [
@@ -261,7 +261,7 @@ rutp:OWLDISJP-P2 a rut:Parameter ;
 
 rutp:OWLCARD a rut:Pattern ;
     dcterms:identifier "OWLCARD" ;
-    dcterms:description """Emulates the owl:cardinality constrain without a Class constraint"""@en ;
+    dcterms:description """Emulates the owl:cardinality constrain without a Class constraint""" ;
     rut:sparqlWherePattern """ {
                                  ?resource %%P1%% ?c.
                                } GROUP BY ?resource
@@ -298,7 +298,7 @@ rutp:OWLCARD-V1 a rut:Parameter ;
 
 rutp:OWLCARDT a rut:Pattern ;
     dcterms:identifier "OWLCARDT" ;
-    dcterms:description """Emulates the owl:cardinality constrain on a Class"""@en ;
+    dcterms:description """Emulates the owl:cardinality constrain on a Class""" ;
     rut:sparqlWherePattern """ {
 	                                ?resource rdf:type/rdfs:subClassOf* %%T1%%.
 	                                ?resource %%P1%% ?c.
@@ -344,7 +344,7 @@ rutp:OWLCARDT-V1 a rut:Parameter ;
 
 rutp:OWLQCARDT a rut:Pattern ;
     dcterms:identifier "OWLQCARDT" ;
-    dcterms:description """Emulates the owl:qualifiedCardinality constrain on a Class"""@en ;
+    dcterms:description """Emulates the owl:qualifiedCardinality constrain on a Class""" ;
     rut:sparqlWherePattern """ {
 	                                ?resource rdf:type/rdfs:subClassOf* %%T1%%.
 	                                ?resource %%P1%% ?c.
@@ -396,7 +396,7 @@ rutp:OWLQCARDT-T2 a rut:Parameter ;
 
 rutp:TYPRODEP a rut:Pattern ;
     dcterms:identifier "TYPRODEP" ;
-    dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence"""@en ;
+    dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence""" ;
     rut:sparqlWherePattern """ {
                                     {
 										?resource rdf:type/rdfs:subClassOf* %%T1%% .
@@ -437,7 +437,7 @@ rutp:TYPRODEP-P1 a rut:Parameter ;
 
 rutp:TYPROTYPEDEP a rut:Pattern ;
     dcterms:identifier "TYPROTYPEDEP" ;
-    dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence"""@en ;
+    dcterms:description """ A property must or must not exist in a class instance. Use 'NOT' for existence and '' for non existence""" ;
     rut:sparqlWherePattern """ {
                                     {
 										?resource rdf:type/rdfs:subClassOf* %%T1%% .
@@ -483,7 +483,7 @@ rutp:TYPROTYPEDEP-T2 a rut:Parameter ;
 
 rutp:INVFUNC a rut:Pattern ;
     dcterms:identifier "INVFUNC" ;
-    dcterms:description """ Unique value constraint of inverse functional properties """@en ;
+    dcterms:description """ Unique value constraint of inverse functional properties """ ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?object .
                                     ?resource2 %%P1%% ?object .
@@ -514,7 +514,7 @@ rutp:INVFUNC-P1 a rut:Parameter ;
 
 rutp:INVFUNCT a rut:Pattern ;
     dcterms:identifier "INVFUNCT" ;
-    dcterms:description """ Unique value constraint of inverse functional properties (constraint on a class) """@en ;
+    dcterms:description """ Unique value constraint of inverse functional properties (constraint on a class) """ ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?object ;
                                        rdf:type/rdfs:subClassOf* %%T1%% .
@@ -554,7 +554,7 @@ rutp:INVFUNCT-T1 a rut:Parameter ;
 
 rutp:OWLSYMMETRICPROP a rut:Pattern ;
     dcterms:identifier "OWLSYMMETRICPROP" ;
-    dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """@en ;
+    dcterms:description """ Given the case that a certain property p is symmetric, it is assumed that for two resources x and y being related to each other via this property, both statements a p b. and b p a. exist in the dataset """ ;
     rut:sparqlWherePattern """ {
                                     ?r1  %%P1%% ?resource .
                                     FILTER NOT EXISTS {?resource %%P1%% ?r1 } .
@@ -586,7 +586,7 @@ rutp:OWLSYMMETRICPROP-P1 a rut:Parameter ;
 
 rutp:OWLASYMMETRICPROP a rut:Pattern ;
     dcterms:identifier "OWLASYMMETRICPROP" ;
-    dcterms:description """ Given a property that is asymmetric, this pattern finds cases where it is nonetheless used as symmetric property """@en ;
+    dcterms:description """ Given a property that is asymmetric, this pattern finds cases where it is nonetheless used as symmetric property """ ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?resource .
@@ -620,7 +620,7 @@ rutp:OWLASYMMETRICPROP-P1 a rut:Parameter ;
 
 rutp:OWLTRANSPROP a rut:Pattern ;
     dcterms:identifier "OWLTRANSPROP" ;
-    dcterms:description """ Given a transitive property, this pattern finds missing statements containing the consequent transitive entailments """@en ;
+    dcterms:description """ Given a transitive property, this pattern finds missing statements containing the consequent transitive entailments """ ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?r2 .
                                     ?r2 %%P1%% ?r3 .
@@ -652,7 +652,7 @@ rutp:OWLTRANSPROP-P1 a rut:Parameter ;
 
 rutp:OWLIRREFLEXIVE a rut:Pattern ;
     dcterms:identifier "OWLIRREFLEXIVE" ;
-    dcterms:description """ Given an irreflexive property, this pattern find violating statement that nontheless use this property reflexively """@en ;
+    dcterms:description """ Given an irreflexive property, this pattern find violating statement that nontheless use this property reflexively """ ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?resource .
                                 } """ ;
@@ -682,7 +682,7 @@ rutp:OWLIRREFLEXIVE-P1 a rut:Parameter ;
 
 rutp:COMP a rut:Pattern ;
     dcterms:identifier "COMP" ;
-    dcterms:description """Comparison between two literal values in a resource"""@en ;
+    dcterms:description """Comparison between two literal values in a resource""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?beforeVal .
                                     ?resource %%P2%% ?afterVal .
@@ -727,7 +727,7 @@ rutp:COMP-OP a rut:Parameter ;
 
 rutp:MATCH a rut:Pattern ;
     dcterms:identifier "MATCH" ;
-    dcterms:description """Literal in not in a desired pattern"""@en ;
+    dcterms:description """Literal in not in a desired pattern""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?value .
                                     FILTER (%%OP%% regex(str(?value), '%%REGEX%%')) .
@@ -769,7 +769,7 @@ rutp:MATCH-REGEX a rut:Parameter ;
 
 rutp:LITRAN a rut:Pattern ;
     dcterms:identifier "LITRAN" ;
-    dcterms:description """Literal in specific range"""@en ;
+    dcterms:description """Literal in specific range""" ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type/rdfs:subClassOf* %%T1%% .
                                     ?resource %%P1%% ?value .
@@ -827,7 +827,7 @@ rutp:LITRAN-valueMax a rut:Parameter ;
 
 rutp:TYPDEP a rut:Pattern ;
     dcterms:identifier "TYPDEP" ;
-    dcterms:description """Resource is of type A and not of type B"""@en ;
+    dcterms:description """Resource is of type A and not of type B""" ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type/rdfs:subClassOf* %%T1%% .
                                     FILTER NOT EXISTS {?resource rdf:type/rdfs:subClassOf* %%T2%%}
@@ -865,7 +865,7 @@ rutp:TYPDEP-T2 a rut:Parameter ;
 
 rutp:PVT a rut:Pattern ;
     dcterms:identifier "PVT" ;
-    dcterms:description """Resources with a propertyA having valueA should contain a triple with propertyB"""@en ;
+    dcterms:description """Resources with a propertyA having valueA should contain a triple with propertyB""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%%
                                     FILTER NOT EXISTS {?resource %%P2%% ?p}
@@ -901,7 +901,7 @@ rutp:PVT-P2 a rut:Parameter ;
 
 rutp:TRIPLE a rut:Pattern ;
     dcterms:identifier "TRIPLE" ;
-    dcterms:description """Resource has ValueA for PropertyB"""@en ;
+    dcterms:description """Resource has ValueA for PropertyB""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% %%V1%% .
                                 } """ ;
@@ -937,7 +937,7 @@ rutp:TRIPLE-V1 a rut:Parameter ;
 
 rutp:TRIPLEDR a rut:Pattern ;
     dcterms:identifier "TRIPLEDR" ;
-    dcterms:description """Resource has ValueA for PropertyB"""@en ;
+    dcterms:description """Resource has ValueA for PropertyB""" ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type/rdfs:subClassOf* %%T1%% ;
                                               %%P1%% ?v .
@@ -974,7 +974,7 @@ rutp:TRIPLEDR-T2 a rut:Parameter ;
 
 rutp:OBJFUNC a rut:Pattern ;
     dcterms:identifier "OBJFUNC" ;
-    dcterms:description """The object of a triple satisfies a function"""@en ;
+    dcterms:description """The object of a triple satisfies a function""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?obj .
                                     FILTER( %%NEG%%  %%FUNC%% (?obj))
@@ -1017,7 +1017,7 @@ rutp:OBJFUNC-FUNC a rut:Parameter ;
 
 rutp:OBJFUNCD a rut:Pattern ;
     dcterms:identifier "OBJFUNCD" ;
-    dcterms:description """The object of a triple satisfies a function but the resource has specific type"""@en ;
+    dcterms:description """The object of a triple satisfies a function but the resource has specific type""" ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type|rdfs:subClassOf* %%T1%% ;
                                               %%P1%% ?obj .
@@ -1067,7 +1067,7 @@ rutp:OBJFUNCD-FUNC a rut:Parameter ;
 
 rutp:OBJVALIND a rut:Pattern ;
     dcterms:identifier "OBJVALIND" ;
-    dcterms:description """The object of a triple satisfies a function but the resource has specific type"""@en ;
+    dcterms:description """The object of a triple satisfies a function but the resource has specific type""" ;
     rut:sparqlWherePattern """ {
                                     ?resource rdf:type|rdfs:subClassOf* %%T1%% ;
                                               %%P1%% ?obj .
@@ -1117,7 +1117,7 @@ rutp:OBJVALIND-VALUES a rut:Parameter ;
 
 rutp:CHECKLANG a rut:Pattern ;
     dcterms:identifier "CHECKLANG" ;
-    dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
+    dcterms:description """Resource has more than one plain literal of a certain language assigned""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c .
                                     FILTER ( lang(?c) %%OP%% '%%V1%%')  .
@@ -1161,7 +1161,7 @@ rutp:CHECKLANG-V1 a rut:Parameter ;
 
 rutp:ONELANG a rut:Pattern ;
     dcterms:identifier "ONELANG" ;
-    dcterms:description """Resource has more than one plain literal of a certain language assigned"""@en ;
+    dcterms:description """Resource has more than one plain literal of a certain language assigned""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c1 ;
                                               %%P1%% ?c2 .
@@ -1205,7 +1205,7 @@ rutp:ONELANG-V1 a rut:Parameter ;
 
 rutp:ONELANGGLOBAL a rut:Pattern ;
     dcterms:identifier "ONELANGGLOBAL" ;
-    dcterms:description """Resource has more than one plain literal of any language assigned"""@en ;
+    dcterms:description """Resource has more than one plain literal of any language assigned""" ;
     rut:sparqlWherePattern """ {
                                     ?resource %%P1%% ?c1 ;
                                               %%P1%% ?c2 .

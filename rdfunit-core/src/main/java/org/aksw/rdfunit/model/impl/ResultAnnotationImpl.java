@@ -84,14 +84,8 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
 
         public Builder(Resource element, Property property) {
 
-            checkNotNull(property);
-
-            this.element = element;
-            this.property = property;
-        }
-
-        public Builder(Property property) {
-            this(null, property);
+            this.element = checkNotNull(element);
+            this.property = checkNotNull(property);
         }
 
         public Builder(String propertyIri) {

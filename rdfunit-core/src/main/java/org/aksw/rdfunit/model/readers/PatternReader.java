@@ -58,7 +58,7 @@ public final class PatternReader implements ElementReader<Pattern> {
         count = 0;
         for (Statement smt : resource.listProperties(DCTerms.identifier).toList()) {
             checkArgument(++count == 1, "Cannot have more than one identifier in Pattern %s", resource.getURI());
-            patternBuilder.setId(smt.getObject().asLiteral().getString());
+            patternBuilder.setId(smt.getObject().asLiteral().getLexicalForm());
         }
 
         // description

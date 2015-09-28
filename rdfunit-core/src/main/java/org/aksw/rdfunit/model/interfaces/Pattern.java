@@ -81,5 +81,7 @@ public interface Pattern extends Element{
      */
     Optional<PatternParameter> getParameter(String parameterURI);
 
+    Collection<ResultAnnotation> getResultAnnotations();
+
 
 }
