@@ -23,6 +23,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 9/26/15 1:23 PM
+ * @version $Id: $Id
  */
 public class TestGeneratorTCInstantiator {
 
@@ -32,11 +33,22 @@ public class TestGeneratorTCInstantiator {
     private final Collection<TestGenerator> testGenerators;
     private final SchemaSource source;
 
+    /**
+     * <p>Constructor for TestGeneratorTCInstantiator.</p>
+     *
+     * @param testGenerators a {@link java.util.Collection} object.
+     * @param source a {@link org.aksw.rdfunit.sources.SchemaSource} object.
+     */
     public TestGeneratorTCInstantiator(Collection<TestGenerator> testGenerators, SchemaSource source) {
         this.testGenerators = testGenerators;
         this.source = source;
     }
 
+    /**
+     * <p>generate.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<TestCase> generate() {
 
 

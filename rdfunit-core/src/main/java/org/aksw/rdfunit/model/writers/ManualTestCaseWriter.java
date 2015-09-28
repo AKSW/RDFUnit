@@ -21,6 +21,12 @@ final class ManualTestCaseWriter implements ElementWriter {
         this.manualTC = manualTC;
     }
 
+    /**
+     * <p>createManualTestCaseWriter.</p>
+     *
+     * @param manualTC a {@link org.aksw.rdfunit.model.impl.ManualTestCaseImpl} object.
+     * @return a {@link org.aksw.rdfunit.model.writers.ManualTestCaseWriter} object.
+     */
     public static ManualTestCaseWriter createManualTestCaseWriter(ManualTestCaseImpl manualTC) {return new ManualTestCaseWriter(manualTC);}
 
     /** {@inheritDoc} */

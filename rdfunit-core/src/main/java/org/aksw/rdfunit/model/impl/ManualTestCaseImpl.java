@@ -16,6 +16,14 @@ public class ManualTestCaseImpl extends AbstractTestCaseImpl implements TestCase
     private final String sparqlWhere;
     private final String sparqlPrevalence;
 
+    /**
+     * <p>Constructor for ManualTestCaseImpl.</p>
+     *
+     * @param tcResource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
+     * @param sparqlWhere a {@link java.lang.String} object.
+     * @param sparqlPrevalence a {@link java.lang.String} object.
+     */
     public ManualTestCaseImpl(Resource tcResource, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) {
         super(tcResource, annotation);
         this.sparqlWhere = sparqlWhere;

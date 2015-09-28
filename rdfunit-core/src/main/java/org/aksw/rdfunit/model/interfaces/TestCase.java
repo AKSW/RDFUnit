@@ -77,6 +77,11 @@ public interface TestCase extends Element{
      */
     String getAbrTestURI();
 
+    /**
+     * <p>getTestCaseAnnotation.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
+     */
     TestCaseAnnotation getTestCaseAnnotation();
 
 

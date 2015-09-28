@@ -29,7 +29,8 @@ public final class BindingReader implements ElementReader<Binding> {
     /**
      * <p>create.</p>
      *
-     * @return a {@link BindingReader} object.
+     * @return a {@link org.aksw.rdfunit.model.readers.BindingReader} object.
+     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      */
     public static BindingReader create(Pattern pattern) { return new BindingReader(pattern);}
 

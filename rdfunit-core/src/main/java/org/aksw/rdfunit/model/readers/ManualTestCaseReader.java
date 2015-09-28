@@ -24,7 +24,7 @@ public final class ManualTestCaseReader implements ElementReader<TestCase> {
     /**
      * <p>create.</p>
      *
-     * @return a {@link ManualTestCaseReader} object.
+     * @return a {@link org.aksw.rdfunit.model.readers.ManualTestCaseReader} object.
      */
     public static ManualTestCaseReader create() { return new ManualTestCaseReader();}
 

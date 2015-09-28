@@ -68,11 +68,17 @@ public final class RDFUNITv {
     /** Constant <code>sparqlPrevalence</code> */
     public static final Property sparqlPrevalence = property("sparqlPrevalence");
 
+    /** Constant <code>appliesTo</code> */
     public static final Property appliesTo = property("appliesTo");
+    /** Constant <code>generated</code> */
     public static final Property generated = property("generated");
+    /** Constant <code>source</code> */
     public static final Property source = property("source");
+    /** Constant <code>testCaseLogLevel</code> */
     public static final Property testCaseLogLevel = property("testCaseLogLevel");
+    /** Constant <code>testGenerator</code> */
     public static final Property testGenerator = property("testGenerator");
+    /** Constant <code>references</code> */
     public static final Property references = property("references");
 
     private RDFUNITv() {

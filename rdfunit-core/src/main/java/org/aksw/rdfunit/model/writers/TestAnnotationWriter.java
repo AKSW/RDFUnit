@@ -23,6 +23,12 @@ public final class TestAnnotationWriter implements ElementWriter {
         this.tcAnnotation = tcAnnotation;
     }
 
+    /**
+     * <p>createTestCaseAnnotationWriter.</p>
+     *
+     * @param tcAnnotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
+     * @return a {@link org.aksw.rdfunit.model.writers.TestAnnotationWriter} object.
+     */
     public static TestAnnotationWriter createTestCaseAnnotationWriter(TestCaseAnnotation tcAnnotation) {return new TestAnnotationWriter(tcAnnotation);}
 
     /** {@inheritDoc} */

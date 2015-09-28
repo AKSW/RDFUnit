@@ -30,7 +30,7 @@ public final class PatternBasedTestCaseReader implements ElementReader<TestCase>
     /**
      * <p>create.</p>
      *
-     * @return a {@link PatternBasedTestCaseReader} object.
+     * @return a {@link org.aksw.rdfunit.model.readers.PatternBasedTestCaseReader} object.
      */
     public static PatternBasedTestCaseReader create() { return new PatternBasedTestCaseReader();}
 

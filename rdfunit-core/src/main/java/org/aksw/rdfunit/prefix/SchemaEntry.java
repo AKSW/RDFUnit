@@ -78,11 +78,13 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
         return vocabularyDefinedBy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hashCode(prefix, vocabularyURI, vocabularyNamespace, vocabularyDefinedBy);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -98,6 +100,7 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
                 && Objects.equal(this.vocabularyDefinedBy, other.vocabularyDefinedBy);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "SchemaEntry{" +

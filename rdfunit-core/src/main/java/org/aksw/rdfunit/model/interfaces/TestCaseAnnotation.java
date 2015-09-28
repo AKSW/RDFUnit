@@ -16,6 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * <p>TestCaseAnnotation class.</p>
  * TODO: make this an interface and move to Impl
+ *
  * @author Dimitris Kontokostas
  *         Description
  * @since 1/3/14 3:40 PM
@@ -36,15 +37,15 @@ public class TestCaseAnnotation implements Element {
     /**
      * <p>Constructor for TestCaseAnnotation.</p>
      *
-     * @param resource
-     * @param generated a {@link TestGenerationType} object.
-     * @param autoGeneratorURI a {@link String} object.
-     * @param appliesTo a {@link TestAppliesTo} object.
-     * @param sourceUri a {@link String} object.
-     * @param references a {@link Collection} object.
-     * @param description a {@link String} object.
-     * @param testCaseLogLevel a {@link RLOGLevel} object.
-     * @param resultAnnotations a {@link Collection} object.
+     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param generated a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
+     * @param autoGeneratorURI a {@link java.lang.String} object.
+     * @param appliesTo a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.
+     * @param sourceUri a {@link java.lang.String} object.
+     * @param references a {@link java.util.Collection} object.
+     * @param description a {@link java.lang.String} object.
+     * @param testCaseLogLevel a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
+     * @param resultAnnotations a {@link java.util.Collection} object.
      */
     public TestCaseAnnotation(Resource resource, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
         this.resource = checkNotNull(resource);
@@ -183,6 +184,7 @@ public class TestCaseAnnotation implements Element {
         return description;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return Optional.fromNullable(resource);

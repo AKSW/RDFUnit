@@ -39,6 +39,11 @@ public interface TestGenerator extends Element {
      */
     Pattern getTAGPattern();
 
+    /**
+     * <p>getTAGAnnotations.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     Collection<ResultAnnotation> getTAGAnnotations();
 
     /**

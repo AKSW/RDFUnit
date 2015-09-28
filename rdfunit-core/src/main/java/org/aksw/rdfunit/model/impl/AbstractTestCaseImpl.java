@@ -25,6 +25,12 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     protected final Resource tcResource;
     protected final TestCaseAnnotation annotation;
 
+    /**
+     * <p>Constructor for AbstractTestCaseImpl.</p>
+     *
+     * @param tcResource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
+     */
     public AbstractTestCaseImpl(Resource tcResource, TestCaseAnnotation annotation) {
         this.tcResource = tcResource;
         this.annotation = annotation;
@@ -146,11 +152,13 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
         return this.getTestURI();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return Optional.fromNullable(tcResource);
     }
 
+    /** {@inheritDoc} */
     @Override
     public TestCaseAnnotation getTestCaseAnnotation() {
         return annotation;

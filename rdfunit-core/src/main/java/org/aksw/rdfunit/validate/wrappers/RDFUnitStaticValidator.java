@@ -40,7 +40,7 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>getTestSuite.</p>
      *
-     * @return a {@link TestSuite} object.
+     * @return a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
      */
     public static TestSuite getTestSuite() {
         return testSuiteGenerator.getTestSuite();
@@ -136,7 +136,7 @@ public final class RDFUnitStaticValidator {
      *
      * @param testCaseExecutionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param testSource a {@link org.aksw.rdfunit.sources.TestSource} object.
-     * @param testSuite a {@link TestSuite} object.
+     * @param testSuite a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {

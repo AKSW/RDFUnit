@@ -126,6 +126,7 @@ public final class TestGeneratorImpl implements TestGenerator {
         return pattern;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Collection<ResultAnnotation> getTAGAnnotations() {
         return generatorAnnotations;

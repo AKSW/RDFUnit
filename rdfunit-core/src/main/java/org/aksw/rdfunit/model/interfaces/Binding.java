@@ -15,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * <p>Binding class.</p>
  * TODO: make this an interface and move to Impl
+ *
  * @author Dimitris Kontokostas
  *         Holds a parameter binding between a pattern parameter and a test instance
  * @since 9/30/13 8:28 AM
@@ -28,10 +29,9 @@ public class Binding implements Element {
     /**
      * <p>Constructor for Binding.</p>
      *
-     *
-     * @param resource
-     * @param parameter a {@link PatternParameter} object.
-     * @param value a {@link RDFNode} object.
+     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
+     * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
      * @throws org.aksw.rdfunit.exceptions.BindingException if any.
      */
     public Binding(Resource resource, PatternParameter parameter, RDFNode value) {
@@ -85,6 +85,11 @@ public class Binding implements Element {
     }
 
 
+    /**
+     * <p>Getter for the field <code>parameter</code>.</p>
+     *
+     * @return a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
+     */
     public PatternParameter getParameter() {
         return parameter;
     }
@@ -129,6 +134,7 @@ public class Binding implements Element {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<Resource> getResource() {
         return Optional.fromNullable(resource);

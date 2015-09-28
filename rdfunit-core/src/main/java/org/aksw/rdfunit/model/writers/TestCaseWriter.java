@@ -21,6 +21,12 @@ public final class TestCaseWriter implements ElementWriter {
         this.testCase = testCase;
     }
 
+    /**
+     * <p>createTestCaseWriter.</p>
+     *
+     * @param testCase a {@link org.aksw.rdfunit.model.interfaces.TestCase} object.
+     * @return a {@link org.aksw.rdfunit.model.writers.TestCaseWriter} object.
+     */
     public static TestCaseWriter createTestCaseWriter(TestCase testCase) {return new TestCaseWriter(testCase);}
 
     /** {@inheritDoc} */

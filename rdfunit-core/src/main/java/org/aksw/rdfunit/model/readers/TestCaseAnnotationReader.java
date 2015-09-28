@@ -30,7 +30,7 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
     /**
      * <p>create.</p>
      *
-     * @return a {@link TestCaseAnnotationReader} object.
+     * @return a {@link org.aksw.rdfunit.model.readers.TestCaseAnnotationReader} object.
      */
     public static TestCaseAnnotationReader create() { return new TestCaseAnnotationReader();}
 

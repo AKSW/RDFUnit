@@ -82,7 +82,7 @@ public class TestGeneratorExecutor {
      * @param testFolder a {@link java.lang.String} object.
      * @param dataset a {@link org.aksw.rdfunit.sources.Source} object.
      * @param autoGenerators a {@link java.util.Collection} object.
-     * @return a {@link TestSuite} object.
+     * @return a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
      */
     public TestSuite generateTestSuite(String testFolder, TestSource dataset, Collection<TestGenerator> autoGenerators) {
 

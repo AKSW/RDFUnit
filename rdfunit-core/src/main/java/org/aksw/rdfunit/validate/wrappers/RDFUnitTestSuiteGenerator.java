@@ -44,7 +44,7 @@ public final class RDFUnitTestSuiteGenerator {
     /**
      * <p>Getter for the field <code>testSuite</code>.</p>
      *
-     * @return a {@link TestSuite} object.
+     * @return a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
      */
     public TestSuite getTestSuite() {
         if (testSuite == null) {

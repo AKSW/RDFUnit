@@ -22,6 +22,12 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
         this.patternBasedTestCase = patternBasedTestCase;
     }
 
+    /**
+     * <p>createPatternBasedTestCaseWriter.</p>
+     *
+     * @param patternBasedTestCase a {@link org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl} object.
+     * @return a {@link org.aksw.rdfunit.model.writers.PatternBasedTestCaseWriter} object.
+     */
     public static PatternBasedTestCaseWriter createPatternBasedTestCaseWriter(PatternBasedTestCaseImpl patternBasedTestCase) {return new PatternBasedTestCaseWriter(patternBasedTestCase);}
 
     /** {@inheritDoc} */

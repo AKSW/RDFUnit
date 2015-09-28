@@ -41,6 +41,9 @@ public final class LOVEndpoint {
             "} \n" +
             "ORDER BY ?vocabPrefix ";
 
+    /**
+     * <p>Constructor for LOVEndpoint.</p>
+     */
     public LOVEndpoint(){}
 
 
@@ -81,6 +84,11 @@ public final class LOVEndpoint {
         return lovEntries;
     }
 
+    /**
+     * <p>writeAllLOVEntriesToFile.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public void writeAllLOVEntriesToFile(String filename)  {
 
         List<SchemaEntry> lovEntries = getAllLOVEntries();
