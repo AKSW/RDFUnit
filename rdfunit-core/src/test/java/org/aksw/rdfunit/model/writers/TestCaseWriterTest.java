@@ -5,7 +5,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.TestCaseBatchReader;
 import org.aksw.rdfunit.resources.ManualTestResources;
@@ -70,11 +69,11 @@ public class TestCaseWriterTest {
             TestCaseWriter.createTestCaseWriter(tc).write(modelWritten);
         }
 
-        Model difference = inputModel.difference(modelWritten);
-
-        new RDFFileWriter("tmp" + label.replace("/", "_") + ".in.ttl", "TTL").write(inputModel);
-        new RDFFileWriter("tmp" + label.replace("/", "_") + ".out.ttl", "TTL").write(modelWritten);
-        new RDFFileWriter("tmp" + label.replace("/", "_") + ".diff.ttl", "TTL").write(difference);
+        // See the difference...
+        //Model difference = inputModel.difference(modelWritten);
+        //new RDFFileWriter("tmp" + label.replace("/", "_") + ".in.ttl", "TTL").write(inputModel);
+        //new RDFFileWriter("tmp" + label.replace("/", "_") + ".out.ttl", "TTL").write(modelWritten);
+        //new RDFFileWriter("tmp" + label.replace("/", "_") + ".diff.ttl", "TTL").write(difference);
 
         assertThat(inputModel.isIsomorphicWith(modelWritten)).isTrue();
     }
