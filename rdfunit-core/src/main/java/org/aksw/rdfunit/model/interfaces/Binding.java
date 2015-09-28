@@ -1,14 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
 import com.google.common.base.Optional;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
-import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -92,20 +87,6 @@ public class Binding implements Element {
      */
     public PatternParameter getParameter() {
         return parameter;
-    }
-
-    /**
-     * <p>writeToModel.</p>
-     *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
-     */
-    public Resource writeToModel(Model model) {
-        return model.createResource()
-                .addProperty(RDF.type, RDFUNITv.Binding)
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:parameter")), model.createResource(parameter.getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:bindingValue")), value);
-
     }
 
     private boolean validateType() {

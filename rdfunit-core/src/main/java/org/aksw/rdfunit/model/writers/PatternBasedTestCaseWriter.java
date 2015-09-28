@@ -41,7 +41,8 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
                 .addProperty(RDFUNITv.basedOnPattern,  ElementWriterUtils.copyElementResourceInModel(patternBasedTestCase.getPattern(), model));
 
         for (Binding binding : patternBasedTestCase.getBindings()) {
-            resource.addProperty(RDFUNITv.binding, binding.writeToModel(model));
+            Resource bindingResource = BindingWriter.createBindingWriter(binding).write(model);
+            resource.addProperty(RDFUNITv.binding, bindingResource);
         }
 
         TestAnnotationWriter.createTestCaseAnnotationWriter(patternBasedTestCase.getTestCaseAnnotation()).write(model);
