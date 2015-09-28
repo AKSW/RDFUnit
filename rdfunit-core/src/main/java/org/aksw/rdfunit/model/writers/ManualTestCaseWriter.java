@@ -13,7 +13,7 @@ import org.aksw.rdfunit.vocabulary.RDFUNITv;
  * @since 6/17/15 5:57 PM
  * @version $Id: $Id
  */
-public final class ManualTestCaseWriter implements ElementWriter {
+final class ManualTestCaseWriter implements ElementWriter {
 
     private final ManualTestCaseImpl manualTC;
 

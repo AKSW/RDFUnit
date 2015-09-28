@@ -14,7 +14,7 @@ import org.aksw.rdfunit.vocabulary.RDFUNITv;
  * @since 6/17/15 5:57 PM
  * @version $Id: $Id
  */
-public final class PatternBasedTestCaseWriter implements ElementWriter {
+final class PatternBasedTestCaseWriter implements ElementWriter {
 
     private final PatternBasedTestCaseImpl patternBasedTestCase;
 
