@@ -24,12 +24,12 @@ public final class TestAnnotationWriter implements ElementWriter {
     }
 
     /**
-     * <p>createTestCaseAnnotationWriter.</p>
+     * <p>create.</p>
      *
      * @param tcAnnotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
      * @return a {@link org.aksw.rdfunit.model.writers.TestAnnotationWriter} object.
      */
-    public static TestAnnotationWriter createTestCaseAnnotationWriter(TestCaseAnnotation tcAnnotation) {return new TestAnnotationWriter(tcAnnotation);}
+    public static TestAnnotationWriter create(TestCaseAnnotation tcAnnotation) {return new TestAnnotationWriter(tcAnnotation);}
 
     /** {@inheritDoc} */
     @Override
@@ -52,12 +52,12 @@ public final class TestAnnotationWriter implements ElementWriter {
         }
 
         for (ResultAnnotation annotation : tcAnnotation.getResultAnnotations()) {
-            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write(model);
+            Resource annRes = ResultAnnotationWriter.create(annotation).write(model);
             resource.addProperty(RDFUNITv.resultAnnotation, annRes);
         }
 
         for (ResultAnnotation annotation : tcAnnotation.getVariableAnnotations()) {
-            Resource annRes = ResultAnnotationWriter.createResultAnnotationWriter(annotation).write(model);
+            Resource annRes = ResultAnnotationWriter.create(annotation).write(model);
             resource.addProperty(RDFUNITv.resultAnnotation, annRes);
         }
 

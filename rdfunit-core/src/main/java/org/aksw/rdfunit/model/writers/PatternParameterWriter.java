@@ -22,7 +22,7 @@ public final class PatternParameterWriter implements ElementWriter {
         this.patternParameter = patternParameter;
     }
 
-    public static PatternParameterWriter createPatternParameterWriter(PatternParameter patternParameter) {return new PatternParameterWriter(patternParameter);}
+    public static PatternParameterWriter create(PatternParameter patternParameter) {return new PatternParameterWriter(patternParameter);}
 
     /** {@inheritDoc} */
     @Override

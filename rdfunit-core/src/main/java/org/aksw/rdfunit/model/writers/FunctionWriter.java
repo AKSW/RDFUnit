@@ -23,7 +23,7 @@ public final class FunctionWriter implements ElementWriter {
     }
 
     /**
-     * <p>createArgumentWriter.</p>
+     * <p>create.</p>
      *
      * @param function a {@link org.aksw.rdfunit.model.interfaces.Function} object.
      * @return a {@link org.aksw.rdfunit.model.writers.FunctionWriter} object.

@@ -152,7 +152,7 @@ public class ValidateCLI {
             Model model = ModelFactory.createDefaultModel();
             PrefixNSService.setNSPrefixesInModel(model);
             for (TestCase ut : testSuite.getTestCases()) {
-                TestCaseWriter.createTestCaseWriter(ut).write(model);
+                TestCaseWriter.create(ut).write(model);
             }
 
             TestCoverageEvaluator tce = new TestCoverageEvaluator();

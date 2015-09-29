@@ -22,12 +22,12 @@ public final class BindingWriter implements ElementWriter {
     }
 
     /**
-     * <p>createBindingWriter.</p>
+     * <p>create.</p>
      *
      * @param binding a {@link org.aksw.rdfunit.model.interfaces.Binding} object.
      * @return a {@link org.aksw.rdfunit.model.writers.BindingWriter} object.
      */
-    public static BindingWriter createBindingWriter(Binding binding) {return new BindingWriter(binding);}
+    public static BindingWriter create(Binding binding) {return new BindingWriter(binding);}
 
     /** {@inheritDoc} */
     @Override

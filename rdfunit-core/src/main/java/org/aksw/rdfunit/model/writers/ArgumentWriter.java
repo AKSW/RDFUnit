@@ -27,12 +27,12 @@ public final class ArgumentWriter implements ElementWriter {
     }
 
     /**
-     * <p>createArgumentWriter.</p>
+     * <p>create.</p>
      *
      * @param argument a {@link org.aksw.rdfunit.model.interfaces.Argument} object.
      * @return a {@link org.aksw.rdfunit.model.writers.ArgumentWriter} object.
      */
-    public static ArgumentWriter createArgumentWriter(Argument argument) {return new ArgumentWriter(argument);}
+    public static ArgumentWriter create(Argument argument) {return new ArgumentWriter(argument);}
 
     /** {@inheritDoc} */
     @Override

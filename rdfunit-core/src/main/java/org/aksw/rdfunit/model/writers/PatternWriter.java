@@ -24,7 +24,7 @@ public final class PatternWriter implements ElementWriter {
         this.pattern = pattern;
     }
 
-    public static PatternWriter createPatternWriter(Pattern pattern) {return new PatternWriter(pattern);}
+    public static PatternWriter create(Pattern pattern) {return new PatternWriter(pattern);}
 
     /** {@inheritDoc} */
     @Override
@@ -42,12 +42,12 @@ public final class PatternWriter implements ElementWriter {
         }
 
         for (PatternParameter patternParameter: pattern.getParameters()) {
-            Resource parameter = PatternParameterWriter.createPatternParameterWriter(patternParameter).write(model);
+            Resource parameter = PatternParameterWriter.create(patternParameter).write(model);
             resource.addProperty(RDFUNITv.parameter, parameter);
         }
 
         for (ResultAnnotation resultAnnotation: pattern.getResultAnnotations()) {
-            Resource annotationResource = ResultAnnotationWriter.createResultAnnotationWriter(resultAnnotation).write(model);
+            Resource annotationResource = ResultAnnotationWriter.create(resultAnnotation).write(model);
             resource.addProperty(RDFUNITv.resultAnnotation, annotationResource);
         }
 

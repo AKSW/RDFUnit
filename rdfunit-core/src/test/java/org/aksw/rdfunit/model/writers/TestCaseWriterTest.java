@@ -66,7 +66,7 @@ public class TestCaseWriterTest {
 
         Model modelWritten = ModelFactory.createDefaultModel();
         for (TestCase tc : testCaseCollection) {
-            TestCaseWriter.createTestCaseWriter(tc).write(modelWritten);
+            TestCaseWriter.create(tc).write(modelWritten);
         }
 
         // See the difference...

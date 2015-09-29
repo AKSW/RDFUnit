@@ -68,7 +68,7 @@ public final class TestUtils {
     public static void writeTestsToFile(Collection<TestCase> tests, RDFWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests) {
-            TestCaseWriter.createTestCaseWriter(t).write(model);
+            TestCaseWriter.create(t).write(model);
         }
         try {
             org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);

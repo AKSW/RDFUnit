@@ -29,7 +29,7 @@ public class PatternWriterTest {
 
         Model outputModel = ModelFactory.createDefaultModel();
         for (Pattern pattern: patterns) {
-            PatternWriter.createPatternWriter(pattern).write(outputModel);
+            PatternWriter.create(pattern).write(outputModel);
         }
 
         //Model difference = inputModel.difference(outputModel);

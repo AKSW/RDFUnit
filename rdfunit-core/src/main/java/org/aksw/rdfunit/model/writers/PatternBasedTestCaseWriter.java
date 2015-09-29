@@ -23,12 +23,12 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
     }
 
     /**
-     * <p>createPatternBasedTestCaseWriter.</p>
+     * <p>create.</p>
      *
      * @param patternBasedTestCase a {@link org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl} object.
      * @return a {@link org.aksw.rdfunit.model.writers.PatternBasedTestCaseWriter} object.
      */
-    public static PatternBasedTestCaseWriter createPatternBasedTestCaseWriter(PatternBasedTestCaseImpl patternBasedTestCase) {return new PatternBasedTestCaseWriter(patternBasedTestCase);}
+    public static PatternBasedTestCaseWriter create(PatternBasedTestCaseImpl patternBasedTestCase) {return new PatternBasedTestCaseWriter(patternBasedTestCase);}
 
     /** {@inheritDoc} */
     @Override
@@ -41,11 +41,11 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
                 .addProperty(RDFUNITv.basedOnPattern,  ElementWriterUtils.copyElementResourceInModel(patternBasedTestCase.getPattern(), model));
 
         for (Binding binding : patternBasedTestCase.getBindings()) {
-            Resource bindingResource = BindingWriter.createBindingWriter(binding).write(model);
+            Resource bindingResource = BindingWriter.create(binding).write(model);
             resource.addProperty(RDFUNITv.binding, bindingResource);
         }
 
-        TestAnnotationWriter.createTestCaseAnnotationWriter(patternBasedTestCase.getTestCaseAnnotation()).write(model);
+        TestAnnotationWriter.create(patternBasedTestCase.getTestCaseAnnotation()).write(model);
 
 
         return resource;

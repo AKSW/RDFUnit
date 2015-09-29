@@ -15,31 +15,31 @@ import org.aksw.rdfunit.vocabulary.RDFUNITv;
  */
 final class ManualTestCaseWriter implements ElementWriter {
 
-    private final ManualTestCaseImpl manualTC;
+    private final ManualTestCaseImpl manualTestCase;
 
-    private ManualTestCaseWriter(ManualTestCaseImpl manualTC) {
-        this.manualTC = manualTC;
+    private ManualTestCaseWriter(ManualTestCaseImpl manualTestCase) {
+        this.manualTestCase = manualTestCase;
     }
 
     /**
-     * <p>createManualTestCaseWriter.</p>
+     * <p>create.</p>
      *
      * @param manualTC a {@link org.aksw.rdfunit.model.impl.ManualTestCaseImpl} object.
      * @return a {@link org.aksw.rdfunit.model.writers.ManualTestCaseWriter} object.
      */
-    public static ManualTestCaseWriter createManualTestCaseWriter(ManualTestCaseImpl manualTC) {return new ManualTestCaseWriter(manualTC);}
+    public static ManualTestCaseWriter create(ManualTestCaseImpl manualTC) {return new ManualTestCaseWriter(manualTC);}
 
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(manualTC, model);
+        Resource resource = ElementWriterUtils.copyElementResourceInModel(manualTestCase, model);
 
         resource
                 .addProperty(RDF.type, RDFUNITv.ManualTestCase)
-                .addProperty(RDFUNITv.sparqlWhere, manualTC.getSparqlWhere())
-                .addProperty(RDFUNITv.sparqlPrevalence, manualTC.getSparqlPrevalence());
+                .addProperty(RDFUNITv.sparqlWhere, manualTestCase.getSparqlWhere())
+                .addProperty(RDFUNITv.sparqlPrevalence, manualTestCase.getSparqlPrevalence());
 
-        TestAnnotationWriter.createTestCaseAnnotationWriter(manualTC.getTestCaseAnnotation()).write(model);
+        TestAnnotationWriter.create(manualTestCase.getTestCaseAnnotation()).write(model);
 
         return resource;
     }

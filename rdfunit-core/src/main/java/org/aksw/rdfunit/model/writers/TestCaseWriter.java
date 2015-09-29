@@ -22,23 +22,23 @@ public final class TestCaseWriter implements ElementWriter {
     }
 
     /**
-     * <p>createTestCaseWriter.</p>
+     * <p>create.</p>
      *
      * @param testCase a {@link org.aksw.rdfunit.model.interfaces.TestCase} object.
      * @return a {@link org.aksw.rdfunit.model.writers.TestCaseWriter} object.
      */
-    public static TestCaseWriter createTestCaseWriter(TestCase testCase) {return new TestCaseWriter(testCase);}
+    public static TestCaseWriter create(TestCase testCase) {return new TestCaseWriter(testCase);}
 
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
 
         if (testCase instanceof ManualTestCaseImpl) {
-            return ManualTestCaseWriter.createManualTestCaseWriter( (ManualTestCaseImpl) testCase).write(model);
+            return ManualTestCaseWriter.create((ManualTestCaseImpl) testCase).write(model);
         }
 
         if (testCase instanceof PatternBasedTestCaseImpl) {
-            return PatternBasedTestCaseWriter.createPatternBasedTestCaseWriter((PatternBasedTestCaseImpl) testCase).write(model);
+            return PatternBasedTestCaseWriter.create((PatternBasedTestCaseImpl) testCase).write(model);
         }
 
         throw new RuntimeException("Writer of test case not implemented: " + testCase.toString());

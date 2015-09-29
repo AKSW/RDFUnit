@@ -34,12 +34,12 @@ public final class ResultAnnotationWriter implements ElementWriter {
     }
 
     /**
-     * <p>createResultAnnotationWriter.</p>
+     * <p>create.</p>
      *
      * @param resultAnnotation a {@link org.aksw.rdfunit.model.interfaces.ResultAnnotation} object.
      * @return a {@link org.aksw.rdfunit.model.writers.ResultAnnotationWriter} object.
      */
-    public static ResultAnnotationWriter createResultAnnotationWriter(ResultAnnotation resultAnnotation) { return createResultAnnotationWriterRut(resultAnnotation); }
+    public static ResultAnnotationWriter create(ResultAnnotation resultAnnotation) { return createResultAnnotationWriterRut(resultAnnotation); }
     /**
      * <p>createResultAnnotationWriterRut.</p>
      *
