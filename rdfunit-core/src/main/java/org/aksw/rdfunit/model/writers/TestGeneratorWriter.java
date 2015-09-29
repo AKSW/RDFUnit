@@ -23,6 +23,12 @@ public final class TestGeneratorWriter implements ElementWriter {
         this.testGenerator = testGenerator;
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param testGenerator a {@link org.aksw.rdfunit.model.interfaces.TestGenerator} object.
+     * @return a {@link org.aksw.rdfunit.model.writers.TestGeneratorWriter} object.
+     */
     public static TestGeneratorWriter create(TestGenerator testGenerator) {return new TestGeneratorWriter(testGenerator);}
 
     /** {@inheritDoc} */

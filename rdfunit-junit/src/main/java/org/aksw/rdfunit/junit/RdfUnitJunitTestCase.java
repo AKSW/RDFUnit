@@ -53,6 +53,9 @@ final class RdfUnitJunitTestCase {
         return this.rdfUnitJunitTestCaseDataProvider.getTestInputModel();
     }
 
+    /**
+     * <p>prepareForExecution.</p>
+     */
     public void prepareForExecution() {
         try {
             this.rdfUnitJunitTestCaseDataProvider.initialize();

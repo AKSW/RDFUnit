@@ -81,6 +81,11 @@ public interface Pattern extends Element{
      */
     Optional<PatternParameter> getParameter(String parameterURI);
 
+    /**
+     * <p>getResultAnnotations.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     Collection<ResultAnnotation> getResultAnnotations();
 
 

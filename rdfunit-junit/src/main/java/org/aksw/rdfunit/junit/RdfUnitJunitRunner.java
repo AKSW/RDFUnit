@@ -1,10 +1,5 @@
 package org.aksw.rdfunit.junit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
@@ -18,6 +13,11 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 
@@ -53,9 +53,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         generateRdfUnitTestCases();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
@@ -203,17 +201,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return additionalData;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected List<RdfUnitJunitTestCase> getChildren() {
         return Collections.unmodifiableList(testCases);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected Description describeChild(RdfUnitJunitTestCase child) {
         return Description.createTestDescription(
@@ -231,14 +225,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return basename.isEmpty() ? method.getName() : basename;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isIgnored(RdfUnitJunitTestCase child) {
         return child.getTestInputMethod().getAnnotation(Ignore.class) != null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
         if(isIgnored(child)) {

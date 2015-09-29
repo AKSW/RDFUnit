@@ -22,6 +22,12 @@ public final class PatternParameterWriter implements ElementWriter {
         this.patternParameter = patternParameter;
     }
 
+    /**
+     * <p>create.</p>
+     *
+     * @param patternParameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
+     * @return a {@link org.aksw.rdfunit.model.writers.PatternParameterWriter} object.
+     */
     public static PatternParameterWriter create(PatternParameter patternParameter) {return new PatternParameterWriter(patternParameter);}
 
     /** {@inheritDoc} */

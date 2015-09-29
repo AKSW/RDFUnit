@@ -125,6 +125,7 @@ public final class PatternImpl implements Pattern {
         return Optional.absent();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Collection<ResultAnnotation> getResultAnnotations() {
         return annotations;
