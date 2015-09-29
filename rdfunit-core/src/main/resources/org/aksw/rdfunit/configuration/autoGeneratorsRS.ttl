@@ -15,7 +15,7 @@
 # OSLC oslc:range (a single range)
 # Class range wrongly defined (single range)
 rutg:OSLCRANGEC a rut:TestGenerator ;
-    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)""" ;
     rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
 								?s a oslc:ResourceShape ;
                                    oslc:describes ?class ; # we work only on typed classes
@@ -40,7 +40,7 @@ rutg:OSLCRANGEC a rut:TestGenerator ;
 
 # Class range missing (single range)
 rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
-    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is missing)"""@en ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is missing)""" ;
     rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
                                 ?s a oslc:ResourceShape ;
 	                               oslc:describes ?class ; # we work only on typed classes
@@ -66,7 +66,7 @@ rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
 
 # OSLC oslc:valueShape (still like range on typed shapes)
 rutg:OSLCVALUESHAPE a rut:TestGenerator ;
-    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)""" ;
     rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
 								?s a oslc:ResourceShape ;
                                    oslc:describes ?class ; # we work only on typed classes
@@ -95,7 +95,7 @@ rutg:OSLCVALUESHAPE a rut:TestGenerator ;
 # oslc:Exactly-one / oslc:One-or-many (must exist at least once)
 
 rutg:OSLCCARDEX a rut:TestGenerator ;
-    dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once"""@en ;
+    dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
 							 ?s a oslc:ResourceShape ;
                                 oslc:describes ?T1 ; # we work only on typed classes
@@ -113,7 +113,7 @@ rutg:OSLCCARDEX a rut:TestGenerator ;
 
 #oslc:Exactly-one (ensure only one)
 rutg:OSLCCARD a rut:TestGenerator ;
-    dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
+    dcterms:description """Generates owl:cardinality constrains defined in a schema""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
 							 ?s a oslc:ResourceShape ;
                                 oslc:describes ?T1 ; # we work only on typed classes
@@ -130,7 +130,7 @@ rutg:OSLCCARD a rut:TestGenerator ;
 
 # oslc:Zero-or-one
 rutg:OSLCGARD-MAX a rut:TestGenerator ;
-    dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
+    dcterms:description """Generates owl:cardinality constrains defined in a schema""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
 							 ?s a oslc:ResourceShape ;
 	                            oslc:describes ?T1 ; # we work only on typed classes
@@ -153,7 +153,7 @@ rutg:OSLCGARD-MAX a rut:TestGenerator ;
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:OSLCRANGEL a rut:TestGenerator ;
-    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
                                  oslc:describes ?T1 ; # we work only on typed classes
@@ -171,7 +171,7 @@ rutg:OSLCRANGEL a rut:TestGenerator ;
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:OSLCRANGEI a rut:TestGenerator ;
-    dcterms:description """Check all defined IRIs if they are indeed literals"""@en ;
+    dcterms:description """Check all defined IRIs if they are indeed literals""" ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {   # isLiteral instead of isIRI because of blank nodes
                              ?s a oslc:ResourceShape ;
                                 oslc:describes ?T1 ; # we work only on typed classes
@@ -189,7 +189,7 @@ rutg:OSLCRANGEI a rut:TestGenerator ;
 
 # Datatype range (TODO check domain as well / needs new pattern)
 rutg:OSLCRANGED a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema"""@en ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema""" ;
     rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
                              ?s a oslc:ResourceShape ;
                                 oslc:describes ?class ; # we work only on typed classes
@@ -207,7 +207,7 @@ rutg:OSLCRANGED a rut:TestGenerator ;
 
 # Check for blank nodes (oslc:valueType oslc:LocalResource)
 rutg:OSLCRANGE-BLANK a rut:TestGenerator ;
-    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('!' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
 	                             oslc:describes ?T1 ; # we work only on typed classes
@@ -224,7 +224,7 @@ rutg:OSLCRANGE-BLANK a rut:TestGenerator ;
 
 # Check for non-blank nodes (oslc:valueType oslc:Resource => must not be a blank node)
 rutg:OSLCRANGE-RES a rut:TestGenerator ;
-    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
                               ?s a oslc:ResourceShape ;
                                  oslc:describes ?T1 ; # we work only on typed classes
@@ -246,7 +246,7 @@ rutg:OSLCRANGE-RES a rut:TestGenerator ;
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:OSLCALLOWEDVAL a rut:TestGenerator ;
-    dcterms:description """Check all defined Literals if they are indeed literals"""@en ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
 	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {
 									select distinct ?T1 ?P1 ( ?term as ?VALUE) WHERE {

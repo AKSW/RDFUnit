@@ -15,7 +15,7 @@
 ##########################################
 
 rutg:DSPSTANDALONE a rut:TestGenerator ;
-    dcterms:description """Standalone class constrant, instances of a class cannot have any other properties"""@en ;
+    dcterms:description """Standalone class constrant, instances of a class cannot have any other properties""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('' as ?NOT) ('?p1' as ?P1) ?DESCRIPTION WHERE {
 							 ?s a dsp:DescriptionTemplate ;
                                 dsp:standalone "true"^^xsd:boolean ;
@@ -45,7 +45,7 @@ rutg:DSPSTANDALONE a rut:TestGenerator ;
 
 # dsp:minOccur number > 0 (count restriction if exists)
 rutg:DSPM-OCCURS-MIN a rut:TestGenerator ;
-    dcterms:description """Generates owl:minCardinality constrains defined in a schema"""@en ;
+    dcterms:description """Generates owl:minCardinality constrains defined in a schema""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<' as ?OP) (str(?v)  as ?V1) ?DESCRIPTION WHERE {
 							?s a dsp:DescriptionTemplate ;
 								dsp:resourceClass ?T1 ;
@@ -63,7 +63,7 @@ rutg:DSPM-OCCURS-MIN a rut:TestGenerator ;
 
 # dsp:minOccur number > 0 (exists in db)
 rutg:DSPM-OCCURSX-MIN a rut:TestGenerator ;
-    dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once"""@en ;
+    dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
 							 ?s a dsp:DescriptionTemplate ;
                                 dsp:resourceClass ?T1 ;
@@ -86,7 +86,7 @@ rutg:DSPM-OCCURSX-MIN a rut:TestGenerator ;
 
 # owl:manCardinality number > 0 (count restriction if exists)
 rutg:DSPCGARD-MAX a rut:TestGenerator ;
-    dcterms:description """Generates owl:cardinality constrains defined in a schema"""@en ;
+    dcterms:description """Generates owl:cardinality constrains defined in a schema""" ;
     rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?DESCRIPTION WHERE {
 							  ?s a dsp:DescriptionTemplate ;
 	                             dsp:resourceClass ?T1 ;
@@ -104,7 +104,7 @@ rutg:DSPCGARD-MAX a rut:TestGenerator ;
 
 # owl:maxCardinality number = 0 (must not exist)
 rutg:DSPCARD-MAX0 a rut:TestGenerator ;
-    dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0"""@en ;
+    dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0""" ;
     rut:sparqlGenerator """  SELECT DISTINCT ?T1 ('' as ?NOT) ?P1 ?DESCRIPTION WHERE {
 							 ?s a dsp:DescriptionTemplate ;
 	                             dsp:resourceClass ?T1 ;
@@ -128,7 +128,7 @@ rutg:DSPCARD-MAX0 a rut:TestGenerator ;
 
 # Class range wrongly defined (single range)
 rutg:DSPRANGEC a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)"""@en ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)""" ;
     rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -156,7 +156,7 @@ rutg:DSPRANGEC a rut:TestGenerator ;
 
 # Class range missing (single range)
 rutg:DSPRANGEC-MISS a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is missing)"""@en ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is missing)""" ;
     rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
                                 ?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -194,7 +194,7 @@ rutg:DSPRANGEC-MISS a rut:TestGenerator ;
 
 # no domain check mandatory  (TODO Check with domain as well?)
 rutg:DSPLITERAL a rut:TestGenerator ;
-    dcterms:description """Checks if a property is Literal"""@en ;
+    dcterms:description """Checks if a property is Literal""" ;
     rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC)  ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -215,7 +215,7 @@ rutg:DSPLITERAL a rut:TestGenerator ;
 
 # Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
 rutg:DSPLITERAL-VAL a rut:TestGenerator ;
-    dcterms:description """Check if a literal is in the defined values"""@en ;
+    dcterms:description """Check if a literal is in the defined values""" ;
     rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
 	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {
 									select distinct ?T1 ?P1 ( ?term as ?VALUE) WHERE {
@@ -250,7 +250,7 @@ rutg:DSPLITERAL-VAL a rut:TestGenerator ;
 
 # no domain check mandatory
 rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
-    dcterms:description """dsp:languageOccurrence -> mandatory constraint generation"""@en ;
+    dcterms:description """dsp:languageOccurrence -> mandatory constraint generation""" ;
     rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -269,7 +269,7 @@ rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
 
 # no domain check disallowed
 rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
-    dcterms:description """dsp:languageOccurrence -> disallowed constraint generation"""@en ;
+    dcterms:description """dsp:languageOccurrence -> disallowed constraint generation""" ;
     rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
@@ -293,7 +293,7 @@ rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
 # TODO check multiple languages
 # no domain check disallowed
 rutg:DSPLANG a rut:TestGenerator ;
-    dcterms:description """ Check if the property has the correct language"""@en ;
+    dcterms:description """ Check if the property has the correct language""" ;
     rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) (str(?lang) as ?V1) ?DESCRIPTION where {
 								?s a dsp:DescriptionTemplate .
                                 ?s dsp:statementTemplate/dsp:property ?P1 .
