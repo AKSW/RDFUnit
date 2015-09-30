@@ -25,4 +25,9 @@ public final class Resources {
     /** Constant <code>AUTO_GENERATORS_RS="/org/aksw/rdfunit/configuration/autoGen"{trunked}</code> */
     public static final String AUTO_GENERATORS_RS = "/org/aksw/rdfunit/configuration/autoGeneratorsRS.ttl";
 
+
+    public static final String SCHEMAS_LOV = "/org/aksw/rdfunit/configuration/schemas_custom.csv";
+    public static final String SCHEMAS_CUSTOM = "/org/aksw/rdfunit/configuration/schemas_lov.csv";
+
+
 }

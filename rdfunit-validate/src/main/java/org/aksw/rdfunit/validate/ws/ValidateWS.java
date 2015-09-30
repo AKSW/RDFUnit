@@ -48,7 +48,7 @@ public class ValidateWS extends RDFUnitWebService {
     @Override
     public void init() throws ServletException {
         RDFUnitUtils.fillSchemaServiceFromLOV();
-        RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"));
+        RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
         try {
             RDFUnit rdfunit = new RDFUnit();
             rdfunit.init();

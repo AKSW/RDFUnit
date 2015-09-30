@@ -149,14 +149,14 @@ public class ValidateCLI {
 
         // Calculate coverage
         if (configuration.isCalculateCoverageEnabled()) {
-            Model model = ModelFactory.createDefaultModel();
-            PrefixNSService.setNSPrefixesInModel(model);
+            Model testSuiteModel = ModelFactory.createDefaultModel();
+            PrefixNSService.setNSPrefixesInModel(testSuiteModel);
             for (TestCase ut : testSuite.getTestCases()) {
-                TestCaseWriter.create(ut).write(model);
+                TestCaseWriter.create(ut).write(testSuiteModel);
             }
 
             TestCoverageEvaluator tce = new TestCoverageEvaluator();
-            tce.calculateCoverage(new QueryExecutionFactoryModel(model), dataset.getPrefix() + ".property.count", dataset.getPrefix() + ".class.count");
+            tce.calculateCoverage(new QueryExecutionFactoryModel(testSuiteModel), configuration.getTestSource().getExecutionFactory());
         }
     }
 

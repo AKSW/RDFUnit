@@ -3,14 +3,16 @@ package org.aksw.rdfunit.coverage;
 import com.hp.hpl.jena.query.*;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.statistics.DatasetStatisticsClassesCount;
+import org.aksw.rdfunit.statistics.DatasetStatisticsPropertiesCount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * <p>TestCoverageEvaluator class.</p>
@@ -61,52 +63,20 @@ public class TestCoverageEvaluator {
     /**
      * <p>calculateCoverage.</p>
      *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
+     * @param testSuiteQEF a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      * @param propertiesFile a {@link java.lang.String} object.
      * @param classFile a {@link java.lang.String} object.
      * @throws java.io.IOException if any.
      */
-    public void calculateCoverage(QueryExecutionFactory qef, String propertiesFile, String classFile) throws IOException {
+    public void calculateCoverage(QueryExecutionFactory testSuiteQEF, QueryExecutionFactory inputSource) throws IOException {
 
-        String line;
-        long propertiesTotal = 0;
-        long classesTotal = 0;
+        Map<String, Long> properties = new DatasetStatisticsPropertiesCount().getStatisticsMap(inputSource);
+        long propertiesTotal = properties.size();
 
-        Map<String, Long> properties = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(propertiesFile), "UTF8"))) {
+        Map<String, Long> classes = new DatasetStatisticsClassesCount().getStatisticsMap(inputSource);
+        long classesTotal = classes.size();
 
-            while ((line = br.readLine()) != null) {
-                // process the line.
-                String[] ar = line.split(" ");
-                long count = Long.parseLong(ar[0].trim());
-                String ref = ar[1].trim();
-                propertiesTotal += count;
-                properties.put(ref, count);
-
-            }
-        }
-
-        Map<String, Long> classes = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(classFile), "UTF8"))) {
-
-            while ((line = br.readLine()) != null) {
-                // process the line.
-                String[] ar = line.split(" ");
-                long count = Long.parseLong(ar[0].trim());
-                String ref = ar[1].trim();
-                classesTotal += count;
-                classes.put(ref, count);
-
-            }
-        }
-
-        calculateCoverage(qef, properties, propertiesTotal, classes, classesTotal);
-
-
+        calculateCoverage(testSuiteQEF, properties, propertiesTotal, classes, classesTotal);
     }
 
     private void calculateCoverage(QueryExecutionFactory model, Map<String, Long> propertyCount, long totalProperties, Map<String, Long> classCount, long totalClasses) {

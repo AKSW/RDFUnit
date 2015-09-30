@@ -28,8 +28,8 @@ public class DatasetStatisticsClassesTest extends DatasetStatisticsTest {
 
     @Test
     public void testGetStats() throws Exception {
-        for (Map.Entry<String, Integer> entry : executeBasicTest().entrySet()) {
-            assertEquals(new Integer(0), entry.getValue());
+        for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
+            assertEquals(new Long(0), entry.getValue());
         }
     }
 }

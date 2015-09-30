@@ -36,7 +36,7 @@ public abstract class DatasetStatistics {
      * @param qef the qef
      * @return a Map, if doGetCounts is false, the number defaults to 0
      */
-    public Map<String, Integer> getStatisticsMap(QueryExecutionFactory qef) {
+    public Map<String, Long> getStatisticsMap(QueryExecutionFactory qef) {
 
         return getStats(getStatisticsQuery(), qef);
 
@@ -48,8 +48,8 @@ public abstract class DatasetStatistics {
     public DatasetStatistics() {
     }
 
-    private Map<String, Integer> getStats(String sparqlQuery, QueryExecutionFactory qef) {
-        Map<String, Integer> stats = new HashMap<>();
+    private Map<String, Long> getStats(String sparqlQuery, QueryExecutionFactory qef) {
+        Map<String, Long> stats = new HashMap<>();
 
         QueryExecution qe = null;
         try {
@@ -64,7 +64,7 @@ public abstract class DatasetStatistics {
                 if (qs.contains("count")) {
                     c = qs.get("count").asLiteral().getInt();
                 }
-                stats.put(s, c);
+                stats.put(s, new Long(c));
             }
         } finally {
             if (qe != null) {
