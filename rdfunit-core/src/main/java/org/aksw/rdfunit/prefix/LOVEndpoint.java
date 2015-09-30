@@ -65,7 +65,7 @@ public final class LOVEndpoint {
                 QuerySolution row = rs.next();
 
                 String prefix = row.get("vocabPrefix").asLiteral().getLexicalForm();
-                String vocab = row.get("vocabURI").asLiteral().getLexicalForm();
+                String vocab = row.get("vocabURI").asResource().getURI();
                 String ns = row.get("vocabNamespace").asLiteral().getLexicalForm();
                 String definedBy = ns; // default
                 if (ns == null || ns.isEmpty()) {
@@ -73,7 +73,7 @@ public final class LOVEndpoint {
                 }
 
                 if (row.get("definedBy") != null) {
-                    definedBy = row.get("definedBy").asLiteral().getLexicalForm();
+                    definedBy = row.get("definedBy").asResource().getURI();
                 }
                 lovEntries.add(new SchemaEntry(prefix, vocab, ns, definedBy));
             }
