@@ -38,3 +38,11 @@ public static class TestRunner {
 - Manual Tests
 - LOV integration
 - JUnit: `@Rule`, `@Before`, `@After`
+
+### Attribution
+Special thanks to
+ * Michael Leuthold 
+ * Daniel Hiller @dhiller
+ * @pepperbob
+
+For contributing this module
