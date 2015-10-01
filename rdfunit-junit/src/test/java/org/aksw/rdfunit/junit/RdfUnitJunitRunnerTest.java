@@ -60,6 +60,11 @@ public class RdfUnitJunitRunnerTest {
         new RdfUnitJunitRunner(RDFUnitMissingOntologyAnnotation.class);
     }
 
+    @Test(expected = InitializationError.class)
+    public void throwsInitializationErrorIfOntologyDoesNotResolve() throws InitializationError {
+        new RdfUnitJunitRunner(RDFUnitWrongSchemaUri.class);
+    }
+
     @Test
     public void returnsVocabulary() throws InitializationError {
         final RdfUnitJunitRunner rdfUnitJunitRunner = new RdfUnitJunitRunner(ControlledVocabularyTest.class);
@@ -105,6 +110,15 @@ public class RdfUnitJunitRunnerTest {
 
     @RunWith(RdfUnitJunitRunner.class)
     public static class RDFUnitMissingOntologyAnnotation {
+    }
+
+    @RunWith(RdfUnitJunitRunner.class)
+    @Schema(uri = "dummy/uri/that/does/not/resolve")
+    public static class RDFUnitWrongSchemaUri {
+        @TestInput
+        public Model testInput() {
+            return ModelFactory.createDefaultModel();
+        }
     }
 
     @RunWith(RdfUnitJunitRunner.class)
