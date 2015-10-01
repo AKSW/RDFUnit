@@ -72,6 +72,15 @@ public final class RDFReaderFactory {
         return new RDFFirstSuccessReader(readers);
     }
 
+    public static RDFReader createResourceOrFileOrDereferenceReader(String uri) {
+        Collection<RDFReader> readers = new ArrayList<>();
+        readers.add(createResourceReader(uri));
+        readers.add(new RDFStreamReader(uri));
+        readers.add(new RDFDereferenceReader(uri));
+
+        return new RDFFirstSuccessReader(readers);
+    }
+
     /**
      * Generates a Dereference reader. This can be either a remote url, a local file or a resource
      *
@@ -117,4 +126,5 @@ public final class RDFReaderFactory {
     public static RDFReader createEmptyReader() {
         return RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/empty.ttl");
     }
+
 }

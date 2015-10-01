@@ -34,6 +34,9 @@ public static class TestRunner {
 3. Create generated TestCases for each `@TestInput`
 4. Run tests individually hooked into the JUnit-Runtime
 
+Notes:
+ * For the uri provided in `@Schema` e.g. `uri = "ontologies/foaf.rdf"`, `RdfUnitJunitRunner` is trying to resolve it in the following order 1) as a java resource, 2) as a system file and 3) as a remote location (dereference)    
+
 ### What is currently not supported
 - Manual Tests
 - LOV integration
