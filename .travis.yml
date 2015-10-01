@@ -21,7 +21,7 @@ script:
   - "mvn clean install"
   - "cd rdfunit-webdemo"
   - "mvn clean install"
-
+  - "cd .."
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
 notifications:
