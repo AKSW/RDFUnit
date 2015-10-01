@@ -43,9 +43,8 @@ Notes:
 - JUnit: `@Rule`, `@Before`, `@After`
 
 ### Attribution
-Special thanks to the [@wk-muenster](https://github.com/wk-muenster) team
+Special thanks to the [@wk-muenster](https://github.com/wk-muenster) team for contributing this module
  * Michael Leuthold 
  * Daniel Hiller [@dhiller](https://github.com/dhiller)
  * [@pepperbob](https://github.com/pepperbob)
 
-For contributing this module
