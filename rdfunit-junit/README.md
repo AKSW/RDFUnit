@@ -43,9 +43,9 @@ Notes:
 - JUnit: `@Rule`, `@Before`, `@After`
 
 ### Attribution
-Special thanks to
+Special thanks to the [@wk-muenster](https://github.com/wk-muenster) team
  * Michael Leuthold 
- * Daniel Hiller @dhiller
- * @pepperbob
+ * Daniel Hiller [@dhiller](https://github.com/dhiller)
+ * [@pepperbob](https://github.com/pepperbob)
 
 For contributing this module
