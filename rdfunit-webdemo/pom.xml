@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.19-SNAPSHOT</version>
+        <version>0.7.20-SNAPSHOT</version>
     </parent>
     <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
@@ -50,7 +50,6 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-manual-tests</artifactId>
-            <version>0.7.20-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
