@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests;
+package org.aksw.rdfunit.model.validators;
 
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QueryParseException;
