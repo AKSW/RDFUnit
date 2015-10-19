@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
+import java.util.Collection;
+
 /**
  * Description
  *
