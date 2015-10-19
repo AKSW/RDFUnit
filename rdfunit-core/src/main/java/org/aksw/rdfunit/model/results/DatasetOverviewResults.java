@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests.results;
+package org.aksw.rdfunit.model.results;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 
@@ -51,7 +51,7 @@ public class DatasetOverviewResults {
     /**
      * <p>set.</p>
      *
-     * @param results a {@link org.aksw.rdfunit.tests.results.DatasetOverviewResults} object.
+     * @param results a {@link org.aksw.rdfunit.model.results.DatasetOverviewResults} object.
      */
     public void set(DatasetOverviewResults results) {
         this.totalTests = results.getTotalTests();

@@ -4,12 +4,12 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.results.DatasetOverviewResults;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
-import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -105,7 +105,7 @@ public final class RDFUnitStaticValidator {
      * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
-     * @param overviewResults a {@link org.aksw.rdfunit.tests.results.DatasetOverviewResults} object.
+     * @param overviewResults a {@link org.aksw.rdfunit.model.results.DatasetOverviewResults} object.
      * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {

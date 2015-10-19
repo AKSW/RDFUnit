@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests.results;
+package org.aksw.rdfunit.model.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;

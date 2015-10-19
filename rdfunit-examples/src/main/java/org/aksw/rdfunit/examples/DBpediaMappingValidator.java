@@ -9,11 +9,11 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
-import org.aksw.rdfunit.tests.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 

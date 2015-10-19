@@ -5,10 +5,10 @@ import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.results.StatusTestCaseResult;
+import org.aksw.rdfunit.model.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
-import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
 import org.aksw.rdfunit.utils.SparqlUtils;
 
 import java.util.Arrays;

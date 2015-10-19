@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.tests.results;
+package org.aksw.rdfunit.model.results;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
