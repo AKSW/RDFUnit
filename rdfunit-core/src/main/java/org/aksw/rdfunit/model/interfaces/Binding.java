@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
@@ -30,7 +29,7 @@ public class Binding implements Element {
      * @throws org.aksw.rdfunit.exceptions.BindingException if any.
      */
     public Binding(Resource resource, PatternParameter parameter, RDFNode value) {
-        this.resource = resource;
+        this.resource = checkNotNull(resource, "Element must not be null");
         this.parameter = checkNotNull(parameter, "parameter must not be null in Binding");
         this.value = checkNotNull(value, "value must not be null in Binding");
 
@@ -117,7 +116,7 @@ public class Binding implements Element {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(resource);
+    public Resource getResource() {
+        return resource;
     }
 }

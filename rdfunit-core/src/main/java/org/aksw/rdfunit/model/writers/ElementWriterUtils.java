@@ -21,8 +21,8 @@ final class ElementWriterUtils {
      * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      */
     public static Resource copyElementResourceInModel(Element element, Model model) {
-        if (element.getResource().isPresent() && !element.getResource().get().isAnon()) {
-            return model.createResource(element.getResource().get().getURI());
+        if (!element.getResource().isAnon()) {
+            return model.createResource(element.getResource().getURI());
         } else {
             return model.createResource();
         }

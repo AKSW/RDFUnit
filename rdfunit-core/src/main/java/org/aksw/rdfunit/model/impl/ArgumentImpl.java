@@ -38,8 +38,8 @@ public final class ArgumentImpl implements Argument {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(element);
+    public Resource getResource() {
+        return element;
     }
 
     /** {@inheritDoc} */

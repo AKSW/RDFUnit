@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
@@ -186,7 +185,7 @@ public class TestCaseAnnotation implements Element {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(resource);
+    public Resource getResource() {
+        return resource;
     }
 }

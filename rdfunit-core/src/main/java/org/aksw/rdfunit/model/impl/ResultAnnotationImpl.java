@@ -33,8 +33,8 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(element);
+    public Resource getResource() {
+        return element;
     }
 
     /** {@inheritDoc} */

@@ -27,7 +27,7 @@ public class ArgumentImplTest {
 
     @Test
     public void testGetResource() throws Exception {
-        assertThat(argDef.getResource().get())
+        assertThat(argDef.getResource())
                 .isEqualTo(element);
     }
 

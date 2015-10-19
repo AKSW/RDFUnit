@@ -65,7 +65,7 @@ public class ConstraintTemplateImpl implements ConstraintTemplate {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
+    public Resource getResource() {
         return null;
     }
 }

@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
@@ -17,5 +16,5 @@ public interface Element {
      *
      * @return the resource associated with this element
      */
-    Optional<Resource> getResource();
+    Resource getResource();
 }

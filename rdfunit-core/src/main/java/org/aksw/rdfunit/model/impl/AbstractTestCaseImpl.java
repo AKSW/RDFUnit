@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -154,8 +153,8 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(tcResource);
+    public Resource getResource() {
+        return tcResource;
     }
 
     /** {@inheritDoc} */

@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -73,8 +72,8 @@ public final class TestGeneratorImpl implements TestGenerator {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(element);
+    public Resource getResource() {
+        return element;
     }
 
     /** {@inheritDoc} */

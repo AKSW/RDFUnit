@@ -67,8 +67,8 @@ public final class FunctionImpl implements Function {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(element);
+    public Resource getResource() {
+        return element;
     }
 
     public static class Builder {

@@ -35,8 +35,8 @@ public final class PatternParameterImpl implements PatternParameter {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Resource> getResource() {
-        return Optional.fromNullable(element);
+    public Resource getResource() {
+        return element;
     }
 
     /** {@inheritDoc} */
