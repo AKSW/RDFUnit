@@ -73,7 +73,7 @@ public class TestGeneratorTCInstantiator {
                         RDFNode n = row.get(p.getId());
                         Binding b;
                         try {
-                            b = new Binding(null, p, n);
+                            b = new Binding(p, n);
                         } catch (Exception e) {
                             log.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), tg.getTAGUri(), e);
                             continue;

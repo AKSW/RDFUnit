@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.interfaces;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -20,6 +21,10 @@ public class Binding implements Element {
     private final PatternParameter parameter;
     private final RDFNode value;
 
+
+    public Binding(PatternParameter parameter, RDFNode value) {
+        this(ResourceFactory.createResource(), parameter, value);
+    }
     /**
      * <p>Constructor for Binding.</p>
      *
