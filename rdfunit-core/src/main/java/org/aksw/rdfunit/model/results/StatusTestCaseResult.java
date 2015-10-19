@@ -2,11 +2,12 @@ package org.aksw.rdfunit.model.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
+
 
 /**
  * The Status test case result.
@@ -33,10 +34,10 @@ public class StatusTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:StatusTestCaseResult")))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:resultStatus")), model.createResource(getStatus().getUri()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("dcterms:description")), getTestCase().getResultMessage())
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testCaseLogLevel")), model.createResource(getTestCase().getLogLevel().getUri()))
+                .addProperty(RDF.type, RDFUNITv.StatusTestCaseResult)
+                .addProperty(RDFUNITv.resultStatus, model.createResource(getStatus().getUri()))
+                .addProperty(DCTerms.description, getTestCase().getResultMessage())
+                .addProperty(RDFUNITv.testCaseLogLevel, model.createResource(getTestCase().getLogLevel().getUri()))
                 ;
     }
 

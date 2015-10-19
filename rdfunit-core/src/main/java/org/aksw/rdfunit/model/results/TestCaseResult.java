@@ -6,9 +6,11 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
+import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import java.util.Calendar;
 
@@ -42,10 +44,10 @@ public abstract class TestCaseResult {
      */
     public Resource serialize(Model model, String testExecutionURI) {
         return model.createResource(testExecutionURI + "/" + JenaUUID.generate().asString())
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:TestCaseResult")))
+                .addProperty(RDF.type, RDFUNITv.TestCaseResult)
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasGeneratedBy")), model.createResource(testExecutionURI))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:testCase")), model.createResource(getTestCase().getTestURI()))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("dcterms:date")), model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
+                .addProperty(RDFUNITv.testCase, model.createResource(getTestCase().getTestURI()))
+                .addProperty(DCTerms.date, model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;
     }
 

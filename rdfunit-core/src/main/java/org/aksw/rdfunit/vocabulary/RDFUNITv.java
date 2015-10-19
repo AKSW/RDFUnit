@@ -34,7 +34,10 @@ public final class RDFUNITv {
     public static final Resource PatternBasedTestCase = resource("PatternBasedTestCase");
     /** Constant <code>ManualTestCase</code> */
     public static final Resource ManualTestCase = resource("ManualTestCase");
-
+    public static final Resource StatusTestCaseResult = resource("StatusTestCaseResult");
+    public static final Resource TestCaseResult = resource("TestCaseResult");
+    public static final Resource AggregatedTestResult = resource("AggregatedTestResult");
+    public static final Resource ExtendedTestCaseResult = resource("ExtendedTestCaseResult");
 
 
 
@@ -80,6 +83,14 @@ public final class RDFUNITv {
     public static final Property testGenerator = property("testGenerator");
     /** Constant <code>references</code> */
     public static final Property references = property("references");
+
+    public static final Property resultStatus = property("resultStatus");
+
+    public static final Property testCase = property("testCase");
+
+    public static final Property resultCount = property("resultCount");
+    public static final Property resultPrevalence = property("resultPrevalence");
+
 
     private RDFUNITv() {
 

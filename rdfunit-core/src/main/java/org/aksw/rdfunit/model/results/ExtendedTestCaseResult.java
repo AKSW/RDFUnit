@@ -8,6 +8,7 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class ExtendedTestCaseResult extends RLOGTestCaseResult {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         Resource resource = super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:ExtendedTestCaseResult")))
+                .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult)
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("spin:ConstraintViolation")))
                 .addProperty(model.createProperty(PrefixNSService.getURIFromAbbrev("spin:violationRoot")), model.createResource(getResource()));
 
