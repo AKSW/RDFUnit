@@ -1,10 +1,7 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-import org.aksw.rdfunit.model.interfaces.Binding;
-import org.aksw.rdfunit.model.interfaces.Pattern;
-import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
+import org.aksw.rdfunit.model.interfaces.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +14,7 @@ import java.util.Collections;
  * @since 1/3/14 3:49 PM
  * @version $Id: $Id
  */
-public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements TestCase {
+public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements TestCase, PatternBasedTestCase {
 
     private final Pattern pattern;
     private final Collection<Binding> bindings;
