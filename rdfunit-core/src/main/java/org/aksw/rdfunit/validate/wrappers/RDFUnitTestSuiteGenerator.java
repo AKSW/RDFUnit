@@ -110,7 +110,7 @@ public final class RDFUnitTestSuiteGenerator {
         public Builder addSchemaURI(String prefix, String schemaUri) {
             checkNotNull(schemaUri);
 
-            SchemaSource schemaSource = createSource(prefix, schemaUri, RDFReaderFactory.createResourceReader(schemaUri));
+            SchemaSource schemaSource = createSource(prefix, schemaUri, RDFReaderFactory.createDereferenceReader(schemaUri));
             schemas.add(schemaSource);
 
             return this;
