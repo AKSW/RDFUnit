@@ -25,7 +25,6 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-manual-tests</artifactId>
-            <version>0.7.21-SNAPSHOT</version>
         </dependency>
 
         <dependency>
