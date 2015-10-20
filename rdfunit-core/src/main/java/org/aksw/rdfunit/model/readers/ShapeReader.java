@@ -10,6 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 10/19/15 7:15 PM
+ * @version $Id: $Id
  */
 public class ShapeReader implements ElementReader<Shape> {
 
@@ -25,9 +26,7 @@ public class ShapeReader implements ElementReader<Shape> {
         return new ShapeReader();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Shape read(Resource resource) {
         checkNotNull(resource);

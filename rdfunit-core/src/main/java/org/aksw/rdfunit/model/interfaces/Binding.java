@@ -22,6 +22,12 @@ public class Binding implements Element {
     private final RDFNode value;
 
 
+    /**
+     * <p>Constructor for Binding.</p>
+     *
+     * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
+     * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
+     */
     public Binding(PatternParameter parameter, RDFNode value) {
         this(ResourceFactory.createResource(), parameter, value);
     }

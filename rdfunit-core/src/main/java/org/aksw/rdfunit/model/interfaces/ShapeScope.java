@@ -10,6 +10,11 @@ package org.aksw.rdfunit.model.interfaces;
 public interface ShapeScope extends Element{
 
     //TODO refactor this later when we support more scope types
+    /**
+     * <p>getScopeClass.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String getScopeClass();
 
 }

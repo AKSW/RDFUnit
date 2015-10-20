@@ -72,6 +72,13 @@ public final class RDFReaderFactory {
         return new RDFFirstSuccessReader(readers);
     }
 
+    /**
+     * <p>createResourceOrFileOrDereferenceReader.</p>
+     *
+     * @param uri a {@link java.lang.String} object.
+     * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @since 0.7.20
+     */
     public static RDFReader createResourceOrFileOrDereferenceReader(String uri) {
         Collection<RDFReader> readers = new ArrayList<>();
         readers.add(createResourceReader(uri));
