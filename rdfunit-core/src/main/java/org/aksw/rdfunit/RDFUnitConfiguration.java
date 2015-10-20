@@ -258,23 +258,25 @@ public class RDFUnitConfiguration {
             if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
                 tmp_customDereferenceURI = customDereferenceURI;
             }
-            testSourceBuilder.setInMemReader(RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI));
+            if (testSourceBuilder.getInMemReader() == null) { // if the reader is not set already e.g. text
+                testSourceBuilder.setInMemReader(RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI));
+            }
         }
 
 
 
 
         // Set TestSource configuration
-        if (this.endpointQueryCacheTTL != -1)
+        if (this.endpointQueryCacheTTL > 0)
             testSourceBuilder.setCacheTTL(this.endpointQueryCacheTTL);
 
-        if (this.endpointQueryDelayMS != -1)
+        if (this.endpointQueryDelayMS > 0)
             testSourceBuilder.setQueryDelay(this.endpointQueryDelayMS);
 
-        if (this.endpointQueryPagination != -1)
+        if (this.endpointQueryPagination > 0)
             testSourceBuilder.setPagination(this.endpointQueryPagination);
 
-        if (this.endpointQueryLimit != -1)
+        if (this.endpointQueryLimit > 0)
             testSourceBuilder.setQueryLimit(this.endpointQueryLimit);
 
         testSource = testSourceBuilder.build();

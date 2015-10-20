@@ -147,6 +147,9 @@ public class TestSourceBuilder {
         }
 
         this.inMemReader = RDFReaderFactory.createReaderFromText(customTextSource, format.getName());
+        if (queryingConfig == null) {
+            queryingConfig = QueryingConfig.createInMemory();
+        }
 
         return this;
     }
@@ -268,5 +271,9 @@ public class TestSourceBuilder {
      */
     public Collection<String> getEndpointGraphs() {
         return endpointGraphs;
+    }
+
+    public RDFReader getInMemReader() {
+        return this.inMemReader;
     }
 }
