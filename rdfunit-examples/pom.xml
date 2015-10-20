@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.20-SNAPSHOT</version>
+        <version>0.7.20</version>
     </parent>
 
     <artifactId>rdfunit-examples</artifactId>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-manual-tests</artifactId>
-            <version>0.7.20-SNAPSHOT</version>
+            <version>0.7.20</version>
         </dependency>
 
         <dependency>
