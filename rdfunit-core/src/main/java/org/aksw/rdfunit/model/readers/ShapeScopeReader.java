@@ -1,11 +1,8 @@
 package org.aksw.rdfunit.model.readers;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
-import org.aksw.rdfunit.vocabulary.SHACL;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,7 +33,7 @@ public class ShapeScopeReader implements ElementReader<ShapeScope> {
         checkNotNull(resource);
 
         return null;
-
+        /*
         int count = 0;
         for (Statement smt : resource.listProperties(SHACL.clazz).toList()) {
             checkArgument(++count == 1, "Cannot have more than one class scope in Shape %s", resource.getURI());
