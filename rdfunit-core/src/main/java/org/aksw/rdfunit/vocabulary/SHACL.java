@@ -46,6 +46,8 @@ public final class SHACL {
     /** Constant <code>valueType</code> */
     public static final Property valueType = property("valueType");
 
+    public static final Property clazz = property("class");
+
 
 
     /** Constant <code>annotationProperty</code> */

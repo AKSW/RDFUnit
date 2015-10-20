@@ -7,6 +7,9 @@ package org.aksw.rdfunit.model.interfaces;
  * @since 8/21/15 11:46 AM
  * @version $Id: $Id
  */
-public interface Scope extends Element{
+public interface ShapeScope extends Element{
+
+    //TODO refactor this later when we support more scope types
+    String getScopeClass();
 
 }
