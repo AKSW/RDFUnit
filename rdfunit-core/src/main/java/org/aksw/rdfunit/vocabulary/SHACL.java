@@ -24,6 +24,7 @@ public final class SHACL {
     public static final Resource Function = resource("Function");
     /** Constant <code>ResultAnnotation</code> */
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
+    public static final Resource ValidationResult = resource("ValidationResult");
 
 
     //properties
@@ -37,8 +38,6 @@ public final class SHACL {
     public static final Property defaultValue = property("defaultValue");
     /** Constant <code>optional</code> */
     public static final Property optional = property("optional");
-    /** Constant <code>predicate</code> */
-    public static final Property predicate = property("predicate");
     /** Constant <code>returnType</code> */
     public static final Property returnType = property("returnType");
     /** Constant <code>sparql</code> */
@@ -48,6 +47,13 @@ public final class SHACL {
 
     /** Constant <code>clazz</code> */
     public static final Property clazz = property("class");
+
+    public static final Property severity = property("severity");
+    public static final Property focusNode = property("focusNode");
+    public static final Property subject = property("subject");
+    public static final Property predicate = property("predicate");
+    public static final Property object = property("object");
+    public static final Property message = property("message");
 
 
 

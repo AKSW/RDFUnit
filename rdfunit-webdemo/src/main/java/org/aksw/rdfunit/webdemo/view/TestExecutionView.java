@@ -83,10 +83,10 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
         execTypeSelect.setItemCaption(TestCaseExecutionType.statusTestCaseResult, "Status (all)");
         execTypeSelect.addItem(TestCaseExecutionType.aggregatedTestCaseResult);
         execTypeSelect.setItemCaption(TestCaseExecutionType.aggregatedTestCaseResult, "Counts (all)");
-        execTypeSelect.addItem(TestCaseExecutionType.rlogTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.rlogTestCaseResult, "Resources");
-        execTypeSelect.addItem(TestCaseExecutionType.extendedTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.extendedTestCaseResult, "Annotated Res.");
+        execTypeSelect.addItem(TestCaseExecutionType.shaclSimpleTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclSimpleTestCaseResult, "Resources");
+        execTypeSelect.addItem(TestCaseExecutionType.shaclFullTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclFullTestCaseResult, "Annotated Res.");
 
         // Select turtle
         execTypeSelect.setNullSelectionAllowed(false);
@@ -305,7 +305,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                             frame.setWidth("100%");
                             frame.setHeight("100%");
                             inner.addComponent(frame);
-                            if (execTypeSelect.getValue().equals(TestCaseExecutionType.extendedTestCaseResult)) {
+                            if (execTypeSelect.getValue().equals(TestCaseExecutionType.shaclFullTestCaseResult)) {
                                 Notification.show(
                                         "Annotated results don't support HTML",
                                         "This will fall back to simple 'Resources' HTML report\n" +

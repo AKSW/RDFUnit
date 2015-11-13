@@ -227,7 +227,7 @@ public class TestSourceBuilder {
      * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
      */
     public TestSource build() {
-        checkNotNull(sourceConfig);
+        checkNotNull(sourceConfig , "Source configuration not set in TestSourceBuilder");
         checkNotNull(referenceSchemata, "Referenced schemata not set in TestSourceBuilder");
 
         if (testSourceType.equals(TestSourceType.Endpoint)) {

@@ -9,7 +9,6 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
-import org.aksw.rdfunit.model.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
@@ -43,11 +42,11 @@ public class DBpediaMappingValidator {
     private static final String sparqlQuery = PrefixNSService.getSparqlPrefixDecl() +
             " select ?error ?missing ?predicate ?mapping\n" +
             " where {\n" +
-            "  ?v a rut:ExtendedTestCaseResult ;\n" +
+            "  ?v a sh:ValidationResult ;\n" +
             "     rut:testCase rutt:rr-predicateObjectMap-wrong-domain ;\n" +
             "     rdf:predicate ?predicate ;\n" +
-            "     spin:missingValue ?missing ;\n" +
-            "     spin:violationValue ?error ;\n" +
+            "     sh:expectedObject ?missing ;\n" +
+            "     sh:object ?error ;\n" +
             "     rlog:resource ?mapping .\n" +
             " } ORDER BY ?mapping ";
 
@@ -86,7 +85,7 @@ public class DBpediaMappingValidator {
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     public Model validateAllMappings() throws RDFReaderException {
-        return RDFUnitStaticValidator.validate(TestCaseExecutionType.extendedTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
+        return RDFUnitStaticValidator.validate(TestCaseExecutionType.shaclFullTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
     }
 
     /**
@@ -102,8 +101,6 @@ public class DBpediaMappingValidator {
             qe = QueryExecutionFactory.create(sparqlQuery, model);
 
             ResultSet results = qe.execSelect();
-
-            ExtendedTestCaseResult result = null;
 
             while (results.hasNext()) {
 

@@ -5,6 +5,7 @@ import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.results.RLOGTestCaseResult;
+import org.aksw.rdfunit.model.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
@@ -129,7 +130,7 @@ public abstract class TestExecutor {
                 if (r instanceof StatusTestCaseResult) {
                     status = ((StatusTestCaseResult) r).getStatus();
                 } else {
-                    if (r instanceof RLOGTestCaseResult) {
+                    if (r instanceof RLOGTestCaseResult || r instanceof SimpleShaclTestCaseResult) {
                         status = TestCaseResultStatus.Fail;
                     }
                 }

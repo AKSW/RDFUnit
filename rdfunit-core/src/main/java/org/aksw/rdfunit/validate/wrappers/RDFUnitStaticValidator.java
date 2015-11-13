@@ -173,6 +173,12 @@ public final class RDFUnitStaticValidator {
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, final String agentID, DatasetOverviewResults overviewResults) {
 
+        checkNotNull(testCaseExecutionType, "Test Execution Type must not be null");
+        checkNotNull(testSource, "Test Source must not be null");
+        checkNotNull(testSuite, "Test Suite must not be null");
+        checkNotNull(agentID, "Agent must not be null");
+        checkNotNull(overviewResults, "Overview Results must not be null");
+
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
         testExecutorMonitor.setUserID(agentID);

@@ -16,24 +16,23 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-@Deprecated
-public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
+public class RDFHTMLResultsShaclWriter extends RDFHTMLResultsWriter {
 
     /**
      * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
      *
-     * @param filename a {@link java.lang.String} object.
+     * @param filename a {@link String} object.
      */
-    public RDFHTMLResultsRlogWriter(String filename) {
+    public RDFHTMLResultsShaclWriter(String filename) {
         super(filename);
     }
 
     /**
      * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
      *
-     * @param outputStream a {@link java.io.OutputStream} object.
+     * @param outputStream a {@link OutputStream} object.
      */
-    public RDFHTMLResultsRlogWriter(OutputStream outputStream) {
+    public RDFHTMLResultsShaclWriter(OutputStream outputStream) {
         super(outputStream);
     }
 
@@ -51,10 +50,10 @@ public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT DISTINCT ?level ?message ?resource ?testcase WHERE {" +
-                " ?s a rut:RLOGTestCaseResult ; " +
-                "    rlog:level ?level ;" +
-                "    rlog:message ?message ; " +
-                "    rlog:resource ?resource ; " +
+                " ?s a sh:ValidationResult ; " +
+                "    sh:severity ?level ;" +
+                "    sh:message:message ?message ; " +
+                "    sh:focusNode ?resource ; " +
                 "    rut:testCase ?testcase ; " +
                 //"    prov:wasGeneratedBy <" + testExecutionURI + "> " +
                 "} ";

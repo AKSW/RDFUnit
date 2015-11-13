@@ -8,7 +8,7 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.results.RLOGTestCaseResult;
+import org.aksw.rdfunit.model.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
@@ -20,22 +20,21 @@ import java.util.Collection;
 
 
 /**
- * The RLOG Executor returns violation instances and for every instance it generates an rlog:Entry
+ * The Simple SHACL Executor returns violation instances and for every instance it generates an sd:Violation:Entry
  * See the rlog vocabulary
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 4:25 PM
  * @version $Id: $Id
  */
-@Deprecated
-public class RLOGTestExecutor extends TestExecutor {
+public class ShaclSimpleTestExecutor extends TestExecutor {
 
     /**
-     * Instantiates a new RLOGTestExecutor
+     * Instantiates a new SimpleShaclTestExecutor
      *
      * @param queryGenerationFactory a QueryGenerationFactory
      */
-    public RLOGTestExecutor(QueryGenerationFactory queryGenerationFactory) {
+    public ShaclSimpleTestExecutor(QueryGenerationFactory queryGenerationFactory) {
         super(queryGenerationFactory);
     }
 
@@ -64,7 +63,7 @@ public class RLOGTestExecutor extends TestExecutor {
                 }
                 RLOGLevel logLevel = testCase.getLogLevel();
 
-                testCaseResults.add(new RLOGTestCaseResult(testCase, resource, message, logLevel));
+                testCaseResults.add(new SimpleShaclTestCaseResult(testCase, resource, message, logLevel));
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
@@ -81,8 +80,8 @@ public class RLOGTestExecutor extends TestExecutor {
     /**
      * <p>checkQueryResultStatus.</p>
      *
-     * @param e a {@link com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
+     * @param e a {@link QueryExceptionHTTP} object.
+     * @throws TestCaseExecutionException if any.
      */
     protected void checkQueryResultStatus(QueryExceptionHTTP e) throws TestCaseExecutionException {
         if (SparqlUtils.checkStatusForTimeout(e)) {

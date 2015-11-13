@@ -20,13 +20,25 @@ public enum TestCaseExecutionType {
     aggregatedTestCaseResult,
 
     /**
+     * Reports using the SHACL violation vocab but only severity, message and focusNode
+     */
+    shaclSimpleTestCaseResult,
+
+    /**
+     * Reports using the SHACL violation vocab with all annotations
+     */
+    shaclFullTestCaseResult,
+
+    /**
      * Reports at the violation instance level. For every erroneous resource
      * generates an RLog Entry
      */
+    @Deprecated
     rlogTestCaseResult,
 
     /**
      * Extendes the @rlogTestCaseResult by providing richer information about each resource
      */
+    @Deprecated
     extendedTestCaseResult
 }
