@@ -7,7 +7,6 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 @prefix prov: <http://www.w3.org/ns/prov#>.
-@prefix spin: <http://spinrdf.org/spin#> .
 @prefix dsp: <http://dublincore.org/dc-dsp#> .
 @prefix oslc: <http://open-services.net/ns/core#>.
 @prefix schema: <http://schema.org/> .

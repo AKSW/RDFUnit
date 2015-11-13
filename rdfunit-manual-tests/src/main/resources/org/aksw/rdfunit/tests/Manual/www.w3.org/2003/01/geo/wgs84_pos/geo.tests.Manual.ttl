@@ -9,8 +9,7 @@
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix spin: <http://spinrdf.org/spin#> .
-
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
 # geo:lat must be in the range [-90,90]
 rutt:geo-LITRAN-rangegeolatitude

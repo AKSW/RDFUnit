@@ -9,8 +9,7 @@
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix spin: <http://spinrdf.org/spin#> .
-
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
 # TODO Check this one (http://www.seco.tkk.fi/publications/2012/suominen-hyvonen-skosify-2012.pdf)
 # Missing language tags (equals dbo-CARD-rdfslabelforeachlanguage)
@@ -51,7 +50,7 @@ rutt:skos-ConseptSchemeWithoutRdfslabel
                                  ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue  <http://www.w3.org/2004/02/skos/core#prefLabel> ;
          #<http://www.w3.org/2000/01/rdf-schema#label> ,
     ];
@@ -76,7 +75,7 @@ rutt:skos-ConseptWithoutRdfslabel
                                  ?resource a <http://www.w3.org/2004/02/skos/core#Concept> . } """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty spin:violationPath ;
+	   rut:annotationProperty sh:predicate ;
 	   rut:annotationValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
 	   # <http://www.w3.org/2000/01/rdf-schema#label> ,
 	];

@@ -9,8 +9,7 @@
 @prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
 @prefix rutt: <http://rdfunit.aksw.org/data/tests#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix spin: <http://spinrdf.org/spin#> .
-
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
 
 # dbo:deathDate after dbo:birthDate
@@ -148,12 +147,12 @@ rutt:dbo-LITRAN-rangeheightperson
         rlog:WARN ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue <http://dbpedia.org/ontology/Person>
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?v1""";
     ];
     .

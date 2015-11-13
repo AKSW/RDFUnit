@@ -9,8 +9,7 @@
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix spin: <http://spinrdf.org/spin#> .
-@prefix nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .@prefix nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
 
 rutt:nif-Deprecated-schema
     a       rut:ManualTestCase ;
@@ -30,12 +29,12 @@ rutt:nif-Deprecated-schema
     rut:sparqlPrevalence """  """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?class""";
     ];
     .
@@ -61,12 +60,12 @@ rutt:nif-beginIndex-of-Context-MUST-be-zero
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?begin .} """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex>
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?begin""";
     ];
     .
@@ -97,12 +96,12 @@ rutt:nif-length-of-isString-equal-with-endIndex
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?length . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?length""";
     ];
     .
@@ -138,12 +137,12 @@ rutt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and
                                 ?resource <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?isString ]  . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?endIndex""";
     ];
     .
@@ -169,12 +168,12 @@ rutt:nif-string-length-not-zero
         } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?endIndex""";
     ];
     .
@@ -198,12 +197,12 @@ rutt:nif-rdftype-is-misspelled
                                 ?resource a ?class .  } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type ;
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?class""";
     ];
     .
@@ -227,7 +226,7 @@ rutt:nif-non-context-CString-must-have-explicit-referenceContext
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext>
     ];
     .
@@ -276,12 +275,12 @@ rutt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:missingValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString>;
     ];
     .
@@ -303,7 +302,7 @@ rutt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type
     ];
     .
@@ -325,12 +324,12 @@ rutt:nif-CString-is-abstract-it-SHOULD-not-be-serialized
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#CString>;
     ];
     .

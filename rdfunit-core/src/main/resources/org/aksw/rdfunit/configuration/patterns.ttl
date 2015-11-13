@@ -4,7 +4,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix spin: <http://spinrdf.org/spin#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
 
 ##########################################
@@ -27,12 +27,12 @@ rutp:RDFSRANGE a rut:Pattern ;
     rut:parameter rutp:RDFSRANGE-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?s"""
     ];
     .
@@ -65,7 +65,7 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
     rut:parameter rutp:RDFSRANGE-MISS-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -92,12 +92,12 @@ rutp:RDFSRANGED a rut:Pattern ;
     rut:parameter rutp:RDFSRANGED-D1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?c"""
     ];
     .
@@ -132,7 +132,7 @@ rutp:RDFSDOMAIN a rut:Pattern ;
     rut:parameter rutp:RDFSDOMAIN-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -167,7 +167,7 @@ rutp:RDFSDOMAIN-MISS a rut:Pattern ;
     rut:parameter rutp:RDFSDOMAIN-MISS-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -198,17 +198,17 @@ rutp:OWLDISJC a rut:Pattern ;
     rut:parameter rutp:OWLDISJC-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """%%T1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """%%T2%%"""
     ];
     .
@@ -237,12 +237,12 @@ rutp:OWLDISJP a rut:Pattern ;
     rut:parameter rutp:OWLDISJP-P2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?v"""
     ];
     .
@@ -273,7 +273,7 @@ rutp:OWLCARD a rut:Pattern ;
     rut:parameter rutp:OWLCARD-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -314,7 +314,7 @@ rutp:OWLCARDT a rut:Pattern ;
     rut:parameter rutp:OWLCARDT-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -362,7 +362,7 @@ rutp:OWLQCARDT a rut:Pattern ;
     rut:parameter rutp:OWLQCARDT-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -412,7 +412,7 @@ rutp:TYPRODEP a rut:Pattern ;
     rut:parameter rutp:TYPRODEP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -455,7 +455,7 @@ rutp:TYPROTYPEDEP a rut:Pattern ;
     rut:parameter rutp:TYPROTYPEDEP-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -494,12 +494,12 @@ rutp:INVFUNC a rut:Pattern ;
     rut:parameter rutp:INVFUNC-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?object"""
     ];
     .
@@ -528,12 +528,12 @@ rutp:INVFUNCT a rut:Pattern ;
     rut:parameter rutp:INVFUNCT-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?object"""
     ];
     .
@@ -564,12 +564,12 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
     rut:parameter rutp:OWLSYMMETRICPROP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:missingValue ;
+        rut:annotationProperty sh:expectedObject ;
         rut:annotationValue """?r1"""
     ];
     .
@@ -596,12 +596,12 @@ rutp:OWLASYMMETRICPROP a rut:Pattern ;
     rut:parameter rutp:OWLASYMMETRICPROP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?r2"""
     ];
     .
@@ -631,12 +631,12 @@ rutp:OWLTRANSPROP a rut:Pattern ;
     rut:parameter rutp:OWLTRANSPROP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:missingValue ;
+        rut:annotationProperty sh:expectedObject ;
         rut:annotationValue """?r3"""
     ];
     .
@@ -661,12 +661,12 @@ rutp:OWLIRREFLEXIVE a rut:Pattern ;
     rut:parameter rutp:OWLIRREFLEXIVE-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?resource"""
     ];
     .
@@ -697,12 +697,12 @@ rutp:COMP a rut:Pattern ;
     rut:parameter rutp:COMP-OP ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?beforeVal"""
     ];
     .
@@ -739,12 +739,12 @@ rutp:MATCH a rut:Pattern ;
     rut:parameter rutp:MATCH-REGEX ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?value"""
     ];
     .
@@ -787,12 +787,12 @@ rutp:LITRAN a rut:Pattern ;
     rut:parameter rutp:LITRAN-valueMax ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?value"""
     ];
     .
@@ -839,12 +839,12 @@ rutp:TYPDEP a rut:Pattern ;
     rut:parameter rutp:TYPDEP-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:missingValue ;
+        rut:annotationProperty sh:expectedObject ;
         rut:annotationValue """%%T2%%"""
     ];
     .
@@ -877,7 +877,7 @@ rutp:PVT a rut:Pattern ;
     rut:parameter rutp:PVT-P2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P2%%"""
     ];
     .
@@ -911,12 +911,12 @@ rutp:TRIPLE a rut:Pattern ;
     rut:parameter rutp:TRIPLE-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """%%V1%%"""
     ];
     .
@@ -950,7 +950,7 @@ rutp:TRIPLEDR a rut:Pattern ;
     rut:parameter rutp:TRIPLEDR-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -986,12 +986,12 @@ rutp:OBJFUNC a rut:Pattern ;
     rut:parameter rutp:OBJFUNC-FUNC ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?obj"""
     ];
     .
@@ -1032,12 +1032,12 @@ rutp:OBJFUNCD a rut:Pattern ;
     rut:parameter rutp:OBJFUNCD-FUNC ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?obj"""
     ];
     .
@@ -1082,12 +1082,12 @@ rutp:OBJVALIND a rut:Pattern ;
     rut:parameter rutp:OBJVALIND-VALUES ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?obj"""
     ];
     .
@@ -1129,12 +1129,12 @@ rutp:CHECKLANG a rut:Pattern ;
     rut:parameter rutp:CHECKLANG-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?c"""
     ];
     .
@@ -1173,17 +1173,17 @@ rutp:ONELANG a rut:Pattern ;
     rut:parameter rutp:ONELANG-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?c1"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?c2"""
     ];
     .
@@ -1216,17 +1216,17 @@ rutp:ONELANGGLOBAL a rut:Pattern ;
     rut:parameter rutp:ONELANGGLOBAL-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationPath ;
+        rut:annotationProperty sh:predicate ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?c1"""
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty spin:violationValue ;
+        rut:annotationProperty sh:object ;
         rut:annotationValue """?c2"""
     ];
     .

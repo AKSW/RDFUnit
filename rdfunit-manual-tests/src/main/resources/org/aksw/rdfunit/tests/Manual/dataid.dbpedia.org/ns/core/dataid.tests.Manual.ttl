@@ -9,5 +9,4 @@
 @prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
 @prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix spin: <http://spinrdf.org/spin#> .
-@prefix dataid: <http://dataid.dbpedia.org/ns/core#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .@prefix dataid: <http://dataid.dbpedia.org/ns/core#> .
