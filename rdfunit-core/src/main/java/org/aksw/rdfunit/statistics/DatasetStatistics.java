@@ -64,7 +64,7 @@ public abstract class DatasetStatistics {
                 if (qs.contains("count")) {
                     c = qs.get("count").asLiteral().getInt();
                 }
-                stats.put(s, new Long(c));
+                stats.put(s, (long) c);
             }
         } finally {
             if (qe != null) {

@@ -2,10 +2,7 @@ package org.aksw.rdfunit.io.format;
 
 import com.google.common.collect.Sets;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * <p>SerialiazationFormatFactory class.</p>
@@ -200,7 +197,7 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createTriX() {
         // RDF/XML -> input
-        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("trix"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Collections.singletonList("trix"));
         return new SerializationFormat(
                 "TriX", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.dataset, "trix", "application/trix", currentSynonyms);
 
@@ -214,7 +211,7 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createTriG() {
         // RDF/XML -> input
-        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("trig"));
+        HashSet<String> currentSynonyms = Sets.newHashSet(Collections.singletonList("trig"));
         return new SerializationFormat(
                 "TriG", SerializationFormatIOType.inputAndOutput, SerializationFormatGraphType.dataset, "trix", "application/x-trig", currentSynonyms);
 

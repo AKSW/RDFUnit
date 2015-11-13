@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +54,7 @@ public final class LOVEndpoint {
     public List<SchemaEntry> getAllLOVEntries() {
 
         List<SchemaEntry> lovEntries = new LinkedList<>();
-        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(lovEndpointURI, Arrays.asList(lovGraph));
+        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(lovEndpointURI, Collections.singletonList(lovGraph));
 
 
         try (QueryExecution qe = qef.createQueryExecution(lovSparqlQuery)) {

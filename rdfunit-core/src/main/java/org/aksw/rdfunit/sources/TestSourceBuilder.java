@@ -9,8 +9,8 @@ import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.io.reader.RDFStreamReader;
 
 import java.io.BufferedInputStream;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -172,7 +172,7 @@ public class TestSourceBuilder {
      * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
      */
     public TestSourceBuilder setReferenceSchemata(SchemaSource referenceSchema) {
-        this.referenceSchemata = Arrays.asList(referenceSchema);
+        this.referenceSchemata = Collections.singletonList(referenceSchema);
         return this;
     }
 

@@ -11,8 +11,8 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.SparqlUtils;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 
 /**
@@ -63,7 +63,7 @@ public class StatusTestExecutor extends TestExecutor {
             }
         }
 
-        return Arrays.<TestCaseResult>asList(new StatusTestCaseResult(testCase, status));
+        return Collections.<TestCaseResult>singletonList(new StatusTestCaseResult(testCase, status));
     }
 
 }

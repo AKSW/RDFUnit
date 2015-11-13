@@ -46,7 +46,7 @@ public class RDFUnit {
      * @param baseDirectory a {@link java.lang.String} object.
      */
     public RDFUnit(String baseDirectory) {
-        this(Arrays.asList(baseDirectory));
+        this(Collections.singletonList(baseDirectory));
     }
 
     /**

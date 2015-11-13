@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,7 +33,7 @@ public final class SimpleAnnotation {
      * @return a {@link org.aksw.rdfunit.model.helper.SimpleAnnotation} object.
      */
     public static SimpleAnnotation create(Property property, RDFNode rdfNode) {
-        return new SimpleAnnotation(property, Arrays.asList(rdfNode));
+        return new SimpleAnnotation(property, Collections.singletonList(rdfNode));
     }
 
     /**

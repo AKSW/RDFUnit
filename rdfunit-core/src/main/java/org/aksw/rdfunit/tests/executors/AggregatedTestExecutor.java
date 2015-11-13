@@ -14,8 +14,8 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.SparqlUtils;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -72,7 +72,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         }
 
         // No need to throw exception here, class supports status
-        return Arrays.<TestCaseResult>asList(new AggregatedTestCaseResult(testCase, total, prevalence));
+        return Collections.<TestCaseResult>singletonList(new AggregatedTestCaseResult(testCase, total, prevalence));
     }
 
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {
