@@ -81,6 +81,12 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
             testCaseLogLevel = RLOGLevel.resolve( smt.getObject().asResource().getURI());
         }
 
+        count = 0;
+        for (Statement smt : resource.listProperties(RDFUNITv.testGenerator).toList()) {
+            checkArgument(++count == 1, "Cannot have more than one rut:testGenerator in TestCaseAnnotation %s", resource.getURI());
+            testGenerator = smt.getObject().asResource().getURI();
+        }
+
         //references
         for (Statement smt : resource.listProperties(RDFUNITv.references).toList()) {
             referencesLst.add(smt.getObject().asResource().getURI());
@@ -90,6 +96,7 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
         for (Statement smt : resource.listProperties(RDFUNITv.resultAnnotation).toList()) {
             testAnnotations.add(ResultAnnotationReader.create().read(smt.getResource()));
         }
+
 
         return new TestCaseAnnotation(
                 resource, generated,
