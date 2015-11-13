@@ -17,7 +17,7 @@ import java.util.List;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
-public class PatternBatchReader {
+public final class PatternBatchReader {
 
     private PatternBatchReader(){}
 

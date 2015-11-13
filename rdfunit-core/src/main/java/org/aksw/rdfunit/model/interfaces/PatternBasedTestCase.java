@@ -17,11 +17,11 @@ public interface PatternBasedTestCase extends TestCase {
      *
      * @return a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      */
-    public Pattern getPattern();
+    Pattern getPattern();
     /**
      * <p>getBindings.</p>
      *
      * @return a {@link java.util.Collection} object.
      */
-    public Collection<Binding> getBindings();
+    Collection<Binding> getBindings();
 }

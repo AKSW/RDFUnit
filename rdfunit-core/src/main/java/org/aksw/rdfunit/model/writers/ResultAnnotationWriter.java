@@ -61,7 +61,7 @@ public final class ResultAnnotationWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(resultAnnotation, model);;
+        Resource resource = ElementWriterUtils.copyElementResourceInModel(resultAnnotation, model);
 
         // rdf:type sh:AnnotationProperty
         resource.addProperty(RDF.type, annotationClazz);

@@ -17,7 +17,7 @@ import java.util.List;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
-public class TestGeneratorBatchReader {
+public final class TestGeneratorBatchReader {
 
     private TestGeneratorBatchReader(){}
 

@@ -38,7 +38,7 @@ public final class TestGeneratorImpl implements TestGenerator {
     /**
      * <p>Constructor for TestGenerator.</p>
      *
-     * @param element
+     * @param element  the Resource
      * @param description a {@link java.lang.String} object.
      * @param query a {@link java.lang.String} object.
      * @param pattern a {@link Pattern} object.

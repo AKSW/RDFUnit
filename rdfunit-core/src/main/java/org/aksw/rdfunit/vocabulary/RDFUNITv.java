@@ -11,6 +11,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  * @since 6/17/15 6:43 PM
  * @version $Id: $Id
  */
+@SuppressWarnings("ClassWithTooManyFields")
 public final class RDFUNITv {
 
     //namespace

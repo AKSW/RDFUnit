@@ -33,7 +33,7 @@ public final class AnnotationTemplate {
      * @param minOccurs a int.
      */
     public void addTemplateMin(Property property, int minOccurs) {
-        template.put(property, Range.<Integer>atLeast(minOccurs));
+        template.put(property, Range.atLeast(minOccurs));
     }
 
     /**
@@ -43,7 +43,7 @@ public final class AnnotationTemplate {
      * @param maxOccurs a int.
      */
     public void addTemplateMax(Property property, int maxOccurs) {
-        template.put(property, Range.<Integer>atMost(maxOccurs));
+        template.put(property, Range.atMost(maxOccurs));
     }
 
     /**
@@ -54,7 +54,7 @@ public final class AnnotationTemplate {
      * @param maxOccurs a int.
      */
     public void addTemplateMinMax(Property property, int minOccurs, int maxOccurs) {
-        template.put(property, Range.<Integer>closed(minOccurs, maxOccurs));
+        template.put(property, Range.closed(minOccurs, maxOccurs));
     }
 
     /**

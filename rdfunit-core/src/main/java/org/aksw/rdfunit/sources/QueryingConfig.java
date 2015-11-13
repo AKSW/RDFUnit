@@ -13,7 +13,7 @@ final class QueryingConfig {
     /**
      * cache time to live (in ms), set to 1 week by default for endpoints
      */
-    private static final long CACHE_TTL = 7l * 24l * 60l * 60l * 1000l;
+    private static final long CACHE_TTL = 7L * 24L * 60L * 60L * 1000L;
 
     /**
      * Pagination for big results, set to 800 records by default for endpoints
@@ -23,7 +23,7 @@ final class QueryingConfig {
     /**
      * Delay between queries in a SPARQL Endpoint, set to 5 seconds by default for endpoints
      */
-    private static final long QUERY_DELAY = 5l * 1000l;
+    private static final long QUERY_DELAY = 5L * 1000L;
 
     /**
      * Pose a limit on the returned results. Limit to pagination by default for endpoints

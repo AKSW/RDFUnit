@@ -37,7 +37,6 @@ public class Binding implements Element {
      * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
      * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
-     * @throws org.aksw.rdfunit.exceptions.BindingException if any.
      */
     public Binding(Resource resource, PatternParameter parameter, RDFNode value) {
         this.resource = checkNotNull(resource, "Element must not be null");
@@ -104,9 +103,10 @@ public class Binding implements Element {
         if (pc.equals(PatternParameterConstraints.None)) {
             return true;
         }
-        if (value.isResource() && pc.equals(PatternParameterConstraints.Resource) ||
+        if (value.isResource() &&
+                (pc.equals(PatternParameterConstraints.Resource) ||
                 pc.equals(PatternParameterConstraints.Property) ||
-                pc.equals(PatternParameterConstraints.Class)) {
+                pc.equals(PatternParameterConstraints.Class))) {
             return true;
         }
         if (value.isLiteral() && pc.equals(PatternParameterConstraints.Operator)) {

@@ -34,7 +34,6 @@ public class TestCaseValidator {
     /**
      * <p>validateQueries.</p>
      *
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public void validate() {
         // TODO move this in a separate class

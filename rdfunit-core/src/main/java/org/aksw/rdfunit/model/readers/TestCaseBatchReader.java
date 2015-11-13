@@ -16,7 +16,7 @@ import java.util.Collection;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
-public class TestCaseBatchReader {
+public final class TestCaseBatchReader {
 
     private TestCaseBatchReader(){}
 

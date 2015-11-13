@@ -48,7 +48,6 @@ public final class PatternImpl implements Pattern {
 
             checkArgument(exists, "In Pattern %s parameter %s does not exist in query", name, p.getId());
         }
-;
     }
 
 

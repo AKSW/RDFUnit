@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 10/19/15 7:15 PM
  * @version $Id: $Id
  */
-public class ShapeReader implements ElementReader<Shape> {
+public final class ShapeReader implements ElementReader<Shape> {
 
     private ShapeReader() {
     }
