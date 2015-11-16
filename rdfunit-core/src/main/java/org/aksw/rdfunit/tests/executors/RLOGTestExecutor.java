@@ -27,7 +27,6 @@ import java.util.Collection;
  * @since 2 /2/14 4:25 PM
  * @version $Id: $Id
  */
-@Deprecated
 public class RLOGTestExecutor extends TestExecutor {
 
     /**

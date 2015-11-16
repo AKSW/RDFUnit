@@ -16,7 +16,6 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-@Deprecated
 public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
 
     /**

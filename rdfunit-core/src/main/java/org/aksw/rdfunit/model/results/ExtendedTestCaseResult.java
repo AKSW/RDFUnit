@@ -20,7 +20,6 @@ import java.util.*;
  * @since 2 /2/14 3:57 PM
  * @version $Id: $Id
  */
-@Deprecated
 public class ExtendedTestCaseResult extends RLOGTestCaseResult {
 
     private final Map<ResultAnnotation, Set<RDFNode>> variableAnnotationsMap;

@@ -15,7 +15,6 @@ import org.aksw.rdfunit.vocabulary.RLOG;
  * @since 2 /2/14 3:28 PM
  * @version $Id: $Id
  */
-@Deprecated
 public class RLOGTestCaseResult extends TestCaseResult {
 
     private final String resource;
