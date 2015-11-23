@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.5.7</vaadin.version>
+        <vaadin.version>7.5.9</vaadin.version>
     </properties>
     <repositories>
         <repository>
@@ -129,7 +129,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
-            <version>1.7.12</version>
+            <version>1.7.13</version>
         </dependency>
     </dependencies>
 
@@ -147,7 +147,7 @@
             <!-- directory is cleaned properly -->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>2.6.1</version>
+                <version>3.0.0</version>
                 <configuration>
                     <filesets>
                         <fileset>
