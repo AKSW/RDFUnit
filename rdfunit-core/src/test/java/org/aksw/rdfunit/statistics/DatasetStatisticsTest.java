@@ -24,8 +24,8 @@ public abstract class DatasetStatisticsTest {
 
     protected abstract DatasetStatistics getStatisticsObject();
 
-    protected Map<String, Integer> executeBasicTest() {
-        Map<String, Integer> stats = getStatisticsObject().getStatisticsMap(qef);
+    protected Map<String, Long> executeBasicTest() {
+        Map<String, Long> stats = getStatisticsObject().getStatisticsMap(qef);
         assertEquals(getExteptedItems(), stats.size());
 
         return stats;

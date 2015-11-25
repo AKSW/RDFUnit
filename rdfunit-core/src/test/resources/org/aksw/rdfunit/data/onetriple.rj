@@ -1,0 +1,11 @@
+
+{
+  "http://rdfunit.aksw.org" : {
+    "http://www.w3.org/2002/07/owl#sameAs" : [ {
+        "value" : "http://dbpedia.org/resource/Cool",
+        "type" : "uri"
+        }
+      
+      ]
+    }
+  }

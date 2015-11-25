@@ -1,0 +1,105 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix rutg:    <http://rdfunit.aksw.org/data/generators#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rut:    <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+# geo:lat must be in the range [-90,90]
+rutt:geo-LITRAN-rangegeolatitude
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "geo:lat must be in the range -90 to 90";
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:LITRAN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "[]" ;
+                rut:parameter rutp:LITRAN-T1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+                rut:parameter rutp:LITRAN-P1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "!" ;
+                rut:parameter rutp:LITRAN-NOP
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "-90" ;
+                rut:parameter rutp:LITRAN-valueMin
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "90" ;
+                rut:parameter rutp:LITRAN-valueMax
+              ] ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+    rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    rut:testCaseLogLevel
+            rlog:ERROR .
+
+
+# geo:long must be in the range [-180,180]
+rutt:geo-LITRAN-rangegeolongtitude
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "geo:lat must be in the range -180 to 180";
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:LITRAN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "[]" ;
+                rut:parameter rutp:LITRAN-T1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+                rut:parameter rutp:LITRAN-P1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "!" ;
+                rut:parameter rutp:LITRAN-NOP
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "-180" ;
+                rut:parameter rutp:LITRAN-valueMin
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "180" ;
+                rut:parameter rutp:LITRAN-valueMax
+              ] ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#long> ;
+    rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    rut:testCaseLogLevel
+            rlog:ERROR .
+
+
+# geo:geometry should be a soft inverseFunctional property
+rutt:geo-INVFUNC-uniquegeometry
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "Resources with the exact same coordinates should be the same";
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:INVFUNC ;
+    rut:binding
+            [ a       rut:Binding ;
+              rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+              rut:parameter rutp:INVFUNC-P1
+            ] ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#geometry> ;
+    rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    rut:testCaseLogLevel
+            rlog:WARN .

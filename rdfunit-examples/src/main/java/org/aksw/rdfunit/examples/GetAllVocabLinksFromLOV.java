@@ -10,10 +10,11 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -23,14 +24,21 @@ import java.io.OutputStream;
  *
  * @author Dimitris Kontokostas
  * @since 1/9/15 2:59 PM
+ * @version $Id: $Id
  */
 public class GetAllVocabLinksFromLOV {
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @throws java.lang.Exception if any.
+     */
     public static void main(String[] args) throws Exception {
         RDFUnitUtils.fillSchemaServiceFromLOV();
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RULE_INF, ModelFactory.createDefaultModel());
         for (SchemaSource schema : SchemaService.getSourceListAll(false,null)){
-            QueryExecutionFactory qef = schema.getExecutionFactory();
+            QueryExecutionFactory qef = new QueryExecutionFactoryModel(schema.getModel());
 
             String queryString = PrefixNSService.getSparqlPrefixDecl() +
                     " SELECT DISTINCT ?s ?p ?o WHERE { " +

@@ -3,16 +3,16 @@ package org.aksw.rdfunit.validate.ws;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.model.interfaces.TestGenerator;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestAutoGenerator;
-import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.aksw.rdfunit.validate.utils.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
@@ -42,13 +42,13 @@ public class ValidateWS extends RDFUnitWebService {
     // TODO: pass dataFolder in configuration initialization
     private final String dataFolder = "data/";
     private final String testFolder = dataFolder + "tests/";
-    private Collection<TestAutoGenerator> autogenerators;
+    private Collection<TestGenerator> autogenerators;
 
     /** {@inheritDoc} */
     @Override
     public void init() throws ServletException {
         RDFUnitUtils.fillSchemaServiceFromLOV();
-        RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/schemaDecl.csv"));
+        RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
         try {
             RDFUnit rdfunit = new RDFUnit();
             rdfunit.init();

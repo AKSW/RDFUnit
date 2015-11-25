@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.enums;
 
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * <p>TestAppliesTo class.</p>

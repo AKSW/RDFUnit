@@ -2,17 +2,17 @@ package org.aksw.rdfunit.tests.executors;
 
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
-import org.aksw.rdfunit.Utils.SparqlUtils;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.results.StatusTestCaseResult;
+import org.aksw.rdfunit.model.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
-import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
+import org.aksw.rdfunit.utils.SparqlUtils;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 
 /**
@@ -63,7 +63,7 @@ public class StatusTestExecutor extends TestExecutor {
             }
         }
 
-        return Arrays.<TestCaseResult>asList(new StatusTestCaseResult(testCase, status));
+        return Collections.<TestCaseResult>singletonList(new StatusTestCaseResult(testCase, status));
     }
 
 }

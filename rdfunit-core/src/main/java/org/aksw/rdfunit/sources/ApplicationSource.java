@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.sources;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 
 /**
@@ -11,16 +10,25 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
  * @since 9/16/13 1:57 PM
  * @version $Id: $Id
  */
-public class ApplicationSource extends Source {
+public class ApplicationSource implements Source {
 
-    /**
-     * <p>Constructor for ApplicationSource.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     */
-    public ApplicationSource(String prefix, String uri) {
-        super(prefix, uri);
+
+    private final SourceConfig sourceConfig;
+
+    ApplicationSource(String prefix, String uri) {
+        this.sourceConfig = new SourceConfig(prefix, uri);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getPrefix() {
+        return sourceConfig.getPrefix();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getUri() {
+        return sourceConfig.getUri();
     }
 
     /** {@inheritDoc} */
@@ -29,9 +37,5 @@ public class ApplicationSource extends Source {
         return TestAppliesTo.Application;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    protected QueryExecutionFactory initQueryFactory() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+
 }

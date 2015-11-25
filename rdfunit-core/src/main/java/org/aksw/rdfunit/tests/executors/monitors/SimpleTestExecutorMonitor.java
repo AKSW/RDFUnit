@@ -7,23 +7,24 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.model.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.results.StatusTestCaseResult;
+import org.aksw.rdfunit.model.results.TestCaseResult;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.tests.TestSuite;
-import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.tests.results.DatasetOverviewResults;
-import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A simple test executor monitor. This is used in the CLI version
@@ -42,7 +43,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
     final private Model model;
     final private String executionUUID;
 
-    private Source testedDataset;
+    private TestSource testedDataset;
     private TestSuite testSuite;
     private TestCaseExecutionType executionType;
 
@@ -142,7 +143,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
             //Get item
             TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
-            assert (result != null);
+            checkNotNull(result);
 
             if (result instanceof StatusTestCaseResult) {
                 statusResult = true;

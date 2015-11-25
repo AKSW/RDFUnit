@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.services;
 
-import org.aksw.rdfunit.Utils.CacheUtils;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.SourceFactory;
+import org.aksw.rdfunit.sources.SchemaSourceFactory;
+import org.aksw.rdfunit.utils.CacheUtils;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
@@ -34,6 +34,11 @@ public final class SchemaService {
     private SchemaService() {
     }
 
+    /**
+     * <p>getSize.</p>
+     *
+     * @return a int.
+     */
     public static int getSize() {return schemata.size();}
 
     /**
@@ -106,7 +111,7 @@ public final class SchemaService {
         if (namespace == null) {
             // If not a prefix try to dereference it
             if (prefix.contains("/") || prefix.contains("\\")) {
-                return SourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(prefix), prefix);
+                return SchemaSourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(prefix), prefix);
             } else {
                 return null;
             }
@@ -117,15 +122,15 @@ public final class SchemaService {
 
         if (isDefinedBy != null && !isDefinedBy.isEmpty()) {
             if (baseFolder != null) {
-                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace, isDefinedBy);
+                return SchemaSourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace, isDefinedBy);
             } else {
-                return SourceFactory.createSchemaSourceDereference(prefix, namespace, isDefinedBy);
+                return SchemaSourceFactory.createSchemaSourceDereference(prefix, namespace, isDefinedBy);
             }
         } else {
             if (baseFolder != null) {
-                return SourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace);
+                return SchemaSourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace);
             } else {
-                return SourceFactory.createSchemaSourceDereference(prefix, namespace);
+                return SchemaSourceFactory.createSchemaSourceDereference(prefix, namespace);
             }
         }
     }

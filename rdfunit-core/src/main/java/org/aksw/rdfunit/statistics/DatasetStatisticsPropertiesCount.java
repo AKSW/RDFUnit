@@ -1,12 +1,13 @@
 package org.aksw.rdfunit.statistics;
 
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
  * Description
  *
  * @author Dimitris Kontokostas
  * @since 6/27/15 1:02 PM
+ * @version $Id: $Id
  */
 public class DatasetStatisticsPropertiesCount extends DatasetStatistics {
 
@@ -18,6 +19,7 @@ public class DatasetStatisticsPropertiesCount extends DatasetStatistics {
             "     ?s ?stats ?o . } " +
             " GROUP BY ?stats ";
 
+    /** {@inheritDoc} */
     @Override
     public String getStatisticsQuery() {
         return propertyStatsSPARQLwithCounts;

@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.5-SNAPSHOT</version>
+        <version>0.7.21-SNAPSHOT</version>
     </parent>
 
     <artifactId>rdfunit-examples</artifactId>
@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-resources</artifactId>
+            <artifactId>rdfunit-manual-tests</artifactId>
         </dependency>
 
         <dependency>
@@ -53,12 +53,51 @@
 
     <build>
         <plugins>
-            <plugin>
-
-                <!-- Skip deployment as maven -->
+            <!-- Skip deployment as maven -->
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.7</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin-->
+            <!--plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <configuration>
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                </configuration>
+            </plugin-->
+
+            <!--plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-jar-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <formats>jar</formats>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.aksw.rdfunit.examples.DBpediaMappingValidator</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>DBpediaMappingValidator</finalName>
+                </configuration>
+            </plugin-->
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
                 </configuration>

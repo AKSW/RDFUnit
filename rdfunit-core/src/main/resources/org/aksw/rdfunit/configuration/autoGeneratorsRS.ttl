@@ -1,0 +1,278 @@
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix schema: <http://schema.org/> .
+@prefix oslc:      <http://open-services.net/ns/core#> .
+
+############################################
+### Generates test cases for Types Shapes
+### see http://www.w3.org/Submission/2014/SUBM-shapes-20140211/#associating-and-applying-shapes
+############################################
+
+# OSLC oslc:range (a single range)
+# Class range wrongly defined (single range)
+rutg:OSLCRANGEC a rut:TestGenerator ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)""" ;
+    rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
+								?s a oslc:ResourceShape ;
+                                   oslc:describes ?class ; # we work only on typed classes
+                                   oslc:property ?rsp .
+                                ?rsp oslc:propertyDefinition ?P1 ;
+                                     oslc:range ?T1 .
+
+                                # don't check for general classes (and oslc:Any)
+	                            FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+	                            # Keep unique ranges only
+                                FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
+                                                    FILTER (?T1 != ?T2)
+                                }
+	                            BIND (concat(str(?P1),' does not have correct range: ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# Class range missing (single range)
+rutg:OSLCRANGEC-MISS a rut:TestGenerator ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is missing)""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
+                                ?s a oslc:ResourceShape ;
+	                               oslc:describes ?class ; # we work only on typed classes
+	                               oslc:property ?rsp .
+	                            ?rsp oslc:propertyDefinition ?P1 ;
+	                                 oslc:range ?T1 .
+
+                                # don't check for general classes
+                                FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+                                # Keep unique ranges only
+                                FILTER NOT EXISTS {?s oslc:property/oslc:range ?T2 .
+                                                    FILTER (?T1 != ?T2)
+                                }
+
+                                BIND (concat(str(?P1),' does not have correct range: ', str(?T1)) AS ?DESCRIPTION)}  """ ;
+    rut:basedOnPattern rutp:RDFSRANGE-MISS ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# OSLC oslc:valueShape (still like range on typed shapes)
+rutg:OSLCVALUESHAPE a rut:TestGenerator ;
+    dcterms:description """Generate all oslc:range constrains defined in a schema (when range is wrongly defined)""" ;
+    rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
+								?s a oslc:ResourceShape ;
+                                   oslc:describes ?class ; # we work only on typed classes
+                                   oslc:property ?rsp .
+                                ?rsp oslc:propertyDefinition ?P1 ;
+                                     oslc:valueShape/oslc:describes ?T1 .
+
+                                # don't check for general classes (and oslc:Any)
+	                            FILTER (  ?T1 NOT IN ( oslc:Any, owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+	                            # Keep unique ranges only
+                                FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
+                                                    FILTER (?T1 != ?T2)
+                                }
+	                            BIND (concat(str(?P1),' does not have correct range: ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+#############
+# oslc:occurs (oslc:Exactly-one / oslc:One-or-many / oslc:Zero-or-many / oslc:Zero-or-one)
+
+# oslc:Exactly-one / oslc:One-or-many (must exist at least once)
+
+rutg:OSLCCARDEX a rut:TestGenerator ;
+    dcterms:description """ Generates owl:cardinality constrains. We ensure that the property exists at least once""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
+							 ?s a oslc:ResourceShape ;
+                                oslc:describes ?T1 ; # we work only on typed classes
+                                oslc:property ?rsp .
+                             ?rsp oslc:propertyDefinition ?P1 ;
+                                 oslc:occurs ?occurs .
+                             FILTER (?occurs IN (oslc:Exactly-one, oslc:One-or-many)) .
+							 BIND ( concat('Cardinality of ',  str(?P1),' is 0 for type ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+#oslc:Exactly-one (ensure only one)
+rutg:OSLCCARD a rut:TestGenerator ;
+    dcterms:description """Generates owl:cardinality constrains defined in a schema""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('!=' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
+							 ?s a oslc:ResourceShape ;
+                                oslc:describes ?T1 ; # we work only on typed classes
+                                oslc:property ?rsp .
+                             ?rsp oslc:propertyDefinition ?P1 ;
+                                 oslc:occurs oslc:Exactly-one .
+							 BIND ( concat('Cardinality of ',  str(?P1),' different from 1 for type ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# oslc:Zero-or-one
+rutg:OSLCGARD-MAX a rut:TestGenerator ;
+    dcterms:description """Generates owl:cardinality constrains defined in a schema""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) ('1'  as ?V1) ?DESCRIPTION WHERE {
+							 ?s a oslc:ResourceShape ;
+	                            oslc:describes ?T1 ; # we work only on typed classes
+	                            oslc:property ?rsp .
+	                         ?rsp oslc:propertyDefinition ?P1 ;
+                                oslc:occurs oslc:Zero-or-one .
+							 BIND ( concat('Cardinality of ',  str(?P1),' higher than 1 for type ', str(?T1)) AS ?DESCRIPTION) .} """ ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
+############################
+# oslc:valueType
+############################
+
+
+# Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
+rutg:OSLCRANGEL a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isIRI' as ?FUNC) ?DESCRIPTION where {
+                              ?s a oslc:ResourceShape ;
+                                 oslc:describes ?T1 ; # we work only on typed classes
+                                 oslc:property ?rsp .
+                              ?rsp oslc:propertyDefinition ?P1 ;
+                                   oslc:valueType  ?valueType .
+                              FILTER (?valueType NOT IN (oslc:AnyResource, oslc:LocalResource, oslc:Resource) )
+                              BIND (concat(str(?P1),' does contain a literal value') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+# Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
+rutg:OSLCRANGEI a rut:TestGenerator ;
+    dcterms:description """Check all defined IRIs if they are indeed literals""" ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isLiteral' as ?FUNC) ?DESCRIPTION where {   # isLiteral instead of isIRI because of blank nodes
+                             ?s a oslc:ResourceShape ;
+                                oslc:describes ?T1 ; # we work only on typed classes
+                                oslc:property ?rsp .
+                             ?rsp oslc:propertyDefinition ?P1 ;
+                                  oslc:valueType ?valueType .
+                             FILTER (?valueType IN (oslc:AnyResource, oslc:LocalResource, oslc:Resource) )
+                             BIND (concat(str(?P1),' does contain a literal value') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+# Datatype range (TODO check domain as well / needs new pattern)
+rutg:OSLCRANGED a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
+                             ?s a oslc:ResourceShape ;
+                                oslc:describes ?class ; # we work only on typed classes
+                                oslc:property ?rsp .
+                             ?rsp oslc:propertyDefinition ?P1 ;
+                                  oslc:valueType ?D1 .
+                             FILTER (?D1 NOT IN ( oslc:AnyResource, oslc:LocalResource, oslc:Resource) )
+                             BIND (concat(str(?P1),' does not have datatype: ', str(?D1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGED ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# Check for blank nodes (oslc:valueType oslc:LocalResource)
+rutg:OSLCRANGE-BLANK a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('!' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
+                              ?s a oslc:ResourceShape ;
+	                             oslc:describes ?T1 ; # we work only on typed classes
+	                             oslc:property ?rsp .
+	                          ?rsp oslc:propertyDefinition ?P1 ;
+	                               oslc:valueType  oslc:LocalResource .
+                              BIND (concat(str(?P1),' does contain a blank node (local resource)') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+# Check for non-blank nodes (oslc:valueType oslc:Resource => must not be a blank node)
+rutg:OSLCRANGE-RES a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ('' as ?NEG) ('isBlank' as ?FUNC) ?DESCRIPTION where {
+                              ?s a oslc:ResourceShape ;
+                                 oslc:describes ?T1 ; # we work only on typed classes
+                                 oslc:property ?rsp .
+                              ?rsp oslc:propertyDefinition ?P1 ;
+                                   oslc:valueType  oslc:Resource .
+                              BIND (concat(str(?P1),' does contain a blank node (local resource)') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNCD ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+
+############################
+# OSLC allowedValue / allowedValues
+############################
+
+# Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
+rutg:OSLCALLOWEDVAL a rut:TestGenerator ;
+    dcterms:description """Check all defined Literals if they are indeed literals""" ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
+	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {
+									select distinct ?T1 ?P1 ( ?term as ?VALUE) WHERE {
+	                                    ?s a oslc:ResourceShape ;
+	                                        oslc:describes ?T1 ; # we work only on typed classes
+	                                        oslc:property ?rsp .
+	                                    ?rsp oslc:propertyDefinition ?P1 ;
+	                                        (oslc:allowedValue)|(oslc:allowedValues/oslc:allowedValue) ?v .
+
+	                                    BIND ( IF( ! isLiteral(?v),
+	                                            CONCAT ('<',str(?v), '>') ,   # if not literal, construct IRI
+	                                            CONCAT ( '"', str(?v), '"',
+	                                             IF ( str(lang(?v)) != '' , CONCAT('@',str(lang(?v))), '') ,
+	                                             IF ( str(lang(?v)) = '' && str(datatype(?v)) != '' , CONCAT('^^<',str(datatype(?v)), '>' ), '')))
+	                                             as ?term )
+	                                    } }
+	                            GROUP BY ?T1  ?P1 }
+	                         FILTER (bound (?VALUES) && str(?VALUES) != '')
+                             BIND (concat(str(?P1),' not is predefined values: ', str(?VALUES)) AS ?DESCRIPTION) }""" ;
+    rut:basedOnPattern rutp:OBJVALIND ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+
+# TODO OSLC oslc:maxSize (has to be xsd:string)
+

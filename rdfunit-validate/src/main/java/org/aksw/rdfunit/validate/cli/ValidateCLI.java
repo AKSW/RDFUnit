@@ -5,22 +5,24 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.Utils.RDFWriterFactory;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
+import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.writer.RDFMultipleWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RDFWriterFactory;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.writers.TestCaseWriter;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.aksw.rdfunit.validate.utils.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
@@ -29,6 +31,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * <p>ValidateCLI class.</p>
@@ -77,9 +81,9 @@ public class ValidateCLI {
                 displayHelpAndExit();
             }
         }
-        assert (configuration != null);
+        checkNotNull (configuration );
 
-        if (!RDFUnitUtils.fileExists(configuration.getDataFolder())) {
+        if (!IOUtils.isFile(configuration.getDataFolder())) {
             log.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
             System.exit(1);
         }
@@ -119,7 +123,7 @@ public class ValidateCLI {
         }
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
-        assert (testExecutor != null);
+        checkNotNull(testExecutor);
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results
@@ -145,14 +149,14 @@ public class ValidateCLI {
 
         // Calculate coverage
         if (configuration.isCalculateCoverageEnabled()) {
-            Model model = ModelFactory.createDefaultModel();
-            PrefixNSService.setNSPrefixesInModel(model);
+            Model testSuiteModel = ModelFactory.createDefaultModel();
+            PrefixNSService.setNSPrefixesInModel(testSuiteModel);
             for (TestCase ut : testSuite.getTestCases()) {
-                model.add(ut.getUnitTestModel());
+                TestCaseWriter.create(ut).write(testSuiteModel);
             }
 
             TestCoverageEvaluator tce = new TestCoverageEvaluator();
-            tce.calculateCoverage(new QueryExecutionFactoryModel(model), dataset.getPrefix() + ".property.count", dataset.getPrefix() + ".class.count");
+            tce.calculateCoverage(new QueryExecutionFactoryModel(testSuiteModel), configuration.getTestSource().getExecutionFactory());
         }
     }
 

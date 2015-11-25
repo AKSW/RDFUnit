@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.tests.TestSuite;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
 
 import java.util.Collection;
 
@@ -21,6 +21,7 @@ import java.util.Collection;
 public interface TestExecutorMonitor {
     /**
      * Called when testing starts
+     *
      *  @param testSource   the dataset
      * @param testSuite the test suite
      */

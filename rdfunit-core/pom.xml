@@ -4,28 +4,13 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.7.5-SNAPSHOT</version>
+        <version>0.7.21-SNAPSHOT</version>
     </parent>
 
     <artifactId>rdfunit-core</artifactId>
     <name>RDFUnit - Core</name>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-utils</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-io</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-resources</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.aksw.jena-sparql-api</groupId>
@@ -51,6 +36,15 @@
             <artifactId>jena-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.semarglproject</groupId>
+            <artifactId>semargl-jena</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -61,38 +55,60 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
+        <!-- testing -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
+            <!-- Test-only dependency to unit test the manual tests -->
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-manual-tests</artifactId>
             <scope>test</scope>
         </dependency>
 
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/resources/org/aksw/rdfunit</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>../</directory>
+                                    <includes>
+                                        <include>ns/core.ttl</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

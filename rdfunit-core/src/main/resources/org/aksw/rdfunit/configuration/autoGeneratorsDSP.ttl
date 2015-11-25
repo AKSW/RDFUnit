@@ -1,0 +1,317 @@
+@prefix rutp: <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutg: <http://rdfunit.aksw.org/data/generators#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix schema: <http://schema.org/> .
+@prefix dsp:      <http://dublincore.org/dc-dsp#> .
+
+
+
+
+##########################################
+#### DSP class standalone
+##########################################
+
+rutg:DSPSTANDALONE a rut:TestGenerator ;
+    dcterms:description """Standalone class constrant, instances of a class cannot have any other properties""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('' as ?NOT) ('?p1' as ?P1) ?DESCRIPTION WHERE {
+							 ?s a dsp:DescriptionTemplate ;
+                                dsp:standalone "true"^^xsd:boolean ;
+                                dsp:resourceClass ?T1 .
+							 BIND ( concat('Instances of class ',  str(?T1),' are not allowed to have any properties') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
+##########################################
+#### TODO: DSP class min occurs
+##########################################
+
+
+##########################################
+#### TODO: DSP class max occurs
+##########################################
+
+
+##########################################
+#### DSP Statement Template (with Class) min occurs)
+##########################################
+
+# dsp:minOccur number > 0 (count restriction if exists)
+rutg:DSPM-OCCURS-MIN a rut:TestGenerator ;
+    dcterms:description """Generates owl:minCardinality constrains defined in a schema""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('<' as ?OP) (str(?v)  as ?V1) ?DESCRIPTION WHERE {
+							?s a dsp:DescriptionTemplate ;
+								dsp:resourceClass ?T1 ;
+								dsp:statementTemplate ?templ.
+							?templ dsp:minOccur ?v;
+                                dsp:property ?P1 .
+                            FILTER (?v > 0)
+							BIND ( concat('Cardinality of ',  str(?P1),' lower than ', str(?v), ' for type ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# dsp:minOccur number > 0 (exists in db)
+rutg:DSPM-OCCURSX-MIN a rut:TestGenerator ;
+    dcterms:description """ Generates owl:minCardinality constrains. We ensure that the property exists at least once""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ('NOT' as ?NOT) ?P1 ?DESCRIPTION WHERE {
+							 ?s a dsp:DescriptionTemplate ;
+                                dsp:resourceClass ?T1 ;
+                                dsp:statementTemplate ?templ.
+                             ?templ dsp:minOccur ?v;
+                                dsp:property ?P1 .
+                             FILTER (?v > 0)
+							 BIND ( concat("Cardinality of ",  str(?P1)," lower than ", str(?v), " for type ", str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+##########################################
+#### DSP Statement Template (with Class) max occurs)
+##########################################
+
+
+# owl:manCardinality number > 0 (count restriction if exists)
+rutg:DSPCGARD-MAX a rut:TestGenerator ;
+    dcterms:description """Generates owl:cardinality constrains defined in a schema""" ;
+    rut:sparqlGenerator """ SELECT DISTINCT ?T1 ?P1 ('>' as ?OP) (str(?v)  as ?V1) ?DESCRIPTION WHERE {
+							  ?s a dsp:DescriptionTemplate ;
+	                             dsp:resourceClass ?T1 ;
+	                             dsp:statementTemplate ?templ.
+	                          ?templ dsp:maxOccur ?v;
+	                             dsp:property ?P1 .
+	                          FILTER (?v > 0 ) .
+							  BIND ( concat('Cardinality of ',  str(?P1),' higher than ', str(?v), ' for type ', str(?T1)) AS ?DESCRIPTION) .} """ ;
+    rut:basedOnPattern rutp:OWLCARDT ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# owl:maxCardinality number = 0 (must not exist)
+rutg:DSPCARD-MAX0 a rut:TestGenerator ;
+    dcterms:description """ Generates owl:cardinality constrains. We ensure that the cardinality < 0""" ;
+    rut:sparqlGenerator """  SELECT DISTINCT ?T1 ('' as ?NOT) ?P1 ?DESCRIPTION WHERE {
+							 ?s a dsp:DescriptionTemplate ;
+	                             dsp:resourceClass ?T1 ;
+	                             dsp:statementTemplate ?templ.
+	                          ?templ dsp:maxOccur ?v;
+	                             dsp:property ?P1 .
+                              FILTER (?v = 0) .
+							  BIND ( concat('Cardinality of ',  str(?P1),' higher than ', str(?v), ' for type ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:TYPRODEP ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
+##########################################
+#### TODO: DSP Statement Template valueClass (like range)
+##########################################
+
+
+# Class range wrongly defined (single range)
+rutg:DSPRANGEC a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is wrongly defined)""" ;
+    rut:sparqlGenerator """ select distinct ?P1  ?T1  ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T1 .
+
+	                            # don't check for datatypes / literals here
+                                FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Literal }
+                                FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Datatype }
+                                FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* schema:DataType }
+
+                                # don't check for general classes
+	                            FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+	                            # Keep unique ranges only
+                                FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
+                                                    FILTER (?T1 != ?T2)
+                                }
+	                            BIND (concat(str(?P1),' has different range from: ', str(?T1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGE ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# Class range missing (single range)
+rutg:DSPRANGEC-MISS a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range constrains defined in a schema (when range is missing)""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ?DESCRIPTION where {
+                                ?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T1 .
+
+                                # don't check for datatypes / literals here
+                                FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Literal }
+                                FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* rdfs:Datatype }
+                                FILTER NOT EXISTS {?T1 rdf:type/rdfs:subClassOf* schema:DataType }
+
+                                # don't check for general classes
+                                FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdf:Resource, rdf:Class, rdf:Property, schema:Property, schema:Class ))
+
+                                # Keep unique ranges only
+                                FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:nonLiteralConstraint/dsp:valueClass ?T2 .
+                                                    FILTER (?T1 != ?T2)
+                                }
+
+                                BIND (concat(str(?P1),' does not have defined range: ', str(?T1)) AS ?DESCRIPTION)}  """ ;
+    rut:basedOnPattern rutp:RDFSRANGE-MISS ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:WARN] ;
+    .
+
+# TODO DSP value min occurs
+# TODO DSP value max occurs
+# TODO dsp:subPropertyOf
+# TODO dsp:vocabularyEncodingScheme
+
+##########################################
+# dsp:literalConstraint => must be Literal
+##########################################
+
+# no domain check mandatory  (TODO Check with domain as well?)
+rutg:DSPLITERAL a rut:TestGenerator ;
+    dcterms:description """Checks if a property is Literal""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ('' as ?NEG) ('isIRI' as ?FUNC)  ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint ?x .
+
+                                FILTER NOT EXISTS {?s dsp:resourceClass ?x}
+	                            BIND (concat(str(?P1),' should be a literal') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:OBJFUNC ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+##########################################
+# dsp:literalConstraint -> dsp:literal
+##########################################
+
+# Check for Literal (if not in oslc:AnyResource, oslc:LocalResource, oslc:Resource, then it's a literal)
+rutg:DSPLITERAL-VAL a rut:TestGenerator ;
+    dcterms:description """Check if a literal is in the defined values""" ;
+    rut:sparqlGenerator """ select distinct ?T1 ?P1 ?NOT ?VALUES ?DESCRIPTION where { {
+	                            select distinct ?T1 ?P1 (' NOT ' as ?NOT) (GROUP_CONCAT(?VALUE ; separator=" , ") as ?VALUES)  WHERE {
+									select distinct ?T1 ?P1 ( ?term as ?VALUE) WHERE {
+	                                    ?s a dsp:DescriptionTemplate .
+	                                    ?s dsp:resourceClass ?T1 .
+                                        ?s dsp:statementTemplate/dsp:property ?P1 .
+                                        ?s dsp:statementTemplate/dsp:literalConstraint/dsp:literal ?v .
+
+	                                    BIND ( IF( ! isLiteral(?v),
+	                                            CONCAT ('<',str(?v), '>') ,   # if not literal, construct IRI
+	                                            CONCAT ( '"', str(?v), '"',
+	                                             IF ( str(lang(?v)) != '' , CONCAT('@',str(lang(?v))), '') ,
+                                                 IF ( str(lang(?v)) = '' && str(datatype(?v)) != '' , CONCAT('^^<',str(datatype(?v)), '>' ), '')))
+	                                             as ?term )
+	                                    } }
+	                            GROUP BY ?T1  ?P1 }
+	                         FILTER (bound (?VALUES) && str(?VALUES) != "")
+                             BIND (concat(str(?P1)," not is predefined values: ", str(?VALUES)) AS ?DESCRIPTION) }""" ;
+    rut:basedOnPattern rutp:OBJVALIND ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+	.
+
+
+##########################################
+# dsp:literalConstraint -> dsp:languageOccurrence     => "mandatory" / "optional" / "disallowed"
+##########################################
+
+# TODO make pattern for lang in domain
+
+# no domain check mandatory
+rutg:DSPLANG-OC-MAND a rut:TestGenerator ;
+    dcterms:description """dsp:languageOccurrence -> mandatory constraint generation""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ('=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint/dsp:languageOccurrence ?lang .
+
+                                FILTER NOT EXISTS {?s dsp:resourceClass ?x}
+
+	                            FILTER ( str(?lang) = 'mandatory' )
+	                            BIND (concat(str(?P1),' does not have language defined') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+# no domain check disallowed
+rutg:DSPLANG-OC-DIS a rut:TestGenerator ;
+    dcterms:description """dsp:languageOccurrence -> disallowed constraint generation""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) ('' as ?V1) ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint/dsp:languageOccurrence ?lang .
+
+                                FILTER NOT EXISTS {?s dsp:resourceClass ?x}
+
+	                            FILTER ( str(?lang) = 'disallowed' )
+	                            BIND (concat(str(?P1),' language is disallowed') AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+##########################################
+# dsp:literalConstraint -> dsp:language
+##########################################
+# TODO check with domain as well? (needs new pattern)
+# TODO check multiple languages
+# no domain check disallowed
+rutg:DSPLANG a rut:TestGenerator ;
+    dcterms:description """ Check if the property has the correct language""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ('!=' as ?OP) (str(?lang) as ?V1) ?DESCRIPTION where {
+								?s a dsp:DescriptionTemplate .
+                                ?s dsp:statementTemplate/dsp:property ?P1 .
+                                ?s dsp:statementTemplate/dsp:literalConstraint/dsp:language ?lang .
+
+                                #FILTER NOT EXISTS {?s dsp:statementTemplate/dsp:literalConstraint/dsp:language ?lang2 .
+                                #                    FILTER (?lang != ?lang2)}
+
+	                            BIND (concat(str(?P1),' language is different from: ', str(?lang)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:CHECKLANG ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    .
+
+
+
+# TODO dsp:literalConstraint -> dsp:syntaxEncodingSchemeOccurrence
+# TODO dsp:ValueURIOccurrence
+# TODO dsp:ValueStringConstraint

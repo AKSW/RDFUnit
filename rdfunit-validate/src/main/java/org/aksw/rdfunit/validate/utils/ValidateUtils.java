@@ -42,7 +42,7 @@ public class ValidateUtils {
      * @throws org.apache.commons.cli.ParseException if any.
      */
     public static CommandLine parseArguments(String[] args) throws ParseException {
-        CommandLineParser cliParser = new GnuParser();
+        CommandLineParser cliParser = new DefaultParser();
         return cliParser.parse(getCliOptions(), args);
     }
 
@@ -120,9 +120,11 @@ public class ValidateUtils {
         }
 
         //Endpoint initialization
-        String endpointURI = commandLine.getOptionValue("e");
-        Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
-        configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
+        if (commandLine.hasOption('e')) {
+            String endpointURI = commandLine.getOptionValue("e");
+            Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
+            configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
+        }
 
         if (commandLine.hasOption("s")) {
             try {
@@ -146,12 +148,18 @@ public class ValidateUtils {
         TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
         if (commandLine.hasOption("r")) {
             String rl = commandLine.getOptionValue("r", "aggregate");
-            switch (rl) {
+            switch (rl.toLowerCase()) {
                 case "status":
                     resultLevel = TestCaseExecutionType.statusTestCaseResult;
                     break;
                 case "aggregate":
                     resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
+                    break;
+                case "shacl-lite":
+                    resultLevel = TestCaseExecutionType.shaclSimpleTestCaseResult;
+                    break;
+                case "shacl":
+                    resultLevel = TestCaseExecutionType.shaclFullTestCaseResult;
                     break;
                 case "rlog":
                     resultLevel = TestCaseExecutionType.rlogTestCaseResult;

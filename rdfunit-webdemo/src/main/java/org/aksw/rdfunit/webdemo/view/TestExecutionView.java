@@ -4,24 +4,24 @@ import com.vaadin.server.ConnectorResource;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.rdfunit.Utils.RDFUnitUtils;
-import org.aksw.rdfunit.Utils.RDFWriterFactory;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFStreamWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RDFWriterFactory;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.model.results.StatusTestCaseResult;
+import org.aksw.rdfunit.model.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
-import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.tests.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
-import org.aksw.rdfunit.tests.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.tests.results.StatusTestCaseResult;
-import org.aksw.rdfunit.tests.results.TestCaseResult;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
@@ -83,10 +83,10 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
         execTypeSelect.setItemCaption(TestCaseExecutionType.statusTestCaseResult, "Status (all)");
         execTypeSelect.addItem(TestCaseExecutionType.aggregatedTestCaseResult);
         execTypeSelect.setItemCaption(TestCaseExecutionType.aggregatedTestCaseResult, "Counts (all)");
-        execTypeSelect.addItem(TestCaseExecutionType.rlogTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.rlogTestCaseResult, "Resources");
-        execTypeSelect.addItem(TestCaseExecutionType.extendedTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.extendedTestCaseResult, "Annotated Res.");
+        execTypeSelect.addItem(TestCaseExecutionType.shaclSimpleTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclSimpleTestCaseResult, "Resources");
+        execTypeSelect.addItem(TestCaseExecutionType.shaclFullTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclFullTestCaseResult, "Annotated Res.");
 
         // Select turtle
         execTypeSelect.setNullSelectionAllowed(false);
@@ -305,7 +305,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                             frame.setWidth("100%");
                             frame.setHeight("100%");
                             inner.addComponent(frame);
-                            if (execTypeSelect.getValue().equals(TestCaseExecutionType.extendedTestCaseResult)) {
+                            if (execTypeSelect.getValue().equals(TestCaseExecutionType.shaclFullTestCaseResult)) {
                                 Notification.show(
                                         "Annotated results don't support HTML",
                                         "This will fall back to simple 'Resources' HTML report\n" +

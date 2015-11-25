@@ -2,15 +2,14 @@ package org.aksw.rdfunit;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.Utils.PatternUtils;
-import org.aksw.rdfunit.Utils.TestGeneratorUtils;
 import org.aksw.rdfunit.io.reader.*;
-import org.aksw.rdfunit.patterns.Pattern;
+import org.aksw.rdfunit.model.interfaces.Pattern;
+import org.aksw.rdfunit.model.interfaces.TestGenerator;
+import org.aksw.rdfunit.model.readers.PatternBatchReader;
+import org.aksw.rdfunit.model.readers.TestGeneratorBatchReader;
 import org.aksw.rdfunit.services.PatternService;
-import org.aksw.rdfunit.tests.TestAutoGenerator;
-import org.aksw.rdfunit.utils.PrefixNSService;
+import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +27,9 @@ public class RDFUnit {
 
     private final Collection<String> baseDirectories;
 
-    private volatile Collection<TestAutoGenerator> autoGenerators;
+    private volatile Collection<TestGenerator> autoGenerators;
     private volatile Collection<Pattern> patterns;
-    private volatile QueryExecutionFactory patternQueryFactory;
+    private volatile QueryExecutionFactoryModel patternQueryFactory;
 
     /**
      * <p>Constructor for RDFUnit.</p>
@@ -47,7 +46,7 @@ public class RDFUnit {
      * @param baseDirectory a {@link java.lang.String} object.
      */
     public RDFUnit(String baseDirectory) {
-        this(Arrays.asList(baseDirectory));
+        this(Collections.singletonList(baseDirectory));
     }
 
     /**
@@ -78,7 +77,7 @@ public class RDFUnit {
 
         // Update pattern service
         for (Pattern pattern : getPatterns()) {
-            PatternService.addPattern(pattern.getId(), pattern);
+            PatternService.addPattern(pattern.getId(),pattern.getIRI(), pattern);
         }
     }
 
@@ -86,7 +85,7 @@ public class RDFUnit {
         if (patterns == null) {
             patterns =
                     Collections.unmodifiableCollection(
-                            PatternUtils.instantiatePatternsFromModel(patternQueryFactory));
+                            PatternBatchReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
         }
         return patterns;
     }
@@ -96,11 +95,11 @@ public class RDFUnit {
      *
      * @return a {@link java.util.Collection} object.
      */
-    public synchronized Collection<TestAutoGenerator> getAutoGenerators() {
+    public synchronized Collection<TestGenerator> getAutoGenerators() {
         if (autoGenerators == null) {
             autoGenerators =
                     Collections.unmodifiableCollection(
-                            TestGeneratorUtils.instantiateTestGeneratorsFromModel(patternQueryFactory));
+                            TestGeneratorBatchReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
         }
         return autoGenerators;
     }
@@ -111,7 +110,7 @@ public class RDFUnit {
             String normalizedBaseDir = (baseDirectory.endsWith("/") ? baseDirectory : baseDirectory + "/");
             readers.add(new RDFStreamReader(normalizedBaseDir + relativeName));
         }
-        readers.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/" + relativeName));
+        readers.add(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/configuration/" + relativeName));
         return new RDFFirstSuccessReader(readers);
     }
 

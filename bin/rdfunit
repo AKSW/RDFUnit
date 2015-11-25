@@ -22,6 +22,7 @@ if [ ! -d "rdfunit-validate/target" ]; then
   mvn -pl rdfunit-validate -am clean install \
   -Dmaven.test.skip=true \
   -Dmaven.javadoc.skip=true \
+  -Dgpg.skip=true \
   -Dsource.skip=true
   echo "Compiling finished..."
 fi

@@ -14,7 +14,7 @@ import java.util.Map;
  * Generates property and class statistics for a QEF
  *
  * @author Dimitris Kontokostas
- * @version $Id: $Id
+ * @version $Id : $Id
  * @since 6 /16/14 1:27 PM
  */
 public abstract class DatasetStatistics {
@@ -22,34 +22,34 @@ public abstract class DatasetStatistics {
     private static final Logger log = LoggerFactory.getLogger(DatasetStatistics.class);
 
 
+    /**
+     * Gets statistics query.
+     *
+     * @return the statistics query
+     */
     protected abstract String getStatisticsQuery();
 
 
     /**
      * Returns a map with statistics according to the current execution query.
      *
+     * @param qef the qef
      * @return a Map, if doGetCounts is false, the number defaults to 0
      */
-    public Map<String, Integer> getStatisticsMap(QueryExecutionFactory qef) {
+    public Map<String, Long> getStatisticsMap(QueryExecutionFactory qef) {
 
         return getStats(getStatisticsQuery(), qef);
 
     }
 
+    /**
+     * Instantiates a new Dataset statistics.
+     */
     public DatasetStatistics() {
     }
 
-    /**
-     * Gets stats.
-     *
-     * @param sparqlQuery the sparql query
-     * @return the stats
-     */
-/*
-    * helper function to get any stats
-    * */
-    private Map<String, Integer> getStats(String sparqlQuery, QueryExecutionFactory qef) {
-        Map<String, Integer> stats = new HashMap<>();
+    private Map<String, Long> getStats(String sparqlQuery, QueryExecutionFactory qef) {
+        Map<String, Long> stats = new HashMap<>();
 
         QueryExecution qe = null;
         try {
@@ -64,7 +64,7 @@ public abstract class DatasetStatistics {
                 if (qs.contains("count")) {
                     c = qs.get("count").asLiteral().getInt();
                 }
-                stats.put(s, c);
+                stats.put(s, (long) c);
             }
         } finally {
             if (qe != null) {

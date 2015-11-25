@@ -5,10 +5,13 @@
 *.project
 *.settings
 .idea
+.idea/
 *.deb
 *.changes
 *jar-with-dependencies.jar
 target
+log
+*/log/
 pom.xml.releaseBackup
 dependency-reduced-pom.xml
 

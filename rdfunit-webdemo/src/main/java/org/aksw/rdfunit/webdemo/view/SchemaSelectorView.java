@@ -11,7 +11,7 @@ import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.SourceFactory;
+import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.SchemaOption;
@@ -348,7 +348,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                 }
                 try {
                     String oficialFormat = FormatService.getInputFormat(format).getName();
-                    SchemaSource source = SourceFactory.createSchemaSourceFromText("http://rdfunit.aksw.org/CustomConstraint#", text, oficialFormat);
+                    SchemaSource source = SchemaSourceFactory.createSchemaSourceFromText("http://rdfunit.aksw.org/CustomConstraint#", text, oficialFormat);
                     configuration.setSchemata(Arrays.asList(source));
                 } catch (NullPointerException e) {
                     this.setMessage("Unknown error, try again", true);

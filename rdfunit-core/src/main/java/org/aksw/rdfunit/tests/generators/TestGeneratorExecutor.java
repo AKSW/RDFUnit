@@ -1,24 +1,26 @@
 package org.aksw.rdfunit.tests.generators;
 
-import org.aksw.rdfunit.Utils.CacheUtils;
-import org.aksw.rdfunit.Utils.TestGeneratorUtils;
-import org.aksw.rdfunit.Utils.TestUtils;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.io.reader.RDFStreamReader;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
+import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestGenerator;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
-import org.aksw.rdfunit.tests.TestAutoGenerator;
-import org.aksw.rdfunit.tests.TestCase;
-import org.aksw.rdfunit.tests.TestSuite;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
+import org.aksw.rdfunit.utils.CacheUtils;
+import org.aksw.rdfunit.utils.TestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 
 /**
@@ -44,7 +46,7 @@ public class TestGeneratorExecutor {
     }
 
     /**
-     * TestAutoGenerator constructor
+     * TestGenerator constructor
      * TODO: loadFromCache does not make sense if useAutoTests is false
      *
      * @param useAutoTests a boolean.
@@ -57,10 +59,10 @@ public class TestGeneratorExecutor {
         this.useManualTests = useManualTests;
 
         // no auto && no manual tests do not make sense
-        assert (useAutoTests || useManualTests);
+        checkArgument(useAutoTests || useManualTests);
 
         // no auto && cache does not make sense TODO fix this
-        assert (useAutoTests || !loadFromCache);
+        checkArgument(useAutoTests || !loadFromCache);
     }
 
     private final Collection<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<>();
@@ -80,9 +82,9 @@ public class TestGeneratorExecutor {
      * @param testFolder a {@link java.lang.String} object.
      * @param dataset a {@link org.aksw.rdfunit.sources.Source} object.
      * @param autoGenerators a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.tests.TestSuite} object.
+     * @return a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
      */
-    public TestSuite generateTestSuite(String testFolder, Source dataset, Collection<TestAutoGenerator> autoGenerators) {
+    public TestSuite generateTestSuite(String testFolder, TestSource dataset, Collection<TestGenerator> autoGenerators) {
 
         Collection<SchemaSource> sources = dataset.getReferencesSchemata();
 
@@ -124,7 +126,7 @@ public class TestGeneratorExecutor {
         return new TestSuite(allTests);
     }
 
-    private Collection<TestCase> generateAutoTestsForSchemaSource(String testFolder, SchemaSource s, Collection<TestAutoGenerator> autoGenerators) {
+    private Collection<TestCase> generateAutoTestsForSchemaSource(String testFolder, SchemaSource s, Collection<TestGenerator> autoGenerators) {
         Collection<TestCase> tests = new ArrayList<>();
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -143,7 +145,7 @@ public class TestGeneratorExecutor {
 
         } catch (RDFReaderException e) {
             // cannot read from file  / generate
-            Collection<TestCase> testsAuto = TestGeneratorUtils.instantiateTestsFromAG(autoGenerators, s);
+            Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RDFFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
             log.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
