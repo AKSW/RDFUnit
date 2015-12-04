@@ -52,7 +52,7 @@ public class RDFHTMLResultsShaclWriter extends RDFHTMLResultsWriter {
                 " SELECT DISTINCT ?level ?message ?resource ?testcase WHERE {" +
                 " ?s a sh:ValidationResult ; " +
                 "    sh:severity ?level ;" +
-                "    sh:message:message ?message ; " +
+                "    sh:message ?message ; " +
                 "    sh:focusNode ?resource ; " +
                 "    rut:testCase ?testcase ; " +
                 //"    prov:wasGeneratedBy <" + testExecutionURI + "> " +
