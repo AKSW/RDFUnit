@@ -83,10 +83,14 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
         execTypeSelect.setItemCaption(TestCaseExecutionType.statusTestCaseResult, "Status (all)");
         execTypeSelect.addItem(TestCaseExecutionType.aggregatedTestCaseResult);
         execTypeSelect.setItemCaption(TestCaseExecutionType.aggregatedTestCaseResult, "Counts (all)");
+        execTypeSelect.addItem(TestCaseExecutionType.rlogTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.rlogTestCaseResult, "Resources");
+        execTypeSelect.addItem(TestCaseExecutionType.extendedTestCaseResult);
+        execTypeSelect.setItemCaption(TestCaseExecutionType.extendedTestCaseResult, "Annotated Res.");
         execTypeSelect.addItem(TestCaseExecutionType.shaclSimpleTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclSimpleTestCaseResult, "Resources");
+        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclSimpleTestCaseResult, "SHACL (simple)");
         execTypeSelect.addItem(TestCaseExecutionType.shaclFullTestCaseResult);
-        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclFullTestCaseResult, "Annotated Res.");
+        execTypeSelect.setItemCaption(TestCaseExecutionType.shaclFullTestCaseResult, "SHACL (full)");
 
         // Select turtle
         execTypeSelect.setNullSelectionAllowed(false);
