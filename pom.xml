@@ -18,6 +18,9 @@
         <!--module>rdfunit-webdemo</module--> <!-- removed from aggregation, kept as inheritance -->
         <module>rdfunit-examples</module>
         <module>rdfunit-junit</module>
+        <module>rdfunit-model</module>
+        <module>rdfunit-io</module>
+        <module>rdfunit-utils</module>
 
     </modules>
 
@@ -68,6 +71,24 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-io</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
@@ -135,6 +156,15 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>4.0</version>
             </dependency>
+
+            <!-- Guava -->
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>18.0</version>
+            </dependency>
+
 
             <!-- logging -->
             <dependency>

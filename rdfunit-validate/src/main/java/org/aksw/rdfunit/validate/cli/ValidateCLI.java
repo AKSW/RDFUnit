@@ -9,10 +9,10 @@ import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.io.writer.RDFHtmlWriterFactory;
 import org.aksw.rdfunit.io.writer.RDFMultipleWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
-import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
@@ -135,7 +135,7 @@ public class ValidateCLI {
 
         ArrayList<RDFWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
-            outputWriters.add(RDFWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getTestCaseExecutionType()));
+            outputWriters.add(RDFHtmlWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getTestCaseExecutionType()));
         }
 
         RDFWriter resultWriter = new RDFMultipleWriter(outputWriters);

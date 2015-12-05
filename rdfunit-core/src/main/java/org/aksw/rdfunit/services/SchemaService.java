@@ -3,7 +3,7 @@ package org.aksw.rdfunit.services;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
-import org.aksw.rdfunit.utils.CacheUtils;
+import org.aksw.rdfunit.utils.UriToPathUtils;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
@@ -111,7 +111,7 @@ public final class SchemaService {
         if (namespace == null) {
             // If not a prefix try to dereference it
             if (prefix.contains("/") || prefix.contains("\\")) {
-                return SchemaSourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(prefix), prefix);
+                return SchemaSourceFactory.createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(prefix), prefix);
             } else {
                 return null;
             }
