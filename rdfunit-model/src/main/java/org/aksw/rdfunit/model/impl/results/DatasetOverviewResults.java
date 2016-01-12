@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model.interfaces.results;
+package org.aksw.rdfunit.model.impl.results;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 

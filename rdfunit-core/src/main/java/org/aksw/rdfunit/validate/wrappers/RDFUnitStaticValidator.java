@@ -4,7 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
-import org.aksw.rdfunit.model.interfaces.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.executors.TestExecutor;

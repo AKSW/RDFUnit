@@ -10,7 +10,7 @@ import org.aksw.rdfunit.model.interfaces.Element;
  * @author Dimitris Kontokostas
  * @since 8/21/15 11:06 PM
  */
-final class ElementWriterUtils {
+final public class ElementWriterUtils {
     private ElementWriterUtils() {}
 
     /**

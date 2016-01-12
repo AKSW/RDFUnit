@@ -12,6 +12,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 import java.util.Calendar;
@@ -49,7 +50,7 @@ public abstract class TestCaseResultImpl implements TestCaseResult {
     public Resource serialize(Model model, String testExecutionURI) {
         return model.createResource(testExecutionURI + "/" + JenaUUID.generate().asString())
                 .addProperty(RDF.type, RDFUNITv.TestCaseResult)
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasGeneratedBy")), model.createResource(testExecutionURI))
+                .addProperty(PROV.wasGeneratedBy, model.createResource(testExecutionURI))
                 .addProperty(RDFUNITv.testCase, model.createResource(getTestCaseUri()))
                 .addProperty(DCTerms.date, model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;

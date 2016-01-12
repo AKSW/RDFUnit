@@ -4,6 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.impl.results.StatusTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -63,7 +64,7 @@ public class StatusTestExecutor extends TestExecutor {
             }
         }
 
-        return Collections.<TestCaseResult>singletonList(new StatusTestCaseResult(testCase, status));
+        return Collections.<TestCaseResult>singletonList(new StatusTestCaseResultImpl(testCase, status));
     }
 
 }

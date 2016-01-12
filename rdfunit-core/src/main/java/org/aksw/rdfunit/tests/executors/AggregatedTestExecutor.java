@@ -7,6 +7,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.impl.results.AggregatedTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -72,7 +73,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         }
 
         // No need to throw exception here, class supports status
-        return Collections.<TestCaseResult>singletonList(new AggregatedTestCaseResult(testCase, total, prevalence));
+        return Collections.<TestCaseResult>singletonList(new AggregatedTestCaseResultImpl(testCase, total, prevalence));
     }
 
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {

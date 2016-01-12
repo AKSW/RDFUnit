@@ -12,13 +12,14 @@ import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
+import org.aksw.rdfunit.vocabulary.PROV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,11 +189,11 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
         execution
                 .addProperty(RDF.type, getModel().createResource(PrefixNSService.getURIFromAbbrev("rut:TestExecution")))
-                .addProperty(RDF.type, getModel().createResource(PrefixNSService.getURIFromAbbrev("prov:Activity")))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:used")), testSuiteResource)
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:startedAtTime")),
+                .addProperty(RDF.type, PROV.Activity)
+                .addProperty(PROV.used, testSuiteResource)
+                .addProperty(PROV.startedAtTime,
                         ResourceFactory.createTypedLiteral("" + overviewResults.getStartTime(), XSDDatatype.XSDdateTime))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:endedAtTime")),
+                .addProperty(PROV.endedAtTime,
                         ResourceFactory.createTypedLiteral("" + overviewResults.getEndTime(), XSDDatatype.XSDdateTime))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:source")),
                         getModel().createResource(testedDataset.getUri()))
@@ -208,7 +209,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                         ResourceFactory.createTypedLiteral("" + overviewResults.getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("rut:totalIndividualErrors")),
                         ResourceFactory.createTypedLiteral("" + overviewResults.getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger))
-                .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasStartedBy")),
+                .addProperty(PROV.wasStartedBy,
                         getModel().createResource(userID));
 
 
