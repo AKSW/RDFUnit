@@ -42,7 +42,6 @@ public class SimpleShaclTestCaseResult extends TestCaseResultImpl {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult)
                 .addProperty(RDF.type, SHACL.ValidationResult)
                 .addProperty(SHACL.focusNode, model.createResource(getResource()))    //TODO double check later, might not always be the current resource
                 .addProperty(SHACL.message, getMessage())

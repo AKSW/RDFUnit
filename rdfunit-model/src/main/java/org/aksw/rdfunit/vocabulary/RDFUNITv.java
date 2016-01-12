@@ -43,6 +43,8 @@ public final class RDFUNITv {
     public static final Resource AggregatedTestResult = resource("AggregatedTestResult");
     /** Constant <code>ExtendedTestCaseResult</code> */
     public static final Resource ExtendedTestCaseResult = resource("ExtendedTestCaseResult");
+    public static final Resource TestExecution = resource("TestExecution");
+
 
 
 
@@ -99,6 +101,15 @@ public final class RDFUNITv {
     public static final Property resultCount = property("resultCount");
     /** Constant <code>resultPrevalence</code> */
     public static final Property resultPrevalence = property("resultPrevalence");
+
+    public static final Property testsRun = property("testsRun");
+    public static final Property testsSuceedded = property("testsSuceedded");
+    public static final Property testsFailed = property("testsFailed");
+    public static final Property testsTimeout = property("testsTimeout");
+    public static final Property testsError = property("testsError");
+    public static final Property totalIndividualErrors = property("totalIndividualErrors");
+    public static final Property executionType = property("executionType");
+
 
 
     private RDFUNITv() {

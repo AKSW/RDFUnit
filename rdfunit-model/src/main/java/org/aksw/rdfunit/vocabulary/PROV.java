@@ -30,6 +30,8 @@ public final class PROV {
     public static final Property endedAtTime = property("endedAtTime");
     public static final Property wasStartedBy = property("wasStartedBy");
     public static final Property hadMember = property("hadMember");
+    public static final Property wasAssociatedWith = property("wasAssociatedWith");
+
 
 
 
