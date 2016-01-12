@@ -12,6 +12,7 @@
     <url>http://github.org/AKSW/RDFUnit</url>
 
     <modules>
+        <module>rdfunit-commons</module>
         <module>rdfunit-core</module>
         <module>rdfunit-manual-tests</module>
         <module>rdfunit-validate</module>
@@ -20,8 +21,6 @@
         <module>rdfunit-junit</module>
         <module>rdfunit-model</module>
         <module>rdfunit-io</module>
-        <module>rdfunit-utils</module>
-
     </modules>
 
     <issueManagement>
@@ -74,7 +73,7 @@
 
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
-                <artifactId>rdfunit-utils</artifactId>
+                <artifactId>rdfunit-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

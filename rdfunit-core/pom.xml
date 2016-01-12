@@ -14,7 +14,7 @@
 
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
-            <artifactId>rdfunit-utils</artifactId>
+            <artifactId>rdfunit-commons</artifactId>
         </dependency>
 
         <dependency>

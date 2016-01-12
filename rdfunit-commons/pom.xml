@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rdfunit-utils</artifactId>
-    <name>RDFUnit - Utils</name>
+    <artifactId>rdfunit-commons</artifactId>
+    <name>RDFUnit - Commons</name>
 
 
     <dependencies>
