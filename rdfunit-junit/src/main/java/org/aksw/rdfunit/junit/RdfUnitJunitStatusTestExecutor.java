@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.junit;
 
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.model.results.TestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.tests.executors.RLOGTestExecutor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
 

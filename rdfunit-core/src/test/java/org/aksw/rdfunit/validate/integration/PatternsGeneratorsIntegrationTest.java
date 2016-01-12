@@ -5,7 +5,7 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
-import org.aksw.rdfunit.model.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.interfaces.results.DatasetOverviewResults;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;

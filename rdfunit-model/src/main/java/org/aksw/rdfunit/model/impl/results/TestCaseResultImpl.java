@@ -1,5 +1,6 @@
-package org.aksw.rdfunit.model.results;
+package org.aksw.rdfunit.model.impl.results;
 
+import com.google.common.base.Optional;
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -9,6 +10,7 @@ import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -21,7 +23,8 @@ import java.util.Calendar;
  * @since 1 /2/14 3:44 PM
  * @version $Id: $Id
  */
-public abstract class TestCaseResult {
+public abstract class TestCaseResultImpl implements TestCaseResult {
+    private final String testCaseUri;
     private final TestCase testCase;
     private final XSDDateTime timestamp;
 
@@ -30,7 +33,8 @@ public abstract class TestCaseResult {
      *
      * @param testCase the test case this result is erlated with
      */
-    protected TestCaseResult(TestCase testCase) {
+    protected TestCaseResultImpl(TestCase testCase) {
+        this.testCaseUri = testCase.getTestURI();
         this.testCase = testCase;
         this.timestamp = new XSDDateTime(Calendar.getInstance());
     }
@@ -46,25 +50,19 @@ public abstract class TestCaseResult {
         return model.createResource(testExecutionURI + "/" + JenaUUID.generate().asString())
                 .addProperty(RDF.type, RDFUNITv.TestCaseResult)
                 .addProperty(ResourceFactory.createProperty(PrefixNSService.getURIFromAbbrev("prov:wasGeneratedBy")), model.createResource(testExecutionURI))
-                .addProperty(RDFUNITv.testCase, model.createResource(getTestCase().getTestURI()))
+                .addProperty(RDFUNITv.testCase, model.createResource(getTestCaseUri()))
                 .addProperty(DCTerms.date, model.createTypedLiteral(this.getTimestamp(), XSDDatatype.XSDdateTime))
                 ;
     }
 
-    /**
-     * Gets the associated test case.
-     *
-     * @return the test case
-     */
-    public TestCase getTestCase() {
-        return testCase;
+    public String getTestCaseUri() {
+        return testCaseUri;
     }
 
-    /**
-     * Gets the result timestamp.
-     *
-     * @return the timestamp
-     */
+    public Optional<TestCase> getTestCase() {
+        return Optional.fromNullable(testCase);
+    }
+
     public XSDDateTime getTimestamp() {
         return timestamp;
     }

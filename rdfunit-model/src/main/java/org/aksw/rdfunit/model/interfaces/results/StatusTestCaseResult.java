@@ -1,10 +1,11 @@
-package org.aksw.rdfunit.model.results;
+package org.aksw.rdfunit.model.interfaces.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.impl.results.TestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -16,7 +17,7 @@ import org.aksw.rdfunit.vocabulary.RDFUNITv;
  * @since 1 /6/14 3:26 PM
  * @version $Id: $Id
  */
-public class StatusTestCaseResult extends TestCaseResult {
+public class StatusTestCaseResult extends TestCaseResultImpl {
     private final TestCaseResultStatus status;
 
     /**
@@ -36,8 +37,8 @@ public class StatusTestCaseResult extends TestCaseResult {
         return super.serialize(model, testExecutionURI)
                 .addProperty(RDF.type, RDFUNITv.StatusTestCaseResult)
                 .addProperty(RDFUNITv.resultStatus, model.createResource(getStatus().getUri()))
-                .addProperty(DCTerms.description, getTestCase().getResultMessage())
-                .addProperty(RDFUNITv.testCaseLogLevel, model.createResource(getTestCase().getLogLevel().getUri()))
+                .addProperty(DCTerms.description, getTestCase().get().getResultMessage())
+                .addProperty(RDFUNITv.testCaseLogLevel, model.createResource(getTestCase().get().getLogLevel().getUri()))
                 ;
     }
 

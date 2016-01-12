@@ -1,21 +1,22 @@
-package org.aksw.rdfunit.model.results;
+package org.aksw.rdfunit.model.interfaces.results;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
+import org.aksw.rdfunit.model.impl.results.TestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
-import org.aksw.rdfunit.vocabulary.SHACL;
+import org.aksw.rdfunit.vocabulary.RLOG;
 
 /**
- * The Simplefied SHACL result that contains only message, severity and focusNode
+ * The type RLOG test case result.
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:28 PM
  * @version $Id: $Id
  */
-public class SimpleShaclTestCaseResult extends TestCaseResult {
+public class RLOGTestCaseResult extends TestCaseResultImpl {
 
     private final String resource;
     private final String message;
@@ -29,7 +30,7 @@ public class SimpleShaclTestCaseResult extends TestCaseResult {
      * @param message  the message
      * @param logLevel the log level
      */
-    public SimpleShaclTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
+    public RLOGTestCaseResult(TestCase testCase, String resource, String message, RLOGLevel logLevel) {
         super(testCase);
 
         this.resource = resource;
@@ -41,11 +42,11 @@ public class SimpleShaclTestCaseResult extends TestCaseResult {
     @Override
     public Resource serialize(Model model, String testExecutionURI) {
         return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult)
-                .addProperty(RDF.type, SHACL.ValidationResult)
-                .addProperty(SHACL.focusNode, model.createResource(getResource()))    //TODO double check later, might not always be the current resource
-                .addProperty(SHACL.message, getMessage())
-                .addProperty(SHACL.severity, model.createResource(getLogLevel().getUri()))
+                .addProperty(RDF.type, RDFUNITv.RLOGTestCaseResult)
+                .addProperty(RDF.type, RLOG.Entry)
+                .addProperty(RLOG.resource, model.createResource(getResource()))
+                .addProperty(RLOG.message, getMessage())
+                .addProperty(RLOG.level, model.createResource(getLogLevel().getUri()))
                 ;
     }
 

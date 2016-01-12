@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model.results;
+package org.aksw.rdfunit.model.interfaces.results;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -80,6 +80,12 @@ public class AggregatedTestCaseResult extends StatusTestCaseResult {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + getTestCase().getAbrTestURI();
+
+        String localTestUri = getTestCaseUri();
+        if (getTestCase().isPresent()) {
+            localTestUri = getTestCase().get().getAbrTestURI();
+        }
+
+        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + localTestUri;
     }
 }
