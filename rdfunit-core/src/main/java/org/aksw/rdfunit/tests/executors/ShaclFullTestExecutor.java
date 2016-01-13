@@ -43,8 +43,7 @@ public class ShaclFullTestExecutor extends ExtendedTestExecutor {
                                 res.getMessage(),
                                 ((ExtendedTestCaseResult) res).getFailingResource(),
                                 ((ExtendedTestCaseResult) res).getResultAnnotations()));
-                                //((ExtendedTestCaseResult) res).getResource(),
-                                //((ExtendedTestCaseResult) res).getResultAnnotations()));
+
             }
             else {
                 resultsCopy.add(res);
