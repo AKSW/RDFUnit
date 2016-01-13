@@ -243,7 +243,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         if(isIgnored(child)) {
             notifier.fireTestIgnored(describeChild(child));
         } else {
-            this.runLeaf(new RLOGStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
+            this.runLeaf(new ShaclResultStatement(rdfUnitJunitStatusTestExecutor, child), describeChild(child), notifier);
         }
     }
 

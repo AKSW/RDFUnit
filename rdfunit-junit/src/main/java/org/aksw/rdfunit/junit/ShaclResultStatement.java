@@ -15,12 +15,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Michael Leuthold
  * @version $Id: $Id
  */
-class RLOGStatement extends Statement {
+class ShaclResultStatement extends Statement {
 
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor;
     private final RdfUnitJunitTestCase testCase;
 
-    RLOGStatement(RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor, RdfUnitJunitTestCase testCase) {
+    ShaclResultStatement(RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor, RdfUnitJunitTestCase testCase) {
         this.rdfUnitJunitStatusTestExecutor = rdfUnitJunitStatusTestExecutor;
         this.testCase = testCase;
     }
