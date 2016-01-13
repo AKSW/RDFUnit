@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.helper.SimpleAnnotation;
+import org.aksw.rdfunit.model.interfaces.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -24,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2 /2/14 3:57 PM
  * @version $Id: $Id
  */
-public class ExtendedTestCaseResultImpl extends RLOGTestCaseResultImpl {
+public class ExtendedTestCaseResultImpl extends RLOGTestCaseResultImpl implements ExtendedTestCaseResult {
 
     private final ImmutableSet<SimpleAnnotation> resultAnnotations;
 

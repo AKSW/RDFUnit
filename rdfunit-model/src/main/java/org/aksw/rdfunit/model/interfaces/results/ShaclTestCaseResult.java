@@ -5,7 +5,7 @@ import org.aksw.rdfunit.model.helper.SimpleAnnotation;
 
 import java.util.Set;
 
-public interface ShaclTestCaseResult extends ExtendedTestCaseResult {
+public interface ShaclTestCaseResult extends SimpleShaclTestCaseResult {
     Set<SimpleAnnotation> getResultAnnotations();
 
 }
