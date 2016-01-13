@@ -9,7 +9,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
+import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 /**
@@ -89,10 +89,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
     @Override
     public String toString() {
 
-        String localTestUri = getTestCaseUri();
-        if (getTestCase().isPresent()) {
-            localTestUri = getTestCase().get().getAbrTestURI();
-        }
+        String localTestUri = getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"); ;
 
         return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + localTestUri;
     }

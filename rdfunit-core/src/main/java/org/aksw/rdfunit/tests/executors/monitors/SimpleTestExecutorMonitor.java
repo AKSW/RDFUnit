@@ -94,7 +94,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         this.model = model;
         this.loggingEnabled = loggingEnabled;
         PrefixNSService.setNSPrefixesInModel(model);
-        executionUUID = PrefixNSService.getURIFromAbbrev("rutr:" + JenaUUID.generate().asString());
+        executionUUID = JenaUUID.generate().asString();
     }
 
 
@@ -141,10 +141,6 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         }
         if (status.equals(TestCaseResultStatus.Fail)) {
             overviewResults.increaseFailedTests();
-        }
-
-        for (TestCaseResult result : results) {
-            result.serialize(getModel(), executionUUID);
         }
 
         // in case we have 1 result but is not status

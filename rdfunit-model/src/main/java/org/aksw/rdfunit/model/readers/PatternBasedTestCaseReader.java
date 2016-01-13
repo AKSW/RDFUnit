@@ -47,7 +47,6 @@ public final class PatternBasedTestCaseReader implements ElementReader<TestCase>
         int count = 0; // used to count duplicates
 
         //pattern IRI
-        count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.basedOnPattern).toList()) {
             checkArgument(++count == 1, "Cannot have more than one paattern references in PatternBasedTestCase %s", resource.getURI());
             pattern = PatternService.getPatternFromIRI(smt.getObject().asResource().getURI());

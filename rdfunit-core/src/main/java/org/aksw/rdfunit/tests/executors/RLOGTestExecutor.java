@@ -64,7 +64,7 @@ public class RLOGTestExecutor extends TestExecutor {
                 }
                 RLOGLevel logLevel = testCase.getLogLevel();
 
-                testCaseResults.add(new RLOGTestCaseResultImpl(testCase, resource, message, logLevel));
+                testCaseResults.add(new RLOGTestCaseResultImpl(testCase.getTestURI(), logLevel, message, resource));
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);

@@ -1,19 +1,8 @@
 package org.aksw.rdfunit.model.interfaces.results;
 
-import com.google.common.base.Optional;
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
-import com.hp.hpl.jena.vocabulary.DCTerms;
-import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.vocabulary.RDFUNITv;
-
-import java.util.Calendar;
+import org.aksw.rdfunit.enums.RLOGLevel;
+import org.aksw.rdfunit.model.interfaces.Element;
 
 /**
  * An abstract Test Case Result.
@@ -22,12 +11,11 @@ import java.util.Calendar;
  * @since 1 /2/14 3:44 PM
  * @version $Id: $Id
  */
-public interface TestCaseResult {
+public interface TestCaseResult extends Element {
 
-    Optional<TestCase> getTestCase();
     String getTestCaseUri();
+    RLOGLevel getSeverity();
+    String getMessage();
     XSDDateTime getTimestamp();
-
-    Resource serialize(Model model, String testExecutionURI);
 
 }

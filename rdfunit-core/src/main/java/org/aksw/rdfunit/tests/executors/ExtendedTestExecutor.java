@@ -7,6 +7,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.helper.SimpleAnnotationSet;
+import org.aksw.rdfunit.model.impl.results.ExtendedTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.ExtendedTestCaseResult;
@@ -46,13 +48,14 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
     protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
+        SimpleAnnotationSet annotationSet = SimpleAnnotationSet.create();
 
         QueryExecution qe = null;
         try {
             qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
             ResultSet results = qe.execSelect();
 
-            ExtendedTestCaseResult result = null;
+            ExtendedTestCaseResultImpl.Builder resultBuilder = null;
             String prevResource = "";
 
             while (results.hasNext()) {
@@ -73,28 +76,41 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                 // we add the previous result in the list
                 if (!prevResource.equals(resource)) {
                     // The very first time we enter, result = null and we don't add any result
-                    if (result != null) {
-                        testCaseResults.add(result);
+                    if (resultBuilder != null) {
+                        testCaseResults.add(resultBuilder.setResultAnnotations(annotationSet.getAnnotations()).build());
                     }
 
-                    result = new ExtendedTestCaseResult(testCase, resource, message, logLevel);
+                    resultBuilder = new ExtendedTestCaseResultImpl.Builder(testCase.getTestURI(), logLevel, message, resource );
+
+                    annotationSet.reset();
+
+                    // get static annotations for new test
+                    for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
+                        // Get values
+                        if (resultAnnotation.getAnnotationValue().isPresent()) {
+                            annotationSet.add(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get());
+                        }
+                    }
                 }
 
                 // result must be initialized by now
-                checkNotNull(result);
+                checkNotNull(resultBuilder);
 
-                for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : result.getVariableAnnotationsMap().entrySet()) {
+                // get annotations from the SPARQL query
+                for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
                     // Get the variable name
-                    String variable = vaEntry.getKey().getAnnotationVarName().get().trim();
-                    //If it exists, add it in the Set
-                    if (qs.contains(variable)) {
-                        vaEntry.getValue().add(qs.get(variable));
+                    if (resultAnnotation.getAnnotationVarName().isPresent()) {
+                        String variable = resultAnnotation.getAnnotationVarName().get().trim();
+                        //If it exists, add it in the Set
+                        if (qs.contains(variable)) {
+                            annotationSet.add(resultAnnotation.getAnnotationProperty(), qs.get(variable));
+                        }
                     }
                 }
             }
             // Add last result (if query return any)
-            if (result != null) {
-                testCaseResults.add(result);
+            if (resultBuilder != null) {
+                testCaseResults.add(resultBuilder.setResultAnnotations(annotationSet.getAnnotations()).build());
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);

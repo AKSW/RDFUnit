@@ -9,9 +9,9 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -24,9 +24,11 @@ import java.util.Calendar;
  * @since 1 /2/14 3:44 PM
  * @version $Id: $Id
  */
-public abstract class TestCaseResultImpl implements TestCaseResult {
+public abstract class AbstractTestCaseResultImpl implements TestCaseResult {
+    private final Resource element;
     private final String testCaseUri;
-    private final TestCase testCase;
+    private final RLOGLevel severity;
+    private final String message;
     private final XSDDateTime timestamp;
 
     /**
@@ -34,9 +36,15 @@ public abstract class TestCaseResultImpl implements TestCaseResult {
      *
      * @param testCase the test case this result is erlated with
      */
-    protected TestCaseResultImpl(TestCase testCase) {
-        this.testCaseUri = testCase.getTestURI();
-        this.testCase = testCase;
+    protected AbstractTestCaseResultImpl(TestCase testCase) {
+        this(testCase.getTestURI(), testCase.getLogLevel(), testCase.getResultMessage());
+    }
+
+    protected AbstractTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message) {
+        this.element = ResourceFactory.createResource(JenaUUID.generate().asString());
+        this.testCaseUri = testCaseUri;
+        this.severity = severity;
+        this.message = message;
         this.timestamp = new XSDDateTime(Calendar.getInstance());
     }
 
@@ -56,15 +64,23 @@ public abstract class TestCaseResultImpl implements TestCaseResult {
                 ;
     }
 
+    public Resource getElement() {
+        return element;
+    }
+
     public String getTestCaseUri() {
         return testCaseUri;
     }
 
-    public Optional<TestCase> getTestCase() {
-        return Optional.fromNullable(testCase);
-    }
-
     public XSDDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public RLOGLevel getSeverity() {
+        return severity;
+    }
+
+    public String  getMessage() {
+        return message;
     }
 }

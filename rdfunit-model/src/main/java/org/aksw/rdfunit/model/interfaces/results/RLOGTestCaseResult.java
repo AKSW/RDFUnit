@@ -6,10 +6,6 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 
 public interface RLOGTestCaseResult extends TestCaseResult {
 
-    String getResource();
-
-    String getMessage();
-
-    RLOGLevel getLogLevel();
+    String getFailingResource();
 
 }

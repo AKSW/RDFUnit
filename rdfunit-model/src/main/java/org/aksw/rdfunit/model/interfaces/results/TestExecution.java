@@ -3,7 +3,6 @@ package org.aksw.rdfunit.model.interfaces.results;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.Element;
-import org.aksw.rdfunit.model.interfaces.TestSuite;
 
 import java.util.Collection;
 

@@ -5,7 +5,6 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
-import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.util.Collection;
 
@@ -33,10 +32,9 @@ public class TestExecutionImpl implements TestExecution {
         this.testSuiteUri = checkNotNull(builder.testSuiteUri);
         this.testCaseExecutionType = checkNotNull(builder.testCaseExecutionType);
         this.startedByAgent = checkNotNull(builder.startedByAgent);
-        this.results = new ImmutableList.Builder().addAll(checkNotNull(builder.results)).build();
-        this.schemata= new ImmutableList.Builder().addAll(checkNotNull(builder.schemata)).build();
+        this.results = ImmutableList.copyOf(checkNotNull(builder.results));
+        this.schemata= ImmutableList.copyOf(checkNotNull(builder.schemata));
     }
-
 
     @Override
     public String getTestExecutionUri() {

@@ -9,7 +9,6 @@ import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.model.writers.ElementWriterUtils;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -73,7 +72,7 @@ public final class TestExecutionWriter implements ElementWriter {
 
         // Write individual results
         for (TestCaseResult result : testExecution.getTestCaseResults()) {
-            // TODO write results
+
         }
 
         return resource;

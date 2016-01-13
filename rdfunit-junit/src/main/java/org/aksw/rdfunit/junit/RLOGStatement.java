@@ -40,14 +40,14 @@ class RLOGStatement extends Statement {
         final StringBuilder b = new StringBuilder();
         b.append(testCase.getTestCase().getResultMessage()).append(":\n");
         for (RLOGTestCaseResult r : remainingResults) {
-            b.append("\t").append(r.getResource()).append("\n");
+            b.append("\t").append(r.getFailingResource()).append("\n");
         }
         assertThat(b.toString(), remainingResults.isEmpty());
     }
 
     private boolean resourceIsPartOfInputModel(RLOGTestCaseResult r) {
         return testCase.getTestInputModel().contains(
-                ResourceFactory.createResource(r.getResource()), null);
+                ResourceFactory.createResource(r.getFailingResource()), null);
     }
 
 }

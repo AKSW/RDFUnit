@@ -53,7 +53,7 @@ public class ArgumentWriterTest {
         // reread
         Argument argument2 = ArgumentReader.create().read(r1);
         Model m2 = ModelFactory.createDefaultModel();
-        Resource r2 = ArgumentWriter.create(argument2).write(m2);
+        ArgumentWriter.create(argument2).write(m2);
 
         assertThat(m1.isIsomorphicWith(m2));
     }
