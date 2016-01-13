@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.junit;
 
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.junit.runners.model.Statement;
 
@@ -29,9 +29,9 @@ class RLOGStatement extends Statement {
     @Override
     public void evaluate() throws Throwable {
         final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(testCase);
-        final Collection<RLOGTestCaseResult> remainingResults = new ArrayList<>();
+        final Collection<SimpleShaclTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {
-            RLOGTestCaseResult r = (RLOGTestCaseResult) t;
+            SimpleShaclTestCaseResult r = (SimpleShaclTestCaseResult) t;
             if (!resourceIsPartOfInputModel(r)) {
                 continue;
             }
@@ -39,13 +39,13 @@ class RLOGStatement extends Statement {
         }
         final StringBuilder b = new StringBuilder();
         b.append(testCase.getTestCase().getResultMessage()).append(":\n");
-        for (RLOGTestCaseResult r : remainingResults) {
+        for (SimpleShaclTestCaseResult r : remainingResults) {
             b.append("\t").append(r.getFailingResource()).append("\n");
         }
         assertThat(b.toString(), remainingResults.isEmpty());
     }
 
-    private boolean resourceIsPartOfInputModel(RLOGTestCaseResult r) {
+    private boolean resourceIsPartOfInputModel(SimpleShaclTestCaseResult r) {
         return testCase.getTestInputModel().contains(
                 ResourceFactory.createResource(r.getFailingResource()), null);
     }
