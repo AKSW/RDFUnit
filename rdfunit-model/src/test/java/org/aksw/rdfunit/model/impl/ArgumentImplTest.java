@@ -26,8 +26,8 @@ public class ArgumentImplTest {
     private final Argument argDef = new ArgumentImpl.Builder(element).setPredicate(predicate).build();
 
     @Test
-    public void testGetResource() throws Exception {
-        assertThat(argDef.getResource())
+    public void testGetElement() throws Exception {
+        assertThat(argDef.getElement())
                 .isEqualTo(element);
     }
 

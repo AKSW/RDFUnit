@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class Binding implements Element {
-    private final Resource resource;
+    private final Resource element;
     private final PatternParameter parameter;
     private final RDFNode value;
 
@@ -34,12 +34,12 @@ public class Binding implements Element {
     /**
      * <p>Constructor for Binding.</p>
      *
-     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
      * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
      */
-    public Binding(Resource resource, PatternParameter parameter, RDFNode value) {
-        this.resource = checkNotNull(resource, "Element must not be null");
+    public Binding(Resource element, PatternParameter parameter, RDFNode value) {
+        this.element = checkNotNull(element, "Element must not be null");
         this.parameter =checkNotNull(parameter, "parameter must not be null in Binding");
         this.value = checkNotNull(value, "value must not be null in Binding");
 
@@ -127,7 +127,7 @@ public class Binding implements Element {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
-        return resource;
+    public Resource getElement() {
+        return element;
     }
 }

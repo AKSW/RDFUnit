@@ -38,7 +38,7 @@ public final class ArgumentImpl implements Argument {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 

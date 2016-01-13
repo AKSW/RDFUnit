@@ -18,7 +18,7 @@ import java.util.Collection;
  */
 public class ShapeImpl implements Shape {
 
-    private final Resource resource;
+    private final Resource element;
     private final ShapeScope shapeScope;
     private final RLOGLevel severity;
     private final Collection<PropertyConstraint> propertyContraints;
@@ -26,13 +26,13 @@ public class ShapeImpl implements Shape {
     /**
      * <p>Constructor for ShapeImpl.</p>
      *
-     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param shapeScope a {@link org.aksw.rdfunit.model.interfaces.ShapeScope} object.
      * @param severity a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
      * @param propertyContraints a {@link java.util.Collection} object.
      */
-    public ShapeImpl(Resource resource, ShapeScope shapeScope, RLOGLevel severity, Collection<PropertyConstraint> propertyContraints) {
-        this.resource = resource;
+    public ShapeImpl(Resource element, ShapeScope shapeScope, RLOGLevel severity, Collection<PropertyConstraint> propertyContraints) {
+        this.element = element;
         this.shapeScope = shapeScope;
         this.severity = severity;
         this.propertyContraints = propertyContraints;
@@ -58,7 +58,7 @@ public class ShapeImpl implements Shape {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
-        return resource;
+    public Resource getElement() {
+        return element;
     }
 }

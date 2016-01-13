@@ -17,7 +17,7 @@ public class ShaclTestCaseResultImpl extends ExtendedTestCaseResultImpl implemen
     /*
     public Resource serialize(Model model, String testExecutionURI) {
         Resource resource = super.serialize(model, testExecutionURI)
-            .addProperty(SHACL.subject, model.createResource(getResource()));
+            .addProperty(SHACL.subject, model.createResource(getElement()));
 
 
         for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {

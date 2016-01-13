@@ -53,7 +53,7 @@ public final class PatternImpl implements Pattern {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 
@@ -68,7 +68,7 @@ public final class PatternImpl implements Pattern {
                 String value = externalAnnotation.getAnnotationValue().get().toString();
                 for (Binding binding : bindings) {
                     if (value.equals("%%" + binding.getParameterId() + "%%")) {
-                        sanitizedAnnotation = new ResultAnnotationImpl.Builder(externalAnnotation.getResource(), externalAnnotation.getAnnotationProperty()).setValueRDFUnit(binding.getValue()).build();
+                        sanitizedAnnotation = new ResultAnnotationImpl.Builder(externalAnnotation.getElement(), externalAnnotation.getAnnotationProperty()).setValueRDFUnit(binding.getValue()).build();
                     }
                 }
             }

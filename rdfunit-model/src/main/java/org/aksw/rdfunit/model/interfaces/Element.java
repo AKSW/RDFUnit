@@ -16,5 +16,5 @@ public interface Element {
      *
      * @return the resource associated with this element
      */
-    Resource getResource();
+    Resource getElement();
 }

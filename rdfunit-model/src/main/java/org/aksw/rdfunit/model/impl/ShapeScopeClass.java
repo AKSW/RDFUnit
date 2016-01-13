@@ -11,24 +11,24 @@ import org.aksw.rdfunit.model.interfaces.ShapeScope;
  * @version $Id: $Id
  */
 public class ShapeScopeClass implements ShapeScope {
-    private final Resource resource;
+    private final Resource element;
     private final String clazz;
 
     /**
      * <p>Constructor for ShapeScopeClass.</p>
      *
-     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param clazz a {@link java.lang.String} object.
      */
-    public ShapeScopeClass(Resource resource, String clazz) {
-        this.resource = resource;
+    public ShapeScopeClass(Resource element, String clazz) {
+        this.element = element;
         this.clazz = clazz;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
-        return resource;
+    public Resource getElement() {
+        return element;
     }
 
     /** {@inheritDoc} */

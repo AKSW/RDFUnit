@@ -72,7 +72,7 @@ public final class TestGeneratorImpl implements TestGenerator {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 

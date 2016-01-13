@@ -35,7 +35,7 @@ public final class PatternParameterImpl implements PatternParameter {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 

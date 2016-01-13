@@ -33,7 +33,7 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 

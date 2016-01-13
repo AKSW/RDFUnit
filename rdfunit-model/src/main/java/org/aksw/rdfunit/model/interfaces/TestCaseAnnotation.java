@@ -22,7 +22,7 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class TestCaseAnnotation implements Element {
-    private final Resource resource;
+    private final Resource element;
     private final TestGenerationType generated;
     private final String autoGeneratorURI;
     private final TestAppliesTo appliesTo;
@@ -36,7 +36,7 @@ public class TestCaseAnnotation implements Element {
     /**
      * <p>Constructor for TestCaseAnnotation.</p>
      *
-     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param generated a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
      * @param autoGeneratorURI a {@link java.lang.String} object.
      * @param appliesTo a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.
@@ -46,8 +46,8 @@ public class TestCaseAnnotation implements Element {
      * @param testCaseLogLevel a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
      * @param resultAnnotations a {@link java.util.Collection} object.
      */
-    public TestCaseAnnotation(Resource resource, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
-        this.resource = checkNotNull(resource);
+    public TestCaseAnnotation(Resource element, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
+        this.element = checkNotNull(element);
         this.generated = checkNotNull(generated);
         this.autoGeneratorURI = autoGeneratorURI;
         this.appliesTo = checkNotNull(appliesTo);
@@ -185,7 +185,7 @@ public class TestCaseAnnotation implements Element {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
-        return resource;
+    public Resource getElement() {
+        return element;
     }
 }

@@ -78,7 +78,7 @@ public class TestExecutionImpl implements TestExecution {
     }
 
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 

@@ -21,17 +21,17 @@ import java.util.Collection;
  */
 public abstract class AbstractTestCaseImpl implements TestCase, Comparable<AbstractTestCaseImpl> {
 
-    protected final Resource tcResource;
+    protected final Resource element;
     protected final TestCaseAnnotation annotation;
 
     /**
      * <p>Constructor for AbstractTestCaseImpl.</p>
      *
-     * @param tcResource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
      */
-    public AbstractTestCaseImpl(Resource tcResource, TestCaseAnnotation annotation) {
-        this.tcResource = tcResource;
+    public AbstractTestCaseImpl(Resource element, TestCaseAnnotation annotation) {
+        this.element = element;
         this.annotation = annotation;
         // Validate on subclasses
     }
@@ -103,7 +103,7 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
      * @return a {@link java.lang.String} object.
      */
     public String getTestURI() {
-        return tcResource.getURI();
+        return element.getURI();
     }
 
     /**
@@ -135,14 +135,14 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
 
         AbstractTestCaseImpl testCase = (AbstractTestCaseImpl) o;
 
-        return tcResource.equals(testCase.tcResource);
+        return element.equals(testCase.element);
 
     }
 
     /** {@inheritDoc} */
     @Override
     public int hashCode() {
-        return tcResource.hashCode();
+        return element.hashCode();
     }
 
     /** {@inheritDoc} */
@@ -153,8 +153,8 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
-        return tcResource;
+    public Resource getElement() {
+        return element;
     }
 
     /** {@inheritDoc} */

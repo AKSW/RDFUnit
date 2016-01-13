@@ -67,7 +67,7 @@ public final class FunctionImpl implements Function {
 
     /** {@inheritDoc} */
     @Override
-    public Resource getResource() {
+    public Resource getElement() {
         return element;
     }
 
