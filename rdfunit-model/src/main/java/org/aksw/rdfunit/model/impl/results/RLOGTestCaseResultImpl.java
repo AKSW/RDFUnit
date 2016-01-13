@@ -4,11 +4,11 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.RLOG;
 
+@Deprecated
 public class RLOGTestCaseResultImpl extends AbstractTestCaseResultImpl implements RLOGTestCaseResult {
 
     private final String resource;

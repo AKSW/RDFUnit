@@ -32,6 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2 /2/14 6:13 PM
  * @version $Id: $Id
  */
+@Deprecated
 public class ExtendedTestExecutor extends RLOGTestExecutor {
 
     /**

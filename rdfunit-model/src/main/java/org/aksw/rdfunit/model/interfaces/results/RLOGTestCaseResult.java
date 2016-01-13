@@ -1,9 +1,7 @@
 package org.aksw.rdfunit.model.interfaces.results;
 
 
-import org.aksw.rdfunit.enums.RLOGLevel;
-
-
+@Deprecated
 public interface RLOGTestCaseResult extends TestCaseResult {
 
     String getFailingResource();

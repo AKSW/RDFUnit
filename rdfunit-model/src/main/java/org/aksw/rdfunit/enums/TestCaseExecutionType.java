@@ -33,10 +33,12 @@ public enum TestCaseExecutionType {
      * Reports at the violation instance level. For every erroneous resource
      * generates an RLog Entry
      */
+    @Deprecated
     rlogTestCaseResult,
 
     /**
      * Extendes the @rlogTestCaseResult by providing richer information about each resource
      */
+    @Deprecated
     extendedTestCaseResult
 }

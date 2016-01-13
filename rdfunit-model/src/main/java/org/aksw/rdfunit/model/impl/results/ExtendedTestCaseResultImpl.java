@@ -12,19 +12,12 @@ import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.SHACL;
 
-import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
-/**
- * The type Extended test case result.
- *
- * @author Dimitris Kontokostas
- * @since 2 /2/14 3:57 PM
- * @version $Id: $Id
- */
+@Deprecated
 public class ExtendedTestCaseResultImpl extends RLOGTestCaseResultImpl implements ExtendedTestCaseResult {
 
     private final ImmutableSet<SimpleAnnotation> resultAnnotations;
