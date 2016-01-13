@@ -44,6 +44,7 @@ public final class RDFUNITv {
     /** Constant <code>ExtendedTestCaseResult</code> */
     public static final Resource ExtendedTestCaseResult = resource("ExtendedTestCaseResult");
     public static final Resource TestExecution = resource("TestExecution");
+    public static final Resource TestSuite = resource("TestSuite");
 
 
 

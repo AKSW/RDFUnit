@@ -1,15 +1,12 @@
 package org.aksw.rdfunit.model.impl.results;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
-import org.aksw.rdfunit.vocabulary.RDFUNITv;
-import org.aksw.rdfunit.vocabulary.RLOG;
 
 @Deprecated
-public class RLOGTestCaseResultImpl extends AbstractTestCaseResultImpl implements RLOGTestCaseResult {
+public class RLOGTestCaseResultImpl extends BaseTestCaseResultImpl implements RLOGTestCaseResult {
 
     private final String resource;
 
@@ -18,16 +15,9 @@ public class RLOGTestCaseResultImpl extends AbstractTestCaseResultImpl implement
         this.resource = resource;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Resource serialize(Model model, String testExecutionURI) {
-        return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, RDFUNITv.RLOGTestCaseResult)
-                .addProperty(RDF.type, RLOG.Entry)
-                .addProperty(RLOG.resource, model.createResource(getFailingResource()))
-                .addProperty(RLOG.message, getMessage())
-                .addProperty(RLOG.level, model.createResource(getSeverity().getUri()))
-                ;
+    public RLOGTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, String resource) {
+        super(element, testCaseUri, severity, message, timestamp);
+        this.resource = resource;
     }
 
     public String getFailingResource() {

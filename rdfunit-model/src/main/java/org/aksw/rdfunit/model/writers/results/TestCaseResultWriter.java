@@ -5,11 +5,13 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.helper.SimpleAnnotation;
 import org.aksw.rdfunit.model.interfaces.results.*;
 import org.aksw.rdfunit.model.writers.ElementWriter;
+import org.aksw.rdfunit.model.writers.ElementWriterUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.RLOG;
@@ -33,7 +35,12 @@ public class TestCaseResultWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = model.createResource(executionUri + "/" + testCaseResult.getElement().getURI());
+        Resource resource = null;
+        if (testCaseResult.getElement().isAnon()) {
+            resource = model.createResource(executionUri + "/" + JenaUUID.generate().toString());
+        } else {
+            resource = ElementWriterUtils.copyElementResourceInModel(testCaseResult, model);
+        }
 
         // general properties
         resource
@@ -94,7 +101,7 @@ public class TestCaseResultWriter implements ElementWriter {
 
         if (testCaseResult instanceof ShaclTestCaseResult) {
             resource
-                    .addProperty(SHACL.subject, model.createResource(testCaseResult.getElement().getURI()));
+                    .addProperty(SHACL.subject,model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()));
 
 
             for (SimpleAnnotation annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {

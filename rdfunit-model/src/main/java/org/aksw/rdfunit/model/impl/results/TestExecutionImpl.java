@@ -1,14 +1,18 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 
 public class TestExecutionImpl implements TestExecution {
@@ -24,16 +28,22 @@ public class TestExecutionImpl implements TestExecution {
 
     private final Collection<TestCaseResult> results;
     private final Collection<String> schemata;
+    private final Collection<String> testCaseUris;
 
     private TestExecutionImpl(Builder builder) {
-        this.element = checkNotNull(builder.element);
-        this.datasetOverviewResults = checkNotNull(builder.datasetOverviewResults);
-        this.testedDatasetUri = checkNotNull(builder.testedDatasetUri);
-        this.testSuiteUri = checkNotNull(builder.testSuiteUri);
-        this.testCaseExecutionType = checkNotNull(builder.testCaseExecutionType);
-        this.startedByAgent = checkNotNull(builder.startedByAgent);
-        this.results = ImmutableList.copyOf(checkNotNull(builder.results));
-        this.schemata= ImmutableList.copyOf(checkNotNull(builder.schemata));
+        this.element = checkNotNull(builder.element, "Element is needed in TestExecution");
+        this.testedDatasetUri = checkNotNull(builder.testedDatasetUri, "Tested dataset URI is needed in TestExecution");
+        this.testSuiteUri = checkNotNull(builder.testSuiteUri, "TestSuite URI is needed in TestExecution");
+        this.testCaseExecutionType = checkNotNull(builder.testCaseExecutionType, "Test execution type is needed in TestExecution");
+        this.startedByAgent = checkNotNull(builder.startedByAgent, "Agent starting the execution is needed in TestExecution");
+
+        this.schemata= ImmutableList.copyOf(checkNotNull(builder.schemata, "Used schemata are needed in TestExecution"));
+        this.results = ImmutableList.copyOf(checkNotNull(builder.results, "Results are needed in TestExecution"));
+        this.testCaseUris = ImmutableSet.copyOf(checkNotNull(builder.testCaseUris));
+
+        this.datasetOverviewResults = checkNotNull(builder.datasetOverviewResults, "Overview results are needed in TestExecution");
+
+        checkState(testCaseUris.size() == datasetOverviewResults.getTotalTests(), "Number of tests run is not the same with the number of tests in the TestSuite");
     }
 
     @Override
@@ -50,6 +60,11 @@ public class TestExecutionImpl implements TestExecution {
     @Override
     public Collection<String> getSchemataUris() {
         return schemata;
+    }
+
+    @Override
+    public Collection<String> getTestCasesUris() {
+        return testCaseUris;
     }
 
     @Override
@@ -90,8 +105,9 @@ public class TestExecutionImpl implements TestExecution {
         private String testSuiteUri;
         private TestCaseExecutionType testCaseExecutionType;
         private String startedByAgent = "http://localhost/";
-        private Collection<TestCaseResult> results;
-        private Collection<String> schemata;
+        private Set<TestCaseResult> results = new HashSet<>();
+        private Set<String> schemata = new HashSet<>();
+        private Set<String> testCaseUris = new HashSet<>();
 
         public Builder setElement(Resource element) {
             this.element = element;
@@ -129,12 +145,27 @@ public class TestExecutionImpl implements TestExecution {
         }
 
         public Builder setResults(Collection<TestCaseResult> results) {
-            this.results = results;
+            this.results.addAll(results);
             return this;
         }
 
         public Builder setSchemata(Collection<String> schemata) {
-            this.schemata = schemata;
+            this.schemata.addAll(schemata);
+            return this;
+        }
+
+        public Builder setSchema(String schema) {
+            this.schemata.add(schema);
+            return this;
+        }
+
+        public Builder setTestCaseUris(Collection<String> testCaseUris) {
+            this.testCaseUris.addAll(testCaseUris);
+            return this;
+        }
+
+        public Builder settestCaseUri(String testCaseUri) {
+            this.testCaseUris.add(testCaseUri);
             return this;
         }
 

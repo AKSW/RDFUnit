@@ -1,16 +1,13 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.base.Optional;
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
-import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
 /**
  * The type Aggregated test case result.
@@ -32,9 +29,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
      * @param prevalenceCount the prevalence count
      */
     public AggregatedTestCaseResultImpl(TestCase testCase, long errorCount, long prevalenceCount) {
-        super(testCase, TestCaseResultStatus.resolve(errorCount));
-        this.errorCount = errorCount;
-        this.prevalenceCount = prevalenceCount;
+        this(testCase, TestCaseResultStatus.resolve(errorCount), errorCount, prevalenceCount);
     }
 
     /**
@@ -46,20 +41,19 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
      * @param prevalenceCount the prevalence count
      */
     public AggregatedTestCaseResultImpl(TestCase testCase, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
-        super(testCase, status);
+        this(testCase.getTestURI(), testCase.getLogLevel(), testCase.getResultMessage(), status, errorCount, prevalenceCount);
+    }
+
+    public AggregatedTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
+        super(testCaseUri, severity, message, status);
         this.errorCount = errorCount;
         this.prevalenceCount = prevalenceCount;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Resource serialize(Model model, String testExecutionURI) {
-        return super.serialize(model, testExecutionURI)
-                .addProperty(RDF.type, RDFUNITv.AggregatedTestResult)
-                .addProperty(RDFUNITv.resultCount,
-                        ResourceFactory.createTypedLiteral("" + errorCount, XSDDatatype.XSDinteger))
-                .addProperty(RDFUNITv.resultPrevalence,
-                        ResourceFactory.createTypedLiteral("" + prevalenceCount, XSDDatatype.XSDinteger));
+    public AggregatedTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
+        super(element, testCaseUri, severity, message, timestamp, status);
+        this.errorCount = errorCount;
+        this.prevalenceCount = prevalenceCount;
     }
 
     /**

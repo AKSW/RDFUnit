@@ -213,4 +213,32 @@ public class DatasetOverviewResults {
                 ", endTime=" + endTime +
                 '}';
     }
+
+    public void setSuccessfullTests(long successfullTests) {
+        this.successfullTests = successfullTests;
+    }
+
+    public void setFailedTests(long failedTests) {
+        this.failedTests = failedTests;
+    }
+
+    public void setTimeoutTests(long timeoutTests) {
+        this.timeoutTests = timeoutTests;
+    }
+
+    public void setErrorTests(long errorTests) {
+        this.errorTests = errorTests;
+    }
+
+    public void setStartTime(XSDDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(XSDDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setIndividualErrors(long individualErrors) {
+        this.individualErrors = individualErrors;
+    }
 }

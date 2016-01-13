@@ -1,19 +1,17 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.shared.uuid.JenaUUID;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.impl.results.TestExecutionImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -22,13 +20,10 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
-import org.aksw.rdfunit.vocabulary.PROV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -196,6 +191,10 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         for (SchemaSource src: testedDataset.getReferencesSchemata()) {
             schemata.add(src.getUri());
         }
+        Set<String> testCaseUris = new HashSet<>();
+        for (TestCase tc: testSuite.getTestCases()) {
+            testCaseUris.add(tc.getTestURI());
+        }
 
         TestExecution te = new TestExecutionImpl.Builder()
                 .setElement(ResourceFactory.createResource(executionUUID))
@@ -205,6 +204,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .setTestedDatasetUri(testedDataset.getUri())
                 .setTestSuiteUri(testSuiteResource.getURI())
                 .setSchemata(schemata)
+                .setTestCaseUris(testCaseUris)
                 .setResults(results)
                 .build();
 
