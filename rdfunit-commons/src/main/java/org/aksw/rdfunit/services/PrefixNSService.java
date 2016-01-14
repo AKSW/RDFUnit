@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.services;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.Resources;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -23,17 +23,11 @@ public final class PrefixNSService {
      * Dual map that maps prefixes to namespaces (lazy init)
      */
     private static final class MapInstance {
-        private static final BidiMap<String, String> prefixNsBidiMap = createPrefixNsBidiMap();
+        private static final BiMap<String, String> prefixNsBidiMap = createPrefixNsBidiMap();
 
+        private static BiMap<String, String> createPrefixNsBidiMap() {
 
-        /**
-         * <p>createPrefixNsBidiMap.</p>
-         *
-         * @return a {@link org.apache.commons.collections4.BidiMap} object.
-         */
-        private static BidiMap<String, String> createPrefixNsBidiMap() {
-
-            BidiMap<String, String> dualMap = new DualHashBidiMap<>();
+            BiMap<String, String> dualMap = HashBiMap.create();
             Model prefixModel = ModelFactory.createDefaultModel();
 
             try (InputStream is = PrefixNSService.class.getResourceAsStream(Resources.PREFIXES)) {
@@ -94,7 +88,7 @@ public final class PrefixNSService {
      * @return a {@link java.lang.String} object.
      */
     public static String getPrefixFromNS(final String namespace) {
-        return MapInstance.prefixNsBidiMap.getKey(namespace);
+        return MapInstance.prefixNsBidiMap.inverse().get(namespace);
     }
 
     /**
