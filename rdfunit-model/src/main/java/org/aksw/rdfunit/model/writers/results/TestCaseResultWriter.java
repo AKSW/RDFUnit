@@ -79,9 +79,7 @@ public class TestCaseResultWriter implements ElementWriter {
 
         if (testCaseResult instanceof ExtendedTestCaseResult) {
             resource
-                    .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult)
-                    .addProperty(RDF.type, SHACL.ValidationResult)
-                    .addProperty(SHACL.focusNode, model.createResource(((RLOGTestCaseResult) testCaseResult).getFailingResource()));
+                    .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult);
 
             for (SimpleAnnotation annotation : ((ExtendedTestCaseResult) testCaseResult).getResultAnnotations()) {
                 for (RDFNode rdfNode : annotation.getValues()) {

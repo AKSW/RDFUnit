@@ -46,7 +46,7 @@ public final class ExtendedTestCaseResultReader implements ElementReader<Extende
 
         SimpleAnnotationSet annotationSet = SimpleAnnotationSet.create();
 
-        Set<Property> excludesProperties = ImmutableSet.of(RLOG.level, RLOG.resource, RLOG.message, PROV.wasGeneratedBy, DCTerms.date);
+        Set<Property> excludesProperties = ImmutableSet.of(RLOG.level, RLOG.resource, RLOG.message, PROV.wasGeneratedBy, DCTerms.date, RDFUNITv.testCase);
         Set<Resource> excludesTypes = ImmutableSet.of(RDFUNITv.RLOGTestCaseResult, RDFUNITv.TestCaseResult, RLOG.Entry);
 
         for (Statement smt: resource.listProperties().toList()) {
