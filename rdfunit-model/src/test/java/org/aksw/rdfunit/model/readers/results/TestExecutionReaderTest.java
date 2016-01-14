@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class TestExecutionReaderTest {
@@ -24,13 +24,23 @@ public class TestExecutionReaderTest {
 
     @Parameterized.Parameters(name= "{index}: Result Type: {1}")
     public static Collection<Object[]> resources() throws Exception {
+
+        Model aggregated = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read()).read();
+        Model status = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read()).read();
+        Model shacl = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclFullTestCaseResult.ttl").read()).read();
+        Model shacllite = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclSimpleTestCaseResult.ttl").read()).read();
+        Model rlog = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.rlogTestCaseResult.ttl").read()).read();
+        Model extended = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.extendedTestCaseResult.ttl").read()).read();
+        Model all = new RDFModelReader(aggregated.union(status).union(shacl).union(shacllite).union(rlog).union(extended)).read();
+
         return Arrays.asList(new Object[][] {
-                { RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read(), "aggregated" },
-                { RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read(), "status" },
-                { RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclFullTestCaseResult.ttl").read(), "shacl" },
-                { RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclSimpleTestCaseResult.ttl").read(), "shacl-lite" },
-                { RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.rlogTestCaseResult.ttl").read(), "rlog" },
-                { RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.extendedTestCaseResult.ttl").read(), "extended" },
+                { aggregated, "aggregated" },
+                { status, "status" },
+                { shacl, "shacl" },
+                { shacllite, "shacl-lite" },
+                { rlog, "rlog" },
+                { extended, "extended" },
+                { all, "all-together" },
         });
     }
 
@@ -44,7 +54,7 @@ public class TestExecutionReaderTest {
     @Test
     public void test() throws Exception {
 
-        assertTrue(inputModel != null);
+        assertThat(inputModel.isEmpty()).isFalse();
         Model outputModel = ModelFactory.createDefaultModel();
         outputModel.setNsPrefixes(inputModel.getNsPrefixMap());
 

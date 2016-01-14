@@ -175,7 +175,9 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
 
         Collection<TestCaseResult> results = new ArrayList<>();
         for (Resource r: resource.getModel().listResourcesWithProperty(RDF.type, typeToSearch).toList()) {
-            results.add(reader.read(r)) ;
+            if (r.hasProperty(PROV.wasGeneratedBy, resource)) {
+                results.add(reader.read(r));
+            }
         }
 
         return results;
