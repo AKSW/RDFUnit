@@ -67,7 +67,7 @@ public class ValidateCLI {
             RDFUnitUtils.fillSchemaServiceFromLOV();
         }
         //TODO hack until we fix this, configuration tries to laod schemas so they must be initialized before
-        RDFUnitUtils.fillSchemaServiceFromFile(dataFolder + "schemaDecl.csv");
+        RDFUnitUtils.fillSchemaServiceFromFile(ValidateCLI.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
         //RDFUnitUtils.fillSchemaServiceFromFile(configuration.getDataFolder() + "schemaDecl.csv");
 
         RDFUnitConfiguration configuration = null;
