@@ -55,6 +55,7 @@ public final class SHACL {
     public static final Property predicate = property("predicate");
     public static final Property object = property("object");
     public static final Property message = property("message");
+    public static final Property sourceConstraint = property("sourceConstraint");
 
 
 

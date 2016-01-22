@@ -5,6 +5,8 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 @prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
 
 ##########################################
 #### rdfs:range pattern
@@ -42,7 +44,12 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:RangeObjectConstraint] ;
     .
+
 
 # Class range missing
 rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
@@ -74,6 +81,10 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:WARN] ;
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:RangeObjectConstraint] ;
     .
 
 ##########################################
@@ -110,7 +121,11 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
-	.
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:RangeDatatypeConstraint] ;
+    .
 
 # Check for rdf:langString
 rutg:RDFLANGSTRING a rut:TestGenerator ;
@@ -123,7 +138,11 @@ rutg:RDFLANGSTRING a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
-	.
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:RangeDatatypeConstraint] ;
+    .
 
 # Datatype range
 rutg:RDFSRANGED a rut:TestGenerator ;
@@ -148,6 +167,10 @@ rutg:RDFSRANGED a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:RangeDatatypeConstraint] ;
     .
 
 
@@ -182,7 +205,11 @@ rutg:RDFSRANGENL a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
-	.
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:RangeObjectConstraint] ;
+    .
 
 
 ##########################################
@@ -202,6 +229,10 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:DomainObjectConstraint] ;
     .
 
 
@@ -222,6 +253,10 @@ rutg:RDFSDOMAIN-MISS a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:WARN] ;
+    rut:resultAnnotation [
+            a rut:ResultAnnotation ;
+            rut:annotationProperty sh:sourceConstraint ;
+            rut:annotationValue sh:DomainObjectConstraint] ;
     .
 
 ##########################################

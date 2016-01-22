@@ -43,7 +43,7 @@ public class TestExecutionImpl implements TestExecution {
 
         this.datasetOverviewResults = checkNotNull(builder.datasetOverviewResults, "Overview results are needed in TestExecution");
 
-        checkState(testCaseUris.size() == datasetOverviewResults.getTotalTests(), "Number of tests run is not the same with the number of tests in the TestSuite");
+        checkState(testCaseUris.size() == datasetOverviewResults.getTotalTests(), "Number of tests run (" + testCaseUris.size() + ") is not the same with the number of tests in the TestSuite: " + datasetOverviewResults.getTotalTests());
     }
 
     @Override

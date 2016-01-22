@@ -21,6 +21,7 @@
         <module>rdfunit-junit</module>
         <module>rdfunit-model</module>
         <module>rdfunit-io</module>
+        <module>rdfunit-w3c-dqv</module>
     </modules>
 
     <issueManagement>
@@ -104,6 +105,12 @@
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
                 <artifactId>rdfunit-validate</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-w3c-dqv</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
