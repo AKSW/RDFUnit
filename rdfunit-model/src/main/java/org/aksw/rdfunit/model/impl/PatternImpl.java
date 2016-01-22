@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.Pattern;
@@ -10,6 +9,7 @@ import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -104,7 +104,7 @@ public final class PatternImpl implements Pattern {
     /** {@inheritDoc} */
     @Override
     public Optional<String> getSparqlPatternPrevalence() {
-        return Optional.fromNullable(sparqlPatternPrevalence);
+        return Optional.ofNullable(sparqlPatternPrevalence);
     }
 
     /** {@inheritDoc} */
@@ -121,7 +121,7 @@ public final class PatternImpl implements Pattern {
                 return Optional.of(parameter);
             }
         }
-        return Optional.absent();
+        return Optional.empty();
     }
 
     /** {@inheritDoc} */

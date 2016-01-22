@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface to a function according to SHACL

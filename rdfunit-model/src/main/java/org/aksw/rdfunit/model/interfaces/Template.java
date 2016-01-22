@@ -1,8 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
-
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Description

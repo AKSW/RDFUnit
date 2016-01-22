@@ -1,13 +1,13 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.model.interfaces.Function;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Description
@@ -44,7 +44,7 @@ public final class FunctionImpl implements Function {
     /** {@inheritDoc} */
     @Override
     public Optional<Resource> getReturnType() {
-        return Optional.fromNullable(returnType);
+        return Optional.ofNullable(returnType);
     }
 
     /** {@inheritDoc} */

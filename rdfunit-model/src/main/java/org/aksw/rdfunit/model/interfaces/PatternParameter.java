@@ -1,7 +1,8 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
+
+import java.util.Optional;
 
 /**
  * Defines a Pattern Parameter.

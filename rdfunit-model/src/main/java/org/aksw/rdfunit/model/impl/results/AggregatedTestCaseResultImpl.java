@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.impl.results;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
@@ -8,6 +7,8 @@ import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.services.PrefixNSService;
+
+import java.util.Optional;
 
 /**
  * The type Aggregated test case result.
@@ -75,7 +76,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
             return Optional.of(prevalenceCount);
         }
         else {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 

@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
@@ -9,6 +8,7 @@ import org.aksw.rdfunit.model.interfaces.ConstraintTemplate;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Description

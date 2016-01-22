@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
@@ -8,6 +7,7 @@ import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Description
@@ -41,13 +41,13 @@ public class ShapeImpl implements Shape {
     /** {@inheritDoc} */
     @Override
     public Optional<ShapeScope> getShapeScope() {
-        return Optional.fromNullable(shapeScope);
+        return Optional.ofNullable(shapeScope);
     }
 
     /** {@inheritDoc} */
     @Override
     public Optional<RLOGLevel> getSeverityLevel() {
-        return Optional.fromNullable(severity);
+        return Optional.ofNullable(severity);
     }
 
     /** {@inheritDoc} */

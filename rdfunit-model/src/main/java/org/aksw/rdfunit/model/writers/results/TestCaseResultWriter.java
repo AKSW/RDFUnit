@@ -64,7 +64,7 @@ public class TestCaseResultWriter implements ElementWriter {
                     .addProperty(RDFUNITv.resultCount,
                             ResourceFactory.createTypedLiteral("" + ((AggregatedTestCaseResult) testCaseResult).getErrorCount(), XSDDatatype.XSDinteger))
                     .addProperty(RDFUNITv.resultPrevalence,
-                            ResourceFactory.createTypedLiteral("" +((AggregatedTestCaseResult) testCaseResult).getPrevalenceCount().or(-1l), XSDDatatype.XSDinteger));
+                            ResourceFactory.createTypedLiteral("" +((AggregatedTestCaseResult) testCaseResult).getPrevalenceCount().orElse(-1l), XSDDatatype.XSDinteger));
         }
 
         if (testCaseResult instanceof RLOGTestCaseResult) {

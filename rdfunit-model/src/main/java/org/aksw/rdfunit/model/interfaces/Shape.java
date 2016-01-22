@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import org.aksw.rdfunit.enums.RLOGLevel;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * A SHACL Shape

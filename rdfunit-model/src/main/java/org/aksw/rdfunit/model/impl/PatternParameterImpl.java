@@ -1,10 +1,11 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
+
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -60,7 +61,7 @@ public final class PatternParameterImpl implements PatternParameter {
     /** {@inheritDoc} */
     @Override
     public Optional<String> getConstraintPattern() {
-        return Optional.fromNullable(constraintPattern);
+        return Optional.ofNullable(constraintPattern);
     }
 
     /** {@inheritDoc} */

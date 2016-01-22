@@ -1,11 +1,12 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.interfaces.Argument;
+
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -64,19 +65,19 @@ public final class ArgumentImpl implements Argument {
     /** {@inheritDoc} */
     @Override
     public Optional<Resource> getValueType() {
-        return Optional.fromNullable(valueType);
+        return Optional.ofNullable(valueType);
     }
 
     /** {@inheritDoc} */
     @Override
     public Optional<ValueKind> getValueKind() {
-        return Optional.fromNullable(valueKind);
+        return Optional.ofNullable(valueKind);
     }
 
     /** {@inheritDoc} */
     @Override
     public Optional<RDFNode> getDefaultValue() {
-        return Optional.fromNullable(defaultValue);
+        return Optional.ofNullable(defaultValue);
     }
 
     /** {@inheritDoc} */

@@ -1,12 +1,13 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
+
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -46,13 +47,13 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
     /** {@inheritDoc} */
     @Override
     public Optional<RDFNode> getAnnotationValue() {
-        return Optional.fromNullable(value);
+        return Optional.ofNullable(value);
     }
 
     /** {@inheritDoc} */
     @Override
     public Optional<String> getAnnotationVarName() {
-        return Optional.fromNullable(variableName);
+        return Optional.ofNullable(variableName);
     }
 
     /** {@inheritDoc} */

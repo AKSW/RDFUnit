@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.model.interfaces.results;
 
-import com.google.common.base.Optional;
+import java.util.Optional;
 
 public interface AggregatedTestCaseResult extends StatusTestCaseResult {
 

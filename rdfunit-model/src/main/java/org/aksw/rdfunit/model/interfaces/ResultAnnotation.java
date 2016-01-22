@@ -1,8 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.base.Optional;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+
+import java.util.Optional;
 
 /**
  * Describes an annotation on a Shape or RDFUnit tests, patterns and generators

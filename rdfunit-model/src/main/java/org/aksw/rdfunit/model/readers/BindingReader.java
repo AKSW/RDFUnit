@@ -53,7 +53,7 @@ public final class BindingReader implements ElementReader<Binding> {
         for (Statement smt : resource.listProperties(RDFUNITv.parameter).toList()) {
             checkArgument(++count == 1, "Cannot have more than one rut:parameter in Binding %s", resource.getURI());
             String parameterURI = smt.getObject().asResource().getURI();
-            parameter = pattern.getParameter(parameterURI).orNull();
+            parameter = pattern.getParameter(parameterURI).orElse(null);
         }
 
         return new Binding(resource, parameter, value);
