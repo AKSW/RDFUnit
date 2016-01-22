@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.dqv;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import lombok.NonNull;
+import lombok.Value;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -10,18 +12,13 @@ import java.util.stream.Collectors;
 
 
 /**
- * Description
- *
  * @author Dimitris Kontokostas
  * @since 21/1/2016 9:48 πμ
  */
+@Value
 public class DqvReport {
 
-    private final TestExecution testExecution;
-
-    public DqvReport(TestExecution testExecution) {
-        this.testExecution = testExecution;
-    }
+    @NonNull private final TestExecution testExecution;
 
     Collection<QualityMeasure> getQualityMeasures() {
 

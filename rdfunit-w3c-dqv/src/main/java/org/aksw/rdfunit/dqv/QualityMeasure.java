@@ -1,29 +1,16 @@
 package org.aksw.rdfunit.dqv;
 
+import lombok.NonNull;
+import lombok.Value;
+
 /**
  * @author Dimitris Kontokostas
  * @since 21/1/2016 9:20 μμ
  */
+@Value
 public class QualityMeasure {
-    private final String testExecutionUri;
-    private final String DqvMetricUri;
-    private final double value;
+    @NonNull private final String testExecutionUri;
+    @NonNull private final String DqvMetricUri;
+    @NonNull private final double value;
 
-    public QualityMeasure(String testExecutionUri, String dqvMetricUri, double value) {
-        this.testExecutionUri = testExecutionUri;
-        DqvMetricUri = dqvMetricUri;
-        this.value = value;
-    }
-
-    public String getTestExecutionUri() {
-        return testExecutionUri;
-    }
-
-    public String getDqvMetricUri() {
-        return DqvMetricUri;
-    }
-
-    public double getValue() {
-        return value;
-    }
 }
