@@ -53,8 +53,8 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
 
         //description
         for (Statement smt : resource.listProperties(DCTerms.description).toList()) {
-            checkArgument(++count == 1, "Cannot have more than one descriptions in TestCaseAnnotation %s", resource.getURI());
             description = smt.getObject().asLiteral().getLexicalForm();
+            checkArgument(++count == 1, "Cannot have more than one descriptions '%s' in TestCaseAnnotation %s", description, resource.getURI());
         }
 
         count = 0;
