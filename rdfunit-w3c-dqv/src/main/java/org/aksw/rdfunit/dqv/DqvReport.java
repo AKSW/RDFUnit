@@ -67,7 +67,7 @@ public class DqvReport {
 
     String getMetricFromSourceConstraint(String sourceConstraint) {
         return metricMapper
-                .getMEtricMap()
+                .getMetricMap()
                 .getOrDefault(sourceConstraint, unclassifiedMetric);
 
     }

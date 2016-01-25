@@ -13,7 +13,7 @@ public class MetricMapperTest {
     public void testCreateDefault() throws Exception {
         MetricMapper metricMapper = MetricMapper.createDefault();
 
-        assertThat(metricMapper.getMEtricMap().size())
+        assertThat(metricMapper.getMetricMap().size())
                 .isEqualTo(DEFAULT_MAP_SIZE);
     }
 }

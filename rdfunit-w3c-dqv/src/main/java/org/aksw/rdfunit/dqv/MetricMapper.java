@@ -23,7 +23,7 @@ public class MetricMapper {
     /**
      * returns an immutable Map<String, String>
      */
-    public Map<String, String> getMEtricMap() {
+    public Map<String, String> getMetricMap() {
         return metricMap;
     }
 
