@@ -56,7 +56,7 @@ public class AbstractTestSourceTest {
     @Test
     public void testGetReferencesSchemata() throws Exception {
         for (SchemaSource schemaSource: abstractTestSource.getReferencesSchemata()) {
-            assertThat(TESTReferenceSchemata.contains(schemaSource));
+            assertThat(TESTReferenceSchemata.contains(schemaSource)).isTrue();
         }
     }
 

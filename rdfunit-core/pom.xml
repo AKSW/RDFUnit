@@ -13,6 +13,21 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-commons</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-model</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.aksw.jena-sparql-api</groupId>
             <artifactId>jena-sparql-api-core</artifactId>
         </dependency>
@@ -37,13 +52,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.semarglproject</groupId>
-            <artifactId>semargl-jena</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
 
         <dependency>
@@ -70,12 +80,10 @@
         </dependency>
 
         <dependency>
-            <!-- Test-only dependency to unit test the manual tests -->
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-manual-tests</artifactId>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
 

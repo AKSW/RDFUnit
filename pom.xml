@@ -12,13 +12,16 @@
     <url>http://github.org/AKSW/RDFUnit</url>
 
     <modules>
+        <module>rdfunit-commons</module>
         <module>rdfunit-core</module>
         <module>rdfunit-manual-tests</module>
         <module>rdfunit-validate</module>
         <!--module>rdfunit-webdemo</module--> <!-- removed from aggregation, kept as inheritance -->
         <module>rdfunit-examples</module>
         <module>rdfunit-junit</module>
-
+        <module>rdfunit-model</module>
+        <module>rdfunit-io</module>
+        <module>rdfunit-w3c-dqv</module>
     </modules>
 
     <issueManagement>
@@ -53,10 +56,10 @@
 
     <properties>
         <!-- Project Settings -->
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <java.version>1.7</java.version>
-        <java.version.javadoc>http://java.sun.com/javase/7/docs/api/</java.version.javadoc>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <java.version.javadoc>http://java.sun.com/javase/8/docs/api/</java.version.javadoc>
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -68,6 +71,24 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-io</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
@@ -84,6 +105,12 @@
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
                 <artifactId>rdfunit-validate</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-w3c-dqv</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -130,11 +157,23 @@
                 <version>0.6.1</version>
             </dependency>
 
+            <!-- Guava -->
+
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>4.0</version>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>19.0</version>
             </dependency>
+
+            <!-- Lombok -->
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.6</version>
+                <scope>provided</scope>
+            </dependency>
+
 
             <!-- logging -->
             <dependency>
@@ -173,7 +212,7 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>2.2.0</version>
+                <version>3.3.0</version>
                 <scope>test</scope>
             </dependency>
 
@@ -237,7 +276,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19</version>
+                <version>2.19.1</version>
             </plugin>
 
             <plugin>
@@ -263,7 +302,7 @@
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.0.0</version>
+                <version>4.1.0</version>
             </plugin>
 
             <plugin>
@@ -291,6 +330,13 @@
                     <artifactId>cobertura-maven-plugin</artifactId>
                     <version>2.7</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok-maven-plugin</artifactId>
+                    <version>1.16.6.1</version>
+                </plugin>
+
             </plugins>
 
         </pluginManagement>
@@ -322,7 +368,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.5</version>
+                <version>3.6</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
@@ -344,7 +390,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.19</version>
+                <version>2.19.1</version>
             </plugin>
 
             <plugin>
@@ -374,6 +420,22 @@
             <id>release</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <addOutputDirectory>false</addOutputDirectory>
+                            <sourceDirectory>src/main/java</sourceDirectory>
+                        </configuration>
+                    </plugin>
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -394,6 +456,10 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>2.10.3</version>
+                        <configuration>
+                            <defaultVersion>${project.version}</defaultVersion>
+                            <sourcepath>target/generated-sources/delombok</sourcepath>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>

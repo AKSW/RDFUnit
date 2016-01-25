@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>rdfunit-parent</artifactId>
+        <groupId>org.aksw.rdfunit</groupId>
+        <version>0.7.21-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rdfunit-w3c-dqv</artifactId>
+    <name>RDFUnit - W3c DQV</name>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aksw.jena-sparql-api</groupId>
+            <artifactId>jena-sparql-api-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-arq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- testing -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+</project>

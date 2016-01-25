@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -7,9 +8,11 @@ import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.impl.results.RLOGTestCaseResultImpl;
+import org.aksw.rdfunit.model.impl.results.SimpleShaclTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.results.SimpleShaclTestCaseResult;
-import org.aksw.rdfunit.model.results.TestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.SparqlUtils;
@@ -63,7 +66,7 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
                 }
                 RLOGLevel logLevel = testCase.getLogLevel();
 
-                testCaseResults.add(new SimpleShaclTestCaseResult(testCase, resource, message, logLevel));
+                testCaseResults.add(new SimpleShaclTestCaseResultImpl(testCase.getTestURI(), logLevel, message, resource));
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
@@ -80,8 +83,8 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
     /**
      * <p>checkQueryResultStatus.</p>
      *
-     * @param e a {@link QueryExceptionHTTP} object.
-     * @throws TestCaseExecutionException if any.
+     * @param e a {@link com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP} object.
+     * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
      */
     protected void checkQueryResultStatus(QueryExceptionHTTP e) throws TestCaseExecutionException {
         if (SparqlUtils.checkStatusForTimeout(e)) {

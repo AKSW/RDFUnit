@@ -5,6 +5,7 @@ import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.StringUtils;
+import org.aksw.rdfunit.utils.UriToPathUtils;
 
 /**
  * <p>SourceFactory class.</p>
@@ -94,7 +95,7 @@ public final class SchemaSourceFactory {
     public static SchemaSource createSchemaSourceFromText(String namespace, String text, String format) {
 
         String uri = namespace + StringUtils.getHashFromString(text);
-        String prefix = CacheUtils.getAutoPrefixForURI(uri);
+        String prefix = UriToPathUtils.getAutoPrefixForURI(uri);
 
         return createSchemaSourceSimple(prefix, uri, RDFReaderFactory.createReaderFromText(text, format));
     }
@@ -110,7 +111,7 @@ public final class SchemaSourceFactory {
      */
     public static SchemaSource createSchemaSourceSimple(String uri, RDFReader reader) {
 
-        return createSchemaSourceSimple(CacheUtils.getAutoPrefixForURI(uri), uri, uri, reader);
+        return createSchemaSourceSimple(UriToPathUtils.getAutoPrefixForURI(uri), uri, uri, reader);
     }
 
     /**

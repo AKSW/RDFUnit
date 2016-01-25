@@ -4,9 +4,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.format.SerializationFormat;
+import org.aksw.rdfunit.io.writer.RDFHtmlWriterFactory;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
-import org.aksw.rdfunit.io.writer.RDFWriterFactory;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.validate.ParameterException;
@@ -106,7 +106,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         }
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());
-        RDFWriter RDFWriter = RDFWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getTestCaseExecutionType());
+        RDFWriter RDFWriter = RDFHtmlWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getTestCaseExecutionType());
         RDFWriter.write(model);
     }
 

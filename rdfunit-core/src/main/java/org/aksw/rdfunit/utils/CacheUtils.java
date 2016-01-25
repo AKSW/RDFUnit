@@ -3,8 +3,6 @@ package org.aksw.rdfunit.utils;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.sources.Source;
 
-import java.net.URI;
-
 /**
  * <p>CacheUtils class.</p>
  *
@@ -28,40 +26,7 @@ public final class CacheUtils {
      * @return a {@link java.lang.String} object.
      */
     public static String getSchemaSourceCacheFilename(String testFolder, TestAppliesTo schemaType, String prefix, String uri) {
-        return testFolder + schemaType.name() + "/" + getCacheFolderForURI(uri) + prefix + ".cache." + schemaType.name() + ".ttl";
-    }
-
-    /**
-     * <p>getCacheFolderForURI.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
-    public static String getCacheFolderForURI(String uri) {
-        String retVal = "";
-        try {
-            URI tmp = new URI(uri);
-            String host = tmp.getHost();
-            String path = tmp.getPath();
-            retVal = host + path + (path.endsWith("/") ? "" : "/");
-        } catch (Exception e) {
-            // TODO handle exception
-        }
-
-        return retVal;
-    }
-
-    /**
-     * <p>getAutoPrefixForURI.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
-    public static String getAutoPrefixForURI(String uri) {
-        return uri
-                .replace("http://", "")
-                .replace("https://", "")
-                .replaceAll("[?\"'\\/<>*|:#,&]", "_");
+        return testFolder + schemaType.name() + "/" + UriToPathUtils.getCacheFolderForURI(uri) + prefix + ".cache." + schemaType.name() + ".ttl";
     }
 
     /**
@@ -98,7 +63,7 @@ public final class CacheUtils {
     }
 
     private static String getFile(String testFolder, Source source, String type, String sourceType) {
-        return testFolder + sourceType + "/" + getCacheFolderForURI(source.getUri()) + source.getPrefix() + "." + type + "." + sourceType + ".ttl";
+        return testFolder + sourceType + "/" + UriToPathUtils.getCacheFolderForURI(source.getUri()) + source.getPrefix() + "." + type + "." + sourceType + ".ttl";
     }
 
 }

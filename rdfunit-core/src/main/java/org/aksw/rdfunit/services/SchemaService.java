@@ -1,11 +1,11 @@
 package org.aksw.rdfunit.services;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
-import org.aksw.rdfunit.utils.CacheUtils;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.aksw.rdfunit.utils.UriToPathUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,7 @@ public final class SchemaService {
     /**
      * Creates a Bi-Directional map between prefix & namespace
      */
-    final private static BidiMap<String, String> schemata = new DualHashBidiMap<>();
+    final private static BiMap<String, String> schemata = HashBiMap.create();
 
     /**
      * if namespace is different from the ontology uri, we keep it in this map
@@ -49,7 +49,7 @@ public final class SchemaService {
      * @param url a {@link java.lang.String} object.
      */
     public static void addSchemaDecl(String prefix, String uri, String url) {
-        schemata.put(prefix, uri);
+        schemata.forcePut(prefix, uri);
         definedBy.put(uri, url);
     }
 
@@ -81,7 +81,7 @@ public final class SchemaService {
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
     public static SchemaSource getSourceFromUri(String baseFolder, String uri) {
-        String prefix = schemata.getKey(uri);
+        String prefix = schemata.inverse().get(uri);
         if (prefix == null) {
             return null;
         }
@@ -111,7 +111,7 @@ public final class SchemaService {
         if (namespace == null) {
             // If not a prefix try to dereference it
             if (prefix.contains("/") || prefix.contains("\\")) {
-                return SchemaSourceFactory.createSchemaSourceDereference(CacheUtils.getAutoPrefixForURI(prefix), prefix);
+                return SchemaSourceFactory.createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(prefix), prefix);
             } else {
                 return null;
             }

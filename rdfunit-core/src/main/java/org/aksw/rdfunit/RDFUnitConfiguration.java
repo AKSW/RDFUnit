@@ -10,8 +10,8 @@ import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.NamespaceStatistics;
-import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
+import org.aksw.rdfunit.utils.UriToPathUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -101,7 +101,7 @@ public class RDFUnitConfiguration {
         this.dataFolder = dataFolder;
         this.testFolder = testFolder;
 
-        prefix = CacheUtils.getAutoPrefixForURI(datasetURI); // default prefix
+        prefix = UriToPathUtils.getAutoPrefixForURI(datasetURI); // default prefix
     }
 
     /**
