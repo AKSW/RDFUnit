@@ -2,9 +2,9 @@ package org.aksw.rdfunit.model.interfaces;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
 
 import java.util.Collection;
@@ -64,7 +64,7 @@ public class TestSuite {
      * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      */
     public Resource serialize(Model model) {
-        Resource resource = model.createResource(PrefixNSService.getURIFromAbbrev("ruts:" + JenaUUID.generate().asString()))
+        Resource resource = model.createResource(JenaUtils.getUniqueIri(PrefixNSService.getNSFromPrefix("ruts")))
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:TestSuite")))
                 .addProperty(RDF.type, PROV.Collection);
 

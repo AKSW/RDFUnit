@@ -5,13 +5,13 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.helper.SimpleAnnotation;
 import org.aksw.rdfunit.model.interfaces.results.*;
 import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.model.writers.ElementWriterUtils;
+import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.RLOG;
@@ -37,7 +37,7 @@ public class TestCaseResultWriter implements ElementWriter {
     public Resource write(Model model) {
         Resource resource = null;
         if (testCaseResult.getElement().isAnon()) {
-            resource = model.createResource(executionUri + "/" + JenaUUID.generate().toString());
+            resource = model.createResource(JenaUtils.getUniqueIri(executionUri + "/"));
         } else {
             resource = ElementWriterUtils.copyElementResourceInModel(testCaseResult, model);
         }

@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MetricMapperTest {
 
-    private static int DEFAULT_MAP_SIZE = 15;
+    private static int DEFAULT_MAP_SIZE = 16;
 
 
     @Test

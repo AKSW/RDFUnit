@@ -2,7 +2,6 @@ package org.aksw.rdfunit.utils;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
@@ -95,7 +94,7 @@ public final class TestUtils {
         }
         String md5Hash = StringUtils.getHashFromString(string2hash.toString());
         if (md5Hash.isEmpty()) {
-            return testURI + JenaUUID.generate().asString();
+            return JenaUtils.getUniqueIri(testURI);
         } else {
             return testURI + md5Hash;
         }

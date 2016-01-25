@@ -3,8 +3,8 @@ package org.aksw.rdfunit.dqv;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.rdfunit.model.writers.ElementWriter;
+import org.aksw.rdfunit.utils.JenaUtils;
 
 import java.util.Collection;
 
@@ -33,7 +33,7 @@ public final class DqvReportWriter implements ElementWriter {
         Resource te = null;
         for (QualityMeasure m: measures) {
             te = model.createResource(m.getTestExecutionUri());
-            Resource measureResource = model.createResource(JenaUUID.generate().toString())
+            Resource measureResource = model.createResource(JenaUtils.getUniqueIri())
                     .addProperty(ResourceFactory.createProperty(dqvNS + "computedOn"), te)
                     .addProperty(ResourceFactory.createProperty(dqvNS + "hasMetric"), ResourceFactory.createResource(m.getDqvMetricUri()))
                     .addProperty(ResourceFactory.createProperty(dqvNS + "value"), "" + m.getValue())

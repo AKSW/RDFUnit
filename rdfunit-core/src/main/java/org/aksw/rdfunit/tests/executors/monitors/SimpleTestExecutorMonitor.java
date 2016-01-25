@@ -4,7 +4,6 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
@@ -19,6 +18,7 @@ import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +89,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         this.model = model;
         this.loggingEnabled = loggingEnabled;
         PrefixNSService.setNSPrefixesInModel(model);
-        executionUUID = JenaUUID.generate().asString();
+        executionUUID = JenaUtils.getUniqueIri();
     }
 
 
