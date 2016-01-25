@@ -49,7 +49,7 @@ public final class SchemaService {
      * @param url a {@link java.lang.String} object.
      */
     public static void addSchemaDecl(String prefix, String uri, String url) {
-        schemata.put(prefix, uri);
+        schemata.forcePut(prefix, uri);
         definedBy.put(uri, url);
     }
 
