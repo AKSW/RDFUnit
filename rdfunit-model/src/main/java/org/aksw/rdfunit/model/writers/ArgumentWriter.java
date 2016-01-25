@@ -37,7 +37,7 @@ public final class ArgumentWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(argument, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(argument, model);
 
         // rdf:type sh:Argument
         resource.addProperty(RDF.type, SHACL.Argument);

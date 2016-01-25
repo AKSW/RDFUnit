@@ -33,7 +33,7 @@ public final class FunctionWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(function, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(function, model);
 
         // rdf:type sh:Argument
         resource.addProperty(RDF.type, SHACL.Function);

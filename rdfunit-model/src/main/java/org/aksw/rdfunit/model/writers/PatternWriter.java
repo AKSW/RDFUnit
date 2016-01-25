@@ -35,7 +35,7 @@ public final class PatternWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(pattern, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(pattern, model);
 
         resource
                 .addProperty(RDF.type, RDFUNITv.Pattern)

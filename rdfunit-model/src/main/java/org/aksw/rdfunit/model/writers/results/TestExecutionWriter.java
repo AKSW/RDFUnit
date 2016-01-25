@@ -8,7 +8,6 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.ElementWriter;
-import org.aksw.rdfunit.model.writers.ElementWriterUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 
@@ -26,7 +25,7 @@ public final class TestExecutionWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(testExecution, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(testExecution, model);
 
 
         //Resource testSuiteResource = testSuite.serialize(getModel());

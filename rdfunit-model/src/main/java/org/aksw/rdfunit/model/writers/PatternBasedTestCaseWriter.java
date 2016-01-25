@@ -33,12 +33,12 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(patternBasedTestCase, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(patternBasedTestCase, model);
 
         resource
                 //.addProperty(RDFS.comment, "FOR DEBUGGING ONLY: SPARQL Query: \n" + new QueryGenerationSelectFactory().getSparqlQueryAsString(this) + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
                 .addProperty(RDF.type, RDFUNITv.PatternBasedTestCase)
-                .addProperty(RDFUNITv.basedOnPattern,  ElementWriterUtils.copyElementResourceInModel(patternBasedTestCase.getPattern(), model));
+                .addProperty(RDFUNITv.basedOnPattern,  ElementWriter.copyElementResourceInModel(patternBasedTestCase.getPattern(), model));
 
         for (Binding binding : patternBasedTestCase.getBindings()) {
             Resource bindingResource = BindingWriter.create(binding).write(model);

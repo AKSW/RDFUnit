@@ -10,7 +10,6 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.helper.SimpleAnnotation;
 import org.aksw.rdfunit.model.interfaces.results.*;
 import org.aksw.rdfunit.model.writers.ElementWriter;
-import org.aksw.rdfunit.model.writers.ElementWriterUtils;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -39,7 +38,7 @@ public class TestCaseResultWriter implements ElementWriter {
         if (testCaseResult.getElement().isAnon()) {
             resource = model.createResource(JenaUtils.getUniqueIri(executionUri + "/"));
         } else {
-            resource = ElementWriterUtils.copyElementResourceInModel(testCaseResult, model);
+            resource = ElementWriter.copyElementResourceInModel(testCaseResult, model);
         }
 
         // general properties

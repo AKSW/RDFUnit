@@ -34,13 +34,13 @@ public final class TestGeneratorWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(testGenerator, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(testGenerator, model);
 
         resource
                 .addProperty(RDF.type, RDFUNITv.TestGenerator)
                 .addProperty(DCTerms.description, testGenerator.getTAGDescription())
                 .addProperty(RDFUNITv.sparqlGenerator, testGenerator.getTAGQuery())
-                .addProperty(RDFUNITv.basedOnPattern, ElementWriterUtils.copyElementResourceInModel(testGenerator.getTAGPattern(), model));
+                .addProperty(RDFUNITv.basedOnPattern, ElementWriter.copyElementResourceInModel(testGenerator.getTAGPattern(), model));
 
 
         for (ResultAnnotation resultAnnotation: testGenerator.getTAGAnnotations()) {

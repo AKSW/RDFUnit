@@ -34,7 +34,7 @@ public final class TestAnnotationWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(tcAnnotation, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(tcAnnotation, model);
 
         resource
                 .addProperty(DCTerms.description, tcAnnotation.getDescription())

@@ -32,7 +32,7 @@ final class ManualTestCaseWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(manualTestCase, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(manualTestCase, model);
 
         resource
                 .addProperty(RDF.type, RDFUNITv.ManualTestCase)

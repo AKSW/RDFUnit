@@ -32,10 +32,10 @@ public final class BindingWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = ElementWriterUtils.copyElementResourceInModel(binding, model);
+        Resource resource = ElementWriter.copyElementResourceInModel(binding, model);
 
         resource.addProperty(RDF.type, RDFUNITv.Binding);
-        resource.addProperty(RDFUNITv.parameter, ElementWriterUtils.copyElementResourceInModel(binding.getParameter(), model));
+        resource.addProperty(RDFUNITv.parameter, ElementWriter.copyElementResourceInModel(binding.getParameter(), model));
         resource.addProperty(RDFUNITv.bindingValue, binding.getValue());
 
         return resource;
