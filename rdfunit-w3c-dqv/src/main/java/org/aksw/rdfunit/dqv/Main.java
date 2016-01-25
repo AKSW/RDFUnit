@@ -23,9 +23,10 @@ public class Main {
         Model testExecutionReader = new RDFStreamReader("/home/jim/work/code/java/Databugger/data/results/dbpedia.org_resource_Thessaloniki.shaclFullTestCaseResult.ttl").read();
 
         for (Resource testExecutionResource: testExecutionReader.listResourcesWithProperty(RDF.type, RDFUNITv.TestExecution).toList()) {
+
             TestExecution testExecution = TestExecutionReader.create().read(testExecutionResource);
 
-            Collection<QualityMeasure> report = new DqvReport(testExecution).getQualityMeasures();
+            Collection<QualityMeasure> report = new DqvReport(testExecution, MetricMapper.createDefault()).getQualityMeasures();
 
             Model model = ModelFactory.createDefaultModel();
             DqvReportWriter.create(report).write(model);

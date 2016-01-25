@@ -111,6 +111,8 @@ public final class RDFUNITv {
     public static final Property totalIndividualErrors = property("totalIndividualErrors");
     public static final Property executionType = property("executionType");
 
+    public static final Property metric = property("metric");
+
 
 
     private RDFUNITv() {

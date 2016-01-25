@@ -6,6 +6,7 @@
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdqv: <http://rdfunit.aksw.org/ns/rdqv#> .
 
 
 ##########################################
@@ -47,7 +48,7 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:RangeObjectConstraint] ;
+            rut:annotationValue rdqv:RangeClassConstraint] ;
     .
 
 
@@ -84,7 +85,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:RangeObjectConstraint] ;
+            rut:annotationValue rdqv:RangeClassConstraint] ;
     .
 
 ##########################################
@@ -124,7 +125,7 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:RangeDatatypeConstraint] ;
+            rut:annotationValue rdqv:RangeDatatypeConstraint] ;
     .
 
 # Check for rdf:langString
@@ -141,7 +142,7 @@ rutg:RDFLANGSTRING a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:RangeDatatypeConstraint] ;
+            rut:annotationValue rdqv:RangeDatatypeConstraint] ;
     .
 
 # Datatype range
@@ -170,7 +171,7 @@ rutg:RDFSRANGED a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:RangeDatatypeConstraint] ;
+            rut:annotationValue rdqv:RangeDatatypeConstraint] ;
     .
 
 
@@ -208,7 +209,7 @@ rutg:RDFSRANGENL a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:RangeObjectConstraint] ;
+            rut:annotationValue rdqv:RangeClassConstraint] ;
     .
 
 
@@ -232,7 +233,7 @@ rutg:RDFSDOMAIN a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:DomainObjectConstraint] ;
+            rut:annotationValue rdqv:DomainConstraint] ;
     .
 
 
@@ -256,7 +257,7 @@ rutg:RDFSDOMAIN-MISS a rut:TestGenerator ;
     rut:resultAnnotation [
             a rut:ResultAnnotation ;
             rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue sh:DomainObjectConstraint] ;
+            rut:annotationValue rdqv:DomainConstraint] ;
     .
 
 ##########################################
@@ -276,6 +277,10 @@ rutg:OWLDISJC1 a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:TypeDisjointConstraint] ;
     .
 
 ##########################################
@@ -296,6 +301,10 @@ rutg:OWLDISJC2 a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:TypeDisjointConstraint] ;
     .
 
 ##########################################
@@ -317,6 +326,10 @@ rutg:OWLALLDISJC a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:TypeDisjointConstraint] ;
     .
 
 
@@ -334,7 +347,10 @@ rutg:OWLDISJP a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
-
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:PropertyDisjointConstraint] ;
     .
 
 ##########################################
@@ -354,6 +370,10 @@ rutg:OWLALLDISJP a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:PropertyDisjointConstraint] ;
     .
 
 
@@ -373,6 +393,10 @@ rutg:OWLCOMPL a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:ComplementOfConstraint] ;
     .
 
 ##########################################
@@ -394,6 +418,10 @@ rutg:OWLCARD a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:cardinality number > 0 (exists in db)
@@ -411,6 +439,10 @@ rutg:OWLCARDEX a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:cardinality number = 0 (must not exist)
@@ -428,6 +460,10 @@ rutg:OWLCARD0 a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:minCardinality number > 0 (count restriction if exists)
@@ -445,6 +481,10 @@ rutg:OWLCARD-MIN a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:minCardinality number > 0 (exists in db)
@@ -462,6 +502,10 @@ rutg:OWLCARDEX-MIN a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:manCardinality number > 0 (count restriction if exists)
@@ -479,6 +523,10 @@ rutg:OWLCGARD-MAX a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:maxCardinality number = 0 (must not exist)
@@ -496,6 +544,10 @@ rutg:OWLCARD-MAX0 a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 ##########################################
@@ -519,6 +571,10 @@ rutg:OWLQCARD a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:qualifiedCardinality number > 0 (exists in db)
@@ -538,6 +594,10 @@ rutg:OWLQCARDEX a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:qualifiedCardinality number = 0 (must not exist)
@@ -557,6 +617,10 @@ rutg:OWLQCARD0 a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:minQualifiedCardinality number > 0 (count restriction if exists)
@@ -576,6 +640,10 @@ rutg:OWLQCARD-MIN a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:minQualifiedCardinality number > 0 (exists in db)
@@ -595,6 +663,10 @@ rutg:OWLQCARDEX-MIN a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:maxQualifiedCardinality number > 0 (count restriction if exists)
@@ -615,6 +687,10 @@ rutg:OWLQCARD-MAX a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 # owl:maxQualifiedCardinality number = 0 (must not exist)
@@ -634,6 +710,10 @@ rutg:OWLQCARD-MAX0 a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 
@@ -651,6 +731,10 @@ rutg:OWLFUNC a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:CardinalityConstraint] ;
     .
 
 ################################################################################
@@ -667,6 +751,10 @@ rutg:OWLINVFUNC a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:InverseFunctionalPropertyConstraint] ;
     .
 
 
@@ -701,6 +789,11 @@ rutg:OWLASYMMETRICPROP a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:AsymmetricPropertyConstraint] ;
+
     .
 
 
@@ -730,6 +823,10 @@ rutg:OWLIRREFLEXIVE a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:IrreflexivePropertyConstraint] ;
     .
 
 
@@ -747,6 +844,10 @@ rutg:OWLDEPRECATEDP a rut:TestGenerator ;
         a rut:ResultAnnotation ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:WARN] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:DeprecatedPropertyConstraint] ;
     .
 
 # TODO owl:DeprecatedClass (needs a new transitive type pattern)

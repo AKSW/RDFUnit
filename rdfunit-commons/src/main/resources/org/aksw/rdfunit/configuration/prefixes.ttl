@@ -18,6 +18,8 @@
 @prefix rutr: <http://rdfunit.aksw.org/data/results#> .
 @prefix ruts: <http://rdfunit.aksw.org/data/testsuite#> .
 
+#@prefix rdqv: <http://rdfunit.aksw.org/ns/rdqv> .
+
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 

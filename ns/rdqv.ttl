@@ -1,0 +1,24 @@
+@base <http://rdfunit.aksw.org/ns/rdqv> .
+@prefix dqv: <http://www.w3.org/ns/dqv#> .
+
+# Reported Quality Metrics
+#TODO add to dimensions
+
+
+<#CardinalityMetric> a dqv:Metric .
+<#OwlRestrictionMetric> a dqv:Metric .
+<#DomainMetric> a dqv:Metric .
+<#RangeClassMetric> a dqv:Metric .
+<#RangeDatatypeMetric> a dqv:Metric .
+<#ValueMetric> a dqv:Metric .
+<#ValueLanguageMetric> a dqv:Metric .
+<#TypeDisjointMetric> a dqv:Metric .
+<#PropertyDisjointMetric> a dqv:Metric .
+<#ComplementOfMetric> a dqv:Metric .
+<#InverseFunctionalPropertyMetric> a dqv:Metric .
+<#DeprecatedPropertyMetric> a dqv:Metric .
+<#DeprecatedClassMetric> a dqv:Metric .
+<#IrreflexivePropertyMetric> a dqv:Metric .
+<#AsymmetricPropertyMetric> a dqv:Metric .
+<#UndefinedMetric> a dqv:Metric .
+<#UnclassifiedMetric> a dqv:Metric .

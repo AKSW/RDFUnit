@@ -1,0 +1,21 @@
+@base <http://rdfunit.aksw.org/ns/rdqv#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
+
+<#CardinalityConstraint>  rut:metric <#CardinalityMetric> .
+<#OwlRestrictionConstraint>  rut:metric <#OwlRestrictionMetric> .
+<#DomainConstraint>  rut:metric <#DomainMetric> .
+<#RangeClassConstraint>  rut:metric <#RangeClassMetric> .
+<#RangeDatatypeConstraint>  rut:metric <#RangeDatatypeMetric> .
+<#ValueConstraint>  rut:metric <#ValueMetric> .
+<#ValueLanguageConstraint>  rut:metric <#ValueLanguageMetric> .
+<#TypeDisjointConstraint>  rut:metric <#TypeDisjointMetric> .
+<#PropertyDisjointConstraint>  rut:metric <#PropertyDisjointMetric> .
+<#ComplementOfConstraint>  rut:metric <#ComplementOfMetric> .
+<#InverseFunctionalPropertyConstraint>  rut:metric <#InverseFunctionalPropertyMetric> .
+<#DeprecatedPropertyConstraint>  rut:metric <#DeprecatedPropertyMetric> .
+<#DeprecatedClassConstraint>  rut:metric <#DeprecatedClassMetric> .
+<#IrreflexivePropertyConstraint>  rut:metric <#IrreflexivePropertyMetric> .
+<#AsymmetricPropertyConstraint>  rut:metric <#AsymmetricPropertyMetric> .
+
+<#UndefinedConstraint>  rut:metric <#UndefinedMetric> .
+

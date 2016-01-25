@@ -8,6 +8,7 @@ import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.vocabulary.SHACL;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -18,22 +19,26 @@ import java.util.stream.Collectors;
 @Value
 public class DqvReport {
 
+    private static final String undefinedMetric = "http://rdfunit.aksw.org/ns/rdqv#UndefinedMetric";
+    private static final String unclassifiedMetric = "http://rdfunit.aksw.org/ns/rdqv#UnclassifiedMetric";
+
     @NonNull private final TestExecution testExecution;
+    @NonNull private final MetricMapper metricMapper;
 
     Collection<QualityMeasure> getQualityMeasures() {
 
 
-        return
-        testExecution.getTestCaseResults().stream()   // go through all results
+        Collection<ShaclTestCaseResult> results =
+            testExecution.getTestCaseResults().stream()   // go through all results
                 .filter(t -> t instanceof ShaclTestCaseResult)
                 .map(ShaclTestCaseResult.class::cast) // use only Shacl results
-                .flatMap(r -> r.getResultAnnotations().stream())  // get annotations
+                .collect(Collectors.toList());
 
-                .filter(p -> p.getProperty().equals(SHACL.sourceConstraint))
-                .flatMap(p2 -> p2.getValues().stream())
-                .filter(RDFNode::isResource)
-                .map(n -> n.asResource().getURI())  // get the metric IRIs
-
+        return results.stream()
+                // get source constraints or use undefined
+                .map(r -> getSourceConstraintFromResult(r).orElse(undefinedMetric))
+                // map to metrics or use unclassified metric
+                .map(c -> getMetricFromSourceConstraint(c))
                 // group same metrics and count
                 .collect( Collectors.groupingBy( c -> c, Collectors.counting() ) )
                 .entrySet().stream()
@@ -47,6 +52,23 @@ public class DqvReport {
                 ).collect(Collectors.toList());
 
 
+
+    }
+
+    Optional<String> getSourceConstraintFromResult(ShaclTestCaseResult r) {
+        return r.getResultAnnotations().stream()
+                .filter(p -> p.getProperty().equals(SHACL.sourceConstraint))
+                .flatMap(p2 -> p2.getValues().stream())
+                .filter(RDFNode::isResource)
+                .map(n -> n.asResource().getURI())
+                .findFirst();
+
+    }
+
+    String getMetricFromSourceConstraint(String sourceConstraint) {
+        return metricMapper
+                .getMEtricMap()
+                .getOrDefault(sourceConstraint, unclassifiedMetric);
 
     }
 
