@@ -32,4 +32,7 @@ RewriteRule ^core$ core.ttl [R=303]
 
 # Choose the default response
 RewriteRule ^core$ core.ttl [R=303]
+
+#rdqv
+RewriteRule ^rdqv$ rdqv.ttl [R=303]
 		
