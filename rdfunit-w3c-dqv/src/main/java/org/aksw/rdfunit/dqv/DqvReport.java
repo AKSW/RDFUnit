@@ -55,7 +55,7 @@ public class DqvReport {
 
     }
 
-    Optional<String> getSourceConstraintFromResult(ShaclTestCaseResult r) {
+    private Optional<String> getSourceConstraintFromResult(ShaclTestCaseResult r) {
         return r.getResultAnnotations().stream()
                 .filter(p -> p.getProperty().equals(SHACL.sourceConstraint))
                 .flatMap(p2 -> p2.getValues().stream())
@@ -65,7 +65,7 @@ public class DqvReport {
 
     }
 
-    String getMetricFromSourceConstraint(String sourceConstraint) {
+    private String getMetricFromSourceConstraint(String sourceConstraint) {
         return metricMapper
                 .getMetricMap()
                 .getOrDefault(sourceConstraint, unclassifiedMetric);
