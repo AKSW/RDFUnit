@@ -103,7 +103,7 @@ public class ValidateUtils {
 
         RDFUnitConfiguration configuration = null;
 
-        String dataFolder = commandLine.getOptionValue("f", "../data/");
+        String dataFolder = commandLine.getOptionValue("f", "data/");
 
         //Dataset URI, important & required (used to associate manual dataset test cases)
         String datasetURI = commandLine.getOptionValue("d", "");
