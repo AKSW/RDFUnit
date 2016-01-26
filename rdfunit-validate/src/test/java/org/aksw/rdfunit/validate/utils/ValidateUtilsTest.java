@@ -52,8 +52,8 @@ public class ValidateUtilsTest {
         assertNotNull(configuration.getEnrichedSchema());
 
         // data folder
-        assertEquals(configuration.getDataFolder(), "../data/");
-        assertEquals(configuration.getTestFolder(), "../data/tests/");
+        assertEquals(configuration.getDataFolder(), "data/");
+        assertEquals(configuration.getTestFolder(), "data/tests/");
 
         // output formats
         assertEquals(configuration.getOutputFormats().size(), 1); // html by default
