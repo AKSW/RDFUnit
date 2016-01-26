@@ -1,7 +1,8 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Objects;
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.model.interfaces.Function;
 
@@ -16,6 +17,8 @@ import java.util.Optional;
  * @since 6/17/15 3:48 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public final class FunctionImpl implements Function {
     private final Resource element;
     private final String comment;
@@ -128,27 +131,4 @@ public final class FunctionImpl implements Function {
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(comment, isCachable, superFunction, arguments, sparqlString, returnType);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final FunctionImpl other = (FunctionImpl) obj;
-        return Objects.equal(this.comment, other.comment)
-                && Objects.equal(this.isCachable, other.isCachable)
-                && Objects.equal(this.superFunction, other.superFunction)
-                && Objects.equal(this.arguments, other.arguments)
-                && Objects.equal(this.sparqlString, other.sparqlString)
-                && Objects.equal(this.returnType, other.returnType);
-    }
 }

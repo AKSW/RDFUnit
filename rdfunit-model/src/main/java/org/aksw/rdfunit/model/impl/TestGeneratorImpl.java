@@ -4,6 +4,8 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.core.Var;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
@@ -25,6 +27,8 @@ import static com.google.common.base.Preconditions.checkState;
  * @since 9/20/13 2:48 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public final class TestGeneratorImpl implements TestGenerator {
     private static final Logger log = LoggerFactory.getLogger(TestGeneratorImpl.class);
 

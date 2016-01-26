@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
@@ -21,6 +23,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 9/16/13 1:14 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public final class PatternImpl implements Pattern {
     private final Resource element;
     private final String id;

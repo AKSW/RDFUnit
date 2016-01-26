@@ -1,7 +1,8 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Objects;
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
 
@@ -17,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 9 /20/13 2:47 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public final class PatternParameterImpl implements PatternParameter {
 
     private final Resource element;
@@ -62,28 +65,6 @@ public final class PatternParameterImpl implements PatternParameter {
     @Override
     public Optional<String> getConstraintPattern() {
         return Optional.ofNullable(constraintPattern);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(element, id, constraint, constraintPattern);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final PatternParameterImpl other = (PatternParameterImpl) obj;
-        return Objects.equal(this.element, other.element)
-                && Objects.equal(this.id, other.id)
-                && Objects.equal(this.constraint, other.constraint)
-                && Objects.equal(this.constraintPattern, other.constraintPattern);
     }
 
     public static class Builder {

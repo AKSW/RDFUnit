@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.*;
 
 import java.util.Collection;
@@ -14,6 +16,8 @@ import java.util.Collections;
  * @since 1/3/14 3:49 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements TestCase, PatternBasedTestCase {
 
     private final Pattern pattern;

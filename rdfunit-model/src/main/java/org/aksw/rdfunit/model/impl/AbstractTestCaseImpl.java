@@ -3,6 +3,8 @@ package org.aksw.rdfunit.model.impl;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -19,6 +21,8 @@ import java.util.Collection;
  * @since 9/23/13 6:31 AM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public abstract class AbstractTestCaseImpl implements TestCase, Comparable<AbstractTestCaseImpl> {
 
     protected final Resource element;
@@ -125,30 +129,6 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
         }
 
         return this.getTestURI().compareTo(o.getTestURI());
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AbstractTestCaseImpl)) return false;
-
-        AbstractTestCaseImpl testCase = (AbstractTestCaseImpl) o;
-
-        return element.equals(testCase.element);
-
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int hashCode() {
-        return element.hashCode();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return this.getTestURI();
     }
 
     /** {@inheritDoc} */

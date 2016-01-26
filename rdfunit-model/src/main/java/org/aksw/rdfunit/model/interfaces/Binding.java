@@ -3,6 +3,8 @@ package org.aksw.rdfunit.model.interfaces;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -16,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 9/30/13 8:28 AM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public class Binding implements Element {
     private final Resource element;
     private final PatternParameter parameter;
@@ -47,12 +51,6 @@ public class Binding implements Element {
         if (!validateType()) {
             //throw new BindingException("Binding is of incorrect constraint type");
         }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return "Binding [" + parameter.getId() + " => " + value + ']';
     }
 
     /**

@@ -1,8 +1,9 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.google.common.base.Objects;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.interfaces.Argument;
 
@@ -17,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 6/17/15 6:04 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public final class ArgumentImpl implements Argument {
 
     private final Resource element;
@@ -78,31 +81,6 @@ public final class ArgumentImpl implements Argument {
     @Override
     public Optional<RDFNode> getDefaultValue() {
         return Optional.ofNullable(defaultValue);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(element, predicate, comment, valueType, valueKind, defaultValue, isOptional);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final ArgumentImpl other = (ArgumentImpl) obj;
-        return Objects.equal(this.element, other.element)
-                && Objects.equal(this.predicate, other.predicate)
-                && Objects.equal(this.comment, other.comment)
-                && Objects.equal(this.valueType, other.valueType)
-                && Objects.equal(this.valueKind, other.valueKind)
-                && Objects.equal(this.defaultValue, other.defaultValue)
-                && Objects.equal(this.isOptional, other.isOptional);
     }
 
     public static class Builder {

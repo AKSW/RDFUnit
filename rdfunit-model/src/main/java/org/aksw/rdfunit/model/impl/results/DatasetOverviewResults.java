@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Calendar;
 
@@ -12,6 +14,8 @@ import java.util.Calendar;
  * @since 6/11/14 7:48 AM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public class DatasetOverviewResults {
 
     private long totalTests = 0;
@@ -196,22 +200,6 @@ public class DatasetOverviewResults {
      */
     public void setEndTime() {
         this.endTime = new XSDDateTime(Calendar.getInstance());
-    }
-
-
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return "DatasetOverviewResults{" +
-                "totalTests=" + totalTests +
-                ", successfullTests=" + successfullTests +
-                ", failedTests=" + failedTests +
-                ", timeoutTests=" + timeoutTests +
-                ", errorTests=" + errorTests +
-                ", individualErrors=" + individualErrors +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                '}';
     }
 
     public void setSuccessfullTests(long successfullTests) {

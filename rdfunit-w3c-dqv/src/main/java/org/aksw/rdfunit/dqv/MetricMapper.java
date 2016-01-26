@@ -2,6 +2,8 @@ package org.aksw.rdfunit.dqv;
 
 import com.google.common.collect.ImmutableMap;
 import com.hp.hpl.jena.rdf.model.Model;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -12,6 +14,8 @@ import java.util.Map;
  * @author Dimitris Kontokostas
  * @since 26/1/2016 12:31 πμ
  */
+@ToString
+@EqualsAndHashCode
 public class MetricMapper {
     private final ImmutableMap<String, String> metricMap;
 

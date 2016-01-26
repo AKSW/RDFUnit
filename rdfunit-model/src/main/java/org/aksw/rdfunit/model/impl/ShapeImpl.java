@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
 import org.aksw.rdfunit.model.interfaces.Shape;
@@ -16,6 +18,8 @@ import java.util.Optional;
  * @since 10/19/15 7:07 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode
 public class ShapeImpl implements Shape {
 
     private final Resource element;
