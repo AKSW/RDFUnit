@@ -1,7 +1,21 @@
 # W3c Data Quality Vocabulary (DQV) Report
 
-RDFUnit- W3c DQV provides an API to generate DQV reports from a [rut:TestExecutions](http://rdfunit.aksw.org/ns#TestExecution).
+RDFUnit- W3c DQV provides an API to generate DQV reports from a [rut:TestExecutions](http://rdfunit.aksw.org/ns/core#TestExecution).
 Scroll at the end for code samples.
+
+## Usage & Code Samples
+
+[org.aksw.rdfunit.dqv.RdfunitDqv](src/main/java/org/aksw/rdfunit/dqv/RdfunitDqv.java) contains example code
+
+```
+   # display a help message
+   $bin/dqv-report -h
+     
+   # read a set of test executions from {input-file} and write a quality report in {output-file}
+   $bin/dqv-report -i {input-file} -o {output-file}
+```
+
+## More Details
 
 #### W3c DQV
 The Data Quality Vocabulary (DQV) is foreseen as an extension to DCAT that provides the ability to publish, exchange and consume quality metadata, for every step of a dataset's lifecycle.
@@ -44,17 +58,5 @@ The aforementioned validation result would provide the following DQV quality rep
   ex:qm1 dqv:computedOn ex:testExecutionIRI ;
     dqv:hasMetric ex:CardinalityMetric
     dqv:value "0.1"^^xsd:double . # 1 instance / 10 triples
-```
-
-### Usage & Code Samples
-
-[org.aksw.rdfunit.dqv.RdfunitDqv](src/main/java/org/aksw/rdfunit/dqv/RdfunitDqv.java) contains example code
-
-```
-   # display a help message
-   $bin/dqv-report -h
-     
-   # read a set of test executions from {input-file} and write a quality report in {output-file}
-   $bin/dqv-report -i {input-file} -o {output-file}
 ```
 
