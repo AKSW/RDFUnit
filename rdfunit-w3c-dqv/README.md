@@ -1,4 +1,4 @@
-# RDFUnit - W3c Data Quality Vocabulary (DQV) Integration 
+# W3c Data Quality Vocabulary (DQV) Report
 
 RDFUnit- W3c DQV provides an API to generate DQV reports from a [rut:TestExecutions](http://rdfunit.aksw.org/ns#TestExecution).
 Scroll at the end for code samples.
