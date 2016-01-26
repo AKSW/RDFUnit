@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# builds core dependencies before execution
+echo "re-instaling depentant modules"
+mvn -pl rdfunit-w3c-dqv -am install -Dmaven.test.skip=true -Dgpg.skip=true -q
+echo "done"
+
+# Increase java heap with the following
+#export MAVEN_OPTS="-Xmx4096m"
+
+bin/dqv-report "$*"
