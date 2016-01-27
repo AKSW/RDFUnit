@@ -7,7 +7,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.model.helper.SimpleAnnotation;
+import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.results.*;
 import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.utils.JenaUtils;
@@ -80,7 +80,7 @@ public class TestCaseResultWriter implements ElementWriter {
             resource
                     .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult);
 
-            for (SimpleAnnotation annotation : ((ExtendedTestCaseResult) testCaseResult).getResultAnnotations()) {
+            for (PropertyValuePair annotation : ((ExtendedTestCaseResult) testCaseResult).getResultAnnotations()) {
                 for (RDFNode rdfNode : annotation.getValues()) {
                     resource.addProperty(annotation.getProperty(), rdfNode);
                 }
@@ -101,7 +101,7 @@ public class TestCaseResultWriter implements ElementWriter {
                     .addProperty(SHACL.subject,model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()));
 
 
-            for (SimpleAnnotation annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {
+            for (PropertyValuePair annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {
                 for (RDFNode rdfNode : annotation.getValues()) {
                     resource.addProperty(annotation.getProperty(), rdfNode);
                 }

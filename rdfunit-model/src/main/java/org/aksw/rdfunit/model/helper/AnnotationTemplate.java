@@ -69,23 +69,23 @@ public final class AnnotationTemplate {
     /**
      * <p>existsInTemplate.</p>
      *
-     * @param simpleAnnotation a {@link org.aksw.rdfunit.model.helper.SimpleAnnotation} object.
+     * @param propertyValuePair a {@link PropertyValuePair} object.
      * @return a boolean.
      */
-    public boolean existsInTemplate(SimpleAnnotation simpleAnnotation) {
-        return template.containsKey(simpleAnnotation.getProperty());
+    public boolean existsInTemplate(PropertyValuePair propertyValuePair) {
+        return template.containsKey(propertyValuePair.getProperty());
     }
 
     /**
      * <p>isValidAccordingToTemplate.</p>
      *
-     * @param simpleAnnotation a {@link org.aksw.rdfunit.model.helper.SimpleAnnotation} object.
+     * @param propertyValuePair a {@link PropertyValuePair} object.
      * @return a boolean.
      */
-    public boolean isValidAccordingToTemplate(SimpleAnnotation simpleAnnotation) {
-        int occurences = simpleAnnotation.getValues().size();
-        if (existsInTemplate(simpleAnnotation)) {
-            return template.get(simpleAnnotation.getProperty()).contains(occurences);
+    public boolean isValidAccordingToTemplate(PropertyValuePair propertyValuePair) {
+        int occurences = propertyValuePair.getValues().size();
+        if (existsInTemplate(propertyValuePair)) {
+            return template.get(propertyValuePair.getProperty()).contains(occurences);
         }
         return false;
     }

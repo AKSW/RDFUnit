@@ -16,11 +16,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 8/28/15 8:36 PM
  * @version $Id: $Id
  */
-public final class SimpleAnnotation {
+public final class PropertyValuePair {
     private final Property property;
     private final Collection<RDFNode> values;
 
-    private SimpleAnnotation(Property property, Collection<RDFNode> values) {
+    private PropertyValuePair(Property property, Collection<RDFNode> values) {
         this.property = checkNotNull(property);
         this.values = ImmutableList.copyOf(checkNotNull(values));
     }
@@ -30,10 +30,10 @@ public final class SimpleAnnotation {
      *
      * @param property a {@link com.hp.hpl.jena.rdf.model.Property} object.
      * @param rdfNode a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
-     * @return a {@link org.aksw.rdfunit.model.helper.SimpleAnnotation} object.
+     * @return a {@link PropertyValuePair} object.
      */
-    public static SimpleAnnotation create(Property property, RDFNode rdfNode) {
-        return new SimpleAnnotation(property, Collections.singletonList(rdfNode));
+    public static PropertyValuePair create(Property property, RDFNode rdfNode) {
+        return new PropertyValuePair(property, Collections.singletonList(rdfNode));
     }
 
     /**
@@ -41,10 +41,10 @@ public final class SimpleAnnotation {
      *
      * @param property a {@link com.hp.hpl.jena.rdf.model.Property} object.
      * @param rdfNode a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.model.helper.SimpleAnnotation} object.
+     * @return a {@link PropertyValuePair} object.
      */
-    public static SimpleAnnotation create(Property property, Collection<RDFNode> rdfNode) {
-        return new SimpleAnnotation(property, rdfNode);
+    public static PropertyValuePair create(Property property, Collection<RDFNode> rdfNode) {
+        return new PropertyValuePair(property, rdfNode);
     }
 
     /**

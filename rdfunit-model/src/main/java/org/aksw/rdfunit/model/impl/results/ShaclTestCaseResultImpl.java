@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.helper.SimpleAnnotation;
+import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
 
@@ -15,15 +15,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl implements ShaclTestCaseResult{
 
-    private final ImmutableSet<SimpleAnnotation> resultAnnotations;
+    private final ImmutableSet<PropertyValuePair> resultAnnotations;
 
 
-    public ShaclTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, String resource, Set<SimpleAnnotation> resultAnnotations) {
+    public ShaclTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, String resource, Set<PropertyValuePair> resultAnnotations) {
         super(testCaseUri, severity, message, resource);
         this.resultAnnotations = ImmutableSet.copyOf(checkNotNull(resultAnnotations));
     }
 
-    public ShaclTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, String resource, Set<SimpleAnnotation> resultAnnotations) {
+    public ShaclTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, String resource, Set<PropertyValuePair> resultAnnotations) {
         super(element, testCaseUri, severity, message, timestamp, resource);
         this.resultAnnotations = ImmutableSet.copyOf(checkNotNull(resultAnnotations));
     }
@@ -36,19 +36,19 @@ public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl imple
                 builder.resultAnnotations);
     }
 
-    public Set<SimpleAnnotation> getResultAnnotations() {
+    public Set<PropertyValuePair> getResultAnnotations() {
         return resultAnnotations;
     }
 
     public static class Builder {
         private RLOGTestCaseResult rlogTestCaseResult;
-        private Set<SimpleAnnotation> resultAnnotations;
+        private Set<PropertyValuePair> resultAnnotations;
 
         public Builder(String testCaseUri, RLOGLevel severity, String message, String resource) {
             rlogTestCaseResult = new RLOGTestCaseResultImpl(testCaseUri, severity, message, resource);
         }
 
-        public Builder setResultAnnotations(Set<SimpleAnnotation> annotations) {
+        public Builder setResultAnnotations(Set<PropertyValuePair> annotations) {
             this.resultAnnotations = annotations;
             return this;
         }

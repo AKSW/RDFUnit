@@ -25,8 +25,8 @@ public class AnnotationTemplateTest {
     private RDFNode rdfNode2 = ResourceFactory.createResource();
     private Collection<RDFNode> rdfNodes = Arrays.asList(rdfNode1, rdfNode2);
 
-    private SimpleAnnotation sa1 = SimpleAnnotation.create(RDF.type, rdfNode1);
-    private SimpleAnnotation sa2 = SimpleAnnotation.create(RDF.predicate, rdfNodes);
+    private PropertyValuePair sa1 = PropertyValuePair.create(RDF.type, rdfNode1);
+    private PropertyValuePair sa2 = PropertyValuePair.create(RDF.predicate, rdfNodes);
 
 
     @Before

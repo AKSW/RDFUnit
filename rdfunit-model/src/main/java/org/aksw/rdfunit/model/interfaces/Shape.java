@@ -19,7 +19,7 @@ public interface Shape extends Element{
      *
      * @return a {@link com.google.common.base.Optional} object.
      */
-    Optional<ShapeScope> getShapeScope();
+    Optional<ShapeScope> getScope();
 
     /**
      * <p>getLogLevel.</p>

@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.model.helper.SimpleAnnotationSet;
+import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ExtendedTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
@@ -44,7 +44,7 @@ public final class ExtendedTestCaseResultReader implements ElementReader<Extende
 
         RLOGTestCaseResult test = RLOGTestCaseResultReader.create().read(resource);
 
-        SimpleAnnotationSet annotationSet = SimpleAnnotationSet.create();
+        PropertyValuePairSet annotationSet = PropertyValuePairSet.create();
 
         Set<Property> excludesProperties = ImmutableSet.of(RLOG.level, RLOG.resource, RLOG.message, PROV.wasGeneratedBy, DCTerms.date, RDFUNITv.testCase);
         Set<Resource> excludesTypes = ImmutableSet.of(RDFUNITv.RLOGTestCaseResult, RDFUNITv.TestCaseResult, RLOG.Entry);

@@ -17,17 +17,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Dimitris Kontokostas
  * @since 14/1/2016 9:30 πμ
  */
-public class SimpleAnnotationSetTest {
+public class PropertyValuePairSetTest {
 
     @Test
     public void testGetAnnotations() throws Exception {
 
         //add rdf:type rdfs:Class
-        SimpleAnnotationSet an1 = SimpleAnnotationSet.create();
+        PropertyValuePairSet an1 = PropertyValuePairSet.create();
         an1.add(RDF.type, RDFS.Class);
         assertThat(an1.getAnnotations().size())
                 .isEqualTo(1);
-        List<SimpleAnnotation> annotations = new ArrayList<>(an1.getAnnotations());
+        List<PropertyValuePair> annotations = new ArrayList<>(an1.getAnnotations());
         assertThat(annotations.get(0).getProperty())
                 .isEqualTo(RDF.type);
         assertThat(annotations.get(0).getValues().size())

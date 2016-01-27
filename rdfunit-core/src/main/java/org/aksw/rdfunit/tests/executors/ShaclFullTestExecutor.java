@@ -6,8 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.model.helper.SimpleAnnotationSet;
-import org.aksw.rdfunit.model.impl.results.ExtendedTestCaseResultImpl;
+import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -18,7 +17,6 @@ import org.aksw.rdfunit.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -45,7 +43,7 @@ public class ShaclFullTestExecutor extends ShaclSimpleTestExecutor {
     protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
-        SimpleAnnotationSet annotationSet = SimpleAnnotationSet.create();
+        PropertyValuePairSet annotationSet = PropertyValuePairSet.create();
 
         QueryExecution qe = null;
         try {

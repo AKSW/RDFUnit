@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
-import org.aksw.rdfunit.model.helper.SimpleAnnotationSet;
+import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
@@ -44,7 +44,7 @@ public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestC
 
         SimpleShaclTestCaseResult test = ShaclSimpleTestCaseResultReader.create().read(resource);
 
-        SimpleAnnotationSet annotationSet = SimpleAnnotationSet.create();
+        PropertyValuePairSet annotationSet = PropertyValuePairSet.create();
 
         Set<Property> excludesProperties = ImmutableSet.of(SHACL.severity, SHACL.focusNode, SHACL.message, PROV.wasGeneratedBy, DCTerms.date);
         Set<Resource> excludesTypes = ImmutableSet.of(SHACL.ValidationResult, RDFUNITv.TestCaseResult);
