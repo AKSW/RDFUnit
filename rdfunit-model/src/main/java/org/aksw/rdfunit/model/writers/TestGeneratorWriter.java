@@ -38,12 +38,12 @@ public final class TestGeneratorWriter implements ElementWriter {
 
         resource
                 .addProperty(RDF.type, RDFUNITv.TestGenerator)
-                .addProperty(DCTerms.description, testGenerator.getTAGDescription())
-                .addProperty(RDFUNITv.sparqlGenerator, testGenerator.getTAGQuery())
-                .addProperty(RDFUNITv.basedOnPattern, ElementWriter.copyElementResourceInModel(testGenerator.getTAGPattern(), model));
+                .addProperty(DCTerms.description, testGenerator.getDescription())
+                .addProperty(RDFUNITv.sparqlGenerator, testGenerator.getQuery())
+                .addProperty(RDFUNITv.basedOnPattern, ElementWriter.copyElementResourceInModel(testGenerator.getPattern(), model));
 
 
-        for (ResultAnnotation resultAnnotation: testGenerator.getTAGAnnotations()) {
+        for (ResultAnnotation resultAnnotation: testGenerator.getAnnotations()) {
             Resource annotationResource = ResultAnnotationWriter.create(resultAnnotation).write(model);
             resource.addProperty(RDFUNITv.resultAnnotation, annotationResource);
         }

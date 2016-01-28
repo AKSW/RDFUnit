@@ -7,9 +7,11 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +35,12 @@ public class QueryGenerationSelectFactoryTest {
     @Test
     public void checkQuery() throws Exception {
 
-        TestCase testCase = new ManualTestCaseImpl(ResourceFactory.createResource("http://example.com"), null, goodSparqlQuery, "");
+        TestCase testCase = ManualTestCaseImpl.builder()
+                .resource(ResourceFactory.createResource("http://example.com"))
+                .annotation(Mockito.mock(TestCaseAnnotation.class))  //Mock class
+                .sparqlWhere(goodSparqlQuery)
+                .sparqlPrevalence("")
+                .build();
 
         Query query1 = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + sparqlSelect + goodSparqlQuery);
         Query query2 = queryGenerationSelectFactory.getSparqlQuery(testCase);

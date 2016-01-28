@@ -28,13 +28,13 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
     /**
      * <p>Constructor for PatternBasedTestCaseImpl.</p>
      *
-     * @param tcResource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
      * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
      * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @param bindings a {@link java.util.Collection} object.
      */
-    public PatternBasedTestCaseImpl(Resource tcResource, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) {
-        super(tcResource, annotation);
+    public PatternBasedTestCaseImpl(Resource resource, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) {
+        super(resource, annotation);
         this.pattern = pattern;
         this.bindings = bindings;
 
@@ -67,14 +67,8 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
         return sparqlPrevalenceCache;
     }
 
-    /**
-     * <p>getAutoGeneratorURI.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     * @since 0.7.19
-     */
     public String getAutoGeneratorURI() {
-        return annotation.getAutoGeneratorURI();
+        return testCaseAnnotation.getAutoGeneratorURI();
     }
 
     private String instantiateBindings(Collection<Binding> bindings, String query) {

@@ -1,8 +1,9 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Value;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
 
 /**
@@ -12,32 +13,9 @@ import org.aksw.rdfunit.model.interfaces.ShapeScope;
  * @since 10/19/15 7:06 PM
  * @version $Id: $Id
  */
-@ToString
-@EqualsAndHashCode
+@Value
 public class ShapeScopeClass implements ShapeScope {
-    private final Resource element;
-    private final String clazz;
+    @Getter @NonNull private final Resource element;
+    @Getter @NonNull private final String scopeClass;
 
-    /**
-     * <p>Constructor for ShapeScopeClass.</p>
-     *
-     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
-     * @param clazz a {@link java.lang.String} object.
-     */
-    public ShapeScopeClass(Resource element, String clazz) {
-        this.element = element;
-        this.clazz = clazz;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Resource getElement() {
-        return element;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getScopeClass() {
-        return clazz;
-    }
 }
