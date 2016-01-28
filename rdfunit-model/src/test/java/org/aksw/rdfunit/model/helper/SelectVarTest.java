@@ -37,4 +37,9 @@ public class SelectVarTest {
         assertThat(selectVar.asString())
                 .isEqualTo(" ( ?" + varName + " AS ?" + label + " ) ");
     }
+
+    @Test(expected=NullPointerException.class)
+    public void testNull() {
+        SelectVar.create(null);
+    }
 }
