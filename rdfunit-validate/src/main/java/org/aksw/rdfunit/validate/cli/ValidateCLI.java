@@ -131,7 +131,7 @@ public class ValidateCLI {
 
 
         // Write results to RDFWriter ()
-        String filename = "../data/results/" + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
+        String filename = configuration.getDataFolder() + "results/" + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
 
         ArrayList<RDFWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
