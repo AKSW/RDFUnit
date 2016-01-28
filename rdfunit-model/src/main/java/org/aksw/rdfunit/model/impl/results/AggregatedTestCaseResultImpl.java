@@ -84,7 +84,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
     @Override
     public String toString() {
 
-        String localTestUri = getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"); ;
+        String localTestUri = getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
 
         return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + localTestUri;
     }
