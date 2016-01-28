@@ -1,14 +1,16 @@
 package org.aksw.rdfunit.model.helper;
 
+import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.Value;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A simple Property / RDFNode(s) structure that is mainly used in annotations
@@ -18,7 +20,6 @@ import java.util.Collections;
  * @since 8/28/15 8:36 PM
  */
 @Value
-@Builder
 public final class PropertyValuePair {
 
     @Getter
@@ -26,16 +27,18 @@ public final class PropertyValuePair {
 
     @Singular
     @Getter
-    private final Collection<RDFNode> values;
+    private final ImmutableSet<RDFNode> values;
+
+    private PropertyValuePair(Property property, Collection<RDFNode> values) {
+        this.property = checkNotNull(property);
+        this.values = ImmutableSet.copyOf(checkNotNull(values));
+    }
 
     public static PropertyValuePair create(Property property, RDFNode rdfNode) {
         return create(property, Collections.singletonList(rdfNode));
     }
 
     public static PropertyValuePair create(Property property, Collection<RDFNode> rdfNode) {
-        return PropertyValuePair.builder()
-                .property(property)
-                .values(rdfNode)
-                .build();
+        return new PropertyValuePair(property, rdfNode);
     }
 }

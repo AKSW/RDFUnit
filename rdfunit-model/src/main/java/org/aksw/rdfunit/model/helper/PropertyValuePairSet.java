@@ -22,15 +22,17 @@ import java.util.stream.Collectors;
 public class PropertyValuePairSet {
     @Getter
     @Singular
+    @NonNull
     private final ImmutableSet<PropertyValuePair> annotations;
 
     private PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
         this.annotations = ImmutableSet.copyOf(groupAnnotationsPerProperty(annotations));
     }
 
+    /*
     public Collection<RDFNode> getPropertyValues(Property property) {
         return getPropertyValues(property, this.annotations);
-    }
+    }*/
 
     private Collection<RDFNode> getPropertyValues(Property property, Set<PropertyValuePair> annotationSet) {
         return annotationSet.stream()
@@ -43,7 +45,7 @@ public class PropertyValuePairSet {
 
         return ungroupedAnnotations.stream()
                 // get list of properties
-                .map(an -> an.getProperty())
+                .map(PropertyValuePair::getProperty)
                 .distinct() // remove duplicates
                 // for every property get all values
                 .map(p -> PropertyValuePair.create(p, getPropertyValues(p, ungroupedAnnotations)))
