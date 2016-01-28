@@ -3,9 +3,7 @@ package org.aksw.rdfunit.model.helper;
 import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Singular;
+import lombok.*;
 
 import java.util.Collection;
 import java.util.Set;
@@ -16,7 +14,7 @@ import java.util.stream.Collectors;
  * @author Dimitris Kontokostas
  * @since 12/1/2016 11:50 μμ
  */
-@Builder
+@Builder @ToString @EqualsAndHashCode
 public class PropertyValuePairSet {
     @Getter @Singular
     private final ImmutableSet<PropertyValuePair> annotations;
