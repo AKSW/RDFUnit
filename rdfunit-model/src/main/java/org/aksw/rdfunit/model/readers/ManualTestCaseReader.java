@@ -38,7 +38,7 @@ public final class ManualTestCaseReader implements ElementReader<TestCase> {
         String sparqlWhere = null;
         String sparqlPrevalence = null;
 
-        int count = 0; // used to count duplicates
+        int count; // used to count duplicates
 
         count = 0;
         for (Statement smt : resource.listProperties(RDFUNITv.sparqlWhere).toList()) {

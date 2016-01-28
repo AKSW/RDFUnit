@@ -42,7 +42,7 @@ public final class PatternReader implements ElementReader<Pattern> {
 
         patternBuilder.setElement(resource);
 
-        int count = 0; // used to count duplicates
+        int count; // used to count duplicates
 
 
         /**

@@ -42,9 +42,7 @@ public final class BatchTestCaseReader {
 
         model.listResourcesWithProperty(RDF.type, RDFUNITv.ManualTestCase).toList()
                 .parallelStream()
-                .forEach(resource -> {
-                    testCases.add(ManualTestCaseReader.create().read(resource));
-                });
+                .forEach(resource -> testCases.add(ManualTestCaseReader.create().read(resource)));
 
 
         model.listResourcesWithProperty(RDF.type, RDFUNITv.PatternBasedTestCase)
