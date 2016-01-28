@@ -44,7 +44,7 @@ public class ShapeImpl implements Shape {
 
     /** {@inheritDoc} */
     @Override
-    public Optional<ShapeScope> getShapeScope() {
+    public Optional<ShapeScope> getScope() {
         return Optional.ofNullable(shapeScope);
     }
 
