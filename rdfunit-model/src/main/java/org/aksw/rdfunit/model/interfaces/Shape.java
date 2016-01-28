@@ -1,12 +1,10 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import org.aksw.rdfunit.enums.RLOGLevel;
-
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * A SHACL Shape
+ * missing ATM: filters, sparql constraints, ...
  *
  * @author Dimitris Kontokostas
  * @since 8/21/15 12:18 AM
@@ -14,24 +12,8 @@ import java.util.Optional;
  */
 public interface Shape extends Element{
 
-    /**
-     * <p>getScope.</p>
-     *
-     * @return a {@link com.google.common.base.Optional} object.
-     */
-    Optional<ShapeScope> getScope();
+    Collection<ShapeScope> getScopes();
 
-    /**
-     * <p>getLogLevel.</p>
-     *
-     * @return a {@link com.google.common.base.Optional} object.
-     */
-    Optional<RLOGLevel> getSeverityLevel();
+    Collection<PropertyConstraintGroup> getPropertyConstraintGroups();
 
-    /**
-     * <p>getPropertyConstraints.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
-    Collection<PropertyConstraint> getPropertyConstraints();
 }
