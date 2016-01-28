@@ -3,11 +3,16 @@ package org.aksw.rdfunit.model.helper;
 import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Singular;
+import lombok.Value;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 
 /**
@@ -17,16 +22,16 @@ import java.util.stream.Collectors;
  * @since 12/1/2016 11:50 μμ
  */
 @Builder
-@ToString
-@EqualsAndHashCode
+@Value
 public class PropertyValuePairSet {
     @Getter
     @Singular
-    @NonNull
     private final ImmutableSet<PropertyValuePair> annotations;
 
     private PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
-        this.annotations = ImmutableSet.copyOf(groupAnnotationsPerProperty(annotations));
+        this.annotations = ImmutableSet.copyOf(
+                groupAnnotationsPerProperty(
+                        checkNotNull(annotations)));
     }
 
     /*
