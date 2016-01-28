@@ -11,12 +11,17 @@ import java.util.stream.Collectors;
 
 
 /**
+ * holds a simple set of property value pairs but on build groups the values with the same properties
+ *
  * @author Dimitris Kontokostas
  * @since 12/1/2016 11:50 μμ
  */
-@Builder @ToString @EqualsAndHashCode
+@Builder
+@ToString
+@EqualsAndHashCode
 public class PropertyValuePairSet {
-    @Getter @Singular
+    @Getter
+    @Singular
     private final ImmutableSet<PropertyValuePair> annotations;
 
     private PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
@@ -34,15 +39,14 @@ public class PropertyValuePairSet {
                 .collect(Collectors.toList());
     }
 
-
     private Set<PropertyValuePair> groupAnnotationsPerProperty(Set<PropertyValuePair> ungroupedAnnotations) {
 
-        return  ungroupedAnnotations.stream()
+        return ungroupedAnnotations.stream()
                 // get list of properties
                 .map(an -> an.getProperty())
                 .distinct() // remove duplicates
                 // for every property get all values
-                .map(p -> PropertyValuePair.create(p, getPropertyValues(p, ungroupedAnnotations)) )
+                .map(p -> PropertyValuePair.create(p, getPropertyValues(p, ungroupedAnnotations)))
                 .collect(Collectors.toSet());
     }
 }
