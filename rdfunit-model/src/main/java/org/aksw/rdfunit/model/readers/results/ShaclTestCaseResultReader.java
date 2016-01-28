@@ -6,6 +6,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
@@ -44,7 +45,7 @@ public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestC
 
         SimpleShaclTestCaseResult test = ShaclSimpleTestCaseResultReader.create().read(resource);
 
-        PropertyValuePairSet annotationSet = PropertyValuePairSet.create();
+        PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
         Set<Property> excludesProperties = ImmutableSet.of(SHACL.severity, SHACL.focusNode, SHACL.message, PROV.wasGeneratedBy, DCTerms.date);
         Set<Resource> excludesTypes = ImmutableSet.of(SHACL.ValidationResult, RDFUNITv.TestCaseResult);
@@ -56,9 +57,9 @@ public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestC
             if (RDF.type.equals(smt.getPredicate()) && excludesTypes.contains(smt.getObject().asResource())) {
                 continue;
             }
-            annotationSet.add(smt.getPredicate(), smt.getObject());
+            annotationSetBuilder.annotation(PropertyValuePair.create(smt.getPredicate(), smt.getObject()));
         }
 
-        return new ShaclTestCaseResultImpl(resource, test.getTestCaseUri(), test.getSeverity(), test.getMessage(), test.getTimestamp(), test.getFailingResource(), annotationSet.getAnnotations());
+        return new ShaclTestCaseResultImpl(resource, test.getTestCaseUri(), test.getSeverity(), test.getMessage(), test.getTimestamp(), test.getFailingResource(), annotationSetBuilder.build().getAnnotations());
     }
 }

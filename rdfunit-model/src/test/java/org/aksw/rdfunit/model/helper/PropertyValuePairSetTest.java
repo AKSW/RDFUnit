@@ -23,11 +23,11 @@ public class PropertyValuePairSetTest {
     public void testGetAnnotations() throws Exception {
 
         //add rdf:type rdfs:Class
-        PropertyValuePairSet an1 = PropertyValuePairSet.create();
-        an1.add(RDF.type, RDFS.Class);
-        assertThat(an1.getAnnotations().size())
+        PropertyValuePairSet.PropertyValuePairSetBuilder an1 = PropertyValuePairSet.builder();
+        an1.annotation(PropertyValuePair.create(RDF.type, RDFS.Class));
+        assertThat(an1.build().getAnnotations().size())
                 .isEqualTo(1);
-        List<PropertyValuePair> annotations = new ArrayList<>(an1.getAnnotations());
+        List<PropertyValuePair> annotations = new ArrayList<>(an1.build().getAnnotations());
         assertThat(annotations.get(0).getProperty())
                 .isEqualTo(RDF.type);
         assertThat(annotations.get(0).getValues().size())
@@ -36,18 +36,18 @@ public class PropertyValuePairSetTest {
                 .isEqualTo(RDFS.Class);
 
         //add rdf:type rdfs:Literal
-        an1.add(RDF.type, RDFS.Literal);
-        assertThat(an1.getAnnotations().size())
+        an1.annotation(PropertyValuePair.create(RDF.type, RDFS.Literal));
+        assertThat(an1.build().getAnnotations().size())
                 .isEqualTo(1);
-        annotations = new ArrayList<>(an1.getAnnotations());
+        annotations = new ArrayList<>(an1.build().getAnnotations());
         assertThat(annotations.get(0).getProperty())
                 .isEqualTo(RDF.type);
         assertThat(annotations.get(0).getValues().size())
                 .isEqualTo(2);
 
         //add rdf:subject rdfs:Datatype
-        an1.add(RDF.subject, RDFS.Datatype);
-        assertThat(an1.getAnnotations().size())
+        an1.annotation(PropertyValuePair.create(RDF.subject, RDFS.Datatype));
+        assertThat(an1.build().getAnnotations().size())
                 .isEqualTo(2);
 
 

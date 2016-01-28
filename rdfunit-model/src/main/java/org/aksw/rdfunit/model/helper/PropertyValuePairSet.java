@@ -3,65 +3,48 @@ package org.aksw.rdfunit.model.helper;
 import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Singular;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 
 /**
  * @author Dimitris Kontokostas
  * @since 12/1/2016 11:50 μμ
  */
+@Builder
 public class PropertyValuePairSet {
-    Set<PropertyValuePair> annotations = new HashSet<>();
+    @Getter @Singular
+    private final ImmutableSet<PropertyValuePair> annotations;
 
-    private PropertyValuePairSet() {}
-
-    public static PropertyValuePairSet create() {return new PropertyValuePairSet();}
-
-    public void add(Property property, RDFNode value) {
-        add(property, Collections.singletonList(value));
+    private PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
+        this.annotations = ImmutableSet.copyOf(groupAnnotationsPerProperty(annotations));
     }
 
-    public void add(Property property, Collection<RDFNode> values) {
-        annotations.add(PropertyValuePair.create(property, values));
+    public Collection<RDFNode> getPropertyValues(Property property) {
+        return getPropertyValues(property, this.annotations);
     }
 
-    public void reset() {
-        annotations.clear();
+    private Collection<RDFNode> getPropertyValues(Property property, Set<PropertyValuePair> annotationSet) {
+        return annotationSet.stream()
+                .filter(p -> p.getProperty().equals(property))
+                .flatMap(p -> p.getValues().stream())
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Returns an Immutable Set of the existing annotations
-     */
-    public Set<PropertyValuePair> getAnnotations() {
-        Set<Property> properties = getAnnotationProperties();
-        if (properties.size() == annotations.size()) {
-            return ImmutableSet.copyOf(annotations);
-        }
 
-        Set<PropertyValuePair> annotationsCopy = new HashSet<>();
-        for (Property p: properties) {
-            annotationsCopy.add(PropertyValuePair.create(p, getPropertyValues(p)));
-        }
-        return new ImmutableSet.Builder<PropertyValuePair>().addAll(annotationsCopy).build();
-    }
+    private Set<PropertyValuePair> groupAnnotationsPerProperty(Set<PropertyValuePair> ungroupedAnnotations) {
 
-    private Set<Property> getAnnotationProperties() {
-        Set<Property> properties = new HashSet<>();
-        for (PropertyValuePair an: annotations) {
-            properties.add(an.getProperty());
-        }
-        return properties;
-    }
-
-    private Collection<RDFNode> getPropertyValues(Property property) {
-        Set<RDFNode> values = new HashSet<>();
-        for (PropertyValuePair an: annotations) {
-            if (an.getProperty().equals(property));
-            values.addAll(an.getValues());
-        }
-        return values;
+        return  ungroupedAnnotations.stream()
+                // get list of properties
+                .map(an -> an.getProperty())
+                .distinct() // remove duplicates
+                // for every property get all values
+                .map(p -> PropertyValuePair.create(p, getPropertyValues(p, ungroupedAnnotations)) )
+                .collect(Collectors.toSet());
     }
 }

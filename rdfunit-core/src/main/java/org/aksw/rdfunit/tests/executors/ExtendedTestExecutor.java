@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ExtendedTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
@@ -45,7 +46,7 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
     protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
-        PropertyValuePairSet annotationSet = PropertyValuePairSet.create();
+        PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
         QueryExecution qe = null;
         try {
@@ -74,18 +75,21 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                 if (!prevResource.equals(resource)) {
                     // The very first time we enter, result = null and we don't add any result
                     if (resultBuilder != null) {
-                        testCaseResults.add(resultBuilder.setResultAnnotations(annotationSet.getAnnotations()).build());
+                        testCaseResults.add(
+                                resultBuilder
+                                        .setResultAnnotations(annotationSetBuilder.build().getAnnotations())
+                                        .build());
                     }
 
                     resultBuilder = new ExtendedTestCaseResultImpl.Builder(testCase.getTestURI(), logLevel, message, resource );
 
-                    annotationSet.reset();
+                    annotationSetBuilder = PropertyValuePairSet.builder(); // reset
 
                     // get static annotations for new test
                     for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
                         // Get values
                         if (resultAnnotation.getAnnotationValue().isPresent()) {
-                            annotationSet.add(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get());
+                            annotationSetBuilder.annotation(PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get()));
                         }
                     }
                 }
@@ -100,14 +104,14 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                         String variable = resultAnnotation.getAnnotationVarName().get().trim();
                         //If it exists, add it in the Set
                         if (qs.contains(variable)) {
-                            annotationSet.add(resultAnnotation.getAnnotationProperty(), qs.get(variable));
+                            annotationSetBuilder.annotation(PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), qs.get(variable)));
                         }
                     }
                 }
             }
             // Add last result (if query return any)
             if (resultBuilder != null) {
-                testCaseResults.add(resultBuilder.setResultAnnotations(annotationSet.getAnnotations()).build());
+                testCaseResults.add(resultBuilder.setResultAnnotations(annotationSetBuilder.build().getAnnotations()).build());
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
