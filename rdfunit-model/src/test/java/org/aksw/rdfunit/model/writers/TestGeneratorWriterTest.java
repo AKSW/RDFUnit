@@ -6,7 +6,7 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
-import org.aksw.rdfunit.model.readers.TestGeneratorBatchReader;
+import org.aksw.rdfunit.model.readers.BatchTestGeneratorReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +50,7 @@ public class TestGeneratorWriterTest {
 
     @Test
     public void testWrite() throws Exception {
-        Collection<TestGenerator> testCaseCollection = TestGeneratorBatchReader.create().getTestGeneratorsFromModel(inputModel);
+        Collection<TestGenerator> testCaseCollection = BatchTestGeneratorReader.create().getTestGeneratorsFromModel(inputModel);
 
         Model modelWritten = ModelFactory.createDefaultModel();
         for (TestGenerator tg : testCaseCollection) {

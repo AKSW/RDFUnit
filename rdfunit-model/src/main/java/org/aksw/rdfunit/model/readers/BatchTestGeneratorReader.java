@@ -17,16 +17,16 @@ import java.util.List;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
-public final class TestGeneratorBatchReader {
+public final class BatchTestGeneratorReader {
 
-    private TestGeneratorBatchReader(){}
+    private BatchTestGeneratorReader(){}
 
     /**
      * <p>create.</p>
      *
-     * @return a {@link org.aksw.rdfunit.model.readers.TestGeneratorBatchReader} object.
+     * @return a {@link BatchTestGeneratorReader} object.
      */
-    public static TestGeneratorBatchReader create() { return new TestGeneratorBatchReader();}
+    public static BatchTestGeneratorReader create() { return new BatchTestGeneratorReader();}
 
     /**
      * <p>getTestGeneratorsFromModel.</p>

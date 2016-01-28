@@ -18,18 +18,18 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
-public final class TestCaseBatchReader {
+public final class BatchTestCaseReader {
 
-    private static final Logger log = LoggerFactory.getLogger(TestCaseBatchReader.class);
+    private static final Logger log = LoggerFactory.getLogger(BatchTestCaseReader.class);
 
-    private TestCaseBatchReader(){}
+    private BatchTestCaseReader(){}
 
     /**
      * <p>create.</p>
      *
-     * @return a {@link org.aksw.rdfunit.model.readers.TestCaseBatchReader} object.
+     * @return a {@link BatchTestCaseReader} object.
      */
-    public static TestCaseBatchReader create() { return new TestCaseBatchReader();}
+    public static BatchTestCaseReader create() { return new BatchTestCaseReader();}
 
     /**
      * <p>getTestCasesFromModel.</p>

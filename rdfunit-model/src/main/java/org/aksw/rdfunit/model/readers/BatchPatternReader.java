@@ -17,16 +17,16 @@ import java.util.List;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
-public final class PatternBatchReader {
+public final class BatchPatternReader {
 
-    private PatternBatchReader(){}
+    private BatchPatternReader(){}
 
     /**
      * <p>create.</p>
      *
-     * @return a {@link org.aksw.rdfunit.model.readers.PatternBatchReader} object.
+     * @return a {@link BatchPatternReader} object.
      */
-    public static PatternBatchReader create() { return new PatternBatchReader();}
+    public static BatchPatternReader create() { return new BatchPatternReader();}
 
     /**
      * <p>getPatternsFromModel.</p>

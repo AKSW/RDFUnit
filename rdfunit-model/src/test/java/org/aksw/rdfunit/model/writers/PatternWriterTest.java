@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.model.interfaces.Pattern;
-import org.aksw.rdfunit.model.readers.PatternBatchReader;
+import org.aksw.rdfunit.model.readers.BatchPatternReader;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -25,7 +25,7 @@ public class PatternWriterTest {
 
         Model inputModel = RDFReaderFactory.createResourceReader(Resources.PATTERNS).read();
 
-        Collection<Pattern> patterns = PatternBatchReader.create().getPatternsFromModel(inputModel);
+        Collection<Pattern> patterns = BatchPatternReader.create().getPatternsFromModel(inputModel);
 
         Model outputModel = ModelFactory.createDefaultModel();
         for (Pattern pattern: patterns) {

@@ -8,7 +8,7 @@ import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.readers.TestCaseBatchReader;
+import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +54,7 @@ public final class TestUtils {
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
      */
     public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) throws TestCaseInstantiationException {
-        return TestCaseBatchReader.create().getTestCasesFromModel(model);
+        return BatchTestCaseReader.create().getTestCasesFromModel(model);
     }
 
 

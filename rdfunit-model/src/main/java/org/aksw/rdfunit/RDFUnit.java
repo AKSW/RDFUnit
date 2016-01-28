@@ -6,8 +6,8 @@ import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
-import org.aksw.rdfunit.model.readers.PatternBatchReader;
-import org.aksw.rdfunit.model.readers.TestGeneratorBatchReader;
+import org.aksw.rdfunit.model.readers.BatchPatternReader;
+import org.aksw.rdfunit.model.readers.BatchTestGeneratorReader;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -85,7 +85,7 @@ public class RDFUnit {
         if (patterns == null) {
             patterns =
                     Collections.unmodifiableCollection(
-                            PatternBatchReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
+                            BatchPatternReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
         }
         return patterns;
     }
@@ -99,7 +99,7 @@ public class RDFUnit {
         if (autoGenerators == null) {
             autoGenerators =
                     Collections.unmodifiableCollection(
-                            TestGeneratorBatchReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
+                            BatchTestGeneratorReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
         }
         return autoGenerators;
     }
