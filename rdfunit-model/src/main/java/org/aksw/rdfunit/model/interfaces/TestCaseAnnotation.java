@@ -1,16 +1,17 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.hp.hpl.jena.rdf.model.Property;
+import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.vocabulary.RLOG;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
-import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 
 /**
  * <p>TestCaseAnnotation class.</p>
@@ -30,8 +31,8 @@ public class TestCaseAnnotation implements Element {
     private final Collection<String> references;
     private final String description;
     private final RLOGLevel testCaseLogLevel;
-    private final Collection<ResultAnnotation> resultAnnotations;
-    private final Collection<ResultAnnotation> variableAnnotations;
+    private final ImmutableList<ResultAnnotation> resultAnnotations;
+    private final ImmutableList<ResultAnnotation> variableAnnotations;
 
     /**
      * <p>Constructor for TestCaseAnnotation.</p>
@@ -54,11 +55,10 @@ public class TestCaseAnnotation implements Element {
         this.sourceUri = checkNotNull(sourceUri);
         this.references = checkNotNull(references);
         this.description = checkNotNull(description);
-        this.resultAnnotations = new ArrayList<>();
-        this.resultAnnotations.addAll(checkNotNull(resultAnnotations));
-        // need to instantiate result annotations first
-        this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel);
-        this.variableAnnotations = findVariableAnnotations();
+
+        this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel, checkNotNull(resultAnnotations));
+        this.variableAnnotations = ImmutableList.copyOf(findVariableAnnotations(resultAnnotations));
+        this.resultAnnotations = ImmutableList.copyOf(findNonVariableAnnotations(resultAnnotations));
     }
 
     /**
@@ -110,41 +110,30 @@ public class TestCaseAnnotation implements Element {
     /*
      * Get either testCaseLogLevel or generate it from resultAnnotations (and then remove the annotation)
      * */
-    private RLOGLevel findAnnotationLevel(RLOGLevel testCaseLogLevel) {
+    private RLOGLevel findAnnotationLevel(RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> givenAnnotations) {
 
-        RLOGLevel logLevel = testCaseLogLevel;
-
-        ResultAnnotation pointer = null;
-        for (ResultAnnotation annotation : resultAnnotations) {
-            Property p = RLOG.level;
-            if (annotation.getAnnotationProperty().toString().equals(RLOG.level.toString())) {
-                pointer = annotation;
+        for (ResultAnnotation annotation : givenAnnotations) {
+            if (annotation.getAnnotationProperty().equals(RLOG.level)) {
+                return RLOGLevel.resolve(annotation.getAnnotationValue().get().toString());
             }
         }
-        if (pointer != null) {
-            if (logLevel == null) {// Get new value only if testCaseLogLevel doesn't exists
-                logLevel = RLOGLevel.resolve(pointer.getAnnotationValue().get().toString());
-            }
-            resultAnnotations.remove(pointer); // remove now that we have testCaseLogLevel
-        }
 
-        return logLevel;
+        return testCaseLogLevel;
     }
 
-    private Collection<ResultAnnotation> findVariableAnnotations() {
+    private Collection<ResultAnnotation> findVariableAnnotations(Collection<ResultAnnotation> givenAnnotations) {
 
-        ArrayList<ResultAnnotation> variableAnnotations = new ArrayList<>();
+        return givenAnnotations.stream()
+                .filter(a -> a.getAnnotationVarName().isPresent())
+                .collect(Collectors.toList());
+    }
 
-        for (ResultAnnotation annotation : resultAnnotations) {
-            if (annotation.getAnnotationVarName().isPresent()) {
-                variableAnnotations.add(annotation);
-            }
-        }
-        for (ResultAnnotation variableAnnotation: variableAnnotations) {
-            resultAnnotations.remove(variableAnnotation);
-        }
+    private Collection<ResultAnnotation> findNonVariableAnnotations(Collection<ResultAnnotation> givenAnnotations) {
 
-        return variableAnnotations;
+        return givenAnnotations.stream()
+                .filter(a -> !a.getAnnotationVarName().isPresent())
+                .filter(a -> !a.getAnnotationProperty().equals(RLOG.level))
+                .collect(Collectors.toList());
     }
 
     /**
