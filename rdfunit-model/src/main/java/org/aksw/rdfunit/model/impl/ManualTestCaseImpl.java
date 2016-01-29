@@ -1,10 +1,7 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 
@@ -16,6 +13,7 @@ import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
  * @version $Id: $Id
  */
 @Value
+@EqualsAndHashCode(callSuper=true)
 public class ManualTestCaseImpl extends AbstractTestCaseImpl implements TestCase {
     @Getter @NonNull private final String sparqlWhere;
     @Getter @NonNull private final String sparqlPrevalence;
