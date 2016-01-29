@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.coverage;
 
-import com.hp.hpl.jena.query.*;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.statistics.DatasetStatisticsClassesCount;
 import org.aksw.rdfunit.statistics.DatasetStatisticsPropertiesCount;
+import org.apache.jena.query.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

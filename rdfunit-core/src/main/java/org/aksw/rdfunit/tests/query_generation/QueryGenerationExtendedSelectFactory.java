@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.tests.query_generation;
 
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
 
 import java.util.HashSet;
 import java.util.Set;

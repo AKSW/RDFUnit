@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.model.writers;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.model.interfaces.Element;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * Interface for writing elements back to RDF
@@ -16,8 +16,8 @@ public interface ElementWriter {
     /**
      * <p>write.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Resource} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      */
     Resource write(Model model);
 

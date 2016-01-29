@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.Optional;
 

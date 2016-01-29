@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.junit;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.TestSource;
+import org.apache.jena.rdf.model.Model;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
@@ -47,7 +47,7 @@ final class RdfUnitJunitTestCase {
     /**
      * <p>Getter for the field <code>testInputModel</code>.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public Model getTestInputModel() {
         return this.rdfUnitJunitTestCaseDataProvider.getTestInputModel();

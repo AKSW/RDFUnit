@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.dqv;
 
 import com.google.common.collect.ImmutableMap;
-import com.hp.hpl.jena.rdf.model.Model;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.apache.jena.rdf.model.Model;
 
 import java.util.Map;
 

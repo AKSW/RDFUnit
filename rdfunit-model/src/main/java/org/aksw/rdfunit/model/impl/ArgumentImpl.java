@@ -1,11 +1,11 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.interfaces.Argument;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Optional;
 

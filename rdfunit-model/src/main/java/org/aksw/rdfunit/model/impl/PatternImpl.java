@@ -1,13 +1,13 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.google.common.collect.ImmutableList;
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.ArrayList;
 import java.util.Collection;

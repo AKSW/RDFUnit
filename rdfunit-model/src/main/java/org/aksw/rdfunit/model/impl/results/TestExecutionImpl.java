@@ -2,10 +2,10 @@ package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 import java.util.HashSet;

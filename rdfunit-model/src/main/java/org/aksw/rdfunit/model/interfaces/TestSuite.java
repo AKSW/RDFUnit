@@ -1,11 +1,11 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 
 import java.util.Collection;
 
@@ -60,8 +60,8 @@ public class TestSuite {
     /**
      * <p>serialize.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Resource} object.
      */
     public Resource serialize(Model model) {
         Resource resource = model.createResource(JenaUtils.getUniqueIri(PrefixNSService.getNSFromPrefix("ruts")))

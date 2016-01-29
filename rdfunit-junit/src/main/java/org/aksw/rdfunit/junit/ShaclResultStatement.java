@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.junit;
 
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.runners.model.Statement;
 
 import java.util.ArrayList;

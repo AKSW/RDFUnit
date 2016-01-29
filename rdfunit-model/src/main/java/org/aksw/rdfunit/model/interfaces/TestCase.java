@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.hp.hpl.jena.query.Query;
 import org.aksw.rdfunit.enums.RLOGLevel;
+import org.apache.jena.query.Query;
 
 import java.util.Collection;
 
@@ -59,7 +59,7 @@ public interface TestCase extends Element{
     /**
      * <p>getSparqlPrevalenceQuery.</p>
      *
-     * @return a {@link com.hp.hpl.jena.query.Query} object.
+     * @return a {@link org.apache.jena.query.Query} object.
      */
     Query getSparqlPrevalenceQuery() ;
 

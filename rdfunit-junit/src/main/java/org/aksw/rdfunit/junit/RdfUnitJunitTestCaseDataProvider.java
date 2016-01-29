@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.junit;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.io.reader.RDFMultipleReader;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
+import org.apache.jena.rdf.model.Model;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
@@ -83,7 +83,7 @@ final class RdfUnitJunitTestCaseDataProvider {
     /**
      * <p>Getter for the field <code>testInputModel</code>.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public Model getTestInputModel() {
         return testInputModel;

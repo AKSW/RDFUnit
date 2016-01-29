@@ -1,7 +1,5 @@
 package org.aksw.rdfunit.model.writers;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
@@ -9,6 +7,8 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.resources.ManualTestResources;
 import org.aksw.rdfunit.utils.UriToPathUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

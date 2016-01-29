@@ -1,15 +1,15 @@
 package org.aksw.rdfunit.validate.wrappers;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
+import org.apache.jena.rdf.model.Model;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -51,8 +51,8 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>validate.</p>
      *
-     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model inputModel) {
         return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult);
@@ -62,9 +62,9 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>validate.</p>
      *
-     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model inputModel, final TestCaseExecutionType executionType) {
         return validate(inputModel, executionType, "custom");
@@ -74,9 +74,9 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>validate.</p>
      *
-     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
      * @param inputURI a {@link java.lang.String} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model inputModel, final String inputURI) {
         return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult, inputURI);
@@ -86,10 +86,10 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>validate.</p>
      *
-     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) {
 
@@ -102,11 +102,11 @@ public final class RDFUnitStaticValidator {
     /**
      * <p>validate.</p>
      *
-     * @param inputModel a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
      * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param inputURI a {@link java.lang.String} object.
      * @param overviewResults a {@link DatasetOverviewResults} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
 
@@ -138,7 +138,7 @@ public final class RDFUnitStaticValidator {
      * @param testCaseExecutionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
      * @param testSource a {@link org.aksw.rdfunit.sources.TestSource} object.
      * @param testSuite a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {
 

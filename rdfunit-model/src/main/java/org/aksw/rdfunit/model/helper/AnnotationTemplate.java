@@ -2,7 +2,7 @@ package org.aksw.rdfunit.model.helper;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Range;
-import com.hp.hpl.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Property;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -29,7 +29,7 @@ public final class AnnotationTemplate {
     /**
      * <p>addTemplateMin.</p>
      *
-     * @param property a {@link com.hp.hpl.jena.rdf.model.Property} object.
+     * @param property a {@link org.apache.jena.rdf.model.Property} object.
      * @param minOccurs a int.
      */
     public void addTemplateMin(Property property, int minOccurs) {
@@ -39,7 +39,7 @@ public final class AnnotationTemplate {
     /**
      * <p>addTemplateMax.</p>
      *
-     * @param property a {@link com.hp.hpl.jena.rdf.model.Property} object.
+     * @param property a {@link org.apache.jena.rdf.model.Property} object.
      * @param maxOccurs a int.
      */
     public void addTemplateMax(Property property, int maxOccurs) {
@@ -49,7 +49,7 @@ public final class AnnotationTemplate {
     /**
      * <p>addTemplateMinMax.</p>
      *
-     * @param property a {@link com.hp.hpl.jena.rdf.model.Property} object.
+     * @param property a {@link org.apache.jena.rdf.model.Property} object.
      * @param minOccurs a int.
      * @param maxOccurs a int.
      */

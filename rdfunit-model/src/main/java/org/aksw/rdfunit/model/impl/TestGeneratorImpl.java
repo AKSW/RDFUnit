@@ -1,10 +1,6 @@
 package org.aksw.rdfunit.model.impl;
 
 import com.google.common.collect.ImmutableList;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.sparql.core.Var;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +9,10 @@ import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.core.Var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +59,7 @@ public final class TestGeneratorImpl implements TestGenerator {
     /**
      * <p>createTAG.</p>
      *
-     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link org.apache.jena.rdf.model.Resource} object.
      * @param description a {@link java.lang.String} object.
      * @param query a {@link java.lang.String} object.
      * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.

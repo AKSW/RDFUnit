@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.model.readers;
 
 import com.google.common.collect.ImmutableList;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public final class BatchTestCaseReader {
     /**
      * <p>getTestCasesFromModel.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      * @return a {@link java.util.Collection} object.
      */
     public Collection<TestCase> getTestCasesFromModel(Model model) {

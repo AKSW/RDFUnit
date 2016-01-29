@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.*;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -28,7 +28,7 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
     /**
      * <p>Constructor for PatternBasedTestCaseImpl.</p>
      *
-     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param resource a {@link org.apache.jena.rdf.model.Resource} object.
      * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
      * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @param bindings a {@link java.util.Collection} object.

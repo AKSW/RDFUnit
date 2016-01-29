@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * Triple writer interface

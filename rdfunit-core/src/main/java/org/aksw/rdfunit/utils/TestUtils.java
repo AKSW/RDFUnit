@@ -1,7 +1,5 @@
 package org.aksw.rdfunit.utils;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
@@ -10,6 +8,8 @@ import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public final class TestUtils {
     /**
      * <p>instantiateTestsFromModel.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      * @return a {@link java.util.Collection} object.
      */
     public static Collection<TestCase> instantiateTestsFromModel(Model model) {
@@ -48,7 +48,7 @@ public final class TestUtils {
     /**
      * <p>instantiateTestsFromModel.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      * @param strict a boolean.
      * @return a {@link java.util.Collection} object.
      * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.

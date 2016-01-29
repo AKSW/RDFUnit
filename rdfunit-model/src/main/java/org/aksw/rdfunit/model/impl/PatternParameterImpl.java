@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Optional;
 

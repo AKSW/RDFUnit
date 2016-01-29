@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.model.readers;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public final class BatchTestGeneratorReader {
     /**
      * <p>getTestGeneratorsFromModel.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      * @return a {@link java.util.Collection} object.
      */
     public Collection<TestGenerator> getTestGeneratorsFromModel(Model model) {

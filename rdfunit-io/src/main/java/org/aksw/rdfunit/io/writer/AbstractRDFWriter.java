@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * Skeleton abstract class for RDFWriter

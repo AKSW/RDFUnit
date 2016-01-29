@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * ManualTestCase Implementation

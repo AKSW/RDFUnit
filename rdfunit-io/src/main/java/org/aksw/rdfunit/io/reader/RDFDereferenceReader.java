@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.io.reader;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.shared.NotFoundException;
 import org.aksw.rdfunit.io.IOUtils;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.shared.NotFoundException;
 
 import java.io.File;
 

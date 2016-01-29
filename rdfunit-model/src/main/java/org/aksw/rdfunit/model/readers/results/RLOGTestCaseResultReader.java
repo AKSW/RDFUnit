@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.readers.results;
 
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
 import org.aksw.rdfunit.model.impl.results.RLOGTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.vocabulary.RLOG;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

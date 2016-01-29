@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.sources;
 
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ public class SchemaSource implements Source {
     /**
      * <p>Getter for the field <code>model</code>.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      * @since 0.7.6
      */
     public Model getModel() {

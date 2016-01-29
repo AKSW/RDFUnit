@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.readers;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.apache.jena.rdf.model.Resource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

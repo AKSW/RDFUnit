@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.helper;
 
 import com.google.common.collect.ImmutableSet;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.Value;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.Collection;
 import java.util.Set;

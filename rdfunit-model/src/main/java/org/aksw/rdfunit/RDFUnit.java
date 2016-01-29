@@ -1,7 +1,5 @@
 package org.aksw.rdfunit;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.Pattern;
@@ -10,6 +8,8 @@ import org.aksw.rdfunit.model.readers.BatchPatternReader;
 import org.aksw.rdfunit.model.readers.BatchTestGeneratorReader;
 import org.aksw.rdfunit.services.PatternService;
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

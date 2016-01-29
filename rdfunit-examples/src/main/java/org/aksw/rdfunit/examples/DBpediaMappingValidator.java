@@ -1,10 +1,5 @@
 package org.aksw.rdfunit.examples;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -15,6 +10,11 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Model;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -81,7 +81,7 @@ public class DBpediaMappingValidator {
     /**
      * <p>validateAllMappings.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     public Model validateAllMappings() throws RDFReaderException {
@@ -91,7 +91,7 @@ public class DBpediaMappingValidator {
     /**
      * <p>getErrorListFromModel.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      * @return a {@link java.util.List} object.
      */
     public List<MappingDomainError> getErrorListFromModel(Model model) {

@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.model.impl;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.*;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 

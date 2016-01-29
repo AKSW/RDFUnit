@@ -2,9 +2,9 @@ package org.aksw.rdfunit.services;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.aksw.rdfunit.Resources;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import java.io.InputStream;
 import java.util.Collections;

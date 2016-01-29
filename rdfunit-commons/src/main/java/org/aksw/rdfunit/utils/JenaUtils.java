@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.utils;
 
-import com.hp.hpl.jena.shared.uuid.JenaUUID;
+import org.apache.jena.shared.uuid.JenaUUID;
 
 public final class JenaUtils {
 

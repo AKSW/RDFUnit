@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.model.readers;
 
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * Interface for reading SHACL / RDFUnit elements
@@ -14,7 +14,7 @@ public interface ElementReader <T> {
     /**
      * <p>read.</p>
      *
-     * @param resource a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param resource a {@link org.apache.jena.rdf.model.Resource} object.
      * @return a T object.
      */
     T read(Resource resource);

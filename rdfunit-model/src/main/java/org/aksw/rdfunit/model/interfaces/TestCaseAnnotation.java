@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.interfaces;
 
 import com.google.common.collect.ImmutableList;
-import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.Getter;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.vocabulary.RLOG;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -38,7 +38,7 @@ public class TestCaseAnnotation implements Element {
     /**
      * <p>Constructor for TestCaseAnnotation.</p>
      *
-     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link org.apache.jena.rdf.model.Resource} object.
      * @param generated a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
      * @param autoGeneratorURI a {@link java.lang.String} object.
      * @param appliesTo a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.

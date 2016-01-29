@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.reader;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * <p>RDFModelReader class.</p>
@@ -18,7 +18,7 @@ public class RDFModelReader extends AbstractRDFReader implements RDFReader  {
     /**
      * <p>Constructor for RDFModelReader.</p>
      *
-     * @param model a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @param model a {@link org.apache.jena.rdf.model.Model} object.
      */
     public RDFModelReader(Model model) {
         super();

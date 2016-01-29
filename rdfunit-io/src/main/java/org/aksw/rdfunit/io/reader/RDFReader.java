@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.reader;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * Triple reader interface
@@ -31,7 +31,7 @@ public interface RDFReader {
     /**
      * <p>readDataset.</p>
      *
-     * @return a {@link com.hp.hpl.jena.query.Dataset} object.
+     * @return a {@link org.apache.jena.query.Dataset} object.
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     Dataset readDataset() throws RDFReaderException ;
@@ -39,7 +39,7 @@ public interface RDFReader {
     /**
      * <p>readDataset.</p>
      *
-     * @param dataset a {@link com.hp.hpl.jena.query.Dataset} object.
+     * @param dataset a {@link org.apache.jena.query.Dataset} object.
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     void readDataset(Dataset dataset) throws RDFReaderException ;

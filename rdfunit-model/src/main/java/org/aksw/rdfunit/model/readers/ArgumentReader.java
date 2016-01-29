@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.readers;
 
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.vocabulary.RDFS;
 import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.impl.ArgumentImpl;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.vocabulary.RDFS;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

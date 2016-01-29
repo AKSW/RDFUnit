@@ -1,11 +1,10 @@
 package org.aksw.rdfunit.model.writers;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.aksw.rdfunit.model.interfaces.Function;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 
 /**
  * Description
@@ -39,7 +38,7 @@ public final class FunctionWriter implements ElementWriter {
         resource.addProperty(RDF.type, SHACL.Function);
 
 
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("FunctionWriter not implemented");
         //return resource;
     }
 }

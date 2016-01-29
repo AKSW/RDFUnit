@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.model.impl.results;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.jena.datatypes.xsd.XSDDateTime;
 
 import java.util.Calendar;
 
@@ -173,7 +173,7 @@ public class DatasetOverviewResults {
     /**
      * <p>Getter for the field <code>startTime</code>.</p>
      *
-     * @return a {@link com.hp.hpl.jena.datatypes.xsd.XSDDateTime} object.
+     * @return a {@link org.apache.jena.datatypes.xsd.XSDDateTime} object.
      */
     public XSDDateTime getStartTime() {
         return startTime;
@@ -189,7 +189,7 @@ public class DatasetOverviewResults {
     /**
      * <p>Getter for the field <code>endTime</code>.</p>
      *
-     * @return a {@link com.hp.hpl.jena.datatypes.xsd.XSDDateTime} object.
+     * @return a {@link org.apache.jena.datatypes.xsd.XSDDateTime} object.
      */
     public XSDDateTime getEndTime() {
         return endTime;

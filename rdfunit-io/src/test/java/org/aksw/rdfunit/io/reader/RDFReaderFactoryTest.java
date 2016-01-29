@@ -2,7 +2,7 @@ package org.aksw.rdfunit.io.reader;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 
 import java.net.URL;

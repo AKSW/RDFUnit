@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.hp.hpl.jena.rdf.model.Property;
 import org.aksw.rdfunit.enums.RLOGLevel;
+import org.apache.jena.rdf.model.Property;
 
 import java.util.Collection;
 
@@ -25,7 +25,7 @@ public interface ConstraintTemplate extends Template {
     /**
      * <p>getPrperty.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.Property} object.
+     * @return a {@link org.apache.jena.rdf.model.Property} object.
      */
     Property getPrperty();
 

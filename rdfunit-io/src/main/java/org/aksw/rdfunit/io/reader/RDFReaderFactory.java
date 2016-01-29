@@ -98,7 +98,7 @@ public final class RDFReaderFactory {
         Collection<RDFReader> readers = new ArrayList<>();
         if (!IOUtils.isFile(uri)) {
             readers.add(new RDFDereferenceReader(uri));
-            readers.add(new RDFaReader(uri));
+            //readers.add(new RDFaReader(uri));
         } else {
             readers.add(new RDFStreamReader(uri));
             readers.add(RDFReaderFactory.createResourceReader(uri));

@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.io.reader;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * <p>RDFReadAndCacheReader class.</p>

@@ -1,11 +1,11 @@
 package org.aksw.rdfunit.dqv;
 
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import lombok.NonNull;
 import lombok.Value;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.Collection;
 import java.util.Optional;

@@ -1,10 +1,6 @@
 package org.aksw.rdfunit.tests.generators;
 
 import com.google.common.collect.ImmutableList;
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
@@ -13,6 +9,10 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.tests.TestCaseValidator;
 import org.aksw.rdfunit.utils.TestUtils;
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

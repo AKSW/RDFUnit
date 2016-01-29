@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.io;
 
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.rdf.model.Model;
 
 import java.io.File;
 import java.net.URI;
@@ -24,7 +24,7 @@ public final class IOUtils {
      * <p>getModelFromQueryFactory.</p>
      *
      * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @return a {@link com.hp.hpl.jena.rdf.model.Model} object.
+     * @return a {@link org.apache.jena.rdf.model.Model} object.
      */
     public static Model getModelFromQueryFactory(QueryExecutionFactory qef) {
         if (qef instanceof QueryExecutionFactoryModel) {

@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.model.interfaces.results;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.Element;
+import org.apache.jena.datatypes.xsd.XSDDateTime;
 
 /**
  * An abstract Test Case Result.

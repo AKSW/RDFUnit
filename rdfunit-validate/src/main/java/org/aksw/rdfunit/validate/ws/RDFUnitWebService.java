@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.validate.ws;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.format.SerializationFormat;
@@ -10,6 +9,7 @@ import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.validate.ParameterException;
+import org.apache.jena.rdf.model.Model;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

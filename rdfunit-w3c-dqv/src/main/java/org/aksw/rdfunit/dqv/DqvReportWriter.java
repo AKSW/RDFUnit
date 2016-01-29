@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.dqv;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.utils.JenaUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Collection;
 

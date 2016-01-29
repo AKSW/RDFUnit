@@ -1,11 +1,11 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -30,7 +30,7 @@ public class Binding implements Element {
      * <p>Constructor for Binding.</p>
      *
      * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
-     * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
+     * @param value a {@link org.apache.jena.rdf.model.RDFNode} object.
      */
     public Binding(PatternParameter parameter, RDFNode value) {
         this(ResourceFactory.createResource(), parameter, value);
@@ -38,9 +38,9 @@ public class Binding implements Element {
     /**
      * <p>Constructor for Binding.</p>
      *
-     * @param element a {@link com.hp.hpl.jena.rdf.model.Resource} object.
+     * @param element a {@link org.apache.jena.rdf.model.Resource} object.
      * @param parameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
-     * @param value a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
+     * @param value a {@link org.apache.jena.rdf.model.RDFNode} object.
      */
     public Binding(Resource element, PatternParameter parameter, RDFNode value) {
         this.element = checkNotNull(element, "Element must not be null");
@@ -71,7 +71,7 @@ public class Binding implements Element {
     /**
      * <p>Getter for the field <code>value</code>.</p>
      *
-     * @return a {@link com.hp.hpl.jena.rdf.model.RDFNode} object.
+     * @return a {@link org.apache.jena.rdf.model.RDFNode} object.
      */
     public RDFNode getValue() {
         return value;
