@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl;
 
+import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.rdf.model.Resource;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -31,8 +32,8 @@ public final class PatternImpl implements Pattern {
     private final String description;
     private final String sparqlWherePattern;
     private final String sparqlPatternPrevalence;
-    private final Collection<PatternParameter> parameters;
-    private final Collection<ResultAnnotation> annotations;
+    private final ImmutableList<PatternParameter> parameters;
+    private final ImmutableList<ResultAnnotation> annotations;
 
     private PatternImpl(Builder builder) {
 
@@ -42,9 +43,9 @@ public final class PatternImpl implements Pattern {
         this.description = checkNotNull(builder.description, "Description is required in Pattern %s", name);
         this.sparqlWherePattern = checkNotNull(builder.sparqlWherePattern, "SPARQL Where pattern is required in Pattern %s", name);
         this.sparqlPatternPrevalence = builder.sparqlPatternPrevalence;
-        this.parameters = checkNotNull(builder.parameters);
+        this.parameters = ImmutableList.copyOf(checkNotNull(builder.parameters));
         checkArgument(!parameters.isEmpty(), "Pattern %s must have at least one parameter", name);
-        this.annotations = checkNotNull(builder.annotations);
+        this.annotations = ImmutableList.copyOf(checkNotNull(builder.annotations));
 
         //check if defined parameters exist is sparql
         for (PatternParameter p : getParameters()) {

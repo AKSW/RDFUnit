@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl;
 
+import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -38,7 +39,7 @@ public final class TestGeneratorImpl implements TestGenerator {
     @Getter private final String description;
     @Getter private final String query;
     @Getter private final Pattern pattern;
-    @Getter private final Collection<ResultAnnotation> annotations;
+    @Getter private final ImmutableList<ResultAnnotation> annotations;
 
 
 
@@ -52,7 +53,7 @@ public final class TestGeneratorImpl implements TestGenerator {
         this.query = checkNotNull(query, "Query in %s should not be null", tagName);
         checkState(!query.trim().isEmpty(), "Query in %s should not be empty", tagName);
         this.pattern = checkNotNull(pattern, "Pattern in %s should not be null", tagName);
-        this.annotations = checkNotNull(generatorAnnotations);
+        this.annotations = ImmutableList.copyOf(checkNotNull(generatorAnnotations));
     }
 
     /**

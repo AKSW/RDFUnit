@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.generators;
 
+import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -30,7 +31,7 @@ public class TestGeneratorTCInstantiator {
     private static final Logger log = LoggerFactory.getLogger(TestGeneratorTCInstantiator.class);
 
 
-    private final Collection<TestGenerator> testGenerators;
+    private final ImmutableList<TestGenerator> testGenerators;
     private final SchemaSource source;
 
     /**
@@ -40,7 +41,7 @@ public class TestGeneratorTCInstantiator {
      * @param source a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
     public TestGeneratorTCInstantiator(Collection<TestGenerator> testGenerators, SchemaSource source) {
-        this.testGenerators = testGenerators;
+        this.testGenerators = ImmutableList.copyOf(testGenerators);
         this.source = source;
     }
 
@@ -55,75 +56,75 @@ public class TestGeneratorTCInstantiator {
         Collection<TestCase> tests = new ArrayList<>();
 
         for (TestGenerator tg: testGenerators) {
-            Pattern tgPattern = tg.getPattern();
+                    Pattern tgPattern = tg.getPattern();
 
-            Query q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + tg.getQuery());
+                        Query q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + tg.getQuery());
             QueryExecution qe = new QueryExecutionFactoryModel(source.getModel()).createQueryExecution(q);
-            ResultSet rs = qe.execSelect();
+                        ResultSet rs = qe.execSelect();
 
-            while (rs.hasNext()) {
-                QuerySolution row = rs.next();
+                        while (rs.hasNext()) {
+                            QuerySolution row = rs.next();
 
-                Collection<Binding> bindings = new ArrayList<>();
-                Collection<String> references = new ArrayList<>();
-                String description;
+                            Collection<Binding> bindings = new ArrayList<>();
+                            Collection<String> references = new ArrayList<>();
+                            String description;
 
-                for (PatternParameter p : tgPattern.getParameters()) {
-                    if (row.contains(p.getId())) {
-                        RDFNode n = row.get(p.getId());
-                        Binding b;
-                        try {
-                            b = new Binding(p, n);
-                        } catch (Exception e) {
-                            log.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri(), e);
-                            continue;
+                            for (PatternParameter p : tgPattern.getParameters()) {
+                                if (row.contains(p.getId())) {
+                                    RDFNode n = row.get(p.getId());
+                                    Binding b;
+                                    try {
+                                        b = new Binding(p, n);
+                                    } catch (Exception e) {
+                                        log.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri(), e);
+                                        continue;
+                                    }
+                                    bindings.add(b);
+                                    if (n.isResource() && !"loglevel".equalsIgnoreCase(p.getId())) {
+                                        references.add(n.toString().trim().replace(" ", ""));
+                                    }
+                                } else {
+                                    log.error("Not bindings for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri());
+                                    break;
+                                }
+                            }
+                            if (bindings.size() != tg.getPattern().getParameters().size()) {
+                                log.error("Bindings for pattern {} do not match in AutoGenerator: {}", tgPattern.getId(), tg.getUri());
+                                continue;
+                            }
+
+                            if (row.get("DESCRIPTION") != null) {
+                                description = row.get("DESCRIPTION").toString();
+                            } else {
+                                log.error("No ?DESCRIPTION variable found in AutoGenerator: {}", tg.getUri());
+                                continue;
+                            }
+
+
+
+                            Collection<ResultAnnotation> patternBindedAnnotations = tgPattern.getBindedAnnotations(bindings);
+                            patternBindedAnnotations.addAll(tg.getAnnotations());
+                            Resource tcResource = ResourceFactory.createResource(TestUtils.generateTestURI(source.getPrefix(), tgPattern, bindings, tg.getUri()));
+                            PatternBasedTestCaseImpl tc = new PatternBasedTestCaseImpl(
+                                    tcResource,
+                                    new TestCaseAnnotation(
+                                            tcResource, TestGenerationType.AutoGenerated,
+                                            tg.getUri(),
+                                            source.getSourceType(),
+                                            source.getUri(),
+                                            references,
+                                            description,
+                                            null,
+                                            patternBindedAnnotations),
+                                    tgPattern,
+                                    bindings
+                            );
+                            new TestCaseValidator(tc).validate();
+                            tests.add(tc);
+
+
                         }
-                        bindings.add(b);
-                        if (n.isResource() && !"loglevel".equalsIgnoreCase(p.getId())) {
-                            references.add(n.toString().trim().replace(" ", ""));
-                        }
-                    } else {
-                        log.error("Not bindings for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri());
-                        break;
                     }
-                }
-                if (bindings.size() != tg.getPattern().getParameters().size()) {
-                    log.error("Bindings for pattern {} do not match in AutoGenerator: {}", tgPattern.getId(), tg.getUri());
-                    continue;
-                }
-
-                if (row.get("DESCRIPTION") != null) {
-                    description = row.get("DESCRIPTION").toString();
-                } else {
-                    log.error("No ?DESCRIPTION variable found in AutoGenerator: {}", tg.getUri());
-                    continue;
-                }
-
-
-
-                    Collection<ResultAnnotation> patternBindedAnnotations = tgPattern.getBindedAnnotations(bindings);
-                    patternBindedAnnotations.addAll(tg.getAnnotations());
-                    Resource tcResource = ResourceFactory.createResource(TestUtils.generateTestURI(source.getPrefix(), tgPattern, bindings, tg.getUri()));
-                    PatternBasedTestCaseImpl tc = new PatternBasedTestCaseImpl(
-                            tcResource,
-                            new TestCaseAnnotation(
-                                    tcResource, TestGenerationType.AutoGenerated,
-                                    tg.getUri(),
-                                    source.getSourceType(),
-                                    source.getUri(),
-                                    references,
-                                    description,
-                                    null,
-                                    patternBindedAnnotations),
-                            tgPattern,
-                            bindings
-                    );
-                    new TestCaseValidator(tc).validate();
-                    tests.add(tc);
-
-
-            }
-        }
         return tests;
     }
 }
