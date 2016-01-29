@@ -14,7 +14,7 @@ import org.aksw.rdfunit.model.interfaces.ShapeScope;
  * @version $Id: $Id
  */
 @Value
-public class ShapeScopeClass implements ShapeScope {
+public class ShapeScopeClassImpl implements ShapeScope {
     @Getter @NonNull private final Resource element;
     @Getter @NonNull private final String scopeClass;
 
