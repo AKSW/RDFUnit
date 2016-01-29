@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.interfaces;
 
 import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.rdf.model.Resource;
+import lombok.Getter;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -23,14 +24,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class TestCaseAnnotation implements Element {
-    private final Resource element;
-    private final TestGenerationType generated;
-    private final String autoGeneratorURI;
-    private final TestAppliesTo appliesTo;
-    private final String sourceUri;
+    @Getter private final Resource element;
+    @Getter private final TestGenerationType generated;
+    @Getter private final String autoGeneratorURI;
+    @Getter private final TestAppliesTo appliesTo;
+    @Getter private final String sourceUri;
     private final Collection<String> references;
-    private final String description;
-    private final RLOGLevel testCaseLogLevel;
+    @Getter private final String description;
+    @Getter private final RLOGLevel testCaseLogLevel;
     private final ImmutableList<ResultAnnotation> resultAnnotations;
     private final ImmutableList<ResultAnnotation> variableAnnotations;
 
@@ -61,55 +62,22 @@ public class TestCaseAnnotation implements Element {
         this.resultAnnotations = ImmutableList.copyOf(findNonVariableAnnotations(resultAnnotations));
     }
 
-    /**
-     * <p>Getter for the field <code>generated</code>.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
-     */
-    public TestGenerationType getGenerated() {
-        return generated;
-    }
-
-    /**
-     * <p>Getter for the field <code>autoGeneratorURI</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getAutoGeneratorURI() {
-        return autoGeneratorURI;
-    }
-
-    /**
-     * <p>Getter for the field <code>appliesTo</code>.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.
-     */
-    public TestAppliesTo getAppliesTo() {
-        return appliesTo;
-    }
-
-    /**
-     * <p>Getter for the field <code>sourceUri</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getSourceUri() {
-        return sourceUri;
-    }
-
-    /**
-     * <p>Getter for the field <code>references</code>.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
     public Collection<String> getReferences() {
         return references;
     }
 
+    public Collection<ResultAnnotation> getResultAnnotations() {
+        return resultAnnotations;
+    }
 
-    /*
-     * Get either testCaseLogLevel or generate it from resultAnnotations (and then remove the annotation)
-     * */
+    public Collection<ResultAnnotation> getVariableAnnotations() {
+        return variableAnnotations;
+    }
+
+
+    /**
+     * Get either testCaseLogLevel or generate it from resultAnnotations
+     **/
     private RLOGLevel findAnnotationLevel(RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> givenAnnotations) {
 
         for (ResultAnnotation annotation : givenAnnotations) {
@@ -117,7 +85,7 @@ public class TestCaseAnnotation implements Element {
                 return RLOGLevel.resolve(annotation.getAnnotationValue().get().toString());
             }
         }
-
+        // return default
         return testCaseLogLevel;
     }
 
@@ -136,45 +104,4 @@ public class TestCaseAnnotation implements Element {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * <p>Getter for the field <code>testCaseLogLevel</code>.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
-     */
-    public RLOGLevel getTestCaseLogLevel() {
-        return testCaseLogLevel;
-    }
-
-    /**
-     * <p>Getter for the field <code>resultAnnotations</code>.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
-    public Collection<ResultAnnotation> getResultAnnotations() {
-        return resultAnnotations;
-    }
-
-    /**
-     * <p>Getter for the field <code>variableAnnotations</code>.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
-    public Collection<ResultAnnotation> getVariableAnnotations() {
-        return variableAnnotations;
-    }
-
-    /**
-     * <p>Getter for the field <code>description</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Resource getElement() {
-        return element;
-    }
 }
