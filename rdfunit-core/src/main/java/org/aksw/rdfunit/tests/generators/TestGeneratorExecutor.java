@@ -100,7 +100,10 @@ public class TestGeneratorExecutor {
                 break;
             }
 
-            log.info("Generating tests for: {}", s.getUri());
+            if (s.getModel() == null || s.getModel().isEmpty()) {
+                log.error("Trying to generate tests for {} but cannot read source", s.getUri());
+                continue;
+            }
 
             //Generate auto tests from schema
             if (useAutoTests) {

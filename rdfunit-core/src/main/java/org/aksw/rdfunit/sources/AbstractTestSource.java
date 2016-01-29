@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.sources;
 
+import com.google.common.collect.ImmutableSet;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -28,7 +28,7 @@ public abstract class AbstractTestSource implements TestSource {
 
     protected final SourceConfig sourceConfig;
     protected final QueryingConfig queryingConfig;
-    private final Collection<SchemaSource> referenceSchemata;
+    private final ImmutableSet<SchemaSource> referenceSchemata;
 
     private QueryExecutionFactory queryFactory = null;
 
@@ -43,7 +43,7 @@ public abstract class AbstractTestSource implements TestSource {
     public AbstractTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata) {
         this.sourceConfig = checkNotNull(sourceConfig);
         this.queryingConfig = checkNotNull(queryingConfig);
-        this.referenceSchemata = Collections.unmodifiableCollection(checkNotNull(referenceSchemata));
+        this.referenceSchemata = ImmutableSet.copyOf(checkNotNull(referenceSchemata));
     }
 
     /**

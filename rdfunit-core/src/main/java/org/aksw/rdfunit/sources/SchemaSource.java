@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.sources;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.reader.RDFReader;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
@@ -17,16 +20,18 @@ import org.slf4j.LoggerFactory;
  * @since 9/16/13 1:51 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode(exclude={"model", "schemaReader"})
 public class SchemaSource implements Source {
     /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(SchemaSource.class);
 
 
     protected final SourceConfig sourceConfig;
-    protected final String schema;
-    protected final RDFReader schemaReader;
+    @Getter private final String schema;
 
-    protected final OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
+    protected final RDFReader schemaReader;
+    @Getter(lazy=true) private final Model model = initModel() ;
 
     SchemaSource(SourceConfig sourceConfig, RDFReader schemaReader) {
         this(sourceConfig, sourceConfig.getUri(), schemaReader);
@@ -45,47 +50,35 @@ public class SchemaSource implements Source {
         this.schemaReader = source.schemaReader;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getPrefix() {
         return sourceConfig.getPrefix();
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getUri() {
         return sourceConfig.getUri();
     }
 
-    /** {@inheritDoc} */
     @Override
     public TestAppliesTo getSourceType() {
         return TestAppliesTo.Schema;
     }
 
+
     /**
-     * <p>Getter for the field <code>model</code>.</p>
-     *
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     * @since 0.7.6
+     * lazy loaded via lombok
      */
-    public Model getModel() {
-        if (model.isEmpty())
+    private Model initModel() {
+        OntModel m = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         try {
-            schemaReader.read(model);
+            schemaReader.read(m);
         } catch (RDFReaderException e) {
             log.error("Cannot load ontology: {} ", getSchema(), e);
         }
-        return model;
+        return m;
     }
 
-    /**
-     * <p>Getter for the field <code>schema</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getSchema() {
-        return schema;
-    }
+
 
 }
