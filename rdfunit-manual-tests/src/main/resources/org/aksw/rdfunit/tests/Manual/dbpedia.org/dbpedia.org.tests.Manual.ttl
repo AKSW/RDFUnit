@@ -47,10 +47,10 @@ rutt:dbpedia-org-manual-dateofbirthbirthdate
     rut:references <http://dbpedia.org/property/dateOfBirth>  ;
     rut:source <http://dbpedia.org> ;
     rut:sparqlWhere """ {
-                                 ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 .
-                                 FILTER NOT EXISTS {?resource <http://dbpedia.org/ontology/birthDate> ?v2}} """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ ;
+                                 ?this <http://dbpedia.org/property/dateOfBirth> ?v1 .
+                                 FILTER NOT EXISTS {?this <http://dbpedia.org/ontology/birthDate> ?v2}} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {
+                                 ?this <http://dbpedia.org/property/dateOfBirth> ?v1 . } """ ;
     rut:testCaseLogLevel
               rlog:WARN .
 

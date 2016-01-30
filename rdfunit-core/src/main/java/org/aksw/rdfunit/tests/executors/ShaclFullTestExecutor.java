@@ -58,8 +58,8 @@ public class ShaclFullTestExecutor extends ShaclSimpleTestExecutor {
 
                 QuerySolution qs = results.next();
 
-                String resource = qs.get("resource").toString();
-                if (qs.get("resource").isLiteral()) {
+                String resource = qs.get("this").toString();
+                if (qs.get("this").isLiteral()) {
                     resource = StringUtils.getHashFromString(resource);
                 }
                 String message = testCase.getResultMessage();

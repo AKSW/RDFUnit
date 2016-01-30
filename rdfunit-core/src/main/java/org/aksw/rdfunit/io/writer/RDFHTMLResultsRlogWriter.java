@@ -49,11 +49,11 @@ public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
         String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?level ?message ?resource ?testcase WHERE {" +
+                " SELECT DISTINCT ?level ?message ?this ?testcase WHERE {" +
                 " ?s a rut:RLOGTestCaseResult ; " +
                 "    rlog:level ?level ;" +
                 "    rlog:message ?message ; " +
-                "    rlog:resource ?resource ; " +
+                "    rlog:resource ?this ; " +
                 "    rut:testCase ?testcase ; " +
                 //"    prov:wasGeneratedBy <" + testExecutionURI + "> " +
                 "} ";
@@ -68,7 +68,7 @@ public class RDFHTMLResultsRlogWriter extends RDFHTMLResultsWriter {
                 QuerySolution qs = rs.next();
                 String level = qs.get("level").toString();
                 String message = qs.get("message").toString();
-                String resource = qs.get("resource").toString();
+                String resource = qs.get("this").toString();
                 String testcase = qs.get("testcase").toString();
 
                 String levelShort = PrefixNSService.getLocalName(level, "rlog");

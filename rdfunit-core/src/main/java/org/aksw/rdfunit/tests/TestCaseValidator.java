@@ -50,13 +50,13 @@ public class TestCaseValidator {
         // check for Resource & message
         boolean hasResource = false;
         for (String v : vars) {
-            if ("resource".equals(v)) {
+            if ("this".equals(v)) {
                 hasResource = true;
             }
 
         }
         if (!hasResource) {
-           // throw new TestCaseInstantiationException("?resource is not included in SELECT for Test: " + testCase.getTestURI());
+           // throw new TestCaseInstantiationException("?this is not included in SELECT for Test: " + testCase.getTestURI());
         }
 
         // Message is allowed to exist either in SELECT or as a result annotation

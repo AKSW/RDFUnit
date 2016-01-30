@@ -133,16 +133,16 @@ rutt:dbo-LITRAN-rangeheightperson
     rut:source <http://dbpedia.org/ontology/> ;
     rut:sparqlWhere """  {
                              {
-                                ?resource a <http://dbpedia.org/ontology/Person> .
-                                ?resource <http://dbpedia.org/ontology/height> ?v1 .
+                                ?this a <http://dbpedia.org/ontology/Person> .
+                                ?this <http://dbpedia.org/ontology/height> ?v1 .
                              }  UNION {
-                                ?resource a ?class .
+                                ?this a ?class .
                                 ?class rdfs:subClassOf+ <http://dbpedia.org/ontology/Person> .
-                                ?resource <http://dbpedia.org/ontology/height> ?v1 .
+                                ?this <http://dbpedia.org/ontology/height> ?v1 .
                              }
                              FILTER ( !(xsd:double(?v1) < 44 || xsd:double(?v1) > 250))} """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource <http://dbpedia.org/ontology/height> ?v1 . } """ ;
+    rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {
+                                 ?this <http://dbpedia.org/ontology/height> ?v1 . } """ ;
     rut:testCaseLogLevel
         rlog:WARN ;
     rut:resultAnnotation [

@@ -43,11 +43,11 @@ rutt:skos-ConseptSchemeWithoutRdfslabel
     rut:source <http://www.w3.org/2004/02/skos/core#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-	                         ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
-	                         FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
-	                         FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v2 }} """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ ;
+	                         ?this a <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+	                         FILTER NOT EXISTS {?this <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
+	                         FILTER NOT EXISTS {?this <http://www.w3.org/2004/02/skos/core#prefLabel> ?v2 }} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {
+                                 ?this a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
         rut:annotationProperty sh:predicate ;
@@ -68,11 +68,11 @@ rutt:skos-ConseptWithoutRdfslabel
     rut:source <http://www.w3.org/2004/02/skos/core#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-                             ?resource a <http://www.w3.org/2004/02/skos/core#Concept> .
-                             FILTER NOT EXISTS {?resource <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
-                             FILTER NOT EXISTS {?resource <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
-    rut:sparqlPrevalence """ SELECT (count(?resource) AS ?total) WHERE {
-                                 ?resource a <http://www.w3.org/2004/02/skos/core#Concept> . } """ ;
+                             ?this a <http://www.w3.org/2004/02/skos/core#Concept> .
+                             FILTER NOT EXISTS {?this <http://www.w3.org/2000/01/rdf-schema#label> ?v1 }
+                             FILTER NOT EXISTS {?this <http://www.w3.org/2004/02/skos/core#prefLabel> ?v1 }} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {
+                                 ?this a <http://www.w3.org/2004/02/skos/core#Concept> . } """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty sh:predicate ;

@@ -14,7 +14,7 @@ import org.apache.jena.query.QueryFactory;
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
-    private static final String selectClause = " SELECT DISTINCT ?resource WHERE ";
+    private static final String selectClause = " SELECT DISTINCT ?this WHERE ";
 
     /** {@inheritDoc} */
     @Override

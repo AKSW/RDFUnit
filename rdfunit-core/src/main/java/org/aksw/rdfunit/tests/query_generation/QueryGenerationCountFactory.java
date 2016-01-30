@@ -14,10 +14,10 @@ import org.apache.jena.query.QueryFactory;
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
 
-    private static final String selectClauseSimple = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE ";
+    private static final String selectClauseSimple = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE ";
 
-    private static final String selectClauseGroupStart = " SELECT (count(DISTINCT ?resource ) AS ?total ) WHERE {" +
-                                                   " SELECT ?resource WHERE ";
+    private static final String selectClauseGroupStart = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE {" +
+                                                   " SELECT ?this WHERE ";
     private static final String selectClauseGroupEnd = "}";
 
     /** {@inheritDoc} */

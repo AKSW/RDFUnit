@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * Factory that returns select queries and besides
- * SELECT ?resource it adds all variable annotations
+ * SELECT ?this it adds all variable annotations
  *
  * @author Dimitris Kontokostas
  * @since 7/25/14 10:02 PM
@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
 
-    private static final String selectDistinctResource = " SELECT DISTINCT ?resource ";
+    private static final String selectDistinctResource = " SELECT DISTINCT ?this ";
 
-    private static final String resourceVar = "?resource";
+    private static final String resourceVar = "?this";
 
     private static final String whereClause = " WHERE ";
 
-    private static final String orderByResourceAsc = "  ORDER BY ASC(?resource) ";
+    private static final String orderByResourceAsc = "  ORDER BY ASC(?this) ";
 
     /** {@inheritDoc} */
     @Override

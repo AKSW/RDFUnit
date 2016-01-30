@@ -19,9 +19,9 @@ public class QueryGenerationSelectFactoryTest {
 
     private static final String sparqlPrefix = "";
 
-    private static final String sparqlSelect = " SELECT DISTINCT ?resource WHERE ";
+    private static final String sparqlSelect = " SELECT DISTINCT ?this WHERE ";
 
-    private static final String goodSparqlQuery = "{ ?resource ?p ?o }";
+    private static final String goodSparqlQuery = "{ ?this ?p ?o }";
 
     private QueryGenerationSelectFactory queryGenerationSelectFactory;
 

@@ -85,7 +85,7 @@ rut:Pattern
 rut:sparqlWherePattern
     a owl:DatatypeProperty ;
     rdfs:label "sparqlWherePattern"@en ;
-    rdfs:comment "The WHERE part of a sparql query with %%parameter%% placeholders. Must bind variables ?resource and ?message (see rut:sparqlWhere)"@en ;
+    rdfs:comment "The WHERE part of a sparql query with %%parameter%% placeholders. Must bind variables ?this and ?message (see rut:sparqlWhere)"@en ;
     rdfs:domain rut:Pattern ;
     rdfs:range xsd:string .
 
@@ -331,7 +331,7 @@ rut:sparqlWhere
     rdfs:label "sparqlWhere"@en ;
     rdfs:comment
         """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and bind the following variables:
-        ?resource: the instance (URI) where the constraint violation occurs;
+        ?this: the instance (URI) where the constraint violation occurs;
         ?message: a logging message."""@en ;
     rdfs:domain rut:ManualTestCase ;
     rdfs:range xsd:string .
