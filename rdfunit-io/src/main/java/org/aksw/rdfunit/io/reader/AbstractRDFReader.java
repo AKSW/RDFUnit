@@ -31,7 +31,7 @@ public abstract class AbstractRDFReader implements RDFReader {
     @Override
     public Dataset readDataset() throws RDFReaderException {
         try {
-            Dataset dataset = DatasetFactory.createMem();
+            Dataset dataset = DatasetFactory.create();
             readDataset(dataset);
             return dataset;
         } catch (Exception e) {
