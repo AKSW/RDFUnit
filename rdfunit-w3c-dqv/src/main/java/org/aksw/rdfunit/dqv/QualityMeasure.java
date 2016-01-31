@@ -11,6 +11,6 @@ import lombok.Value;
 public class QualityMeasure {
     @NonNull private final String testExecutionUri;
     @NonNull private final String DqvMetricUri;
-    @NonNull private final double value;
+    private final double value;
 
 }

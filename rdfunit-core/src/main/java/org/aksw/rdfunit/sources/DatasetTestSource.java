@@ -41,7 +41,7 @@ public class DatasetTestSource extends AbstractTestSource implements TestSource 
     }
 
     DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader) {
-        this(sourceConfig, queryingConfig, referenceSchemata, dumpReader, DatasetFactory.createMem());  //OntModelSpec.RDFS_MEM_RDFS_INF
+        this(sourceConfig, queryingConfig, referenceSchemata, dumpReader, DatasetFactory.create());  //OntModelSpec.RDFS_MEM_RDFS_INF
     }
 
     DatasetTestSource(DatasetTestSource datasetTestSource, Collection<SchemaSource> referenceSchemata) {

@@ -17,7 +17,7 @@ import java.util.Collections;
  * @version $Id: $Id
  */
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper=true)
 public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements TestCase, PatternBasedTestCase {
 
     private final Pattern pattern;
