@@ -65,6 +65,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jena-sparql-api-version>3.0.1-1</jena-sparql-api-version>
         <org-apache-jena-version>3.0.1</org-apache-jena-version>
+        <slf4j-version>1.7.14</slf4j-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
 
@@ -189,14 +190,14 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.14</version>
+                <version>${slf4j-version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.14</version>
+                <version>${slf4j-version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
