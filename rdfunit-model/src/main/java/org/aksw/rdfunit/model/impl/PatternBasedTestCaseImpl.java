@@ -1,75 +1,74 @@
 package org.aksw.rdfunit.model.impl;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.*;
+import org.apache.jena.ext.com.google.common.collect.ImmutableSet;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * <p>PatternBasedTestCase class.</p>
  *
  * @author Dimitris Kontokostas
  *         Description
- * @since 1/3/14 3:49 PM
  * @version $Id: $Id
+ * @since 1/3/14 3:49 PM
  */
 @ToString
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements TestCase, PatternBasedTestCase {
 
-    private final Pattern pattern;
-    private final Collection<Binding> bindings;
-    private String sparqlWhereCache = null;
-    private String sparqlPrevalenceCache = null;
+    @Getter @NonNull private final Pattern pattern;
+    @NonNull private final ImmutableSet<Binding> bindings;
+    @Getter(lazy = true) @NonNull private final String sparqlWhere = initSparqlWhere();
+    @Getter(lazy = true) @NonNull private final String sparqlPrevalence = initSparqlPrevalence();
 
     /**
      * <p>Constructor for PatternBasedTestCaseImpl.</p>
      *
-     * @param resource a {@link org.apache.jena.rdf.model.Resource} object.
+     * @param resource   a {@link org.apache.jena.rdf.model.Resource} object.
      * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
-     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     * @param bindings a {@link java.util.Collection} object.
+     * @param pattern    a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
+     * @param bindings   a {@link java.util.Collection} object.
      */
     public PatternBasedTestCaseImpl(Resource resource, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) {
         super(resource, annotation);
         this.pattern = pattern;
-        this.bindings = bindings;
+        this.bindings = ImmutableSet.copyOf(bindings);
 
         // validate
         if (bindings.size() != pattern.getParameters().size()) {
-           // throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
+            // throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
         }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getSparqlWhere() {
-        if (sparqlWhereCache == null) {
-            sparqlWhereCache = instantiateBindings(bindings, pattern.getSparqlWherePattern()).trim();
-        }
-        return sparqlWhereCache;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getSparqlPrevalence() {
-        if (sparqlPrevalenceCache == null ) {
-            if (pattern.getSparqlPatternPrevalence().isPresent()) {
-                sparqlPrevalenceCache = instantiateBindings(bindings, pattern.getSparqlPatternPrevalence().get()).trim();
-            }
-            else {
-                sparqlPrevalenceCache = "";
-            }
-        }
-        return sparqlPrevalenceCache;
     }
 
     public String getAutoGeneratorURI() {
         return testCaseAnnotation.getAutoGeneratorURI();
     }
+
+    public Collection<Binding> getBindings() {
+        return bindings;
+    }
+
+    private String initSparqlWhere() {
+        return instantiateBindings(bindings, pattern.getSparqlWherePattern()).trim();
+
+    }
+
+    private String initSparqlPrevalence() {
+
+        if (pattern.getSparqlPatternPrevalence().isPresent()) {
+            return instantiateBindings(bindings, pattern.getSparqlPatternPrevalence().get()).trim();
+        } else {
+            return "";
+        }
+
+    }
+
 
     private String instantiateBindings(Collection<Binding> bindings, String query) {
         String sparql = query;
@@ -79,21 +78,5 @@ public class PatternBasedTestCaseImpl extends AbstractTestCaseImpl implements Te
         return sparql;
     }
 
-    /**
-     * <p>Getter for the field <code>pattern</code>.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     */
-    public Pattern getPattern() {
-        return pattern;
-    }
 
-    /**
-     * <p>Getter for the field <code>bindings</code>.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
-    public Collection<Binding> getBindings() {
-        return Collections.unmodifiableCollection(bindings);
-    }
 }
