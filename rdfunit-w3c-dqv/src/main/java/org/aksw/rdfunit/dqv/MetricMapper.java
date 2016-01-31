@@ -40,11 +40,13 @@ public class MetricMapper {
             throw new IllegalArgumentException("Cannot read default metric mappings");
         }
 
-        ImmutableMap.Builder builder = new ImmutableMap.Builder<String, String>();
+        ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<>();
         model.listStatements().toList().stream()
                 .filter(smt -> smt.getPredicate().equals(RDFUNITv.metric))
                 .filter(smt -> smt.getObject().isResource())
-                .forEach(smt -> builder.put(smt.getSubject().getURI(), smt.getObject().asResource().getURI()));
+                .forEach(smt -> {
+                    builder.put(smt.getSubject().getURI(), smt.getObject().asResource().getURI());
+                });
 
         return new MetricMapper(builder.build());
     }
