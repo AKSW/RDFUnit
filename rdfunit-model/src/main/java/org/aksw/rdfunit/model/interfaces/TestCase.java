@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 9/23/13 6:31 AM
  * @version $Id: $Id
  */
-public interface TestCase extends Element{
+public interface TestCase extends Element, Comparable<TestCase>{
 
     /**
      * <p>getSparqlWhere.</p>
@@ -84,5 +84,16 @@ public interface TestCase extends Element{
      */
     TestCaseAnnotation getTestCaseAnnotation();
 
+    /**
+     * URI is atm based on a hash of the sparql query TODO: change and compare the hash directly
+     */
+    @Override
+    default int compareTo(TestCase o) {
+        if (o == null) {
+            return -1;
+        }
+
+        return this.getTestURI().compareTo(o.getTestURI());
+    }
 
 }

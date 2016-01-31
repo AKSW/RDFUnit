@@ -23,7 +23,7 @@ import java.util.Collection;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
-public abstract class AbstractTestCaseImpl implements TestCase, Comparable<AbstractTestCaseImpl> {
+abstract class AbstractTestCaseImpl implements TestCase {
 
     @Getter @NonNull protected final Resource element;
     @Getter @NonNull protected final TestCaseAnnotation testCaseAnnotation;
@@ -66,15 +66,5 @@ public abstract class AbstractTestCaseImpl implements TestCase, Comparable<Abstr
     }
 
 
-
-    /** {@inheritDoc} */
-    @Override
-    public int compareTo(AbstractTestCaseImpl o) {
-        if (o == null) {
-            return -1;
-        }
-
-        return this.getTestURI().compareTo(o.getTestURI());
-    }
 
 }
