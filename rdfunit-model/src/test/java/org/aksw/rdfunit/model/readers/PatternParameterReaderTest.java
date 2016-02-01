@@ -2,7 +2,6 @@ package org.aksw.rdfunit.model.readers;
 
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -38,6 +37,6 @@ public class PatternParameterReaderTest {
 
     @Test
     public void testRead() throws Exception {
-        PatternParameter patternParameter = PatternParameterReader.create().read(resource);
+        PatternParameterReader.create().read(resource);
     }
 }

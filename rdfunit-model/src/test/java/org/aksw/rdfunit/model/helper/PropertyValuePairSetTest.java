@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.helper;
 
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.junit.Test;
@@ -32,7 +31,7 @@ public class PropertyValuePairSetTest {
                 .isEqualTo(RDF.type);
         assertThat(annotations.get(0).getValues().size())
                 .isEqualTo(1);
-        assertThat(((new ArrayList<RDFNode>(annotations.get(0).getValues())).get(0)))
+        assertThat(((new ArrayList<>(annotations.get(0).getValues())).get(0)))
                 .isEqualTo(RDFS.Class);
 
         //add rdf:type rdfs:Literal

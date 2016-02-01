@@ -21,7 +21,7 @@ public class DumpTestSourceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetExecutionFactoryEmpty() throws Exception {
-        TestSource testSource = TestSourceFactory.createDumpTestSource("tmp", "non-resolvable-uri", RDFReaderFactory.createResourceReader("non-resolvable-uri"), new ArrayList<SchemaSource>());
+        TestSource testSource = TestSourceFactory.createDumpTestSource("tmp", "non-resolvable-uri", RDFReaderFactory.createResourceReader("non-resolvable-uri"), new ArrayList<>());
         testSource.getExecutionFactory();
     }
 }

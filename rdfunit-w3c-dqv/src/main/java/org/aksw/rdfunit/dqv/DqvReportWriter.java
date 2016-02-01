@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 public final class DqvReportWriter implements ElementWriter {
 
-    private final String dqvNS = "http://www.w3.org/ns/dqv#";
+    private final static String dqvNS = "http://www.w3.org/ns/dqv#";
     private final Collection<QualityMeasure> measures;
 
     private DqvReportWriter(Collection<QualityMeasure> measures) {

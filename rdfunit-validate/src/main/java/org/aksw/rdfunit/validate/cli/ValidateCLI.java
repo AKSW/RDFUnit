@@ -60,9 +60,6 @@ public class ValidateCLI {
             displayHelpAndExit();
         }
 
-
-        String dataFolder = commandLine.getOptionValue("f", "../data/");
-
         if (!commandLine.hasOption('v')) { // explicitely do not use LOV
             RDFUnitUtils.fillSchemaServiceFromLOV();
         }

@@ -2,7 +2,6 @@ package org.aksw.rdfunit.model.readers;
 
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -42,6 +41,6 @@ public class PatternReaderTest {
 
     @Test
     public void testRead() throws Exception {
-        Pattern pattern = PatternReader.create().read(resource);
+        PatternReader.create().read(resource);
     }
 }

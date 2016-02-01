@@ -53,7 +53,7 @@ public class RDFUnit {
      * <p>Constructor for RDFUnit.</p>
      */
     public RDFUnit() {
-        this(new ArrayList<String>());
+        this(new ArrayList<>());
     }
 
     /**
@@ -130,7 +130,7 @@ public class RDFUnit {
      * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
      */
     public static RDFReader getPatternsReader() {
-        return getPatternsReader(new ArrayList<String>());
+        return getPatternsReader(new ArrayList<>());
     }
 
     /**
@@ -149,7 +149,7 @@ public class RDFUnit {
      * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
      */
     public static RDFReader getAutoGeneratorsOWLReader() {
-        return getAutoGeneratorsOWLReader(new ArrayList<String>());
+        return getAutoGeneratorsOWLReader(new ArrayList<>());
     }
 
     /**
@@ -168,7 +168,7 @@ public class RDFUnit {
      * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
      */
     public static RDFReader getAutoGeneratorsDSPReader() {
-        return getAutoGeneratorsDSPReader(new ArrayList<String>());
+        return getAutoGeneratorsDSPReader(new ArrayList<>());
     }
 
     /**
@@ -187,7 +187,7 @@ public class RDFUnit {
      * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
      */
     public static RDFReader getAutoGeneratorsRSReader() {
-        return getAutoGeneratorsRSReader(new ArrayList<String>());
+        return getAutoGeneratorsRSReader(new ArrayList<>());
     }
 
     /**
@@ -212,6 +212,6 @@ public class RDFUnit {
      * @return a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
      */
     public static RDFReader getAutoGeneratorsALLReader() {
-        return getAutoGeneratorsALLReader(new ArrayList<String>());
+        return getAutoGeneratorsALLReader(new ArrayList<>());
     }
 }
