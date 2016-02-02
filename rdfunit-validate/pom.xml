@@ -16,11 +16,13 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-core</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-manual-tests</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -102,29 +104,29 @@
         </plugins>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <configuration>
-                        <formats>jar</formats>
-                        <archive>
-                            <manifest>
-                                <mainClass>org.aksw.rdfunit.validate.cli.ValidateCLI</mainClass>
-                            </manifest>
-                        </archive>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>make-jar-assembly</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>single</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <formats>jar</formats>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.aksw.rdfunit.validate.cli.ValidateCLI</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-jar-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             </plugins>
         </pluginManagement>
     </build>

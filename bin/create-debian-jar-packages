@@ -9,7 +9,7 @@ mvn clean
 #sed -i "1s/^/ * $comment\n/" debian/CHANGES.txt
 
 # create cli deb
-mvn -pl rdfunit-validate -am install -Pdebpackage
+mvn -pl rdfunit-validate -am install package -Pdebpackage
 
 # create webdemo deb
 cd rdfunit-webdemo
@@ -17,5 +17,8 @@ mvn install -Pdebpackage
 cd - > /dev/null
 
 # move *.deb to project folder
-find . -iname "rdfunit*.deb" -exec mv '{}' ./ \;
-find . -iname "rdfunit*.changes" -exec mv '{}' ./ \;
+find . -iname "rdfunit*.deb" -exec mv -f '{}' ./ \;
+find . -iname "rdfunit*.changes" -exec mv -f '{}' ./ \;
+find . -iname "rdfunit-cli.jar" -exec mv -f '{}' ./ \;
+find . -iname "rdfunit-webdemo*.war" -exec mv -f '{}' ./ \;
+

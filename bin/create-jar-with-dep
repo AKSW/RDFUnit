@@ -1,9 +1,0 @@
-#!/bin/bash
-
-mvn -pl rdfunit-validate -am clean install  && \
-mvn -pl rdfunit-validate assembly:single
-
-
-
-# move jar to project folder
-find . -iname "rdfunit*jar-with-dependencies.jar" -exec mv -f '{}' ./ \;
