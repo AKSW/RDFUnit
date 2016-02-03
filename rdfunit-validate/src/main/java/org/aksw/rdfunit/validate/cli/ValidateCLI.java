@@ -30,6 +30,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -128,7 +129,13 @@ public class ValidateCLI {
 
 
         // Write results to RDFWriter ()
-        String filename = configuration.getDataFolder() + "results/" + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
+        String resultsFolder = configuration.getDataFolder() + "results/";
+        String filename = resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
+
+        if (!(new File(resultsFolder).exists())) {
+            log.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
+            new File(resultsFolder).mkdirs();
+        }
 
         ArrayList<RDFWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
