@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model;
+package org.aksw.rdfunit.model.shacl;
 
 import com.google.common.collect.ImmutableList;
 import lombok.Builder;

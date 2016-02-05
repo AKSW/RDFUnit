@@ -33,36 +33,40 @@ public final class ArgumentReader implements ElementReader<Argument> {
     public Argument read(Resource resource) {
         checkNotNull(resource);
 
-        ArgumentImpl.Builder argumentBuilder = new ArgumentImpl.Builder(resource);
+        ArgumentImpl.ArgumentImplBuilder argumentBuilder = ArgumentImpl.builder();
+
+        argumentBuilder.element(resource);
 
         // get predicate
         for (Statement smt : resource.listProperties(SHACL.predicate).toList()) {
-            argumentBuilder = argumentBuilder.setPredicate(smt.getObject().asResource());
+            argumentBuilder = argumentBuilder.predicate(smt.getObject().asResource());
         }
 
         checkNotNull(argumentBuilder);
 
         //comment
         for (Statement smt : resource.listProperties(RDFS.comment).toList()) {
-            argumentBuilder.setComment(smt.getObject().asLiteral().getLexicalForm());
+            argumentBuilder.comment(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //default value
         for (Statement smt : resource.listProperties(SHACL.defaultValue).toList()) {
-            argumentBuilder.setDefaultValue(smt.getObject());
+            argumentBuilder.defaultValue(smt.getObject());
         }
 
         //get datatype / valueType...
         for (Statement smt : resource.listProperties(SHACL.datatype).toList()) {
-            argumentBuilder.setValueType(smt.getObject().asResource(), ValueKind.DATATYPE);
+            argumentBuilder.valueType(smt.getObject().asResource());
+            argumentBuilder.valueKind(ValueKind.DATATYPE);
         }
         for (Statement smt : resource.listProperties(SHACL.valueType).toList()) {
-            argumentBuilder.setValueType(smt.getObject().asResource(), ValueKind.IRI);
+            argumentBuilder.valueType(smt.getObject().asResource());
+            argumentBuilder.valueKind(ValueKind.IRI);
         }
 
         // get optional
         for (Statement smt : resource.listProperties(SHACL.optional).toList()) {
-            argumentBuilder.setOptional(smt.getObject().asLiteral().getBoolean());
+            argumentBuilder.isOptional(smt.getObject().asLiteral().getBoolean());
         }
 
         return argumentBuilder.build();
