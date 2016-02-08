@@ -23,11 +23,11 @@ public interface ConstraintTemplate extends Template {
     String getDefaultMessage();
 
     /**
-     * <p>getPrperty.</p>
+     * <p>getProperty.</p>
      *
      * @return a {@link org.apache.jena.rdf.model.Property} object.
      */
-    Property getPrperty();
+    Property getProperty();
 
     /**
      * <p>getResultAnnotations.</p>

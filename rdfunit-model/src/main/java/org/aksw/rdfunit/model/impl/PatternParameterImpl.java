@@ -93,7 +93,7 @@ public final class PatternParameterImpl implements PatternParameter {
             return this;
         }
 
-        public Builder setContraintPattern(String constraintPattern) {
+        public Builder setConstraintPattern(String constraintPattern) {
             this.constraintPattern = constraintPattern;
             return this;
         }

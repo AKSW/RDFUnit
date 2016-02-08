@@ -59,7 +59,7 @@ public final class TestExecutionWriter implements ElementWriter {
                 .addProperty(RDFUNITv.testsRun,
                         ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getTotalTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsSuceedded,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getSuccessfullTests(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getSuccessfulTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsFailed,
                         ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getFailedTests(), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsTimeout,

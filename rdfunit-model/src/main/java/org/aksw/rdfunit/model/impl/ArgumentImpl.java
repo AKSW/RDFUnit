@@ -16,7 +16,7 @@ import java.util.Optional;
  * @version $Id: $Id
  */
 @ToString
-@EqualsAndHashCode(exclude={"resource"})
+@EqualsAndHashCode(exclude={"element"})
 @Builder
 public final class ArgumentImpl implements Argument {
 
@@ -24,7 +24,6 @@ public final class ArgumentImpl implements Argument {
     @Getter @NonNull private final Resource predicate;
     @Getter @NonNull private final String comment;
     @Getter private final boolean isOptional;
-    @Getter private final boolean isList;
     private final Resource valueType;
     private final ValueKind valueKind;
     private final RDFNode defaultValue;

@@ -58,11 +58,11 @@ public final class AnnotationTemplate {
     }
 
     /**
-     * <p>getProprtiesAsSet.</p>
+     * <p>getPropertiesAsSet.</p>
      *
      * @return a {@link java.util.Set} object.
      */
-    public Set<Property> getProprtiesAsSet() {
+    public Set<Property> getPropertiesAsSet() {
         return template.keySet();
     }
 
@@ -83,9 +83,9 @@ public final class AnnotationTemplate {
      * @return a boolean.
      */
     public boolean isValidAccordingToTemplate(PropertyValuePair propertyValuePair) {
-        int occurences = propertyValuePair.getValues().size();
+        int occurrences = propertyValuePair.getValues().size();
         if (existsInTemplate(propertyValuePair)) {
-            return template.get(propertyValuePair.getProperty()).contains(occurences);
+            return template.get(propertyValuePair.getProperty()).contains(occurrences);
         }
         return false;
     }

@@ -164,7 +164,7 @@ public class TestExecutionImpl implements TestExecution {
             return this;
         }
 
-        public Builder settestCaseUri(String testCaseUri) {
+        public Builder setTestCaseUri(String testCaseUri) {
             this.testCaseUris.add(testCaseUri);
             return this;
         }

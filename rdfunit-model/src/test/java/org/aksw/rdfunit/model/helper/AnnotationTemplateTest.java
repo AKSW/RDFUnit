@@ -87,14 +87,14 @@ public class AnnotationTemplateTest {
     }
 
     @Test
-    public void testGetProprtiesAsSet() throws Exception {
+    public void testGetPropertiesAsSet() throws Exception {
 
         AnnotationTemplate at = AnnotationTemplate.create();
         at.addTemplateMinMax(RDF.type, 1,2);
         at.addTemplateMinMax(RDF.predicate, 3,5);
 
-        assertThat(at.getProprtiesAsSet()).isNotEmpty();
-        assertThat(at.getProprtiesAsSet().size()).isEqualTo(2);
+        assertThat(at.getPropertiesAsSet()).isNotEmpty();
+        assertThat(at.getPropertiesAsSet().size()).isEqualTo(2);
     }
 
 }

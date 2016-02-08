@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class DatasetOverviewResults {
 
     private long totalTests = 0;
-    private long successfullTests = 0;
+    private long successfulTests = 0;
     private long failedTests = 0;
     private long timeoutTests = 0;
     private long errorTests = 0;
@@ -42,7 +42,7 @@ public class DatasetOverviewResults {
      * <p>reset.</p>
      */
     public final void reset() {
-        successfullTests = 0;
+        successfulTests = 0;
         failedTests = 0;
         timeoutTests = 0;
         errorTests = 0;
@@ -59,7 +59,7 @@ public class DatasetOverviewResults {
      */
     public void set(DatasetOverviewResults results) {
         this.totalTests = results.getTotalTests();
-        this.successfullTests = results.getSuccessfullTests();
+        this.successfulTests = results.getSuccessfulTests();
         this.failedTests = results.getFailedTests();
         this.timeoutTests = results.getTimeoutTests();
         this.errorTests = results.getErrorTests();
@@ -89,19 +89,19 @@ public class DatasetOverviewResults {
     }
 
     /**
-     * <p>Getter for the field <code>successfullTests</code>.</p>
+     * <p>Getter for the field <code>successfulTests</code>.</p>
      *
      * @return a long.
      */
-    public long getSuccessfullTests() {
-        return successfullTests;
+    public long getSuccessfulTests() {
+        return successfulTests;
     }
 
     /**
-     * <p>increaseSuccessfullTests.</p>
+     * <p>increaseSuccessfulTests.</p>
      */
-    public void increaseSuccessfullTests() {
-        this.successfullTests++;
+    public void increaseSuccessfulTests() {
+        this.successfulTests++;
     }
 
     /**
@@ -202,8 +202,8 @@ public class DatasetOverviewResults {
         this.endTime = new XSDDateTime(Calendar.getInstance());
     }
 
-    public void setSuccessfullTests(long successfullTests) {
-        this.successfullTests = successfullTests;
+    public void setSuccessfulTests(long successfulTests) {
+        this.successfulTests = successfulTests;
     }
 
     public void setFailedTests(long failedTests) {

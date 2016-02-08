@@ -48,7 +48,7 @@ public final class PatternBasedTestCaseReader implements ElementReader<TestCase>
 
         //pattern IRI
         for (Statement smt : resource.listProperties(RDFUNITv.basedOnPattern).toList()) {
-            checkArgument(++count == 1, "Cannot have more than one paattern references in PatternBasedTestCase %s", resource.getURI());
+            checkArgument(++count == 1, "Cannot have more than one pattern references in PatternBasedTestCase %s", resource.getURI());
             pattern = PatternService.getPatternFromIRI(smt.getObject().asResource().getURI());
 
         }

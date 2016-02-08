@@ -25,7 +25,10 @@ public final class ShapeReader implements ElementReader<Shape> {
         shapeBuilder
             .element(resource)
             .scopes(
-                BatchShapeScopeReader.create().read(resource));
+                BatchShapeScopeReader.create().read(resource))
+            .propertyConstraintGroups(
+                    BatchShapePropertyGroupReader.create().read(resource)
+            );
 
         return shapeBuilder.build();
 

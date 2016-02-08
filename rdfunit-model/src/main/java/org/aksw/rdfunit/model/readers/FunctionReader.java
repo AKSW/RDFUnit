@@ -33,34 +33,34 @@ public final class FunctionReader implements ElementReader<Function> {
     public Function read(Resource resource) {
         checkNotNull(resource);
 
-        FunctionImpl.Builder functonBuilder = new FunctionImpl.Builder();
+        FunctionImpl.Builder functionBuilder = new FunctionImpl.Builder();
 
         //comment
         for (Statement smt : resource.listProperties(RDFS.comment).toList()) {
-            functonBuilder.setComment(smt.getObject().asLiteral().getLexicalForm());
+            functionBuilder.setComment(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //cachable
         for (Statement smt : resource.listProperties(SHACL.cachable).toList()) {
-            functonBuilder.setCachable(smt.getObject().asLiteral().getBoolean());
+            functionBuilder.setCachable(smt.getObject().asLiteral().getBoolean());
         }
 
         //sparql string
         for (Statement smt : resource.listProperties(SHACL.sparql).toList()) {
-            functonBuilder.setSPARQLString(smt.getObject().asLiteral().getLexicalForm());
+            functionBuilder.setSPARQLString(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //sparql string
         for (Statement smt : resource.listProperties(SHACL.returnType).toList()) {
-            functonBuilder.setSPARQLString(smt.getObject().asLiteral().getLexicalForm());
+            functionBuilder.setSPARQLString(smt.getObject().asLiteral().getLexicalForm());
         }
 
         // arguments
         for (Statement smt : resource.listProperties(SHACL.argument).toList()) {
             ArgumentReader argumentReader = ArgumentReader.create();
-            functonBuilder.addArguments(argumentReader.read(smt.getObject().asResource()));
+            functionBuilder.addArguments(argumentReader.read(smt.getObject().asResource()));
         }
 
-        return functonBuilder.build();
+        return functionBuilder.build();
     }
 }

@@ -132,7 +132,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
             overviewResults.increaseTimeoutTests();
         }
         if (status.equals(TestCaseResultStatus.Success)) {
-            overviewResults.increaseSuccessfullTests();
+            overviewResults.increaseSuccessfulTests();
         }
         if (status.equals(TestCaseResultStatus.Fail)) {
             overviewResults.increaseFailedTests();

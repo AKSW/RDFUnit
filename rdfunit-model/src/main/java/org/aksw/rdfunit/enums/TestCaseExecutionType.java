@@ -15,7 +15,7 @@ public enum TestCaseExecutionType {
     statusTestCaseResult,
 
     /**
-     * Extendes the @statusTestCaseResult and provides the count and prevalence for every test case
+     * Extends the @statusTestCaseResult and provides the count and prevalence for every test case
      */
     aggregatedTestCaseResult,
 
@@ -37,7 +37,7 @@ public enum TestCaseExecutionType {
     rlogTestCaseResult,
 
     /**
-     * Extendes the @rlogTestCaseResult by providing richer information about each resource
+     * Extends the @rlogTestCaseResult by providing richer information about each resource
      */
     @Deprecated
     extendedTestCaseResult

@@ -34,7 +34,7 @@ public class TestCaseResultWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
-        Resource resource = null;
+        Resource resource;
         if (testCaseResult.getElement().isAnon()) {
             resource = model.createResource(JenaUtils.getUniqueIri(executionUri + "/"));
         } else {

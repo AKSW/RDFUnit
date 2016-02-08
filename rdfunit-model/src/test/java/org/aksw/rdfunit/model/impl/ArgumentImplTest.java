@@ -35,7 +35,7 @@ public class ArgumentImplTest {
     public void testGetComment() throws Exception {
         assertThat(argDef.getComment()).isEmpty();
 
-        final String comment = "asdf";
+        final String comment = "dog";
         ArgumentImpl arg2 = ArgumentImpl.builder().element(element).predicate(predicate).comment(comment).build();
         assertThat(arg2.getComment())
                 .isEqualTo(comment);

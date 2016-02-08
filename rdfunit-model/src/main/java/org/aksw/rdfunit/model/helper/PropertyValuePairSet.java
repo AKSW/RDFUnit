@@ -34,6 +34,18 @@ public class PropertyValuePairSet {
                         checkNotNull(annotations)));
     }
 
+    public boolean contains(Property property) {
+        return annotations.stream()
+                .anyMatch( pvp -> pvp.getProperty().equals(property));
+    }
+
+    public Set<RDFNode> getPropertyValues(Property property) {
+        return annotations.stream()
+                .filter( pvp -> pvp.getProperty().equals(property))
+                .flatMap(pvp -> pvp.getValues().stream())
+                .collect(Collectors.toSet());
+    }
+
     /*
     public Collection<RDFNode> getPropertyValues(Property property) {
         return getPropertyValues(property, this.annotations);

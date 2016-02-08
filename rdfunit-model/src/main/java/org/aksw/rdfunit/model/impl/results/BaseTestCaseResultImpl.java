@@ -26,7 +26,7 @@ class BaseTestCaseResultImpl implements TestCaseResult {
     /**
      * Constructor
      *
-     * @param testCase the test case this result is erlated with
+     * @param testCase the test case this result is related with
      */
     protected BaseTestCaseResultImpl(TestCase testCase) {
         this(testCase.getTestURI(), testCase.getLogLevel(), testCase.getResultMessage());

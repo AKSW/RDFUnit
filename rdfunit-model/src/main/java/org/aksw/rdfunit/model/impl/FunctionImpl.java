@@ -101,7 +101,7 @@ public final class FunctionImpl implements Function {
             return this;
         }
 
-        public Builder setSupoerFunction(Function val) {
+        public Builder setSuperFunction(Function val) {
             superFunction = val;
             return this;
         }

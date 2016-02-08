@@ -47,7 +47,7 @@ public class Binding implements Element {
         this.parameter =checkNotNull(parameter, "parameter must not be null in Binding");
         this.value = checkNotNull(value, "value must not be null in Binding");
 
-        //Validate bibding
+        //Validate biding
         if (!validateType()) {
             //throw new BindingException("Binding is of incorrect constraint type");
         }

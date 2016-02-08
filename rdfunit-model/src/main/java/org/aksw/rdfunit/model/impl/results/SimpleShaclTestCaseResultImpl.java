@@ -6,7 +6,7 @@ import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.rdf.model.Resource;
 
 /**
- * The Simplefied SHACL result that contains only message, severity and focusNode
+ * The Simplified SHACL result that contains only message, severity and focusNode
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:28 PM

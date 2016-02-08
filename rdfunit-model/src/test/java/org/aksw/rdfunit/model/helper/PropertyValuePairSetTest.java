@@ -26,6 +26,12 @@ public class PropertyValuePairSetTest {
         an1.annotation(PropertyValuePair.create(RDF.type, RDFS.Class));
         assertThat(an1.build().getAnnotations().size())
                 .isEqualTo(1);
+        assertThat(an1.build().contains(RDF.type)).isTrue();
+        assertThat(an1.build().contains(RDF.first)).isFalse();
+        assertThat(an1.build().getPropertyValues(RDF.type))
+                .isNotEmpty()
+                .hasSize(1);
+        assertThat(an1.build().getPropertyValues(RDF.first)).isEmpty();
         List<PropertyValuePair> annotations = new ArrayList<>(an1.build().getAnnotations());
         assertThat(annotations.get(0).getProperty())
                 .isEqualTo(RDF.type);

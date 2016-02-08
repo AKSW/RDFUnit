@@ -81,7 +81,7 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
 
         // TestSuite testCaseUris;
         for (Statement smt : testSuiteResource.listProperties(PROV.hadMember).toList()) {
-            testExecutionBuilder.settestCaseUri(smt.getObject().asResource().getURI());
+            testExecutionBuilder.setTestCaseUri(smt.getObject().asResource().getURI());
         }
 
 
@@ -112,7 +112,7 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
 
         // RDFUNITv.testsSuceedded
         for (Statement smt : resource.listProperties(RDFUNITv.testsSuceedded).toList()) {
-            overviewResults.setSuccessfullTests(smt.getObject().asLiteral().getLong());
+            overviewResults.setSuccessfulTests(smt.getObject().asLiteral().getLong());
         }
 
         // RDFUNITv.testsTimeout
