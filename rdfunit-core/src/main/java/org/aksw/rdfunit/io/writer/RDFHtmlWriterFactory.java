@@ -15,6 +15,8 @@ public final class RDFHtmlWriterFactory {
     public static RDFWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestExecution testExecution) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHTMLWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
+        } else if (serializationFormat.equals(FormatService.getOutputFormat("xml"))) {
+            return createXMLWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else {
             return new RDFFileWriter(filenameWithoutExtension + "." + serializationFormat.getExtension(), serializationFormat.getName());
         }
@@ -24,6 +26,8 @@ public final class RDFHtmlWriterFactory {
     public static RDFWriter createWriterFromFormat(OutputStream outputStream, SerializationFormat serializationFormat, TestExecution testExecution) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHTMLWriter(testExecution, outputStream);
+        } else if (serializationFormat.equals(FormatService.getOutputFormat("xml"))) {
+            return createXMLWriter(testExecution, outputStream);
         } else {
             return new RDFStreamWriter(outputStream, serializationFormat.getName());
         }
@@ -51,6 +55,50 @@ public final class RDFHtmlWriterFactory {
             case extendedTestCaseResult:
                 // TODO extended not supported ATM, use RLOG instead
                 return new RDFHtmlResultsRlogWriter(testExecution, outputStream);
+            default:
+                return null;
+        }
+    }
+    
+    /**
+     * <p>createXMLWriter.</p>
+     * only support status and aggregated for the time being
+     * @param type a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @param filename a {@link String} object.
+     * @return a {@link org.aksw.rdfunit.io.writer.RDFHTMLResultsWriter} object.
+     */
+    public static JunitXMLResultsWriter createXMLWriter(TestExecution testExecution, String filename) {
+        switch (testExecution.getTestExecutionType()) {
+        	case shaclFullTestCaseResult:
+        	case shaclSimpleTestCaseResult:
+        	case rlogTestCaseResult:
+        	case extendedTestCaseResult:
+            case statusTestCaseResult:
+                return new JunitXMLResultsStatusWriter(testExecution, filename);
+            case aggregatedTestCaseResult:
+                return new JunitXMLResultsAggregateWriter(testExecution, filename);
+            default:
+                return null;
+        }
+    }
+    
+    /**
+     * <p>createXMLWriter.</p>
+     * only support status and aggregated for the time being
+     * @param type a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
+     * @param outputStream a {@link OutputStream} object.
+     * @return a {@link org.aksw.rdfunit.io.writer.RDFHTMLResultsWriter} object.
+     */
+    public static JunitXMLResultsWriter createXMLWriter(TestExecution testExecution, OutputStream outputStream) {
+        switch (testExecution.getTestExecutionType()) {
+    	case shaclFullTestCaseResult:
+    	case shaclSimpleTestCaseResult:
+    	case rlogTestCaseResult:
+    	case extendedTestCaseResult:
+        case statusTestCaseResult:
+            return new JunitXMLResultsStatusWriter(testExecution, outputStream);
+        case aggregatedTestCaseResult:
+            return new JunitXMLResultsAggregateWriter(testExecution, outputStream);
             default:
                 return null;
         }
