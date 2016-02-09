@@ -36,7 +36,8 @@ public final class SerialiazationFormatFactory {
         serializationFormats.add(createRDFXMLOut());
         serializationFormats.add(createRDFa());
         serializationFormats.add(createHTML());
-
+        serializationFormats.add(createXML());
+        
         // dataset formats
         serializationFormats.add(createNQads());
         serializationFormats.add(createTriG());
@@ -57,6 +58,19 @@ public final class SerialiazationFormatFactory {
         HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("html", "htm"));
         return new SerializationFormat(
                 "html", SerializationFormatIOType.output, SerializationFormatGraphType.singleGraph, "html", "text/html", currentSynonyms);
+
+    }
+    
+    /**
+     * <p>createXML.</p>
+     *
+     * @return an XML format as output only
+     */
+    public static SerializationFormat createXML() {
+        // HTML -> only output
+        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("xml", "junit"));
+        return new SerializationFormat(
+                "xml", SerializationFormatIOType.output, SerializationFormatGraphType.singleGraph, "xml", "application/xml", currentSynonyms);
 
     }
 
