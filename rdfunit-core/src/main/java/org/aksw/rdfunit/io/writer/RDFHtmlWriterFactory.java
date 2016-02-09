@@ -119,16 +119,16 @@ public final class RDFHtmlWriterFactory {
      * @param filename a {@link String} object.
      * @return a {@link org.aksw.rdfunit.io.writer.RDFHTMLResultsWriter} object.
      */
-    public static RDFXMLResultsWriter createXMLWriter(TestCaseExecutionType type, String filename) {
+    public static JunitXMLResultsWriter createXMLWriter(TestCaseExecutionType type, String filename) {
         switch (type) {
         	case shaclFullTestCaseResult:
         	case shaclSimpleTestCaseResult:
         	case rlogTestCaseResult:
         	case extendedTestCaseResult:
             case statusTestCaseResult:
-                return new RDFXMLResultsStatusWriter(filename);
+                return new JunitXMLResultsStatusWriter(filename);
             case aggregatedTestCaseResult:
-                return new RDFXMLResultsAggregateWriter(filename);
+                return new JunitXMLResultsAggregateWriter(filename);
             default:
                 return null;
         }
@@ -141,16 +141,16 @@ public final class RDFHtmlWriterFactory {
      * @param outputStream a {@link OutputStream} object.
      * @return a {@link org.aksw.rdfunit.io.writer.RDFHTMLResultsWriter} object.
      */
-    public static RDFXMLResultsWriter createXMLWriter(TestCaseExecutionType type, OutputStream outputStream) {
+    public static JunitXMLResultsWriter createXMLWriter(TestCaseExecutionType type, OutputStream outputStream) {
         switch (type) {
     	case shaclFullTestCaseResult:
     	case shaclSimpleTestCaseResult:
     	case rlogTestCaseResult:
     	case extendedTestCaseResult:
         case statusTestCaseResult:
-            return new RDFXMLResultsStatusWriter(outputStream);
+            return new JunitXMLResultsStatusWriter(outputStream);
         case aggregatedTestCaseResult:
-            return new RDFXMLResultsAggregateWriter(outputStream);
+            return new JunitXMLResultsAggregateWriter(outputStream);
             default:
                 return null;
         }

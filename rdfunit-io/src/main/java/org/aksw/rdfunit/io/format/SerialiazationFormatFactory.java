@@ -68,7 +68,7 @@ public final class SerialiazationFormatFactory {
      */
     public static SerializationFormat createXML() {
         // HTML -> only output
-        HashSet<String> currentSynonyms = Sets.newHashSet(Arrays.asList("xml", "junit"));
+        HashSet<String> currentSynonyms = Sets.newHashSet();
         return new SerializationFormat(
                 "xml", SerializationFormatIOType.output, SerializationFormatGraphType.singleGraph, "xml", "application/xml", currentSynonyms);
 

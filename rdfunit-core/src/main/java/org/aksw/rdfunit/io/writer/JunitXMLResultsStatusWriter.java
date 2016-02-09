@@ -16,14 +16,14 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class RDFXMLResultsStatusWriter extends RDFXMLResultsWriter {
+public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
 
     /**
      * <p>Constructor for RDFHTMLResultsStatusWriter.</p>
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RDFXMLResultsStatusWriter(String filename) {
+    public JunitXMLResultsStatusWriter(String filename) {
         super(filename);
     }
 
@@ -32,7 +32,7 @@ public class RDFXMLResultsStatusWriter extends RDFXMLResultsWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public RDFXMLResultsStatusWriter(OutputStream outputStream) {
+    public JunitXMLResultsStatusWriter(OutputStream outputStream) {
         super(outputStream);
     }
 

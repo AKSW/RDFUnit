@@ -16,13 +16,13 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class RDFXMLResultsAggregateWriter extends RDFXMLResultsStatusWriter {
+public class JunitXMLResultsAggregateWriter extends JunitXMLResultsStatusWriter {
     /**
      * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RDFXMLResultsAggregateWriter(String filename) {
+    public JunitXMLResultsAggregateWriter(String filename) {
         super(filename);
     }
 
@@ -31,7 +31,7 @@ public class RDFXMLResultsAggregateWriter extends RDFXMLResultsStatusWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public RDFXMLResultsAggregateWriter(OutputStream outputStream) {
+    public JunitXMLResultsAggregateWriter(OutputStream outputStream) {
         super(outputStream);
     }
 
