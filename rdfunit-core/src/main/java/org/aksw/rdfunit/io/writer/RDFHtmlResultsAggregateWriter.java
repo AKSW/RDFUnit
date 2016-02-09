@@ -42,7 +42,7 @@ public class RDFHtmlResultsAggregateWriter extends RDFHtmlResultsStatusWriter {
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList() throws RDFWriterException {
+    protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>";
 

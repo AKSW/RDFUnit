@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * RDFHTMLResultsWriter are different fromt he other RDFUnit writers because they write a TestExecution
+ * RDFHTMLResultsWriter are different front he other RDFUnit writers because they write a TestExecution
  * initialized in construction and not the model provided in write(Model)
  *
  * @since 11/14/13 1:04 PM
@@ -66,7 +66,7 @@ public abstract class RDFHtmlResultsWriter extends AbstractRDFWriter implements 
      */
     protected abstract StringBuffer getResultsHeader();
 
-    protected abstract StringBuffer getResultsList()  throws RDFWriterException;
+    protected abstract StringBuffer getResultsList() ;
 
     private StringBuffer getHeader() {
         StringBuffer header = new StringBuffer();

@@ -4,6 +4,7 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
@@ -56,22 +57,8 @@ public abstract class JunitXMLResultsWriter extends AbstractRDFWriter implements
         }
     }
 
-    /**
-     * <p>getResultsHeader.</p>
-     *
-     * @return a {@link java.lang.StringBuffer} object.
-     */
-    protected abstract StringBuffer getResultsHeader();
 
-    /**
-     * <p>getResultsList.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param testExecutionURI a {@link java.lang.String} object.
-     * @return a {@link java.lang.StringBuffer} object.
-     * @throws org.aksw.rdfunit.io.writer.RDFWriterException if any.
-     */
-    protected abstract StringBuffer getResultsList()  throws RDFWriterException;
+    protected abstract StringBuffer getResultsList() ;
 
     private StringBuffer getHeader() {
         StringBuffer header = new StringBuffer();
@@ -83,15 +70,7 @@ public abstract class JunitXMLResultsWriter extends AbstractRDFWriter implements
         return new StringBuffer("</testsuite>");
     }
     
-    /**
-     * Create <testsuite> element containing test execution stats
-     * @param qef
-     * @param testExecution
-     * @return
-     * @throws RDFWriterException
-     */
-
-    private StringBuffer getTestExecutionStats() throws RDFWriterException {
+    private StringBuffer getTestExecutionStats() {
         StringBuffer stats = new StringBuffer();
         stats.append("<testsuite name=\"").append(testExecution.getTestExecutionUri()).append("\" ");
   
@@ -119,7 +98,7 @@ public abstract class JunitXMLResultsWriter extends AbstractRDFWriter implements
     		    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff)));
     }
 
-    private StringBuffer getTestExecutionResults() throws RDFWriterException {
+    private StringBuffer getTestExecutionResults() {
         StringBuffer results = new StringBuffer();
         results.append(getResultsList());
         return results;

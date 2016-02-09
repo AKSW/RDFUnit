@@ -17,27 +17,18 @@ import java.io.OutputStream;
  * @version $Id: $Id
  */
 public class JunitXMLResultsAggregateWriter extends JunitXMLResultsStatusWriter {
-    /**
-     * <p>Constructor for JunitXMLResultsAggregateWriter.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
+
+
     public JunitXMLResultsAggregateWriter(TestExecution testExecution, String filename) {
     	super(testExecution, filename);
     }
 
-    /**
-     * <p>Constructor for JunitXMLResultsAggregateWriter.</p>
-     *
-     * @param outputStream a {@link java.io.OutputStream} object.
-     */
     public JunitXMLResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);
     }
 
-    /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList() throws RDFWriterException {
+    protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
         

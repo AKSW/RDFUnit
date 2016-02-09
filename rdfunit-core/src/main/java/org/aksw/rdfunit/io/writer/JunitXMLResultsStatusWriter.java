@@ -18,33 +18,16 @@ import java.io.OutputStream;
  */
 public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
 
-    /**
-     * <p>Constructor for JunitXMLResultsStatusWriter.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
     public JunitXMLResultsStatusWriter(TestExecution testExecution, String filename) {
     	super(testExecution, filename);
     }
 
-    /**
-     * <p>Constructor for JunitXMLResultsStatusWriter.</p>
-     *
-     * @param outputStream a {@link java.io.OutputStream} object.
-     */
     public JunitXMLResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);
     }
 
-    /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsHeader() {
-		return null;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected StringBuffer getResultsList() throws RDFWriterException {
+    protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
         
@@ -54,7 +37,7 @@ public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
         			result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
             results.append(testcaseElement);
 
-            if(aggregatedResult.getStatus().name().equals(TestCaseResultStatus.Fail)) {
+            if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Fail)) {
             	results.append("\t\t<failure message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getSeverity().name()+"\"/>\n");
             } else if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Error)||aggregatedResult.getStatus().equals(TestCaseResultStatus.Timeout)) {
             	results.append("\t\t<error message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getStatus().name()+"\"/>\n");
@@ -65,12 +48,6 @@ public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
         return results;
     }
 
-    /**
-     * <p>getStatusClass.</p>
-     *
-     * @param status a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     protected String getStatusClass(TestCaseResultStatus status) {
 
         switch (status) {
