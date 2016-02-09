@@ -6,6 +6,7 @@ import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.reader.RDFReaderException;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
@@ -17,7 +18,6 @@ import org.aksw.rdfunit.validate.utils.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
-import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +70,7 @@ public class ValidateWS extends RDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override
-    protected Model validate(final RDFUnitConfiguration configuration, final TestSource dataset, final TestSuite testSuite) throws TestCaseExecutionException {
+    protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource dataset, final TestSuite testSuite) throws TestCaseExecutionException {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
         if (testExecutor == null) {
             throw new TestCaseExecutionException(null, "Cannot initialize test executor. Exiting");
@@ -81,7 +81,7 @@ public class ValidateWS extends RDFUnitWebService {
         // warning, caches intermediate results
         testExecutor.execute(dataset, testSuite);
 
-        return testExecutorMonitor.getModel();
+        return testExecutorMonitor.getTestExecution();
     }
 
     /** {@inheritDoc} */

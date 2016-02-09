@@ -70,6 +70,7 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
             testExecutionBuilder.setStartedByAgent(smt.getObject().asResource().getURI());
         }
 
+        /*
         // prov:used
         Resource testSuiteResource = null;
         for (Statement smt : resource.listProperties(PROV.used).toList()) {
@@ -82,7 +83,7 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
         // TestSuite testCaseUris;
         for (Statement smt : testSuiteResource.listProperties(PROV.hadMember).toList()) {
             testExecutionBuilder.setTestCaseUri(smt.getObject().asResource().getURI());
-        }
+        }  */
 
 
         // overview results

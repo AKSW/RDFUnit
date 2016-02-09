@@ -35,7 +35,8 @@ public final class TestExecutionWriter implements ElementWriter {
                 .addProperty(RDF.type, RDFUNITv.TestExecution);
 
         //Test suite
-        Resource testSuiteResource = model.createResource(testExecution.getTestSuiteUri());
+        /*
+        Resource testSuiteResource = testExecution.getTestSuite().serialize(model);
 
         testSuiteResource
                 .addProperty(RDF.type, RDFUNITv.TestSuite)
@@ -44,7 +45,7 @@ public final class TestExecutionWriter implements ElementWriter {
         for (String tc: testExecution.getTestCasesUris()) {
             testSuiteResource.addProperty(PROV.hadMember, model.createResource(tc));
         }
-        resource.addProperty(PROV.used, testSuiteResource);
+        resource.addProperty(PROV.used, testSuiteResource);   */
 
         // metadata
         resource.addProperty(RDFUNITv.executionType, testExecution.getTestExecutionType().name())

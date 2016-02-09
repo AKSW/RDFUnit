@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
+import lombok.Getter;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
@@ -10,7 +11,6 @@ import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
-import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
@@ -18,12 +18,15 @@ import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -38,6 +41,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleTestExecutorMonitor.class);
     private final boolean loggingEnabled;
+    @Getter private TestExecution testExecution;
 
     private final DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
@@ -184,31 +188,23 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         // Set testing end time
         overviewResults.setEndTime();
 
-        //TODO leave for now
-        Resource testSuiteResource = testSuite.serialize(getModel());
+        List<String> schemata = testedDataset.getReferencesSchemata().stream()
+                .map(SchemaSource::getUri).collect(Collectors.toList());
 
-        List<String> schemata = new ArrayList<>();
-        for (SchemaSource src: testedDataset.getReferencesSchemata()) {
-            schemata.add(src.getUri());
-        }
-        Set<String> testCaseUris = new HashSet<>();
-        for (TestCase tc: testSuite.getTestCases()) {
-            testCaseUris.add(tc.getTestURI());
-        }
+        Set<String> testCaseUris = testSuite.getTestCases().stream()
+                .map(TestCase::getTestURI).collect(Collectors.toSet());
 
-        TestExecution te = new TestExecutionImpl.Builder()
+        testExecution = new TestExecutionImpl.Builder()
                 .setElement(ResourceFactory.createResource(executionUUID))
                 .setDatasetOverviewResults(overviewResults)
                 .setStartedByAgent(userID)
                 .setTestCaseExecutionType(executionType)
                 .setTestedDatasetUri(testedDataset.getUri())
-                .setTestSuiteUri(testSuiteResource.getURI())
+                //.setTestSuite(testSuite)
                 .setSchemata(schemata)
                 .setTestCaseUris(testCaseUris)
                 .setResults(results)
                 .build();
-
-        TestExecutionWriter.create(te).write(getModel());
 
         if (loggingEnabled) {
             log.info("Tests run: " + overviewResults.getTotalTests() +
@@ -217,15 +213,6 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                     ", Error: " + overviewResults.getErrorTests() +
                     ". Individual Errors: " + overviewResults.getIndividualErrors());
         }
-    }
-
-    /**
-     * Gets model that contains the results
-     *
-     * @return the model
-     */
-    public Model getModel() {
-        return model;
     }
 
     /**

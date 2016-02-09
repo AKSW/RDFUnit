@@ -7,9 +7,12 @@ import org.aksw.rdfunit.io.writer.RDFHtmlWriterFactory;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -75,7 +78,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         final TestSuite testSuite = getTestSuite(configuration, dataset);
         assert (testSuite != null);
 
-        Model results = null;
+        TestExecution results = null;
         try {
             results = validate(configuration, dataset, testSuite);
         } catch (TestCaseExecutionException e) {
@@ -84,7 +87,9 @@ public abstract class RDFUnitWebService extends HttpServlet {
         assert (results != null);
 
         try {
-            writeResults(configuration, results, httpServletResponse);
+            Model model = ModelFactory.createDefaultModel();
+            TestExecutionWriter.create(results).write(model);
+            writeResults(configuration, model, httpServletResponse);
         } catch (RDFWriterException e) {
             printMessage(httpServletResponse, e.getMessage());
         }
@@ -137,7 +142,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @return a Model that contains the results of a validation
      * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
      */
-    abstract protected Model validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException;
+    abstract protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException;
 
     /**
      * Prints a help message with the correct arguments one can use to call the service
