@@ -1,10 +1,9 @@
 package org.aksw.rdfunit.io.writer;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.enums.RLOGLevel;
+import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 
 import java.io.OutputStream;
 
@@ -23,8 +22,8 @@ public class RDFHTMLResultsShaclWriter extends RDFHTMLResultsWriter {
      *
      * @param filename a {@link String} object.
      */
-    public RDFHTMLResultsShaclWriter(String filename) {
-        super(filename);
+    public RDFHTMLResultsShaclWriter(TestExecution testExecution, String filename) {
+        super(testExecution, filename);
     }
 
     /**
@@ -32,8 +31,8 @@ public class RDFHTMLResultsShaclWriter extends RDFHTMLResultsWriter {
      *
      * @param outputStream a {@link OutputStream} object.
      */
-    public RDFHTMLResultsShaclWriter(OutputStream outputStream) {
-        super(outputStream);
+    public RDFHTMLResultsShaclWriter(TestExecution testExecution, OutputStream outputStream) {
+        super(testExecution, outputStream);
     }
 
     /** {@inheritDoc} */
@@ -44,65 +43,41 @@ public class RDFHTMLResultsShaclWriter extends RDFHTMLResultsWriter {
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
+    protected StringBuffer getResultsList() throws RDFWriterException {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
-        String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?level ?message ?this ?testcase WHERE {" +
-                " ?s a sh:ValidationResult ; " +
-                "    sh:severity ?level ;" +
-                "    sh:message ?message ; " +
-                "    sh:focusNode ?this ; " +
-                "    rut:testCase ?testcase ; " +
-                //"    prov:wasGeneratedBy <" + testExecutionURI + "> " +
-                "} ";
-
-        QueryExecution qe = null;
-
-        try {
-            qe = qef.createQueryExecution(sparql);
-            ResultSet rs = qe.execSelect();
-
-            while (rs.hasNext()) {
-                QuerySolution qs = rs.next();
-                String level = qs.get("level").toString();
-                String message = qs.get("message").toString();
-                String resource = qs.get("this").toString();
-                String testcase = qs.get("testcase").toString();
-
-                String levelShort = PrefixNSService.getLocalName(level, "rlog");
-                String rowClass = "";
-                switch (levelShort) {
-                    case "WARN":
-                        rowClass = "warning";
-                        break;
-                    case "ERROR":
-                        rowClass = "danger";
-                        break;
-                    case "INFO":
-                        rowClass = "info";
-                        break;
-                    default:
-                        break;
-                }
-                String row = String.format(template,
-                        rowClass,
-                        "<a href=\"" + level + "\">" + levelShort + "</a>",
-                        message,
-                        resource, resource, // <a href=%s>%s</a>
-                        testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-                results.append(row);
-            }
-
-        } catch (Exception e) {
-            throw new RDFWriterException(e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
-        }
-
+        testExecution.getTestCaseResults().stream()
+                .map(ShaclTestCaseResult.class::cast)
+                .forEach(result -> results.append(
+                        String.format(template,
+                                getStatusClass(result.getSeverity()),
+                                "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
+                                result.getMessage(),
+                                result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>
+                                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"))
+                ));
         return results;
+    }
+
+    /**
+     * return a css class
+     */
+    static String getStatusClass(RLOGLevel level) {
+        String rowClass = "";
+        switch (level) {
+            case WARN:
+                rowClass = "warning";
+                break;
+            case ERROR:
+                rowClass = "danger";
+                break;
+            case INFO:
+                rowClass = "info";
+                break;
+            default:
+                break;
+        }
+        return rowClass;
     }
 }

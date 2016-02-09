@@ -1,10 +1,8 @@
 package org.aksw.rdfunit.io.writer;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 
 import java.io.OutputStream;
 
@@ -23,8 +21,8 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RDFHTMLResultsAggregateWriter(String filename) {
-        super(filename);
+    public RDFHTMLResultsAggregateWriter(TestExecution testExecution, String filename) {
+        super(testExecution, filename);
     }
 
     /**
@@ -32,8 +30,8 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public RDFHTMLResultsAggregateWriter(OutputStream outputStream) {
-        super(outputStream);
+    public RDFHTMLResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
+        super(testExecution, outputStream);
     }
 
     /** {@inheritDoc} */
@@ -44,60 +42,24 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
+    protected StringBuffer getResultsList() throws RDFWriterException {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>";
 
-        String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resultStatus ?level ?testcase ?description ?resultCount ?resultPrevalence WHERE {" +
-                " ?s a rut:AggregatedTestResult ; " +
-                "    rut:resultStatus ?resultStatus ; " +
-                "    rut:testCaseLogLevel ?level ; " +
-                "    rut:testCase ?testcase ;" +
-                "    dcterms:description ?description ;" +
-                "    rut:resultCount ?resultCount ; " +
-                "    rut:resultPrevalence ?resultPrevalence ; " +
-                //"    prov:wasGeneratedBy <" + testExecutionURI + "> " +
-                "} ";
-
-        QueryExecution qe = null;
-
-        try {
-            qe = qef.createQueryExecution(sparql);
-            ResultSet rs = qe.execSelect();
-
-            while (rs.hasNext()) {
-                QuerySolution qs = rs.next();
-                String resultStatus = qs.get("resultStatus").toString();
-                String testcase = qs.get("testcase").toString();
-                String description = qs.get("description").toString();
-                String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
-                String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
-                String level = qs.get("level").toString();
-
-                String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
-                String levelShort = PrefixNSService.getLocalName(level, "rlog");
-                String rowClass = getStatusClass(statusShort);
-
-                String row = String.format(template,
-                        rowClass,
-                        "<a href=\"" + resultStatus + "\">" + statusShort + "</a>",
-                        "<a href=\"" + level + "\">" + levelShort + "</a>",
-                        testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
-                        description,
-                        resultCount,
-                        resultPrevalence);
-                results.append(row);
-            }
-
-        } catch (Exception e) {
-            throw new RDFWriterException(e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
-        }
+        testExecution.getTestCaseResults().stream()
+            .map(AggregatedTestCaseResult.class::cast)
+            .forEach(result -> results.append(
+                String.format(template,
+                        getStatusClass(result.getStatus()),
+                        "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
+                        "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
+                        result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
+                        result.getMessage(),
+                        result.getErrorCount(),
+                        result.getPrevalenceCount().orElse(-1L)
+                )));
 
         return results;
+
     }
 }

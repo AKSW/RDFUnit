@@ -8,10 +8,8 @@ import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
-import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.validate.ParameterException;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
 import javax.servlet.ServletException;
@@ -52,11 +50,6 @@ public abstract class RDFUnitWebService extends HttpServlet {
 
     /**
      * Has all the workflow logic for getting the parameters, performing a validation and writing the output
-     *
-     * @param httpServletRequest
-     * @param httpServletResponse
-     * @throws ServletException
-     * @throws IOException
      */
     private void handleRequestAndRespond(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         RDFUnitConfiguration configuration = null;
@@ -87,9 +80,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         assert (results != null);
 
         try {
-            Model model = ModelFactory.createDefaultModel();
-            TestExecutionWriter.create(results).write(model);
-            writeResults(configuration, model, httpServletResponse);
+            writeResults(configuration, results, httpServletResponse);
         } catch (RDFWriterException e) {
             printMessage(httpServletResponse, e.getMessage());
         }
@@ -97,22 +88,16 @@ public abstract class RDFUnitWebService extends HttpServlet {
 
     /**
      * Writes the output of the validation to the HttpServletResponse
-     *
-     * @param configuration       an RDFUnitConfiguration object generated with getConfiguration
-     * @param model               a Model generated with validate()
-     * @param httpServletResponse the HttpServletResponse where we write our output
-     * @throws org.aksw.rdfunit.io.writer.RDFWriterException
-     * @throws IOException
      */
-    private void writeResults(final RDFUnitConfiguration configuration, final Model model, HttpServletResponse httpServletResponse) throws RDFWriterException, IOException {
+    private void writeResults(final RDFUnitConfiguration configuration, final TestExecution testExecution, HttpServletResponse httpServletResponse) throws RDFWriterException, IOException {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
         if (serializationFormat == null) {
             throw new RDFWriterException("Invalid output format");
         }
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());
-        RDFWriter RDFWriter = RDFHtmlWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, configuration.getTestCaseExecutionType());
-        RDFWriter.write(model);
+        RDFWriter RDFWriter = RDFHtmlWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, testExecution);
+        RDFWriter.write(ModelFactory.createDefaultModel());
     }
 
     /**

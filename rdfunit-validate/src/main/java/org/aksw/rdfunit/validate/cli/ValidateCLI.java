@@ -142,7 +142,7 @@ public class ValidateCLI {
 
         ArrayList<RDFWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
-            outputWriters.add(RDFHtmlWriterFactory.createWriterFromFormat(filename, serializationFormat, configuration.getTestCaseExecutionType()));
+            outputWriters.add(RDFHtmlWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution));
         }
 
         RDFWriter resultWriter = new RDFMultipleWriter(outputWriters);
