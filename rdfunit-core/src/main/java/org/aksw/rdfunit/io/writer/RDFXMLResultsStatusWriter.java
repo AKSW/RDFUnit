@@ -11,7 +11,7 @@ import java.io.OutputStream;
 /**
  * <p>RDFHTMLResultsStatusWriter class.</p>
  *
- * @author Dimitris Kontokostas
+ * @author Martin Bruemmer
  *         Description
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
