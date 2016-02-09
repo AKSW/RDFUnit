@@ -17,7 +17,7 @@ public interface TestExecution extends Element {
     DatasetOverviewResults getDatasetOverviewResults();
 
     String getTestedDatasetUri();
-    String getTestSuiteUri();
+    //TestSuite getTestSuite();
     TestCaseExecutionType getTestExecutionType();
 
     String getStartedByAgent();

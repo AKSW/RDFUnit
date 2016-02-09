@@ -13,7 +13,9 @@ import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
+import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -126,6 +128,7 @@ public class ValidateCLI {
 
         // warning, caches intermediate results
         testExecutor.execute(dataset, testSuite);
+        TestExecution testExecution = testExecutorMonitor.getTestExecution();
 
 
         // Write results to RDFWriter ()
@@ -144,7 +147,10 @@ public class ValidateCLI {
 
         RDFWriter resultWriter = new RDFMultipleWriter(outputWriters);
         try {
-            resultWriter.write(testExecutorMonitor.getModel());
+            Model model = ModelFactory.createDefaultModel();
+            TestExecutionWriter.create(testExecution).write(model);
+
+            resultWriter.write(model);
             log.info("Results stored in: " + filename + ".*");
         } catch (RDFWriterException e) {
             log.error("Cannot write tests to file: " + e.getMessage());

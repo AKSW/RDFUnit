@@ -4,6 +4,8 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
@@ -15,6 +17,7 @@ import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -84,7 +87,7 @@ public class DBpediaMappingValidator {
      * @return a {@link org.apache.jena.rdf.model.Model} object.
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
-    public Model validateAllMappings() throws RDFReaderException {
+    public TestExecution validateAllMappings() throws RDFReaderException {
         return RDFUnitStaticValidator.validate(TestCaseExecutionType.shaclFullTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
     }
 
@@ -188,7 +191,8 @@ public class DBpediaMappingValidator {
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
     public String validateAndGetJson() throws RDFReaderException {
-        Model model = validateAllMappings();
+        Model model = ModelFactory.createDefaultModel();
+        TestExecutionWriter.create(validateAllMappings()).write(model);
 
         //new RDFFileWriter("mappings.ttl").write(model);
         List<MappingDomainError> errors = getErrorListFromModel(model);

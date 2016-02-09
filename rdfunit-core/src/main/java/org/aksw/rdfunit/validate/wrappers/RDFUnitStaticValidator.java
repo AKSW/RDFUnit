@@ -1,9 +1,11 @@
 package org.aksw.rdfunit.validate.wrappers;
 
+import lombok.NonNull;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RDFModelReader;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
@@ -27,71 +29,31 @@ public final class RDFUnitStaticValidator {
     private RDFUnitStaticValidator() {
     }
 
-    /**
-     * <p>initWrapper.</p>
-     *
-     * @param testSuiteGenerator a {@link org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator} object.
-     */
-    public static void initWrapper(RDFUnitTestSuiteGenerator testSuiteGenerator) {
-        checkNotNull(testSuiteGenerator);
+    public static void initWrapper(@NonNull RDFUnitTestSuiteGenerator testSuiteGenerator) {
         RDFUnitStaticValidator.testSuiteGenerator = testSuiteGenerator;
     }
 
-    /**
-     * <p>getTestSuite.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
-     */
     public static TestSuite getTestSuite() {
         return testSuiteGenerator.getTestSuite();
     }
 
 
 
-    /**
-     * <p>validate.</p>
-     *
-     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
-    public static Model validate(final Model inputModel) {
+    public static TestExecution validate(final Model inputModel) {
         return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult);
     }
 
 
-    /**
-     * <p>validate.</p>
-     *
-     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
-     * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
-    public static Model validate(final Model inputModel, final TestCaseExecutionType executionType) {
+    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType) {
         return validate(inputModel, executionType, "custom");
     }
 
 
-    /**
-     * <p>validate.</p>
-     *
-     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
-    public static Model validate(final Model inputModel, final String inputURI) {
+    public static TestExecution validate(final Model inputModel, final String inputURI) {
         return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult, inputURI);
     }
 
-
-    /**
-     * <p>validate.</p>
-     *
-     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
-     * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
-    public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) {
+    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) {
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
@@ -99,16 +61,7 @@ public final class RDFUnitStaticValidator {
     }
 
 
-    /**
-     * <p>validate.</p>
-     *
-     * @param inputModel a {@link org.apache.jena.rdf.model.Model} object.
-     * @param executionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
-     * @param inputURI a {@link java.lang.String} object.
-     * @param overviewResults a {@link DatasetOverviewResults} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
-    public static Model validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
+    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
@@ -128,19 +81,11 @@ public final class RDFUnitStaticValidator {
         testExecutor.execute(modelSource, testSuiteGenerator.getTestSuite());
         overviewResults.set(testExecutorMonitor.getOverviewResults());
 
-        return testExecutorMonitor.getModel();
+        return testExecutorMonitor.getTestExecution();
     }
 
 
-    /**
-     * <p>validate.</p>
-     *
-     * @param testCaseExecutionType a {@link org.aksw.rdfunit.enums.TestCaseExecutionType} object.
-     * @param testSource a {@link org.aksw.rdfunit.sources.TestSource} object.
-     * @param testSuite a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
-    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {
+    public static TestExecution validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite) {
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
@@ -150,29 +95,16 @@ public final class RDFUnitStaticValidator {
     /**
      * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitConfiguration object
      * This function can also serve as standalone
-     *
-     * @param testCaseExecutionType execution type
-     * @param testSource               the dataset source we want to test
-     * @param testSuite             the list of test cases we want to test our Source against
-     * @param overviewResults This is a way to get validation statistics
-     * @return a new Model that contains the validation results. The results are according to executionType
      */
-    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, DatasetOverviewResults overviewResults) {
+    public static TestExecution validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, DatasetOverviewResults overviewResults) {
         return validate(testCaseExecutionType, testSource, testSuite, "http://localhost", overviewResults);
     }
 
     /**
      * Static method that validates a Source. In this case the Source and TestSuite are provided as argument along with a RDFUnitConfiguration object
      * This function can also serve as standalone
-     *
-     * @param testCaseExecutionType execution type
-     * @param testSource               the dataset source we want to test
-     * @param testSuite             the list of test cases we want to test our Source against
-     * @param agentID             an identifier that will be set in the execution provenance data as prov:wasStartedBy
-     * @param overviewResults This is a way to get validation statistics
-     * @return a new Model that contains the validation results. The results are according to executionType
      */
-    public static Model validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, final String agentID, DatasetOverviewResults overviewResults) {
+    public static TestExecution validate(final TestCaseExecutionType testCaseExecutionType, final TestSource testSource, final TestSuite testSuite, final String agentID, DatasetOverviewResults overviewResults) {
 
         checkNotNull(testCaseExecutionType, "Test Execution Type must not be null");
         checkNotNull(testSource, "Test Source must not be null");
@@ -190,7 +122,7 @@ public final class RDFUnitStaticValidator {
         testExecutor.execute(testSource, testSuite);
         overviewResults.set(testExecutorMonitor.getOverviewResults());
 
-        return testExecutorMonitor.getModel();
+        return testExecutorMonitor.getTestExecution();
     }
 
 }

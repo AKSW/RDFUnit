@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.impl.results;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
+import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.apache.jena.rdf.model.Resource;
@@ -20,7 +21,7 @@ public class TestExecutionImpl implements TestExecution {
     private final DatasetOverviewResults datasetOverviewResults;
 
     private final String testedDatasetUri;
-    private final String testSuiteUri;
+    //private final TestSuite testSuite;
     private final TestCaseExecutionType testCaseExecutionType;
 
     private final String startedByAgent;
@@ -32,7 +33,7 @@ public class TestExecutionImpl implements TestExecution {
     private TestExecutionImpl(Builder builder) {
         this.element = checkNotNull(builder.element, "Element is needed in TestExecution");
         this.testedDatasetUri = checkNotNull(builder.testedDatasetUri, "Tested dataset URI is needed in TestExecution");
-        this.testSuiteUri = checkNotNull(builder.testSuiteUri, "TestSuite URI is needed in TestExecution");
+        //this.testSuite = checkNotNull(builder.testSuite, "TestSuite URI is needed in TestExecution");
         this.testCaseExecutionType = checkNotNull(builder.testCaseExecutionType, "Test execution type is needed in TestExecution");
         this.startedByAgent = checkNotNull(builder.startedByAgent, "Agent starting the execution is needed in TestExecution");
 
@@ -77,10 +78,10 @@ public class TestExecutionImpl implements TestExecution {
         return testedDatasetUri;
     }
 
-    @Override
-    public String getTestSuiteUri() {
-        return testSuiteUri;
-    }
+    /*@Override
+    public TestSuite getTestSuite() {
+        return testSuite;
+    }   */
 
     @Override
     public TestCaseExecutionType getTestExecutionType() {
@@ -102,7 +103,7 @@ public class TestExecutionImpl implements TestExecution {
         private DatasetOverviewResults datasetOverviewResults;
         private String executionUUID;
         private String testedDatasetUri;
-        private String testSuiteUri;
+        private TestSuite testSuite;
         private TestCaseExecutionType testCaseExecutionType;
         private String startedByAgent = "http://localhost/";
         private Set<TestCaseResult> results = new HashSet<>();
@@ -129,8 +130,8 @@ public class TestExecutionImpl implements TestExecution {
             return this;
         }
 
-        public Builder setTestSuiteUri(String testSuiteUri) {
-            this.testSuiteUri = testSuiteUri;
+        public Builder setTestSuite(TestSuite testSuite) {
+            this.testSuite = testSuite;
             return this;
         }
 

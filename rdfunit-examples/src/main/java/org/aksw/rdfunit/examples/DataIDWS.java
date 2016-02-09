@@ -5,12 +5,12 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.aksw.rdfunit.validate.ws.RDFUnitWebService;
-import org.apache.jena.rdf.model.Model;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -100,7 +100,7 @@ public class DataIDWS extends RDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override
-    protected Model validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException {
+    protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException {
         return RDFUnitStaticValidator.validate(configuration.getTestCaseExecutionType(), testSource, testSuite);
     }
 
