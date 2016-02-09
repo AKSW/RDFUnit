@@ -16,6 +16,7 @@ import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
+import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
@@ -25,6 +26,8 @@ import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -253,16 +256,18 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         //OutputStream to get the results as string and display
                         final ByteArrayOutputStream os = new ByteArrayOutputStream();
                         final SimpleTestExecutorMonitor monitor = RDFUnitDemoSession.getExecutorMonitor();
+                        final Model model = ModelFactory.createDefaultModel();
+                        TestExecutionWriter.create(monitor.getTestExecution()).write(model);
                         try {
                             if (resultFormat.equals("html")) {
-                                RDFHtmlWriterFactory.createHTMLWriter((TestCaseExecutionType) execTypeSelect.getValue(), os).write(monitor.getModel());
+                                RDFHtmlWriterFactory.createHTMLWriter(monitor.getTestExecution(), os).write(model);
                             } else {
-                                new RDFStreamWriter(os, resultFormat).write(monitor.getModel());
+                                new RDFStreamWriter(os, resultFormat).write(model);
                             }
                             // cache results in result folder
                             long randomNumber = (new Random()).nextInt(10000);
                             String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
-                            new RDFFileWriter(fileLocation, "TURTLE").write(monitor.getModel());
+                            new RDFFileWriter(fileLocation, "TURTLE").write(model);
                         } catch (RDFWriterException e) {
                             Notification.show("Error occurred in Serialization", Notification.Type.ERROR_MESSAGE);
                             log.error("Error occurred in Serialization", e);
