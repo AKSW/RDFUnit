@@ -30,27 +30,27 @@ public final class RDFHtmlWriterFactory {
     }
 
 
-    public static RDFHTMLResultsWriter createHTMLWriter(TestExecution testExecution,  String filename) {
+    public static RDFHtmlResultsWriter createHTMLWriter(TestExecution testExecution, String filename) {
         return createHTMLWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
     }
 
 
-    public static RDFHTMLResultsWriter createHTMLWriter(TestExecution testExecution, OutputStream outputStream) {
+    public static RDFHtmlResultsWriter createHTMLWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
             case statusTestCaseResult:
-                return new RDFHTMLResultsStatusWriter(testExecution, outputStream);
+                return new RDFHtmlResultsStatusWriter(testExecution, outputStream);
             case aggregatedTestCaseResult:
-                return new RDFHTMLResultsAggregateWriter(testExecution, outputStream);
+                return new RDFHtmlResultsAggregateWriter(testExecution, outputStream);
             case shaclSimpleTestCaseResult:
-                return new RDFHTMLResultsShaclWriter(testExecution, outputStream);
+                return new RDFHtmlResultsShaclWriter(testExecution, outputStream);
             case shaclFullTestCaseResult:
                 // TODO extended not supported ATM, use RLOG instead
-                return new RDFHTMLResultsShaclWriter(testExecution, outputStream);
+                return new RDFHtmlResultsShaclWriter(testExecution, outputStream);
             case rlogTestCaseResult:
-                return new RDFHTMLResultsRlogWriter(testExecution, outputStream);
+                return new RDFHtmlResultsRlogWriter(testExecution, outputStream);
             case extendedTestCaseResult:
                 // TODO extended not supported ATM, use RLOG instead
-                return new RDFHTMLResultsRlogWriter(testExecution, outputStream);
+                return new RDFHtmlResultsRlogWriter(testExecution, outputStream);
             default:
                 return null;
         }

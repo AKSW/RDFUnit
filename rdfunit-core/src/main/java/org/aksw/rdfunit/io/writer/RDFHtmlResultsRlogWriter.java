@@ -1,69 +1,50 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.OutputStream;
 
-/**
- * <p>RDFHTMLResultsRlogWriter class.</p>
- *
- * @author Dimitris Kontokostas
- *         Description
- * @since 4/23/14 8:55 AM
- * @version $Id: $Id
- */
-public class RDFHTMLResultsShaclWriter extends RDFHTMLResultsWriter {
 
-    /**
-     * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
-     *
-     * @param filename a {@link String} object.
-     */
-    public RDFHTMLResultsShaclWriter(TestExecution testExecution, String filename) {
+public class RDFHtmlResultsRlogWriter extends RDFHtmlResultsWriter {
+
+    public RDFHtmlResultsRlogWriter(TestExecution testExecution, String filename) {
         super(testExecution, filename);
     }
 
-    /**
-     * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
-     *
-     * @param outputStream a {@link OutputStream} object.
-     */
-    public RDFHTMLResultsShaclWriter(TestExecution testExecution, OutputStream outputStream) {
+    public RDFHtmlResultsRlogWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsHeader() {
         return new StringBuffer("<tr><th>Level</th><th>Message</th><th>Resource</th><th>Test Case</th></tr>");
     }
 
-    /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList() throws RDFWriterException {
         StringBuffer results = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
         testExecution.getTestCaseResults().stream()
-                .map(ShaclTestCaseResult.class::cast)
+                .map(RLOGTestCaseResult.class::cast)
                 .forEach(result -> results.append(
                         String.format(template,
-                                getStatusClass(result.getSeverity()),
+                                RDFHtmlResultsShaclWriter.getStatusClass(result.getSeverity()),
                                 "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
                                 result.getMessage(),
                                 result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>
                                 result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"))
-                ));
+                        ));
         return results;
     }
 
     /**
      * return a css class
      */
-    static String getStatusClass(RLOGLevel level) {
+    private String getStatusClass(RLOGLevel level) {
         String rowClass = "";
         switch (level) {
             case WARN:

@@ -7,13 +7,13 @@ import org.aksw.rdfunit.services.PrefixNSService;
 
 import java.io.OutputStream;
 
-public class RDFHTMLResultsStatusWriter extends RDFHTMLResultsWriter {
+public class RDFHtmlResultsStatusWriter extends RDFHtmlResultsWriter {
 
-    public RDFHTMLResultsStatusWriter(TestExecution testExecution, String filename) {
+    public RDFHtmlResultsStatusWriter(TestExecution testExecution, String filename) {
         super(testExecution, filename);
     }
 
-    public RDFHTMLResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
+    public RDFHtmlResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
 

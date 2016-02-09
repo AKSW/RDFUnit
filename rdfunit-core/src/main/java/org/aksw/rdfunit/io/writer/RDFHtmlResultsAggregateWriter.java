@@ -14,14 +14,14 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
+public class RDFHtmlResultsAggregateWriter extends RDFHtmlResultsStatusWriter {
 
     /**
      * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RDFHTMLResultsAggregateWriter(TestExecution testExecution, String filename) {
+    public RDFHtmlResultsAggregateWriter(TestExecution testExecution, String filename) {
         super(testExecution, filename);
     }
 
@@ -30,7 +30,7 @@ public class RDFHTMLResultsAggregateWriter extends RDFHTMLResultsStatusWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public RDFHTMLResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
+    public RDFHtmlResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
 
