@@ -1,15 +1,15 @@
 package org.aksw.rdfunit.io.writer;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 
 import java.io.OutputStream;
 
 /**
- * <p>RDFHTMLResultsStatusWriter class.</p>
+ * <p>JunitXMLResultsStatusWriter class.</p>
  *
  * @author Martin Bruemmer
  *         Description
@@ -19,21 +19,21 @@ import java.io.OutputStream;
 public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
 
     /**
-     * <p>Constructor for RDFHTMLResultsStatusWriter.</p>
+     * <p>Constructor for JunitXMLResultsStatusWriter.</p>
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public JunitXMLResultsStatusWriter(String filename) {
-        super(filename);
+    public JunitXMLResultsStatusWriter(TestExecution testExecution, String filename) {
+    	super(testExecution, filename);
     }
 
     /**
-     * <p>Constructor for RDFHTMLResultsStatusWriter.</p>
+     * <p>Constructor for JunitXMLResultsStatusWriter.</p>
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public JunitXMLResultsStatusWriter(OutputStream outputStream) {
-        super(outputStream);
+    public JunitXMLResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
+    	super(testExecution, outputStream);
     }
 
     /** {@inheritDoc} */
@@ -44,54 +44,22 @@ public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
+    protected StringBuffer getResultsList() throws RDFWriterException {
         StringBuffer results = new StringBuffer();
-        String template = " <testcase name=\"%s\" classname=\""+testExecutionURI+"\">";
+        String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
+        
+        for(TestCaseResult result : testExecution.getTestCaseResults()) {
+        	AggregatedTestCaseResult aggregatedResult = (AggregatedTestCaseResult) result;
+        	String testcaseElement = String.format(template,
+        			result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+            results.append(testcaseElement);
 
-        String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resultStatus ?testcase ?level ?description WHERE {" +
-                " ?s a rut:StatusTestCaseResult ; " +
-                "    rut:resultStatus ?resultStatus ; " +
-                "    rut:testCaseLogLevel ?level ; " +
-                "    rut:testCase ?testcase ;" +
-                "    dcterms:description ?description ;" +
-                "} ";
-
-        QueryExecution qe = null;
-
-        try {
-            qe = qef.createQueryExecution(sparql);
-            ResultSet rs = qe.execSelect();
-
-            while (rs.hasNext()) {
-                QuerySolution qs = rs.next();
-                String resultStatus = qs.get("resultStatus").toString();
-                String testcase = qs.get("testcase").toString();
-                String description = qs.get("description").toString();
-                String level = qs.get("level").toString();
-
-                String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
-                String levelShort = PrefixNSService.getLocalName(level, "rlog");
-      
-                String testcaseElement = String.format(template,
-                		testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-                
-                results.append(testcaseElement);
-                if(statusShort.equals("Fail")) {
-                	results.append("  <failure message=\""+description+"\" type=\""+levelShort+"\"/>\n");
-                } else if(statusShort.equals("Error")||statusShort.equals("Timeout")) {
-                	results.append("\t\t<error message=\""+description+"\" type=\""+statusShort+"\"/>\n");
-                }
-                results.append(" </testcase>\n");
-                
+            if(aggregatedResult.getStatus().name().equals(TestCaseResultStatus.Fail)) {
+            	results.append("\t\t<failure message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getSeverity().name()+"\"/>\n");
+            } else if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Error)||aggregatedResult.getStatus().equals(TestCaseResultStatus.Timeout)) {
+            	results.append("\t\t<error message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getStatus().name()+"\"/>\n");
             }
-
-        } catch (Exception e) {
-            throw new RDFWriterException(e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
+            results.append("\t</testcase>\n");
         }
 
         return results;
@@ -103,16 +71,16 @@ public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
      * @param status a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.
      */
-    protected String getStatusClass(String status) {
+    protected String getStatusClass(TestCaseResultStatus status) {
 
         switch (status) {
-            case "Success":
+            case Success:
                 return "success";
-            case "Fail":
+            case Fail:
                 return "danger";
-            case "Timeout":
+            case Timeout:
                 return "warning";
-            case "Error":
+            case Error:
                 return "warning";
             default:
                 return "";

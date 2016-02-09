@@ -1,15 +1,15 @@
 package org.aksw.rdfunit.io.writer;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 
 import java.io.OutputStream;
 
 /**
- * <p>RDFXMLResultsAggregateWriter class.</p>
+ * <p>JunitXMLResultsAggregateWriter class.</p>
  *
  * @author Martin Bruemmer
  *         Description
@@ -18,78 +18,42 @@ import java.io.OutputStream;
  */
 public class JunitXMLResultsAggregateWriter extends JunitXMLResultsStatusWriter {
     /**
-     * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
+     * <p>Constructor for JunitXMLResultsAggregateWriter.</p>
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public JunitXMLResultsAggregateWriter(String filename) {
-        super(filename);
+    public JunitXMLResultsAggregateWriter(TestExecution testExecution, String filename) {
+    	super(testExecution, filename);
     }
 
     /**
-     * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
+     * <p>Constructor for JunitXMLResultsAggregateWriter.</p>
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public JunitXMLResultsAggregateWriter(OutputStream outputStream) {
-        super(outputStream);
+    public JunitXMLResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
+    	super(testExecution, outputStream);
     }
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList(QueryExecutionFactory qef, String testExecutionURI) throws RDFWriterException {
+    protected StringBuffer getResultsList() throws RDFWriterException {
         StringBuffer results = new StringBuffer();
-        String template = "\t<testcase name=\"%s\" classname=\""+testExecutionURI+"\">\n";
+        String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
+        
+        for(TestCaseResult result : testExecution.getTestCaseResults()) {
+        	AggregatedTestCaseResult aggregatedResult = (AggregatedTestCaseResult) result;
+        	String testcaseElement = String.format(template,
+        			result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+            results.append(testcaseElement);
 
-        String sparql = PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT DISTINCT ?resultStatus ?level ?testcase ?description ?resultCount ?resultPrevalence WHERE {" +
-                " ?s a rut:AggregatedTestResult ; " +
-                "    rut:resultStatus ?resultStatus ; " +
-                "    rut:testCaseLogLevel ?level ; " +
-                "    rut:testCase ?testcase ;" +
-                "    dcterms:description ?description ;" +
-                "    rut:resultCount ?resultCount ; " +
-                "    rut:resultPrevalence ?resultPrevalence . " +
-                "} ";
-
-        QueryExecution qe = null;
-
-        try {
-            qe = qef.createQueryExecution(sparql);
-            ResultSet rs = qe.execSelect();
-
-            while (rs.hasNext()) {
-                QuerySolution qs = rs.next();
-                String resultStatus = qs.get("resultStatus").toString();
-                String testcase = qs.get("testcase").toString();
-                String description = qs.get("description").toString();
-                String resultCount = qs.get("resultCount").asLiteral().getValue().toString();
-                String resultPrevalence = qs.get("resultPrevalence").asLiteral().getValue().toString();
-                String level = qs.get("level").toString();
-
-                String statusShort = resultStatus.replace(PrefixNSService.getNSFromPrefix("rut") + "ResultStatus", "");
-                String levelShort = PrefixNSService.getLocalName(level, "rlog");
-
-                String testcaseElement = String.format(template,
-                		testcase.replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-                
-                results.append(testcaseElement);
-                if(statusShort.equals("Fail")) {
-                	results.append("\t\t<failure message=\""+description+"\" type=\""+levelShort+"\"/>\n");
-                	results.append("\t\t<system-out>Errors:"+resultCount+" Prevalence:"+resultPrevalence+"</system-out>\n");
-                } else if(statusShort.equals("Error")||statusShort.equals("Timeout")) {
-                	results.append("\t\t<error message=\""+description+"\" type=\""+statusShort+"\"/>\n");
-                }
-                results.append("\t</testcase>\n");
-                	
+            if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Fail)) {
+            	results.append("\t\t<failure message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getSeverity().name()+"\"/>\n");
+            	results.append("\t\t<system-out>Errors:"+aggregatedResult.getErrorCount()+" Prevalence:"+aggregatedResult.getPrevalenceCount().orElse(-1L)+"</system-out>\n");
+            } else if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Error)||aggregatedResult.getStatus().name().equals("Timeout")) {
+            	results.append("\t\t<error message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getStatus().name()+"\"/>\n");
             }
-
-        } catch (Exception e) {
-            throw new RDFWriterException(e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
+            results.append("\t</testcase>\n");
         }
 
         return results;
