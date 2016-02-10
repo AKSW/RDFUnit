@@ -2,7 +2,6 @@ package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -31,22 +30,22 @@ public class JunitXmlResultsAggregateWriter extends JunitXmlResultsStatusWriter 
     protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
-        
-        for(TestCaseResult result : testExecution.getTestCaseResults()) {
-        	AggregatedTestCaseResult aggregatedResult = (AggregatedTestCaseResult) result;
-        	String testcaseElement = String.format(template,
-        			aggregatedResult.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-            results.append(testcaseElement);
 
-            if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Fail)) {
-            	results.append("\t\t<failure message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getSeverity().name()+"\"/>\n");
-            	results.append("\t\t<system-out>Errors:"+aggregatedResult.getErrorCount()+" Prevalence:"+aggregatedResult.getPrevalenceCount().orElse(-1L)+"</system-out>\n");
-            } else if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Error)||aggregatedResult.getStatus().name().equals("Timeout")) {
-            	results.append("\t\t<error message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getStatus().name()+"\"/>\n");
-            }
-            results.append("\t</testcase>\n");
-        }
+        testExecution.getTestCaseResults().stream()
+                .map(AggregatedTestCaseResult.class::cast)
+                .forEach( result -> {
+                    String testcaseElement = String.format(template,
+                            result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+                    results.append(testcaseElement);
 
+                    if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
+                        results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
+                        results.append("\t\t<system-out>Errors:"+result.getErrorCount()+" Prevalence:"+result.getPrevalenceCount().orElse(-1L)+"</system-out>\n");
+                    } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().name().equals("Timeout")) {
+                        results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
+                    }
+                    results.append("\t</testcase>\n");
+                });
         return results;
     }
 }

@@ -2,7 +2,6 @@ package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -31,19 +30,20 @@ public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
         StringBuffer results = new StringBuffer();
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
         
-        for(TestCaseResult result : testExecution.getTestCaseResults()) {
-        	StatusTestCaseResult statusResult = (StatusTestCaseResult) result;
-        	String testcaseElement = String.format(template,
-        			statusResult.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-            results.append(testcaseElement);
+        testExecution.getTestCaseResults().stream()
+                .map(StatusTestCaseResult.class::cast)
+                .forEach( result -> {
+                    String testcaseElement = String.format(template,
+                            result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+                    results.append(testcaseElement);
 
-            if(statusResult.getStatus().equals(TestCaseResultStatus.Fail)) {
-            	results.append("\t\t<failure message=\""+statusResult.getMessage()+"\" type=\""+statusResult.getSeverity().name()+"\"/>\n");
-            } else if(statusResult.getStatus().equals(TestCaseResultStatus.Error)||statusResult.getStatus().equals(TestCaseResultStatus.Timeout)) {
-            	results.append("\t\t<error message=\""+statusResult.getMessage()+"\" type=\""+statusResult.getStatus().name()+"\"/>\n");
-            }
-            results.append("\t</testcase>\n");
-        }
+                    if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
+                        results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
+                    } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().equals(TestCaseResultStatus.Timeout)) {
+                        results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
+                    }
+                    results.append("\t</testcase>\n");
+                });
 
         return results;
     }
