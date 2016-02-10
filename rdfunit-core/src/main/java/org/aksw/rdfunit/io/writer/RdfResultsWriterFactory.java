@@ -34,27 +34,27 @@ public final class RdfResultsWriterFactory {
     }
 
 
-    public static RDFHtmlResultsWriter createHtmlWriter(TestExecution testExecution, String filename) {
+    public static RdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, String filename) {
         return createHtmlWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
     }
 
 
-    public static RDFHtmlResultsWriter createHtmlWriter(TestExecution testExecution, OutputStream outputStream) {
+    public static RdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
             case statusTestCaseResult:
-                return new RDFHtmlResultsStatusWriter(testExecution, outputStream);
+                return new RdfHtmlResultsStatusWriter(testExecution, outputStream);
             case aggregatedTestCaseResult:
-                return new RDFHtmlResultsAggregateWriter(testExecution, outputStream);
+                return new RdfHtmlResultsAggregateWriter(testExecution, outputStream);
             case shaclSimpleTestCaseResult:
-                return new RDFHtmlResultsShaclWriter(testExecution, outputStream);
+                return new RdfHtmlResultsShaclWriter(testExecution, outputStream);
             case shaclFullTestCaseResult:
                 // TODO extended not supported ATM, use RLOG instead
-                return new RDFHtmlResultsShaclWriter(testExecution, outputStream);
+                return new RdfHtmlResultsShaclWriter(testExecution, outputStream);
             case rlogTestCaseResult:
-                return new RDFHtmlResultsRlogWriter(testExecution, outputStream);
+                return new RdfHtmlResultsRlogWriter(testExecution, outputStream);
             case extendedTestCaseResult:
                 // TODO extended not supported ATM, use RLOG instead
-                return new RDFHtmlResultsRlogWriter(testExecution, outputStream);
+                return new RdfHtmlResultsRlogWriter(testExecution, outputStream);
             default:
                 throw new IllegalArgumentException("Unsupported TestExecution in createHTMLWriter");
         }

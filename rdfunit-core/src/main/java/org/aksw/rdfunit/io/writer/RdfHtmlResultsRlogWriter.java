@@ -7,9 +7,9 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 
-public class RDFHtmlResultsRlogWriter extends RDFHtmlResultsWriter {
+public class RdfHtmlResultsRlogWriter extends RdfHtmlResultsWriter {
 
-    public RDFHtmlResultsRlogWriter(TestExecution testExecution, OutputStream outputStream) {
+    public RdfHtmlResultsRlogWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
 
@@ -27,7 +27,7 @@ public class RDFHtmlResultsRlogWriter extends RDFHtmlResultsWriter {
                 .map(RLOGTestCaseResult.class::cast)
                 .forEach(result -> results.append(
                         String.format(template,
-                                RDFHtmlResultsShaclWriter.getStatusClass(result.getSeverity()),
+                                RdfHtmlResultsShaclWriter.getStatusClass(result.getSeverity()),
                                 "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
                                 result.getMessage(),
                                 result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>

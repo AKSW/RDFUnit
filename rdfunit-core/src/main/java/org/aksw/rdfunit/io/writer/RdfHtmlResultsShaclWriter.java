@@ -15,7 +15,7 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class RDFHtmlResultsShaclWriter extends RDFHtmlResultsWriter {
+public class RdfHtmlResultsShaclWriter extends RdfHtmlResultsWriter {
 
 
     /**
@@ -23,7 +23,7 @@ public class RDFHtmlResultsShaclWriter extends RDFHtmlResultsWriter {
      *
      * @param outputStream a {@link OutputStream} object.
      */
-    public RDFHtmlResultsShaclWriter(TestExecution testExecution, OutputStream outputStream) {
+    public RdfHtmlResultsShaclWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
 

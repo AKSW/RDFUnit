@@ -14,10 +14,10 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class RDFHtmlResultsAggregateWriter extends RDFHtmlResultsStatusWriter {
+public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
 
 
-    public RDFHtmlResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
+    public RdfHtmlResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
 
