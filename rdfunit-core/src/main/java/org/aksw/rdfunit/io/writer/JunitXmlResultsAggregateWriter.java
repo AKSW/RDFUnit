@@ -16,14 +16,14 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class JunitXMLResultsAggregateWriter extends JunitXMLResultsStatusWriter {
+public class JunitXmlResultsAggregateWriter extends JunitXmlResultsStatusWriter {
 
 
-    public JunitXMLResultsAggregateWriter(TestExecution testExecution, String filename) {
+    public JunitXmlResultsAggregateWriter(TestExecution testExecution, String filename) {
     	super(testExecution, filename);
     }
 
-    public JunitXMLResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
+    public JunitXmlResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);
     }
 

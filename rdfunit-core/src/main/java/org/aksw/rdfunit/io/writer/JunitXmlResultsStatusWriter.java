@@ -16,13 +16,13 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class JunitXMLResultsStatusWriter extends JunitXMLResultsWriter {
+public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
 
-    public JunitXMLResultsStatusWriter(TestExecution testExecution, String filename) {
+    public JunitXmlResultsStatusWriter(TestExecution testExecution, String filename) {
     	super(testExecution, filename);
     }
 
-    public JunitXMLResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
+    public JunitXmlResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);
     }
 

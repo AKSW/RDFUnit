@@ -61,13 +61,19 @@ public class RDFHtmlWriterFactoryTest {
 
             validateHtml(getHtmlForExecution(testExecution));
 
-
+            // TODO validateXml(getXmlForExecution(testExecution));
         }
     }
 
     private String getHtmlForExecution(TestExecution testExecution) throws Exception {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         RDFHtmlWriterFactory.createHTMLWriter(testExecution, os).write(ModelFactory.createDefaultModel());
+        return os.toString("UTF8");
+    }
+
+    private String getXlmlForExecution(TestExecution testExecution) throws Exception {
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        RDFHtmlWriterFactory.createJunitXmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
     }
 

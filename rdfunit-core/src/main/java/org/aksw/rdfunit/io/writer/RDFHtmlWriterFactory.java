@@ -16,7 +16,7 @@ public final class RDFHtmlWriterFactory {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHTMLWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else if (serializationFormat.equals(FormatService.getOutputFormat("junitxml"))) {
-            return createXMLWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
+            return createJunitXmlWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else {
             return new RDFFileWriter(filenameWithoutExtension + "." + serializationFormat.getExtension(), serializationFormat.getName());
         }
@@ -27,7 +27,7 @@ public final class RDFHtmlWriterFactory {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHTMLWriter(testExecution, outputStream);
         } else if (serializationFormat.equals(FormatService.getOutputFormat("junitxml"))) {
-            return createXMLWriter(testExecution, outputStream);
+            return createJunitXmlWriter(testExecution, outputStream);
         } else {
             return new RDFStreamWriter(outputStream, serializationFormat.getName());
         }
@@ -60,20 +60,20 @@ public final class RDFHtmlWriterFactory {
         }
     }
     
-    public static JunitXMLResultsWriter createXMLWriter(TestExecution testExecution, String filename) {
-        return createXMLWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
+    public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, String filename) {
+        return createJunitXmlWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
     }
     
-    public static JunitXMLResultsWriter createXMLWriter(TestExecution testExecution, OutputStream outputStream) {
+    public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
     	case shaclFullTestCaseResult:
     	case shaclSimpleTestCaseResult:
     	case rlogTestCaseResult:
     	case extendedTestCaseResult:
         case statusTestCaseResult:
-            return new JunitXMLResultsStatusWriter(testExecution, outputStream);
+            return new JunitXmlResultsStatusWriter(testExecution, outputStream);
         case aggregatedTestCaseResult:
-            return new JunitXMLResultsAggregateWriter(testExecution, outputStream);
+            return new JunitXmlResultsAggregateWriter(testExecution, outputStream);
             default:
                 return null;
         }
