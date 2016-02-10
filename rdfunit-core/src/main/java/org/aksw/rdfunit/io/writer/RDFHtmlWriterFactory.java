@@ -14,7 +14,7 @@ public final class RDFHtmlWriterFactory {
 
     public static RDFWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestExecution testExecution) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
-            return createHTMLWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
+            return createHtmlWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else if (serializationFormat.equals(FormatService.getOutputFormat("junitxml"))) {
             return createJunitXmlWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else {
@@ -25,7 +25,7 @@ public final class RDFHtmlWriterFactory {
 
     public static RDFWriter createWriterFromFormat(OutputStream outputStream, SerializationFormat serializationFormat, TestExecution testExecution) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
-            return createHTMLWriter(testExecution, outputStream);
+            return createHtmlWriter(testExecution, outputStream);
         } else if (serializationFormat.equals(FormatService.getOutputFormat("junitxml"))) {
             return createJunitXmlWriter(testExecution, outputStream);
         } else {
@@ -34,12 +34,12 @@ public final class RDFHtmlWriterFactory {
     }
 
 
-    public static RDFHtmlResultsWriter createHTMLWriter(TestExecution testExecution, String filename) {
-        return createHTMLWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
+    public static RDFHtmlResultsWriter createHtmlWriter(TestExecution testExecution, String filename) {
+        return createHtmlWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
     }
 
 
-    public static RDFHtmlResultsWriter createHTMLWriter(TestExecution testExecution, OutputStream outputStream) {
+    public static RDFHtmlResultsWriter createHtmlWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
             case statusTestCaseResult:
                 return new RDFHtmlResultsStatusWriter(testExecution, outputStream);
@@ -56,7 +56,7 @@ public final class RDFHtmlWriterFactory {
                 // TODO extended not supported ATM, use RLOG instead
                 return new RDFHtmlResultsRlogWriter(testExecution, outputStream);
             default:
-                return null;
+                throw new IllegalArgumentException("Unsupported TestExecution in createHTMLWriter");
         }
     }
     
@@ -74,8 +74,8 @@ public final class RDFHtmlWriterFactory {
             return new JunitXmlResultsStatusWriter(testExecution, outputStream);
         case aggregatedTestCaseResult:
             return new JunitXmlResultsAggregateWriter(testExecution, outputStream);
-            default:
-                return null;
+        default:
+            throw new IllegalArgumentException("Unsupported TestExecution in JunitXmlResultsWriter");
         }
     }
 }

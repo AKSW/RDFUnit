@@ -74,7 +74,7 @@ public class RDFHtmlWriterFactoryTest {
 
     private String getHtmlForExecution(TestExecution testExecution) throws Exception {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        RDFHtmlWriterFactory.createHTMLWriter(testExecution, os).write(ModelFactory.createDefaultModel());
+        RDFHtmlWriterFactory.createHtmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
     }
 
@@ -107,15 +107,15 @@ public class RDFHtmlWriterFactoryTest {
 
     class SimpleErrorHandler implements ErrorHandler {
         public void warning(SAXParseException e) throws SAXException {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         public void error(SAXParseException e) throws SAXException {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         public void fatalError(SAXParseException e) throws SAXException {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }
