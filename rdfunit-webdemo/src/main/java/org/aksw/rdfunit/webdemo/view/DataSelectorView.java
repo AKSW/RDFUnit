@@ -89,31 +89,19 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
         setCompositionRoot(root);
 
 
-        clearBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                isReady = false;
-                setDefaultValues();
-            }
+        clearBtn.addClickListener((Button.ClickListener) clickEvent -> {
+            isReady = false;
+            setDefaultValues();
         });
 
-        loadBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        DataSelectorView.this.loadBtn.setEnabled(false);
-                        setMessage("Loading...", false);
-                        CommonAccessUtils.pushToClient();
-                        DataSelectorView.this.execute();
-                        DataSelectorView.this.loadBtn.setEnabled(true);
-                        CommonAccessUtils.pushToClient();
-                    }
-                });
-
-            }
-        });
+        loadBtn.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
+            DataSelectorView.this.loadBtn.setEnabled(false);
+            setMessage("Loading...", false);
+            CommonAccessUtils.pushToClient();
+            DataSelectorView.this.execute();
+            DataSelectorView.this.loadBtn.setEnabled(true);
+            CommonAccessUtils.pushToClient();
+        }));
 
     }
 
@@ -163,16 +151,12 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
 
         inputTypeSelect.setItemEnabled(DataOption.SPARQL, false);
 
-        inputTypeSelect.addValueChangeListener(new Property.ValueChangeListener() {
-
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                DataOption value = (DataOption) valueChangeEvent.getProperty().getValue();
-                if (value.equals(DataOption.URI)) {
-                    inputFormatsSelect.setVisible(false);
-                } else {
-                    inputFormatsSelect.setVisible(true);
-                }
+        inputTypeSelect.addValueChangeListener((Property.ValueChangeListener) valueChangeEvent -> {
+            DataOption value = (DataOption) valueChangeEvent.getProperty().getValue();
+            if (value.equals(DataOption.URI)) {
+                inputFormatsSelect.setVisible(false);
+            } else {
+                inputFormatsSelect.setVisible(true);
             }
         });
     }
@@ -238,7 +222,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
         String format = inputFormatsSelect.getValue().toString();
 
 
-        String uri = "";
+        String uri;
         if (dataOption.equals(DataOption.URI)) {
             uri = text.trim();
         }

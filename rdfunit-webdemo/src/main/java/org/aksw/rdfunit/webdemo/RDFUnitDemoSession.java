@@ -3,7 +3,6 @@ package org.aksw.rdfunit.webdemo;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.tests.executors.TestExecutor;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
@@ -49,7 +48,7 @@ public class RDFUnitDemoSession extends VaadinSession {
         VaadinSession.getCurrent().setAttribute(TestGeneratorExecutor.class, testGeneratorExecutor);
 
 
-        TestSuite testSuite = new TestSuite(new ArrayList<TestCase>());
+        TestSuite testSuite = new TestSuite(new ArrayList<>());
         VaadinSession.getCurrent().setAttribute(TestSuite.class, testSuite);
 
         CommonAccessUtils.initializeSchemaServices();

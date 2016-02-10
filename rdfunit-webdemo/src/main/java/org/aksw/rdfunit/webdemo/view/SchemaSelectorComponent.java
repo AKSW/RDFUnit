@@ -226,8 +226,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
         }
         //Collections.sort(sources);
 
-        for (SchemaSource s : sources)
-            container.addBean(s);
+        sources.forEach(container::addBean);
         return container;
     }
 
@@ -318,8 +317,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
      */
     public void setSelections(java.util.Collection<SchemaSource> sources) {
         clearSelections();
-        for (SchemaSource s : sources)
-            tokenField.addToken(s);
+        sources.forEach(tokenField::addToken);
     }
 
     private void clearSelections() {

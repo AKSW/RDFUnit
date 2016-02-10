@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.webdemo.view;
 
-import org.apache.jena.rdf.model.Model;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -16,6 +15,7 @@ import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
 import org.aksw.rdfunit.webdemo.utils.SchemaOption;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
+import org.apache.jena.rdf.model.Model;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -107,40 +107,21 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         setCompositionRoot(root);
 
 
-        clearBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        isReady = false;
-                        setDefaultValues();
-                        SchemaSelectorView.this.loadBtn.setEnabled(true);
-                        CommonAccessUtils.pushToClient();
-                    }
-                });
+        clearBtn.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
+            isReady = false;
+            setDefaultValues();
+            SchemaSelectorView.this.loadBtn.setEnabled(true);
+            CommonAccessUtils.pushToClient();
+        }));
 
-            }
-        });
-
-        loadBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        SchemaSelectorView.this.loadBtn.setEnabled(false);
-                        setMessage("Loading...", false);
-                        CommonAccessUtils.pushToClient();
-                        SchemaSelectorView.this.execute();
-                        SchemaSelectorView.this.loadBtn.setEnabled(true);
-                        CommonAccessUtils.pushToClient();
-                    }
-                });
-
-            }
-        });
+        loadBtn.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
+            SchemaSelectorView.this.loadBtn.setEnabled(false);
+            setMessage("Loading...", false);
+            CommonAccessUtils.pushToClient();
+            SchemaSelectorView.this.execute();
+            SchemaSelectorView.this.loadBtn.setEnabled(true);
+            CommonAccessUtils.pushToClient();
+        }));
 
     }
 
@@ -188,44 +169,40 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         inputTypeSelect.addItem(SchemaOption.CUSTOM_TEXT);
         inputTypeSelect.setItemCaption(SchemaOption.CUSTOM_TEXT, "Direct Input");
 
-        inputTypeSelect.addValueChangeListener(new Property.ValueChangeListener() {
+        inputTypeSelect.addValueChangeListener((Property.ValueChangeListener) valueChangeEvent -> {
 
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+            SchemaOption option = (SchemaOption) valueChangeEvent.getProperty().getValue();
 
-                SchemaOption option = (SchemaOption) valueChangeEvent.getProperty().getValue();
+            switch (option) {
+                case AUTO_OWL:
+                    inputFormatsSelect.setVisible(false);
+                    specificSchemasMessage.setVisible(false);
+                    schemaSelectorWidget.setVisible(false);
+                    inputText.setVisible(false);
 
-                switch (option) {
-                    case AUTO_OWL:
-                        inputFormatsSelect.setVisible(false);
-                        specificSchemasMessage.setVisible(false);
-                        schemaSelectorWidget.setVisible(false);
-                        inputText.setVisible(false);
+                    autoOWLMessage.setVisible(true);
 
-                        autoOWLMessage.setVisible(true);
+                    break;
 
-                        break;
+                case SPECIFIC_URIS:
+                    inputFormatsSelect.setVisible(false);
+                    inputText.setVisible(false);
+                    autoOWLMessage.setVisible(false);
 
-                    case SPECIFIC_URIS:
-                        inputFormatsSelect.setVisible(false);
-                        inputText.setVisible(false);
-                        autoOWLMessage.setVisible(false);
-
-                        specificSchemasMessage.setVisible(true);
-                        schemaSelectorWidget.setVisible(true);
+                    specificSchemasMessage.setVisible(true);
+                    schemaSelectorWidget.setVisible(true);
 
 
-                        break;
-                    case CUSTOM_TEXT:
-                        specificSchemasMessage.setVisible(false);
-                        schemaSelectorWidget.setVisible(false);
-                        autoOWLMessage.setVisible(false);
+                    break;
+                case CUSTOM_TEXT:
+                    specificSchemasMessage.setVisible(false);
+                    schemaSelectorWidget.setVisible(false);
+                    autoOWLMessage.setVisible(false);
 
-                        inputFormatsSelect.setVisible(true);
-                        inputText.setVisible(true);
+                    inputFormatsSelect.setVisible(true);
+                    inputText.setVisible(true);
 
-                        break;
-                }
+                    break;
             }
         });
     }

@@ -185,165 +185,139 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
 
         // Clicking the button creates and runs a work thread
-        startTestingButton.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        startTestingButton.setEnabled(false);
+        startTestingButton.addClickListener((Button.ClickListener) event -> UI.getCurrent().access(() -> {
+            startTestingButton.setEnabled(false);
 
-                        if (inProgress) {
-                            setMessage("Test Execution already in progress", true);
-                            CommonAccessUtils.pushToClient();
-                            return;
-                        }
-                        if (!WorkflowUtils.checkIfPreviousItemIsReady(TestExecutionView.this)) {
-                            setMessage("Please Complete previous step correctly", true);
-                            CommonAccessUtils.pushToClient();
-                            return;
-                        }
-
-                        setMessage("Initializing Test Suite...", false);
-                        CommonAccessUtils.pushToClient();
-
-
-                        TestExecutionView.this.execute();
-                    }
-                });
-
+            if (inProgress) {
+                setMessage("Test Execution already in progress", true);
+                CommonAccessUtils.pushToClient();
+                return;
             }
-        });
-
-        startTestingCancelButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!inProgress) {
-                            Notification.show("Test Execution Not in progress", Notification.Type.WARNING_MESSAGE);
-                            return;
-                        }
-                        TestExecutionView.this.setMessage("Sending cancel signal, waiting for current test to execute", false);
-                        CommonAccessUtils.pushToClient();
-                        RDFUnitDemoSession.getTestExecutor().cancel();
-                    }
-                });
-
+            if (!WorkflowUtils.checkIfPreviousItemIsReady(TestExecutionView.this)) {
+                setMessage("Please Complete previous step correctly", true);
+                CommonAccessUtils.pushToClient();
+                return;
             }
-        });
 
-        resultsButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().access(new Runnable() {
+            setMessage("Initializing Test Suite...", false);
+            CommonAccessUtils.pushToClient();
+
+
+            TestExecutionView.this.execute();
+        }));
+
+        startTestingCancelButton.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
+            if (!inProgress) {
+                Notification.show("Test Execution Not in progress", Notification.Type.WARNING_MESSAGE);
+                return;
+            }
+            TestExecutionView.this.setMessage("Sending cancel signal, waiting for current test to execute", false);
+            CommonAccessUtils.pushToClient();
+            RDFUnitDemoSession.getTestExecutor().cancel();
+        }));
+
+        resultsButton.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
+            if (!isReady || inProgress) {
+                Notification.show("Test Execution in progress or not completed", Notification.Type.WARNING_MESSAGE);
+                return;
+            }
+
+            String resultFormat;
+            try {
+                resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
+            } catch (NullPointerException e) {
+                Notification.show("Error occurred in format selection", Notification.Type.ERROR_MESSAGE);
+                log.error("Error occurred in format selection", e);
+                return;
+            }
+
+            //OutputStream to get the results as string and display
+            final ByteArrayOutputStream os = new ByteArrayOutputStream();
+            final SimpleTestExecutorMonitor monitor = RDFUnitDemoSession.getExecutorMonitor();
+            final Model model = ModelFactory.createDefaultModel();
+            TestExecutionWriter.create(monitor.getTestExecution()).write(model);
+            try {
+                if (resultFormat.equals("html")) {
+                    RdfResultsWriterFactory.createHtmlWriter(monitor.getTestExecution(), os).write(model);
+                } else {
+                    new RDFStreamWriter(os, resultFormat).write(model);
+                }
+                // cache results in result folder
+                long randomNumber = (new Random()).nextInt(10000);
+                String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
+                new RDFFileWriter(fileLocation, "TURTLE").write(model);
+            } catch (RDFWriterException e) {
+                Notification.show("Error occurred in Serialization", Notification.Type.ERROR_MESSAGE);
+                log.error("Error occurred in Serialization", e);
+            }
+
+            final VerticalLayout inner = new VerticalLayout();
+            inner.setSpacing(true);
+            inner.setWidth("100%");
+            inner.setHeight("100%");
+
+            // Get contents as String
+            String tmp_contents = " ";
+            try {
+                tmp_contents = os.toString("UTF8");
+            } catch (UnsupportedEncodingException e) {
+                log.error("Encoding error: " + e.getMessage());
+            }
+            final String contents = tmp_contents;
+
+            if (resultFormat.equals("html")) {
+                BrowserFrame frame = new BrowserFrame("", new ConnectorResource() {
+
                     @Override
-                    public void run() {
-                        if (!isReady || inProgress) {
-                            Notification.show("Test Execution in progress or not completed", Notification.Type.WARNING_MESSAGE);
-                            return;
-                        }
-
-                        String resultFormat = "";
+                    public DownloadStream getStream() {
                         try {
-                            resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
-                        } catch (NullPointerException e) {
-                            Notification.show("Error occurred in format selection", Notification.Type.ERROR_MESSAGE);
-                            log.error("Error occurred in format selection", e);
-                            return;
-                        }
-
-                        //OutputStream to get the results as string and display
-                        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-                        final SimpleTestExecutorMonitor monitor = RDFUnitDemoSession.getExecutorMonitor();
-                        final Model model = ModelFactory.createDefaultModel();
-                        TestExecutionWriter.create(monitor.getTestExecution()).write(model);
-                        try {
-                            if (resultFormat.equals("html")) {
-                                RdfResultsWriterFactory.createHtmlWriter(monitor.getTestExecution(), os).write(model);
-                            } else {
-                                new RDFStreamWriter(os, resultFormat).write(model);
-                            }
-                            // cache results in result folder
-                            long randomNumber = (new Random()).nextInt(10000);
-                            String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
-                            new RDFFileWriter(fileLocation, "TURTLE").write(model);
-                        } catch (RDFWriterException e) {
-                            Notification.show("Error occurred in Serialization", Notification.Type.ERROR_MESSAGE);
-                            log.error("Error occurred in Serialization", e);
-                        }
-
-                        final VerticalLayout inner = new VerticalLayout();
-                        inner.setSpacing(true);
-                        inner.setWidth("100%");
-                        inner.setHeight("100%");
-
-                        // Get contents as String
-                        String tmp_contents = " ";
-                        try {
-                            tmp_contents = os.toString("UTF8");
+                            return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
                         } catch (UnsupportedEncodingException e) {
                             log.error("Encoding error: " + e.getMessage());
                         }
-                        final String contents = tmp_contents;
+                        return null;
+                    }
 
-                        if (resultFormat.equals("html")) {
-                            BrowserFrame frame = new BrowserFrame("", new ConnectorResource() {
+                    @Override
+                    public String getFilename() {
+                        return "";
+                    }
 
-                                @Override
-                                public DownloadStream getStream() {
-                                    try {
-                                        return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
-                                    } catch (UnsupportedEncodingException e) {
-                                        log.error("Encoding error: " + e.getMessage());
-                                    }
-                                    return null;
-                                }
-
-                                @Override
-                                public String getFilename() {
-                                    return "";
-                                }
-
-                                @Override
-                                public String getMIMEType() {
-                                    return "text/html";
-                                }
-                            });
-                            //Label htmlLabel = new Label(os.toString(), ContentMode.HTML);
-                            frame.setWidth("100%");
-                            frame.setHeight("100%");
-                            inner.addComponent(frame);
-                            if (execTypeSelect.getValue().equals(TestCaseExecutionType.shaclFullTestCaseResult)) {
-                                Notification.show(
-                                        "Annotated results don't support HTML",
-                                        "This will fall back to simple 'Resources' HTML report\n" +
-                                                "Select an RDF serialization (e.g. turtle) to see the annotations.\n" +
-                                                "(click on this message to close it)",
-                                        Notification.Type.ERROR_MESSAGE
-                                );
-                            }
-                        } else {
-                            TextArea textArea = new TextArea("", contents);
-                            textArea.setWidth("100%");
-                            textArea.setHeight("100%");
-                            inner.addComponent(textArea);
-
-                        }
-
-                        final Window window = new Window("Results");
-                        window.setWidth("90%");
-                        window.setHeight("90%");
-                        window.setModal(true);
-                        window.setContent(inner);
-
-
-                        UI.getCurrent().addWindow(window);
+                    @Override
+                    public String getMIMEType() {
+                        return "text/html";
                     }
                 });
+                //Label htmlLabel = new Label(os.toString(), ContentMode.HTML);
+                frame.setWidth("100%");
+                frame.setHeight("100%");
+                inner.addComponent(frame);
+                if (execTypeSelect.getValue().equals(TestCaseExecutionType.shaclFullTestCaseResult)) {
+                    Notification.show(
+                            "Annotated results don't support HTML",
+                            "This will fall back to simple 'Resources' HTML report\n" +
+                                    "Select an RDF serialization (e.g. turtle) to see the annotations.\n" +
+                                    "(click on this message to close it)",
+                            Notification.Type.ERROR_MESSAGE
+                    );
+                }
+            } else {
+                TextArea textArea = new TextArea("", contents);
+                textArea.setWidth("100%");
+                textArea.setHeight("100%");
+                inner.addComponent(textArea);
 
             }
-        });
+
+            final Window window = new Window("Results");
+            window.setWidth("90%");
+            window.setHeight("90%");
+            window.setModal(true);
+            window.setContent(inner);
+
+
+            UI.getCurrent().addWindow(window);
+        }));
 
 
     }
@@ -454,29 +428,23 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 count = totalErrors = failTest = sucessTests = timeoutTests = 0;
                 total = testSuite.size();
 
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
+                UI.getCurrent().access(() -> {
 
-                        startTestingCancelButton.setEnabled(true);
-                        testingProgress.setEnabled(true);
-                        testingProgress.setValue(0.0f);
-                        testingProgressLabel.setValue("0/" + total);
-                        CommonAccessUtils.pushToClient();
-                    }
+                    startTestingCancelButton.setEnabled(true);
+                    testingProgress.setEnabled(true);
+                    testingProgress.setValue(0.0f);
+                    testingProgressLabel.setValue("0/" + total);
+                    CommonAccessUtils.pushToClient();
                 });
 
             }
 
             @Override
             public void singleTestStarted(final TestCase test) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (count == 0) {
-                            setMessage("Running tests...", false);
-                            CommonAccessUtils.pushToClient();
-                        }
+                UI.getCurrent().access(() -> {
+                    if (count == 0) {
+                        setMessage("Running tests...", false);
+                        CommonAccessUtils.pushToClient();
                     }
                 });
             }
@@ -506,11 +474,9 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         failTest++;
                 }
 
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        testingProgress.setValue((float) count / total);
-                        testingProgressLabel.setValue(count + "/" + total + getStatusStr());
+                UI.getCurrent().access(() -> {
+                    testingProgress.setValue((float) count / total);
+                    testingProgressLabel.setValue(count + "/" + total + getStatusStr());
 
 //                if ((timeoutTests == 10 || timeoutTests == 30) && sucessTests == 0 && failTest == 0) {
 //                    //Too many timeouts maybe banned
@@ -519,24 +485,20 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 //                            Notification.Type.WARNING_MESSAGE);
 //                }
 
-                        CommonAccessUtils.pushToClient();
-                    }
+                    CommonAccessUtils.pushToClient();
                 });
 
             }
 
             @Override
             public void testingFinished() {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        testingProgress.setValue(1.0f);
-                        setMessage("Completed! " + getStatusStr() + ". See the results or rerun with a different 'Report Type'", false);
-                        startTestingButton.setEnabled(true);
-                        inProgress = false;
-                        isReady = true;
-                        CommonAccessUtils.pushToClient();
-                    }
+                UI.getCurrent().access(() -> {
+                    testingProgress.setValue(1.0f);
+                    setMessage("Completed! " + getStatusStr() + ". See the results or rerun with a different 'Report Type'", false);
+                    startTestingButton.setEnabled(true);
+                    inProgress = false;
+                    isReady = true;
+                    CommonAccessUtils.pushToClient();
                 });
 
             }

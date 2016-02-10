@@ -35,18 +35,15 @@ public final class WorkflowUtils {
      * @param isError a boolean.
      */
     public static void setMessage(final Label label, final String message, final boolean isError) {
-        UI.getCurrent().access(new Runnable() {
-            @Override
-            public void run() {
-                if (isError) {
-                    label.setStyleName(ValoTheme.LABEL_FAILURE);
-                } else {
-                    label.setStyleName(ValoTheme.LABEL_SUCCESS);
-                }
-
-                label.setValue(message);
-                CommonAccessUtils.pushToClient();
+        UI.getCurrent().access(() -> {
+            if (isError) {
+                label.setStyleName(ValoTheme.LABEL_FAILURE);
+            } else {
+                label.setStyleName(ValoTheme.LABEL_SUCCESS);
             }
+
+            label.setValue(message);
+            CommonAccessUtils.pushToClient();
         });
 
     }

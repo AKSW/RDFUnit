@@ -9,7 +9,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.aksw.rdfunit.webdemo.view.EndointTestTab;
+import org.aksw.rdfunit.webdemo.view.EndpointTestTab;
 import org.aksw.rdfunit.webdemo.view.IntroTab;
 
 import javax.servlet.annotation.WebServlet;
@@ -57,15 +57,13 @@ public class RDFUnitDemo extends UI {
         setPollInterval(15000);
 
         mainTab.addTab(new IntroTab(), "Introduction");
-        mainTab.addTab(new EndointTestTab(), "Test RDF Data");
+        mainTab.addTab(new EndpointTestTab(), "Test RDF Data");
         mainTab.setSelectedTab(1);
 
         // When user exits (window close, loose session) stop background threads
-        this.addDetachListener(new DetachListener() {
-            public void detach(DetachEvent event) {
-                RDFUnitDemoSession.getTestExecutor().cancel();
-                RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
-            }
+        this.addDetachListener((DetachListener) event -> {
+            RDFUnitDemoSession.getTestExecutor().cancel();
+            RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
         });
 
     }

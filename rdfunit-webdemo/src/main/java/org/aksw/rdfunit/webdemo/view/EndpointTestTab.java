@@ -13,7 +13,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 11/15/13 8:19 AM
  * @version $Id: $Id
  */
-public class EndointTestTab extends VerticalLayout {
+public class EndpointTestTab extends VerticalLayout {
 
 
     //    private final NativeSelect examplesSelect = new NativeSelect("Select an example");
@@ -30,7 +30,7 @@ public class EndointTestTab extends VerticalLayout {
     /**
      * <p>Constructor for EndointTestTab.</p>
      */
-    public EndointTestTab() {
+    public EndpointTestTab() {
         initLayout();
     }
 
