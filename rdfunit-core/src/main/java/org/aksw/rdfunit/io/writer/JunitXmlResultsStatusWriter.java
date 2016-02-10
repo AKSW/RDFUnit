@@ -32,15 +32,15 @@ public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
         
         for(TestCaseResult result : testExecution.getTestCaseResults()) {
-        	StatusTestCaseResult aggregatedResult = (StatusTestCaseResult) result;
+        	StatusTestCaseResult statusResult = (StatusTestCaseResult) result;
         	String testcaseElement = String.format(template,
-        			result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+        			statusResult.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
             results.append(testcaseElement);
 
-            if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Fail)) {
-            	results.append("\t\t<failure message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getSeverity().name()+"\"/>\n");
-            } else if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Error)||aggregatedResult.getStatus().equals(TestCaseResultStatus.Timeout)) {
-            	results.append("\t\t<error message=\""+aggregatedResult.getMessage()+"\" type=\""+aggregatedResult.getStatus().name()+"\"/>\n");
+            if(statusResult.getStatus().equals(TestCaseResultStatus.Fail)) {
+            	results.append("\t\t<failure message=\""+statusResult.getMessage()+"\" type=\""+statusResult.getSeverity().name()+"\"/>\n");
+            } else if(statusResult.getStatus().equals(TestCaseResultStatus.Error)||statusResult.getStatus().equals(TestCaseResultStatus.Timeout)) {
+            	results.append("\t\t<error message=\""+statusResult.getMessage()+"\" type=\""+statusResult.getStatus().name()+"\"/>\n");
             }
             results.append("\t</testcase>\n");
         }

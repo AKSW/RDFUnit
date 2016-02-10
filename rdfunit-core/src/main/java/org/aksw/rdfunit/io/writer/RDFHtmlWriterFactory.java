@@ -66,14 +66,18 @@ public final class RDFHtmlWriterFactory {
     
     public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
-    	case shaclFullTestCaseResult:
-    	case shaclSimpleTestCaseResult:
-    	case rlogTestCaseResult:
-    	case extendedTestCaseResult:
         case statusTestCaseResult:
             return new JunitXmlResultsStatusWriter(testExecution, outputStream);
         case aggregatedTestCaseResult:
             return new JunitXmlResultsAggregateWriter(testExecution, outputStream);
+    	case shaclFullTestCaseResult:
+    		return new JunitXmlResultsShaclWriter(testExecution, outputStream);
+    	case shaclSimpleTestCaseResult:
+    		return new JunitXmlResultsShaclWriter(testExecution, outputStream);
+    	case rlogTestCaseResult:
+    		return new JunitXmlResultsRlogWriter(testExecution, outputStream);
+    	case extendedTestCaseResult:
+    		return new JunitXmlResultsRlogWriter(testExecution, outputStream);
         default:
             throw new IllegalArgumentException("Unsupported TestExecution in JunitXmlResultsWriter");
         }
