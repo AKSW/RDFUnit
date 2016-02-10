@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
@@ -32,7 +32,7 @@ public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
         
         for(TestCaseResult result : testExecution.getTestCaseResults()) {
-        	AggregatedTestCaseResult aggregatedResult = (AggregatedTestCaseResult) result;
+        	StatusTestCaseResult aggregatedResult = (StatusTestCaseResult) result;
         	String testcaseElement = String.format(template,
         			result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
             results.append(testcaseElement);

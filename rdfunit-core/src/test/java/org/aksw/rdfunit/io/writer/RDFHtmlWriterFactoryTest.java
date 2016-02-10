@@ -13,7 +13,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.tidy.Tidy;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -61,7 +67,8 @@ public class RDFHtmlWriterFactoryTest {
 
             validateHtml(getHtmlForExecution(testExecution));
 
-            // TODO validateXml(getXmlForExecution(testExecution));
+            // Not working
+            //validateXml(getXmlForExecution(testExecution));
         }
     }
 
@@ -71,7 +78,7 @@ public class RDFHtmlWriterFactoryTest {
         return os.toString("UTF8");
     }
 
-    private String getXlmlForExecution(TestExecution testExecution) throws Exception {
+    private String getXmlForExecution(TestExecution testExecution) throws Exception {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         RDFHtmlWriterFactory.createJunitXmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
@@ -83,5 +90,32 @@ public class RDFHtmlWriterFactoryTest {
         tidy.parse(new StringReader(html), writer);
         assertThat(tidy.getParseErrors()).isZero();
         assertThat(tidy.getParseWarnings()).isZero();
+    }
+
+    private void validateXml(String xml) throws Exception {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(false);
+        factory.setNamespaceAware(true);
+
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        builder.setErrorHandler(new SimpleErrorHandler());
+        // the "parse" method also validates XML, will throw an exception if misformatted
+        builder.parse(new InputSource(new StringReader(xml)));
+
+    }
+
+    class SimpleErrorHandler implements ErrorHandler {
+        public void warning(SAXParseException e) throws SAXException {
+            System.out.println(e.getMessage());
+        }
+
+        public void error(SAXParseException e) throws SAXException {
+            System.out.println(e.getMessage());
+        }
+
+        public void fatalError(SAXParseException e) throws SAXException {
+            System.out.println(e.getMessage());
+        }
     }
 }
