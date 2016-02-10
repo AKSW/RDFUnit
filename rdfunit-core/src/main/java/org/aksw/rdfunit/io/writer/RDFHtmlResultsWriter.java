@@ -70,7 +70,7 @@ public abstract class RDFHtmlResultsWriter extends AbstractRDFWriter implements 
 
     private StringBuffer getHeader() {
         StringBuffer header = new StringBuffer();
-        header.append("<!DOCTYPE html><html><head>\n");
+        header.append("<!DOCTYPE html>\n<html><head>\n");
         header.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\">\n" +
                 "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/css/theme.default.css\" >\n" +
                 "<script type=\"text/javascript\" src=\"http://code.jquery.com/jquery-1.11.0.min.js\"></script>\n" +
@@ -109,7 +109,7 @@ public abstract class RDFHtmlResultsWriter extends AbstractRDFWriter implements 
     private StringBuffer getTestExecutionResults() throws RDFWriterException {
         StringBuffer results = new StringBuffer();
         results.append("<h3>Results</h3>\n");
-        results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\"><thead>\n");
+        results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\" summary=\"Detailed results\"><thead>\n");
         results.append(getResultsHeader());
         results.append("</thead><tbody>\n");
         results.append(getResultsList());
