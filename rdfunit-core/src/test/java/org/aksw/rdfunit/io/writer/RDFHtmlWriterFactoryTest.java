@@ -14,13 +14,17 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.tidy.Tidy;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -68,7 +72,7 @@ public class RDFHtmlWriterFactoryTest {
             validateHtml(getHtmlForExecution(testExecution));
 
             // Not working
-            //validateXml(getXmlForExecution(testExecution));
+            assertThat(validateXml(getXmlForExecution(testExecution))).isTrue();
         }
     }
 
@@ -92,16 +96,24 @@ public class RDFHtmlWriterFactoryTest {
         assertThat(tidy.getParseWarnings()).isZero();
     }
 
-    private void validateXml(String xml) throws Exception {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating(false);
-        factory.setNamespaceAware(true);
+    private boolean validateXml(String xml) throws Exception {
 
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        builder.setErrorHandler(new SimpleErrorHandler());
-        // the "parse" method also validates XML, will throw an exception if misformatted
-        builder.parse(new InputSource(new StringReader(xml)));
+        String schemaFile = "./src/test/resources//org/aksw/rdfunit/io/writer/junit-4.xsd";
+        FileInputStream xsd = new FileInputStream(schemaFile);
+        try
+        {
+            SchemaFactory schemaFactory = 
+                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(new StreamSource(xsd));
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new StringReader(xml)));
+            return true;
+        }
+        catch(Exception ex)
+        {
+        	ex.printStackTrace();
+            return false;
+        }
 
     }
 

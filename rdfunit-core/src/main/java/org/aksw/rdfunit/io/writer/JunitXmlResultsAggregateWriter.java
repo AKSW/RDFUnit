@@ -35,7 +35,7 @@ public class JunitXmlResultsAggregateWriter extends JunitXmlResultsStatusWriter 
         for(TestCaseResult result : testExecution.getTestCaseResults()) {
         	AggregatedTestCaseResult aggregatedResult = (AggregatedTestCaseResult) result;
         	String testcaseElement = String.format(template,
-        			result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+        			aggregatedResult.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
             results.append(testcaseElement);
 
             if(aggregatedResult.getStatus().equals(TestCaseResultStatus.Fail)) {
