@@ -8,8 +8,8 @@ import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import java.io.OutputStream;
 
 
-public final class RDFHtmlWriterFactory {
-    private RDFHtmlWriterFactory() {
+public final class RdfResultsWriterFactory {
+    private RdfResultsWriterFactory() {
     }
 
     public static RDFWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestExecution testExecution) {

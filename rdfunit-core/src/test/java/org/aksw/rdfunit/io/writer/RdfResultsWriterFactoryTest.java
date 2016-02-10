@@ -29,7 +29,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
-public class RDFHtmlWriterFactoryTest {
+public class RdfResultsWriterFactoryTest {
 
     @Parameterized.Parameters(name= "{index}: Result Type: {1}")
     public static Collection<Object[]> resources() throws Exception {
@@ -72,13 +72,13 @@ public class RDFHtmlWriterFactoryTest {
 
     private String getHtmlForExecution(TestExecution testExecution) throws Exception {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        RDFHtmlWriterFactory.createHtmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
+        RdfResultsWriterFactory.createHtmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
     }
 
     private String getXmlForExecution(TestExecution testExecution) throws Exception {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        RDFHtmlWriterFactory.createJunitXmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
+        RdfResultsWriterFactory.createJunitXmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
     }
 
@@ -93,7 +93,7 @@ public class RDFHtmlWriterFactoryTest {
     private void validateXml(String xml) throws Exception {
 
         String schemaFile = "/org/aksw/rdfunit/io/writer/junit-4.xsd";
-        InputStream xsd = RDFHtmlWriterFactoryTest.class.getResourceAsStream(schemaFile);
+        InputStream xsd = RdfResultsWriterFactoryTest.class.getResourceAsStream(schemaFile);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = schemaFactory.newSchema(new StreamSource(xsd));
         Validator validator = schema.newValidator();

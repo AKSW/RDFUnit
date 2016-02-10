@@ -8,9 +8,9 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
-import org.aksw.rdfunit.io.writer.RDFHtmlWriterFactory;
 import org.aksw.rdfunit.io.writer.RDFStreamWriter;
 import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
@@ -260,7 +260,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         TestExecutionWriter.create(monitor.getTestExecution()).write(model);
                         try {
                             if (resultFormat.equals("html")) {
-                                RDFHtmlWriterFactory.createHtmlWriter(monitor.getTestExecution(), os).write(model);
+                                RdfResultsWriterFactory.createHtmlWriter(monitor.getTestExecution(), os).write(model);
                             } else {
                                 new RDFStreamWriter(os, resultFormat).write(model);
                             }
