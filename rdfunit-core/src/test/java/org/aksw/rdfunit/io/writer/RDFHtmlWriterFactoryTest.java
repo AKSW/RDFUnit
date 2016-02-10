@@ -13,18 +13,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.tidy.Tidy;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -70,9 +66,7 @@ public class RDFHtmlWriterFactoryTest {
             TestExecution testExecution = TestExecutionReader.create().read(testExecutionResource);
 
             validateHtml(getHtmlForExecution(testExecution));
-
-            // Not working
-            assertThat(validateXml(getXmlForExecution(testExecution))).isTrue();
+            validateXml(getXmlForExecution(testExecution));
         }
     }
 
@@ -96,38 +90,14 @@ public class RDFHtmlWriterFactoryTest {
         assertThat(tidy.getParseWarnings()).isZero();
     }
 
-    private boolean validateXml(String xml) throws Exception {
+    private void validateXml(String xml) throws Exception {
 
-        String schemaFile = "./src/test/resources//org/aksw/rdfunit/io/writer/junit-4.xsd";
-        FileInputStream xsd = new FileInputStream(schemaFile);
-        try
-        {
-            SchemaFactory schemaFactory = 
-                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new StreamSource(xsd));
-            Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(new StringReader(xml)));
-            return true;
-        }
-        catch(Exception ex)
-        {
-        	ex.printStackTrace();
-            return false;
-        }
-
+        String schemaFile = "/org/aksw/rdfunit/io/writer/junit-4.xsd";
+        InputStream xsd = RDFHtmlWriterFactoryTest.class.getResourceAsStream(schemaFile);
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Schema schema = schemaFactory.newSchema(new StreamSource(xsd));
+        Validator validator = schema.newValidator();
+        validator.validate(new StreamSource(new StringReader(xml)));
     }
 
-    class SimpleErrorHandler implements ErrorHandler {
-        public void warning(SAXParseException e) throws SAXException {
-            throw new RuntimeException(e);
-        }
-
-        public void error(SAXParseException e) throws SAXException {
-            throw new RuntimeException(e);
-        }
-
-        public void fatalError(SAXParseException e) throws SAXException {
-            throw new RuntimeException(e);
-        }
-    }
 }
