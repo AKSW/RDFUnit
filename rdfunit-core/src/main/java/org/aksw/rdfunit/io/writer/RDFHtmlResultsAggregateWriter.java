@@ -16,20 +16,7 @@ import java.io.OutputStream;
  */
 public class RDFHtmlResultsAggregateWriter extends RDFHtmlResultsStatusWriter {
 
-    /**
-     * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
-    public RDFHtmlResultsAggregateWriter(TestExecution testExecution, String filename) {
-        super(testExecution, filename);
-    }
 
-    /**
-     * <p>Constructor for RDFHTMLResultsAggregateWriter.</p>
-     *
-     * @param outputStream a {@link java.io.OutputStream} object.
-     */
     public RDFHtmlResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }

@@ -17,14 +17,6 @@ import java.io.OutputStream;
  */
 public class RDFHtmlResultsShaclWriter extends RDFHtmlResultsWriter {
 
-    /**
-     * <p>Constructor for RDFHTMLResultsRlogWriter.</p>
-     *
-     * @param filename a {@link String} object.
-     */
-    public RDFHtmlResultsShaclWriter(TestExecution testExecution, String filename) {
-        super(testExecution, filename);
-    }
 
     /**
      * <p>Constructor for RDFHTMLResultsRlogWriter.</p>

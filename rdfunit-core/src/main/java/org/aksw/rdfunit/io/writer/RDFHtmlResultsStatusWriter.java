@@ -9,10 +9,6 @@ import java.io.OutputStream;
 
 public class RDFHtmlResultsStatusWriter extends RDFHtmlResultsWriter {
 
-    public RDFHtmlResultsStatusWriter(TestExecution testExecution, String filename) {
-        super(testExecution, filename);
-    }
-
     public RDFHtmlResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);
     }
