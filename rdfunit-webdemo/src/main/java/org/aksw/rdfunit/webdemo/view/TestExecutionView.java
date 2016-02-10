@@ -260,7 +260,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         TestExecutionWriter.create(monitor.getTestExecution()).write(model);
                         try {
                             if (resultFormat.equals("html")) {
-                                RDFHtmlWriterFactory.createHTMLWriter(monitor.getTestExecution(), os).write(model);
+                                RDFHtmlWriterFactory.createHtmlWriter(monitor.getTestExecution(), os).write(model);
                             } else {
                                 new RDFStreamWriter(os, resultFormat).write(model);
                             }
