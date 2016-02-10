@@ -19,13 +19,13 @@ public class RDFHtmlResultsStatusWriter extends RDFHtmlResultsWriter {
 
     @Override
     protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Description</th></tr>");
+        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Description</th></tr>\n");
     }
 
     @Override
     protected StringBuffer getResultsList()  {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
                 .map(StatusTestCaseResult.class::cast)

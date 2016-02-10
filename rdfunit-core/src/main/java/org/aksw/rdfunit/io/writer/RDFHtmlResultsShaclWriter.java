@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -38,17 +38,17 @@ public class RDFHtmlResultsShaclWriter extends RDFHtmlResultsWriter {
     /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Level</th><th>Message</th><th>Resource</th><th>Test Case</th></tr>");
+        return new StringBuffer("<tr><th>Level</th><th>Message</th><th>Resource</th><th>Test Case</th></tr>\n");
     }
 
     /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><a href=\"%s\">%s</a></td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
-                .map(ShaclTestCaseResult.class::cast)
+                .map(SimpleShaclTestCaseResult.class::cast)
                 .forEach(result -> results.append(
                         String.format(template,
                                 getStatusClass(result.getSeverity()),

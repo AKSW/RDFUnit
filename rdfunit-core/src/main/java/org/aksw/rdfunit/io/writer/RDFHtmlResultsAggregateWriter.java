@@ -37,14 +37,14 @@ public class RDFHtmlResultsAggregateWriter extends RDFHtmlResultsStatusWriter {
     /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>");
+        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>\n");
     }
 
     /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
             .map(AggregatedTestCaseResult.class::cast)

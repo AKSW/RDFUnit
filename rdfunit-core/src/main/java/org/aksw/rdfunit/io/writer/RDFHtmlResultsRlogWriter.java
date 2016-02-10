@@ -26,7 +26,7 @@ public class RDFHtmlResultsRlogWriter extends RDFHtmlResultsWriter {
     @Override
     protected StringBuffer getResultsList() {
         StringBuffer results = new StringBuffer();
-        String template = "<tr class=\"%s\"><td>%s</td><td>%s</ts><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
+        String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
         testExecution.getTestCaseResults().stream()
                 .map(RLOGTestCaseResult.class::cast)
