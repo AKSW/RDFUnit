@@ -20,7 +20,6 @@ script:
   - "cd rdfunit-webdemo"
   - "mvn clean install"
   - "cd .."
-  - "sh bin/create-debian-jar-packages"
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
 notifications:
