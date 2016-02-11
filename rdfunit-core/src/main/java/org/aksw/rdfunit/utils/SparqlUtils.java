@@ -56,7 +56,7 @@ public final class SparqlUtils {
                 QuerySolution qs = results.next();
                 String annotationProperty = qs.get("annotationProperty").toString();
                 RDFNode annotationValue = qs.get("annotationValue");
-                annotations.add(new ResultAnnotationImpl.Builder(annotationProperty).setValueRDFUnit(annotationValue).build());
+                annotations.add(new ResultAnnotationImpl.Builder(uri, annotationProperty).setValueRDFUnit(annotationValue).build());
             }
 
         } catch (Exception e) {

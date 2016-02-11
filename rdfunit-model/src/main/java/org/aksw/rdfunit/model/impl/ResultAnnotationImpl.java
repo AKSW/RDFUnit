@@ -71,8 +71,8 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
             this.property = checkNotNull(property);
         }
 
-        public Builder(String propertyIri) {
-            this(null, ResourceFactory.createProperty(propertyIri));
+        public Builder(String elementUri, String propertyIri) {
+            this(ResourceFactory.createResource(elementUri), ResourceFactory.createProperty(propertyIri));
         }
 
         public Builder setValue(RDFNode value) {

@@ -130,10 +130,10 @@ public class TestExecutionImpl implements TestExecution {
             return this;
         }
 
-        public Builder setTestSuite(TestSuite testSuite) {
+        /*public Builder setTestSuite(TestSuite testSuite) {
             this.testSuite = testSuite;
             return this;
-        }
+        } */
 
         public Builder setTestCaseExecutionType(TestCaseExecutionType testCaseExecutionType) {
             this.testCaseExecutionType = testCaseExecutionType;
