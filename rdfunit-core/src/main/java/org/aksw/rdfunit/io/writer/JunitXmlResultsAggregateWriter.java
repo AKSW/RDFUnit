@@ -17,11 +17,6 @@ import java.io.OutputStream;
  */
 public class JunitXmlResultsAggregateWriter extends JunitXmlResultsStatusWriter {
 
-
-    public JunitXmlResultsAggregateWriter(TestExecution testExecution, String filename) {
-    	super(testExecution, filename);
-    }
-
     public JunitXmlResultsAggregateWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);
     }
@@ -33,19 +28,22 @@ public class JunitXmlResultsAggregateWriter extends JunitXmlResultsStatusWriter 
 
         testExecution.getTestCaseResults().stream()
                 .map(AggregatedTestCaseResult.class::cast)
-                .forEach( result -> {
-                    String testcaseElement = String.format(template,
-                            result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-                    results.append(testcaseElement);
+                .forEach( result -> printResult(results, template, result));
 
-                    if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
-                        results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
-                        results.append("\t\t<system-out>Errors:"+result.getErrorCount()+" Prevalence:"+result.getPrevalenceCount().orElse(-1L)+"</system-out>\n");
-                    } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().name().equals("Timeout")) {
-                        results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
-                    }
-                    results.append("\t</testcase>\n");
-                });
         return results;
+    }
+
+    private void printResult(StringBuffer results, String template, AggregatedTestCaseResult result) {
+        String testcaseElement = String.format(template,
+                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+        results.append(testcaseElement);
+
+        if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
+            results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
+            results.append("\t\t<system-out>Errors:"+result.getErrorCount()+" Prevalence:"+result.getPrevalenceCount().orElse(-1L)+"</system-out>\n");
+        } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().name().equals("Timeout")) {
+            results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
+        }
+        results.append("\t</testcase>\n");
     }
 }

@@ -20,20 +20,24 @@ public class RdfHtmlResultsRlogWriter extends RdfHtmlResultsWriter {
 
     @Override
     protected StringBuffer getResultsList() {
-        StringBuffer results = new StringBuffer();
+        StringBuffer htmlString = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
         testExecution.getTestCaseResults().stream()
                 .map(RLOGTestCaseResult.class::cast)
-                .forEach(result -> results.append(
-                        String.format(template,
-                                RdfHtmlResultsShaclWriter.getStatusClass(result.getSeverity()),
-                                "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
-                                result.getMessage(),
-                                result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>
-                                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"))
-                        ));
-        return results;
+                .forEach(result -> printResult(htmlString, template, result));
+        return htmlString;
+    }
+
+    private StringBuffer printResult(StringBuffer htmlString, String template, RLOGTestCaseResult result) {
+        return htmlString.append(
+                String.format(template,
+                        RdfHtmlResultsShaclWriter.getStatusClass(result.getSeverity()),
+                        "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
+                        result.getMessage(),
+                        result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>
+                        result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"))
+                );
     }
 
 }

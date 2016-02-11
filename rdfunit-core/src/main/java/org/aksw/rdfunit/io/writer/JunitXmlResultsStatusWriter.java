@@ -17,10 +17,6 @@ import java.io.OutputStream;
  */
 public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
 
-    public JunitXmlResultsStatusWriter(TestExecution testExecution, String filename) {
-    	super(testExecution, filename);
-    }
-
     public JunitXmlResultsStatusWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);
     }
@@ -32,36 +28,24 @@ public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
         
         testExecution.getTestCaseResults().stream()
                 .map(StatusTestCaseResult.class::cast)
-                .forEach( result -> {
-                    String testcaseElement = String.format(template,
-                            result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
-                    results.append(testcaseElement);
-
-                    if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
-                        results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
-                    } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().equals(TestCaseResultStatus.Timeout)) {
-                        results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
-                    }
-                    results.append("\t</testcase>\n");
-                });
+                .forEach( result -> printResult(results, template, result));
 
         return results;
     }
 
-    protected String getStatusClass(TestCaseResultStatus status) {
+    private void printResult(StringBuffer results, String template, StatusTestCaseResult result) {
+        String testcaseElement = String.format(template,
+                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+        results.append(testcaseElement);
 
-        switch (status) {
-            case Success:
-                return "success";
-            case Fail:
-                return "danger";
-            case Timeout:
-                return "warning";
-            case Error:
-                return "warning";
-            default:
-                return "";
+        if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
+            results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
+        } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().equals(TestCaseResultStatus.Timeout)) {
+            results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
         }
+        results.append("\t</testcase>\n");
     }
+
+
 
 }

@@ -30,23 +30,27 @@ public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
     /** {@inheritDoc} */
     @Override
     protected StringBuffer getResultsList() {
-        StringBuffer results = new StringBuffer();
+        StringBuffer htmlString = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
             .map(AggregatedTestCaseResult.class::cast)
-            .forEach(result -> results.append(
-                String.format(template,
-                        getStatusClass(result.getStatus()),
-                        "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
-                        "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
-                        result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
-                        result.getMessage(),
-                        result.getErrorCount(),
-                        result.getPrevalenceCount().orElse(-1L)
-                )));
+            .forEach(result -> printResult(htmlString, template, result));
 
-        return results;
+        return htmlString;
 
+    }
+
+    private StringBuffer printResult(StringBuffer htmlString, String template, AggregatedTestCaseResult result) {
+        return htmlString.append(
+            String.format(template,
+                    getStatusClass(result.getStatus()),
+                    "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
+                    "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
+                    result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
+                    result.getMessage(),
+                    result.getErrorCount(),
+                    result.getPrevalenceCount().orElse(-1L)
+            ));
     }
 }

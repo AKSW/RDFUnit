@@ -20,27 +20,31 @@ public class RdfHtmlResultsStatusWriter extends RdfHtmlResultsWriter {
 
     @Override
     protected StringBuffer getResultsList()  {
-        StringBuffer results = new StringBuffer();
+        StringBuffer htmlString = new StringBuffer();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
                 .map(StatusTestCaseResult.class::cast)
-                .forEach(result -> results.append(
-                    String.format(template,
-                        getStatusClass(result.getStatus()),
-                        "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
-                        "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
-                        result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
-                        result.getMessage()
-                )));
+                .forEach(result -> printResult(htmlString, template, result));
 
-        return results;
+        return htmlString;
+    }
+
+    private StringBuffer printResult(StringBuffer htmlString, String template, StatusTestCaseResult result) {
+        return htmlString.append(
+            String.format(template,
+                getStatusClass(result.getStatus()),
+                "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
+                "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
+                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
+                result.getMessage()
+        ));
     }
 
     /**
      * return a css class
      */
-    protected String getStatusClass(TestCaseResultStatus status) {
+    String getStatusClass(TestCaseResultStatus status) {
 
         switch (status) {
             case Success:
