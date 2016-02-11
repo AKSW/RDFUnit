@@ -1,2 +1,4 @@
 *.ttl
 *.html
+*.gz
+*.jsonld
