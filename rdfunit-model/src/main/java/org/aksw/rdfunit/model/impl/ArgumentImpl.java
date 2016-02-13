@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.impl;
 import lombok.*;
 import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.interfaces.Argument;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 
@@ -21,7 +22,7 @@ import java.util.Optional;
 public final class ArgumentImpl implements Argument {
 
     @Getter @NonNull private final Resource element;
-    @Getter @NonNull private final Resource predicate;
+    @Getter @NonNull private final Property predicate;
     @Getter @NonNull private final String comment;
     @Getter private final boolean isOptional;
     private final Resource valueType;

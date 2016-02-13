@@ -7,6 +7,7 @@ import lombok.Singular;
 import lombok.Value;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 import java.util.Set;
@@ -24,14 +25,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Builder
 @Value
 public class PropertyValuePairSet {
-    @Getter
-    @Singular
-    private final ImmutableSet<PropertyValuePair> annotations;
+    @Getter @Singular private final ImmutableSet<PropertyValuePair> annotations;
 
     private PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
         this.annotations = ImmutableSet.copyOf(
                 groupAnnotationsPerProperty(
                         checkNotNull(annotations)));
+    }
+
+    public static PropertyValuePairSet createFromResource(Resource resource) {
+        PropertyValuePairSetBuilder builder = PropertyValuePairSet.builder();
+        resource.listProperties().toList().stream()
+                .map(smt -> PropertyValuePair.create(smt.getPredicate(), smt.getObject()))
+                .forEach(s -> builder.annotation(s));
+
+        return builder.build();
     }
 
     public boolean contains(Property property) {

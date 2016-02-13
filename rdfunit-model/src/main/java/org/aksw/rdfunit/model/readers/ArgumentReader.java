@@ -5,6 +5,7 @@ import org.aksw.rdfunit.model.impl.ArgumentImpl;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.vocabulary.RDFS;
 
@@ -39,7 +40,7 @@ public final class ArgumentReader implements ElementReader<Argument> {
 
         // get predicate
         for (Statement smt : resource.listProperties(SHACL.predicate).toList()) {
-            argumentBuilder = argumentBuilder.predicate(smt.getObject().asResource());
+            argumentBuilder = argumentBuilder.predicate(ResourceFactory.createProperty(smt.getObject().asResource().getURI()));
         }
 
         checkNotNull(argumentBuilder);

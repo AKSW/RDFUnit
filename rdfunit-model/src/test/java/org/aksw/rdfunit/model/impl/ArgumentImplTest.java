@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.impl;
 import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArgumentImplTest {
 
     private final Resource element = ResourceFactory.createResource("http://example.com/argument/11");
-    private final Resource predicate = ResourceFactory.createResource(SHACL.namespace + "arg1");
+    private final Property predicate = ResourceFactory.createProperty(SHACL.namespace + "arg1");
 
     private final Argument argDef = ArgumentImpl.builder().element(element).predicate(predicate).comment("").build();
 

@@ -29,4 +29,10 @@ ex:MyShape
 		sh:datatype xsd:string ;
 		sh:class ex:SuperClass ;
 	] ;
+
+		sh:inverseProperty [
+    		sh:predicate ex:value ;
+    		sh:datatype xsd:string ;
+    		sh:class ex:SuperClass ;
+    	] ;
 .

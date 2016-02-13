@@ -1,12 +1,16 @@
 package org.aksw.rdfunit.model.readers;
 
+import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.ShapeScopeType;
 import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -25,6 +29,13 @@ public class ShapeReaderTest {
 
     private static final String shapeResource = "/org/aksw/rdfunit/shacl/sampleShape.ttl" ;
 
+    @Before
+    public void setUp() throws Exception {
+        // Needed to resolve the patterns
+        RDFUnit rdfUnit = new RDFUnit();
+        rdfUnit.init();
+    }
+
     @Test
     public void testRead() throws Exception {
 
@@ -32,7 +43,7 @@ public class ShapeReaderTest {
 
         List<Shape> shapes = shapesModel.listResourcesWithProperty(RDF.type, SHACL.Shape).toList()
                 .stream()
-                .map( r -> ShapeReader.create().read(r))
+                .map( r -> ShapeReader.create(TemplateRegistry.createCore()).read(r))
                 .collect(Collectors.toList());
 
         assertThat(shapes)
@@ -40,6 +51,32 @@ public class ShapeReaderTest {
 
         Shape sh = shapes.get(0);
 
+        checkScope(sh);
+
+        testPropertyGroups(sh);
+    }
+
+    private void testPropertyGroups(Shape sh) {
+        assertThat(sh.getPropertyConstraintGroups())
+                .hasSize(2);
+
+        // have one normal & one inverse property
+        assertThat(sh.getPropertyConstraintGroups().stream().map(PropertyConstraintGroup::isInverse).distinct().collect(Collectors.toList()))
+                .hasSize(2);
+
+        // make sure exact same with reverse
+        //also verifies equality checks
+        PropertyConstraintGroup pcg1 = sh.getPropertyConstraintGroups().get(0);
+        PropertyConstraintGroup pcg2 = sh.getPropertyConstraintGroups().get(1);
+
+        assertThat(pcg1.getPropertyConstraints().size())
+                .isEqualTo(pcg2.getPropertyConstraints().size());
+
+        pcg1.getPropertyConstraints().stream()
+                .forEach( p -> assertThat(pcg2.getPropertyConstraints().contains(p)));
+    }
+
+    private void checkScope(Shape sh) {
         assertThat(sh.getScopes())
                 .hasSize(ShapeScopeType.values().length);
 

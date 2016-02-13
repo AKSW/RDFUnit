@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A SHACL Shape
@@ -14,6 +15,6 @@ public interface Shape extends Element{
 
     Collection<ShapeScope> getScopes();
 
-    Collection<PropertyConstraintGroup> getPropertyConstraintGroups();
+    List<PropertyConstraintGroup> getPropertyConstraintGroups();
 
 }

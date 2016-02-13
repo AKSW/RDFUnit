@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "element")
 public class Binding implements Element {
     private final Resource element;
     private final PatternParameter parameter;

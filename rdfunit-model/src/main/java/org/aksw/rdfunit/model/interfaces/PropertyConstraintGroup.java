@@ -1,8 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
+import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.apache.jena.rdf.model.Property;
 
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author Dimitris Kontokostas
@@ -19,7 +20,12 @@ public interface PropertyConstraintGroup extends Element{
     /**
      * The list of property constraints
      */
-    Collection<PropertyConstraint> getPropertyConstraints();
+    Set<PropertyConstraint> getPropertyConstraints();
+
+    /**
+     * Raw access to all values in this PropertyGroup
+     */
+    PropertyValuePairSet getPropertyValuePairSet();
 
     /**
      * return true if it is an inverse property constraint, false otherwise

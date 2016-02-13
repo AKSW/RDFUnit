@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 9/16/13 1:14 PM
  * @version $Id: $Id
  */
-@ToString
+@ToString (exclude = {"sparqlWherePattern", "sparqlPatternPrevalence"})
 @EqualsAndHashCode
 public final class PatternImpl implements Pattern {
     private final Resource element;

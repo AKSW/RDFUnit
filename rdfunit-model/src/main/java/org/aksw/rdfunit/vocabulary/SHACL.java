@@ -58,6 +58,11 @@ public final class SHACL {
     public static final Property scopeClass = property("scopeClass");
     public static final Property scopeNode = property("scopeNode");
     public static final Property scope = property("scope");
+    public static final Property property = property("property");
+    public static final Property inverseProperty = property("inverseProperty");
+    //public static final Property cachable = property("cachable");
+    //public static final Property cachable = property("cachable");
+    //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");
 
 

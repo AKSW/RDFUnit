@@ -6,7 +6,7 @@ import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
 import org.apache.jena.rdf.model.Resource;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * A simple Shape implementation
@@ -20,7 +20,7 @@ import java.util.Collection;
 public class ShapeImpl implements Shape {
 
     @Getter @NonNull private final Resource element;
-    @Getter @NonNull @Singular private final Collection<ShapeScope> scopes;
-    @Getter @NonNull @Singular private final Collection<PropertyConstraintGroup> propertyConstraintGroups;
+    @Getter @NonNull @Singular private final List<ShapeScope> scopes;
+    @Getter @NonNull @Singular private final List<PropertyConstraintGroup> propertyConstraintGroups;
 
 }

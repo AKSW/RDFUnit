@@ -18,7 +18,7 @@ public interface PropertyConstraint {
     /**
      * Gets the constraint group that contains this constraint
      */
-    PropertyConstraintGroup getPropertyConstraintGroup();
+    //PropertyConstraintGroup getPropertyConstraintGroup();
 
     //**
     // * a shortcut to get the constraining property

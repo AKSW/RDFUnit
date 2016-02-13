@@ -62,7 +62,7 @@ abstract class AbstractTestCaseImpl implements TestCase {
 
     @Override
     public String getAbrTestURI() {
-        return getTestURI().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
+        return element.getLocalName();
     }
 
 
