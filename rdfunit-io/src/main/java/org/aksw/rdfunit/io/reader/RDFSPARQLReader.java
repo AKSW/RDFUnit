@@ -12,7 +12,7 @@ import org.apache.jena.rdf.model.Model;
  * @since 11/14/13 8:58 AM
  * @version $Id: $Id
  */
-public class RDFSPARQLReader extends AbstractRDFReader implements RDFReader  {
+public class RDFSPARQLReader implements RDFReader  {
 
     private final String endpoint;
     private final String graph;

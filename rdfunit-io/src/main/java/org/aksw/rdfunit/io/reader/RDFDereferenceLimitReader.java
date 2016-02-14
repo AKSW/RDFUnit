@@ -16,7 +16,7 @@ import java.net.URL;
  * @since 11 /14/13 8:48 AM
  * @version $Id: $Id
  */
-public class RDFDereferenceLimitReader extends AbstractRDFReader implements RDFReader {
+public class RDFDereferenceLimitReader implements RDFReader {
 
     /**
      * the URI to be dereferenced

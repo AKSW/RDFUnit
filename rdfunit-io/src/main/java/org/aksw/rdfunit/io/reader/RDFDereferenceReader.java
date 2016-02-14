@@ -16,7 +16,7 @@ import java.io.File;
  * @since 11/14/13 8:48 AM
  * @version $Id: $Id
  */
-public class RDFDereferenceReader extends AbstractRDFReader implements RDFReader {
+public class RDFDereferenceReader implements RDFReader {
 
     private final String uri;
 

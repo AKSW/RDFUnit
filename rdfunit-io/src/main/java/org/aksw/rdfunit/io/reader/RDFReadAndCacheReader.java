@@ -13,7 +13,7 @@ import org.apache.jena.rdf.model.Model;
  * @since 11/14/13 1:09 PM
  * @version $Id: $Id
  */
-public class RDFReadAndCacheReader extends AbstractRDFReader implements RDFReader  {
+public class RDFReadAndCacheReader implements RDFReader  {
     private final RDFReader reader;
     private final RDFWriter writer;
 

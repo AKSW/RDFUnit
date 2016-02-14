@@ -1,7 +1,9 @@
 package org.aksw.rdfunit.io.reader;
 
 import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 /**
  * Triple reader interface
@@ -18,7 +20,15 @@ public interface RDFReader {
      * @return a {@code Model} with the data read
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
-    Model read() throws RDFReaderException ;
+    default Model read() throws RDFReaderException {
+        try {
+            Model model = ModelFactory.createDefaultModel();
+            read(model);
+            return model;
+        } catch (Exception e) {
+            throw new RDFReaderException(e);
+        }
+    }
 
     /**
      * Reads RDF and writes the data in the Model provided by the user
@@ -34,7 +44,15 @@ public interface RDFReader {
      * @return a {@link org.apache.jena.query.Dataset} object.
      * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
      */
-    Dataset readDataset() throws RDFReaderException ;
+    default Dataset readDataset() throws RDFReaderException {
+        try {
+            Dataset dataset = DatasetFactory.create();
+            readDataset(dataset);
+            return dataset;
+        } catch (Exception e) {
+            throw new RDFReaderException(e);
+        }
+    }
 
     /**
      * <p>readDataset.</p>

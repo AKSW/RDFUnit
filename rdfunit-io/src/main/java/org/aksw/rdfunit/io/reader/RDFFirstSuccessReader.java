@@ -13,7 +13,7 @@ import java.util.Collection;
  * @since 11/14/13 8:51 AM
  * @version $Id: $Id
  */
-public class RDFFirstSuccessReader extends AbstractRDFReader implements RDFReader  {
+public class RDFFirstSuccessReader implements RDFReader  {
 
     private final Collection<RDFReader> readers;
 
