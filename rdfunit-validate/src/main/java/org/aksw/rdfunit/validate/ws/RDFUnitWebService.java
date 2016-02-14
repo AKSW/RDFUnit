@@ -3,9 +3,9 @@ package org.aksw.rdfunit.validate.ws;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.io.format.SerializationFormat;
-import org.aksw.rdfunit.io.writer.RDFWriter;
-import org.aksw.rdfunit.io.writer.RDFWriterException;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
+import org.aksw.rdfunit.io.writer.RdfWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.TestSource;
@@ -81,7 +81,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
 
         try {
             writeResults(configuration, results, httpServletResponse);
-        } catch (RDFWriterException e) {
+        } catch (RdfWriterException e) {
             printMessage(httpServletResponse, e.getMessage());
         }
     }
@@ -89,15 +89,15 @@ public abstract class RDFUnitWebService extends HttpServlet {
     /**
      * Writes the output of the validation to the HttpServletResponse
      */
-    private void writeResults(final RDFUnitConfiguration configuration, final TestExecution testExecution, HttpServletResponse httpServletResponse) throws RDFWriterException, IOException {
+    private void writeResults(final RDFUnitConfiguration configuration, final TestExecution testExecution, HttpServletResponse httpServletResponse) throws RdfWriterException, IOException {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
         if (serializationFormat == null) {
-            throw new RDFWriterException("Invalid output format");
+            throw new RdfWriterException("Invalid output format");
         }
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());
-        RDFWriter RDFWriter = RdfResultsWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, testExecution);
-        RDFWriter.write(ModelFactory.createDefaultModel());
+        RdfWriter RdfWriter = RdfResultsWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, testExecution);
+        RdfWriter.write(ModelFactory.createDefaultModel());
     }
 
     /**

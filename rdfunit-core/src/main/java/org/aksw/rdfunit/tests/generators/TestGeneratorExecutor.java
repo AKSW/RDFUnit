@@ -4,7 +4,7 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.io.reader.RdfStreamReader;
-import org.aksw.rdfunit.io.writer.RDFFileWriter;
+import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
@@ -150,7 +150,7 @@ public class TestGeneratorExecutor {
             // cannot read from file  / generate
             Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
-            TestUtils.writeTestsToFile(testsAuto, new RDFFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
+            TestUtils.writeTestsToFile(testsAuto, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
             log.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
         }
 

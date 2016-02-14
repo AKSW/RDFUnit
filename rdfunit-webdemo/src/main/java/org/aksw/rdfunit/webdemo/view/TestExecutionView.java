@@ -7,10 +7,10 @@ import com.vaadin.ui.*;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.io.format.FormatService;
-import org.aksw.rdfunit.io.writer.RDFFileWriter;
-import org.aksw.rdfunit.io.writer.RDFStreamWriter;
-import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
+import org.aksw.rdfunit.io.writer.RdfStreamWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
@@ -240,13 +240,13 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 if (resultFormat.equals("html")) {
                     RdfResultsWriterFactory.createHtmlWriter(monitor.getTestExecution(), os).write(model);
                 } else {
-                    new RDFStreamWriter(os, resultFormat).write(model);
+                    new RdfStreamWriter(os, resultFormat).write(model);
                 }
                 // cache results in result folder
                 long randomNumber = (new Random()).nextInt(10000);
                 String fileLocation = RDFUnitDemoSession.getBaseDir()+ "results/" + System.currentTimeMillis() + "-" + randomNumber  + ".ttl";
-                new RDFFileWriter(fileLocation, "TURTLE").write(model);
-            } catch (RDFWriterException e) {
+                new RdfFileWriter(fileLocation, "TURTLE").write(model);
+            } catch (RdfWriterException e) {
                 Notification.show("Error occurred in Serialization", Notification.Type.ERROR_MESSAGE);
                 log.error("Error occurred in Serialization", e);
             }

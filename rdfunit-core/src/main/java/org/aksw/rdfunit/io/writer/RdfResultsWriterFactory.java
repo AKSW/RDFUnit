@@ -12,30 +12,30 @@ public final class RdfResultsWriterFactory {
     private RdfResultsWriterFactory() {
     }
 
-    public static RDFWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestExecution testExecution) {
+    public static RdfWriter createWriterFromFormat(String filenameWithoutExtension, SerializationFormat serializationFormat, TestExecution testExecution) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHtmlWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else if (serializationFormat.equals(FormatService.getOutputFormat("junitxml"))) {
             return createJunitXmlWriter(testExecution, filenameWithoutExtension + "." + serializationFormat.getExtension());
         } else {
-            return new RDFFileWriter(filenameWithoutExtension + "." + serializationFormat.getExtension(), serializationFormat.getName());
+            return new RdfFileWriter(filenameWithoutExtension + "." + serializationFormat.getExtension(), serializationFormat.getName());
         }
     }
 
 
-    public static RDFWriter createWriterFromFormat(OutputStream outputStream, SerializationFormat serializationFormat, TestExecution testExecution) {
+    public static RdfWriter createWriterFromFormat(OutputStream outputStream, SerializationFormat serializationFormat, TestExecution testExecution) {
         if (serializationFormat.equals(FormatService.getOutputFormat("html"))) {
             return createHtmlWriter(testExecution, outputStream);
         } else if (serializationFormat.equals(FormatService.getOutputFormat("junitxml"))) {
             return createJunitXmlWriter(testExecution, outputStream);
         } else {
-            return new RDFStreamWriter(outputStream, serializationFormat.getName());
+            return new RdfStreamWriter(outputStream, serializationFormat.getName());
         }
     }
 
 
     public static RdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, String filename) {
-        return createHtmlWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
+        return createHtmlWriter(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 
 
@@ -61,7 +61,7 @@ public final class RdfResultsWriterFactory {
     }
     
     public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, String filename) {
-        return createJunitXmlWriter(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
+        return createJunitXmlWriter(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
     
     public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, OutputStream outputStream) {

@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class RdfHtmlResultsWriter implements RDFWriter  {
+public abstract class RdfHtmlResultsWriter implements RdfWriter {
     protected final TestExecution testExecution;
     private final OutputStream outputStream;
 
@@ -36,12 +36,12 @@ public abstract class RdfHtmlResultsWriter implements RDFWriter  {
      * @param filename a {@link java.lang.String} object.
      */
     public RdfHtmlResultsWriter(TestExecution testExecution, String filename) {
-        this(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
+        this(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void write(QueryExecutionFactory qef) throws RDFWriterException {
+    public void write(QueryExecutionFactory qef) throws RdfWriterException {
 
         try {
             // TODO not efficient StringBuilder.toString().getBytes()
@@ -55,7 +55,7 @@ public abstract class RdfHtmlResultsWriter implements RDFWriter  {
             outputStream.close();
 
         } catch (IOException e) {
-            throw new RDFWriterException("Cannot write HTML", e);
+            throw new RdfWriterException("Cannot write HTML", e);
         }
     }
 
@@ -85,7 +85,7 @@ public abstract class RdfHtmlResultsWriter implements RDFWriter  {
         return new StringBuffer("</body>\n</html>");
     }
 
-    private StringBuffer getTestExecutionStats() throws RDFWriterException {
+    private StringBuffer getTestExecutionStats() throws RdfWriterException {
         StringBuffer stats = new StringBuffer();
         stats.append("<h2>TestExecution: ").append(testExecution.getTestExecutionUri()).append("</h2>\n");
         //TODO for some reason, using the "testExecution" URI does not work :/
@@ -106,7 +106,7 @@ public abstract class RdfHtmlResultsWriter implements RDFWriter  {
         return stats;
     }
 
-    private StringBuffer getTestExecutionResults() throws RDFWriterException {
+    private StringBuffer getTestExecutionResults() throws RdfWriterException {
         StringBuffer results = new StringBuffer();
         results.append("<h3>Results</h3>\n");
         results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\" summary=\"Detailed results\"><thead>\n");

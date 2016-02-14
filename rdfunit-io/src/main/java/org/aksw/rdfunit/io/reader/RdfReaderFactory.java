@@ -2,8 +2,8 @@ package org.aksw.rdfunit.io.reader;
 
 import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.format.FormatService;
-import org.aksw.rdfunit.io.writer.RDFFileWriter;
-import org.aksw.rdfunit.io.writer.RDFWriter;
+import org.aksw.rdfunit.io.writer.RdfFileWriter;
+import org.aksw.rdfunit.io.writer.RdfWriter;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -42,7 +42,7 @@ public final class RdfReaderFactory {
         readers.add(new RdfDereferenceReader(uri));
 
         RdfReader r = new RdfFirstSuccessReader(readers);
-        RDFWriter w = new RDFFileWriter(filename, true);
+        RdfWriter w = new RdfFileWriter(filename, true);
         return new RdfReadAndCacheReader(r, w);
 
     }

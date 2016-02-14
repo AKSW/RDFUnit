@@ -12,24 +12,24 @@ import java.util.Collection;
  * @since 11/14/13 1:13 PM
  * @version $Id: $Id
  */
-public class RDFMultipleWriter implements RDFWriter  {
-    private final Collection<RDFWriter> writers;
+public class RdfMultipleWriter implements RdfWriter {
+    private final Collection<RdfWriter> writers;
 
     /**
      * <p>Constructor for RDFMultipleWriter.</p>
      *
      * @param writers a {@link java.util.Collection} object.
      */
-    public RDFMultipleWriter(Collection<RDFWriter> writers) {
+    public RdfMultipleWriter(Collection<RdfWriter> writers) {
         super();
         this.writers = writers;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void write(QueryExecutionFactory model) throws RDFWriterException {
+    public void write(QueryExecutionFactory model) throws RdfWriterException {
         //TODO check for early exceptions
-        for (RDFWriter w : writers) {
+        for (RdfWriter w : writers) {
             if (w != null) {
                 w.write(model);
             }

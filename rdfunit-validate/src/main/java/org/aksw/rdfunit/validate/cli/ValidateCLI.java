@@ -7,10 +7,10 @@ import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
-import org.aksw.rdfunit.io.writer.RDFMultipleWriter;
-import org.aksw.rdfunit.io.writer.RDFWriter;
-import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RdfMultipleWriter;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
+import org.aksw.rdfunit.io.writer.RdfWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -140,19 +140,19 @@ public class ValidateCLI {
             new File(resultsFolder).mkdirs();
         }
 
-        ArrayList<RDFWriter> outputWriters = new ArrayList<>();
+        ArrayList<RdfWriter> outputWriters = new ArrayList<>();
         for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
             outputWriters.add(RdfResultsWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution));
         }
 
-        RDFWriter resultWriter = new RDFMultipleWriter(outputWriters);
+        RdfWriter resultWriter = new RdfMultipleWriter(outputWriters);
         try {
             Model model = ModelFactory.createDefaultModel();
             TestExecutionWriter.create(testExecution).write(model);
 
             resultWriter.write(model);
             log.info("Results stored in: " + filename + ".*");
-        } catch (RDFWriterException e) {
+        } catch (RdfWriterException e) {
             log.error("Cannot write tests to file: " + e.getMessage());
         }
 

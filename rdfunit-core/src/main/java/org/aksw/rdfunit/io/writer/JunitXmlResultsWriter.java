@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class JunitXmlResultsWriter implements RDFWriter  {
+public abstract class JunitXmlResultsWriter implements RdfWriter {
 	protected final TestExecution testExecution;
 	private final OutputStream outputStream;
 
@@ -38,12 +38,12 @@ public abstract class JunitXmlResultsWriter implements RDFWriter  {
      * @param filename a {@link java.lang.String} object.
      */
     public JunitXmlResultsWriter(TestExecution testExecution, String filename) {
-        this(testExecution, RDFStreamWriter.getOutputStreamFromFilename(filename));
+        this(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void write(QueryExecutionFactory qef) throws RDFWriterException {
+    public void write(QueryExecutionFactory qef) throws RdfWriterException {
   
         try {
             // TODO not efficient StringBuilder.toString().getBytes()
@@ -53,7 +53,7 @@ public abstract class JunitXmlResultsWriter implements RDFWriter  {
             outputStream.write(getFooter().toString().getBytes("UTF8"));
             outputStream.close();
         } catch (IOException e) {
-            throw new RDFWriterException("Cannot write XML", e);
+            throw new RdfWriterException("Cannot write XML", e);
         }
     }
 

@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.utils;
 
 import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
-import org.aksw.rdfunit.io.writer.RDFWriter;
-import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RdfWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -62,9 +62,9 @@ public final class TestUtils {
      * <p>writeTestsToFile.</p>
      *
      * @param tests a {@link java.util.Collection} object.
-     * @param testCache a {@link org.aksw.rdfunit.io.writer.RDFWriter} object.
+     * @param testCache a {@link RdfWriter} object.
      */
-    public static void writeTestsToFile(Collection<TestCase> tests, RDFWriter testCache) {
+    public static void writeTestsToFile(Collection<TestCase> tests, RdfWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests) {
             TestCaseWriter.create(t).write(model);
@@ -72,7 +72,7 @@ public final class TestUtils {
         try {
             org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);
             testCache.write(model);
-        } catch (RDFWriterException e) {
+        } catch (RdfWriterException e) {
             log.error("Cannot cache tests: " + e.getMessage());
         }
     }

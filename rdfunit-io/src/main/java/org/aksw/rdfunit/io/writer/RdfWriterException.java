@@ -8,13 +8,13 @@ package org.aksw.rdfunit.io.writer;
  * @since 11/14/13 8:35 AM
  * @version $Id: $Id
  */
-public class RDFWriterException extends Exception {
+public class RdfWriterException extends Exception {
 
 
     /**
      * <p>Constructor for RDFWriterException.</p>
      */
-    public RDFWriterException() {
+    public RdfWriterException() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class RDFWriterException extends Exception {
      * @param message a {@link java.lang.String} object.
      * @param e a {@link java.lang.Throwable} object.
      */
-    public RDFWriterException(String message, Throwable e) {
+    public RdfWriterException(String message, Throwable e) {
         super(message, e);
     }
 
@@ -33,7 +33,7 @@ public class RDFWriterException extends Exception {
      *
      * @param message a {@link java.lang.String} object.
      */
-    public RDFWriterException(String message) {
+    public RdfWriterException(String message) {
         super(message);
     }
 
@@ -42,7 +42,7 @@ public class RDFWriterException extends Exception {
      *
      * @param e a {@link java.lang.Throwable} object.
      */
-    public RDFWriterException(Throwable e) {
+    public RdfWriterException(Throwable e) {
         super(e);
     }
 
@@ -51,7 +51,7 @@ public class RDFWriterException extends Exception {
      *
      * @param e a {@link java.lang.Exception} object.
      */
-    public RDFWriterException(Exception e) {
+    public RdfWriterException(Exception e) {
         super(e);
     }
 }

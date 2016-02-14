@@ -17,7 +17,7 @@ import java.io.OutputStream;
  * @since 5/27/14 5:46 PM
  * @version $Id: $Id
  */
-public class RDFStreamWriter implements RDFWriter {
+public class RdfStreamWriter implements RdfWriter {
     private final OutputStream outputStream;
     private final String filetype;
 
@@ -27,7 +27,7 @@ public class RDFStreamWriter implements RDFWriter {
      * @param outputStream a {@link java.io.OutputStream} object.
      * @param filetype a {@link java.lang.String} object.
      */
-    public RDFStreamWriter(OutputStream outputStream, String filetype) {
+    public RdfStreamWriter(OutputStream outputStream, String filetype) {
         super();
         this.outputStream = outputStream;
         this.filetype = filetype;
@@ -38,7 +38,7 @@ public class RDFStreamWriter implements RDFWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public RDFStreamWriter(OutputStream outputStream) {
+    public RdfStreamWriter(OutputStream outputStream) {
         super();
         this.outputStream = outputStream;
         this.filetype = "TURTLE";
@@ -46,14 +46,14 @@ public class RDFStreamWriter implements RDFWriter {
 
     /** {@inheritDoc} */
     @Override
-    public void write(QueryExecutionFactory qef) throws RDFWriterException {
+    public void write(QueryExecutionFactory qef) throws RdfWriterException {
         try {
             Model model = IOUtils.getModelFromQueryFactory(qef);
             PrefixNSService.setNSPrefixesInModel(model);
             model.write(outputStream, filetype);
 
         } catch (Exception e) {
-            throw new RDFWriterException("Error writing in OutputStream: " + e.getMessage(), e);
+            throw new RdfWriterException("Error writing in OutputStream: " + e.getMessage(), e);
         }
     }
 

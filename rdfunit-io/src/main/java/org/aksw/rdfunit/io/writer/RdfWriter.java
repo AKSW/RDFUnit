@@ -11,15 +11,15 @@ import org.apache.jena.rdf.model.Model;
  * @since 11 /14/13 12:59 PM
  * @version $Id: $Id
  */
-public interface RDFWriter {
+public interface RdfWriter {
 
     /**
      * Writes a model into a destination. This function delegates to {@code write(QueryExecutionFactory qef)}
      *
      * @param model the model
-     * @throws org.aksw.rdfunit.io.writer.RDFWriterException the triple writer exception
+     * @throws RdfWriterException the triple writer exception
      */
-    default void write(Model model) throws RDFWriterException {
+    default void write(Model model) throws RdfWriterException {
         write(new QueryExecutionFactoryModel(model));
     }
 
@@ -28,7 +28,7 @@ public interface RDFWriter {
      * abstract class that writes a {@code QueryExecutionFactory} to a destination
      *
      * @param qef a QueryExecutionFactory
-     * @throws org.aksw.rdfunit.io.writer.RDFWriterException the triple writer exception
+     * @throws RdfWriterException the triple writer exception
      */
-    void write(QueryExecutionFactory qef) throws RDFWriterException;
+    void write(QueryExecutionFactory qef) throws RdfWriterException;
 }

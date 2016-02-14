@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.reader;
 
-import org.aksw.rdfunit.io.writer.RDFWriter;
-import org.aksw.rdfunit.io.writer.RDFWriterException;
+import org.aksw.rdfunit.io.writer.RdfWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 
@@ -15,15 +15,15 @@ import org.apache.jena.rdf.model.Model;
  */
 public class RdfReadAndCacheReader implements RdfReader {
     private final RdfReader reader;
-    private final RDFWriter writer;
+    private final RdfWriter writer;
 
     /**
      * <p>Constructor for RDFReadAndCacheReader.</p>
      *
      * @param reader a {@link RdfReader} object.
-     * @param writer a {@link org.aksw.rdfunit.io.writer.RDFWriter} object.
+     * @param writer a {@link RdfWriter} object.
      */
-    public RdfReadAndCacheReader(RdfReader reader, RDFWriter writer) {
+    public RdfReadAndCacheReader(RdfReader reader, RdfWriter writer) {
         super();
         this.reader = reader;
         this.writer = writer;
@@ -36,7 +36,7 @@ public class RdfReadAndCacheReader implements RdfReader {
         //If read succeeds try to write
         try {
             writer.write(model);
-        } catch (RDFWriterException e) {
+        } catch (RdfWriterException e) {
 
         }
     }
@@ -49,7 +49,7 @@ public class RdfReadAndCacheReader implements RdfReader {
         try {
             //TODO change this
             writer.write(dataset.getDefaultModel());
-        } catch (RDFWriterException e) {
+        } catch (RdfWriterException e) {
 
         }
     }

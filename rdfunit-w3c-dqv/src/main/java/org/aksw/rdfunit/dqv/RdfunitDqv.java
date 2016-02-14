@@ -2,8 +2,8 @@ package org.aksw.rdfunit.dqv;
 
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.io.writer.RDFFileWriter;
-import org.aksw.rdfunit.io.writer.RDFWriter;
+import org.aksw.rdfunit.io.writer.RdfFileWriter;
+import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.readers.results.TestExecutionReader;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -29,7 +29,7 @@ public class RdfunitDqv {
         }
 
         RdfReader input = getInputReader(commandLine);
-        RDFWriter output = getOutputWriter(commandLine);
+        RdfWriter output = getOutputWriter(commandLine);
 
         Model model = ModelFactory.createDefaultModel();
 
@@ -72,12 +72,12 @@ public class RdfunitDqv {
         return RdfReaderFactory.createResourceOrFileOrDereferenceReader(commandLine.getOptionValue("i"));
     }
 
-    private static RDFWriter getOutputWriter(CommandLine commandLine) {
+    private static RdfWriter getOutputWriter(CommandLine commandLine) {
         if (!commandLine.hasOption("o")) {
             displayHelp();
             throw new IllegalArgumentException("Error: Required argument '-o' is missing.");
         }
-        return new RDFFileWriter(commandLine.getOptionValue("o"));
+        return new RdfFileWriter(commandLine.getOptionValue("o"));
     }
 
     private static void displayHelp() {

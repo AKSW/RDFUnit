@@ -17,7 +17,7 @@ import java.io.OutputStream;
  * @since 11/14/13 1:01 PM
  * @version $Id: $Id
  */
-public class RDFFileWriter implements RDFWriter {
+public class RdfFileWriter implements RdfWriter {
     private final String filename;
     private final String filetype;
     private final boolean skipIfExists;
@@ -30,7 +30,7 @@ public class RDFFileWriter implements RDFWriter {
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RDFFileWriter(String filename) {
+    public RdfFileWriter(String filename) {
         this(filename, "TURTLE", false, true, true);
     }
 
@@ -40,7 +40,7 @@ public class RDFFileWriter implements RDFWriter {
      * @param filename a {@link java.lang.String} object.
      * @param filetype a {@link java.lang.String} object.
      */
-    public RDFFileWriter(String filename, String filetype) {
+    public RdfFileWriter(String filename, String filetype) {
         this(filename, filetype, false, true, true);
     }
 
@@ -50,7 +50,7 @@ public class RDFFileWriter implements RDFWriter {
      * @param filename a {@link java.lang.String} object.
      * @param skipIfExists a boolean.
      */
-    public RDFFileWriter(String filename, boolean skipIfExists) {
+    public RdfFileWriter(String filename, boolean skipIfExists) {
         this(filename, "TURTLE", skipIfExists, true, true);
     }
 
@@ -63,7 +63,7 @@ public class RDFFileWriter implements RDFWriter {
      * @param createParentDirectories a boolean.
      * @param overwrite a boolean.
      */
-    public RDFFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {
+    public RdfFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {
         super();
         this.filename = filename;
         this.filetype = filetype;
@@ -74,7 +74,7 @@ public class RDFFileWriter implements RDFWriter {
 
     /** {@inheritDoc} */
     @Override
-    public void write(QueryExecutionFactory qef) throws RDFWriterException {
+    public void write(QueryExecutionFactory qef) throws RdfWriterException {
 
         File file = new File(filename);
         if (file.exists() && skipIfExists) {
@@ -82,14 +82,14 @@ public class RDFFileWriter implements RDFWriter {
         }
 
         if (file.exists() && !overwrite) {
-            throw new RDFWriterException("Error writing file: File already exists and cannot overwrite");
+            throw new RdfWriterException("Error writing file: File already exists and cannot overwrite");
         }
 
 
         if (createParentDirectories) {
             File parentF = file.getParentFile();
             if (parentF != null && !parentF.exists() && !parentF.mkdirs()) {
-                throw new RDFWriterException("Error writing file: Cannot create new directory structure for file: " + filename);
+                throw new RdfWriterException("Error writing file: Cannot create new directory structure for file: " + filename);
             }
         }
 
@@ -100,7 +100,7 @@ public class RDFFileWriter implements RDFWriter {
             model.write(fos, filetype);
 
         } catch (Exception e) {
-            throw new RDFWriterException("Error writing file: " + e.getMessage(), e);
+            throw new RdfWriterException("Error writing file: " + e.getMessage(), e);
         }
 
     }
