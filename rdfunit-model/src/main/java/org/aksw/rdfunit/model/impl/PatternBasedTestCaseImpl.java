@@ -22,11 +22,12 @@ import java.util.Collection;
 @EqualsAndHashCode
 public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase {
 
+    @Getter @NonNull private final Pattern pattern;
+    @NonNull private final ImmutableSet<Binding> bindings;
+
     @Getter @NonNull private final Resource element;
     @Getter @NonNull private final TestCaseAnnotation testCaseAnnotation;
 
-    @Getter @NonNull private final Pattern pattern;
-    @NonNull private final ImmutableSet<Binding> bindings;
     @Getter(lazy = true) @NonNull private final String sparqlWhere = initSparqlWhere();
     @Getter(lazy = true) @NonNull private final String sparqlPrevalence = initSparqlPrevalence();
 

@@ -3,7 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.shacl.TemplateRegistry;
-import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
 
@@ -28,7 +28,7 @@ public final class BatchShapeReader {
     public Set<Shape> getShapesFromModel(Model model) {
         ConcurrentLinkedQueue<Shape> shapes = new ConcurrentLinkedQueue<>();
 
-        model.listResourcesWithProperty(RDF.type, RDFUNITv.ManualTestCase).toList()
+        model.listResourcesWithProperty(RDF.type, SHACL.Shape).toList()
                 .parallelStream()
                 .forEach(resource -> shapes.add(ShapeReader.create(templateRegistry).read(resource)));
 

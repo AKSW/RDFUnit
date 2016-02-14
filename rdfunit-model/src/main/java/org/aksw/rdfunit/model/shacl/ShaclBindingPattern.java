@@ -3,9 +3,11 @@ package org.aksw.rdfunit.model.shacl;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
+import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 
@@ -43,5 +45,10 @@ public class ShaclBindingPattern implements PropertyConstraint{
     @Override
     public Set<PropertyValuePair> getAdditionalArguments() {
         throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public TestCase getTestCase() {
+        return new PatternBasedTestCaseImpl(null, null, pattern.getPattern(), bindings);
     }
 }

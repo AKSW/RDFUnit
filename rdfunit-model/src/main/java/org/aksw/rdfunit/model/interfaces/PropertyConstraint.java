@@ -42,4 +42,6 @@ public interface PropertyConstraint {
      */
     Set<PropertyValuePair> getAdditionalArguments();
 
+    TestCase getTestCase();
+
 }

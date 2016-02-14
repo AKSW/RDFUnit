@@ -31,4 +31,11 @@ public interface PropertyConstraintGroup extends Element{
      * return true if it is an inverse property constraint, false otherwise
      */
     boolean isInverse();
+
+    default String getPropertyFilter() {
+        if (isInverse())  {
+            return " ?value <" + getProperty().getURI() + "> ?this .";
+        }
+        else return " ?this <" + getProperty().getURI() + "> ?value .";
+    }
 }

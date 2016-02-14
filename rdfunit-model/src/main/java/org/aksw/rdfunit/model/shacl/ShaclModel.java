@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.model.impl.ScopedTestCase;
 import org.aksw.rdfunit.model.interfaces.Shape;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.BatchShapeReader;
 import org.apache.jena.rdf.model.Model;
 
@@ -34,4 +36,22 @@ public class ShaclModel {
     }
 
     public Set<Shape> getShapes() { return shapes;}
+
+    public Set<TestCase> generateTestCases() {
+        ImmutableSet.Builder<TestCase> builder = ImmutableSet.builder();
+
+        getShapes().forEach( shape -> // for every shape
+                shape.getScopes().forEach( scope ->  // for every scope (skip if none)
+                                shape.getPropertyConstraintGroups().forEach( ppg ->
+                                    ppg.getPropertyConstraints().forEach( ppc ->
+                                                builder.add(
+                                                        ScopedTestCase.builder()
+                                                                .scope(scope)
+                                                                .filterSpqrql(ppg.getPropertyFilter())
+                                                                .testCase(ppc.getTestCase())
+                                                                .build())
+                                            ))));
+
+        return builder.build();
+    }
 }

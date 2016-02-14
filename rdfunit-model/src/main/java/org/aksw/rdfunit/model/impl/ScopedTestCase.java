@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.Resource;
 public class ScopedTestCase implements TestCase{
 
     @NonNull private final ShapeScope scope;
+    @NonNull private final String filterSpqrql;
     @NonNull private final TestCase testCase;
 
 
@@ -46,7 +47,7 @@ public class ScopedTestCase implements TestCase{
     private String injectScopeInSparql(String sparqlQuery, ShapeScope scope) {
         // FIXME good for now
         int bracketIndex = sparqlQuery.indexOf('{');
-        return sparqlQuery.substring(0,bracketIndex+1) + scope.getPattern() + sparqlQuery.substring(bracketIndex+1);
+        return sparqlQuery.substring(0,bracketIndex+1) + scope.getPattern() + filterSpqrql + sparqlQuery.substring(bracketIndex+1);
     }
 
 }

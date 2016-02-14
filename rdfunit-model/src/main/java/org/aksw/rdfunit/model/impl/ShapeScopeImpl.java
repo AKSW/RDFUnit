@@ -10,7 +10,7 @@ import org.aksw.rdfunit.model.interfaces.ShapeScope;
 import java.util.Optional;
 import java.util.function.Function;
 
-@ToString
+@ToString(exclude = "generatePattern")
 @EqualsAndHashCode
 public class ShapeScopeImpl implements ShapeScope{
 
