@@ -60,7 +60,11 @@ public class ScopedTestCaseTest {
         TestCase innerTestCAse = Mockito.mock(TestCase.class);
         when(innerTestCAse.getSparqlWhere()).thenReturn(sparqlQuery);
 
-        TestCase scopedTestCase = ScopedTestCase.builder().testCase(innerTestCAse).scope(scope).build();
+        TestCase scopedTestCase = ScopedTestCase.builder()
+                .testCase(innerTestCAse)
+                .scope(scope)
+                .filterSpqrql(" ?this <http://example.cpm/p> ?value .")
+                .build();
 
         String finalSparql = PrefixNSService.getSparqlPrefixDecl() + scopedTestCase.getSparqlWhere();
 
@@ -72,8 +76,6 @@ public class ScopedTestCaseTest {
         } catch (Exception e) {
             Fail.fail("Failed sparql query:\n" + finalSparql, e);
         }
-
-        System.out.println(finalSparql);
 
     }
 }
