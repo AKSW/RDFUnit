@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class JunitXmlResultsWriter extends AbstractRDFWriter implements RDFWriter  {
+public abstract class JunitXmlResultsWriter implements RDFWriter  {
 	protected final TestExecution testExecution;
 	private final OutputStream outputStream;
 

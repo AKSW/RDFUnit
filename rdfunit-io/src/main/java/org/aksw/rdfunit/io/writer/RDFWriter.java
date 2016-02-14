@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.apache.jena.rdf.model.Model;
 
 /**
@@ -18,7 +19,9 @@ public interface RDFWriter {
      * @param model the model
      * @throws org.aksw.rdfunit.io.writer.RDFWriterException the triple writer exception
      */
-    void write(Model model) throws RDFWriterException ;
+    default void write(Model model) throws RDFWriterException {
+        write(new QueryExecutionFactoryModel(model));
+    }
 
 
     /**

@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 11/14/13 1:13 PM
  * @version $Id: $Id
  */
-public class RDFMultipleWriter extends AbstractRDFWriter implements RDFWriter  {
+public class RDFMultipleWriter implements RDFWriter  {
     private final Collection<RDFWriter> writers;
 
     /**

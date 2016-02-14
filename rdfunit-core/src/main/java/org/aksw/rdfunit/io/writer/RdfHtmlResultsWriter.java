@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class RdfHtmlResultsWriter extends AbstractRDFWriter implements RDFWriter  {
+public abstract class RdfHtmlResultsWriter implements RDFWriter  {
     protected final TestExecution testExecution;
     private final OutputStream outputStream;
 
