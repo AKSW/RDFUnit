@@ -72,6 +72,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <!-- Test-only dependency to unit test the manual tests -->
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-manual-tests</artifactId>

@@ -64,11 +64,11 @@ public class ShapeScopeImpl implements ShapeScope{
     }
 
     private static String inversePropertyScopePattern(Optional<String> uri) {
-        return " [] <" + uri.get() + "> ?this";
+        return " [] <" + uri.get() + "> ?this .";
     }
 
     private static String propertyScopePattern(Optional<String> uri) {
-        return "?this <" + uri + "> [] .";
+        return "?this <" + uri.get() + "> [] .";
     }
 
     @SuppressWarnings({"SameReturnValue", "UnusedParameters"})
