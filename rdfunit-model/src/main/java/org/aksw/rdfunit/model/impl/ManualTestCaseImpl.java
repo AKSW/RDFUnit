@@ -13,14 +13,18 @@ import org.apache.jena.rdf.model.Resource;
  * @version $Id: $Id
  */
 @Value
-@EqualsAndHashCode(callSuper=true)
-public class ManualTestCaseImpl extends AbstractTestCaseImpl implements TestCase {
+@EqualsAndHashCode
+public class ManualTestCaseImpl implements TestCase {
+    @Getter @NonNull private final Resource element;
+    @Getter @NonNull private final TestCaseAnnotation testCaseAnnotation;
+
     @Getter @NonNull private final String sparqlWhere;
     @Getter @NonNull private final String sparqlPrevalence;
 
     @Builder
     private ManualTestCaseImpl(Resource resource, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) {
-        super(resource, annotation);
+        this.element = resource;
+        this.testCaseAnnotation = annotation;
         this.sparqlWhere = sparqlWhere;
         this.sparqlPrevalence = sparqlPrevalence;
     }
