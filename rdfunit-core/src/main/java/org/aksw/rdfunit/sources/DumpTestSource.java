@@ -2,7 +2,7 @@ package org.aksw.rdfunit.sources;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -27,17 +27,17 @@ public class DumpTestSource extends AbstractTestSource implements TestSource {
     /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(DumpTestSource.class);
 
-    private final RDFReader dumpReader;
+    private final RdfReader dumpReader;
 
     private final OntModel dumpModel;
 
-    DumpTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader, OntModel model) {
+    DumpTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RdfReader dumpReader, OntModel model) {
         super(sourceConfig, queryingConfig, referenceSchemata);
         this.dumpReader = checkNotNull(dumpReader);
         dumpModel = checkNotNull(model);
     }
 
-    DumpTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader) {
+    DumpTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RdfReader dumpReader) {
         this(sourceConfig, queryingConfig, referenceSchemata, dumpReader, ModelFactory.createOntologyModel( OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel()));  //OntModelSpec.RDFS_MEM_RDFS_INF
     }
 

@@ -11,7 +11,7 @@ import org.apache.jena.rdf.model.Model;
  * @since 5/7/14 3:36 PM
  * @version $Id: $Id
  */
-public class RDFModelReader implements RDFReader  {
+public class RdfModelReader implements RdfReader {
 
     private final Model model;
 
@@ -20,26 +20,26 @@ public class RDFModelReader implements RDFReader  {
      *
      * @param model a {@link org.apache.jena.rdf.model.Model} object.
      */
-    public RDFModelReader(Model model) {
+    public RdfModelReader(Model model) {
         super();
         this.model = model;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Model read() throws RDFReaderException {
+    public Model read() throws RdfReaderException {
         return model;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         model.add(this.model);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         dataset.setDefaultModel(dataset.getDefaultModel().union(read()));
     }
 

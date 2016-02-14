@@ -2,7 +2,7 @@ package org.aksw.rdfunit.validate.wrappers;
 
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.io.reader.RDFModelReader;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -73,7 +73,7 @@ public final class RDFUnitStaticValidator {
         final TestSource modelSource = new TestSourceBuilder()
                 .setPrefixUri("custom", inputURI)
                 .setImMemDataset()
-                .setInMemReader(new RDFModelReader(inputModel))
+                .setInMemReader(new RdfModelReader(inputModel))
                 .setReferenceSchemata(testSuiteGenerator.getSchemas())
                 .build();
 

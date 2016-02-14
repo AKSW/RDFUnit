@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.junit;
 
-import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
@@ -34,11 +34,11 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     /**
      * Constant <code>INPUT_DATA_RETURN_TYPE</code>
      */
-    public static final Class<?> INPUT_DATA_RETURN_TYPE = RDFReader.class;
+    public static final Class<?> INPUT_DATA_RETURN_TYPE = RdfReader.class;
     private final List<RdfUnitJunitTestCase> testCases = new ArrayList<>();
     private final RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor = new RdfUnitJunitStatusTestExecutor();
-    private RDFReader additionalData = new RDFModelReader(ModelFactory.createDefaultModel());
-    private RDFReader schemaReader;
+    private RdfReader additionalData = new RdfModelReader(ModelFactory.createDefaultModel());
+    private RdfReader schemaReader;
     private Object testCaseInstance;
 
     /**
@@ -148,8 +148,8 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     private void setUpSchemaReader() throws InitializationError {
         try {
-            schemaReader = new RDFModelReader(RDFReaderFactory.createResourceOrFileOrDereferenceReader(getSchema().uri()).read());
-        } catch (RDFReaderException e) {
+            schemaReader = new RdfModelReader(RdfReaderFactory.createResourceOrFileOrDereferenceReader(getSchema().uri()).read());
+        } catch (RdfReaderException e) {
             throw new InitializationError(e);
         }
     }
@@ -174,7 +174,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
             final FrameworkMethod additionalDataMethod = annotatedMethods.get(0);
             additionalData =
                     checkNotNull(
-                            (RDFReader) additionalDataMethod.invokeExplosively(getTestCaseInstance()),
+                            (RdfReader) additionalDataMethod.invokeExplosively(getTestCaseInstance()),
                             "Method %s annotated with @%s returned null!",
                             additionalDataMethod.getMethod().getName(),
                             AdditionalData.class.getSimpleName()
@@ -195,7 +195,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                 .build().getTestSuite().getTestCases();
     }
 
-    private RDFReader getSchemaReader() {
+    private RdfReader getSchemaReader() {
         return schemaReader;
     }
 
@@ -203,7 +203,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return getTestClass().getAnnotation(Schema.class);
     }
 
-    RDFReader getAdditionalDataModel() {
+    RdfReader getAdditionalDataModel() {
         return additionalData;
     }
 

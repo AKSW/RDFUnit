@@ -2,7 +2,7 @@ package org.aksw.rdfunit.model.readers;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.ShapeScopeType;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
@@ -39,7 +39,7 @@ public class ShapeReaderTest {
     @Test
     public void testRead() throws Exception {
 
-        Model shapesModel = RDFReaderFactory.createResourceReader(shapeResource).read();
+        Model shapesModel = RdfReaderFactory.createResourceReader(shapeResource).read();
 
         List<Shape> shapes = shapesModel.listResourcesWithProperty(RDF.type, SHACL.Shape).toList()
                 .stream()

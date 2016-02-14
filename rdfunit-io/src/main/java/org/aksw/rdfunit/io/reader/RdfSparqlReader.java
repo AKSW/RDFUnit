@@ -12,7 +12,7 @@ import org.apache.jena.rdf.model.Model;
  * @since 11/14/13 8:58 AM
  * @version $Id: $Id
  */
-public class RDFSPARQLReader implements RDFReader  {
+public class RdfSparqlReader implements RdfReader {
 
     private final String endpoint;
     private final String graph;
@@ -23,7 +23,7 @@ public class RDFSPARQLReader implements RDFReader  {
      * @param endpoint a {@link java.lang.String} object.
      * @param graph a {@link java.lang.String} object.
      */
-    public RDFSPARQLReader(String endpoint, String graph) {
+    public RdfSparqlReader(String endpoint, String graph) {
         super();
         this.endpoint = endpoint;
         this.graph = graph;
@@ -31,16 +31,16 @@ public class RDFSPARQLReader implements RDFReader  {
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         //TODO implement
-        throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
+        throw new RdfReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
     }
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         //TODO implement
-        throw new RDFReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
+        throw new RdfReaderException("RDFSPARQLReader (" + endpoint + " / " + graph + ") not implemented yet");
     }
 
     /** {@inheritDoc} */

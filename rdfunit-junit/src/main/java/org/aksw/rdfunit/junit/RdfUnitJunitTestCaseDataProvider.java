@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.junit;
 
-import org.aksw.rdfunit.io.reader.RDFMultipleReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.io.reader.RdfMultipleReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
@@ -19,7 +19,7 @@ final class RdfUnitJunitTestCaseDataProvider {
     private final FrameworkMethod testInputMethod;
     private final Object testCaseInstance;
     private final SchemaSource schemaSource;
-    private final RDFReader additionalData;
+    private final RdfReader additionalData;
     private boolean initialized = false;
     private Model testInputModel;
     private TestSource modelSource;
@@ -30,13 +30,13 @@ final class RdfUnitJunitTestCaseDataProvider {
      * @param testInputMethod a {@link org.junit.runners.model.FrameworkMethod} object.
      * @param testCaseInstance a {@link java.lang.Object} object.
      * @param schemaSource a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     * @param additionalData a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param additionalData a {@link RdfReader} object.
      */
     public RdfUnitJunitTestCaseDataProvider(
             FrameworkMethod testInputMethod,
             Object testCaseInstance,
             SchemaSource schemaSource,
-            RDFReader additionalData
+            RdfReader additionalData
     ) {
         this.testInputMethod = testInputMethod;
         this.testCaseInstance = testCaseInstance;
@@ -49,9 +49,9 @@ final class RdfUnitJunitTestCaseDataProvider {
             return;
         }
 
-        final RDFReader testInputReader;
+        final RdfReader testInputReader;
         try {
-            testInputReader = (RDFReader) testInputMethod.getMethod().invoke(testCaseInstance);
+            testInputReader = (RdfReader) testInputMethod.getMethod().invoke(testCaseInstance);
         } catch (IllegalAccessException | InvocationTargetException e1) {
             throw new InitializationError(e1);
         }
@@ -65,14 +65,14 @@ final class RdfUnitJunitTestCaseDataProvider {
 
         try {
             testInputModel = testInputReader.read();
-        } catch (RDFReaderException readerException) {
+        } catch (RdfReaderException readerException) {
             throw new RuntimeException(readerException);
         }
         modelSource = new TestSourceBuilder()
                 // FIXME why do we need at least one source config? If we omit this, it will break...
                 .setPrefixUri("custom", "rdfunit")
                 .setInMemReader(
-                        new RDFMultipleReader(asList(testInputReader, additionalData))
+                        new RdfMultipleReader(asList(testInputReader, additionalData))
                 )
                 .setReferenceSchemata(schemaSource)
                 .build();

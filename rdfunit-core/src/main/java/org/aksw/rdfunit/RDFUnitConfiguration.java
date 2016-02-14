@@ -6,7 +6,7 @@ import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.NamespaceStatistics;
@@ -259,7 +259,7 @@ public class RDFUnitConfiguration {
                 tmp_customDereferenceURI = customDereferenceURI;
             }
             if (testSourceBuilder.getInMemReader() == null) { // if the reader is not set already e.g. text
-                testSourceBuilder.setInMemReader(RDFReaderFactory.createDereferenceReader(tmp_customDereferenceURI));
+                testSourceBuilder.setInMemReader(RdfReaderFactory.createDereferenceReader(tmp_customDereferenceURI));
             }
         }
 

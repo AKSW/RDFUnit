@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.junit;
 
-import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.Ignore;
@@ -39,9 +39,9 @@ public class RunnerOnIgnoredClassTest {
         private static boolean ignoredTestInputMethodNotCalled = true;
 
         @TestInput
-        public RDFReader ignoredTestInput() {
+        public RdfReader ignoredTestInput() {
             ignoredTestInputMethodNotCalled = false;
-            return new RDFModelReader(ModelFactory.createDefaultModel());
+            return new RdfModelReader(ModelFactory.createDefaultModel());
         }
     }
 }

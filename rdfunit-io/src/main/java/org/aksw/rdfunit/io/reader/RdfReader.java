@@ -12,21 +12,21 @@ import org.apache.jena.rdf.model.ModelFactory;
  * @since 11/14/13 8:33 AM
  * @version $Id: $Id
  */
-public interface RDFReader {
+public interface RdfReader {
 
     /**
      * Reads RDF and returns a {@code Model}
      *
      * @return a {@code Model} with the data read
-     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     * @throws RdfReaderException if any.
      */
-    default Model read() throws RDFReaderException {
+    default Model read() throws RdfReaderException {
         try {
             Model model = ModelFactory.createDefaultModel();
             read(model);
             return model;
         } catch (Exception e) {
-            throw new RDFReaderException(e);
+            throw new RdfReaderException(e);
         }
     }
 
@@ -34,23 +34,23 @@ public interface RDFReader {
      * Reads RDF and writes the data in the Model provided by the user
      *
      * @param model the model we want to write our data into
-     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     * @throws RdfReaderException if any.
      */
-    void read(Model model) throws RDFReaderException;
+    void read(Model model) throws RdfReaderException;
 
     /**
      * <p>readDataset.</p>
      *
      * @return a {@link org.apache.jena.query.Dataset} object.
-     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     * @throws RdfReaderException if any.
      */
-    default Dataset readDataset() throws RDFReaderException {
+    default Dataset readDataset() throws RdfReaderException {
         try {
             Dataset dataset = DatasetFactory.create();
             readDataset(dataset);
             return dataset;
         } catch (Exception e) {
-            throw new RDFReaderException(e);
+            throw new RdfReaderException(e);
         }
     }
 
@@ -58,7 +58,7 @@ public interface RDFReader {
      * <p>readDataset.</p>
      *
      * @param dataset a {@link org.apache.jena.query.Dataset} object.
-     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     * @throws RdfReaderException if any.
      */
-    void readDataset(Dataset dataset) throws RDFReaderException ;
+    void readDataset(Dataset dataset) throws RdfReaderException;
 }

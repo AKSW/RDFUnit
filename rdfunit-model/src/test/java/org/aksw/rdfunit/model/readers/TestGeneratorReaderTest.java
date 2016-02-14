@@ -2,8 +2,8 @@ package org.aksw.rdfunit.model.readers;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Resources;
-import org.aksw.rdfunit.io.reader.RDFMultipleReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfMultipleReader;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
@@ -43,10 +43,10 @@ public class TestGeneratorReaderTest {
     @Parameterized.Parameters(name= "{index}: TestGenerator: {0}")
     public static Collection<Object[]> resources() throws Exception {
 
-        Model model = new RDFMultipleReader(Arrays.asList(
-                RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL),
-                RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS),
-                RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP)
+        Model model = new RdfMultipleReader(Arrays.asList(
+                RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL),
+                RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS),
+                RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP)
         )).read();
 
         Collection<Object[]> parameters = new ArrayList<>();

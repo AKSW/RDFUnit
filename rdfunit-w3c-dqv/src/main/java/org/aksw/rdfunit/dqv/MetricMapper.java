@@ -3,8 +3,8 @@ package org.aksw.rdfunit.dqv;
 import com.google.common.collect.ImmutableMap;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 
@@ -35,8 +35,8 @@ public class MetricMapper {
 
         Model model;
         try {
-            model = RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/dqv/metricMappings.ttl").read();
-        } catch (RDFReaderException e) {
+            model = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/dqv/metricMappings.ttl").read();
+        } catch (RdfReaderException e) {
             throw new IllegalArgumentException("Cannot read default metric mappings");
         }
 

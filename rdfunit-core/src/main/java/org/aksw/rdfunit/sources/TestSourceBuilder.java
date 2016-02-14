@@ -4,9 +4,9 @@ import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.format.SerializationFormatGraphType;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.io.reader.RDFStreamReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfStreamReader;
 
 import java.io.BufferedInputStream;
 import java.util.Collection;
@@ -30,7 +30,7 @@ public class TestSourceBuilder {
     private Collection<SchemaSource> referenceSchemata = null;
     private QueryingConfig queryingConfig = null;
 
-    private RDFReader inMemReader = null;
+    private RdfReader inMemReader = null;
     private String sparqlEndpoint = null;
     private Collection<String> endpointGraphs = null;
 
@@ -102,17 +102,17 @@ public class TestSourceBuilder {
         } else {
             setImMemSingle();
         }
-        this.inMemReader = RDFReaderFactory.createDereferenceReader(uri);
+        this.inMemReader = RdfReaderFactory.createDereferenceReader(uri);
         return this;
     }
 
     /**
      * <p>Setter for the field <code>inMemReader</code>.</p>
      *
-     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param reader a {@link RdfReader} object.
      * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
      */
-    public TestSourceBuilder setInMemReader(RDFReader reader) {
+    public TestSourceBuilder setInMemReader(RdfReader reader) {
         this.inMemReader = reader;
         if (queryingConfig == null) {
             queryingConfig = QueryingConfig.createInMemory();
@@ -126,7 +126,7 @@ public class TestSourceBuilder {
      * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
      */
     public TestSourceBuilder setInMemFromPipe() {
-        this.inMemReader = new RDFStreamReader(new BufferedInputStream(System.in), "TURTLE");
+        this.inMemReader = new RdfStreamReader(new BufferedInputStream(System.in), "TURTLE");
         setImMemSingle();
         return this;
     }
@@ -146,7 +146,7 @@ public class TestSourceBuilder {
             throw new UndefinedSerializationException(customTextFormat);
         }
 
-        this.inMemReader = RDFReaderFactory.createReaderFromText(customTextSource, format.getName());
+        this.inMemReader = RdfReaderFactory.createReaderFromText(customTextSource, format.getName());
         if (queryingConfig == null) {
             queryingConfig = QueryingConfig.createInMemory();
         }
@@ -273,7 +273,7 @@ public class TestSourceBuilder {
         return endpointGraphs;
     }
 
-    public RDFReader getInMemReader() {
+    public RdfReader getInMemReader() {
         return this.inMemReader;
     }
 }

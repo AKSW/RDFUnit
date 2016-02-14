@@ -2,7 +2,7 @@ package org.aksw.rdfunit.model.writers;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Resources;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.readers.BatchTestGeneratorReader;
 import org.apache.jena.rdf.model.Model;
@@ -37,9 +37,9 @@ public class TestGeneratorWriterTest {
     @Parameterized.Parameters(name= "{index}: Model: {1} ")
     public static Collection<Object[]> models() throws Exception {
         return Arrays.asList( new Object[][]{
-                        {RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL).read(), "OWLGen"},
-                        {RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS).read(), "RSGen"},
-                        {RDFReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP).read(), "DSPGen"}
+                        {RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL).read(), "OWLGen"},
+                        {RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS).read(), "RSGen"},
+                        {RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP).read(), "DSPGen"}
                 });
     }
 

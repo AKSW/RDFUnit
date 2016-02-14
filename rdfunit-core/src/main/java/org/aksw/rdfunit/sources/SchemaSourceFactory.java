@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.StringUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
@@ -43,7 +43,7 @@ public final class SchemaSourceFactory {
      */
     public static SchemaSource createSchemaSourceFromCache(String baseFolder, String prefix, String uri, String schema) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.Schema, prefix, uri);
-        RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, schema);
+        RdfReader reader = RdfReaderFactory.createFileOrDereferenceReader(cacheFile, schema);
         return createSchemaSourceSimple(prefix, uri, schema, reader);
     }
 
@@ -67,7 +67,7 @@ public final class SchemaSourceFactory {
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
     public static SchemaSource createSchemaSourceDereference(String prefix, String uri, String schema) {
-        return createSchemaSourceSimple(prefix, uri, schema, RDFReaderFactory.createDereferenceReader(schema));
+        return createSchemaSourceSimple(prefix, uri, schema, RdfReaderFactory.createDereferenceReader(schema));
     }
 
     /**
@@ -80,7 +80,7 @@ public final class SchemaSourceFactory {
      */
     public static EnrichedSchemaSource createEnrichedSchemaSourceFromCache(String baseFolder, String prefix, String uri) {
         String cacheFile = CacheUtils.getSchemaSourceCacheFilename(baseFolder, TestAppliesTo.EnrichedSchema, prefix, uri);
-        RDFReader reader = RDFReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
+        RdfReader reader = RdfReaderFactory.createFileOrDereferenceReader(cacheFile, uri);
         return new EnrichedSchemaSource(new SourceConfig(prefix, uri), reader);
     }
 
@@ -97,7 +97,7 @@ public final class SchemaSourceFactory {
         String uri = namespace + StringUtils.getHashFromString(text);
         String prefix = UriToPathUtils.getAutoPrefixForURI(uri);
 
-        return createSchemaSourceSimple(prefix, uri, RDFReaderFactory.createReaderFromText(text, format));
+        return createSchemaSourceSimple(prefix, uri, RdfReaderFactory.createReaderFromText(text, format));
     }
 
 
@@ -105,11 +105,11 @@ public final class SchemaSourceFactory {
      * <p>createSchemaSourceSimple.</p>
      *
      * @param uri a {@link java.lang.String} object.
-     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param reader a {@link RdfReader} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      * @since 0.7.19
      */
-    public static SchemaSource createSchemaSourceSimple(String uri, RDFReader reader) {
+    public static SchemaSource createSchemaSourceSimple(String uri, RdfReader reader) {
 
         return createSchemaSourceSimple(UriToPathUtils.getAutoPrefixForURI(uri), uri, uri, reader);
     }
@@ -119,10 +119,10 @@ public final class SchemaSourceFactory {
      *
      * @param prefix a {@link java.lang.String} object.
      * @param uri a {@link java.lang.String} object.
-     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param reader a {@link RdfReader} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
-    public static SchemaSource createSchemaSourceSimple(String prefix, String uri, RDFReader reader) {
+    public static SchemaSource createSchemaSourceSimple(String prefix, String uri, RdfReader reader) {
 
         return createSchemaSourceSimple(prefix, uri, uri, reader);
     }
@@ -133,10 +133,10 @@ public final class SchemaSourceFactory {
      * @param prefix a {@link java.lang.String} object.
      * @param uri a {@link java.lang.String} object.
      * @param schema a {@link java.lang.String} object.
-     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param reader a {@link RdfReader} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
-    public static SchemaSource createSchemaSourceSimple(String prefix, String uri, String schema, RDFReader reader) {
+    public static SchemaSource createSchemaSourceSimple(String prefix, String uri, String schema, RdfReader reader) {
 
         return new SchemaSource(new SourceConfig(prefix, uri), schema, reader);
     }

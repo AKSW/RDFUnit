@@ -13,29 +13,29 @@ import java.util.Collection;
  * @since 11/14/13 8:51 AM
  * @version $Id: $Id
  */
-public class RDFMultipleReader implements RDFReader  {
+public class RdfMultipleReader implements RdfReader {
 
-    private final Collection<RDFReader> readers;
+    private final Collection<RdfReader> readers;
 
     /**
      * <p>Constructor for RDFMultipleReader.</p>
      *
      * @param readers a {@link java.util.Collection} object.
      */
-    public RDFMultipleReader(Collection<RDFReader> readers) {
+    public RdfMultipleReader(Collection<RdfReader> readers) {
         super();
         this.readers = readers;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
 
-        for (RDFReader r : readers) {
+        for (RdfReader r : readers) {
             try {
                 r.read(model);
-            } catch (RDFReaderException e) {
-                throw new RDFReaderException("Cannot read from reader: " + e.getMessage());
+            } catch (RdfReaderException e) {
+                throw new RdfReaderException("Cannot read from reader: " + e.getMessage());
             }
         }
 
@@ -44,13 +44,13 @@ public class RDFMultipleReader implements RDFReader  {
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
 
-        for (RDFReader r : readers) {
+        for (RdfReader r : readers) {
             try {
                 r.readDataset(dataset);
-            } catch (RDFReaderException e) {
-                throw new RDFReaderException("Cannot read from reader: " + e.getMessage());
+            } catch (RdfReaderException e) {
+                throw new RdfReaderException("Cannot read from reader: " + e.getMessage());
             }
         }
 

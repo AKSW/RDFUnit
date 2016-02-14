@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Dimitris Kontokostas
  * @since 9/14/15 11:49 AM
  */
-public class RDFReaderFactoryTest {
+public class RdfReaderFactoryTest {
 
     @Test
     public void testCreateFileOrDereferenceReader() throws Exception {
@@ -43,7 +43,7 @@ public class RDFReaderFactoryTest {
         URL url = Resources.getResource(this.getClass(),"/org/aksw/rdfunit/io/onetriple.ttl");
         String content = Resources.toString(url, Charsets.UTF_8);
 
-        RDFReader reader = RDFReaderFactory.createReaderFromText(content, "TTL");
+        RdfReader reader = RdfReaderFactory.createReaderFromText(content, "TTL");
 
         Model model = reader.read();
         assertThat(model.isIsomorphicWith(ReaderTestUtils.createOneTripleModel())).isTrue();

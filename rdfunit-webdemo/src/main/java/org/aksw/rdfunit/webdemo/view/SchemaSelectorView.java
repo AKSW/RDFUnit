@@ -7,8 +7,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
@@ -313,12 +313,12 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                     return false;
                 }
                 try {
-                    Model model = RDFReaderFactory.createReaderFromText(text, format).read();
+                    Model model = RdfReaderFactory.createReaderFromText(text, format).read();
                     if (model.isEmpty()) {
                         this.setMessage("Empty constraints ", true);
                         return false;
                     }
-                } catch (RDFReaderException e) {
+                } catch (RdfReaderException e) {
                     this.setMessage("Invalid RDF: " + e.getMessage(), true);
                     return false;
 

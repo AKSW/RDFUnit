@@ -16,7 +16,7 @@ import java.net.URL;
  * @since 11 /14/13 8:48 AM
  * @version $Id: $Id
  */
-public class RDFDereferenceLimitReader implements RDFReader {
+public class RdfDereferenceLimitReader implements RdfReader {
 
     /**
      * the URI to be dereferenced
@@ -39,7 +39,7 @@ public class RDFDereferenceLimitReader implements RDFReader {
      * @param uri the uri
      * @param limitInBytes the limit in bytes
      */
-    public RDFDereferenceLimitReader(String uri, long limitInBytes) {
+    public RdfDereferenceLimitReader(String uri, long limitInBytes) {
         this(uri, limitInBytes, true);
     }
 
@@ -50,7 +50,7 @@ public class RDFDereferenceLimitReader implements RDFReader {
      * @param limitInBytes the limit in bytes
      * @param strict to fail even when size cannot be determined
      */
-    public RDFDereferenceLimitReader(String uri, long limitInBytes, boolean strict) {
+    public RdfDereferenceLimitReader(String uri, long limitInBytes, boolean strict) {
         super();
         this.uri = uri;
         this.limitInBytes = limitInBytes;
@@ -59,27 +59,27 @@ public class RDFDereferenceLimitReader implements RDFReader {
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         checkUriSizeOrThrowExceprion();
 
         // continue with a normal Dereference Reader
-        RDFReaderFactory.createDereferenceReader(uri).read(model);
+        RdfReaderFactory.createDereferenceReader(uri).read(model);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         checkUriSizeOrThrowExceprion();
 
         // continue with a normal Dereference Reader
-        RDFReaderFactory.createDereferenceReader(uri).readDataset(dataset);
+        RdfReaderFactory.createDereferenceReader(uri).readDataset(dataset);
     }
 
 
-    private void checkUriSizeOrThrowExceprion() throws RDFReaderException {
+    private void checkUriSizeOrThrowExceprion() throws RdfReaderException {
         long size = getUriSize(uri);
         if (size > limitInBytes || !strict || size < 0) {
-            throw new RDFReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
+            throw new RdfReaderException("'" + uri + "' size (" + size + ") bigger than " + limitInBytes);
         }
     }
 

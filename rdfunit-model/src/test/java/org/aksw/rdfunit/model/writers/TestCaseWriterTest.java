@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.model.writers;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.resources.ManualTestResources;
@@ -47,8 +47,8 @@ public class TestCaseWriterTest {
             String uri = entry.getValue();
             String resource = "/org/aksw/rdfunit/tests/" + "Manual/" + UriToPathUtils.getCacheFolderForURI(uri) + prefix + "." + "tests" + "." + "Manual" + ".ttl";
             try {
-                models.add(new Object[] {RDFReaderFactory.createResourceReader(resource).read(), resource});
-            } catch (RDFReaderException e) {
+                models.add(new Object[] {RdfReaderFactory.createResourceReader(resource).read(), resource});
+            } catch (RdfReaderException e) {
                 throw new RuntimeException("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")");
             }
         }

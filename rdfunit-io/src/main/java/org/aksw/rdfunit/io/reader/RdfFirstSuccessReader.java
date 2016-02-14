@@ -13,31 +13,31 @@ import java.util.Collection;
  * @since 11/14/13 8:51 AM
  * @version $Id: $Id
  */
-public class RDFFirstSuccessReader implements RDFReader  {
+public class RdfFirstSuccessReader implements RdfReader {
 
-    private final Collection<RDFReader> readers;
+    private final Collection<RdfReader> readers;
 
     /**
      * <p>Constructor for RDFFirstSuccessReader.</p>
      *
      * @param readers a {@link java.util.Collection} object.
      */
-    public RDFFirstSuccessReader(Collection<RDFReader> readers) {
+    public RdfFirstSuccessReader(Collection<RdfReader> readers) {
         super();
         this.readers = readers;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         StringBuilder message = new StringBuilder();
         // return the first successful attempt
-        for (RDFReader r : readers) {
+        for (RdfReader r : readers) {
             try {
                 r.read(model);
                 // return on first read() that does not throw an exception
                 return;
-            } catch (RDFReaderException e) {
+            } catch (RdfReaderException e) {
                 message.append("\n");
                 if (e.getMessage() != null) {
                     message.append(e.getMessage());
@@ -47,20 +47,20 @@ public class RDFFirstSuccessReader implements RDFReader  {
             }
         }
 
-        throw new RDFReaderException("Cannot read from any reader: " + message.toString());
+        throw new RdfReaderException("Cannot read from any reader: " + message.toString());
     }
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         StringBuilder message = new StringBuilder();
         // return the first successful attempt
-        for (RDFReader r : readers) {
+        for (RdfReader r : readers) {
             try {
                 r.readDataset(dataset);
                 // return on first read() that does not throw an exception
                 return;
-            } catch (RDFReaderException e) {
+            } catch (RdfReaderException e) {
                 message.append("\n");
                 if (e.getMessage() != null) {
                     message.append(e.getMessage());
@@ -70,7 +70,7 @@ public class RDFFirstSuccessReader implements RDFReader  {
             }
         }
 
-        throw new RDFReaderException("Cannot read from any reader: " + message.toString());
+        throw new RdfReaderException("Cannot read from any reader: " + message.toString());
     }
 
     /** {@inheritDoc} */

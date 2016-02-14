@@ -16,7 +16,7 @@ import java.io.File;
  * @since 11/14/13 8:48 AM
  * @version $Id: $Id
  */
-public class RDFDereferenceReader implements RDFReader {
+public class RdfDereferenceReader implements RdfReader {
 
     private final String uri;
 
@@ -25,7 +25,7 @@ public class RDFDereferenceReader implements RDFReader {
      *
      * @param uri a {@link java.lang.String} object.
      */
-    public RDFDereferenceReader(String uri) {
+    public RdfDereferenceReader(String uri) {
         super();
         if (IOUtils.isFile(uri)) {
             this.uri = new File(uri).getAbsolutePath();
@@ -36,37 +36,37 @@ public class RDFDereferenceReader implements RDFReader {
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         try {
             RDFDataMgr.read(model, uri);
 
             // Not found
         } catch (NotFoundException e) {
-            throw new RDFReaderException("'" + uri + "' not found", e);
+            throw new RdfReaderException("'" + uri + "' not found", e);
         }
 
         //org.apache.jena.riot.RiotException -> if wrong format, i.e. turtle instead of RDF/XML
 
         catch (Exception e) {
-            throw new RDFReaderException(e);
+            throw new RdfReaderException(e);
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         try {
             RDFDataMgr.read(dataset, uri);
 
             // Not found
         } catch (NotFoundException e) {
-            throw new RDFReaderException("'" + uri + "' not found", e);
+            throw new RdfReaderException("'" + uri + "' not found", e);
         }
 
         //org.apache.jena.riot.RiotException -> if wrong format, i.e. turtle instead of RDF/XML
 
         catch (Exception e) {
-            throw new RDFReaderException(e);
+            throw new RdfReaderException(e);
         }
     }
 

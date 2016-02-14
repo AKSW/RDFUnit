@@ -2,7 +2,7 @@ package org.aksw.rdfunit.sources;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactoryDataset;
-import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.Dataset;
@@ -29,18 +29,18 @@ public class DatasetTestSource extends AbstractTestSource implements TestSource 
     /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(DatasetTestSource.class);
 
-    private final RDFReader dumpReader;
+    private final RdfReader dumpReader;
 
     private final Dataset dumpDataset;
 
 
-    DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader, Dataset dataset) {
+    DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RdfReader dumpReader, Dataset dataset) {
         super(sourceConfig, queryingConfig, referenceSchemata);
         this.dumpReader = checkNotNull(dumpReader);
         this.dumpDataset = checkNotNull(dataset);
     }
 
-    DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RDFReader dumpReader) {
+    DatasetTestSource(SourceConfig sourceConfig, QueryingConfig queryingConfig, Collection<SchemaSource> referenceSchemata, RdfReader dumpReader) {
         this(sourceConfig, queryingConfig, referenceSchemata, dumpReader, DatasetFactory.create());  //OntModelSpec.RDFS_MEM_RDFS_INF
     }
 

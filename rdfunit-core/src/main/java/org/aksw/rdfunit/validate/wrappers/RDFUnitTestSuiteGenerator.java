@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.validate.wrappers;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.io.reader.RDFFirstSuccessReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfFirstSuccessReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
@@ -55,11 +55,11 @@ public final class RDFUnitTestSuiteGenerator {
                     RDFUnit rdfunit = new RDFUnit();
                     try {
                         rdfunit.init();
-                    } catch (RDFReaderException e) {
+                    } catch (RdfReaderException e) {
                         // fatal error
                     }
 
-                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RDFReaderFactory.createEmptyReader(), schemas);
+                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);
 
                     TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
                             enableAutoTests,
@@ -110,7 +110,7 @@ public final class RDFUnitTestSuiteGenerator {
         public Builder addSchemaURI(String prefix, String schemaUri) {
             checkNotNull(schemaUri);
 
-            SchemaSource schemaSource = createSource(prefix, schemaUri, RDFReaderFactory.createDereferenceReader(schemaUri));
+            SchemaSource schemaSource = createSource(prefix, schemaUri, RdfReaderFactory.createDereferenceReader(schemaUri));
             schemas.add(schemaSource);
 
             return this;
@@ -119,7 +119,7 @@ public final class RDFUnitTestSuiteGenerator {
         public Builder addLocalResource(String prefix, String localResource) {
             checkNotNull(localResource);
 
-            SchemaSource schemaSource = createSource(prefix, localResource, RDFReaderFactory.createResourceReader(localResource));
+            SchemaSource schemaSource = createSource(prefix, localResource, RdfReaderFactory.createResourceReader(localResource));
             schemas.add(schemaSource);
 
             return this;
@@ -129,10 +129,10 @@ public final class RDFUnitTestSuiteGenerator {
             checkNotNull(localResource);
             checkNotNull(schemaUri);
 
-            RDFReader schemaReader = new RDFFirstSuccessReader(
+            RdfReader schemaReader = new RdfFirstSuccessReader(
                     Arrays.asList(
-                            RDFReaderFactory.createResourceReader(localResource),
-                            RDFReaderFactory.createDereferenceReader(schemaUri)
+                            RdfReaderFactory.createResourceReader(localResource),
+                            RdfReaderFactory.createDereferenceReader(schemaUri)
                     ));
 
             SchemaSource schemaSource = createSource(prefix, schemaUri, schemaReader);
@@ -141,7 +141,7 @@ public final class RDFUnitTestSuiteGenerator {
             return this;
         }
 
-        public Builder addSchemaURI(String prefix, String schemaUri, RDFReader rdfReader) {
+        public Builder addSchemaURI(String prefix, String schemaUri, RdfReader rdfReader) {
             schemas.add(createSource(prefix, checkNotNull(schemaUri), checkNotNull(rdfReader)));
             return this;
         }
@@ -150,7 +150,7 @@ public final class RDFUnitTestSuiteGenerator {
             return new RDFUnitTestSuiteGenerator(schemas, enableAutoTests, enableManualTests);
         }
 
-        private SchemaSource createSource(String prefix, String schemaUri, RDFReader schemaReader) {
+        private SchemaSource createSource(String prefix, String schemaUri, RdfReader schemaReader) {
             return SchemaSourceFactory.createSchemaSourceSimple(prefix, schemaUri, schemaReader);
         }
 

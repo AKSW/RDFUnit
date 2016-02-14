@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.tests.generators;
 
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
-import org.aksw.rdfunit.io.reader.RDFStreamReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfStreamReader;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
@@ -142,11 +142,11 @@ public class TestGeneratorExecutor {
                 cachedTestsLocation = ""; // non existing path
             }
             Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
-                    new RDFStreamReader(cachedTestsLocation).read());
+                    new RdfStreamReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
             log.info("{} contains {} automatically created tests (loaded from cache)", s.getUri(), testsAutoCached.size());
 
-        } catch (RDFReaderException e) {
+        } catch (RdfReaderException e) {
             // cannot read from file  / generate
             Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
@@ -169,14 +169,14 @@ public class TestGeneratorExecutor {
         }
         try {
             Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    RDFReaderFactory.createFileOrResourceReader(
+                    RdfReaderFactory.createFileOrResourceReader(
                             CacheUtils.getSourceManualTestFile(testFolder, s),                 // check for local directory first
                             CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", s)  // otherwise check if it exists in resources
                     ).read());
 
             tests.addAll(testsManuals);
             log.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
-        } catch (RDFReaderException e) {
+        } catch (RdfReaderException e) {
             // Do nothing, Manual tests do not exist
         }
 

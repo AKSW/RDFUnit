@@ -8,13 +8,13 @@ package org.aksw.rdfunit.io.reader;
  * @since 11/14/13 8:35 AM
  * @version $Id: $Id
  */
-public class RDFReaderException extends Exception {
+public class RdfReaderException extends Exception {
 
 
     /**
      * <p>Constructor for RDFReaderException.</p>
      */
-    public RDFReaderException() {
+    public RdfReaderException() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class RDFReaderException extends Exception {
      * @param message a {@link java.lang.String} object.
      * @param e a {@link java.lang.Throwable} object.
      */
-    public RDFReaderException(String message, Throwable e) {
+    public RdfReaderException(String message, Throwable e) {
         super(message, e);
     }
 
@@ -33,7 +33,7 @@ public class RDFReaderException extends Exception {
      *
      * @param message a {@link java.lang.String} object.
      */
-    public RDFReaderException(String message) {
+    public RdfReaderException(String message) {
         super(message);
     }
 
@@ -42,7 +42,7 @@ public class RDFReaderException extends Exception {
      *
      * @param e a {@link java.lang.Throwable} object.
      */
-    public RDFReaderException(Throwable e) {
+    public RdfReaderException(Throwable e) {
         super(e);
     }
 
@@ -51,7 +51,7 @@ public class RDFReaderException extends Exception {
      *
      * @param e a {@link java.lang.Exception} object.
      */
-    public RDFReaderException(Exception e) {
+    public RdfReaderException(Exception e) {
         super(e);
     }
 }

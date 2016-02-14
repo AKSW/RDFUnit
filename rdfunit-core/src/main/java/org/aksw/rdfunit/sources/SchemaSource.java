@@ -4,8 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
@@ -30,15 +30,15 @@ public class SchemaSource implements Source {
     protected final SourceConfig sourceConfig;
     @Getter private final String schema;
 
-    protected final RDFReader schemaReader;
+    protected final RdfReader schemaReader;
     @Getter(lazy=true) private final Model model = initModel() ;
 
-    SchemaSource(SourceConfig sourceConfig, RDFReader schemaReader) {
+    SchemaSource(SourceConfig sourceConfig, RdfReader schemaReader) {
         this(sourceConfig, sourceConfig.getUri(), schemaReader);
     }
 
 
-    SchemaSource(SourceConfig sourceConfig, String schema, RDFReader schemaReader) {
+    SchemaSource(SourceConfig sourceConfig, String schema, RdfReader schemaReader) {
         this.sourceConfig = sourceConfig;
         this.schema = schema;
         this.schemaReader = schemaReader;
@@ -73,7 +73,7 @@ public class SchemaSource implements Source {
         OntModel m = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, ModelFactory.createDefaultModel());
         try {
             schemaReader.read(m);
-        } catch (RDFReaderException e) {
+        } catch (RdfReaderException e) {
             log.error("Cannot load ontology: {} ", getSchema(), e);
         }
         return m;

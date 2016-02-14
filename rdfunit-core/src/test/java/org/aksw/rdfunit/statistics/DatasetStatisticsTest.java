@@ -2,8 +2,8 @@ package org.aksw.rdfunit.statistics;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.junit.Before;
 
 import java.util.Map;
@@ -16,7 +16,7 @@ public abstract class DatasetStatisticsTest {
 
     @Before
     public void setUp() throws Exception {
-        RDFReader reader = RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
+        RdfReader reader = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
         qef = new QueryExecutionFactoryModel(reader.read());
     }
 

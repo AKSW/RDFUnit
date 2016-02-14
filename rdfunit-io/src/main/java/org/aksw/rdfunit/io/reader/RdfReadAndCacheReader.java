@@ -13,17 +13,17 @@ import org.apache.jena.rdf.model.Model;
  * @since 11/14/13 1:09 PM
  * @version $Id: $Id
  */
-public class RDFReadAndCacheReader implements RDFReader  {
-    private final RDFReader reader;
+public class RdfReadAndCacheReader implements RdfReader {
+    private final RdfReader reader;
     private final RDFWriter writer;
 
     /**
      * <p>Constructor for RDFReadAndCacheReader.</p>
      *
-     * @param reader a {@link org.aksw.rdfunit.io.reader.RDFReader} object.
+     * @param reader a {@link RdfReader} object.
      * @param writer a {@link org.aksw.rdfunit.io.writer.RDFWriter} object.
      */
-    public RDFReadAndCacheReader(RDFReader reader, RDFWriter writer) {
+    public RdfReadAndCacheReader(RdfReader reader, RDFWriter writer) {
         super();
         this.reader = reader;
         this.writer = writer;
@@ -31,7 +31,7 @@ public class RDFReadAndCacheReader implements RDFReader  {
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         reader.read(model);
         //If read succeeds try to write
         try {
@@ -43,7 +43,7 @@ public class RDFReadAndCacheReader implements RDFReader  {
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         reader.readDataset(dataset);
         //If read succeeds try to write
         try {

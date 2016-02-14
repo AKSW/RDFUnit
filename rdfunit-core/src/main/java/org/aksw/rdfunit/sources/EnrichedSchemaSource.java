@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
 
 /**
  * <p>EnrichedSchemaSource class.</p>
@@ -14,11 +14,11 @@ import org.aksw.rdfunit.io.reader.RDFReader;
 public class EnrichedSchemaSource extends SchemaSource implements Source{
 
 
-    EnrichedSchemaSource(SourceConfig sourceConfig, RDFReader schemaReader) {
+    EnrichedSchemaSource(SourceConfig sourceConfig, RdfReader schemaReader) {
         super(sourceConfig, schemaReader);
     }
 
-    EnrichedSchemaSource(SourceConfig sourceConfig, String schema, RDFReader schemaReader) {
+    EnrichedSchemaSource(SourceConfig sourceConfig, String schema, RdfReader schemaReader) {
         super(sourceConfig, schema, schemaReader);
     }
 

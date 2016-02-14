@@ -58,15 +58,15 @@ public class DBpediaMappingValidator {
         return mappingServer + "/server/mappings/" + lang + "/pages/rdf/all";
     }
 
-    private RDFReader getRMLReader() {
-        Collection<RDFReader> allReaders = new ArrayList<>();
+    private RdfReader getRMLReader() {
+        Collection<RdfReader> allReaders = new ArrayList<>();
         // we add the ontology
-        allReaders.add(new RDFDereferenceReader(dbpediaOntology));
+        allReaders.add(new RdfDereferenceReader(dbpediaOntology));
         // add all the mapping languages
         for (String lang : languages) {
-            allReaders.add(new RDFDereferenceReader(getRMLlink(lang)));
+            allReaders.add(new RdfDereferenceReader(getRMLlink(lang)));
         }
-        return new RDFMultipleReader(allReaders);
+        return new RdfMultipleReader(allReaders);
     }
 
     private TestSource getMappingSource() {
@@ -74,9 +74,9 @@ public class DBpediaMappingValidator {
 
     }
 
-    private TestSuite getDBpMappingsTestSuite() throws RDFReaderException {
+    private TestSuite getDBpMappingsTestSuite() throws RdfReaderException {
         Collection<TestCase> tests = TestUtils.instantiateTestsFromModel(
-                RDFReaderFactory.createResourceReader(rmlManualTests).read());
+                RdfReaderFactory.createResourceReader(rmlManualTests).read());
 
         return new TestSuite(tests);
     }
@@ -85,9 +85,9 @@ public class DBpediaMappingValidator {
      * <p>validateAllMappings.</p>
      *
      * @return a {@link org.apache.jena.rdf.model.Model} object.
-     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     * @throws RdfReaderException if any.
      */
-    public TestExecution validateAllMappings() throws RDFReaderException {
+    public TestExecution validateAllMappings() throws RdfReaderException {
         return RDFUnitStaticValidator.validate(TestCaseExecutionType.shaclFullTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
     }
 
@@ -188,9 +188,9 @@ public class DBpediaMappingValidator {
      * <p>validateAndGetJson.</p>
      *
      * @return a {@link java.lang.String} object.
-     * @throws org.aksw.rdfunit.io.reader.RDFReaderException if any.
+     * @throws RdfReaderException if any.
      */
-    public String validateAndGetJson() throws RDFReaderException {
+    public String validateAndGetJson() throws RdfReaderException {
         Model model = ModelFactory.createDefaultModel();
         TestExecutionWriter.create(validateAllMappings()).write(model);
 

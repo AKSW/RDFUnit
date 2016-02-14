@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 
-public class RDFStreamReaderDatasetTest {
+public class RdfStreamReaderDatasetTest {
 
     private Dataset dataset;
 
@@ -61,7 +61,7 @@ public class RDFStreamReaderDatasetTest {
 
     @Test
     public void testReader() throws Exception{
-        Dataset readDatasaet = RDFReaderFactory.createResourceReader(resourceName).readDataset();
+        Dataset readDatasaet = RdfReaderFactory.createResourceReader(resourceName).readDataset();
         Iterator<String> namedGraphs = dataset.listNames();
         while (namedGraphs.hasNext()) {
             String namedGraph = namedGraphs.next();

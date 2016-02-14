@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.readers.results;
 
-import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -25,13 +25,13 @@ public class TestExecutionReaderTest {
     @Parameterized.Parameters(name= "{index}: Result Type: {1}")
     public static Collection<Object[]> resources() throws Exception {
 
-        Model aggregated = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read()).read();
-        Model status = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read()).read();
-        Model shacl = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclFullTestCaseResult.ttl").read()).read();
-        Model shacllite = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclSimpleTestCaseResult.ttl").read()).read();
-        Model rlog = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.rlogTestCaseResult.ttl").read()).read();
-        Model extended = new RDFModelReader(RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.extendedTestCaseResult.ttl").read()).read();
-        Model all = new RDFModelReader(aggregated.union(status).union(shacl).union(shacllite).union(rlog).union(extended)).read();
+        Model aggregated = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read()).read();
+        Model status = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read()).read();
+        Model shacl = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclFullTestCaseResult.ttl").read()).read();
+        Model shacllite = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclSimpleTestCaseResult.ttl").read()).read();
+        Model rlog = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.rlogTestCaseResult.ttl").read()).read();
+        Model extended = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.extendedTestCaseResult.ttl").read()).read();
+        Model all = new RdfModelReader(aggregated.union(status).union(shacl).union(shacllite).union(rlog).union(extended)).read();
 
         return Arrays.asList(new Object[][] {
                 { aggregated, "aggregated" },

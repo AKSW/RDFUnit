@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.junit;
 
-import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Before;
@@ -19,15 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class RdfUnitJunitRunnerTest {
 
-    public static final RDFReader CONTROLLED_VOCABULARY = newEmptyModelRdfReader();
+    public static final RdfReader CONTROLLED_VOCABULARY = newEmptyModelRdfReader();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     private RdfUnitJunitRunner underTest;
 
-    private static RDFReader newEmptyModelRdfReader() {
-        return new RDFModelReader(ModelFactory.createDefaultModel());
+    private static RdfReader newEmptyModelRdfReader() {
+        return new RdfModelReader(ModelFactory.createDefaultModel());
     }
 
     @Before
@@ -85,7 +85,7 @@ public class RdfUnitJunitRunnerTest {
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class RdfUnitTest {
         @TestInput
-        public RDFReader testInput() {
+        public RdfReader testInput() {
             return newEmptyModelRdfReader();
         }
     }
@@ -103,7 +103,7 @@ public class RdfUnitJunitRunnerTest {
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class RdfUnitWithNullTestInputTest {
         @TestInput
-        public RDFReader testInput() {
+        public RdfReader testInput() {
             return null;
         }
     }
@@ -126,12 +126,12 @@ public class RdfUnitJunitRunnerTest {
     public static class ControlledVocabularyTest {
 
         @TestInput
-        public RDFReader testInput() {
+        public RdfReader testInput() {
             return newEmptyModelRdfReader();
         }
 
         @AdditionalData
-        public RDFReader vocabulary() {
+        public RdfReader vocabulary() {
             return CONTROLLED_VOCABULARY;
         }
     }
@@ -140,17 +140,17 @@ public class RdfUnitJunitRunnerTest {
     @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
     public static class TwoControlledVocabulariesNotAllowedTest {
         @TestInput
-        public RDFReader testInput() {
+        public RdfReader testInput() {
             return newEmptyModelRdfReader();
         }
 
         @AdditionalData
-        public RDFReader vocabulary1() {
+        public RdfReader vocabulary1() {
             return CONTROLLED_VOCABULARY;
         }
 
         @AdditionalData
-        public RDFReader vocabulary2() {
+        public RdfReader vocabulary2() {
             return CONTROLLED_VOCABULARY;
         }
     }
@@ -160,7 +160,7 @@ public class RdfUnitJunitRunnerTest {
     public static class VocabularyWithWrongReturnTypeNotAllowedTest {
 
         @TestInput
-        public RDFReader testInput() {
+        public RdfReader testInput() {
             return newEmptyModelRdfReader();
         }
 

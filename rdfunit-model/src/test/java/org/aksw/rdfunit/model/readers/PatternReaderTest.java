@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.readers;
 
 import org.aksw.rdfunit.Resources;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -27,7 +27,7 @@ public class PatternReaderTest {
 
     @Parameters(name= "{index}: Pattern: {0}")
     public static Collection<Object[]> resources() throws Exception {
-        Model model = RDFReaderFactory.createResourceReader(Resources.PATTERNS).read();
+        Model model = RdfReaderFactory.createResourceReader(Resources.PATTERNS).read();
         Collection<Object[]> parameters = new ArrayList<>();
         for (Resource resource: model.listResourcesWithProperty(RDF.type, RDFUNITv.Pattern).toList()) {
             parameters.add(new Object[] {resource});

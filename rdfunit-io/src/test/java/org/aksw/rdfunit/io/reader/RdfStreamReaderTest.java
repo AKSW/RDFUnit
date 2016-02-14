@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 
-public class RDFStreamReaderTest {
+public class RdfStreamReaderTest {
 
     private Model model;
 
@@ -45,7 +45,7 @@ public class RDFStreamReaderTest {
 
     @Test
     public void testReader() throws Exception{
-        Model readModel = RDFReaderFactory.createResourceReader(resourceName).read();
+        Model readModel = RdfReaderFactory.createResourceReader(resourceName).read();
         assertTrue("Models not the same", model.isIsomorphicWith(readModel));
 
     }

@@ -6,7 +6,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.io.reader.RDFDereferenceLimitReader;
+import org.aksw.rdfunit.io.reader.RdfDereferenceLimitReader;
 import org.aksw.rdfunit.utils.StringUtils;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 import org.aksw.rdfunit.webdemo.utils.CommonAccessUtils;
@@ -241,7 +241,7 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
                 new URL(uri);
 
                 // Check size
-                if (RDFDereferenceLimitReader.getUriSize(uri) > fileLimit)
+                if (RdfDereferenceLimitReader.getUriSize(uri) > fileLimit)
                     throw new Exception("Contents of " + uri + " bigger than 10MB");
                 configuration.setCustomDereferenceURI(uri);
 

@@ -3,7 +3,7 @@ package org.aksw.rdfunit.validate.ws;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -53,7 +53,7 @@ public class ValidateWS extends RDFUnitWebService {
             RDFUnit rdfunit = new RDFUnit();
             rdfunit.init();
             autogenerators = rdfunit.getAutoGenerators();
-        } catch (RDFReaderException e) {
+        } catch (RdfReaderException e) {
             log.error("Cannot read patterns and/or pattern generators");
         }
     }

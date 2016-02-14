@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.dqv;
 
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.io.writer.RDFFileWriter;
 import org.aksw.rdfunit.io.writer.RDFWriter;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -28,7 +28,7 @@ public class RdfunitDqv {
             System.exit(0);
         }
 
-        RDFReader input = getInputReader(commandLine);
+        RdfReader input = getInputReader(commandLine);
         RDFWriter output = getOutputWriter(commandLine);
 
         Model model = ModelFactory.createDefaultModel();
@@ -64,12 +64,12 @@ public class RdfunitDqv {
         return cliParser.parse(cliOptions, args);
     }
 
-    private static RDFReader getInputReader(CommandLine commandLine) {
+    private static RdfReader getInputReader(CommandLine commandLine) {
         if (!commandLine.hasOption("i")) {
             displayHelp();
             throw new IllegalArgumentException("Error: Required argument '-i' is missing.");
         }
-        return RDFReaderFactory.createResourceOrFileOrDereferenceReader(commandLine.getOptionValue("i"));
+        return RdfReaderFactory.createResourceOrFileOrDereferenceReader(commandLine.getOptionValue("i"));
     }
 
     private static RDFWriter getOutputWriter(CommandLine commandLine) {

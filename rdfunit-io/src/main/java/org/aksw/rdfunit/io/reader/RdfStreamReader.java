@@ -18,7 +18,7 @@ import java.io.InputStream;
  * @since 11/14/13 8:37 AM
  * @version $Id: $Id
  */
-public class RDFStreamReader implements RDFReader  {
+public class RdfStreamReader implements RdfReader {
     private final InputStream inputStream;
     private final String format;
 
@@ -27,7 +27,7 @@ public class RDFStreamReader implements RDFReader  {
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RDFStreamReader(String filename) {
+    public RdfStreamReader(String filename) {
         this(getInputStreamFromFilename(filename), FormatService.getFormatFromExtension(filename));
     }
 
@@ -41,7 +41,7 @@ public class RDFStreamReader implements RDFReader  {
      * @param filename a {@link java.lang.String} object.
      * @param format a {@link java.lang.String} object.
      */
-    public RDFStreamReader(String filename, String format) {
+    public RdfStreamReader(String filename, String format) {
         this(getInputStreamFromFilename(filename), format);
     }
 
@@ -51,7 +51,7 @@ public class RDFStreamReader implements RDFReader  {
      * @param inputStream a {@link java.io.InputStream} object.
      * @param format a {@link java.lang.String} object.
      */
-    public RDFStreamReader(InputStream inputStream, String format) {
+    public RdfStreamReader(InputStream inputStream, String format) {
         super();
         this.inputStream = inputStream;
         this.format = format;
@@ -59,22 +59,22 @@ public class RDFStreamReader implements RDFReader  {
 
     /** {@inheritDoc} */
     @Override
-    public void read(Model model) throws RDFReaderException {
+    public void read(Model model) throws RdfReaderException {
         try {
             RDFDataMgr.read(model, inputStream, null, RDFLanguages.nameToLang(format));
         } catch (Exception e) {
-            throw new RDFReaderException(e.getMessage(), e);
+            throw new RdfReaderException(e.getMessage(), e);
         }
 
     }
 
     /** {@inheritDoc} */
     @Override
-    public void readDataset(Dataset dataset) throws RDFReaderException {
+    public void readDataset(Dataset dataset) throws RdfReaderException {
         try {
             RDFDataMgr.read(dataset, inputStream, null, RDFLanguages.nameToLang(format));
         } catch (Exception e) {
-            throw new RDFReaderException(e.getMessage(), e);
+            throw new RdfReaderException(e.getMessage(), e);
         }
 
     }

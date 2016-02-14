@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.model.writers;
 
-import org.aksw.rdfunit.io.reader.RDFReaderFactory;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.model.readers.ArgumentReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -29,7 +29,7 @@ public class ArgumentWriterTest {
 
     @Parameterized.Parameters(name= "{index}: Pattern: {0}")
     public static Collection<Object[]> resources() throws Exception {
-        Model model = RDFReaderFactory.createResourceReader("/org/aksw/rdfunit/shacl/shacl.shacl.ttl").read();
+        Model model = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/shacl/shacl.shacl.ttl").read();
         Collection<Object[]> parameters = new ArrayList<>();
         for (RDFNode node: model.listObjectsOfProperty(SHACL.argument).toList()) {
             parameters.add(new Object[] {node});

@@ -2,9 +2,9 @@ package org.aksw.rdfunit.junit;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-import org.aksw.rdfunit.io.reader.RDFModelReader;
-import org.aksw.rdfunit.io.reader.RDFReader;
-import org.aksw.rdfunit.io.reader.RDFReaderException;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,7 +35,7 @@ public class RunnerTest {
 
 
     @BeforeClass
-    public static void addNotifierListener() throws RDFReaderException {
+    public static void addNotifierListener() throws RdfReaderException {
         notifier.addListener(mockRunListener);
 
         assertThat(TestRunner.beforeClassCalled).isEqualTo(0);
@@ -138,23 +138,23 @@ public class RunnerTest {
         }
 
         @TestInput
-        public RDFReader getInputData() {
-            return new RDFModelReader(ModelFactory
+        public RdfReader getInputData() {
+            return new RdfModelReader(ModelFactory
                     .createDefaultModel()
                     .read("inputmodels/foaf.rdf"));
         }
 
         @TestInput
-        public RDFReader returningNull() {
+        public RdfReader returningNull() {
             return null;
         }
 
         @TestInput
-        public RDFReader returningMockReader() {
-            RDFReader mockReader = mock(RDFReader.class);
+        public RdfReader returningMockReader() {
+            RdfReader mockReader = mock(RdfReader.class);
             try {
-                when(mockReader.read()).thenThrow(new RDFReaderException("Failed to read (mock)!"));
-            } catch (RDFReaderException e) {
+                when(mockReader.read()).thenThrow(new RdfReaderException("Failed to read (mock)!"));
+            } catch (RdfReaderException e) {
                 throw new RuntimeException(e);
             }
             return mockReader;
@@ -162,15 +162,15 @@ public class RunnerTest {
 
         @TestInput
         @Ignore
-        public RDFReader ignoredTestInput() {
+        public RdfReader ignoredTestInput() {
             ignoredTestInputMethodNotCalled = false;
-            return new RDFModelReader(ModelFactory.createDefaultModel());
+            return new RdfModelReader(ModelFactory.createDefaultModel());
         }
 
         @TestInput(name = "inputs name")
         @Ignore
-        public RDFReader ignoredTestInputWithName() {
-            return new RDFModelReader(ModelFactory.createDefaultModel());
+        public RdfReader ignoredTestInputWithName() {
+            return new RdfModelReader(ModelFactory.createDefaultModel());
         }
     }
 
