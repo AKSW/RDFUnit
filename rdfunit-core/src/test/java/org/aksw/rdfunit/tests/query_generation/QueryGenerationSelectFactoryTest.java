@@ -36,8 +36,8 @@ public class QueryGenerationSelectFactoryTest {
     public void checkQuery() throws Exception {
 
         TestCase testCase = ManualTestCaseImpl.builder()
-                .resource(ResourceFactory.createResource("http://example.com"))
-                .annotation(Mockito.mock(TestCaseAnnotation.class))  //Mock class
+                .element(ResourceFactory.createResource("http://example.com"))
+                .testCaseAnnotation(Mockito.mock(TestCaseAnnotation.class))  //Mock class
                 .sparqlWhere(goodSparqlQuery)
                 .sparqlPrevalence("")
                 .build();

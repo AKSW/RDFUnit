@@ -12,21 +12,14 @@ import org.apache.jena.rdf.model.Resource;
  * @since 1/3/14 3:57 PM
  * @version $Id: $Id
  */
-@Value
-@EqualsAndHashCode
+@Builder
+@EqualsAndHashCode(exclude = "element")
+@ToString
 public class ManualTestCaseImpl implements TestCase {
     @Getter @NonNull private final Resource element;
     @Getter @NonNull private final TestCaseAnnotation testCaseAnnotation;
 
     @Getter @NonNull private final String sparqlWhere;
     @Getter @NonNull private final String sparqlPrevalence;
-
-    @Builder
-    private ManualTestCaseImpl(Resource resource, TestCaseAnnotation annotation, String sparqlWhere, String sparqlPrevalence) {
-        this.element = resource;
-        this.testCaseAnnotation = annotation;
-        this.sparqlWhere = sparqlWhere;
-        this.sparqlPrevalence = sparqlPrevalence;
-    }
 
 }

@@ -35,7 +35,7 @@ public final class ManualTestCaseReader implements ElementReader<TestCase> {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder builder = ManualTestCaseImpl.builder();
 
-        builder.resource(resource);
+        builder.element(resource);
 
 
         int count; // used to count duplicates
@@ -52,7 +52,7 @@ public final class ManualTestCaseReader implements ElementReader<TestCase> {
             builder.sparqlPrevalence(smt.getObject().asLiteral().getLexicalForm());
         }
 
-        builder.annotation(TestCaseAnnotationReader.create().read(resource));
+        builder.testCaseAnnotation(TestCaseAnnotationReader.create().read(resource));
 
         return builder.build();
     }
