@@ -9,6 +9,7 @@ import org.aksw.rdfunit.vocabulary.RLOG;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -66,11 +67,11 @@ public class TestCaseAnnotation implements Element {
         return references;
     }
 
-    public Collection<ResultAnnotation> getResultAnnotations() {
+    public List<ResultAnnotation> getResultAnnotations() {
         return resultAnnotations;
     }
 
-    public Collection<ResultAnnotation> getVariableAnnotations() {
+    public List<ResultAnnotation> getVariableAnnotations() {
         return variableAnnotations;
     }
 

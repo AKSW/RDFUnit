@@ -36,6 +36,7 @@ public final class SHACL {
     public static final Property argument = property("argument");
     public static final Property cachable = property("cachable");
     public static final Property datatype = property("datatype");
+    public static final Property datatypeIn = property("datatypeIn");
     public static final Property defaultValue = property("defaultValue");
     public static final Property optional = property("optional");
     public static final Property returnType = property("returnType");
@@ -43,6 +44,8 @@ public final class SHACL {
     public static final Property valueType = property("valueType");
 
     public static final Property clazz = property("class");
+    public static final Property clazzIn = property("classIn");
+    public static final Property directType = property("directType");
 
     public static final Property severity = property("severity");
     public static final Property focusNode = property("focusNode");
@@ -64,6 +67,16 @@ public final class SHACL {
     //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");
+
+
+    public static final Property minExclusive = property("minExclusive");
+    public static final Property minInclusive = property("minInclusive");
+    public static final Property maxExclusive = property("maxExclusive");
+    public static final Property maxInclusive = property("maxInclusive");
+    public static final Property minLength = property("minLength");
+    public static final Property maxLength = property("maxLength");
+
+
 
 
     private SHACL() {
