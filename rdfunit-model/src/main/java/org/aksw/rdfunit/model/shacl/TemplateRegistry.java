@@ -45,48 +45,38 @@ public class TemplateRegistry {
     public static TemplateRegistry createCore() {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
-//        //create datatype
-//        Pattern datatypePattern = PatternService.getPatternFromID("RDFSRANGED");
-//        ShaclPattern.ShaclPatternBuilder shaclPatternBuilder = ShaclPattern.builder();
-//        shaclPatternBuilder
-//                .pattern(datatypePattern)
-//                .parameter(CoreArguments.predicate, datatypePattern.getParameter(PrefixNSService.getURIFromAbbrev("rutp:RDFSRANGED-P1")).get())
-//                .parameter(CoreArguments.datatype, datatypePattern.getParameter(PrefixNSService.getURIFromAbbrev("rutp:RDFSRANGED-D1")).get())
-//                .mainArgument(CoreArguments.datatype);
-//
-//        builder.shaclPattern(shaclPatternBuilder.build());
         builder.shaclCoreTemplate(createTemplate( CoreArguments.datatype,
-                "FILTER NOT EXISTS {\n" +
+                " FILTER NOT EXISTS {\n" +
                 "\t\t{ FILTER isLiteral(?value) .} .\n" +
                 "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
-                "\t\tFILTER (?valueDatatype = $datatype) . }"));
+                "\t\tFILTER (?valueDatatype = $datatype) . } "));
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
-                "FILTER (isLiteral(?value) || \n" +
+                " FILTER (isLiteral(?value) || \n" +
                         "\t\t!( $class = rdfs:Resource ||\n" +
                         "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
-                        "\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* $class } ))"));
+                        "\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* $class } )) "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
                 " FILTER NOT EXISTS { ?value a $directType .} "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
-                "FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) ."));
+                " FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxLength,
-                "FILTER (isBlank(?value) || STRLEN(str(?value)) > $maxLength) ."));
+                " FILTER (isBlank(?value) || STRLEN(str(?value)) > $maxLength) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minExclusive,
-                "FILTER (!(?value > $minExclusive)) ."));
+                " FILTER (!(?value > $minExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minInclusive,
-                "FILTER (!(?value >= $minExclusive)) ."));
+                " FILTER (!(?value >= $minExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxExclusive,
-                "FILTER (!(?value < $minExclusive)) ."));
+                " FILTER (!(?value < $minExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
-                "FILTER (!(?value <= $minExclusive)) ."));
+                " FILTER (!(?value <= $minExclusive)) . "));
 
         return builder.build();
     }
