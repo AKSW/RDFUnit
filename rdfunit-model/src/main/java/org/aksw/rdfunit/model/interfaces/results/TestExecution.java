@@ -12,7 +12,7 @@ public interface TestExecution extends Element {
 
     Collection<TestCaseResult> getTestCaseResults();
     Collection<String> getSchemataUris();
-    Collection<String> getTestCasesUris();
+    //Collection<String> getTestCasesUris();
 
     DatasetOverviewResults getDatasetOverviewResults();
 

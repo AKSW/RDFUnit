@@ -2,7 +2,9 @@ package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
+import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
@@ -10,6 +12,7 @@ import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
+import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
 import org.aksw.rdfunit.tests.generators.TestGeneratorTCInstantiator;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.junit.After;
@@ -124,12 +127,31 @@ public class PatternsGeneratorsIntegrationTest {
         testMap(testsWithErrorsDSP, testSuite, ontologyDSPSource);
     }
 
-    private void testMap(Map<String, Integer> datasets, TestSuite testSuite, SchemaSource ontologySource) {
+    @Test
+    public void testSHACL() throws Exception {
+
+        Map<String, Integer> testsWithErrorsShacl = new HashMap<>();
+
+        testsWithErrorsShacl.put("shacl/sh.class-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.class-wrong.ttl", 1);
+
+
+        RdfReader ontologyShaclReader = new RdfModelReader(RdfReaderFactory.createResourceReader(resourcePrefix + "shacl/shacl.constraints.ttl").read());
+        SchemaSource ontologyShaclSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyShaclReader);
+
+
+        TestSuite testSuite = new TestSuite(
+                new ShaclTestGenerator().generate(ontologyShaclSource));
+
+        testMap(testsWithErrorsShacl, testSuite, ontologyShaclSource);
+    }
+
+    private void testMap(Map<String, Integer> datasets, TestSuite testSuite, SchemaSource ontologySource) throws RdfReaderException {
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
         for (Map.Entry<String, Integer> entry : datasets.entrySet()) {
-            String resource = entry.getKey();
-            int errors = datasets.get(resource);
+            String resource = resourcePrefix + entry.getKey();
+            int errors = entry.getValue();
 
             // Test all execution types
             long failedTestCases = -1;
@@ -139,7 +161,7 @@ public class PatternsGeneratorsIntegrationTest {
                 final TestSource modelSource = new TestSourceBuilder()
                         .setImMemSingle()
                         .setPrefixUri("test", resource)
-                        .setInMemReader(RdfReaderFactory.createResourceReader(resourcePrefix + resource))
+                        .setInMemReader(new RdfModelReader(RdfReaderFactory.createResourceReader( resource).read()))
                         .setReferenceSchemata(ontologySource)
                         .build();
 

@@ -71,7 +71,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
         for (Map.Entry<Argument, RDFNode>  entry:  bindings.entrySet()) {
             finalSparqlSnippet = replaceBinding(finalSparqlSnippet, entry.getKey(), entry.getValue());
         }
-        return finalSparqlSnippet;
+        return "{ " + finalSparqlSnippet + " }";
     }
 
     private String replaceBinding(String sparql, Argument argument, RDFNode value) {
@@ -101,7 +101,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 RLOGLevel.resolve(bindings.get(CoreArguments.severity).asResource().getURI()),
                 Arrays.asList(
                         new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.object)
-                                .setVariableName("?value").build(),
+                                .setVariableName("value").build(),
                         new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.predicate)
                                 .setValue(bindings.get(CoreArguments.predicate)).build()
                 ));

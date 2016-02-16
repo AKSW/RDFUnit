@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -28,7 +27,7 @@ public class TestExecutionImpl implements TestExecution {
 
     private final Collection<TestCaseResult> results;
     private final Collection<String> schemata;
-    private final Set<String> testCaseUris;
+    //private final Set<String> testCaseUris;
 
     private TestExecutionImpl(Builder builder) {
         this.element = checkNotNull(builder.element, "Element is needed in TestExecution");
@@ -39,7 +38,7 @@ public class TestExecutionImpl implements TestExecution {
 
         this.schemata= ImmutableList.copyOf(checkNotNull(builder.schemata, "Used schemata are needed in TestExecution"));
         this.results = ImmutableList.copyOf(checkNotNull(builder.results, "Results are needed in TestExecution"));
-        this.testCaseUris = ImmutableSet.copyOf(checkNotNull(builder.testCaseUris));
+        //this.testCaseUris = ImmutableSet.copyOf(checkNotNull(builder.testCaseUris));
 
         this.datasetOverviewResults = checkNotNull(builder.datasetOverviewResults, "Overview results are needed in TestExecution");
 
@@ -63,10 +62,10 @@ public class TestExecutionImpl implements TestExecution {
         return schemata;
     }
 
-    @Override
-    public Collection<String> getTestCasesUris() {
-        return testCaseUris;
-    }
+    //@Override
+    //public Collection<String> getTestCasesUris() {
+    //    return testCaseUris;
+    //}
 
     @Override
     public DatasetOverviewResults getDatasetOverviewResults() {
