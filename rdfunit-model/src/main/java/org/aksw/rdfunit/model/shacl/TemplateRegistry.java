@@ -113,7 +113,7 @@ public class TemplateRegistry {
                 " ?this $notEquals ?value . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.pattern, CoreArguments.flags,
-                "FILTER (isBlank(?value) || IF(bound($flags), !regex(str(?value), $pattern, $flags), !regex(str(?value), $pattern))) ."));
+                " BIND ('$flags' AS ?myFlags) . FILTER (isBlank(?value) || IF(?myFlags != '', !regex(str(?value), '$pattern', '$flags'), !regex(str(?value), '$pattern'))) ."));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.uniqueLang,
                 " {FILTER ($uniqueLang) . }\n" +

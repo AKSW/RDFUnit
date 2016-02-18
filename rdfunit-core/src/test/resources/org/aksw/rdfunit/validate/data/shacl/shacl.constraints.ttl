@@ -49,6 +49,11 @@ ex:MyShape
         sh:minInclusive 5 ;
         sh:maxInclusive 10 ;
     ] ;
+    sh:property [
+        sh:predicate ex:checkPattern ;
+        sh:pattern "^Ali" ;
+        sh:flags "i" ;
+    ] ;
 
 
     # sh:nodeType
