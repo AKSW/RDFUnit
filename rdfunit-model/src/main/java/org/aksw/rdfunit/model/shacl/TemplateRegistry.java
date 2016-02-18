@@ -94,13 +94,13 @@ public class TemplateRegistry {
                 " FILTER (!(?value > $minExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minInclusive,
-                " FILTER (!(?value >= $minExclusive)) . "));
+                " FILTER (!(?value >= $minInclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxExclusive,
-                " FILTER (!(?value < $minExclusive)) . "));
+                " FILTER (!(?value < $maxExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
-                " FILTER (!(?value <= $minExclusive)) . "));
+                " FILTER (!(?value <= $maxInclusive)) . "));
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.nodeKind,

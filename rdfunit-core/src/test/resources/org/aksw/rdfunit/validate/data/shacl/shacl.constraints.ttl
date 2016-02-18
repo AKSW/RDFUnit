@@ -39,6 +39,16 @@ ex:MyShape
         sh:minLength 3;
         sh:maxLength 5;
     ];
+    sh:property [
+        sh:predicate ex:checkMinMaxExclusive ;
+        sh:minExclusive 5 ;
+        sh:maxExclusive 10 ;
+    ] ;
+    sh:property [
+        sh:predicate ex:checkMinMaxInclusive ;
+        sh:minInclusive 5 ;
+        sh:maxInclusive 10 ;
+    ] ;
 
 
     # sh:nodeType
