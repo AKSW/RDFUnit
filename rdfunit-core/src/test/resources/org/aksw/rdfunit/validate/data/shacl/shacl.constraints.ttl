@@ -34,6 +34,12 @@ ex:MyShape
         sh:predicate ex:checkNotEquals ;
         sh:notEquals ex:checkNotEqualsTo ;
     ] ;
+    sh:property [
+        sh:predicate ex:checkLength ;
+        sh:minLength 3;
+        sh:maxLength 5;
+    ];
+
 
     # sh:nodeType
 	sh:property [

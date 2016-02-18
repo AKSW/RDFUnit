@@ -1,0 +1,11 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:1 rdf:type ex:Person ;
+  ex:checkLength "123" ;
+  ex:checkLength "1234" ;
+  ex:checkLength "12345" ;
+  .

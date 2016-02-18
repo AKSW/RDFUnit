@@ -144,6 +144,9 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsShacl.put("shacl/sh.notEquals-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.notEquals-wrong.ttl", 4);
 
+        testsWithErrorsShacl.put("shacl/sh.min.maxLength-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.min.maxLength-wrong.ttl", 2);
+
         //testsWithErrorsShacl.put("shacl/sh.nodeType-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-IRI.ttl", 2);
         testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-Literal.ttl", 2);
