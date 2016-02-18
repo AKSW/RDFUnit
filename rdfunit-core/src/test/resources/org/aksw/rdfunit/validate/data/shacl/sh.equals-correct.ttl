@@ -1,0 +1,28 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:1 rdf:type ex:Person ;
+  ex:checkEquals 1 ;
+  ex:checkEqualsTo 1 ;
+  .
+
+
+ex:2 rdf:type ex:Person ;
+  ex:checkEquals "asdf" ;
+  ex:checkEqualsTo "asdf" ;
+  .
+
+
+ex:3 rdf:type ex:Person ;
+  ex:checkEquals "asdf"@el ;
+  ex:checkEqualsTo "asdf"@el ;
+  .
+
+
+ex:4 rdf:type ex:Person ;
+  ex:checkEquals "1999-02-12"^^xsd:date ;
+  ex:checkEqualsTo "1999-02-12"^^xsd:date ;
+  .

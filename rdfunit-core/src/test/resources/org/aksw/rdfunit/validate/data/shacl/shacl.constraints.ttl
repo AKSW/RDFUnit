@@ -26,6 +26,14 @@ ex:MyShape
         sh:datatype xsd:date ;
     ] ;
 
+    sh:property [
+        sh:predicate ex:checkEquals ;
+        sh:equals ex:checkEqualsTo ;
+    ] ;
+    sh:property [
+        sh:predicate ex:checkNotEquals ;
+        sh:notEquals ex:checkNotEqualsTo ;
+    ] ;
 
     # sh:nodeType
 	sh:property [
