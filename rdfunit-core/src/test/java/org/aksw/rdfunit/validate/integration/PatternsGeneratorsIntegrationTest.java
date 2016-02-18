@@ -134,6 +134,13 @@ public class PatternsGeneratorsIntegrationTest {
 
         testsWithErrorsShacl.put("shacl/sh.class-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.class-wrong.ttl", 1);
+        testsWithErrorsShacl.put("shacl/sh.directType-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.directType-wrong.ttl", 2);
+
+        //testsWithErrorsShacl.put("shacl/sh.nodeType-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-IRI.ttl", 2);
+        testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-Literal.ttl", 2);
+        testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-BlankNode.ttl", 2);
 
 
         RdfReader ontologyShaclReader = new RdfModelReader(RdfReaderFactory.createResourceReader(resourcePrefix + "shacl/shacl.constraints.ttl").read());

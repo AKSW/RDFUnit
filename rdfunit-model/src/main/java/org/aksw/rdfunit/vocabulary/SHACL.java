@@ -66,7 +66,6 @@ public final class SHACL {
     //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");
     //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
 
 
     public static final Property minExclusive = property("minExclusive");
@@ -75,6 +74,17 @@ public final class SHACL {
     public static final Property maxInclusive = property("maxInclusive");
     public static final Property minLength = property("minLength");
     public static final Property maxLength = property("maxLength");
+    public static final Property nodeKind = property("nodeKind");
+    public static final Property notEquals = property("notEquals");
+    public static final Property equals = property("equals");
+    public static final Property hasValue = property("hasValue");
+    public static final Property lessThan = property("lessThan");
+    public static final Property lessThanOrEquals = property("lessThanOrEquals");
+    public static final Property minCount = property("minCount");
+    public static final Property maxCount = property("maxCount");
+    public static final Property pattern = property("pattern");
+    public static final Property flags = property("flags");
+    public static final Property uniqueLang = property("uniqueLang");
 
 
 

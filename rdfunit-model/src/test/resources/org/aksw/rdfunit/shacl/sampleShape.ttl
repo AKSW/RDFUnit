@@ -29,28 +29,54 @@ ex:MyShape
 	sh:property [
 		sh:predicate ex:value ;
 		sh:datatype xsd:string ;
+		sh:datatypeIn ( xsd:string rdf:langString ) ; # not yet supported
 		sh:class ex:SuperClass ;
+		sh:classIn ( ex:ClassA ex:ClassB ) ; # not yet supported
 		sh:directType ex:SuperClass ;
+		sh:equals ex:givenName ;
+		sh:hasValue ex:Green ;
+		sh:in ( ex:Value1 ex:Value2 ex:Value3 ) ; # not yet supported
+		sh:lessThan ex:endDate ;
+		sh:lessThanOrEquals ex:endDate ;
+		sh:minCount 1 ;  # not yet supported
+        sh:maxCount 1 ;  # not yet supported
 		sh:minLength 1;
 		sh:maxLength 5;
 		sh:minExclusive 1;
 		sh:minInclusive 1;
 		sh:maxExclusive 1;
 		sh:maxInclusive 1;
+        sh:nodeKind sh:IRI ;
+        sh:notEquals ex:altLabel ;
+        sh:pattern "^Ali" ;  sh:flags "i" ;
+        sh:uniqueLang true ;
 		sh:severity rlog:WARN;
 	] ;
 
     sh:inverseProperty [
-        sh:predicate ex:value ;
-        sh:datatype xsd:string ;
-        sh:class ex:SuperClass ;
-        sh:directType ex:SuperClass ;
-        sh:minLength 1;
-        sh:maxLength 5;
-        sh:minExclusive 1;
-        sh:minInclusive 1;
-        sh:maxExclusive 1;
-        sh:maxInclusive 1;
-        sh:severity rlog:WARN;
+		sh:predicate ex:value ;
+		sh:datatype xsd:string ;
+		sh:datatypeIn ( xsd:string rdf:langString ) ; # not yet supported
+		sh:class ex:SuperClass ;
+		sh:classIn ( ex:ClassA ex:ClassB ) ; # not yet supported
+		sh:directType ex:SuperClass ;
+		sh:equals ex:givenName ;
+		sh:hasValue ex:Green ;
+		sh:in ( ex:Value1 ex:Value2 ex:Value3 ) ; # not yet supported
+		sh:lessThan ex:endDate ;
+		sh:lessThanOrEquals ex:endDate ;
+		sh:minCount 1 ;  # not yet supported
+        sh:maxCount 1 ;  # not yet supported
+		sh:minLength 1;
+		sh:maxLength 5;
+		sh:minExclusive 1;
+		sh:minInclusive 1;
+		sh:maxExclusive 1;
+		sh:maxInclusive 1;
+        sh:nodeKind ex:IRI ;
+        sh:notEquals ex:altLabel ;
+        sh:pattern "^Ali" ;  sh:flags "i" ;
+        sh:uniqueLang true ;
+		sh:severity rlog:WARN;
     ] ;
 .

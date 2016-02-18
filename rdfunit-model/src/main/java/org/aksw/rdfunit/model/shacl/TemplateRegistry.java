@@ -51,14 +51,38 @@ public class TemplateRegistry {
                 "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
                 "\t\tFILTER (?valueDatatype = $datatype) . } "));
 
+        //sh:datatypeIn
+
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
                 " FILTER (isLiteral(?value) || \n" +
                         "\t\t!( $class = rdfs:Resource ||\n" +
                         "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
                         "\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* $class } )) "));
+        //sh:classIn
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
                 " FILTER NOT EXISTS { ?value a $directType .} "));
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.equals,
+                "FILTER NOT EXISTS { ?this $equals ?value . } "));
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
+                " FILTER NOT EXISTS { ?this $predicate $hasValue . } "));
+
+        //TODO sh:in
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThan,
+                " ?this $lessThan ?value2 .\n" +
+                "\tFILTER (!(?value < ?value2)) . "));
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThanOrEquals,
+                " ?this $lessThan ?value2 .\n" +
+                        "\tFILTER (!(?value <= ?value2)) . "));
+
+
+        //TODO sh:minCount,
+
+        //TODO sh:maxCount
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) . "));
@@ -78,6 +102,31 @@ public class TemplateRegistry {
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
                 " FILTER (!(?value <= $minExclusive)) . "));
 
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.nodeKind,
+                "\tFILTER NOT EXISTS {\n" +
+                "\t\tFILTER ((isIRI(?value) && $nodeKind = sh:IRI) ||\n" +
+                "\t\t\t(isLiteral(?value) && $nodeKind = sh:Literal) ||\n" +
+                "\t\t\t(isBlank(?value) && $nodeKind = sh:BlankNode)) . } "));
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
+                " ?this $notEquals ?value . "));
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.pattern, CoreArguments.flags,
+                "FILTER (isBlank(?value) || IF(bound($flags), !regex(str(?value), $pattern, $flags), !regex(str(?value), $pattern))) ."));
+
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.uniqueLang,
+                " {FILTER ($uniqueLang) . }\n" +
+                "\tBIND (lang(?value) AS ?lang) .\n" +
+                "\tFILTER (bound(?lang) && ?lang != \"\") . \n" +
+                "\tFILTER EXISTS {\n" +
+                "\t\t?this $predicate ?otherValue .\n" +
+                "\t\tFILTER (?otherValue != ?value && ?lang = lang(?otherValue)) . } " ));
+
+        //TODO sh:valueShape
+
+        //TODO sh:qualifiedValueShape, sh:qualifiedMinCount, sh:qualifiedMaxCount
+
         return builder.build();
     }
 
@@ -87,6 +136,17 @@ public class TemplateRegistry {
                 .argument(CoreArguments.predicate)
                 .argument(CoreArguments.severity)
                 .message(argument.getPredicate().getLocalName())
+                .sparqlSnippet(sparqlSnippet)
+                .build();
+    }
+
+    static ShaclPropertyConstraintTemplate createTemplate(Argument argument1, Argument argument2, String sparqlSnippet) {
+        return ShaclPropertyConstraintTemplate.builder()
+                .argument(argument1)
+                .argument(argument2)
+                .argument(CoreArguments.predicate)
+                .argument(CoreArguments.severity)
+                .message(argument1.getPredicate().getLocalName())
                 .sparqlSnippet(sparqlSnippet)
                 .build();
     }

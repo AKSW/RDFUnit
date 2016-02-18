@@ -10,12 +10,30 @@
 
 ex:MyShape
 	a sh:Shape ;
-	sh:scopeNode ex:ValidInstance1 ;
 	sh:scopeClass ex:Person ;
 
 	sh:property [
 		sh:predicate ex:classCheckProperty ;
 		sh:class ex:SuperClass ;
 	] ;
+	sh:property [
+        sh:predicate ex:checkDirectClass ;
+        sh:directType ex:DirectClass ;
+    ] ;
+
+
+    # sh:nodeType
+	sh:property [
+		sh:predicate ex:checkNodeKindIRI ;
+		sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:predicate ex:checkNodeKindLiteral ;
+        sh:nodeKind sh:Literal ;
+    ]  ;
+    sh:property [
+        sh:predicate ex:checkNodeKindBlankNode ;
+        sh:nodeKind sh:BlankNode ;
+    ] ;
 
 .

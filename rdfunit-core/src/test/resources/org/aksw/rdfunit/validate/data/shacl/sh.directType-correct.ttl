@@ -5,16 +5,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:1 rdf:type ex:Person ;
-  ex:classCheckProperty ex:2 .
+  ex:checkDirectClass ex:2 .
 
-ex:2 rdf:type ex:SuperClass .
+ex:2 rdf:type ex:DirectClass .
 
-ex:3 ex:classCheckProperty ex:4 .
+ex:3 ex:checkDirectClass ex:4 .
 ex:4 a ex:SuperClassXYZ. # correct, scope is different
-
-# Check transitive types
-ex:5 a ex:Person ;
- ex:classCheckProperty ex:6 ;
- .
-ex:6 a ex:SubType .
-ex:SubType rdfs:subClassOf ex:SuperClass .

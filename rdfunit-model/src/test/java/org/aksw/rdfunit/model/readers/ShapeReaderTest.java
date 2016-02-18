@@ -71,7 +71,7 @@ public class ShapeReaderTest {
         PropertyConstraintGroup pcg2 = sh.getPropertyConstraintGroups().get(1);
 
         assertThat(pcg1.getPropertyConstraints())
-                .hasSize(9);
+                .hasSize(17);
 
         assertThat(pcg1.getPropertyConstraints().size())
                 .isEqualTo(pcg2.getPropertyConstraints().size());
