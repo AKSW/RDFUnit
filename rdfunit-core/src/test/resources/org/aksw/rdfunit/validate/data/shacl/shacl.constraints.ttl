@@ -21,6 +21,11 @@ ex:MyShape
         sh:directType ex:DirectClass ;
     ] ;
 
+    sh:property [
+        sh:predicate ex:checkDatatype ;
+        sh:datatype xsd:date ;
+    ] ;
+
 
     # sh:nodeType
 	sh:property [
