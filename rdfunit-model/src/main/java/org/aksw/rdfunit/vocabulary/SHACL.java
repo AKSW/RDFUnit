@@ -86,6 +86,8 @@ public final class SHACL {
     public static final Property flags = property("flags");
     public static final Property uniqueLang = property("uniqueLang");
 
+    public static final Property valueShape = property("valueShape");
+
 
 
 
