@@ -8,6 +8,7 @@ import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
@@ -172,7 +173,6 @@ public class PatternsGeneratorsIntegrationTest {
     }
 
     private void testMap(Map<String, Integer> datasets, TestSuite testSuite, SchemaSource ontologySource) throws RdfReaderException {
-        DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
         for (Map.Entry<String, Integer> entry : datasets.entrySet()) {
             String resource = resourcePrefix + entry.getKey();
@@ -190,7 +190,8 @@ public class PatternsGeneratorsIntegrationTest {
                         .setReferenceSchemata(ontologySource)
                         .build();
 
-                RDFUnitStaticValidator.validate(executionType, modelSource, testSuite, overviewResults);
+                TestExecution execution = RDFUnitStaticValidator.validate(executionType, modelSource, testSuite);
+                DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();
 
                 // For status results we don't get violation instances
                 if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
