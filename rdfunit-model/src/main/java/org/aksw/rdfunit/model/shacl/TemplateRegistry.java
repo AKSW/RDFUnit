@@ -30,7 +30,7 @@ public class TemplateRegistry {
         return shaclCoreTemplates.stream()
                 //get all patterns that can bind to the input
                 .filter(p -> p.getArguments().stream().allMatch(a -> a.canBind(propertyValuePairSet)))
-                // create bindings for each and map tp ShaclBindingPattern
+                // create bindings for each and map to ShaclPropertyConstraintInstance
                 .map(p -> {
                     ShaclPropertyConstraintInstance.ShaclPropertyConstraintInstanceBuilder builder = ShaclPropertyConstraintInstance.builder();
 
@@ -46,6 +46,7 @@ public class TemplateRegistry {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.datatype,
+                "sh:datatype of $predicate should be '$value'",
                 " FILTER NOT EXISTS {\n" +
                 "\t\t{ FILTER isLiteral(?value) .} .\n" +
                 "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
@@ -54,6 +55,7 @@ public class TemplateRegistry {
         //sh:datatypeIn
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
+                "sh:class of $predicate should be '$value'",
                 " FILTER (isLiteral(?value) || \n" +
                         "\t\t!( $class = rdfs:Resource ||\n" +
                         "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
@@ -61,21 +63,26 @@ public class TemplateRegistry {
         //sh:classIn
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
+                "sh:directType of $predicate should be '$value'",
                 " FILTER NOT EXISTS { ?value a $directType .} "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.equals,
-                "FILTER NOT EXISTS { ?this $equals ?value . } "));
+                "$predicate should be equal to '$value'",
+                " FILTER NOT EXISTS { ?this $equals ?value . } "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
+                "$predicate have value: $value",
                 " FILTER NOT EXISTS { ?this $predicate $hasValue . } "));
 
         //TODO sh:in
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThan,
+                "$predicate should be less than '$value'",
                 " ?this $lessThan ?value2 .\n" +
                 "\tFILTER (!(?value < ?value2)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThanOrEquals,
+                "$predicate should be less than or equals to '$value'",
                 " ?this $lessThan ?value2 .\n" +
                         "\tFILTER (!(?value <= ?value2)) . "));
 
@@ -85,37 +92,47 @@ public class TemplateRegistry {
         //TODO sh:maxCount
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
+                "sh:minLength of $predicate should be '$value'",
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxLength,
+                "sh:maxLength of $predicate should be '$value'",
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) > $maxLength) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minExclusive,
+                "sh:minExclusive of $predicate should be '$value'",
                 " FILTER (!(?value > $minExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minInclusive,
+                "sh:minInclusive of $predicate should be '$value'",
                 " FILTER (!(?value >= $minInclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxExclusive,
+                "sh:maxExclusive of $predicate should be '$value'",
                 " FILTER (!(?value < $maxExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
+                "sh:maxInclusive of $predicate should be '$value'",
                 " FILTER (!(?value <= $maxInclusive)) . "));
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.nodeKind,
+                "sh:nodeKind of $predicate should be '$value'",
                 "\tFILTER NOT EXISTS {\n" +
                 "\t\tFILTER ((isIRI(?value) && $nodeKind = sh:IRI) ||\n" +
                 "\t\t\t(isLiteral(?value) && $nodeKind = sh:Literal) ||\n" +
                 "\t\t\t(isBlank(?value) && $nodeKind = sh:BlankNode)) . } "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
+                "$predicate should no be equal to '$value'",
                 " ?this $notEquals ?value . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.pattern, CoreArguments.flags,
+                "Value $predicate should conform to pattern: '$value'",
                 " BIND ('$flags' AS ?myFlags) . FILTER (isBlank(?value) || IF(?myFlags != '', !regex(str(?value), '$pattern', '$flags'), !regex(str(?value), '$pattern'))) ."));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.uniqueLang,
+                "$predicate should have one value per language",
                 " {FILTER ($uniqueLang) . }\n" +
                 "\tBIND (lang(?value) AS ?lang) .\n" +
                 "\tFILTER (bound(?lang) && ?lang != \"\") . \n" +
@@ -130,23 +147,23 @@ public class TemplateRegistry {
         return builder.build();
     }
 
-    static ShaclPropertyConstraintTemplate createTemplate(Argument argument, String sparqlSnippet) {
+    static ShaclPropertyConstraintTemplate createTemplate(Argument argument, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
                 .argument(argument)
                 .argument(CoreArguments.predicate)
                 .argument(CoreArguments.severity)
-                .message(argument.getPredicate().getLocalName())
+                .message(message)
                 .sparqlSnippet(sparqlSnippet)
                 .build();
     }
 
-    static ShaclPropertyConstraintTemplate createTemplate(Argument argument1, Argument argument2, String sparqlSnippet) {
+    static ShaclPropertyConstraintTemplate createTemplate(Argument argument1, Argument argument2, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
                 .argument(argument1)
                 .argument(argument2)
                 .argument(CoreArguments.predicate)
                 .argument(CoreArguments.severity)
-                .message(argument1.getPredicate().getLocalName())
+                .message(message)
                 .sparqlSnippet(sparqlSnippet)
                 .build();
     }
