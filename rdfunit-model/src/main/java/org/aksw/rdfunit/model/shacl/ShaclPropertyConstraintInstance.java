@@ -70,14 +70,30 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     private String generateSparqlWhere() {
         String finalSparqlSnippet = this.template.getSparqlSnippet();
 
+        finalSparqlSnippet = replaceBindings(finalSparqlSnippet);
+        return "{ " + finalSparqlSnippet + " }";
+    }
+
+    private String replaceBindings(String finalSparqlSnippet) {
         for (Map.Entry<Argument, RDFNode>  entry:  bindings.entrySet()) {
             finalSparqlSnippet = replaceBinding(finalSparqlSnippet, entry.getKey(), entry.getValue());
         }
-        return "{ " + finalSparqlSnippet + " }";
+        return finalSparqlSnippet;
     }
 
     private String replaceBinding(String sparql, Argument argument, RDFNode value) {
         return sparql.replace("$"+argument.getPredicate().getLocalName(), formatRdfValue(value));
+    }
+
+    private String generateMessage() {
+        String finalMessage = this.template.getMessage();
+
+        finalMessage = replaceBindings(finalMessage);
+        return finalMessage;
+    }
+
+    private String replaceMessage(String message, Argument argument, RDFNode value) {
+        return message.replace("$"+argument.getPredicate().getLocalName(), formatRdfValue(value));
     }
 
     private String formatRdfValue(RDFNode value) {
@@ -99,7 +115,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
                 Arrays.asList(bindings.get(CoreArguments.predicate).asResource().getURI()),
-                template.getMessage(),
+                generateMessage(),
                 RLOGLevel.resolve(bindings.get(CoreArguments.severity).asResource().getURI()),
                 Arrays.asList(
                         new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.object)

@@ -46,7 +46,7 @@ public class TemplateRegistry {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.datatype,
-                "sh:datatype of $predicate should be '$value'",
+                "sh:datatype of $predicate should be '$datatype'",
                 " FILTER NOT EXISTS {\n" +
                 "\t\t{ FILTER isLiteral(?value) .} .\n" +
                 "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
@@ -55,7 +55,7 @@ public class TemplateRegistry {
         //sh:datatypeIn
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
-                "sh:class of $predicate should be '$value'",
+                "sh:class of $predicate should be '$class'",
                 " FILTER (isLiteral(?value) || \n" +
                         "\t\t!( $class = rdfs:Resource ||\n" +
                         "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
@@ -63,26 +63,26 @@ public class TemplateRegistry {
         //sh:classIn
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
-                "sh:directType of $predicate should be '$value'",
+                "sh:directType of $predicate should be '$directType'",
                 " FILTER NOT EXISTS { ?value a $directType .} "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.equals,
-                "$predicate should be equal to '$value'",
+                "$predicate should be equal to '$equals'",
                 " FILTER NOT EXISTS { ?this $equals ?value . } "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
-                "$predicate have value: $value",
+                "$predicate have value: $hasValue",
                 " FILTER NOT EXISTS { ?this $predicate $hasValue . } "));
 
         //TODO sh:in
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThan,
-                "$predicate should be less than '$value'",
+                "$predicate should be less than '$lessThan'",
                 " ?this $lessThan ?value2 .\n" +
                 "\tFILTER (!(?value < ?value2)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThanOrEquals,
-                "$predicate should be less than or equals to '$value'",
+                "$predicate should be less than or equals to '$lessThanOrEquals'",
                 " ?this $lessThan ?value2 .\n" +
                         "\tFILTER (!(?value <= ?value2)) . "));
 
@@ -92,43 +92,43 @@ public class TemplateRegistry {
         //TODO sh:maxCount
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
-                "sh:minLength of $predicate should be '$value'",
+                "sh:minLength of $predicate should be '$minLength'",
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxLength,
-                "sh:maxLength of $predicate should be '$value'",
+                "sh:maxLength of $predicate should be '$maxLength'",
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) > $maxLength) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minExclusive,
-                "sh:minExclusive of $predicate should be '$value'",
+                "sh:minExclusive of $predicate should be '$minExclusive'",
                 " FILTER (!(?value > $minExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minInclusive,
-                "sh:minInclusive of $predicate should be '$value'",
+                "sh:minInclusive of $predicate should be '$minInclusive'",
                 " FILTER (!(?value >= $minInclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxExclusive,
-                "sh:maxExclusive of $predicate should be '$value'",
+                "sh:maxExclusive of $predicate should be '$maxExclusive'",
                 " FILTER (!(?value < $maxExclusive)) . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
-                "sh:maxInclusive of $predicate should be '$value'",
+                "sh:maxInclusive of $predicate should be '$maxInclusive'",
                 " FILTER (!(?value <= $maxInclusive)) . "));
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.nodeKind,
-                "sh:nodeKind of $predicate should be '$value'",
+                "sh:nodeKind of $predicate should be '$nodeKind'",
                 "\tFILTER NOT EXISTS {\n" +
                 "\t\tFILTER ((isIRI(?value) && $nodeKind = sh:IRI) ||\n" +
                 "\t\t\t(isLiteral(?value) && $nodeKind = sh:Literal) ||\n" +
                 "\t\t\t(isBlank(?value) && $nodeKind = sh:BlankNode)) . } "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
-                "$predicate should no be equal to '$value'",
+                "$predicate should no be equal to '$notEquals'",
                 " ?this $notEquals ?value . "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.pattern, CoreArguments.flags,
-                "Value $predicate should conform to pattern: '$value'",
+                "Value $predicate should conform to pattern: '$pattern'",
                 " BIND ('$flags' AS ?myFlags) . FILTER (isBlank(?value) || IF(?myFlags != '', !regex(str(?value), '$pattern', '$flags'), !regex(str(?value), '$pattern'))) ."));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.uniqueLang,
