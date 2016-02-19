@@ -114,6 +114,9 @@ public class TestGeneratorExecutor {
             if (useManualTests) {
                 allTests.addAll(generateManualTestsForSource(testFolder, s));
             }
+
+            // Shacl Generator
+            allTests.addAll(new ShaclTestGenerator().generate(s));
         }
 
         //Find manual tests for dataset (if not canceled

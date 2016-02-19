@@ -4,7 +4,6 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.rdf.model.Resource;
 
@@ -84,8 +83,6 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
     @Override
     public String toString() {
 
-        String localTestUri = getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:");
-
-        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + localTestUri;
+        return "Errors: " + errorCount + " / Prevalence: " + prevalenceCount + ". Test: " + getMessage();
     }
 }

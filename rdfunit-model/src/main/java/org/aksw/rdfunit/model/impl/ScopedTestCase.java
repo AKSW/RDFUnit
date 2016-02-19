@@ -16,7 +16,7 @@ import org.apache.jena.rdf.model.Resource;
  */
 @Builder
 @ToString
-public class ScopedTestCase implements TestCase{
+public class ScopedTestCase implements TestCase {
 
     @NonNull private final ShapeScope scope;
     @NonNull private final String filterSpqrql;
