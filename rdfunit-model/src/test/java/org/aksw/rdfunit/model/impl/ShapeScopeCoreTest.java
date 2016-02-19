@@ -18,23 +18,23 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Dimitris Kontokostas
  * @since 5/2/2016 2:00 μμ
  */
-public class ShapeScopeImplTest {
+public class ShapeScopeCoreTest {
 
     @Test(expected=NullPointerException.class)
     public void testCreateNullType() throws Exception {
-        ShapeScopeImpl.create(null);
+        ShapeScopeCore.create(null);
     }
 
     @Test(expected=NullPointerException.class)
     public void testCreateNullValue() throws Exception {
-        ShapeScopeImpl.create(ShapeScopeType.AllObjectsScope, null);
+        ShapeScopeCore.create(ShapeScopeType.AllObjectsScope, null);
     }
 
     @Test
     public void testPatternUnique() throws Exception {
 
         List<String> scopePatterns = Arrays.stream(ShapeScopeType.values() )
-                .map( s -> ShapeScopeImpl.create(s, "http://example.com"))
+                .map( s -> ShapeScopeCore.create(s, "http://example.com"))
                 .map(ShapeScope::getPattern)
                 .collect(Collectors.toList());
 
@@ -50,7 +50,7 @@ public class ShapeScopeImplTest {
 
         String uri = "http://example.com";
         Arrays.stream(ShapeScopeType.values() )
-                .map( s -> ShapeScopeImpl.create(s, uri))
+                .map( s -> ShapeScopeCore.create(s, uri))
                 .filter( s -> s.getScopeType().hasArgument())
                 .forEach( s -> {
                     assertThat(s.getPattern()).contains(uri);

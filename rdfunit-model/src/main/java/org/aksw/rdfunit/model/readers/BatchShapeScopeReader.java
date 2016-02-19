@@ -2,7 +2,7 @@ package org.aksw.rdfunit.model.readers;
 
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.enums.ShapeScopeType;
-import org.aksw.rdfunit.model.impl.ShapeScopeImpl;
+import org.aksw.rdfunit.model.impl.ShapeScopeCore;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
@@ -55,7 +55,7 @@ public final class BatchShapeScopeReader {
         return resource.listProperties(SHACL.scopeClass)
                 .toList().stream()
                 .filter(smt -> smt.getObject().isResource())
-                .map(smt -> ShapeScopeImpl.create(ShapeScopeType.ClassScope, smt.getObject().asResource().getURI()))
+                .map(smt -> ShapeScopeCore.create(ShapeScopeType.ClassScope, smt.getObject().asResource().getURI()))
                 .collect(Collectors.toList());
     }
 
@@ -63,19 +63,19 @@ public final class BatchShapeScopeReader {
         return resource.listProperties(SHACL.scopeNode)
                 .toList().stream()
                 .filter(smt -> smt.getObject().isResource())
-                .map(smt -> ShapeScopeImpl.create(ShapeScopeType.NodeScope, smt.getObject().asResource().getURI()))
+                .map(smt -> ShapeScopeCore.create(ShapeScopeType.NodeScope, smt.getObject().asResource().getURI()))
                 .collect(Collectors.toList());
     }
 
     private List<ShapeScope> collectPropertyScope(Resource resource) {
         return  collectPropertyHelper(resource, SHACL.PropertyScope).stream()
-                .map(smt -> ShapeScopeImpl.create(ShapeScopeType.PropertyScope, smt.getObject().asResource().getURI()))
+                .map(smt -> ShapeScopeCore.create(ShapeScopeType.PropertyScope, smt.getObject().asResource().getURI()))
                 .collect(Collectors.toList());
     }
 
     private List<ShapeScope> collectInversePropertyScope(Resource resource) {
         return  collectPropertyHelper(resource, SHACL.InversePropertyScope).stream()
-                .map(smt -> ShapeScopeImpl.create(ShapeScopeType.InversePropertyScope, smt.getObject().asResource().getURI()))
+                .map(smt -> ShapeScopeCore.create(ShapeScopeType.InversePropertyScope, smt.getObject().asResource().getURI()))
                 .collect(Collectors.toList());
     }
 
@@ -90,13 +90,13 @@ public final class BatchShapeScopeReader {
 
     private List<ShapeScope> collectAllSubjectsScope(Resource resource) {
         return  collectAllHelper(resource, SHACL.AllSubjectsScope).stream()
-                .map(smt -> ShapeScopeImpl.create(ShapeScopeType.AllSubjectsScope))
+                .map(smt -> ShapeScopeCore.create(ShapeScopeType.AllSubjectsScope))
                 .collect(Collectors.toList());
     }
 
     private List<ShapeScope> collectAllObjectsScope(Resource resource) {
         return  collectAllHelper(resource, SHACL.AllObjectsScope).stream()
-                .map(smt -> ShapeScopeImpl.create(ShapeScopeType.AllObjectsScope))
+                .map(smt -> ShapeScopeCore.create(ShapeScopeType.AllObjectsScope))
                 .collect(Collectors.toList());
     }
 

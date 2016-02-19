@@ -7,7 +7,9 @@ public enum ShapeScopeType {
     PropertyScope(true),
     InversePropertyScope(true),
     AllSubjectsScope(false),
-    AllObjectsScope(false)
+    AllObjectsScope(false),
+
+    ValueShapeScope(true)
     ;
 
     private final boolean hasArgument;

@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 @ToString(exclude = "generatePattern")
 @EqualsAndHashCode
-public class ShapeScopeImpl implements ShapeScope{
+public class ShapeScopeCore implements ShapeScope{
 
     @Getter private final ShapeScopeType scopeType;
     @Getter private final Optional<String> uri;
@@ -22,7 +22,7 @@ public class ShapeScopeImpl implements ShapeScope{
         return generatePattern.apply(uri);
     }
 
-    private ShapeScopeImpl(ShapeScopeType scopeType, Optional<String> uri, Function<Optional<String>, String> generatePattern) {
+    private ShapeScopeCore(ShapeScopeType scopeType, Optional<String> uri, Function<Optional<String>, String> generatePattern) {
         this.scopeType = scopeType;
         this.uri = uri;
         this.generatePattern = generatePattern;
@@ -39,17 +39,17 @@ public class ShapeScopeImpl implements ShapeScope{
     private static ShapeScope create(ShapeScopeType scopeType, Optional<String> uri) {
         switch (scopeType) {
             case ClassScope:
-                return new ShapeScopeImpl(scopeType, uri, ShapeScopeImpl::classScopePattern);
+                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::classScopePattern);
             case NodeScope:
-                return new ShapeScopeImpl(scopeType, uri, ShapeScopeImpl::nodeScopePattern);
+                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::nodeScopePattern);
             case AllObjectsScope:
-                return new ShapeScopeImpl(scopeType, uri, ShapeScopeImpl::allObjectsScopePattern);
+                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::allObjectsScopePattern);
             case AllSubjectsScope:
-                return new ShapeScopeImpl(scopeType, uri, ShapeScopeImpl::allSubjectsScopePattern);
+                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::allSubjectsScopePattern);
             case InversePropertyScope:
-                return new ShapeScopeImpl(scopeType, uri, ShapeScopeImpl::inversePropertyScopePattern);
+                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::inversePropertyScopePattern);
             case PropertyScope:
-                return new ShapeScopeImpl(scopeType, uri, ShapeScopeImpl::propertyScopePattern);
+                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::propertyScopePattern);
         }
 
         throw new IllegalArgumentException("Something wrong with the input");

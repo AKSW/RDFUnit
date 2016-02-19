@@ -37,7 +37,7 @@ public class ScopedTestCaseTest {
 
         String p = "http://example.com#ex";
         List<ShapeScope> scopes = Arrays.stream(ShapeScopeType.values())
-                .map(scType -> ShapeScopeImpl.create(scType, p))
+                .map(scType -> ShapeScopeCore.create(scType, p))
                 .collect(Collectors.toList());
 
         Collection<Object[]> parameters = new ArrayList<>();

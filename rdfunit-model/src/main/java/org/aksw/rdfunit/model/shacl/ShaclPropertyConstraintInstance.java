@@ -92,10 +92,6 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
         return finalMessage;
     }
 
-    private String replaceMessage(String message, Argument argument, RDFNode value) {
-        return message.replace("$"+argument.getPredicate().getLocalName(), formatRdfValue(value));
-    }
-
     private String formatRdfValue(RDFNode value) {
             if (value.isResource()) {
                 // some vocabularies use spaces in uris
