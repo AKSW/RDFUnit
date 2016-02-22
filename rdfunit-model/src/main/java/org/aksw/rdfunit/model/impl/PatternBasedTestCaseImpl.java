@@ -39,7 +39,7 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
      * @param pattern    a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
      * @param bindings   a {@link java.util.Collection} object.
      */
-    public PatternBasedTestCaseImpl(Resource resource, TestCaseAnnotation annotation, Pattern pattern, Collection<Binding> bindings) {
+    public PatternBasedTestCaseImpl(@NonNull Resource resource, @NonNull TestCaseAnnotation annotation, @NonNull Pattern pattern, @NonNull Collection<Binding> bindings) {
         this.element = resource;
         this.testCaseAnnotation = annotation;
         this.pattern = pattern;
