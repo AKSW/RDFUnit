@@ -8,6 +8,8 @@ import org.aksw.rdfunit.tests.query_generation.QueryGenerationExtendedSelectFact
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QueryParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -19,6 +21,8 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public class TestCaseValidator {
+    private static final Logger log = LoggerFactory.getLogger(TestCaseValidator.class);
+
 
     private final TestCase testCase;
 
@@ -57,15 +61,18 @@ public class TestCaseValidator {
         }
         if (!hasResource) {
            // throw new TestCaseInstantiationException("?this is not included in SELECT for Test: " + testCase.getTestURI());
+            log.warn("?this is not included in SELECT for Test: {}", testCase.getTestURI());
         }
 
         // Message is allowed to exist either in SELECT or as a result annotation
         if (testCase.getResultMessage().trim().isEmpty()) {
             //throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testCase.getTestURI());
+            log.warn("No test case dcterms:description message included in TestCase: {}", testCase.getTestURI());
         }
 
         if (testCase.getLogLevel() == null) {
             //throw new TestCaseInstantiationException("No (or malformed) log level included for Test: " + testCase.getTestURI());
+            log.warn("No (or malformed) log level included for Test: {}", testCase.getTestURI());
         }
     }
 
@@ -77,6 +84,7 @@ public class TestCaseValidator {
         } catch (QueryParseException e) {
             String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testCase.getTestURI() + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
             //throw new TestCaseInstantiationException(message, e);
+            log.warn(message);
         }
     }
 }
