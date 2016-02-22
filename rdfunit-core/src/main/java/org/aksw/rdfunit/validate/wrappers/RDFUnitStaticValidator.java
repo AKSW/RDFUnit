@@ -65,6 +65,7 @@ public final class RDFUnitStaticValidator {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
+        testExecutorMonitor.setExecutionType(executionType);
 
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(executionType);
         checkNotNull(testExecutor, "TestExecutor should not be null");
