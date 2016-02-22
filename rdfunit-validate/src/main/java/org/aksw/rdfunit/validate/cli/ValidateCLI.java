@@ -137,7 +137,11 @@ public class ValidateCLI {
 
         if (!(new File(resultsFolder).exists())) {
             log.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
-            new File(resultsFolder).mkdirs();
+            File resultsFileFolder = new File(resultsFolder);
+            boolean dirsCreated = resultsFileFolder.mkdirs();
+            if (!dirsCreated) {
+                log.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
+            }
         }
 
         ArrayList<RdfWriter> outputWriters = new ArrayList<>();

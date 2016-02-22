@@ -228,7 +228,10 @@ public class DBpediaMappingValidator {
         final String filenameArchive = folder + "/archive/errors." + timeStamp + ".json";
         // create folder if it does not exists
         File archivedFolder = new File(folder+"/archive/");
-        archivedFolder.mkdirs();
+        boolean dirsCreated = archivedFolder.mkdirs();
+        if (!dirsCreated) {
+            System.err.println("could not create archive folder");
+        }
 
         final String json = new DBpediaMappingValidator().validateAndGetJson();
 
