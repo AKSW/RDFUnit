@@ -2,7 +2,6 @@ package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableList;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.apache.jena.rdf.model.Resource;
@@ -102,7 +101,7 @@ public class TestExecutionImpl implements TestExecution {
         private DatasetOverviewResults datasetOverviewResults;
         private String executionUUID;
         private String testedDatasetUri;
-        private TestSuite testSuite;
+        //private TestSuite testSuite;
         private TestCaseExecutionType testCaseExecutionType;
         private String startedByAgent = "http://localhost/";
         private Set<TestCaseResult> results = new HashSet<>();
