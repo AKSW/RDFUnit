@@ -5,7 +5,6 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.io.IOUtils;
-import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.writer.RdfMultipleWriter;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
@@ -33,7 +32,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -144,10 +144,10 @@ public class ValidateCLI {
             }
         }
 
-        ArrayList<RdfWriter> outputWriters = new ArrayList<>();
-        for (SerializationFormat serializationFormat : configuration.getOutputFormats()) {
-            outputWriters.add(RdfResultsWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution));
-        }
+        List<RdfWriter> outputWriters = configuration.getOutputFormats().stream()
+                .map(serializationFormat ->
+                        RdfResultsWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution))
+                .collect(Collectors.toList());
 
         RdfWriter resultWriter = new RdfMultipleWriter(outputWriters);
         try {
