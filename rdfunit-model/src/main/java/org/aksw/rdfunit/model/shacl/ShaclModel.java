@@ -3,7 +3,6 @@ package org.aksw.rdfunit.model.shacl;
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
-import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.model.impl.ScopedTestCase;
 import org.aksw.rdfunit.model.interfaces.Shape;
@@ -28,7 +27,6 @@ public class ShaclModel {
     // TODO do not use Model for instantiation, change later
     public ShaclModel(Model shaclGraph) throws RdfReaderException {
 
-        RDFUnit rdfUnit = new RDFUnit();
         // read templates from Model, for now only use fixed core
         this.templateRegistry = TemplateRegistry.createCore();
         this.shapes = ImmutableSet.copyOf(BatchShapeReader.create(templateRegistry).getShapesFromModel(shaclGraph));
