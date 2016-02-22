@@ -184,7 +184,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private SchemaSource createSchemaSourceFromSchema() {
+    private SchemaSource createSchemaSourceFromSchema() throws InitializationError {
         return SchemaSourceFactory.createSchemaSourceSimple(getSchema().uri(), getSchemaReader());
     }
 
@@ -199,8 +199,12 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return schemaReader;
     }
 
-    private Schema getSchema() {
-        return getTestClass().getAnnotation(Schema.class);
+    private Schema getSchema() throws InitializationError {
+        Schema schema = getTestClass().getAnnotation(Schema.class);
+        if (schema == null) {
+            throw new InitializationError("Cannot read Schema");
+        }
+        return schema;
     }
 
     RdfReader getAdditionalDataModel() {
