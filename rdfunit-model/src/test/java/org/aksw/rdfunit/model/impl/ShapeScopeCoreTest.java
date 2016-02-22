@@ -34,6 +34,7 @@ public class ShapeScopeCoreTest {
     public void testPatternUnique() throws Exception {
 
         List<String> scopePatterns = Arrays.stream(ShapeScopeType.values() )
+                .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
                 .map( s -> ShapeScopeCore.create(s, "http://example.com"))
                 .map(ShapeScope::getPattern)
                 .collect(Collectors.toList());
@@ -50,6 +51,7 @@ public class ShapeScopeCoreTest {
 
         String uri = "http://example.com";
         Arrays.stream(ShapeScopeType.values() )
+                .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
                 .map( s -> ShapeScopeCore.create(s, uri))
                 .filter( s -> s.getScopeType().hasArgument())
                 .forEach( s -> {

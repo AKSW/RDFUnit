@@ -85,7 +85,7 @@ public class ShapeReaderTest {
 
     private void checkScope(Shape sh) {
         assertThat(sh.getScopes())
-                .hasSize(ShapeScopeType.values().length);
+                .hasSize(ShapeScopeType.values().length-1);
 
 
         List<ShapeScopeType> scopeTypes = sh.getScopes().stream()
@@ -95,7 +95,7 @@ public class ShapeReaderTest {
 
         // distinct scopes
         assertThat(scopeTypes)
-                .hasSize(ShapeScopeType.values().length)
+                .hasSize(ShapeScopeType.values().length-1)
                 ;
     }
 }

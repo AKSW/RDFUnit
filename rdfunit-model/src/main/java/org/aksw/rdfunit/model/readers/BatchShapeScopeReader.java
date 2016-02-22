@@ -114,5 +114,16 @@ public final class BatchShapeScopeReader {
                 .map(smt -> smt.getObject().asResource())
                 .collect(Collectors.toList());
     }
+       /*
+    private List<ShapeScope> collectValueShapeScopes(Resource resource){
+        resource.getModel().listResourcesWithProperty(SHACL.valueShape, resource).toList()
+                .forEach( r -> {
+                    Resource property = r.getPropertyResourceValue(SHACL.predicate);
+                    r.getModel().listResourcesWithProperty(SHACL.property, resource).toList()
+                            .forEach(shape -> {
+
+                            });
+                });
+    }        */
 }
 

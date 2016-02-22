@@ -37,6 +37,7 @@ public class ScopedTestCaseTest {
 
         String p = "http://example.com#ex";
         List<ShapeScope> scopes = Arrays.stream(ShapeScopeType.values())
+                .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
                 .map(scType -> ShapeScopeCore.create(scType, p))
                 .collect(Collectors.toList());
 
