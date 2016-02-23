@@ -206,6 +206,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .setSchemata(schemata)
                 .setTestCaseUris(testCaseUris)
                 .setResults(results)
+                .setDefaultExecutionType()
                 .build();
 
         TestExecutionWriter.create(te).write(getModel());
