@@ -113,6 +113,11 @@ public class TestExecutionImpl implements TestExecution {
             return this;
         }
 
+        public Builder setDefaultExecutionType() {
+            testCaseExecutionType = TestCaseExecutionType.shaclSimpleTestCaseResult;
+            return this;
+        }
+
         public Builder setDatasetOverviewResults(DatasetOverviewResults datasetOverviewResults) {
             this.datasetOverviewResults = datasetOverviewResults;
             return this;

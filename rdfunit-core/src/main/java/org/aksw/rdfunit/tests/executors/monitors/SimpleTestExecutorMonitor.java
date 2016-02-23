@@ -204,6 +204,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .setSchemata(schemata)
                 .setTestCaseUris(testCaseUris)
                 .setResults(results)
+                .setDefaultExecutionType()
                 .build();
 
         if (loggingEnabled) {
