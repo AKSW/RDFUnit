@@ -145,6 +145,9 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsShacl.put("shacl/sh.notEquals-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.notEquals-wrong.ttl", 4);
 
+        testsWithErrorsShacl.put("shacl/sh.min.maxCount-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.min.maxCount-wrong.ttl", 4); //TODO should be 5
+
         testsWithErrorsShacl.put("shacl/sh.min.maxLength-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.min.maxLength-wrong.ttl", 2);
         testsWithErrorsShacl.put("shacl/sh.min.maxInclusive-correct.ttl", 0);

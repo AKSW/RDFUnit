@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +12,7 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
-import org.aksw.rdfunit.model.interfaces.Argument;
-import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
-import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
+import org.aksw.rdfunit.model.interfaces.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
@@ -22,10 +20,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Hacky code for now
@@ -71,7 +66,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
         String finalSparqlSnippet = this.template.getSparqlSnippet();
 
         finalSparqlSnippet = replaceBindings(finalSparqlSnippet);
-        return "{ " + finalSparqlSnippet + " }";
+        return "{ " + finalSparqlSnippet;
     }
 
     private String replaceBindings(String finalSparqlSnippet) {
@@ -113,12 +108,23 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 Arrays.asList(bindings.get(CoreArguments.predicate).asResource().getURI()),
                 generateMessage(),
                 RLOGLevel.resolve(bindings.get(CoreArguments.severity).asResource().getURI()),
-                Arrays.asList(
-                        new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.object)
-                                .setVariableName("value").build(),
-                        new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.predicate)
-                                .setValue(bindings.get(CoreArguments.predicate)).build()
-                ));
+                createResultAnnotations()
+                );
+    }
+
+    List<ResultAnnotation> createResultAnnotations() {
+        ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
+        // add property
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.predicate)
+                .setValue(bindings.get(CoreArguments.predicate)).build());
+
+        List<Property> nonValueArgs = Arrays.asList(CoreArguments.minCount.getPredicate(), CoreArguments.maxCount.getPredicate());
+        if (!nonValueArgs.contains(getFacetProperty())) {
+            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.object)
+                    .setVariableName("value").build());
+        }
+
+        return annotations.build();
     }
 
     private Resource createTestCaseResource() {

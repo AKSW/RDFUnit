@@ -71,3 +71,40 @@ ex:MyShape
     ] ;
 
 .
+
+
+
+ex:MyCardShape
+	a sh:Shape ;
+	sh:scopeClass ex:CardCheck ;
+
+    sh:property [
+        sh:predicate ex:checkMinCount0 ;
+        sh:minCount "0"^^xsd:int ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkMinCount1 ;
+        sh:minCount "1"^^xsd:int ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkMinCount3 ;
+        sh:minCount "3"^^xsd:int ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkMaxCount0 ;
+        sh:maxCount "0"^^xsd:int ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkMaxCount1 ;
+        sh:maxCount "1"^^xsd:int ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkMaxCount3 ;
+        sh:maxCount "3"^^xsd:int ;
+    ] ;
+    .
