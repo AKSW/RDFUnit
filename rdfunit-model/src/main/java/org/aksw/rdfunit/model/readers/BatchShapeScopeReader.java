@@ -1,14 +1,17 @@
 package org.aksw.rdfunit.model.readers;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.enums.ShapeScopeType;
 import org.aksw.rdfunit.model.impl.ShapeScopeCore;
+import org.aksw.rdfunit.model.impl.ShapeScopeValueShape;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.vocabulary.RDF;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,14 +44,25 @@ public final class BatchShapeScopeReader {
 
         ImmutableSet.Builder<ShapeScope> scopeBuilder = ImmutableSet.builder();
 
+        scopeBuilder.addAll(collectExplicitScopes(resource));
+
+        scopeBuilder.addAll(collectValueShapeScopes(resource));
+
+        return scopeBuilder.build();
+
+    }
+
+    private Set<ShapeScope> collectExplicitScopes(Resource resource) {
+        ImmutableSet.Builder<ShapeScope> scopeBuilder = ImmutableSet.builder();
+
         scopeBuilder.addAll(collectClassScopes(resource));
         scopeBuilder.addAll(collectNodeScopes(resource));
         scopeBuilder.addAll(collectPropertyScope(resource));
         scopeBuilder.addAll(collectInversePropertyScope(resource));
         scopeBuilder.addAll(collectAllSubjectsScope(resource));
         scopeBuilder.addAll(collectAllObjectsScope(resource));
-        return scopeBuilder.build();
 
+        return scopeBuilder.build();
     }
 
     private List<ShapeScope> collectClassScopes(Resource resource) {
@@ -114,16 +128,33 @@ public final class BatchShapeScopeReader {
                 .map(smt -> smt.getObject().asResource())
                 .collect(Collectors.toList());
     }
-       /*
-    private List<ShapeScope> collectValueShapeScopes(Resource resource){
-        resource.getModel().listResourcesWithProperty(SHACL.valueShape, resource).toList()
-                .forEach( r -> {
-                    Resource property = r.getPropertyResourceValue(SHACL.predicate);
-                    r.getModel().listResourcesWithProperty(SHACL.property, resource).toList()
-                            .forEach(shape -> {
 
+    private Set<ShapeScope> collectValueShapeScopes(Resource resource){
+        return collectValueShapeScopes(resource, Arrays.asList());
+    }
+
+    private Set<ShapeScope> collectValueShapeScopes(Resource resource, List<Resource> propertyChain){
+        ImmutableSet.Builder<ShapeScope> scopes = ImmutableSet.builder();
+
+        List<Resource> tmp = resource.getModel().listResourcesWithProperty(SHACL.valueShape, resource).toList();
+
+                tmp.forEach( r -> {
+                    Resource property = r.getPropertyResourceValue(SHACL.predicate);
+                    getParentShapeResources(r)
+                            .forEach(shape -> {
+                                ImmutableList<Resource> propChainNew = new ImmutableList.Builder().add(property).addAll(propertyChain).build();
+                                collectExplicitScopes(shape).forEach(scope ->
+                                        scopes.add(ShapeScopeValueShape.create(scope, propChainNew)));
+
+                                scopes.addAll(collectValueShapeScopes(shape, propChainNew));
                             });
                 });
-    }        */
+
+        return scopes.build();
+    }
+
+    private List<Resource> getParentShapeResources(Resource resource) {
+        return resource.getModel().listResourcesWithProperty(SHACL.property, resource).toList();
+    }
 }
 

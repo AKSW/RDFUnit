@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeScopeType;
 import org.aksw.rdfunit.model.interfaces.ShapeScope;
-import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ShapeScopeValueShape implements ShapeScope{
 
     @Getter private final ShapeScopeType scopeType = ShapeScopeType.ValueShapeScope;
-    private final ImmutableList<Property> propertyChain;
+    private final ImmutableList<Resource> propertyChain;
     private final ShapeScope outerScope;
     private final Function<ShapeScopeValueShape, String> generatePattern;
 
@@ -32,13 +32,13 @@ public class ShapeScopeValueShape implements ShapeScope{
         return generatePattern.apply(this);
     }
 
-    private ShapeScopeValueShape(ShapeScope outerScope, List<Property> propertyChain, Function<ShapeScopeValueShape, String> generatePattern) {
+    private ShapeScopeValueShape(ShapeScope outerScope, List<Resource> propertyChain, Function<ShapeScopeValueShape, String> generatePattern) {
         this.outerScope = outerScope;
         this.propertyChain = ImmutableList.copyOf(propertyChain);
         this.generatePattern = generatePattern;
     }
 
-    public static ShapeScope create(ShapeScope outerScope, List<Property> propertyChain) {
+    public static ShapeScope create(ShapeScope outerScope, List<Resource> propertyChain) {
         switch (outerScope.getScopeType()) {
             case ClassScope:
                 return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::classScopePattern);
@@ -55,7 +55,7 @@ public class ShapeScopeValueShape implements ShapeScope{
             case ValueShapeScope:
                 if (outerScope instanceof ShapeScopeValueShape) {
                     ShapeScopeValueShape transformScope = (ShapeScopeValueShape) outerScope;
-                    ImmutableList.Builder<Property> builder = new ImmutableList.Builder<>();
+                    ImmutableList.Builder<Resource> builder = new ImmutableList.Builder<>();
                     builder.addAll(propertyChain);
                     builder.addAll(transformScope.propertyChain);
                     return create(transformScope.outerScope, builder.build());
@@ -70,7 +70,7 @@ public class ShapeScopeValueShape implements ShapeScope{
                 writePropertyChain(scope.propertyChain) + "  ?this . ";
     }
 
-    private static String writePropertyChain(List<Property> propertyChain) {
+    private static String writePropertyChain(List<Resource> propertyChain) {
         return propertyChain.stream()
                 .map( p -> "<" + p.getURI() + ">")
                 .collect(Collectors.joining("/"));
