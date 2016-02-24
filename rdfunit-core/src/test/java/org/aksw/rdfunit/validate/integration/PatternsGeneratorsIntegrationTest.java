@@ -149,7 +149,8 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsShacl.put("shacl/sh.hasValue-In-wrong.ttl", 4);
 
         testsWithErrorsShacl.put("shacl/sh.min.maxCount-correct.ttl", 0);
-        testsWithErrorsShacl.put("shacl/sh.min.maxCount-wrong.ttl", 4); //TODO should be 5
+        testsWithErrorsShacl.put("shacl/sh.minCount-wrong.ttl", 3);
+        testsWithErrorsShacl.put("shacl/sh.maxCount-wrong.ttl", 3);
 
         testsWithErrorsShacl.put("shacl/sh.min.maxLength-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.min.maxLength-wrong.ttl", 2);
@@ -162,9 +163,9 @@ public class PatternsGeneratorsIntegrationTest {
         testsWithErrorsShacl.put("shacl/sh.pattern-wrong.ttl", 3);
 
         testsWithErrorsShacl.put("shacl/sh.valueShape-correct.ttl", 0);
-        testsWithErrorsShacl.put("shacl/sh.valueShape-wrong.ttl", 2);
+        testsWithErrorsShacl.put("shacl/sh.valueShape-wrong.ttl", 3);
 
-        //testsWithErrorsShacl.put("shacl/sh.nodeType-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.nodeType-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-IRI.ttl", 2);
         testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-Literal.ttl", 2);
         testsWithErrorsShacl.put("shacl/sh.nodeType-wrong-BlankNode.ttl", 2);

@@ -2,10 +2,7 @@ package org.aksw.rdfunit.model.shacl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Singular;
+import lombok.*;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -27,6 +24,8 @@ import java.util.stream.Collectors;
  * @since 14/2/2016 11:20 μμ
  */
 @Builder
+@ToString
+@EqualsAndHashCode
 public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     @NonNull @Getter private final ShaclPropertyConstraintTemplate template;
     @NonNull @Getter @Singular private final ImmutableMap<Argument, RDFNode> bindings;
@@ -48,20 +47,26 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     }
 
     @Override
-    public TestCase getTestCase() {
+    public TestCase getTestCase(boolean forInverseProperty) {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
+        String sparql = (forInverseProperty) ? generateSparqlWhere(template.getSparqlInvPSnippet()) : generateSparqlWhere(template.getSparqlPropSnippet());
 
         return testBuilder
                 .element(createTestCaseResource())
                 .sparqlPrevalence("")
-                .sparqlWhere(generateSparqlWhere())
+                .sparqlWhere(sparql)
                 .testCaseAnnotation(generateTestAnnotations())
                 .build();
     }
 
-    private String generateSparqlWhere() {
-        String finalSparqlSnippet = this.template.getSparqlSnippet();
+    @Override
+    public boolean usesValidatorFunction() {
+        return template.isIncludePropertyFilter();
+    }
+
+    private String generateSparqlWhere(String sparqlString) {
+        String finalSparqlSnippet = sparqlString;
 
         finalSparqlSnippet = replaceBindings(finalSparqlSnippet);
         return "{ " + finalSparqlSnippet;

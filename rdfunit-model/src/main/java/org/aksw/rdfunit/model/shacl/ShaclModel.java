@@ -41,14 +41,16 @@ public class ShaclModel {
         getShapes().forEach( shape -> // for every shape
                 shape.getScopes().forEach( scope ->  // for every scope (skip if none)
                                 shape.getPropertyConstraintGroups().forEach( ppg ->
-                                    ppg.getPropertyConstraints().forEach( ppc ->
-                                                builder.add(
-                                                        ScopedTestCase.builder()
-                                                                .scope(scope)
-                                                                .filterSpqrql(ppg.getPropertyFilter())
-                                                                .testCase(ppc.getTestCase())
-                                                                .build())
-                                            ))));
+                                    ppg.getPropertyConstraints().forEach( ppc -> {
+                                        String filter = ppg.getPropertyFilter();
+                                        if (!ppc.usesValidatorFunction()) {filter = "";}
+                                        builder.add(
+                                                ScopedTestCase.builder()
+                                                        .scope(scope)
+                                                        .filterSpqrql(filter)
+                                                        .testCase(ppc.getTestCase(ppg.isInverse()))
+                                                        .build());
+                                    } ))));
 
         return builder.build();
     }

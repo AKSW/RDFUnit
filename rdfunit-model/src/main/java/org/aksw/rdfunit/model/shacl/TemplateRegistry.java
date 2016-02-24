@@ -30,6 +30,8 @@ public class TemplateRegistry {
         return shaclCoreTemplates.stream()
                 //get all patterns that can bind to the input
                 .filter(p -> p.getArguments().stream().allMatch(a -> a.canBind(propertyValuePairSet)))
+                // check if any filter applies
+                .filter(p -> p.canBind(propertyValuePairSet))
                 // create bindings for each and map to ShaclPropertyConstraintInstance
                 .map(p -> {
                     ShaclPropertyConstraintInstance.ShaclPropertyConstraintInstanceBuilder builder = ShaclPropertyConstraintInstance.builder();
@@ -104,16 +106,28 @@ public class TemplateRegistry {
                         "\tFILTER (!(?value <= ?value2)) . }"));
 
 
-        //TODO sh:minCount = 1 ??? (can be tweaked)
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.minCount,
+        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.minCount,
                 "Minimum cardinality for $predicate is '$minCount'",
                 " } GROUP BY ?this\n" +
-                " HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) ) "));
+                " HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) ) ",
+                " ASK { FILTER ($minCount > 1)}"));
+        builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.minCount,
+                "Minimum cardinality for $predicate is '$minCount'1",
+                " FILTER NOT EXISTS { ?this $predicate ?value }} ",
+                " FILTER NOT EXISTS { ?this $predicate ?value }} ", // is inverse property like this?
+                " ASK { FILTER ($minCount > 0)}"));
 
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.maxCount,
+        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.maxCount,
                 "Maximum cardinality for $predicate is '$maxCount'",
                 " } GROUP BY ?this\n" +
-                " HAVING ( ( count(?value)  > $maxCount ) && ( count(?value)  != 0 ) ) "));
+                " HAVING ( ( count(?value)  > $maxCount ) && ( count(?value)  != 0 ) ) ",
+                " ASK { FILTER ($maxCount > 0)}"));
+        builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.maxCount,
+                "Maximum cardinality for $predicate is '$maxCount'0",
+                " FILTER EXISTS { ?this $predicate ?value }} ",
+                " FILTER EXISTS { ?this $predicate ?value }} ", // is inverse property like this?
+                " ASK { FILTER ($maxCount = 0)}"));
+
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
                 "sh:minLength of $predicate should be '$minLength'",
@@ -140,12 +154,19 @@ public class TemplateRegistry {
                 " FILTER (!(?value <= $maxInclusive)) . }"));
 
 
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.nodeKind,
+        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
                 "sh:nodeKind of $predicate should be '$nodeKind'",
-                "\tFILTER NOT EXISTS {\n" +
-                "\t\tFILTER ((isIRI(?value) && $nodeKind = sh:IRI) ||\n" +
-                "\t\t\t(isLiteral(?value) && $nodeKind = sh:Literal) ||\n" +
-                "\t\t\t(isBlank(?value) && $nodeKind = sh:BlankNode)) . } }"));
+                " FILTER (!isIRI(?value)) .  } ",
+                " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)}"));
+        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
+                "sh:nodeKind of $predicate should be '$nodeKind'",
+                " FILTER (!isLiteral(?value)) .  } ",
+                " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#Literal>)}"));
+        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
+                "sh:nodeKind of $predicate should be '$nodeKind'",
+                " FILTER (!isBlank(?value)) .  } ",
+                " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNode>)}"));
+
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
                 "$predicate should no be equal to '$notEquals'",
@@ -177,7 +198,35 @@ public class TemplateRegistry {
                 .argument(CoreArguments.predicate)
                 .argument(CoreArguments.severity)
                 .message(message)
-                .sparqlSnippet(sparqlSnippet)
+                .sparqlPropSnippet(sparqlSnippet)
+                .sparqlInvPSnippet(sparqlSnippet)
+                .includePropertyFilter(true)
+                .build();
+    }
+
+    static ShaclPropertyConstraintTemplate createTemplateWithFilter(Argument argument, String message, String sparqlSnippet, String filter) {
+        return ShaclPropertyConstraintTemplate.builder()
+                .argument(argument)
+                .argument(CoreArguments.predicate)
+                .argument(CoreArguments.severity)
+                .message(message)
+                .sparqlPropSnippet(sparqlSnippet)
+                .sparqlInvPSnippet(sparqlSnippet)
+                .argumentFilter(argument, filter)
+                .includePropertyFilter(true)
+                .build();
+    }
+
+    static ShaclPropertyConstraintTemplate createTemplateWithFilterNF(Argument argument, String message, String sparqlPropSnippet, String sparqlInvPSnippet, String filter) {
+        return ShaclPropertyConstraintTemplate.builder()
+                .argument(argument)
+                .argument(CoreArguments.predicate)
+                .argument(CoreArguments.severity)
+                .message(message)
+                .sparqlPropSnippet(sparqlPropSnippet)
+                .sparqlInvPSnippet(sparqlInvPSnippet)
+                .argumentFilter(argument, filter)
+                .includePropertyFilter(false)
                 .build();
     }
 
@@ -188,7 +237,9 @@ public class TemplateRegistry {
                 .argument(CoreArguments.predicate)
                 .argument(CoreArguments.severity)
                 .message(message)
-                .sparqlSnippet(sparqlSnippet)
+                .sparqlPropSnippet(sparqlSnippet)
+                .sparqlInvPSnippet(sparqlSnippet)
+                .includePropertyFilter(true)
                 .build();
     }
 }

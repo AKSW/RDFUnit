@@ -93,9 +93,9 @@ ex:MyShape
 
 
 
-ex:MyCardShape
+ex:MyCardShapeMin
 	a sh:Shape ;
-	sh:scopeClass ex:CardCheck ;
+	sh:scopeClass ex:CardCheckMin ;
 
     sh:property [
         sh:predicate ex:checkMinCount0 ;
@@ -111,6 +111,10 @@ ex:MyCardShape
         sh:predicate ex:checkMinCount3 ;
         sh:minCount "3"^^xsd:int ;
     ] ;
+.
+ex:MyCardShapeMax
+	a sh:Shape ;
+	sh:scopeClass ex:CardCheckMax ;
 
     sh:property [
         sh:predicate ex:checkMaxCount0 ;

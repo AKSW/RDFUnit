@@ -1,0 +1,53 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:min0 rdf:type ex:CardCheckMin ;
+  # ex:checkMinCount0 "a" ; # no values but no error
+    ex:checkMinCount0 "b" ;
+    ex:checkMinCount0 "c" ;
+
+    ex:checkMinCount1 "a" ;
+
+    ex:checkMinCount3 "a" ;
+    ex:checkMinCount3 "b" ;
+    ex:checkMinCount3 "c" ;
+  .
+
+ex:min1 rdf:type ex:CardCheckMin ;
+  ex:checkMinCount0 "a" ;
+  ex:checkMinCount0 "b" ;
+  ex:checkMinCount0 "c" ;
+
+  # ex:checkMinCount1 "a" ;  # wrong 1 error
+
+  ex:checkMinCount3 "a" ;
+  ex:checkMinCount3 "b" ;
+  ex:checkMinCount3 "c" ;
+  .
+
+ex:min3 rdf:type ex:CardCheckMin ;
+
+  ex:checkMinCount0 "a" ;
+  ex:checkMinCount0 "b" ;
+  ex:checkMinCount0 "c" ;
+
+  ex:checkMinCount1 "a" ;
+
+  ex:checkMinCount3 "a" ;
+  ex:checkMinCount3 "b" ; # wrong 1 error
+  .
+
+ex:min3b rdf:type ex:CardCheckMin ;
+
+  ex:checkMinCount0 "a" ;
+  ex:checkMinCount0 "b" ;
+  ex:checkMinCount0 "c" ;
+
+  ex:checkMinCount1 "a" ;
+
+  # ex:checkMinCount3 "a" ;
+  # ex:checkMinCount3 "b" ; # wrong 1 error
+  .

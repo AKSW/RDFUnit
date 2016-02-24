@@ -15,3 +15,9 @@ ex:2  a ex:ValueShapeClass ;
 		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
 		ex:nestedProperty [ ex:nestedProperty2 "asdf"] ;
 	] .
+
+ex:2  a ex:ValueShapeClass ;
+	ex:someProperty [
+		#ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
+		#ex:nestedProperty [ ex:nestedProperty2 "asdf"] ;
+	] .

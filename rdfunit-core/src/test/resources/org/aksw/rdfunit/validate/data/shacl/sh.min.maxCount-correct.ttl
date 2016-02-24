@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:1 rdf:type ex:CardCheck ;
+ex:1 rdf:type ex:CardCheckMin ;
   ex:checkMinCount0 "a" ;
   ex:checkMinCount0 "b" ;
   ex:checkMinCount0 "c" ;
@@ -15,6 +15,8 @@ ex:1 rdf:type ex:CardCheck ;
   ex:checkMinCount3 "b" ;
   ex:checkMinCount3 "c" ;
 
+.
+ex:2 rdf:type ex:CardCheckMax ;
   #ex:checkMaxCount0 "0" ;
 
   ex:checkMaxCount1 "a" ;

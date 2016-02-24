@@ -42,6 +42,8 @@ public interface PropertyConstraint {
      */
     Set<PropertyValuePair> getAdditionalArguments();
 
-    TestCase getTestCase();
+    TestCase getTestCase(boolean forInverseProperty);
+
+    boolean usesValidatorFunction();
 
 }
