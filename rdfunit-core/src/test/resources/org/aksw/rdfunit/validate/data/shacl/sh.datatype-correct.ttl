@@ -6,3 +6,9 @@
 
 ex:1 rdf:type ex:Person ;
   ex:checkDatatype "2016-02-19"^^xsd:date .
+
+ex:2 rdf:type ex:Person ;
+  ex:checkDatatypeIn "2016-02-19"^^xsd:date .
+
+ex:2 rdf:type ex:Person ;
+  ex:checkDatatypeIn "19"^^xsd:nonNegativeInteger .

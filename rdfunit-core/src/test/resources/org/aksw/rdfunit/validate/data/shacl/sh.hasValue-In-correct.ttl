@@ -4,14 +4,11 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:1 a ex:Person ;
-  ex:classCheckProperty ex:2 . # error
-ex:2 a ex:SuperClassXYZ.
+ex:1 rdf:type ex:Person ;
+  ex:checkHasValue "100"^^xsd:int  .
 
-ex:3 ex:classCheckProperty ex:4 .
-ex:4 a ex:SuperClassXYZ. # correct, scope is different
+ex:2 rdf:type ex:Person ;
+  ex:checkIn ex:A .
 
-
-ex:5 a ex:Person ;
-  ex:checkClassIn ex:2 .   # error
-
+ex:2 rdf:type ex:Person ;
+  ex:checkIn "example" .

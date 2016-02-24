@@ -17,6 +17,10 @@ ex:MyShape
 		sh:class ex:SuperClass ;
 	] ;
 	sh:property [
+		sh:predicate ex:checkClassIn ;
+		sh:classIn (ex:SuperClass1 ex:SuperClass2) ;
+	] ;
+	sh:property [
         sh:predicate ex:checkDirectClass ;
         sh:directType ex:DirectClass ;
     ] ;
@@ -24,6 +28,11 @@ ex:MyShape
     sh:property [
         sh:predicate ex:checkDatatype ;
         sh:datatype xsd:date ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkDatatypeIn ;
+        sh:datatypeIn (xsd:date xsd:nonNegativeInteger) ;
     ] ;
 
     sh:property [
@@ -53,6 +62,16 @@ ex:MyShape
         sh:predicate ex:checkPattern ;
         sh:pattern "^Ali" ;
         sh:flags "i" ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkHasValue ;
+        sh:hasValue "100"^^xsd:int ;
+    ] ;
+
+    sh:property [
+        sh:predicate ex:checkIn ;
+        sh:in (ex:A "example" ) ;
     ] ;
 
 

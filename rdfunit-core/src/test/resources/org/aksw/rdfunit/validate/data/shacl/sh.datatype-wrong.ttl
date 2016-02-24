@@ -6,3 +6,6 @@
 
 ex:1 rdf:type ex:Person ;
   ex:checkDatatype "2016-02-19ss"@el .
+
+ex:2 rdf:type ex:Person ;
+  ex:checkDatatypeIn "20"^^xsd:Integer .

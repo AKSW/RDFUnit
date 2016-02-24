@@ -15,12 +15,10 @@ import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Hacky code for now
@@ -89,12 +87,49 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
 
     private String formatRdfValue(RDFNode value) {
             if (value.isResource()) {
-                // some vocabularies use spaces in uris
-                return "<" + value.asResource().getURI().trim().replace(" ", "") + ">";
+                Resource r = value.asResource();
+                if (r.isAnon() && r.canAs(RDFList.class)) {
+                    return getListItems(r).stream().map(n -> formatRdfListValue(n)).collect(Collectors.joining("  "));
+                } else {
+                    return asFullTurtleUri(r);
+                }
 
             } else {
-                return value.asLiteral().getLexicalForm();
+                return asSimpleLiteral(value.asLiteral());
             }
+    }
+
+    private String asSimpleLiteral(Literal value) {
+        return value.getLexicalForm();
+    }
+
+    private String asFullTurtleLiteral(Literal value) {
+        return "\""+value.getLexicalForm()+"\"^^<"+value.getDatatypeURI()+">";
+    }
+
+    private String asFullTurtleUri(Resource value) {
+        // some vocabularies use spaces in uris
+        return "<" + value.getURI().trim().replace(" ", "") + ">";
+    }
+
+    private String formatRdfListValue(RDFNode listVal) {
+        if (listVal.isResource()) {
+            return asFullTurtleUri(listVal.asResource());
+        } else {
+            return asFullTurtleLiteral(listVal.asLiteral());
+        }
+    }
+
+    private List<RDFNode> getListItems(Resource list) {
+        ImmutableList.Builder<RDFNode> nodes = ImmutableList.builder();
+        try {
+            RDFList rdfList = list.as( RDFList.class );
+            rdfList.iterator().forEachRemaining(nodes::add);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Argument not a list", e);
+        }
+
+        return nodes.build();
     }
 
     // hack for now

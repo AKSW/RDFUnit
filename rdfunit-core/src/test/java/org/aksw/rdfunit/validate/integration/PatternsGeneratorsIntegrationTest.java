@@ -134,16 +134,19 @@ public class PatternsGeneratorsIntegrationTest {
         Map<String, Integer> testsWithErrorsShacl = new HashMap<>();
 
         testsWithErrorsShacl.put("shacl/sh.class-correct.ttl", 0);
-        testsWithErrorsShacl.put("shacl/sh.class-wrong.ttl", 1);
+        testsWithErrorsShacl.put("shacl/sh.class-wrong.ttl", 2);
         testsWithErrorsShacl.put("shacl/sh.directType-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.directType-wrong.ttl", 2);
         testsWithErrorsShacl.put("shacl/sh.datatype-correct.ttl", 0);
-        testsWithErrorsShacl.put("shacl/sh.datatype-wrong.ttl", 1);
+        testsWithErrorsShacl.put("shacl/sh.datatype-wrong.ttl", 2);
 
         testsWithErrorsShacl.put("shacl/sh.equals-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.equals-wrong.ttl", 4);
         testsWithErrorsShacl.put("shacl/sh.notEquals-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.notEquals-wrong.ttl", 4);
+
+        testsWithErrorsShacl.put("shacl/sh.hasValue-In-correct.ttl", 0);
+        testsWithErrorsShacl.put("shacl/sh.hasValue-In-wrong.ttl", 4);
 
         testsWithErrorsShacl.put("shacl/sh.min.maxCount-correct.ttl", 0);
         testsWithErrorsShacl.put("shacl/sh.min.maxCount-wrong.ttl", 4); //TODO should be 5

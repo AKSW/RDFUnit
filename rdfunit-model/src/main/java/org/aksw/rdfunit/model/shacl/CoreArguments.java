@@ -15,13 +15,13 @@ public class CoreArguments {
     public static final Argument severity = createSeverity();
 
     public static final Argument clazz = createSimpleArgument(SHACL.clazz);
-    //public static final Argument classIn = createSimpleArgument(SHACL.clazzIn);
+    public static final Argument clazzIn = createSimpleArgument(SHACL.clazzIn);
     public static final Argument datatype = createSimpleArgument(SHACL.datatype, "", ValueKind.IRI);
-    //public static final Argument datatypeIn = createSimpleArgument(SHACL.datatypeIn);
+    public static final Argument datatypeIn = createSimpleArgument(SHACL.datatypeIn);
     public static final Argument directType = createSimpleArgument(SHACL.directType);
     public static final Argument equals = createSimpleArgument(SHACL.equals);
     public static final Argument hasValue = createSimpleArgument(SHACL.hasValue);
-    //public static final Argument in
+    public static final Argument in = createSimpleArgument(SHACL.in);
     public static final Argument lessThan = createSimpleArgument(SHACL.lessThan);
     public static final Argument lessThanOrEquals = createSimpleArgument(SHACL.lessThanOrEquals);
     public static final Argument minCount = createSimpleArgument(SHACL.minCount);

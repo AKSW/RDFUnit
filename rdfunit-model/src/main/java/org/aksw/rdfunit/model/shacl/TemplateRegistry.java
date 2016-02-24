@@ -52,7 +52,13 @@ public class TemplateRegistry {
                 "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
                 "\t\tFILTER (?valueDatatype = $datatype) . } }"));
 
-        //sh:datatypeIn
+        builder.shaclCoreTemplate(createTemplate( CoreArguments.datatypeIn,
+                "sh:datatype of $predicate should be ($datatypeIn)",
+                "FILTER (!isLiteral(?value) || NOT EXISTS {\n" +
+                        "\t\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
+                        "\t\t\tVALUES ?valueDatatype { $datatypeIn } .\n" +
+                        "\t\t})\n" +
+                        "\t}\n" ));
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
                 "sh:class of $predicate should be '$class'",
@@ -60,7 +66,16 @@ public class TemplateRegistry {
                         "\t\t!( $class = rdfs:Resource ||\n" +
                         "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
                         "\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* $class } )) }"));
-        //sh:classIn
+
+        builder.shaclCoreTemplate(createTemplate( CoreArguments.clazzIn,
+                "sh:classIn of $predicate should be in ($classIn)",
+                "FILTER (isLiteral(?value) || NOT EXISTS {\n" +
+                        "\t\t\tFILTER (?class = rdfs:Resource ||\n" +
+                        "\t\t\t\t(?class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
+                        "\t\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* ?c . VALUES ?c { $classIn } })\n" +
+                        "\t\t})\n" +
+                        "}"));
+
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
                 "sh:directType of $predicate should be '$directType'",
@@ -74,7 +89,9 @@ public class TemplateRegistry {
                 "$predicate have value: $hasValue",
                 " FILTER NOT EXISTS { ?this $predicate $hasValue . } }"));
 
-        //TODO sh:in
+        builder.shaclCoreTemplate( createTemplate( CoreArguments.in,
+                "$predicate have value: $in",
+        "FILTER NOT EXISTS { VALUES ?value { $in }  } } " ));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThan,
                 "$predicate should be less than '$lessThan'",
@@ -93,7 +110,6 @@ public class TemplateRegistry {
                 " } GROUP BY ?this\n" +
                 " HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) ) "));
 
-        //TODO sh:maxCount = 0 ??? (not supported atm)
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxCount,
                 "Maximum cardinality for $predicate is '$maxCount'",
                 " } GROUP BY ?this\n" +

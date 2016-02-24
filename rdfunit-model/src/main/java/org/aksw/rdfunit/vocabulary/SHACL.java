@@ -78,6 +78,7 @@ public final class SHACL {
     public static final Property notEquals = property("notEquals");
     public static final Property equals = property("equals");
     public static final Property hasValue = property("hasValue");
+    public static final Property in = property("in");
     public static final Property lessThan = property("lessThan");
     public static final Property lessThanOrEquals = property("lessThanOrEquals");
     public static final Property minCount = property("minCount");
