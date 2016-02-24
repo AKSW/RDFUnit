@@ -81,18 +81,13 @@ public class AggregatedTestExecutor extends TestExecutor {
         checkNotNull(var);
 
         int result = 0;
-        QueryExecution qe = null;
-        try {
-            qe = model.createQueryExecution(query);
+        try ( QueryExecution qe = model.createQueryExecution(query) ) {
+
             ResultSet results = qe.execSelect();
 
             if (results != null && results.hasNext()) {
                 QuerySolution qs = results.next();
                 result = qs.get(var).asLiteral().getInt();
-            }
-        } finally {
-            if (qe != null) {
-                qe.close();
             }
         }
 

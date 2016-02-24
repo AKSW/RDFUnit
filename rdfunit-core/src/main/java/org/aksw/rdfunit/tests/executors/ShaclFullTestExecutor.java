@@ -46,9 +46,9 @@ public class ShaclFullTestExecutor extends ShaclSimpleTestExecutor {
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
         PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
-        QueryExecution qe = null;
-        try {
-            qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
+
+        try (QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase))){
+
             ResultSet results = qe.execSelect();
 
             ShaclTestCaseResultImpl.Builder resultBuilder = null;
@@ -118,10 +118,6 @@ public class ShaclFullTestExecutor extends ShaclSimpleTestExecutor {
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
         }
 
         return testCaseResults;

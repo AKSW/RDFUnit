@@ -45,9 +45,8 @@ public class RLOGTestExecutor extends TestExecutor {
 
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
 
-        QueryExecution qe = null;
-        try {
-            qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
+        try ( QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase))){
+
             ResultSet results = qe.execSelect();
 
             while (results.hasNext()) {
@@ -68,10 +67,6 @@ public class RLOGTestExecutor extends TestExecutor {
             }
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
         }
 
         return testCaseResults;

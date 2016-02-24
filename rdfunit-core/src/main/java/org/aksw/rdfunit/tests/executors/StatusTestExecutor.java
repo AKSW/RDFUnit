@@ -37,10 +37,9 @@ public class StatusTestExecutor extends TestExecutor {
     protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
         TestCaseResultStatus status = TestCaseResultStatus.Error;
-        QueryExecution qe = null;
 
-        try {
-            qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));
+
+        try (QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));) {
             boolean fail = qe.execAsk();
 
             if (fail) {
@@ -57,10 +56,6 @@ public class StatusTestExecutor extends TestExecutor {
                 status = TestCaseResultStatus.Error;
             }
 
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
         }
 
         return Collections.<TestCaseResult>singletonList(new StatusTestCaseResultImpl(testCase, status));
