@@ -127,3 +127,27 @@ ex:MyCardShape
         sh:maxCount "3"^^xsd:int ;
     ] ;
     .
+
+ex:ValueShapeExampleShape
+	a sh:Shape ;
+	sh:scopeClass ex:ValueShapeClass;
+	sh:property [
+		sh:predicate ex:someProperty ;
+		sh:valueShape ex:ValueShapeNested1 ;
+	] .
+
+ex:ValueShapeNested1
+    a sh:Shape ;
+    sh:property [
+        sh:predicate ex:nestedProperty ;
+        sh:minCount 2 ;
+        sh:valueShape ex:ValueShapeNested2;
+    ].
+
+ex:ValueShapeNested2
+    a sh:Shape ;
+    sh:property [
+        sh:predicate ex:nestedProperty2 ;
+        sh:datatype xsd:int;
+    ].
+
