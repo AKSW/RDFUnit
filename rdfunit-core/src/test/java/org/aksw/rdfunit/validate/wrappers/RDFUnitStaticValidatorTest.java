@@ -2,81 +2,61 @@ package org.aksw.rdfunit.validate.wrappers;
 
 
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-
+import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.riot.Lang;
+import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.sources.TestSourceBuilder;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+@RunWith(Parameterized.class)
 public class RDFUnitStaticValidatorTest {
 
-    @Test
-    public void testValidateModelShaclFullTestCaseResultMode() throws RdfReaderException {
-        //Init
-        String turtle = "";
-
-        //Act
-        Model model = RdfReaderFactory.createReaderFromText(turtle, Lang.NTRIPLES.getName()).read();
-
+    @Before
+    public void setUp() throws Exception {
         RDFUnitStaticValidator.initWrapper(
                 new RDFUnitTestSuiteGenerator.Builder()
-                        .addLocalResourceOrSchemaURI("nif", "org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl", "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#")
+                        .addLocalResource("empty", "/org/aksw/rdfunit/validate/data/empty.ttl")
                         .build()
         );
-        RDFUnitStaticValidator.validate(model, TestCaseExecutionType.shaclFullTestCaseResult);
-
     }
 
-    @Test
-    public void testValidateModelStatusTestCaseResultMode() throws RdfReaderException {
-        //Init
-        String turtle = "";
-
-        //Act
-        Model model = RdfReaderFactory.createReaderFromText(turtle, Lang.NTRIPLES.getName()).read();
-
-        RDFUnitStaticValidator.initWrapper(
-                new RDFUnitTestSuiteGenerator.Builder()
-                        .addLocalResourceOrSchemaURI("nif", "org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl", "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#")
-                        .build()
-        );
-        RDFUnitStaticValidator.validate(model, TestCaseExecutionType.statusTestCaseResult);
-
+    @Parameterized.Parameters
+    public static Collection<Object[]> resources() throws Exception {
+        Collection<Object[]> parameters = new ArrayList<>();
+        for (TestCaseExecutionType t: TestCaseExecutionType.values()) {
+            parameters.add(new Object[] {t});
+        }
+        return parameters;
     }
+
+    @Parameterized.Parameter
+    public TestCaseExecutionType testCaseExecutionType;
 
 
     @Test
-    public void testValidateModelAggregatedTestCaseResultMode() throws RdfReaderException {
-        //Init
-        String turtle = "";
-
-        //Act
-        Model model = RdfReaderFactory.createReaderFromText(turtle, Lang.NTRIPLES.getName()).read();
-
-        RDFUnitStaticValidator.initWrapper(
-                new RDFUnitTestSuiteGenerator.Builder()
-                        .addLocalResourceOrSchemaURI("nif", "org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl", "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#")
-                        .build()
-        );
-        RDFUnitStaticValidator.validate(model, TestCaseExecutionType.aggregatedTestCaseResult);
-
+    public void testValidateModel() throws RdfReaderException {
+        RDFUnitStaticValidator.validate(ModelFactory.createDefaultModel(), testCaseExecutionType);
     }
 
     @Test
-    public void testValidateModelShaclSimpleTestCaseResultMode() throws RdfReaderException {
-        //Init
-        String turtle = "";
-
-        //Act
-        Model model = RdfReaderFactory.createReaderFromText(turtle, Lang.NTRIPLES.getName()).read();
-
-        RDFUnitStaticValidator.initWrapper(
-                new RDFUnitTestSuiteGenerator.Builder()
-                        .addLocalResourceOrSchemaURI("nif", "org/uni-leipzig/persistence/nlp2rdf/nif-core/nif-core.ttl", "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#")
-                        .build()
-        );
-        RDFUnitStaticValidator.validate(model, TestCaseExecutionType.shaclSimpleTestCaseResult);
-
+    public void testValidateModelAsSource() throws RdfReaderException {
+        // create new dataset for current entry
+        final TestSource modelSource = new TestSourceBuilder()
+                .setImMemSingle()
+                .setPrefixUri("test", "http://example.com")
+                .setInMemReader(new RdfModelReader(RdfReaderFactory.createResourceReader( "/org/aksw/rdfunit/validate/data/empty.ttl").read()))
+                .setReferenceSchemata(Collections.emptyList())
+                .build();
+        RDFUnitStaticValidator.validate(testCaseExecutionType, modelSource, RDFUnitStaticValidator.getTestSuite());
     }
+
 }
