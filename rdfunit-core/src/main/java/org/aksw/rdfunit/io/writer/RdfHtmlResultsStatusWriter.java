@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.writer;
 
+import com.google.common.html.HtmlEscapers;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -37,7 +38,7 @@ public class RdfHtmlResultsStatusWriter extends RdfHtmlResultsWriter {
                 "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
                 "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
                 result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
-                result.getMessage()
+                HtmlEscapers.htmlEscaper().escape(result.getMessage())
         ));
     }
 

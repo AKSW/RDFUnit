@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.writer;
 
+import com.google.common.html.HtmlEscapers;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -50,7 +51,7 @@ public class RdfHtmlResultsShaclWriter extends RdfHtmlResultsWriter {
                 String.format(template,
                         getStatusClass(result.getSeverity()),
                         "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
-                        result.getMessage(),
+                        HtmlEscapers.htmlEscaper().escape(result.getMessage()),
                         result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>
                         result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"))
         );
