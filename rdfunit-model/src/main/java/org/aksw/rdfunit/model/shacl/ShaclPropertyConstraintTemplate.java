@@ -40,8 +40,9 @@ public class ShaclPropertyConstraintTemplate {
     private boolean checkFilter(String askQuery) {
         Model m = ModelFactory.createDefaultModel();
         Query q = QueryFactory.create(askQuery);
-        QueryExecution qex = org.apache.jena.query.QueryExecutionFactory.create(q, m);
-        return qex.execAsk();
+        try (QueryExecution qex = org.apache.jena.query.QueryExecutionFactory.create(q, m)) {
+            return qex.execAsk();
+        }
     }
 
     private String generateQuery(PropertyValuePairSet propertyValuePairSet, Argument arg, String sparqlFilter) {
