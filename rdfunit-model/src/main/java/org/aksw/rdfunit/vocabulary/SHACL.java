@@ -32,6 +32,10 @@ public final class SHACL {
     public static final Resource AllObjectsScope = resource("AllObjectsScope");
 
 
+    public static final Resource Info = resource("Info");
+    public static final Resource Warning = resource("Warning");
+    public static final Resource Violation = resource("Violation");
+
     //properties
     public static final Property argument = property("argument");
     public static final Property cachable = property("cachable");
@@ -88,6 +92,8 @@ public final class SHACL {
     public static final Property uniqueLang = property("uniqueLang");
 
     public static final Property valueShape = property("valueShape");
+
+
 
 
 

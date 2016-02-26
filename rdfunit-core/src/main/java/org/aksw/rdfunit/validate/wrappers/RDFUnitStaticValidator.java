@@ -13,6 +13,8 @@ import org.aksw.rdfunit.tests.executors.TestExecutorFactory;
 import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.apache.jena.rdf.model.Model;
 
+import java.util.Collections;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -83,6 +85,20 @@ public final class RDFUnitStaticValidator {
         overviewResults.set(testExecutorMonitor.getOverviewResults());
 
         return testExecutorMonitor.getTestExecution();
+    }
+
+    public static TestExecution validate(final TestCaseExecutionType testCaseExecutionType, final Model model, final TestSuite testSuite) {
+
+
+        final TestSource testSource = new TestSourceBuilder()
+                .setPrefixUri("custom", "http://example.com")
+                .setImMemDataset()
+                .setInMemReader(new RdfModelReader(model))
+                .setReferenceSchemata(Collections.emptyList())
+                .build();
+
+
+        return validate(testCaseExecutionType, testSource, testSuite);
     }
 
 

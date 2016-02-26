@@ -216,6 +216,9 @@ public class ValidateUtils {
                 case "shacl-lite":
                     resultLevel = TestCaseExecutionType.shaclSimpleTestCaseResult;
                     break;
+                case "shacllite":
+                    resultLevel = TestCaseExecutionType.shaclSimpleTestCaseResult;
+                    break;
                 case "shacl":
                     resultLevel = TestCaseExecutionType.shaclFullTestCaseResult;
                     break;

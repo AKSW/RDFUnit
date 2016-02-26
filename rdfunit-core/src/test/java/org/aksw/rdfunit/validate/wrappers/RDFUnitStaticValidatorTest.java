@@ -49,6 +49,8 @@ public class RDFUnitStaticValidatorTest {
 
     @Test
     public void testValidateModelAsSource() throws RdfReaderException {
+        RDFUnitStaticValidator.validate(testCaseExecutionType, ModelFactory.createDefaultModel(),RDFUnitStaticValidator.getTestSuite());
+
         // create new dataset for current entry
         final TestSource modelSource = new TestSourceBuilder()
                 .setImMemSingle()
