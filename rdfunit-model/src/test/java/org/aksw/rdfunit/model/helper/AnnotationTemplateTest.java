@@ -3,7 +3,6 @@ package org.aksw.rdfunit.model.helper;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -28,11 +27,6 @@ public class AnnotationTemplateTest {
     private PropertyValuePair sa1 = PropertyValuePair.create(RDF.type, rdfNode1);
     private PropertyValuePair sa2 = PropertyValuePair.create(RDF.predicate, rdfNodes);
 
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test
     public void testAddTemplateMin() throws Exception {

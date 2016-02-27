@@ -46,14 +46,6 @@ public abstract class AbstractTestSource implements TestSource {
         this.referenceSchemata = ImmutableSet.copyOf(checkNotNull(referenceSchemata));
     }
 
-    /**
-     * <p>initQueryFactory.</p>
-     *
-     * @return a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     */
-    abstract protected QueryExecutionFactory initQueryFactory();
-
-
     /** {@inheritDoc} */
     @Override
     public QueryingConfig getQueryingConfig() {
@@ -92,6 +84,25 @@ public abstract class AbstractTestSource implements TestSource {
         }
         return queryFactory;
     }
+
+    public long getCacheTTL() {
+        return queryingConfig.getCacheTTL();
+    }
+
+    public long getQueryDelay() {
+        return queryingConfig.getQueryDelay();
+    }
+
+    public long getQueryLimit() {
+        return queryingConfig.getQueryLimit();
+    }
+
+    public long getPagination() {
+        return queryingConfig.getPagination();
+    }
+
+
+    protected abstract  QueryExecutionFactory initQueryFactory();
 
     /**
      * <p>masqueradeQEF.</p>
@@ -147,43 +158,5 @@ public abstract class AbstractTestSource implements TestSource {
         }
         return qef;
     }
-
-
-    /**
-     * <p>getCacheTTL.</p>
-     *
-     * @return a long.
-     */
-    public long getCacheTTL() {
-        return queryingConfig.getCacheTTL();
-    }
-
-    /**
-     * <p>getQueryDelay.</p>
-     *
-     * @return a long.
-     */
-    public long getQueryDelay() {
-        return queryingConfig.getQueryDelay();
-    }
-
-    /**
-     * <p>getQueryLimit.</p>
-     *
-     * @return a long.
-     */
-    public long getQueryLimit() {
-        return queryingConfig.getQueryLimit();
-    }
-
-    /**
-     * <p>getPagination.</p>
-     *
-     * @return a long.
-     */
-    public long getPagination() {
-        return queryingConfig.getPagination();
-    }
-
 
 }

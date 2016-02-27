@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,11 +12,6 @@ import java.util.ArrayList;
  * @since 8/26/15 1:45 PM
  */
 public class DumpTestSourceTest {
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetExecutionFactoryEmpty() throws Exception {

@@ -66,7 +66,7 @@ public abstract class TestExecutor {
      * @return the java . util . collection
      * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException the test case execution exception
      */
-    abstract protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException;
+    protected abstract Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException;
 
 
     /**

@@ -54,7 +54,7 @@ public class ValidateWS extends RDFUnitWebService {
             rdfunit.init();
             autogenerators = rdfunit.getAutoGenerators();
         } catch (RdfReaderException e) {
-            LOGGER.error("Cannot read patterns and/or pattern generators");
+            LOGGER.error("Cannot read patterns and/or pattern generators", e);
         }
     }
 

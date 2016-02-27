@@ -40,7 +40,7 @@ public final class TestUtils {
         try {
             return instantiateTestsFromModel(model, false);
         } catch (TestCaseInstantiationException e) {
-            // This should not occur since we pass strict-> false
+            LOGGER.warn("TestCase instantiation failed", e);
         }
         throw new RuntimeException("Unexpected exception...");
     }

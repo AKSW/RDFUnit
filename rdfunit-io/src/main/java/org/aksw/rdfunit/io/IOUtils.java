@@ -52,7 +52,7 @@ public final class IOUtils {
      */
     public static boolean isURI(String uri) {
         try {
-            URI tmp = new URI(uri);
+            new URI(uri);
             return true;
         } catch (URISyntaxException e) {
             return false;

@@ -25,9 +25,9 @@ public final class LOVEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LOVEndpoint.class);
 
-    private static final String lovEndpointURI = "http://lov.okfn.org/dataset/lov/sparql";
-    private static final String lovGraph = "http://lov.okfn.org/dataset/lov";
-    private static final String lovSparqlQuery =
+    private static final String LOV_ENDPOINT_URI = "http://lov.okfn.org/dataset/lov/sparql";
+    private static final String LOV_GRAPH = "http://lov.okfn.org/dataset/lov";
+    private static final String LOV_SPARQL_QUERY =
             "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>\n" +
             "PREFIX vann:<http://purl.org/vocab/vann/>\n" +
             "PREFIX voaf:<http://purl.org/vocommons/voaf#>\n" +
@@ -40,24 +40,14 @@ public final class LOVEndpoint {
             "} \n" +
             "ORDER BY ?vocabPrefix ";
 
-    /**
-     * <p>Constructor for LOVEndpoint.</p>
-     */
-    public LOVEndpoint(){}
 
-
-    /**
-     * <p>getAllLOVEntries.</p>
-     *
-     * @return a {@link java.util.List} object.
-     */
     public List<SchemaEntry> getAllLOVEntries() {
 
         List<SchemaEntry> lovEntries = new LinkedList<>();
-        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(lovEndpointURI, Collections.singletonList(lovGraph));
+        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(LOV_ENDPOINT_URI, Collections.singletonList(LOV_GRAPH));
 
 
-        try (QueryExecution qe = qef.createQueryExecution(lovSparqlQuery)) {
+        try (QueryExecution qe = qef.createQueryExecution(LOV_SPARQL_QUERY)) {
 
             ResultSet rs = qe.execSelect();
             while (rs.hasNext()) {
@@ -99,7 +89,7 @@ public final class LOVEndpoint {
 
 
         try (Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("outfilename"), "UTF-8")) ){
+                new FileOutputStream(filename), "UTF-8")) ){
 
             out.write(header);
             out.write("\n");
@@ -114,10 +104,9 @@ public final class LOVEndpoint {
                 }
                 out.write('\n');
             }
-        } catch (UnsupportedEncodingException e) {
         } catch (IOException e) {
+            LOGGER.info("Cannot write to file", e);
         }
-
 
     }
 }

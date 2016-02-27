@@ -114,5 +114,9 @@ public class DataIDWS extends RDFUnitWebService {
                         "\n -o\tOutput format:'html(default)|turtle|jsonld|rdfjson|ntriples|rdfxml|rdfxml-abbrev" + //JSON-LD|RDF/JSON|TriG|NQuads'"
                         "";
 
+        httpServletResponse.setContentType("text/html");
+        httpServletResponse.getWriter().append(helpMessage);
+
+
     }
 }
