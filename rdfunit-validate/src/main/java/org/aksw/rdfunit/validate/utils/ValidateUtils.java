@@ -20,10 +20,12 @@ import java.util.Collection;
  * @since 6/13/14 4:35 PM
  * @version $Id: $Id
  */
-public class ValidateUtils {
+public final class ValidateUtils {
     private static final Logger log = LoggerFactory.getLogger(ValidateUtils.class);
 
     private static final Options cliOptions = generateCLIOptions();
+
+    private ValidateUtils(){}
 
     /**
      * <p>Getter for the field <code>cliOptions</code>.</p>
@@ -304,7 +306,9 @@ public class ValidateUtils {
 
     private static Collection<String> getUriStrs(String parameterStr) {
         Collection<String> uriStrs = new ArrayList<>();
-        if (parameterStr == null) return uriStrs;
+        if (parameterStr == null) {
+            return uriStrs;
+        }
 
         for (String uriStr : parameterStr.split(",")) {
             if (!uriStr.trim().isEmpty())
