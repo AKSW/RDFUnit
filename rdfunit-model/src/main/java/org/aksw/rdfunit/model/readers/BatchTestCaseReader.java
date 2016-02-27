@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public final class BatchTestCaseReader {
 
-    private static final Logger logger = LoggerFactory.getLogger(BatchTestCaseReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BatchTestCaseReader.class);
 
     private BatchTestCaseReader(){}
 
@@ -52,7 +52,7 @@ public final class BatchTestCaseReader {
                     try {
                         testCases.add(PatternBasedTestCaseReader.create().read(resource));
                     } catch (IllegalArgumentException ex) {
-                        logger.warn("Cannot create PatternBasedTestCase {}", resource.toString(), ex);
+                        LOGGER.warn("Cannot create PatternBasedTestCase {}", resource.toString(), ex);
                     }
                 });
 

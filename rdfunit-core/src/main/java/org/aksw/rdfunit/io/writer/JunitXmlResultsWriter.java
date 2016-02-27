@@ -58,20 +58,20 @@ public abstract class JunitXmlResultsWriter implements RdfWriter {
     }
 
 
-    protected abstract StringBuffer getResultsList() ;
+    protected abstract StringBuilder getResultsList() ;
 
-    private StringBuffer getHeader() {
-        StringBuffer header = new StringBuffer();
+    private StringBuilder getHeader() {
+        StringBuilder header = new StringBuilder();
         header.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         return header;
     }
 
-    private StringBuffer getFooter() {
-        return new StringBuffer("</testsuite>");
+    private StringBuilder getFooter() {
+        return new StringBuilder("</testsuite>");
     }
     
-    private StringBuffer getTestExecutionStats() {
-        StringBuffer stats = new StringBuffer();
+    private StringBuilder getTestExecutionStats() {
+        StringBuilder stats = new StringBuilder();
         stats.append("<testsuite name=\"").append(testExecution.getTestExecutionUri()).append("\" ");
   
         DatasetOverviewResults dor = testExecution.getDatasetOverviewResults();
@@ -98,8 +98,8 @@ public abstract class JunitXmlResultsWriter implements RdfWriter {
     		    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff)));
     }
 
-    private StringBuffer getTestExecutionResults() {
-        StringBuffer results = new StringBuffer();
+    private StringBuilder getTestExecutionResults() {
+        StringBuilder results = new StringBuilder();
         results.append(getResultsList());
         return results;
     }

@@ -23,7 +23,7 @@ import java.util.List;
  */
 public final class LOVEndpoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(LOVEndpoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LOVEndpoint.class);
 
     private static final String lovEndpointURI = "http://lov.okfn.org/dataset/lov/sparql";
     private static final String lovGraph = "http://lov.okfn.org/dataset/lov";
@@ -77,7 +77,7 @@ public final class LOVEndpoint {
                 lovEntries.add(new SchemaEntry(prefix, vocab, ns, definedBy));
             }
         } catch (Exception e) {
-            logger.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
+            LOGGER.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
         }
 
         return lovEntries;

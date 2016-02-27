@@ -24,7 +24,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public final class SparqlUtils {
-    private static final Logger logger = LoggerFactory.getLogger(SparqlUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SparqlUtils.class);
 
 
     private SparqlUtils() {
@@ -60,8 +60,8 @@ public final class SparqlUtils {
             }
 
         } catch (Exception e) {
-            logger.error("Error in sparql query",e);
-            logger.debug(sparql);
+            LOGGER.error("Error in sparql query",e);
+            LOGGER.debug(sparql);
         } finally {
             if (qe != null) {
                 qe.close();

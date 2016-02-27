@@ -26,7 +26,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public abstract class TestExecutor {
-    private static final Logger logger = LoggerFactory.getLogger(TestExecutor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestExecutor.class);
     /**
      * Used in {@code cancel()} to stop the current execution
      */
@@ -103,7 +103,7 @@ public abstract class TestExecutor {
 
             // Test case execution and debug logging
             long executionTimeStartInMS = System.currentTimeMillis();
-            logger.debug("{} : started execution", testCase.getAbrTestURI());
+            LOGGER.debug("{} : started execution", testCase.getAbrTestURI());
 
             try {
                 results = executeSingleTest(testSource, testCase);
@@ -115,15 +115,15 @@ public abstract class TestExecutor {
                 //} catch (InterruptedException e1) {
                 //    e1.printStackTrace();
                 //}
-                logger.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
+                LOGGER.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
                 //throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
             } catch (Exception e) {
-                logger.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
+                LOGGER.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
                 status = TestCaseResultStatus.Error;
             }
 
             long executionTimeEndInMS = System.currentTimeMillis();
-            logger.debug("{} : execution completed in {}ms", testCase.getAbrTestURI(), (executionTimeEndInMS - executionTimeStartInMS));
+            LOGGER.debug("{} : execution completed in {}ms", testCase.getAbrTestURI(), (executionTimeEndInMS - executionTimeStartInMS));
 
             if (results.isEmpty()) {
                 status = TestCaseResultStatus.Success;

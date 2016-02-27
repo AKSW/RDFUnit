@@ -13,15 +13,20 @@ import java.util.Map;
  * @version $Id: $Id
  */
 public final class ManualTestResources {
+
+    private ManualTestResources() {}
+
     private static class ResourcesInstance {
+
         private static final Map<String, String> resources = create();
+
+        private ResourcesInstance() {}
 
         private static Map<String, String> create() {
             Map<String, String> r = new HashMap<>();
             r.put("dbpedia.org", "http://dbpedia.org");
             r.put("dbo", "http://dbpedia.org/ontology/");
             r.put("lemon", "http://lemon-model.net/lemon#");
-            //r.put("lgdo", "http://linkedgeodata.org/ontology/");
             r.put("nif", "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#");
             r.put("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#");
             r.put("skos", "http://www.w3.org/2004/02/skos/core#");

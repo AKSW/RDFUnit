@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 @EqualsAndHashCode(exclude={"model", "schemaReader"})
 public class SchemaSource implements Source {
     /** Constant <code>log</code> */
-    protected static final Logger logger = LoggerFactory.getLogger(SchemaSource.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(SchemaSource.class);
 
 
     protected final SourceConfig sourceConfig;
@@ -74,7 +74,7 @@ public class SchemaSource implements Source {
         try {
             schemaReader.read(m);
         } catch (RdfReaderException e) {
-            logger.error("Cannot load ontology: {} ", getSchema(), e);
+            LOGGER.error("Cannot load ontology: {} ", getSchema(), e);
         }
         return m;
     }

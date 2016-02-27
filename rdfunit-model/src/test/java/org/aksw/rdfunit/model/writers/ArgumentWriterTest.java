@@ -55,6 +55,7 @@ public class ArgumentWriterTest {
         Model m2 = ModelFactory.createDefaultModel();
         ArgumentWriter.create(argument2).write(m2);
 
-        assertThat(m1.isIsomorphicWith(m2));
+        assertThat(m1.isIsomorphicWith(m2))
+            .isTrue();
     }
 }

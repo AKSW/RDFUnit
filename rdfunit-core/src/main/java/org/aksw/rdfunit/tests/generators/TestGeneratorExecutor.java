@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @version $Id: $Id
  */
 public class TestGeneratorExecutor {
-    private static final Logger logger = LoggerFactory.getLogger(TestGeneratorExecutor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestGeneratorExecutor.class);
     private volatile boolean isCanceled = false;
     private final boolean loadFromCache;
     private final boolean useManualTests;
@@ -101,7 +101,7 @@ public class TestGeneratorExecutor {
             }
 
             if (s.getModel() == null || s.getModel().isEmpty()) {
-                logger.error("Trying to generate tests for {} but cannot read source", s.getUri());
+                LOGGER.error("Trying to generate tests for {} but cannot read source", s.getUri());
                 continue;
             }
 
@@ -147,14 +147,14 @@ public class TestGeneratorExecutor {
             Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
                     new RdfStreamReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
-            logger.info("{} contains {} automatically created tests (loaded from cache)", s.getUri(), testsAutoCached.size());
+            LOGGER.info("{} contains {} automatically created tests (loaded from cache)", s.getUri(), testsAutoCached.size());
 
         } catch (RdfReaderException e) {
             // cannot read from file  / generate
             Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
-            logger.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
+            LOGGER.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
         }
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -178,7 +178,7 @@ public class TestGeneratorExecutor {
                     ).read());
 
             tests.addAll(testsManuals);
-            logger.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
+            LOGGER.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
         } catch (RdfReaderException e) {
             // Do nothing, Manual tests do not exist
         }

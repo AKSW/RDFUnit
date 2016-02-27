@@ -46,7 +46,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class ValidateCLI {
-    private static final Logger logger = LoggerFactory.getLogger(ValidateCLI.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValidateCLI.class);
 
 
     /**
@@ -84,7 +84,7 @@ public class ValidateCLI {
         checkNotNull (configuration );
 
         if (!IOUtils.isFile(configuration.getDataFolder())) {
-            logger.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
+            LOGGER.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
             System.exit(1);
         }
 
@@ -136,11 +136,11 @@ public class ValidateCLI {
         String filename = resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
 
         if (!(new File(resultsFolder).exists())) {
-            logger.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
+            LOGGER.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
             File resultsFileFolder = new File(resultsFolder);
             boolean dirsCreated = resultsFileFolder.mkdirs();
             if (!dirsCreated) {
-                logger.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
+                LOGGER.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
             }
         }
 
@@ -155,9 +155,9 @@ public class ValidateCLI {
             TestExecutionWriter.create(testExecution).write(model);
 
             resultWriter.write(model);
-            logger.info("Results stored in: " + filename + ".*");
+            LOGGER.info("Results stored in: " + filename + ".*");
         } catch (RdfWriterException e) {
-            logger.error("Cannot write tests to file: " + e.getMessage());
+            LOGGER.error("Cannot write tests to file: " + e.getMessage());
         }
 
 
@@ -175,7 +175,7 @@ public class ValidateCLI {
     }
 
     private static void displayHelpAndExit(String errorMessage) {
-        logger.error(errorMessage);
+        LOGGER.error(errorMessage);
         displayHelpAndExit();
     }
 

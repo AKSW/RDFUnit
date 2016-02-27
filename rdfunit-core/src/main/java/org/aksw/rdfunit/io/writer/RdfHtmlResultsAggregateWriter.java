@@ -24,14 +24,14 @@ public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>\n");
+    protected StringBuilder getResultsHeader() {
+        return new StringBuilder("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>\n");
     }
 
     /** {@inheritDoc} */
     @Override
-    protected StringBuffer getResultsList() {
-        StringBuffer htmlString = new StringBuffer();
+    protected StringBuilder getResultsList() {
+        StringBuilder htmlString = new StringBuilder();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><span title=\"%s\">%s</span></td><td>%s</td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
@@ -42,7 +42,7 @@ public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
 
     }
 
-    private StringBuffer printResult(StringBuffer htmlString, String template, AggregatedTestCaseResult result) {
+    private StringBuilder printResult(StringBuilder htmlString, String template, AggregatedTestCaseResult result) {
         return htmlString.append(
             String.format(template,
                     getStatusClass(result.getStatus()),

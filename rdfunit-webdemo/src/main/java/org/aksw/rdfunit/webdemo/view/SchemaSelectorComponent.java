@@ -31,7 +31,7 @@ import java.util.Set;
  * @since 11/18/13 11:26 AM
  */
 final class SchemaSelectorComponent extends VerticalLayout {
-    private static final Logger logger = LoggerFactory.getLogger(SchemaSelectorComponent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchemaSelectorComponent.class);
 
     final private TokenField tokenField;
 
@@ -221,7 +221,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
         try {
             sources = SchemaService.getSourceListAll(false, null);
         } catch (UndefinedSchemaException e) {
-            logger.error("Undefined schema");
+            LOGGER.error("Undefined schema");
             sources = new ArrayList<>();
         }
         //Collections.sort(sources);

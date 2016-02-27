@@ -29,7 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public final class RDFUnitTestSuiteGenerator {
-    private static final Logger logger = LoggerFactory.getLogger(RDFUnitTestSuiteGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RDFUnitTestSuiteGenerator.class);
 
 
     private final Collection<SchemaSource> schemas;
@@ -60,7 +60,7 @@ public final class RDFUnitTestSuiteGenerator {
                     try {
                         rdfunit.init();
                     } catch (RdfReaderException e) {
-                        logger.error("Could not Init RDFUnit");
+                        LOGGER.error("Could not Init RDFUnit");
                     }
 
                     TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);

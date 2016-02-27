@@ -59,17 +59,13 @@ public abstract class RdfHtmlResultsWriter implements RdfWriter {
         }
     }
 
-    /**
-     * <p>getResultsHeader.</p>
-     *
-     * @return a {@link java.lang.StringBuffer} object.
-     */
-    protected abstract StringBuffer getResultsHeader();
 
-    protected abstract StringBuffer getResultsList() ;
+    protected abstract StringBuilder getResultsHeader();
 
-    private StringBuffer getHeader() {
-        StringBuffer header = new StringBuffer();
+    protected abstract StringBuilder getResultsList() ;
+
+    private StringBuilder getHeader() {
+        StringBuilder header = new StringBuilder();
         header.append("<!DOCTYPE html>\n<html><head>\n");
         header.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\">\n" +
                 "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/css/theme.default.css\" >\n" +
@@ -81,12 +77,12 @@ public abstract class RdfHtmlResultsWriter implements RdfWriter {
         return header;
     }
 
-    private StringBuffer getFooter() {
-        return new StringBuffer("</body>\n</html>");
+    private StringBuilder getFooter() {
+        return new StringBuilder("</body>\n</html>");
     }
 
-    private StringBuffer getTestExecutionStats() throws RdfWriterException {
-        StringBuffer stats = new StringBuffer();
+    private StringBuilder getTestExecutionStats() throws RdfWriterException {
+        StringBuilder stats = new StringBuilder();
         stats.append("<h2>TestExecution: ").append(testExecution.getTestExecutionUri()).append("</h2>\n");
         //TODO for some reason, using the "testExecution" URI does not work :/
 
@@ -106,8 +102,8 @@ public abstract class RdfHtmlResultsWriter implements RdfWriter {
         return stats;
     }
 
-    private StringBuffer getTestExecutionResults() throws RdfWriterException {
-        StringBuffer results = new StringBuffer();
+    private StringBuilder getTestExecutionResults() throws RdfWriterException {
+        StringBuilder results = new StringBuilder();
         results.append("<h3>Results</h3>\n");
         results.append("<table id=\"myTable\" class=\"tablesorter tablesorter-default table\" summary=\"Detailed results\"><thead>\n");
         results.append(getResultsHeader());

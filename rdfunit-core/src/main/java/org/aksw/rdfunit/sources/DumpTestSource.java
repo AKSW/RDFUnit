@@ -6,8 +6,6 @@ import org.aksw.rdfunit.io.reader.RdfReader;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -24,8 +22,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class DumpTestSource extends AbstractTestSource implements TestSource {
-    /** Constant <code>log</code> */
-    protected static final Logger logger = LoggerFactory.getLogger(DumpTestSource.class);
 
     private final RdfReader dumpReader;
 
@@ -72,7 +68,7 @@ public class DumpTestSource extends AbstractTestSource implements TestSource {
             // Note that the ontologies have reasoning enabled but not the dump source
             dumpModel.add(ontModel);
         } catch (Exception e) {
-            logger.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
+            LOGGER.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
         }
         return masqueradeQEF(new QueryExecutionFactoryModel(dumpModel), this);

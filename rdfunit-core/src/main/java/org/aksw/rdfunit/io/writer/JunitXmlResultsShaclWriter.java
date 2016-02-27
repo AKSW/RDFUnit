@@ -22,8 +22,8 @@ public class JunitXmlResultsShaclWriter extends JunitXmlResultsWriter {
     }
 
     @Override
-    protected StringBuffer getResultsList() {
-        StringBuffer results = new StringBuffer();
+    protected StringBuilder getResultsList() {
+        StringBuilder results = new StringBuilder();
         String template = "\t<testcase name=\"%s\" classname=\"%s\">\n";
 
         testExecution.getTestCaseResults().stream()
@@ -33,7 +33,7 @@ public class JunitXmlResultsShaclWriter extends JunitXmlResultsWriter {
         return results;
     }
 
-    private void printResult(StringBuffer results, String template, SimpleShaclTestCaseResult result) {
+    private void printResult(StringBuilder results, String template, SimpleShaclTestCaseResult result) {
         String testcaseElement = String.format(template,
                 result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                 result.getFailingResource());

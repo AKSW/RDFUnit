@@ -21,7 +21,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public class TestCaseValidator {
-    private static final Logger logger = LoggerFactory.getLogger(TestCaseValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestCaseValidator.class);
 
 
     private final TestCase testCase;
@@ -61,18 +61,18 @@ public class TestCaseValidator {
         }
         if (!hasResource) {
            // throw new TestCaseInstantiationException("?this is not included in SELECT for Test: " + testCase.getTestURI());
-            logger.warn("?this is not included in SELECT for Test: {}", testCase.getTestURI());
+            LOGGER.warn("?this is not included in SELECT for Test: {}", testCase.getTestURI());
         }
 
         // Message is allowed to exist either in SELECT or as a result annotation
         if (testCase.getResultMessage().trim().isEmpty()) {
             //throw new TestCaseInstantiationException("No test case dcterms:description message included in TestCase: " + testCase.getTestURI());
-            logger.warn("No test case dcterms:description message included in TestCase: {}", testCase.getTestURI());
+            LOGGER.warn("No test case dcterms:description message included in TestCase: {}", testCase.getTestURI());
         }
 
         if (testCase.getLogLevel() == null) {
             //throw new TestCaseInstantiationException("No (or malformed) log level included for Test: " + testCase.getTestURI());
-            logger.warn("No (or malformed) log level included for Test: {}", testCase.getTestURI());
+            LOGGER.warn("No (or malformed) log level included for Test: {}", testCase.getTestURI());
         }
     }
 
@@ -84,7 +84,7 @@ public class TestCaseValidator {
         } catch (QueryParseException e) {
             String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testCase.getTestURI() + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
             //throw new TestCaseInstantiationException(message, e);
-            logger.warn(message);
+            LOGGER.warn(message);
         }
     }
 }

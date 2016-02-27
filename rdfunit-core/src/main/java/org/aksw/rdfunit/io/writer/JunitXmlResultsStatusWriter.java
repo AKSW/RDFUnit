@@ -22,8 +22,8 @@ public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
     }
 
     @Override
-    protected StringBuffer getResultsList() {
-        StringBuffer results = new StringBuffer();
+    protected StringBuilder getResultsList() {
+        StringBuilder results = new StringBuilder();
         String template = "\t<testcase name=\"%s\" classname=\""+testExecution.getTestExecutionUri()+"\">\n";
         
         testExecution.getTestCaseResults().stream()
@@ -33,7 +33,7 @@ public class JunitXmlResultsStatusWriter extends JunitXmlResultsWriter {
         return results;
     }
 
-    private void printResult(StringBuffer results, String template, StatusTestCaseResult result) {
+    private void printResult(StringBuilder results, String template, StatusTestCaseResult result) {
         String testcaseElement = String.format(template,
                 result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
         results.append(testcaseElement);

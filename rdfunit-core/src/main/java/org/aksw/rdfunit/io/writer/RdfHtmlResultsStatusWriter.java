@@ -15,13 +15,13 @@ public class RdfHtmlResultsStatusWriter extends RdfHtmlResultsWriter {
     }
 
     @Override
-    protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Description</th></tr>\n");
+    protected StringBuilder getResultsHeader() {
+        return new StringBuilder("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Description</th></tr>\n");
     }
 
     @Override
-    protected StringBuffer getResultsList()  {
-        StringBuffer htmlString = new StringBuffer();
+    protected StringBuilder getResultsList()  {
+        StringBuilder htmlString = new StringBuilder();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
@@ -31,7 +31,7 @@ public class RdfHtmlResultsStatusWriter extends RdfHtmlResultsWriter {
         return htmlString;
     }
 
-    private StringBuffer printResult(StringBuffer htmlString, String template, StatusTestCaseResult result) {
+    private StringBuilder printResult(StringBuilder htmlString, String template, StatusTestCaseResult result) {
         return htmlString.append(
             String.format(template,
                 getStatusClass(result.getStatus()),

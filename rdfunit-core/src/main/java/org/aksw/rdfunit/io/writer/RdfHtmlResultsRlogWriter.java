@@ -15,13 +15,13 @@ public class RdfHtmlResultsRlogWriter extends RdfHtmlResultsWriter {
     }
 
     @Override
-    protected StringBuffer getResultsHeader() {
-        return new StringBuffer("<tr><th>Level</th><th>Message</th><th>Resource</th><th>Test Case</th></tr>");
+    protected StringBuilder getResultsHeader() {
+        return new StringBuilder("<tr><th>Level</th><th>Message</th><th>Resource</th><th>Test Case</th></tr>");
     }
 
     @Override
-    protected StringBuffer getResultsList() {
-        StringBuffer htmlString = new StringBuffer();
+    protected StringBuilder getResultsList() {
+        StringBuilder htmlString = new StringBuilder();
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><a href=\"%s\">%s</a></td><td>%s</td></tr>";
 
         testExecution.getTestCaseResults().stream()
@@ -30,7 +30,7 @@ public class RdfHtmlResultsRlogWriter extends RdfHtmlResultsWriter {
         return htmlString;
     }
 
-    private StringBuffer printResult(StringBuffer htmlString, String template, RLOGTestCaseResult result) {
+    private StringBuilder printResult(StringBuilder htmlString, String template, RLOGTestCaseResult result) {
         return htmlString.append(
                 String.format(template,
                         RdfHtmlResultsShaclWriter.getStatusClass(result.getSeverity()),

@@ -23,7 +23,7 @@ import java.util.Map;
  * @version $Id: $Id
  */
 public class TestCoverageEvaluator {
-    private static final Logger logger = LoggerFactory.getLogger(TestCoverageEvaluator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestCoverageEvaluator.class);
 
 
     private final Collection<String> fDomPatterns = Arrays.asList("RDFSDOMAIN", "OWLDISJP",
@@ -86,38 +86,38 @@ public class TestCoverageEvaluator {
             // Fdomain Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fDomPatterns)));
             double fDom = getCoverage(references, propertyCount, totalProperties);
-            logger.info("Fdom Coverage: {}", fDom);
+            LOGGER.info("Fdom Coverage: {}", fDom);
 
             // Frange Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fRangPatterns)));
             double fRang = getCoverage(references, propertyCount, totalProperties);
-            logger.info("fRang Coverage: {}", fRang);
+            LOGGER.info("fRang Coverage: {}", fRang);
 
             // Fdepend Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fDepPatterns)));
             double fDep = getCoverage(references, propertyCount, totalProperties);
-            logger.info("fDep Coverage: {}", fDep);
+            LOGGER.info("fDep Coverage: {}", fDep);
 
             // FCard Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCardPatterns)));
             double fCard = getCoverage(references, propertyCount, totalProperties);
-            logger.info("fCard Coverage: {}", fCard);
+            LOGGER.info("fCard Coverage: {}", fCard);
         } else {
-            logger.warn("No properties found in Source (probably source is empty)");
+            LOGGER.warn("No properties found in Source (probably source is empty)");
         }
 
         if (totalClasses > 0) {
             // Fmem Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fMemPatterns)));
             double fMem = getCoverage(references, classCount, totalClasses);
-            logger.info("fMem Coverage: {}", fMem);
+            LOGGER.info("fMem Coverage: {}", fMem);
 
             // FCdep Coverage metric
             references = getReferenceSet(model, sparql.replace("%%PATTERNS%%", generateInClause(fCDepPatterns)));
             double fCDep = getCoverage(references, classCount, totalClasses);
-            logger.info("fCDep Coverage: {}", fCDep);
+            LOGGER.info("fCDep Coverage: {}", fCDep);
         } else {
-            logger.warn("No Class usage found in Source");
+            LOGGER.warn("No Class usage found in Source");
         }
     }
 

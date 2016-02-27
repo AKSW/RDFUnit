@@ -25,7 +25,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public final class TestUtils {
-    private static final Logger logger = LoggerFactory.getLogger(TestUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestUtils.class);
 
     private TestUtils() {
     }
@@ -73,7 +73,7 @@ public final class TestUtils {
             org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);
             testCache.write(model);
         } catch (RdfWriterException e) {
-            logger.error("Cannot cache tests: " + e.getMessage());
+            LOGGER.error("Cannot cache tests: " + e.getMessage());
         }
     }
 
