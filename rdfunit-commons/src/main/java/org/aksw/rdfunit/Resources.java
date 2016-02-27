@@ -8,7 +8,6 @@ package org.aksw.rdfunit;
  * @version $Id: $Id
  */
 public final class Resources {
-    private Resources() {}
 
     /** Constant <code>ONTOLOGY="/org/aksw/rdfunit/ns/core.ttl"</code> */
     public static final String ONTOLOGY = "/org/aksw/rdfunit/ns/core.ttl";
@@ -31,5 +30,6 @@ public final class Resources {
     /** Constant <code>SCHEMAS_CUSTOM="/org/aksw/rdfunit/configuration/schemas"{trunked}</code> */
     public static final String SCHEMAS_CUSTOM = "/org/aksw/rdfunit/configuration/schemas_lov.csv";
 
+    private Resources() {}
 
 }

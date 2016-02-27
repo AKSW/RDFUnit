@@ -107,7 +107,7 @@ public class RDFUnit {
     private static RdfReader createReaderFromBaseDirsAndResource(Collection<String> baseDirectories, String relativeName) {
         ArrayList<RdfReader> readers = new ArrayList<>();
         for (String baseDirectory : baseDirectories) {
-            String normalizedBaseDir = (baseDirectory.endsWith("/") ? baseDirectory : baseDirectory + "/");
+            String normalizedBaseDir = baseDirectory.endsWith("/") ? baseDirectory : baseDirectory + "/";
             readers.add(new RdfStreamReader(normalizedBaseDir + relativeName));
         }
         readers.add(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/configuration/" + relativeName));

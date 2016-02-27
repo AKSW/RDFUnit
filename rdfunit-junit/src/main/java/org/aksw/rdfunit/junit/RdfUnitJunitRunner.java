@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
 
@@ -134,15 +135,16 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
     private void generateRdfUnitTestCases() throws InitializationError {
         final SchemaSource schemaSource = createSchemaSourceFromSchema();
-        final Object testCaseInstance = getTestCaseInstance();
-        final Collection<TestCase> testCases = createTestCases();
+        final Object testCaseInstanceLocal = getTestCaseInstance();
+        final Collection<TestCase> testCasesLocal = createTestCases();
         for (FrameworkMethod testInputMethod : getTestInputMethods()) {
             final RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider = new
-                    RdfUnitJunitTestCaseDataProvider(testInputMethod, testCaseInstance, schemaSource,
+                    RdfUnitJunitTestCaseDataProvider(testInputMethod, testCaseInstanceLocal, schemaSource,
                     additionalData);
-            for (TestCase t : testCases) {
-                this.testCases.add(new RdfUnitJunitTestCase(t, rdfUnitJunitTestCaseDataProvider));
-            }
+            this.testCases.addAll(
+                    testCasesLocal.stream()
+                        .map(t -> new RdfUnitJunitTestCase(t, rdfUnitJunitTestCaseDataProvider))
+                        .collect(Collectors.toList()));
         }
     }
 

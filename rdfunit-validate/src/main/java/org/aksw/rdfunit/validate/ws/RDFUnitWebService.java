@@ -29,12 +29,6 @@ import java.io.PrintWriter;
  */
 public abstract class RDFUnitWebService extends HttpServlet {
 
-    /** {@inheritDoc} */
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        // This function is executed on first run and can be used for initialization
-    }
 
     /** {@inheritDoc} */
     @Override

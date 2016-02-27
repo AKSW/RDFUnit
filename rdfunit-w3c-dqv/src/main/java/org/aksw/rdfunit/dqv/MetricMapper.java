@@ -37,7 +37,7 @@ public class MetricMapper {
         try {
             model = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/dqv/metricMappings.ttl").read();
         } catch (RdfReaderException e) {
-            throw new IllegalArgumentException("Cannot read default metric mappings");
+            throw new IllegalArgumentException("Cannot read default metric mappings", e);
         }
 
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<>();
