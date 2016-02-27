@@ -25,6 +25,8 @@ public final class PrefixNSService {
     private static final class MapInstance {
         private static final BiMap<String, String> prefixNsBidiMap = createPrefixNsBidiMap();
 
+        private MapInstance(){}
+
         private static BiMap<String, String> createPrefixNsBidiMap() {
 
             BiMap<String, String> dualMap = HashBiMap.create();
@@ -33,7 +35,7 @@ public final class PrefixNSService {
             try (InputStream is = PrefixNSService.class.getResourceAsStream(Resources.PREFIXES)) {
                 prefixModel.read(is, null, "TURTLE");
             } catch (Exception e) {
-                throw new RuntimeException("Cannot read prefixes.ttl from resources", e);
+                throw new IllegalArgumentException("Cannot read prefixes.ttl from resources", e);
             }
 
             // Update Prefix Service
@@ -48,9 +50,9 @@ public final class PrefixNSService {
     }
 
     private static final class DeclInstance {
-        private static final String sparqlPrefixDecl = createSparqlPrefixes();
+        private static final String SPARQL_PREFIX_DECL = createSparqlPrefixes();
 
-
+        private DeclInstance(){}
         /**
          * We use an external prefix map to avoid concurrency issues
          */
@@ -63,13 +65,7 @@ public final class PrefixNSService {
         }
     }
 
-    private PrefixNSService() {
-    }
-
-    /* We don't need this atm but if we add it need to deal with concurrency
-    public static void addPrefix(String prefix, String uri) {
-        getPrefixNsBidiMap().put(prefix, uri);
-    } */
+    private PrefixNSService() {}
 
     /**
      * Given a prefix it returns the prefix namespace.
@@ -106,7 +102,7 @@ public final class PrefixNSService {
      * @return a {@link java.lang.String} object.
      */
     public static String getSparqlPrefixDecl() {
-        return DeclInstance.sparqlPrefixDecl;
+        return DeclInstance.SPARQL_PREFIX_DECL;
     }
 
     /**
@@ -122,11 +118,6 @@ public final class PrefixNSService {
         }
         throw new IllegalArgumentException("Undefined prefix in " + abbreviation);
     }
-
-    /*
-    public static String getLocalName(String uri) {
-
-    } */
 
 
     /**

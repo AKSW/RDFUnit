@@ -6,6 +6,8 @@ public final class JenaUtils {
 
     private static final String DEFAULT_PREFIX = "urn:uuid:";
 
+    private JenaUtils(){}
+
     public static String getUniqueIri(String prefix) {
         return prefix + JenaUUID.generate().asString();
     }

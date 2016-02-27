@@ -42,7 +42,7 @@ public final class TestUtils {
         } catch (TestCaseInstantiationException e) {
             LOGGER.warn("TestCase instantiation failed", e);
         }
-        throw new RuntimeException("Unexpected exception...");
+        throw new IllegalArgumentException("Unexpected exception...");
     }
 
     /**

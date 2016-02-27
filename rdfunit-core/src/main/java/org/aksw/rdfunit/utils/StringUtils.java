@@ -30,7 +30,7 @@ public final class StringUtils {
             }
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            throw new RuntimeException("Cannot calculate MD5 hash for :" + str, e);
+            throw new IllegalArgumentException("Cannot calculate MD5 hash for :" + str, e);
         }
     }
 }
