@@ -42,7 +42,7 @@ import java.util.Random;
  * @since 11/20/13 5:20 PM
  */
 final class TestExecutionView extends VerticalLayout implements WorkflowItem {
-    private static final Logger log = LoggerFactory.getLogger(TestExecutionView.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestExecutionView.class);
 
 
     private final Button startTestingButton = new Button("Run tests");
@@ -227,7 +227,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 resultFormat = FormatService.getOutputFormat(resultsFormatsSelect.getValue().toString()).getName();
             } catch (NullPointerException e) {
                 Notification.show("Error occurred in format selection", Notification.Type.ERROR_MESSAGE);
-                log.error("Error occurred in format selection", e);
+                logger.error("Error occurred in format selection", e);
                 return;
             }
 
@@ -248,7 +248,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                 new RdfFileWriter(fileLocation, "TURTLE").write(model);
             } catch (RdfWriterException e) {
                 Notification.show("Error occurred in Serialization", Notification.Type.ERROR_MESSAGE);
-                log.error("Error occurred in Serialization", e);
+                logger.error("Error occurred in Serialization", e);
             }
 
             final VerticalLayout inner = new VerticalLayout();
@@ -261,7 +261,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             try {
                 tmp_contents = os.toString("UTF8");
             } catch (UnsupportedEncodingException e) {
-                log.error("Encoding error: " + e.getMessage());
+                logger.error("Encoding error: " + e.getMessage());
             }
             final String contents = tmp_contents;
 
@@ -273,7 +273,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         try {
                             return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
                         } catch (UnsupportedEncodingException e) {
-                            log.error("Encoding error: " + e.getMessage());
+                            logger.error("Encoding error: " + e.getMessage());
                         }
                         return null;
                     }

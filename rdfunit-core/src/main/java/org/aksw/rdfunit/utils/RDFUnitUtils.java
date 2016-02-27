@@ -18,7 +18,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public final class RDFUnitUtils {
-    private static final Logger log = LoggerFactory.getLogger(RDFUnitUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(RDFUnitUtils.class);
 
     private RDFUnitUtils() {
     }
@@ -33,7 +33,7 @@ public final class RDFUnitUtils {
         try (InputStream inputStream = new FileInputStream(additionalCSV)) {
             fillSchemaServiceFromFile(inputStream);
         } catch (IOException e) {
-            log.error("File " + additionalCSV + " not fount!", e);
+            logger.error("File " + additionalCSV + " not fount!", e);
         }
     }
 
@@ -69,26 +69,26 @@ public final class RDFUnitUtils {
                             SchemaService.addSchemaDecl(parts[0], parts[1], parts[2]);
                             break;
                         default:
-                            log.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);
+                            logger.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);
                             count--;
                     }
                 }
 
             } catch (UnsupportedEncodingException e) {
-                log.debug("UnsupportedEncodingException: ", e);
+                logger.debug("UnsupportedEncodingException: ", e);
                 return;
             } catch (IOException e) {
-                log.debug("IOException: ", e);
+                logger.debug("IOException: ", e);
             }
 
-            log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
+            logger.info("Loaded " + count + " schema declarations from: " + additionalCSV);
         }
 
         if (additionalCSV != null) {
             try {
                 additionalCSV.close();
             } catch (IOException e) {
-                log.debug("IOException: ", e);
+                logger.debug("IOException: ", e);
             }
         }
     }
@@ -105,7 +105,7 @@ public final class RDFUnitUtils {
 
         count = SchemaService.getSize() - count;
 
-        log.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
+        logger.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
     }
 
 

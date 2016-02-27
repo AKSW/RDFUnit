@@ -37,7 +37,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public class ValidateWS extends RDFUnitWebService {
-    private static final Logger log = LoggerFactory.getLogger(ValidateWS.class);
+    private static final Logger logger = LoggerFactory.getLogger(ValidateWS.class);
 
     // TODO: pass dataFolder in configuration initialization
     private final String dataFolder = "data/";
@@ -54,7 +54,7 @@ public class ValidateWS extends RDFUnitWebService {
             rdfunit.init();
             autogenerators = rdfunit.getAutoGenerators();
         } catch (RdfReaderException e) {
-            log.error("Cannot read patterns and/or pattern generators");
+            logger.error("Cannot read patterns and/or pattern generators");
         }
     }
 

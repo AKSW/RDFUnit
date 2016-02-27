@@ -27,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DatasetTestSource extends AbstractTestSource implements TestSource {
     /** Constant <code>log</code> */
-    protected static final Logger log = LoggerFactory.getLogger(DatasetTestSource.class);
+    protected static final Logger logger = LoggerFactory.getLogger(DatasetTestSource.class);
 
     private final RdfReader dumpReader;
 
@@ -75,7 +75,7 @@ public class DatasetTestSource extends AbstractTestSource implements TestSource 
             // Note that the ontologies have reasoning enabled but not the dump source
             dumpDataset.setDefaultModel(ontModel.union(dumpDataset.getDefaultModel()));
         } catch (Exception e) {
-            log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
+            logger.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
         }
         return masqueradeQEF(new QueryExecutionFactoryDataset(dumpDataset), this);

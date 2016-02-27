@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class AbstractTestSource implements TestSource {
     /** Constant <code>log</code> */
-    protected static final Logger log = LoggerFactory.getLogger(TestSource.class);
+    protected static final Logger logger = LoggerFactory.getLogger(TestSource.class);
 
 
     protected final SourceConfig sourceConfig;
@@ -128,7 +128,7 @@ public abstract class AbstractTestSource implements TestSource {
             try {
                 return CacheUtilsH2.createQueryExecutionFactory(qef, "./cache/sparql/" + testSource.getPrefix(), false, queryingConfig.getCacheTTL());
             } catch (Exception e) {
-                log.warn("Could not instantiate cache for Endpoint {}", testSource.getUri(), e);
+                logger.warn("Could not instantiate cache for Endpoint {}", testSource.getUri(), e);
             }
         }
         return qef;

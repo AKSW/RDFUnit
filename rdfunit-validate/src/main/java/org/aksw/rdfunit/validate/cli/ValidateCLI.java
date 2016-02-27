@@ -46,7 +46,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public class ValidateCLI {
-    private static final Logger log = LoggerFactory.getLogger(ValidateCLI.class);
+    private static final Logger logger = LoggerFactory.getLogger(ValidateCLI.class);
 
 
     /**
@@ -84,7 +84,7 @@ public class ValidateCLI {
         checkNotNull (configuration );
 
         if (!IOUtils.isFile(configuration.getDataFolder())) {
-            log.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
+            logger.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
             System.exit(1);
         }
 
@@ -136,11 +136,11 @@ public class ValidateCLI {
         String filename = resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
 
         if (!(new File(resultsFolder).exists())) {
-            log.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
+            logger.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
             File resultsFileFolder = new File(resultsFolder);
             boolean dirsCreated = resultsFileFolder.mkdirs();
             if (!dirsCreated) {
-                log.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
+                logger.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
             }
         }
 
@@ -155,9 +155,9 @@ public class ValidateCLI {
             TestExecutionWriter.create(testExecution).write(model);
 
             resultWriter.write(model);
-            log.info("Results stored in: " + filename + ".*");
+            logger.info("Results stored in: " + filename + ".*");
         } catch (RdfWriterException e) {
-            log.error("Cannot write tests to file: " + e.getMessage());
+            logger.error("Cannot write tests to file: " + e.getMessage());
         }
 
 
@@ -175,7 +175,7 @@ public class ValidateCLI {
     }
 
     private static void displayHelpAndExit(String errorMessage) {
-        log.error(errorMessage);
+        logger.error(errorMessage);
         displayHelpAndExit();
     }
 

@@ -21,7 +21,7 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public final class ValidateUtils {
-    private static final Logger log = LoggerFactory.getLogger(ValidateUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(ValidateUtils.class);
 
     private static final Options cliOptions = generateCLIOptions();
 
@@ -231,7 +231,7 @@ public final class ValidateUtils {
                     resultLevel = TestCaseExecutionType.extendedTestCaseResult;
                     break;
                 default:
-                    log.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
+                    logger.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");
                     break;
             }
         }
@@ -256,7 +256,7 @@ public final class ValidateUtils {
         }
         // try to guess schemas automatically
         else {
-            log.info("Searching for used schemata in dataset");
+            logger.info("Searching for used schemata in dataset");
             configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
         }
     }

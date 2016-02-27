@@ -4,8 +4,6 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +16,6 @@ import java.util.Map;
  * @since 6 /16/14 1:27 PM
  */
 public abstract class DatasetStatistics {
-
-    private static final Logger log = LoggerFactory.getLogger(DatasetStatistics.class);
-
 
     /**
      * Gets statistics query.

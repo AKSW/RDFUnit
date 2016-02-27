@@ -33,7 +33,7 @@ import static com.google.common.base.Preconditions.checkState;
 @ToString
 @EqualsAndHashCode
 public final class TestGeneratorImpl implements TestGenerator {
-    private static final Logger log = LoggerFactory.getLogger(TestGeneratorImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestGeneratorImpl.class);
 
     @Getter private final Resource element;
     @Getter private final String description;
@@ -80,19 +80,19 @@ public final class TestGeneratorImpl implements TestGenerator {
     public boolean isValid() {
         Query q;
         if (pattern == null) {
-            log.error("{} : Pattern {} does not exist", getUri(), getPattern());
+            logger.error("{} : Pattern {} does not exist", getUri(), getPattern());
             return false;
         }
         try {
             q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getQuery());
         } catch (Exception e) {
-            log.error("{} Cannot parse query:\n{}", getUri(), PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
+            logger.error("{} Cannot parse query:\n{}", getUri(), PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
             return false;
         }
 
         Collection<Var> sv = q.getProjectVars();
         if (sv.size() != pattern.getParameters().size() + 1) {
-            log.error("{} Select variables are different than Pattern parameters", getUri());
+            logger.error("{} Select variables are different than Pattern parameters", getUri());
             return false;
         }
 

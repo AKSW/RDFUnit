@@ -32,7 +32,7 @@ import java.util.Optional;
  */
 public class TestGeneratorTCInstantiator {
 
-    private static final Logger log = LoggerFactory.getLogger(TestGeneratorTCInstantiator.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestGeneratorTCInstantiator.class);
 
 
     private final ImmutableList<TestGenerator> testGenerators;
@@ -79,7 +79,7 @@ public class TestGeneratorTCInstantiator {
                 try {
                     b = new Binding(p, n);
                 } catch (Exception e) {
-                    log.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri(), e);
+                    logger.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri(), e);
                     continue;
                 }
                 bindings.add(b);
@@ -87,19 +87,19 @@ public class TestGeneratorTCInstantiator {
                     references.add(n.toString().trim().replace(" ", ""));
                 }
             } else {
-                log.error("Not bindings for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri());
+                logger.error("Not bindings for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri());
                 break;
             }
         }
         if (bindings.size() != tg.getPattern().getParameters().size()) {
-            log.error("Bindings for pattern {} do not match in AutoGenerator: {}", tgPattern.getId(), tg.getUri());
+            logger.error("Bindings for pattern {} do not match in AutoGenerator: {}", tgPattern.getId(), tg.getUri());
             return Optional.empty();
         }
 
         if (row.get("DESCRIPTION") != null) {
             description = row.get("DESCRIPTION").toString();
         } else {
-            log.error("No ?DESCRIPTION variable found in AutoGenerator: {}", tg.getUri());
+            logger.error("No ?DESCRIPTION variable found in AutoGenerator: {}", tg.getUri());
             return Optional.empty();
         }
 

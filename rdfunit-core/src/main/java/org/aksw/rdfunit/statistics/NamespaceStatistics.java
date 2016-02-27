@@ -19,7 +19,7 @@ import java.util.*;
  */
 public final class NamespaceStatistics {
 
-    private static final Logger log = LoggerFactory.getLogger(NamespaceStatistics.class);
+    private static final Logger logger = LoggerFactory.getLogger(NamespaceStatistics.class);
 
     private final boolean skipUnknownNamespaces;
 
@@ -114,7 +114,7 @@ public final class NamespaceStatistics {
                 sources.add(source);
             } else {
                 if (skipUnknownNamespaces) {
-                    log.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
+                    logger.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
                 } else {
                     sources.add(SchemaSourceFactory.createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(namespace), namespace));
                 }

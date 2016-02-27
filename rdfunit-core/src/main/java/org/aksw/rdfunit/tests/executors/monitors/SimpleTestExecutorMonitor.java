@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
-    private static final Logger log = LoggerFactory.getLogger(SimpleTestExecutorMonitor.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleTestExecutorMonitor.class);
     private final boolean loggingEnabled;
     @Getter private TestExecution testExecution;
 
@@ -113,7 +113,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         overviewResults.setTotalTests(testSuite.size());
 
         if (loggingEnabled) {
-            log.info("Testing {}", testedDataset.getUri());
+            logger.info("Testing {}", testedDataset.getUri());
         }
     }
 
@@ -155,7 +155,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 statusResult = true;
 
                 if (loggingEnabled) {
-                    log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result);
+                    logger.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result);
                 }
 
 
@@ -176,7 +176,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
             overviewResults.increaseIndividualErrors(individualErrors);
 
             if (loggingEnabled) {
-                log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + results.size() + " violation instances / TC: " + test.getAbrTestURI());
+                logger.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + results.size() + " violation instances / TC: " + test.getAbrTestURI());
             }
 
         }
@@ -207,7 +207,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .build();
 
         if (loggingEnabled) {
-            log.info("Tests run: " + overviewResults.getTotalTests() +
+            logger.info("Tests run: " + overviewResults.getTotalTests() +
                     ", Failed: " + overviewResults.getFailedTests() +
                     ", Timeout: " + overviewResults.getTimeoutTests() +
                     ", Error: " + overviewResults.getErrorTests() +
