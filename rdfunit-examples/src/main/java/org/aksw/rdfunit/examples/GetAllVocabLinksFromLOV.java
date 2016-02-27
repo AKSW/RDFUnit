@@ -28,6 +28,8 @@ import java.io.OutputStream;
  */
 public class GetAllVocabLinksFromLOV {
 
+    private GetAllVocabLinksFromLOV(){}
+
     /**
      * <p>main.</p>
      *

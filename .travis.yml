@@ -21,15 +21,13 @@ script:
   - "mvn clean install"
   - "cd .."
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn clean cobertura:cobertura jacoco:report coveralls:report
 notifications:
   email:
     recipients:
       - jimkont@gmail.com
     on_success: change
     on_failure: change
-after_success:
-  - mvn clean cobertura:cobertura coveralls:report
 addons:
   coverity_scan:
     project:

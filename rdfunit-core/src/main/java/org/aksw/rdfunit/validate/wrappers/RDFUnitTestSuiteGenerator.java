@@ -11,6 +11,8 @@ import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @version $Id: $Id
  */
 public final class RDFUnitTestSuiteGenerator {
+    private static final Logger log = LoggerFactory.getLogger(RDFUnitTestSuiteGenerator.class);
+
 
     private final Collection<SchemaSource> schemas;
 
@@ -56,7 +60,7 @@ public final class RDFUnitTestSuiteGenerator {
                     try {
                         rdfunit.init();
                     } catch (RdfReaderException e) {
-                        // fatal error
+                        log.error("Could not Init RDFUnit");
                     }
 
                     TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);

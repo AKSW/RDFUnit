@@ -32,15 +32,14 @@ import java.util.*;
  */
 public class DBpediaMappingValidator {
 
-    private static final String mappingServer = "http://mappings.dbpedia.org";
-    //private static final String mappingServer = "http://localhost:9999";
+    private static final String mappingServer = "http://mappings.dbpedia.org"; // "http://localhost:9999";
 
     private static final String dbpediaOntology = mappingServer + "/server/ontology/dbpedia.owl";
     private static final String rmlManualTests = "/org/aksw/rdfunit/tests/Manual/www.w3.org/ns/r2rml/rr.tests.Manual.ttl";
     private static final Collection<String> languages = Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
     // 2014 languages
-    //private static final Collection<String> languages = Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
-    //private static final Collection<String> languages = Arrays.asList("el", "bg");
+    // Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
+    // Arrays.asList("el", "bg");
 
     private static final String sparqlQuery = PrefixNSService.getSparqlPrefixDecl() +
             " select ?error ?missing ?predicate ?mapping\n" +
@@ -211,7 +210,7 @@ public class DBpediaMappingValidator {
 
 
         if (args.length > 1) {
-            throw new RuntimeException("Expected at most one argument - the folder");
+            throw new IllegalArgumentException("Expected at most one argument - the folder");
         }
 
         // get folder name
