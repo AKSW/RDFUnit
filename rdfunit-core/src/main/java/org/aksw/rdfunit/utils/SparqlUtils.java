@@ -37,7 +37,7 @@ public final class SparqlUtils {
      * @param uri a {@link java.lang.String} object.
      * @return a {@link java.util.Collection} object.
      */
-    static public Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
+    public static Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
         Collection<ResultAnnotation> annotations = new ArrayList<>();
         String sparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
                 " SELECT ?annotationProperty ?annotationValue WHERE {" +

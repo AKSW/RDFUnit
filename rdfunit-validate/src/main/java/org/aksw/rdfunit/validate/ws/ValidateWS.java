@@ -41,7 +41,6 @@ public class ValidateWS extends RDFUnitWebService {
 
     // TODO: pass dataFolder in configuration initialization
     private static final String dataFolder = "data/";
-    private static final String testFolder = dataFolder + "tests/";
     private Collection<TestGenerator> autogenerators;
 
     /** {@inheritDoc} */
@@ -113,6 +112,7 @@ public class ValidateWS extends RDFUnitWebService {
     }
 
     /** {@inheritDoc} */
+    @Override
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setContentType("text/html");
         PrintWriter printWriter = httpServletResponse.getWriter();

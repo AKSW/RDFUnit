@@ -73,7 +73,7 @@ public final class TestUtils {
             org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);
             testCache.write(model);
         } catch (RdfWriterException e) {
-            LOGGER.error("Cannot cache tests: " + e.getMessage());
+            LOGGER.error("Cannot cache tests", e);
         }
     }
 

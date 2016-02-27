@@ -11,13 +11,10 @@ import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +42,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     private final DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
-    final private Model model;
-    final private String executionUUID;
+    private final String executionUUID;
 
     private TestSource testedDataset;
     private TestSuite testSuite;
@@ -58,41 +54,13 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     Collection<TestCaseResult> results = new ArrayList<>();
 
-    /**
-     * Instantiates a new Simple test executor monitor.
-     */
+
     public SimpleTestExecutorMonitor() {
-        this(ModelFactory.createDefaultModel(), true);
+        this(true);
     }
 
-    /**
-     * Instantiates a new Simple test executor monitor.
-     *
-     * @param loggingEnabled have logging enabled / disabled
-     */
     public SimpleTestExecutorMonitor(boolean loggingEnabled) {
-        this(ModelFactory.createDefaultModel(), loggingEnabled);
-    }
-
-    /**
-     * Instantiates a new Simple test executor monitor using an external Model.
-     *
-     * @param model the external model
-     */
-    public SimpleTestExecutorMonitor(Model model) {
-        this(model, true);
-    }
-
-    /**
-     * Instantiates a new Simple test executor monitor.
-     *
-     * @param model          the model
-     * @param loggingEnabled the logging enabled
-     */
-    public SimpleTestExecutorMonitor(Model model, boolean loggingEnabled) {
-        this.model = model;
         this.loggingEnabled = loggingEnabled;
-        PrefixNSService.setNSPrefixesInModel(model);
         executionUUID = JenaUtils.getUniqueIri();
     }
 

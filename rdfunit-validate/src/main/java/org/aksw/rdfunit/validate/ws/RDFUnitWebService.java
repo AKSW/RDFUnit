@@ -58,12 +58,12 @@ public abstract class RDFUnitWebService extends HttpServlet {
             httpServletResponse.getWriter().close();
             return;
         }
-        assert (configuration != null);
+        assert configuration != null;
 
         final TestSource dataset = configuration.getTestSource();
 
         final TestSuite testSuite = getTestSuite(configuration, dataset);
-        assert (testSuite != null);
+        assert testSuite != null;
 
         TestExecution results = null;
         try {
@@ -71,7 +71,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
         } catch (TestCaseExecutionException e) {
             // TODO catch error
         }
-        assert (results != null);
+        assert results != null;
 
         try {
             writeResults(configuration, results, httpServletResponse);
@@ -101,7 +101,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @return an initialized RDFUnitConfiguration object
      * @throws org.aksw.rdfunit.validate.ParameterException if any.
      */
-    abstract protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException;
+    protected abstract RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException;
 
     /**
      * Creates a TestSuite based on the RDFUnitConfiguration and the Source to be tested
@@ -110,7 +110,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @param testSource       The dataset to be tested, this is generated automatically from the RDFUnitConfiguration object
      * @return A TestSuite (list of test cases) for running against the tested Source
      */
-    abstract protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource testSource);
+    protected abstract TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource testSource);
 
     /**
      * Executes the validation of a Sourse dataset against a TestSuite based on a RDFUnitConfiguration
@@ -121,7 +121,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @return a Model that contains the results of a validation
      * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
      */
-    abstract protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException;
+    protected abstract TestExecution validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException;
 
     /**
      * Prints a help message with the correct arguments one can use to call the service
@@ -129,7 +129,7 @@ public abstract class RDFUnitWebService extends HttpServlet {
      * @param httpServletResponse a {@link javax.servlet.http.HttpServletResponse} object.
      * @throws java.io.IOException if any.
      */
-    abstract protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException;
+    protected abstract void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException;
 
     /**
      * Help function that writes a string to the output surrounded with {@code <pre> </pre>}

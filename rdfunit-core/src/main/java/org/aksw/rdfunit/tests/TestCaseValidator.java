@@ -84,7 +84,7 @@ public class TestCaseValidator {
         } catch (QueryParseException e) {
             String message = "QueryParseException in " + type + " query (line " + e.getLine() + ", column " + e.getColumn() + " for Test: " + testCase.getTestURI() + "\n" + PrefixNSService.getSparqlPrefixDecl() + sparql;
             //throw new TestCaseInstantiationException(message, e);
-            LOGGER.warn(message);
+            LOGGER.warn(message,e);
         }
     }
 }

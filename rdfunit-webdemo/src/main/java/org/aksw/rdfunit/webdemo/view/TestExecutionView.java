@@ -261,7 +261,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             try {
                 tmp_contents = os.toString("UTF8");
             } catch (UnsupportedEncodingException e) {
-                LOGGER.error("Encoding error: " + e.getMessage());
+                LOGGER.error("Encoding error", e);
             }
             final String contents = tmp_contents;
 
@@ -273,7 +273,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
                         try {
                             return new DownloadStream(new ByteArrayInputStream(contents.getBytes("UTF8")), "text/html", "");
                         } catch (UnsupportedEncodingException e) {
-                            LOGGER.error("Encoding error: " + e.getMessage());
+                            LOGGER.error("Encoding error", e);
                         }
                         return null;
                     }
