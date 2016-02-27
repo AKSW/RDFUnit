@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.aksw.rdfunit.junit.InitializationSupport.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * <p>RdfUnitJunitRunner class.</p>
