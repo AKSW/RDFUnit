@@ -3,7 +3,6 @@ package org.aksw.rdfunit.sources;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.utils.CacheUtils;
 import org.aksw.rdfunit.utils.StringUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 

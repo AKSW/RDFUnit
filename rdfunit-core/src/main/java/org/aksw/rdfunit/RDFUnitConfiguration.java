@@ -253,12 +253,12 @@ public class RDFUnitConfiguration {
             testSourceBuilder.setInMemFromPipe();
         }
         if (getEndpointURI() == null || getEndpointURI().isEmpty()) {
-            String tmp_customDereferenceURI = datasetURI;
+            String tmpCustomDereferenceURI = datasetURI;
             if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
-                tmp_customDereferenceURI = customDereferenceURI;
+                tmpCustomDereferenceURI = customDereferenceURI;
             }
             if (testSourceBuilder.getInMemReader() == null) { // if the reader is not set already e.g. text
-                testSourceBuilder.setInMemReader(RdfReaderFactory.createDereferenceReader(tmp_customDereferenceURI));
+                testSourceBuilder.setInMemReader(RdfReaderFactory.createDereferenceReader(tmpCustomDereferenceURI));
             }
         }
 

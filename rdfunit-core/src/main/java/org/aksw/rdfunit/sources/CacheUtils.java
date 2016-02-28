@@ -1,7 +1,7 @@
-package org.aksw.rdfunit.utils;
+package org.aksw.rdfunit.sources;
 
 import org.aksw.rdfunit.enums.TestAppliesTo;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.utils.UriToPathUtils;
 
 /**
  * <p>CacheUtils class.</p>
