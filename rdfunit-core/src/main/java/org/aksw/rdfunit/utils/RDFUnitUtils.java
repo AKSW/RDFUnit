@@ -74,11 +74,9 @@ public final class RDFUnitUtils {
                     }
                 }
 
-            } catch (UnsupportedEncodingException e) {
-                LOGGER.debug("UnsupportedEncodingException: ", e);
-                return;
             } catch (IOException e) {
-                LOGGER.debug("IOException: ", e);
+                LOGGER.debug("IOException reading schemas", e);
+                return;
             }
 
             LOGGER.info("Loaded " + count + " schema declarations from: " + additionalCSV);

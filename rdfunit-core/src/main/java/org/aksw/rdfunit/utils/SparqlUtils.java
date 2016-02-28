@@ -85,7 +85,7 @@ public final class SparqlUtils {
             qe = qef.createQueryExecution(askQuery);
             return qe.execAsk();
         } catch (Exception e) {
-
+            LOGGER.debug("Exception when running query {}", askQuery, e);
         } finally {
             if (qe != null) {
                 qe.close();

@@ -40,7 +40,6 @@ public class ValidateWS extends RDFUnitWebService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidateWS.class);
 
     // TODO: pass dataFolder in configuration initialization
-    private static final String dataFolder = "data/";
     private Collection<TestGenerator> autogenerators;
 
     /** {@inheritDoc} */
