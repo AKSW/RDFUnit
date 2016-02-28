@@ -82,7 +82,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class RdfUnitTest {
         @TestInput
         public RdfReader testInput() {
@@ -91,7 +91,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class RdfUnitWithWrongTestInputReturnTypeTest {
         @TestInput
         public Model testInput() {
@@ -100,7 +100,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class RdfUnitWithNullTestInputTest {
         @TestInput
         public RdfReader testInput() {
@@ -122,7 +122,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class ControlledVocabularyTest {
 
         @TestInput
@@ -137,7 +137,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class TwoControlledVocabulariesNotAllowedTest {
         @TestInput
         public RdfReader testInput() {
@@ -156,7 +156,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class VocabularyWithWrongReturnTypeNotAllowedTest {
 
         @TestInput

@@ -1,0 +1,26 @@
+@prefix ex: <http://example.com/ns#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# A few sample ontology definitions used for testing
+
+ex:Person a owl:Class.
+ex:Place a owl:Class.
+ex:Work a owl:Class.
+
+# Some subclasses
+
+ex:Politician rdfs:subClassOf ex:Person .
+ex:Athlete rdfs:subClassOf ex:Person .
+ex:SoccerPlayer rdfs:subClassOf ex:Athlete .
+
+ex:PopulatedPlace rdfs:subClassOf ex:Place .
+ex:Town rdfs:subClassOf ex:PopulatedPlace .
+
+
+# All classes disjoint with each other
+# Should generate 3 test cases
+[ a owl:AllDisjointClasses ;
+  owl:members ex:Person, ex:Place, ex:Work ].

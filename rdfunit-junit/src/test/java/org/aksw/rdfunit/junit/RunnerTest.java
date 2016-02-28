@@ -112,7 +112,7 @@ public class RunnerTest {
     }
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     public static class TestRunner {
 
         private static int beforeClassCalled = 0;
@@ -133,7 +133,7 @@ public class RunnerTest {
         public RdfReader getInputData() {
             return new RdfModelReader(ModelFactory
                     .createDefaultModel()
-                    .read("inputmodels/foaf.rdf"));
+                    .read(Constants.EXAMPLE_INPUT_MODEL));
         }
 
         @TestInput

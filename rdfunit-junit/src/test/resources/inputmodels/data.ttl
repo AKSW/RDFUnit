@@ -1,0 +1,16 @@
+# Sample wrong data for testing
+
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+
+ex:error1 a ex:Person, ex:Place . # direct class
+ex:error2 a ex:Place, ex:Work .   # direct again
+ex:error3 a ex:PopulatedPlace, ex:Athlete . # 1 level of subClassOf
+ex:error4 a ex:SoccerPlayer, ex:Town . # 2 levels of subClassOf
+ex:error5 a ex:Athlete, ex:Town .  # mixed level of subClassOf
+ex:error6 a ex:Person, ex:Town .  # mixed level of subClassOf

@@ -31,7 +31,7 @@ public class RunnerOnIgnoredClassTest {
 
 
     @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.FOAF_ONTOLOGY_URI)
+    @Schema(uri = Constants.EXAMPLE_SCHEMA)
     @Ignore
     public static class TestRunnerIgnoredOnClassLevel {
 
