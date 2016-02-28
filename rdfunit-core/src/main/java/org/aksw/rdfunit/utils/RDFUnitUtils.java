@@ -2,7 +2,7 @@ package org.aksw.rdfunit.utils;
 
 import org.aksw.rdfunit.prefix.LOVEndpoint;
 import org.aksw.rdfunit.prefix.SchemaEntry;
-import org.aksw.rdfunit.services.SchemaService;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

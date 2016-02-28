@@ -1,10 +1,8 @@
-package org.aksw.rdfunit.services;
+package org.aksw.rdfunit.sources;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
-import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
 import java.util.ArrayList;

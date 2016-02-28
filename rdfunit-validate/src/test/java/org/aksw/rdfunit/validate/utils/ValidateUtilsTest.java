@@ -1,9 +1,9 @@
 package org.aksw.rdfunit.validate.utils;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
-import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.DumpTestSource;
 import org.aksw.rdfunit.sources.EndpointTestSource;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

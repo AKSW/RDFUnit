@@ -3,7 +3,7 @@ package org.aksw.rdfunit.examples;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.services.SchemaService;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.apache.jena.ontology.OntModel;

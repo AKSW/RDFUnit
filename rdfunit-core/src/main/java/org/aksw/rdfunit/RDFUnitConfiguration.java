@@ -7,7 +7,6 @@ import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.format.SerializationFormat;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.services.SchemaService;
 import org.aksw.rdfunit.sources.*;
 import org.aksw.rdfunit.statistics.NamespaceStatistics;
 import org.aksw.rdfunit.utils.RDFUnitUtils;

@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.statistics;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.services.SchemaService;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.utils.UriToPathUtils;

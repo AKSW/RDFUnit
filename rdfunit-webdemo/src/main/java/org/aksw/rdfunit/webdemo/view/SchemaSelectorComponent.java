@@ -10,7 +10,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.services.SchemaService;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.Source;
