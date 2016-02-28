@@ -12,6 +12,7 @@ import org.apache.jena.vocabulary.DCTerms;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -69,9 +70,9 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
         }
 
         //annotations
-        for (Statement smt : resource.listProperties(RDFUNITv.resultAnnotation).toList()) {
-            generatorAnnotations.add(ResultAnnotationReader.create().read(smt.getResource()));
-        }
+        generatorAnnotations.addAll(resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
+                .map(smt -> ResultAnnotationReader.create().read(smt.getResource()))
+                .collect(Collectors.toList()));
 
         return TestGeneratorImpl.createTAG(resource, description, query, pattern, generatorAnnotations);
     }

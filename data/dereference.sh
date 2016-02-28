@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 find -name *.tests.Schema.ttl | xargs cat > tests.auto.ttl
 find -name *.tests.Manual.ttl | xargs cat > tests.manual.ttl
 find -name *.tests.EnrichedSchema.ttl | xargs cat > tests.enriched.ttl

@@ -85,16 +85,14 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
             )));
         }
 
-        for (FrameworkMethod m : testInputMethods) {
-            if (!m.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
-                errors.add(new Exception(String.format(
-                        "Method %s marked @%s must return %s",
-                        m.getName(),
-                        TestInput.class.getSimpleName(),
-                        INPUT_DATA_RETURN_TYPE.getCanonicalName()
-                )));
-            }
-        }
+        errors.addAll(testInputMethods.stream()
+                .filter(m -> !m.getReturnType().equals(INPUT_DATA_RETURN_TYPE))
+                .map(m -> new Exception(String.format(
+                    "Method %s marked @%s must return %s",
+                    m.getName(),
+                    TestInput.class.getSimpleName(),
+                    INPUT_DATA_RETURN_TYPE.getCanonicalName()
+        ))).collect(Collectors.toList()));
     }
 
     private void verifyAtMostOneAdditionalDataMethodWithMatchingReturnType(List<Throwable> errors) {
@@ -113,20 +111,16 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
             );
         }
 
-        for (FrameworkMethod additionalDataMethod : additionalDataAnnotatedMethods) {
-            if (!additionalDataMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE)) {
-                errors.add(
-                        new Exception(
-                                String.format(
-                                        "Method %s annotated with @%s must return a %s!",
-                                        additionalDataMethod.getName(),
-                                        AdditionalData.class.getSimpleName(),
-                                        INPUT_DATA_RETURN_TYPE.getCanonicalName()
-                                )
+        errors.addAll(additionalDataAnnotatedMethods.stream()
+                .filter(additionalDataMethod -> !additionalDataMethod.getReturnType().equals(INPUT_DATA_RETURN_TYPE))
+                .map(additionalDataMethod -> new Exception(
+                        String.format(
+                                "Method %s annotated with @%s must return a %s!",
+                                additionalDataMethod.getName(),
+                                AdditionalData.class.getSimpleName(),
+                                INPUT_DATA_RETURN_TYPE.getCanonicalName()
                         )
-                );
-            }
-        }
+        )).collect(Collectors.toList()));
     }
 
     private List<FrameworkMethod> getTestInputMethods() {

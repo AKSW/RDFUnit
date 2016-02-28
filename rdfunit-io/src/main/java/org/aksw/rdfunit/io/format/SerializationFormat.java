@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Holds a format serialization description
@@ -49,7 +50,7 @@ public class SerializationFormat {
      * @param graphType a {@link org.aksw.rdfunit.io.format.SerializationFormatGraphType} object.
      */
     public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType) {
-        this(name, ioType, graphType, extension, headerType, new HashSet<String>());
+        this(name, ioType, graphType, extension, headerType, new HashSet<>());
     }
 
     /**
@@ -70,9 +71,7 @@ public class SerializationFormat {
         this.headerType = headerType;
         // Convert all to lowercase
         this.synonyms = new HashSet<>();
-        for (String synonym : synonyms) {
-            this.synonyms.add(synonym.toLowerCase());
-        }
+        this.synonyms.addAll(synonyms.stream().map(String::toLowerCase).collect(Collectors.toList()));
     }
 
     /**

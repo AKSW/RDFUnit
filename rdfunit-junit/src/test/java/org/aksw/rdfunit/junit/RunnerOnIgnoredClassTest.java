@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class RunnerOnIgnoredClassTest {

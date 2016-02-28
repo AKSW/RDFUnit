@@ -37,7 +37,7 @@ public class PropertyValuePairSet {
         PropertyValuePairSetBuilder builder = PropertyValuePairSet.builder();
         resource.listProperties().toList().stream()
                 .map(smt -> PropertyValuePair.create(smt.getPredicate(), smt.getObject()))
-                .forEach(s -> builder.annotation(s));
+                .forEach(builder::annotation);
 
         return builder.build();
     }

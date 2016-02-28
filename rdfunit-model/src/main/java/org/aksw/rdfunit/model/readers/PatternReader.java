@@ -11,6 +11,7 @@ import org.apache.jena.vocabulary.DCTerms;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -83,17 +84,15 @@ public final class PatternReader implements ElementReader<Pattern> {
         }
 
         //parameters
-        Collection<PatternParameter> patternParameters = new ArrayList<>();
-        for (Statement smt : resource.listProperties(RDFUNITv.parameter).toList()) {
-            patternParameters.add(PatternParameterReader.create().read(smt.getResource()));
-        }
+        Collection<PatternParameter> patternParameters = resource.listProperties(RDFUNITv.parameter).toList().stream()
+                .map(smt -> PatternParameterReader.create().read(smt.getResource()))
+                .collect(Collectors.toCollection(ArrayList::new));
         patternBuilder.setParameters(patternParameters);
 
         //annotations
-        Collection<ResultAnnotation> patternAnnotations = new ArrayList<>();
-        for (Statement smt : resource.listProperties(RDFUNITv.resultAnnotation).toList()) {
-            patternAnnotations.add(ResultAnnotationReader.create().read(smt.getResource()));
-        }
+        Collection<ResultAnnotation> patternAnnotations = resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
+                .map(smt -> ResultAnnotationReader.create().read(smt.getResource()))
+                .collect(Collectors.toList());
         patternBuilder.setAnnotations(patternAnnotations);
 
         return patternBuilder.build();

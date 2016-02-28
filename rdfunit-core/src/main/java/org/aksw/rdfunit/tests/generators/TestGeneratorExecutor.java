@@ -125,9 +125,7 @@ public class TestGeneratorExecutor {
         }
 
         /*notify start of testing */
-        for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
-            monitor.generationFinished();
-        }
+        progressMonitors.forEach(TestGeneratorExecutorMonitor::generationFinished);
 
         return new TestSuite(allTests);
     }

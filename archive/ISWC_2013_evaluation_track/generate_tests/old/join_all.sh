@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 EP="de.dbpedia.org.tex el.dbpedia.org.tex es.dbpedia.org.tex fr.dbpedia.org.tex it.dbpedia.org.tex ja.dbpedia.org.tex live.dbpedia.org.tex live.nl.dbpedia.org.tex nl.dbpedia.org.tex pt.dbpedia.org.tex"
 echo -n "" > functional.tex

@@ -6,9 +6,9 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Reader a set of Patterns
@@ -47,11 +47,9 @@ public final class BatchPatternReader {
      * @return a {@link java.util.Collection} object.
      */
     public Collection<Pattern> getPatternsFromResourceList(List<Resource> resources) {
-        Collection<Pattern> patterns = new ArrayList<>();
-        for (Resource resource: resources) {
-            patterns.add(PatternReader.create().read(resource));
-        }
+        return resources.stream()
+                .map(resource -> PatternReader.create().read(resource))
+                .collect(Collectors.toList());
 
-        return patterns;
     }
 }

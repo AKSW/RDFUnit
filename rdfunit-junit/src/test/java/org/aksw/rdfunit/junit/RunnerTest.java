@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.junit;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
@@ -92,12 +91,8 @@ public class RunnerTest {
 
     private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
         return FluentIterable.from(mockRunListener.getFailures())
-                .filter(new Predicate<Failure>() {
-
-                    @Override
-                    public boolean apply(Failure failure) {
-                        return failure.getDescription().getDisplayName().contains(containedInDescription);
-                    }
+                .filter(failure -> {
+                    return failure.getDescription().getDisplayName().contains(containedInDescription);
                 })
                 .first().orNull();
     }
@@ -110,11 +105,8 @@ public class RunnerTest {
     @Test
     public void testInputNameValueIsUsed() {
         int size = FluentIterable.from(mockRunListener.getIgnored())
-                .filter(new Predicate<Description>() {
-                    @Override
-                    public boolean apply(Description input) {
-                        return input.getDisplayName().contains("inputs name");
-                    }
+                .filter(input -> {
+                    return input.getDisplayName().contains("inputs name");
                 }).size();
         assertThat(size).isGreaterThan(0);
     }

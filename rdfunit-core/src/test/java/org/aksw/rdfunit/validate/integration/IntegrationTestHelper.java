@@ -18,7 +18,7 @@ import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
 import org.aksw.rdfunit.tests.generators.TestGeneratorTCInstantiator;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.aksw.rdfunit.io.reader.RdfReaderFactory.createResourceReader;
 import static org.aksw.rdfunit.sources.SchemaSourceFactory.createSchemaSourceSimple;
@@ -73,7 +73,7 @@ public class IntegrationTestHelper {
                 .setImMemSingle()
                 .setPrefixUri("test", testSource)
                 .setInMemReader(new RdfModelReader(RdfReaderFactory.createResourceReader(testSource).read()))
-                .setReferenceSchemata(Arrays.asList(schemaSource))
+                .setReferenceSchemata(Collections.singletonList(schemaSource))
                 .build();
 
         // Test all execution types

@@ -37,7 +37,7 @@ public final class BatchShapeReader {
         model.listObjectsOfProperty(SHACL.valueShape).toSet().stream() // implicit shapes (through sh:valueShape)
                 .filter(RDFNode::isResource)
                 .map(RDFNode::asResource)
-                .forEach(r -> shapeResources.add(r));
+                .forEach(shapeResources::add);
 
         shapeResources.parallelStream()
                 .forEach(resource -> shapes.add(ShapeReader.create(templateRegistry).read(resource)));

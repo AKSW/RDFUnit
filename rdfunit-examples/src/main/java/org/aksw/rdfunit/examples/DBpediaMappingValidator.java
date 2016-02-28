@@ -7,7 +7,6 @@ import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.services.PrefixNSService;
-import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.utils.TestUtils;
@@ -22,6 +21,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Does validation of the DBpedia mappings
@@ -62,14 +62,15 @@ public class DBpediaMappingValidator {
         // we add the ontology
         allReaders.add(new RdfDereferenceReader(dbpediaOntology));
         // add all the mapping languages
-        for (String lang : languages) {
-            allReaders.add(new RdfDereferenceReader(getRMLlink(lang)));
-        }
+        allReaders.addAll(
+                languages.stream()
+                        .map(lang -> new RdfDereferenceReader(getRMLlink(lang)))
+                        .collect(Collectors.toList()));
         return new RdfMultipleReader(allReaders);
     }
 
     private TestSource getMappingSource() {
-        return TestSourceFactory.createDumpTestSource("dbp-mappings", "http://mappings.dbpedia.org", getRMLReader(), new ArrayList<SchemaSource>());
+        return TestSourceFactory.createDumpTestSource("dbp-mappings", "http://mappings.dbpedia.org", getRMLReader(), new ArrayList<>());
 
     }
 

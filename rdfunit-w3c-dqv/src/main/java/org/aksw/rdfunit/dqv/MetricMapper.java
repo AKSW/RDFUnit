@@ -44,9 +44,7 @@ public class MetricMapper {
         model.listStatements().toList().stream()
                 .filter(smt -> smt.getPredicate().equals(RDFUNITv.metric))
                 .filter(smt -> smt.getObject().isResource())
-                .forEach(smt -> {
-                    builder.put(smt.getSubject().getURI(), smt.getObject().asResource().getURI());
-                });
+                .forEach(smt -> builder.put(smt.getSubject().getURI(), smt.getObject().asResource().getURI()));
 
         return new MetricMapper(builder.build());
     }

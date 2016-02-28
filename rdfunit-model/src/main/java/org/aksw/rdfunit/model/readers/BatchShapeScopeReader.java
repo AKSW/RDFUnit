@@ -11,7 +11,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.vocabulary.RDF;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -130,7 +130,7 @@ public final class BatchShapeScopeReader {
     }
 
     private Set<ShapeScope> collectValueShapeScopes(Resource resource){
-        return collectValueShapeScopes(resource, Arrays.asList());
+        return collectValueShapeScopes(resource, Collections.emptyList());
     }
 
     private Set<ShapeScope> collectValueShapeScopes(Resource resource, List<Resource> propertyChain){
@@ -142,7 +142,7 @@ public final class BatchShapeScopeReader {
                     Resource property = r.getPropertyResourceValue(SHACL.predicate);
                     getParentShapeResources(r)
                             .forEach(shape -> {
-                                ImmutableList<Resource> propChainNew = new ImmutableList.Builder().add(property).addAll(propertyChain).build();
+                                ImmutableList<Resource> propChainNew = new ImmutableList.Builder<Resource>().add(property).addAll(propertyChain).build();
                                 collectExplicitScopes(shape).forEach(scope ->
                                         scopes.add(ShapeScopeValueShape.create(scope, propChainNew)));
 

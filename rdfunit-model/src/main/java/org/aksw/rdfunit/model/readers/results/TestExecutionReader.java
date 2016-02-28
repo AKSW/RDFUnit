@@ -169,6 +169,8 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
                 typeToSearch = SHACL.ValidationResult;
                 reader = ShaclSimpleTestCaseResultReader.create();
                 break;
+            default:
+                throw new IllegalArgumentException("unsupported execution type: " + executionType.toString());
         }
         checkNotNull(typeToSearch);
         checkNotNull(reader);

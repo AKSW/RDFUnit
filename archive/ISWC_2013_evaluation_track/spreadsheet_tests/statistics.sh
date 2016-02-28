@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 cat results.tsv | sed 's/{/0/g' | cut -f 1-2 | sort -u | grep -v "^#" | sed 's/\t/ /g'| while read LINE;
 do

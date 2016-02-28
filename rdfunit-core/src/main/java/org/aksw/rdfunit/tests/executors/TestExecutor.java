@@ -155,9 +155,7 @@ public abstract class TestExecutor {
         } // End of TC execution for loop
 
         /*notify end of testing */
-        for (TestExecutorMonitor monitor : progressMonitors) {
-            monitor.testingFinished();
-        }
+        progressMonitors.forEach(TestExecutorMonitor::testingFinished);
 
         return success;
     }

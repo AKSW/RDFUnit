@@ -12,6 +12,7 @@ import org.apache.jena.vocabulary.DCTerms;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -88,14 +89,14 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
         }
 
         //references
-        for (Statement smt : resource.listProperties(RDFUNITv.references).toList()) {
-            referencesLst.add(smt.getObject().asResource().getURI());
-        }
+        referencesLst.addAll(resource.listProperties(RDFUNITv.references).toList().stream()
+                .map(smt -> smt.getObject().asResource().getURI())
+                .collect(Collectors.toList()));
 
         //annotations
-        for (Statement smt : resource.listProperties(RDFUNITv.resultAnnotation).toList()) {
-            testAnnotations.add(ResultAnnotationReader.create().read(smt.getResource()));
-        }
+        testAnnotations.addAll(resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
+                .map(smt -> ResultAnnotationReader.create().read(smt.getResource()))
+                .collect(Collectors.toList()));
 
 
         return new TestCaseAnnotation(

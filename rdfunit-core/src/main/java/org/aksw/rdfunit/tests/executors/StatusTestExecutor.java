@@ -39,7 +39,7 @@ public class StatusTestExecutor extends TestExecutor {
         TestCaseResultStatus status = TestCaseResultStatus.Error;
 
 
-        try (QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase));) {
+        try (QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase))) {
             boolean fail = qe.execAsk();
 
             if (fail) {

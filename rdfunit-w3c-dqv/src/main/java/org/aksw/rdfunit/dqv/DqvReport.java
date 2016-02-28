@@ -38,7 +38,7 @@ public class DqvReport {
                 // get source constraints or use undefined
                 .map(r -> getSourceConstraintFromResult(r).orElse(undefinedMetric))
                 // map to metrics or use unclassified metric
-                .map(c -> getMetricFromSourceConstraint(c))
+                .map(this::getMetricFromSourceConstraint)
                 // group same metrics and count
                 .collect( Collectors.groupingBy( c -> c, Collectors.counting() ) )
                 .entrySet().stream()

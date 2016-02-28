@@ -17,8 +17,8 @@ import org.aksw.rdfunit.webdemo.utils.SchemaOption;
 import org.aksw.rdfunit.webdemo.utils.WorkflowUtils;
 import org.apache.jena.rdf.model.Model;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Description
@@ -326,7 +326,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                 try {
                     String oficialFormat = FormatService.getInputFormat(format).getName();
                     SchemaSource source = SchemaSourceFactory.createSchemaSourceFromText("http://rdfunit.aksw.org/CustomConstraint#", text, oficialFormat);
-                    configuration.setSchemata(Arrays.asList(source));
+                    configuration.setSchemata(Collections.singletonList(source));
                 } catch (NullPointerException e) {
                     this.setMessage("Unknown error, try again", true);
                     return false;

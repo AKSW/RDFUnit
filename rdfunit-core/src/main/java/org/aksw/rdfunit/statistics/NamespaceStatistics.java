@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Provides statistics on the namespaces used in a dataset
@@ -87,9 +88,9 @@ public final class NamespaceStatistics {
 
         for (DatasetStatistics dt : datasetStatistics) {
 
-            for (String n : dt.getStatisticsMap(qef).keySet()) {
-                namespaces.add(getNamespaceFromURI(n));
-            }
+            namespaces.addAll(dt.getStatisticsMap(qef).keySet().stream()
+                    .map(this::getNamespaceFromURI)
+                    .collect(Collectors.toList()));
 
         }
 

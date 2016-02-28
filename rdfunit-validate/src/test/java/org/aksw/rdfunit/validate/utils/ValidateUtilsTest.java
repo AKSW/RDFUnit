@@ -10,7 +10,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +45,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getEndpointURI(), "http://dbpedia.org/sparql");
         assertNull(configuration.getCustomDereferenceURI());
         assertTrue(configuration.getTestSource() instanceof EndpointTestSource);
-        assertEquals(configuration.getEndpointGraphs(), Arrays.asList("http://dbpedia.org"));
+        assertEquals(configuration.getEndpointGraphs(), Collections.singletonList("http://dbpedia.org"));
 
         // get schemas
         assertEquals(configuration.getAllSchemata().size(), 3); //2 schema + 1 enriched
@@ -65,13 +65,13 @@ public class ValidateUtilsTest {
 
         // Limit / pagination / TTL / Delay
         EndpointTestSource endpointTestSource = (EndpointTestSource) configuration.getTestSource();
-        assertEquals(configuration.getEndpointQueryCacheTTL(), 10l * 60l * 1000l);
+        assertEquals(configuration.getEndpointQueryCacheTTL(), 10L * 60L * 1000L);
         assertEquals(configuration.getEndpointQueryCacheTTL(), endpointTestSource.getCacheTTL());
-        assertEquals(configuration.getEndpointQueryDelayMS(), 10l);
+        assertEquals(configuration.getEndpointQueryDelayMS(), 10L);
         assertEquals(configuration.getEndpointQueryDelayMS(), endpointTestSource.getQueryDelay());
-        assertEquals(configuration.getEndpointQueryPagination(), 10l);
+        assertEquals(configuration.getEndpointQueryPagination(), 10L);
         assertEquals(configuration.getEndpointQueryPagination(), endpointTestSource.getPagination());
-        assertEquals(configuration.getEndpointQueryLimit(), 10l);
+        assertEquals(configuration.getEndpointQueryLimit(), 10L);
         assertEquals(configuration.getEndpointQueryLimit(), endpointTestSource.getQueryLimit());
 
 

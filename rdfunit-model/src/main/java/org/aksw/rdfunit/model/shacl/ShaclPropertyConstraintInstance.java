@@ -38,7 +38,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     @Override
     public Set<RDFNode> getFacetValues() {
        Argument argument =  bindings.keySet().stream().filter(arg -> arg.getPredicate().equals(getFacetProperty())).findFirst().get();
-        return new HashSet<>(Arrays.asList(bindings.get(argument)));
+        return new HashSet<>(Collections.singletonList(bindings.get(argument)));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
             if (value.isResource()) {
                 Resource r = value.asResource();
                 if (r.isAnon() && r.canAs(RDFList.class)) {
-                    return getListItems(r).stream().map(n -> formatRdfListValue(n)).collect(Collectors.joining("  "));
+                    return getListItems(r).stream().map(this::formatRdfListValue).collect(Collectors.joining("  "));
                 } else {
                     return asFullTurtleUri(r);
                 }
@@ -145,7 +145,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 null,
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
-                Arrays.asList(bindings.get(CoreArguments.predicate).asResource().getURI()),
+                Collections.singletonList(bindings.get(CoreArguments.predicate).asResource().getURI()),
                 generateMessage(),
                 RLOGLevel.resolve(bindings.get(CoreArguments.severity).asResource().getURI()),
                 createResultAnnotations()
