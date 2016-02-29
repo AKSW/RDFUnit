@@ -59,7 +59,7 @@ public class RdfunitDqv {
         return cliOptions;
     }
 
-    public static CommandLine parseArguments(String[] args) throws ParseException {
+    private static CommandLine parseArguments(String[] args) throws ParseException {
         CommandLineParser cliParser = new DefaultParser();
         return cliParser.parse(cliOptions, args);
     }

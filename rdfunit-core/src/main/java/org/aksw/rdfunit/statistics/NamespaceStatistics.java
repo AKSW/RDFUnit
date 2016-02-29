@@ -103,16 +103,16 @@ public final class NamespaceStatistics {
 
         for (String namespace : namespaces) {
 
-            SchemaSource source = SchemaService.getSourceFromUri(namespace);
+            Optional<SchemaSource> source = SchemaService.getSourceFromUri(namespace);
 
             // If not null, get it from SchemaService
-            if (source != null) {
+            if (source.isPresent()) {
 
                 // Skip some schemas that don't add anything
-                if (excludePrefixes.contains(source.getPrefix())) {
+                if (excludePrefixes.contains(source.get().getPrefix())) {
                     continue;
                 }
-                sources.add(source);
+                sources.add(source.get());
             } else {
                 if (skipUnknownNamespaces) {
                     LOGGER.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);

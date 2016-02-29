@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -33,7 +34,7 @@ import java.util.Set;
 final class SchemaSelectorComponent extends VerticalLayout {
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaSelectorComponent.class);
 
-    final private TokenField tokenField;
+    private final TokenField tokenField;
 
     /**
      * <p>Constructor for SchemaSelectorComponent.</p>
@@ -41,7 +42,6 @@ final class SchemaSelectorComponent extends VerticalLayout {
     public SchemaSelectorComponent() {
 
         VerticalLayout p = new VerticalLayout();
-        //p.getContent().setStyleName("black");
         addComponent(p);
 
         //Label
@@ -57,7 +57,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
         tokenField = new TokenField(lo) {
 
             // dialog if not in 'address book', otherwise just add
-            protected void onTokenInput(Object tokenId) {
+            @Override protected void onTokenInput(Object tokenId) {
                 Set<Object> set = (Set<Object>) getValue();
                 SchemaSource s = null;
                 if (tokenId != null) {
@@ -65,7 +65,10 @@ final class SchemaSelectorComponent extends VerticalLayout {
                         s = SchemaSourceFactory.copySchemaSource((SchemaSource) tokenId);
                     }
                     if (tokenId instanceof String) {
-                        s = SchemaSourceFactory.copySchemaSource(SchemaService.getSourceFromPrefix(RDFUnitDemoSession.getBaseDir(), (String) tokenId));
+                        Optional<SchemaSource> src = SchemaService.getSourceFromPrefix(RDFUnitDemoSession.getBaseDir(), (String) tokenId);
+                        if (src.isPresent()) {
+                            s = SchemaSourceFactory.copySchemaSource(src.get());
+                        }
                     }
                 }
 
@@ -88,18 +91,18 @@ final class SchemaSelectorComponent extends VerticalLayout {
             }
 
             // show confirm dialog
-            protected void onTokenClick(final Object tokenId) {
+            @Override protected void onTokenClick(final Object tokenId) {
                 UI.getCurrent().addWindow(
                         new RemoveWindow((SchemaSource) tokenId, this));
             }
 
             // just delete, no confirm
-            protected void onTokenDelete(Object tokenId) {
+            @Override protected void onTokenDelete(Object tokenId) {
                 this.removeToken(tokenId);
             }
 
             // custom caption + style if not in 'address book'
-            protected void configureTokenButton(Object tokenId,
+            @Override protected void configureTokenButton(Object tokenId,
                                                 Button button) {
                 super.configureTokenButton(tokenId, button);
                 // custom caption
@@ -179,7 +182,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
 
                 private static final long serialVersionUID = -1198191849568844582L;
 
-                public void buttonClick(ClickEvent event) {
+                @Override public void buttonClick(ClickEvent event) {
                     close();
                 }
             });
@@ -191,7 +194,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
 
                         private static final long serialVersionUID = 1L;
 
-                        public void buttonClick(ClickEvent event) {
+                        @Override public void buttonClick(ClickEvent event) {
                             prefix = prefixField.getValue();
                             uri = uriField.getValue();
                             if (!(prefix == null || uri == null || prefix.isEmpty() || uri.isEmpty())) {
@@ -221,10 +224,9 @@ final class SchemaSelectorComponent extends VerticalLayout {
         try {
             sources = SchemaService.getSourceListAll(false, null);
         } catch (UndefinedSchemaException e) {
-            LOGGER.error("Undefined schema");
+            LOGGER.error("Undefined schema", e);
             sources = new ArrayList<>();
         }
-        //Collections.sort(sources);
 
         sources.forEach(container::addBean);
         return container;
@@ -263,13 +265,12 @@ final class SchemaSelectorComponent extends VerticalLayout {
             HorizontalLayout hz = new HorizontalLayout();
             l.addComponent(hz);
             hz.setSpacing(true);
-            //hz.setWidth("100%");
 
             Button cancel = new Button("Cancel", new Button.ClickListener() {
 
                 private static final long serialVersionUID = 7675170261217815011L;
 
-                public void buttonClick(ClickEvent event) {
+                @Override public void buttonClick(ClickEvent event) {
                     RemoveWindow.this.close();
                 }
             });
@@ -280,7 +281,7 @@ final class SchemaSelectorComponent extends VerticalLayout {
 
                 private static final long serialVersionUID = 5004855711589989635L;
 
-                public void buttonClick(ClickEvent event) {
+                @Override public void buttonClick(ClickEvent event) {
                     f.removeToken(s);
                     RemoveWindow.this.close();
                 }

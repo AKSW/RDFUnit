@@ -5,10 +5,7 @@ import com.google.common.collect.HashBiMap;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Holds all the schema definitions
@@ -22,12 +19,12 @@ public final class SchemaService {
     /**
      * Creates a Bi-Directional map between prefix & namespace
      */
-    final private static BiMap<String, String> schemata = HashBiMap.create();
+    private static final  BiMap<String, String> schemata = HashBiMap.create();
 
     /**
      * if namespace is different from the ontology uri, we keep it in this map
      */
-    final private static Map<String,String> definedBy = new HashMap<>();
+    private static final Map<String,String> definedBy = new HashMap<>();
 
     private SchemaService() {
     }
@@ -67,7 +64,7 @@ public final class SchemaService {
      * @param uri a {@link java.lang.String} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
-    public static SchemaSource getSourceFromUri(String uri) {
+    public static Optional<SchemaSource> getSourceFromUri(String uri) {
         return getSourceFromUri(null, uri);
     }
 
@@ -78,10 +75,10 @@ public final class SchemaService {
      * @param uri a {@link java.lang.String} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
-    public static SchemaSource getSourceFromUri(String baseFolder, String uri) {
+    public static Optional<SchemaSource> getSourceFromUri(String baseFolder, String uri) {
         String prefix = schemata.inverse().get(uri);
         if (prefix == null) {
-            return null;
+            return Optional.empty();
         }
 
         return getSourceFromPrefix(baseFolder, prefix);
@@ -93,7 +90,7 @@ public final class SchemaService {
      * @param prefix a {@link java.lang.String} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
-    public static SchemaSource getSourceFromPrefix(String prefix) {
+    public static Optional<SchemaSource> getSourceFromPrefix(String prefix) {
         return getSourceFromPrefix(null, prefix);
     }
 
@@ -104,33 +101,47 @@ public final class SchemaService {
      * @param prefix a {@link java.lang.String} object.
      * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
      */
-    public static SchemaSource getSourceFromPrefix(String baseFolder, String prefix) {
+    public static Optional<SchemaSource> getSourceFromPrefix(String baseFolder, String prefix) {
         String namespace = schemata.get(prefix);
         if (namespace == null) {
-            // If not a prefix try to dereference it
-            if (prefix.contains("/") || prefix.contains("\\")) {
-                return SchemaSourceFactory.createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(prefix), prefix);
-            } else {
-                return null;
-            }
+            return getDereferenceSchemaSource(prefix);
         }
 
         String isDefinedBy = definedBy.get(namespace);
-
-
         if (isDefinedBy != null && !isDefinedBy.isEmpty()) {
-            if (baseFolder != null) {
-                return SchemaSourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace, isDefinedBy);
-            } else {
-                return SchemaSourceFactory.createSchemaSourceDereference(prefix, namespace, isDefinedBy);
-            }
+            return getSchemaSourceWithDefinedBy(baseFolder, prefix, namespace, isDefinedBy);
         } else {
-            if (baseFolder != null) {
-                return SchemaSourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace);
-            } else {
-                return SchemaSourceFactory.createSchemaSourceDereference(prefix, namespace);
-            }
+            return getSchemaSourceFromNs(baseFolder, prefix, namespace);
         }
+    }
+
+    private static Optional<SchemaSource> getSchemaSourceFromNs(String baseFolder, String prefix, String namespace) {
+        if (baseFolder != null) {
+            return Optional.of(SchemaSourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace));
+        } else {
+            return Optional.of(SchemaSourceFactory.createSchemaSourceDereference(prefix, namespace));
+        }
+    }
+
+    private static Optional<SchemaSource> getSchemaSourceWithDefinedBy(String baseFolder, String prefix, String namespace, String isDefinedBy) {
+        if (baseFolder != null) {
+            return Optional.of(SchemaSourceFactory.createSchemaSourceFromCache(baseFolder, prefix, namespace, isDefinedBy));
+        } else {
+            return Optional.of(SchemaSourceFactory.createSchemaSourceDereference(prefix, namespace, isDefinedBy));
+        }
+    }
+
+    private static Optional<SchemaSource> getDereferenceSchemaSource(String prefix) {
+        // If not a prefix try to dereference it
+        if (prefix.contains("/") || prefix.contains("\\")) {
+            return  Optional.of(
+                        SchemaSourceFactory
+                            .createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(prefix), prefix));
+        }
+
+
+        return Optional.empty();
+
     }
 
     /**
@@ -144,9 +155,9 @@ public final class SchemaService {
     public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixes) throws UndefinedSchemaException {
         Collection<SchemaSource> sources = new ArrayList<>();
         for (String id : prefixes) {
-            SchemaSource src = getSourceFromPrefix(baseFolder, id.trim());
-            if (src != null) {
-                sources.add(src);
+            Optional<SchemaSource> src = getSourceFromPrefix(baseFolder, id.trim());
+            if (src.isPresent()) {
+                sources.add(src.get());
             } else {
                 throw new UndefinedSchemaException(id);
             }

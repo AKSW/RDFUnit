@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URI;
 
 /**
@@ -9,6 +12,8 @@ import java.net.URI;
  * @since 12/5/15 4:16 AM
  */
 public final class UriToPathUtils {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UriToPathUtils.class);
+
 
     private UriToPathUtils(){}
 
@@ -26,7 +31,7 @@ public final class UriToPathUtils {
             String path = tmp.getPath();
             retVal = host + path + (path.endsWith("/") ? "" : "/");
         } catch (Exception e) {
-            // TODO handle exception
+            LOGGER.debug("Cannot create cache folder for IRI {}", uri, e);
         }
 
         return retVal;

@@ -116,10 +116,6 @@ public final class RDFUnitUtils {
      * @return a T object.
      */
     public static <T> T getFirstItemInCollection(Collection<T> collection) {
-        //noinspection LoopStatementThatDoesntLoop
-        for (T item : collection) {
-            return item;
-        }
-        return null;
+        return collection.stream().findFirst().orElseGet(null);
     }
 }

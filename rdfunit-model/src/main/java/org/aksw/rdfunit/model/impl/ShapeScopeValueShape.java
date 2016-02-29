@@ -15,22 +15,13 @@ import java.util.stream.Collectors;
 
 @ToString(exclude = "generatePattern")
 @EqualsAndHashCode
-public class ShapeScopeValueShape implements ShapeScope{
+public class
+ShapeScopeValueShape implements ShapeScope{
 
     @Getter private final ShapeScopeType scopeType = ShapeScopeType.ValueShapeScope;
     private final ImmutableList<Resource> propertyChain;
     private final ShapeScope outerScope;
     private final Function<ShapeScopeValueShape, String> generatePattern;
-
-    @Override
-    public Optional<String> getUri() {
-        return outerScope.getUri();
-    }
-
-    @Override
-    public String getPattern() {
-        return generatePattern.apply(this);
-    }
 
     private ShapeScopeValueShape(ShapeScope outerScope, List<Resource> propertyChain, Function<ShapeScopeValueShape, String> generatePattern) {
         this.outerScope = outerScope;
@@ -44,25 +35,40 @@ public class ShapeScopeValueShape implements ShapeScope{
                 return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::classScopePattern);
             case NodeScope:
                 return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::nodeScopePattern);
-           /* case AllObjectsScope:
+            case AllObjectsScope:
                 return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::allObjectsScopePattern);
             case AllSubjectsScope:
                 return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::allSubjectsScopePattern);
             case InversePropertyScope:
                 return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::inversePropertyScopePattern);
             case PropertyScope:
-                return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::propertyScopePattern); */
+                return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::propertyScopePattern);
             case ValueShapeScope:
                 if (outerScope instanceof ShapeScopeValueShape) {
-                    ShapeScopeValueShape transformScope = (ShapeScopeValueShape) outerScope;
-                    ImmutableList.Builder<Resource> builder = new ImmutableList.Builder<>();
-                    builder.addAll(propertyChain);
-                    builder.addAll(transformScope.propertyChain);
-                    return create(transformScope.outerScope, builder.build());
+                    return transformScope((ShapeScopeValueShape) outerScope, propertyChain);
                 }
+            default:
+                throw new IllegalArgumentException("Unsupported scope in sh:valueShape");
         }
+    }
 
-        throw new IllegalArgumentException("Something wrong with the input");
+    @Override
+    public Optional<String> getUri() {
+        return outerScope.getUri();
+    }
+
+    @Override
+    public String getPattern() {
+        return generatePattern.apply(this);
+    }
+
+
+    private static ShapeScope transformScope(ShapeScopeValueShape outerScope, List<Resource> propertyChain) {
+        ShapeScopeValueShape transformScope = outerScope;
+        ImmutableList.Builder<Resource> builder = new ImmutableList.Builder<>();
+        builder.addAll(propertyChain);
+        builder.addAll(transformScope.propertyChain);
+        return create(transformScope.outerScope, builder.build());
     }
 
     private static String classScopePattern(ShapeScopeValueShape scope) {
@@ -77,24 +83,26 @@ public class ShapeScopeValueShape implements ShapeScope{
     }
 
     private static String nodeScopePattern(ShapeScopeValueShape scope) {
-        return " <" + scope.getUri().get() + "> " + writePropertyChain(scope.propertyChain) + " ?this) . ";
+        return " <" + scope.getUri().get() + "> " + writePropertyChain(scope.propertyChain) + " ?this . ";
     }
-   /*
+
     private static String inversePropertyScopePattern(ShapeScopeValueShape scope) {
-        return " [] <" + uri.get() + "> ?this .";
+        return " [] (^<" + scope.getUri().get() + ">)/" + writePropertyChain(scope.propertyChain) + " ?this .";
     }
 
     private static String propertyScopePattern(ShapeScopeValueShape scope) {
-        return "?this <" + uri.get() + "> [] .";
+        return " [] <" + scope.getUri().get() + ">/" + writePropertyChain(scope.propertyChain) + " ?this .";
     }
 
     private static String allObjectsScopePattern(ShapeScopeValueShape scope) {
-        return "[] $shaclAnyPredicate ?this .";
+        return " [] ^$shaclAnyPredicate <" + scope.getUri().get() + "> ; " +
+                writePropertyChain(scope.propertyChain) + "  ?this . ";
     }
 
     private static String allSubjectsScopePattern(ShapeScopeValueShape scope) {
-        return "?this $shaclAnyPredicate [] .";
-    } */
+        return " [] $shaclAnyPredicate <" + scope.getUri().get() + "> ; " +
+                writePropertyChain(scope.propertyChain) + "  ?this . ";
+    }
 
 
 }
