@@ -41,7 +41,6 @@ public class ArgumentWriterTest {
     @Parameterized.Parameter
     public Resource resource;
 
-    private Model model;
 
     @Test
     public void testRead() {

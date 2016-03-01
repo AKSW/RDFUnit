@@ -46,10 +46,6 @@ public class CoreArguments {
         return createSimpleArgument(property, property.getLocalName(), ValueKind.IRI);
     }
 
-    private static Argument createSimpleArgument(Property property, ValueKind valueKind) {
-        return createSimpleArgument(property, property.getLocalName(), valueKind);
-    }
-
     private static Argument createSimpleArgument(Property property, String comment, ValueKind valueKind) {
         return createSimpleArgument(property, comment, valueKind, false);
     }

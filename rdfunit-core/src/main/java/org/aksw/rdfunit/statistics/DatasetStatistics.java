@@ -37,11 +37,6 @@ public abstract class DatasetStatistics {
 
     }
 
-    /**
-     * Instantiates a new Dataset statistics.
-     */
-    public DatasetStatistics() {
-    }
 
     private Map<String, Long> getStats(String sparqlQuery, QueryExecutionFactory qef) {
         Map<String, Long> stats = new HashMap<>();
