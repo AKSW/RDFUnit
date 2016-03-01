@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
 public class RdfFirstSuccessReaderTest {
 
     @Test
-    public void testEmptyRead() throws Exception {
+    public void testEmptyRead() {
         ArrayList<RdfReader> rdfReaders = new ArrayList<>();
 
         RdfFirstSuccessReader reader = new RdfFirstSuccessReader(rdfReaders);
@@ -29,7 +29,7 @@ public class RdfFirstSuccessReaderTest {
     }
 
     @Test
-    public void testExceptionRead() throws Exception {
+    public void testExceptionRead() {
         ArrayList<RdfReader> rdfReaders = new ArrayList<>();
         rdfReaders.add(new RdfStreamReader(""));
 
@@ -50,7 +50,7 @@ public class RdfFirstSuccessReaderTest {
 
 
     @Test
-    public void testNotExceptionRead() throws Exception {
+    public void testNotExceptionRead() {
         ArrayList<RdfReader> rdfReaders = new ArrayList<>();
         rdfReaders.add(new RdfStreamReader(""));
 
@@ -65,7 +65,7 @@ public class RdfFirstSuccessReaderTest {
     }
 
     @Test
-    public void testNotExceptionReadDataset() throws Exception {
+    public void testNotExceptionReadDataset() {
         ArrayList<RdfReader> rdfReaders = new ArrayList<>();
         rdfReaders.add(new RdfStreamReader(""));
 

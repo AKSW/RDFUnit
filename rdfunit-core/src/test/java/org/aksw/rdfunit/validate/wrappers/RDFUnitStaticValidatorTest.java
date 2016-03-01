@@ -21,7 +21,7 @@ import java.util.Collections;
 public class RDFUnitStaticValidatorTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         RDFUnitStaticValidator.initWrapper(
                 new RDFUnitTestSuiteGenerator.Builder()
                         .addLocalResource("empty", "/org/aksw/rdfunit/validate/data/empty.ttl")
@@ -30,7 +30,7 @@ public class RDFUnitStaticValidatorTest {
     }
 
     @Parameterized.Parameters
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() {
         Collection<Object[]> parameters = new ArrayList<>();
         for (TestCaseExecutionType t: TestCaseExecutionType.values()) {
             parameters.add(new Object[] {t});

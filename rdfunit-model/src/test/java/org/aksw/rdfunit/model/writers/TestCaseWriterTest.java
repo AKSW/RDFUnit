@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestCaseWriterTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws RdfReaderException {
         // Needed to resolve the patterns
         RDFUnit rdfUnit = new RDFUnit();
         rdfUnit.init();
@@ -38,7 +38,7 @@ public class TestCaseWriterTest {
 
 
     @Parameterized.Parameters(name= "{index}: Model: {1} ")
-    public static Collection<Object[]> models() throws Exception {
+    public static Collection<Object[]> models() {
 
         Collection<Object[]> models = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class TestCaseWriterTest {
     public String label;
 
     @Test
-    public void testWrite() throws Exception {
+    public void testWrite() {
         Collection<TestCase> testCaseCollection = BatchTestCaseReader.create().getTestCasesFromModel(inputModel);
 
         Model modelWritten = ModelFactory.createDefaultModel();

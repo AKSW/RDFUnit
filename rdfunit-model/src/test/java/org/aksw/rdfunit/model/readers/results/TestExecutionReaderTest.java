@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.readers.results;
 
 import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
@@ -23,7 +24,7 @@ public class TestExecutionReaderTest {
 
 
     @Parameterized.Parameters(name= "{index}: Result Type: {1}")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() throws RdfReaderException {
 
         Model aggregated = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read()).read();
         Model status = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read()).read();
@@ -52,7 +53,7 @@ public class TestExecutionReaderTest {
 
 
     @Test
-    public void test() throws Exception {
+    public void test() {
 
         assertThat(inputModel.isEmpty()).isFalse();
         Model outputModel = ModelFactory.createDefaultModel();

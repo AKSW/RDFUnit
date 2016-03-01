@@ -24,7 +24,7 @@ public class RdfStreamReaderDatasetTest {
     private Dataset dataset;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Model defaultModel = ModelFactory.createDefaultModel();
         defaultModel.add(
                 ResourceFactory.createResource("http://rdfunit.aksw.org"),
@@ -45,7 +45,7 @@ public class RdfStreamReaderDatasetTest {
 
 
     @Parameterized.Parameters(name= "{index}: file: {0}")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() {
 
         String baseResDir = "/org/aksw/rdfunit/io/";
         return Arrays.asList(new Object[][] {

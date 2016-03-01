@@ -11,7 +11,6 @@ import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
@@ -29,16 +28,16 @@ public class IntegrationTestHelper {
     @Getter private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
 
     @Getter(lazy = true) private final static TestSuite shaclTestSuite = createTestSuiteWithShacl(resourcePrefix + "shacl/shacl.constraints.ttl");
-    @Getter(lazy = true) private final static SchemaSource shaclSchemaSource = SchemaSourceFactory.createSchemaSourceSimple(resourcePrefix + "shacl/shacl.constraints.ttl");
+    @Getter(lazy = true) private final static SchemaSource shaclSchemaSource = createSchemaSourceSimple(resourcePrefix + "shacl/shacl.constraints.ttl");
 
     @Getter(lazy = true) private final static TestSuite owlTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(new RDFUnit(), resourcePrefix + "owl/ontology.ttl");
-    @Getter(lazy = true) private final static SchemaSource owlSchemaSource = SchemaSourceFactory.createSchemaSourceSimple(resourcePrefix + "owl/ontology.ttl");
+    @Getter(lazy = true) private final static SchemaSource owlSchemaSource = createSchemaSourceSimple(resourcePrefix + "owl/ontology.ttl");
 
     @Getter(lazy = true) private final static TestSuite rsTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(new RDFUnit(), resourcePrefix + "rs/rs_constraints.ttl");
-    @Getter(lazy = true) private final static SchemaSource rsSchemaSource = SchemaSourceFactory.createSchemaSourceSimple(resourcePrefix + "rs/rs_constraints.ttl");
+    @Getter(lazy = true) private final static SchemaSource rsSchemaSource = createSchemaSourceSimple(resourcePrefix + "rs/rs_constraints.ttl");
 
     @Getter(lazy = true) private final static TestSuite dspTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(new RDFUnit(), resourcePrefix + "dsp/dsp_constraints.ttl");
-    @Getter(lazy = true) private final static SchemaSource dspSchemaSource = SchemaSourceFactory.createSchemaSourceSimple(resourcePrefix + "dsp/dsp_constraints.ttl");
+    @Getter(lazy = true) private final static SchemaSource dspSchemaSource = createSchemaSourceSimple(resourcePrefix + "dsp/dsp_constraints.ttl");
 
     public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {
         try {
@@ -47,7 +46,7 @@ public class IntegrationTestHelper {
             throw new RuntimeException(e);
         }
         RdfReader ontologyDSPReader = RdfReaderFactory.createResourceReader(schemaSource);
-        SchemaSource ontologyDSPSource = SchemaSourceFactory.createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
+        SchemaSource ontologyDSPSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
 
 
         return new TestSuite(

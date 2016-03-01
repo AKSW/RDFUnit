@@ -18,13 +18,13 @@ public class RdfStreamReaderTest {
     private Model model;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         model = ReaderTestUtils.createOneTripleModel();
     }
 
 
     @Parameterized.Parameters(name= "{index}: file: {0}")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() {
 
         String baseResDir = "/org/aksw/rdfunit/io/";
         return Arrays.asList(new Object[][] {

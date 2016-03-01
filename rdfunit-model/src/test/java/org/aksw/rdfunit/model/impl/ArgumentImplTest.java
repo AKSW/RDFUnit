@@ -27,13 +27,13 @@ public class ArgumentImplTest {
     private final Argument argDef = ArgumentImpl.builder().element(element).predicate(predicate).comment("").build();
 
     @Test
-    public void testGetElement() throws Exception {
+    public void testGetElement()  {
         assertThat(argDef.getElement())
                 .isEqualTo(element);
     }
 
     @Test
-    public void testGetComment() throws Exception {
+    public void testGetComment() {
         assertThat(argDef.getComment()).isEmpty();
 
         final String comment = "dog";
@@ -44,7 +44,7 @@ public class ArgumentImplTest {
     }
 
     @Test
-    public void testIsOptional() throws Exception {
+    public void testIsOptional()  {
 
         assertThat(argDef.isOptional())
                 .isFalse();
@@ -59,13 +59,13 @@ public class ArgumentImplTest {
     }
 
     @Test
-    public void testGetPredicate() throws Exception {
+    public void testGetPredicate() {
         assertThat(argDef.getPredicate())
                 .isEqualTo(predicate);
     }
 
     @Test
-    public void testGetValueType() throws Exception {
+    public void testGetValueType()  {
         assertThat(argDef.getValueType().isPresent()).isFalse();
 
         Resource valueType = XSD.xstring;
@@ -84,13 +84,13 @@ public class ArgumentImplTest {
     }
 
     @Test
-    public void testGetValueKind() throws Exception {
+    public void testGetValueKind() {
         assertThat(argDef.getValueKind().isPresent())
                 .isFalse();
     }
 
     @Test
-    public void testGetDefaultValue() throws Exception {
+    public void testGetDefaultValue() {
         assertThat(argDef.getDefaultValue().isPresent())
                 .isFalse();
 

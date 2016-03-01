@@ -29,7 +29,7 @@ public class AnnotationTemplateTest {
 
 
     @Test
-    public void testAddTemplateMin() throws Exception {
+    public void testAddTemplateMin() {
         AnnotationTemplate at = AnnotationTemplate.create();
 
         assertThat(at.existsInTemplate(sa1)).isFalse();
@@ -45,7 +45,7 @@ public class AnnotationTemplateTest {
     }
 
     @Test
-    public void testAddTemplateMax() throws Exception {
+    public void testAddTemplateMax() {
         AnnotationTemplate at = AnnotationTemplate.create();
 
         assertThat(at.existsInTemplate(sa1)).isFalse();
@@ -63,7 +63,7 @@ public class AnnotationTemplateTest {
     }
 
     @Test
-    public void testAddTemplateMinMax() throws Exception {
+    public void testAddTemplateMinMax() {
 
         AnnotationTemplate at = AnnotationTemplate.create();
 
@@ -81,7 +81,7 @@ public class AnnotationTemplateTest {
     }
 
     @Test
-    public void testGetPropertiesAsSet() throws Exception {
+    public void testGetPropertiesAsSet() {
 
         AnnotationTemplate at = AnnotationTemplate.create();
         at.addTemplateMinMax(RDF.type, 1,2);

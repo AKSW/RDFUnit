@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.readers.results.TestExecutionReader;
@@ -13,16 +14,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.tidy.Tidy;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -32,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RdfResultsWriterFactoryTest {
 
     @Parameterized.Parameters(name= "{index}: Result Type: {1}")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() throws RdfReaderException {
         //rdfunit-model/src/test/resources/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl
         Model aggregated = new RdfModelReader(RdfReaderFactory.createResourceOrFileOrDereferenceReader("../rdfunit-model/src/test/resources/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read()).read();
         Model status = new RdfModelReader(RdfReaderFactory.createResourceOrFileOrDereferenceReader("../rdfunit-model/src/test/resources/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read()).read();
@@ -58,7 +57,7 @@ public class RdfResultsWriterFactoryTest {
     public String inputName;
 
     @Test
-    public void testOutputWellFormed() throws Exception {
+    public void testOutputWellFormed() throws RdfWriterException, IOException, SAXException {
 
         assertThat(inputModel.isEmpty()).isFalse();
 
@@ -70,13 +69,13 @@ public class RdfResultsWriterFactoryTest {
         }
     }
 
-    private String getHtmlForExecution(TestExecution testExecution) throws Exception {
+    private String getHtmlForExecution(TestExecution testExecution) throws RdfWriterException, UnsupportedEncodingException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         RdfResultsWriterFactory.createHtmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
     }
 
-    private String getXmlForExecution(TestExecution testExecution) throws Exception {
+    private String getXmlForExecution(TestExecution testExecution) throws RdfWriterException, UnsupportedEncodingException {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         RdfResultsWriterFactory.createJunitXmlWriter(testExecution, os).write(ModelFactory.createDefaultModel());
         return os.toString("UTF8");
@@ -90,7 +89,7 @@ public class RdfResultsWriterFactoryTest {
         assertThat(tidy.getParseWarnings()).isZero();
     }
 
-    private void validateXml(String xml) throws Exception {
+    private void validateXml(String xml) throws SAXException, IOException {
 
         String schemaFile = "/org/aksw/rdfunit/io/writer/junit-4.xsd";
         InputStream xsd = RdfResultsWriterFactoryTest.class.getResourceAsStream(schemaFile);

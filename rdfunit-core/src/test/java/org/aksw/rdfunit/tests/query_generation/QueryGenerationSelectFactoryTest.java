@@ -33,7 +33,7 @@ public class QueryGenerationSelectFactoryTest {
     }
 
     @Test
-    public void checkQuery() throws Exception {
+    public void checkQuery() {
 
         TestCase testCase = ManualTestCaseImpl.builder()
                 .element(ResourceFactory.createResource("http://example.com"))

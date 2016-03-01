@@ -27,7 +27,7 @@ public class DatasetStatisticsClassesCountTest extends DatasetStatisticsTest {
     }
 
     @Test
-    public void testGetStats() throws Exception {
+    public void testGetStats() {
 
         for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
             assertNotEquals(new Long(0), entry.getValue());

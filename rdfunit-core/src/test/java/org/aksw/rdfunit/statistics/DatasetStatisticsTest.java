@@ -3,6 +3,7 @@ package org.aksw.rdfunit.statistics;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.junit.Before;
 
@@ -15,7 +16,7 @@ public abstract class DatasetStatisticsTest {
     protected QueryExecutionFactory qef;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws RdfReaderException {
         RdfReader reader = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
         qef = new QueryExecutionFactoryModel(reader.read());
     }
@@ -33,7 +34,7 @@ public abstract class DatasetStatisticsTest {
 
     /*
     @Test
-    public void testGetPropertyStats() throws Exception {
+    public void testGetPropertyStats() {
         Map<String, Integer> pStats = datasetStatistics.getPropertyStats();
         Map<String, Integer> pStatsCounts = datasetStatisticsCounts.getPropertyStats();
 
@@ -54,7 +55,7 @@ public abstract class DatasetStatisticsTest {
     }
 
     @Test
-    public void testGetClassStats() throws Exception {
+    public void testGetClassStats() {
 
         Map<String, Integer> cStats = datasetStatistics.getClassStats();
         Map<String, Integer> cStatsCounts = datasetStatisticsCounts.getClassStats();
@@ -76,7 +77,7 @@ public abstract class DatasetStatisticsTest {
     }
 
     @Test
-    public void testGetAllNamespaces() throws Exception {
+    public void testGetAllNamespaces() {
         Collection<String> ns = datasetStatistics.getAllNamespacesOntology();
         Collection<String> nsCount = datasetStatisticsCounts.getAllNamespacesOntology();
 
@@ -86,7 +87,7 @@ public abstract class DatasetStatisticsTest {
     }
 
     @Test
-    public void testgetIdentifiedSchemata() throws Exception {
+    public void testgetIdentifiedSchemata() {
         //Collection<SchemaSource> schemata =  datasetStatistics.getIdentifiedSchemataOntology();
         //Collection<SchemaSource> schemataCount = datasetStatisticsCounts.getIdentifiedSchemataOntology();
 

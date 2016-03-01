@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.writers;
 
 import org.aksw.rdfunit.Resources;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.readers.BatchPatternReader;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PatternWriterTest {
 
     @Test
-    public void testWrite() throws Exception {
+    public void testWrite() throws RdfReaderException {
 
         Model inputModel = RdfReaderFactory.createResourceReader(Resources.PATTERNS).read();
 

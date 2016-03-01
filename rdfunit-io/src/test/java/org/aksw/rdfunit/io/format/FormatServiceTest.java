@@ -12,7 +12,7 @@ public class FormatServiceTest {
 
 
     @Test
-    public void testGetInputFormat() throws Exception {
+    public void testGetInputFormat() {
         // Turtle
         assertEquals(FormatService.getInputFormat("turtle"), SerialiazationFormatFactory.createTurtle());
         assertEquals(FormatService.getInputFormat("ttl"), SerialiazationFormatFactory.createTurtle());
@@ -35,7 +35,7 @@ public class FormatServiceTest {
     }
 
     @Test
-    public void testGetOutputFormat() throws Exception {
+    public void testGetOutputFormat() {
         // Turtle
         assertEquals(FormatService.getOutputFormat("turtle"), SerialiazationFormatFactory.createTurtle());
         assertEquals(FormatService.getOutputFormat("ttl"), SerialiazationFormatFactory.createTurtle());
@@ -56,7 +56,7 @@ public class FormatServiceTest {
     }
 
     @Test
-    public void testGetFormatFromExtension() throws Exception {
+    public void testGetFormatFromExtension() {
         Map<String, String> testVals = new HashMap<>();
         testVals.put("asdf.ttl", "TURTLE");
         testVals.put("asdf.nt", "N-TRIPLE");

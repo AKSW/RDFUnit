@@ -9,7 +9,7 @@ public class TestCaseResultStatusTest {
 
 
     @Test
-    public void testResolve() throws Exception {
+    public void testResolve() {
         for (TestCaseResultStatus resultStatus: TestCaseResultStatus.values()) {
             assertEquals(resultStatus, TestCaseResultStatus.resolve(resultStatus.getUri()));
         }

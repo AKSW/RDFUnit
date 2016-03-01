@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.writers;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Resources;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.readers.BatchTestGeneratorReader;
@@ -27,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestGeneratorWriterTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws RdfReaderException {
         // Needed to resolve the patterns
         RDFUnit rdfUnit = new RDFUnit();
         rdfUnit.init();
@@ -35,7 +36,7 @@ public class TestGeneratorWriterTest {
 
 
     @Parameterized.Parameters(name= "{index}: Model: {1} ")
-    public static Collection<Object[]> models() throws Exception {
+    public static Collection<Object[]> models() throws RdfReaderException {
         return Arrays.asList( new Object[][]{
                         {RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL).read(), "OWLGen"},
                         {RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS).read(), "RSGen"},
@@ -49,7 +50,7 @@ public class TestGeneratorWriterTest {
     public String label;
 
     @Test
-    public void testWrite() throws Exception {
+    public void testWrite() {
         Collection<TestGenerator> testCaseCollection = BatchTestGeneratorReader.create().getTestGeneratorsFromModel(inputModel);
 
         Model modelWritten = ModelFactory.createDefaultModel();

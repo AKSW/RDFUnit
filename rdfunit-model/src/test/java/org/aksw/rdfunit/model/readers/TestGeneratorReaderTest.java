@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfMultipleReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -34,14 +35,14 @@ public class TestGeneratorReaderTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws RdfReaderException {
         // Needed to resolve the patterns
         RDFUnit rdfUnit = new RDFUnit();
         rdfUnit.init();
     }
 
     @Parameterized.Parameters(name= "{index}: TestGenerator: {0}")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() throws RdfReaderException {
 
         Model model = new RdfMultipleReader(Arrays.asList(
                 RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL),
@@ -61,7 +62,7 @@ public class TestGeneratorReaderTest {
 
 
     @Test
-    public void testGenerators() throws Exception {
+    public void testGenerators() {
         TestGenerator tag = TestGeneratorReader.create().read(resource);
         assertTrue("TAG" + resource.getURI() + " is not valid", tag.isValid());
     }

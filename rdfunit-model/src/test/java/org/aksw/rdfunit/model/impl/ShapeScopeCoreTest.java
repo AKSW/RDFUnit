@@ -21,17 +21,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ShapeScopeCoreTest {
 
     @Test(expected=NullPointerException.class)
-    public void testCreateNullType() throws Exception {
+    public void testCreateNullType() {
         ShapeScopeCore.create(null);
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCreateNullValue() throws Exception {
+    public void testCreateNullValue() {
         ShapeScopeCore.create(ShapeScopeType.AllObjectsScope, null);
     }
 
     @Test
-    public void testPatternUnique() throws Exception {
+    public void testPatternUnique() {
 
         List<String> scopePatterns = Arrays.stream(ShapeScopeType.values() )
                 .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
@@ -47,7 +47,7 @@ public class ShapeScopeCoreTest {
     }
 
     @Test
-    public void testScopeContainsUri() throws Exception {
+    public void testScopeContainsUri() {
 
         String uri = "http://example.com";
         Arrays.stream(ShapeScopeType.values() )

@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNull;
 public class RLOGLevelTest {
 
     @Test
-    public void testResolve() throws Exception {
+    public void testResolve() {
 
         for (RLOGLevel level : RLOGLevel.values()) {
             assertEquals(level, RLOGLevel.resolve(level.getUri()));

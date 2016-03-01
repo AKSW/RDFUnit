@@ -9,7 +9,7 @@ public class SelectVarTest {
 
 
     @Test
-    public void testCreate() throws Exception {
+    public void testCreate() {
         String varName = "test";
         SelectVar selectVar = SelectVar.create(varName);
 
@@ -24,7 +24,7 @@ public class SelectVarTest {
     }
 
     @Test
-    public void testCreate1() throws Exception {
+    public void testCreate1() {
         String varName = "test";
         String label = "testLabel";
         SelectVar selectVar = SelectVar.create(varName, label);

@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.ShapeScopeType;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 import org.aksw.rdfunit.model.interfaces.Shape;
@@ -31,14 +32,14 @@ public class ShapeReaderTest {
     private static final String shapeResource = "/org/aksw/rdfunit/shacl/sampleShape.ttl" ;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws RdfReaderException {
         // Needed to resolve the patterns
         RDFUnit rdfUnit = new RDFUnit();
         rdfUnit.init();
     }
 
     @Test
-    public void testRead() throws Exception {
+    public void testRead() throws RdfReaderException {
 
         Model shapesModel = RdfReaderFactory.createResourceReader(shapeResource).read();
 

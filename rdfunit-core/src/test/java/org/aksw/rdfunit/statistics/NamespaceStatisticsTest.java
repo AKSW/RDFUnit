@@ -3,6 +3,7 @@ package org.aksw.rdfunit.statistics;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,14 +25,14 @@ public class NamespaceStatisticsTest {
     protected QueryExecutionFactory qef;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws RdfReaderException {
         RdfReader reader = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
         qef = new QueryExecutionFactoryModel(reader.read());
     }
 
 
     @Test
-    public void testGetNamespaces() throws Exception {
+    public void testGetNamespaces() {
 
         assertEquals(13, NamespaceStatistics.createCompleteNSStatisticsAll().getNamespaces(qef).size());
         assertEquals(0, NamespaceStatistics.createCompleteNSStatisticsKnown().getNamespaces(qef).size());
@@ -42,7 +43,7 @@ public class NamespaceStatisticsTest {
     }
 
     @Test
-    public void testGetNamespaceFromURI() throws Exception {
+    public void testGetNamespaceFromURI() {
         Map<String, String> examples = new HashMap<>();
         examples.put("http://example.com/property", "http://example.com/");
         examples.put("http://example.com#property", "http://example.com#");

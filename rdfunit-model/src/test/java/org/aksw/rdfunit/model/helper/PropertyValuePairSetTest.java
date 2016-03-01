@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PropertyValuePairSetTest {
 
     @Test
-    public void testGetAnnotations() throws Exception {
+    public void testGetAnnotations() {
 
         //add rdf:type rdfs:Class
         PropertyValuePairSet.PropertyValuePairSetBuilder an1 = PropertyValuePairSet.builder();

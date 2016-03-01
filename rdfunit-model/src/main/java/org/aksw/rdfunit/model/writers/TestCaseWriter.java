@@ -41,6 +41,6 @@ public final class TestCaseWriter implements ElementWriter {
             return PatternBasedTestCaseWriter.create((PatternBasedTestCaseImpl) testCase).write(model);
         }
 
-        throw new RuntimeException("Writer of test case not implemented: " + testCase.toString());
+        throw new UnsupportedOperationException("Writer of test case not implemented: " + testCase.toString());
     }
 }

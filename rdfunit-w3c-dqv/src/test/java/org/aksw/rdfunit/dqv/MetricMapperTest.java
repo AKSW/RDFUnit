@@ -8,7 +8,7 @@ public class MetricMapperTest {
 
 
     @Test
-    public void testCreateDefault() throws Exception {
+    public void testCreateDefault() {
         MetricMapper metricMapper = MetricMapper.createDefault();
 
         int DEFAULT_MAP_SIZE = 16;

@@ -33,7 +33,7 @@ public class AbstractTestSourceTest {
     private static final Collection<SchemaSource> TESTReferenceSchemata = Collections.emptyList();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         queryingConfig = QueryingConfig.create(TESTCacheTTL, TESTQueryDelay, TESTTestqueryLimit, TESTPagination);
         sourceConfig = new SourceConfig(TESTSourcePrefix, TESTSourceURI);
@@ -48,58 +48,58 @@ public class AbstractTestSourceTest {
     }
 
     @Test
-    public void testGetQueryingConfig() throws Exception {
+    public void testGetQueryingConfig() {
         assertThat(abstractTestSource.getQueryingConfig())
         .isEqualTo(queryingConfig);
     }
 
     @Test
-    public void testGetReferencesSchemata() throws Exception {
+    public void testGetReferencesSchemata() {
         for (SchemaSource schemaSource: abstractTestSource.getReferencesSchemata()) {
             assertThat(TESTReferenceSchemata.contains(schemaSource)).isTrue();
         }
     }
 
     @Test
-    public void testGetPrefix() throws Exception {
+    public void testGetPrefix() {
         assertThat(abstractTestSource.getPrefix())
                 .isEqualTo(sourceConfig.getPrefix());
     }
 
     @Test
-    public void testGetUri() throws Exception {
+    public void testGetUri() {
         assertThat(abstractTestSource.getUri())
                 .isEqualTo(sourceConfig.getUri());
     }
 
     @Test
-    public void testGetSourceType() throws Exception {
+    public void testGetSourceType() {
         assertThat(abstractTestSource.getSourceType())
                 .isEqualTo(TestAppliesTo.Dataset);
 
     }
 
     @Test
-    public void testGetCacheTTL() throws Exception {
+    public void testGetCacheTTL() {
         assertThat(abstractTestSource.getCacheTTL())
                 .isEqualTo(queryingConfig.getCacheTTL());
 
     }
 
     @Test
-    public void testGetQueryDelay() throws Exception {
+    public void testGetQueryDelay() {
         assertThat(abstractTestSource.getQueryDelay())
                 .isEqualTo(queryingConfig.getQueryDelay());
     }
 
     @Test
-    public void testGetQueryLimit() throws Exception {
+    public void testGetQueryLimit()  {
         assertThat(abstractTestSource.getQueryLimit())
                 .isEqualTo(queryingConfig.getQueryLimit());
     }
 
     @Test
-    public void testGetPagination() throws Exception {
+    public void testGetPagination() {
         assertThat(abstractTestSource.getPagination())
                 .isEqualTo(queryingConfig.getPagination());
     }

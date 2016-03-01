@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.validate.integration;
 
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -11,7 +12,7 @@ import java.util.Collection;
 public class OwlIntegrationTest {
 
     @Parameterized.Parameters(name = "{index}: {0} ({1})")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() {
         return Arrays.asList(new Object[][]{
 
                 {"owl/OWLDISJC_Correct.ttl", 0},
@@ -49,7 +50,7 @@ public class OwlIntegrationTest {
 
 
     @Test
-    public void test() throws Exception {
+    public void test() throws RdfReaderException {
 
         IntegrationTestHelper.testMap(
                 IntegrationTestHelper.getResourcePrefix() + testSource,

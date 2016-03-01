@@ -173,17 +173,17 @@ public class RunnerTest {
         private final List<Description> ignored = new ArrayList<>();
 
         @Override
-        public void testFinished(Description description) throws Exception {
+        public void testFinished(Description description) {
             descriptions.add(description);
         }
 
         @Override
-        public void testFailure(Failure failure) throws Exception {
+        public void testFailure(Failure failure) {
             failures.add(failure);
         }
 
         @Override
-        public void testIgnored(Description description) throws Exception {
+        public void testIgnored(Description description) {
             ignored.add(description);
         }
 

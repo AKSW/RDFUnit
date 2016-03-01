@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.writers;
 
+import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.Argument;
 import org.aksw.rdfunit.model.readers.ArgumentReader;
@@ -28,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArgumentWriterTest {
 
     @Parameterized.Parameters(name= "{index}: Pattern: {0}")
-    public static Collection<Object[]> resources() throws Exception {
+    public static Collection<Object[]> resources() throws RdfReaderException {
         Model model = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/shacl/shacl.shacl.ttl").read();
         Collection<Object[]> parameters = new ArrayList<>();
         for (RDFNode node: model.listObjectsOfProperty(SHACL.argument).toList()) {
@@ -43,7 +44,7 @@ public class ArgumentWriterTest {
     private Model model;
 
     @Test
-    public void testRead() throws Exception {
+    public void testRead() {
         // read the Argument
         Argument argument = ArgumentReader.create().read(resource);
 

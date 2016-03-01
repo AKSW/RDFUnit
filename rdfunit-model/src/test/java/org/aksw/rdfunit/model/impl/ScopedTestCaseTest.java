@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class ScopedTestCaseTest {
 
     @Parameterized.Parameters(name= "{index}")
-    public static Collection<Object[]> items() throws Exception {
+    public static Collection<Object[]> items() {
 
         List<String> sparqlSampleQueries = Arrays.asList(
                 "select ?s where{?s ?p ?o }",
@@ -56,7 +56,7 @@ public class ScopedTestCaseTest {
     public ShapeScope scope;
 
     @Test
-    public void test() throws Exception {
+    public void test() {
 
         TestCase innerTestCAse = Mockito.mock(TestCase.class);
         when(innerTestCAse.getSparqlWhere()).thenReturn(sparqlQuery);

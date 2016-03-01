@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class PatternParameterConstraintsTest {
 
     @Test
-    public void testResolve() throws Exception {
+    public void testResolve() {
         for (PatternParameterConstraints level: PatternParameterConstraints.values()) {
             assertEquals(level, PatternParameterConstraints.resolve(level.getUri()));
         }

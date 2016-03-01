@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
+import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.resources.ManualTestResources;
@@ -18,7 +19,7 @@ import static org.junit.Assert.fail;
 public class ManualTestsIntegrationTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         String emptyResource = "/org/aksw/rdfunit/validate/data/empty.ttl";
 
@@ -36,7 +37,7 @@ public class ManualTestsIntegrationTest {
     }
 
     @Test
-    public void testManualTestCases() throws Exception {
+    public void testManualTestCases() throws TestCaseInstantiationException {
 
         for (Map.Entry<String, String> entry : ManualTestResources.getInstance().entrySet()) {
             String prefix = entry.getKey();
