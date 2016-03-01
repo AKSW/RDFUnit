@@ -15,7 +15,7 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class JunitXmlResultsShaclWriter extends JunitXmlResultsWriter {
+public class JunitXmlResultsShaclWriter extends AbstractJunitXmlResultsWriter {
 
     public JunitXmlResultsShaclWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);

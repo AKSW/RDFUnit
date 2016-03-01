@@ -27,7 +27,7 @@ import java.io.PrintWriter;
  * @since 6/18/14 8:52 AM
  * @version $Id: $Id
  */
-public abstract class RDFUnitWebService extends HttpServlet {
+public abstract class AbstractRDFUnitWebService extends HttpServlet {
 
 
     /** {@inheritDoc} */

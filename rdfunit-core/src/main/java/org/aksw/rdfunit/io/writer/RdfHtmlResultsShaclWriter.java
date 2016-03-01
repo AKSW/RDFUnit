@@ -16,7 +16,7 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class RdfHtmlResultsShaclWriter extends RdfHtmlResultsWriter {
+public class RdfHtmlResultsShaclWriter extends AbstractRdfHtmlResultsWriter {
 
 
     /**

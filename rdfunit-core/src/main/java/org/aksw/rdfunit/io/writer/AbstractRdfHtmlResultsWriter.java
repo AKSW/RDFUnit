@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class RdfHtmlResultsWriter implements RdfWriter {
+public abstract class AbstractRdfHtmlResultsWriter implements RdfWriter {
     protected final TestExecution testExecution;
     private final OutputStream outputStream;
 
@@ -24,7 +24,7 @@ public abstract class RdfHtmlResultsWriter implements RdfWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public RdfHtmlResultsWriter(TestExecution testExecution, OutputStream outputStream) {
+    public AbstractRdfHtmlResultsWriter(TestExecution testExecution, OutputStream outputStream) {
         super();
         this.testExecution = testExecution;
         this.outputStream = outputStream;
@@ -35,7 +35,7 @@ public abstract class RdfHtmlResultsWriter implements RdfWriter {
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public RdfHtmlResultsWriter(TestExecution testExecution, String filename) {
+    public AbstractRdfHtmlResultsWriter(TestExecution testExecution, String filename) {
         this(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 

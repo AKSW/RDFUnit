@@ -21,6 +21,7 @@ class ShaclResultStatement extends Statement {
     private final RdfUnitJunitTestCase testCase;
 
     ShaclResultStatement(RdfUnitJunitStatusTestExecutor rdfUnitJunitStatusTestExecutor, RdfUnitJunitTestCase testCase) {
+        super();
         this.rdfUnitJunitStatusTestExecutor = rdfUnitJunitStatusTestExecutor;
         this.testCase = testCase;
     }

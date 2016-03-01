@@ -15,7 +15,7 @@ import java.io.OutputStream;
  * @since 4/23/14 8:55 AM
  * @version $Id: $Id
  */
-public class JunitXmlResultsRlogWriter extends JunitXmlResultsWriter {
+public class JunitXmlResultsRlogWriter extends AbstractJunitXmlResultsWriter {
 
     public JunitXmlResultsRlogWriter(TestExecution testExecution, OutputStream outputStream) {
     	super(testExecution, outputStream);

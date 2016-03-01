@@ -10,7 +10,7 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
-import org.aksw.rdfunit.validate.ws.RDFUnitWebService;
+import org.aksw.rdfunit.validate.ws.AbstractRDFUnitWebService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ import java.util.Collections;
  * @since 6/18/14 10:13 AM
  * @version $Id: $Id
  */
-public class DataIDWS extends RDFUnitWebService {
+public class DataIDWS extends AbstractRDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override

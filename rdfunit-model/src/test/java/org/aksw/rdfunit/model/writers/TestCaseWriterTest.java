@@ -29,12 +29,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(Parameterized.class)
 public class TestCaseWriterTest {
 
-    @Before
-    public void setUp() throws RdfReaderException {
-        // Needed to resolve the patterns
-        RDFUnit rdfUnit = new RDFUnit();
-        rdfUnit.init();
-    }
+    @Parameterized.Parameter
+    public Model inputModel;
+    @Parameterized.Parameter(value=1)
+    public String label;
 
 
     @Parameterized.Parameters(name= "{index}: Model: {1} ")
@@ -49,16 +47,21 @@ public class TestCaseWriterTest {
             try {
                 models.add(new Object[] {RdfReaderFactory.createResourceReader(resource).read(), resource});
             } catch (RdfReaderException e) {
-                throw new RuntimeException("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")");
+                throw new RuntimeException("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")", e);
             }
         }
         return models;
     }
 
-    @Parameterized.Parameter
-    public Model inputModel;
-    @Parameterized.Parameter(value=1)
-    public String label;
+
+    @Before
+    public void setUp() throws RdfReaderException {
+        // Needed to resolve the patterns
+        RDFUnit rdfUnit = new RDFUnit();
+        rdfUnit.init();
+    }
+
+
 
     @Test
     public void testWrite() {

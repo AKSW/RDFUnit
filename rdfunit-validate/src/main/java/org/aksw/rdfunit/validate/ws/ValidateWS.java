@@ -36,7 +36,7 @@ import java.util.Collection;
  * @since 6/13/14 1:50 PM
  * @version $Id: $Id
  */
-public class ValidateWS extends RDFUnitWebService {
+public class ValidateWS extends AbstractRDFUnitWebService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidateWS.class);
 
     // TODO: pass dataFolder in configuration initialization

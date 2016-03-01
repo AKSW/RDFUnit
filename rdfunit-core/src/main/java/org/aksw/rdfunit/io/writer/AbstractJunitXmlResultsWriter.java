@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @since 11/14/13 1:04 PM
  * @version $Id: $Id
  */
-public abstract class JunitXmlResultsWriter implements RdfWriter {
+public abstract class AbstractJunitXmlResultsWriter implements RdfWriter {
 	protected final TestExecution testExecution;
 	private final OutputStream outputStream;
 
@@ -26,7 +26,7 @@ public abstract class JunitXmlResultsWriter implements RdfWriter {
      *
      * @param outputStream a {@link java.io.OutputStream} object.
      */
-    public JunitXmlResultsWriter(TestExecution testExecution, OutputStream outputStream) {
+    public AbstractJunitXmlResultsWriter(TestExecution testExecution, OutputStream outputStream) {
         super();
         this.testExecution = testExecution;
         this.outputStream = outputStream;
@@ -37,7 +37,7 @@ public abstract class JunitXmlResultsWriter implements RdfWriter {
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public JunitXmlResultsWriter(TestExecution testExecution, String filename) {
+    public AbstractJunitXmlResultsWriter(TestExecution testExecution, String filename) {
         this(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 

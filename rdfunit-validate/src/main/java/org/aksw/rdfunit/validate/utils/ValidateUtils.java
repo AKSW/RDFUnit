@@ -311,8 +311,9 @@ public final class ValidateUtils {
         }
 
         for (String uriStr : parameterStr.split(",")) {
-            if (!uriStr.trim().isEmpty())
+            if (!uriStr.trim().isEmpty()) {
                 uriStrs.add(uriStr.trim());
+            }
         }
 
         return uriStrs;

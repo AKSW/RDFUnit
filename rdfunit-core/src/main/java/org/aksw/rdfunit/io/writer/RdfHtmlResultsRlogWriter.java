@@ -8,7 +8,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 
-public class RdfHtmlResultsRlogWriter extends RdfHtmlResultsWriter {
+public class RdfHtmlResultsRlogWriter extends AbstractRdfHtmlResultsWriter {
 
     public RdfHtmlResultsRlogWriter(TestExecution testExecution, OutputStream outputStream) {
         super(testExecution, outputStream);

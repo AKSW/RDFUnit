@@ -34,12 +34,12 @@ public final class RdfResultsWriterFactory {
     }
 
 
-    public static RdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, String filename) {
+    public static AbstractRdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, String filename) {
         return createHtmlWriter(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 
 
-    public static RdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, OutputStream outputStream) {
+    public static AbstractRdfHtmlResultsWriter createHtmlWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
             case statusTestCaseResult:
                 return new RdfHtmlResultsStatusWriter(testExecution, outputStream);
@@ -60,11 +60,11 @@ public final class RdfResultsWriterFactory {
         }
     }
     
-    public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, String filename) {
+    public static AbstractJunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, String filename) {
         return createJunitXmlWriter(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
     
-    public static JunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, OutputStream outputStream) {
+    public static AbstractJunitXmlResultsWriter createJunitXmlWriter(TestExecution testExecution, OutputStream outputStream) {
         switch (testExecution.getTestExecutionType()) {
         case statusTestCaseResult:
             return new JunitXmlResultsStatusWriter(testExecution, outputStream);

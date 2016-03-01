@@ -11,11 +11,6 @@ import org.aksw.rdfunit.services.PrefixNSService;
  */
 public final class DatasetStatisticsAllIris extends DatasetStatistics {
 
-    /**
-     * <p>Constructor for DatasetStatisticsAllIris.</p>
-     */
-    public DatasetStatisticsAllIris() {
-    }
 
     /*
     * SPARQL query to get all IRIs
