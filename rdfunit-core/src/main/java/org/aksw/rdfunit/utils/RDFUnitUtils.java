@@ -71,6 +71,7 @@ public final class RDFUnitUtils {
                         default:
                             LOGGER.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);
                             count--;
+                            break;
                     }
                 }
 

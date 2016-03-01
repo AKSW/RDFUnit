@@ -107,12 +107,7 @@ public class Binding implements Element {
                 pc.equals(PatternParameterConstraints.Class))) {
             return true;
         }
-        if (value.isLiteral() && pc.equals(PatternParameterConstraints.Operator)) {
-            return true;
-        }
-
-        // TODO check for more
-        return false;
+        return value.isLiteral() && pc.equals(PatternParameterConstraints.Operator);
     }
 
     private boolean validatePattern() {

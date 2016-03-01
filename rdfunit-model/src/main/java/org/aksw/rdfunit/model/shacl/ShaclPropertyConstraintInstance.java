@@ -66,17 +66,15 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     }
 
     private String generateSparqlWhere(String sparqlString) {
-        String finalSparqlSnippet = sparqlString;
-
-        finalSparqlSnippet = replaceBindings(finalSparqlSnippet);
-        return "{ " + finalSparqlSnippet;
+        return "{ " + replaceBindings(sparqlString);
     }
 
-    private String replaceBindings(String finalSparqlSnippet) {
+    private String replaceBindings(String sparqlSnippet) {
+        String bindedSnippet = sparqlSnippet;
         for (Map.Entry<Argument, RDFNode>  entry:  bindings.entrySet()) {
-            finalSparqlSnippet = replaceBinding(finalSparqlSnippet, entry.getKey(), entry.getValue());
+            bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
         }
-        return finalSparqlSnippet;
+        return bindedSnippet;
     }
 
     private String replaceBinding(String sparql, Argument argument, RDFNode value) {
@@ -84,10 +82,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     }
 
     private String generateMessage() {
-        String finalMessage = this.template.getMessage();
-
-        finalMessage = replaceBindings(finalMessage);
-        return finalMessage;
+        return replaceBindings(this.template.getMessage());
     }
 
     private String formatRdfValue(RDFNode value) {

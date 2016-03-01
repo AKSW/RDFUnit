@@ -50,9 +50,9 @@ public class ShapeScopeCore implements ShapeScope{
                 return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::inversePropertyScopePattern);
             case PropertyScope:
                 return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::propertyScopePattern);
+            default:
+                throw new IllegalArgumentException("Something wrong with the input");
         }
-
-        throw new IllegalArgumentException("Something wrong with the input");
     }
 
     private static String classScopePattern(Optional<String> uri) {
