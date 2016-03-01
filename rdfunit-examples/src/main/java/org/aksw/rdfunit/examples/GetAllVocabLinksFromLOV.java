@@ -9,8 +9,6 @@ import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
@@ -49,26 +47,17 @@ public class GetAllVocabLinksFromLOV {
                    // " FILTER (strStarts(?s, 'http://dbpedia.org') || strStarts(?o, 'http://dbpedia.org')))" +
                     "}";
 
-            QueryExecution qe = null;
-            try {
-                qe = qef.createQueryExecution(queryString);
-                ResultSet results = qe.execSelect();
-
-                while (results.hasNext()) {
-                    QuerySolution qs = results.next();
+            try (QueryExecution qe = qef.createQueryExecution(queryString)) {
+                qe.execSelect().forEachRemaining(qs -> {
 
                     Resource s = qs.get("s").asResource();
                     Resource p = qs.get("p").asResource();
                     RDFNode o = qs.get("o");
 
-                    model.add(s, ResourceFactory.createProperty(p.getURI()) ,o);
+                    model.add(s, ResourceFactory.createProperty(p.getURI()), o);
 
                     // save the data in a file to read later
-                }
-            } finally {
-                if (qe != null) {
-                    qe.close();
-                }
+                });
             }
         }
 

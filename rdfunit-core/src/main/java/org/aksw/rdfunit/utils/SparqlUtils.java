@@ -4,8 +4,6 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.slf4j.Logger;
@@ -46,26 +44,19 @@ public final class SparqlUtils {
                 "   rut:annotationProperty ?annotationProperty ; " +
                 "   rut:annotationValue ?annotationValue . } ";
 
-        QueryExecution qe = null;
 
-        try {
-            qe = queryFactory.createQueryExecution(sparql);
-            ResultSet results = qe.execSelect();
 
-            while (results.hasNext()) {
-                QuerySolution qs = results.next();
+        try (QueryExecution qe = queryFactory.createQueryExecution(sparql)) {
+
+            qe.execSelect().forEachRemaining(qs -> {
                 String annotationProperty = qs.get("annotationProperty").toString();
                 RDFNode annotationValue = qs.get("annotationValue");
                 annotations.add(new ResultAnnotationImpl.Builder(uri, annotationProperty).setValueRDFUnit(annotationValue).build());
-            }
+            });
 
         } catch (Exception e) {
             LOGGER.error("Error in sparql query",e);
             LOGGER.debug(sparql);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
         }
 
         return annotations;

@@ -3,8 +3,6 @@ package org.aksw.rdfunit.prefix;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,9 +47,7 @@ public final class LOVEndpoint {
 
         try (QueryExecution qe = qef.createQueryExecution(LOV_SPARQL_QUERY)) {
 
-            ResultSet rs = qe.execSelect();
-            while (rs.hasNext()) {
-                QuerySolution row = rs.next();
+            qe.execSelect().forEachRemaining( row -> {
 
                 String prefix = row.get("vocabPrefix").asLiteral().getLexicalForm();
                 String vocab = row.get("vocabURI").asResource().getURI();
@@ -65,7 +61,7 @@ public final class LOVEndpoint {
                     definedBy = row.get("definedBy").asResource().getURI();
                 }
                 lovEntries.add(new SchemaEntry(prefix, vocab, ns, definedBy));
-            }
+            });
         } catch (Exception e) {
             LOGGER.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
         }

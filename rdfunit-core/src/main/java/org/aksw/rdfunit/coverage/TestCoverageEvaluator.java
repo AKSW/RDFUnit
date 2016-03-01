@@ -4,7 +4,9 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.statistics.DatasetStatisticsClassesCount;
 import org.aksw.rdfunit.statistics.DatasetStatisticsPropertiesCount;
-import org.apache.jena.query.*;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,16 +140,14 @@ public class TestCoverageEvaluator {
 
         Collection<String> references = new ArrayList<>();
         Query q = QueryFactory.create(query);
-        QueryExecution qe = model.createQueryExecution(q);
-        ResultSet rs = qe.execSelect();
-
-        while (rs.hasNext()) {
-            QuerySolution row = rs.next();
-
-            references.add("<" + row.get("reference").toString() + ">");
-
+        try (QueryExecution qe = model.createQueryExecution(q))
+        {
+            qe.execSelect().forEachRemaining(
+                    row -> {
+                        references.add("<" + row.get("reference").toString() + ">");
+                    }
+            );
         }
-        qe.close();
 
         return references;
 

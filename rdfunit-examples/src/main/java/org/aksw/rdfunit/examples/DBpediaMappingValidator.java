@@ -13,8 +13,6 @@ import org.aksw.rdfunit.utils.TestUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
@@ -98,16 +96,11 @@ public class DBpediaMappingValidator {
      * @return a {@link java.util.List} object.
      */
     public List<MappingDomainError> getErrorListFromModel(Model model) {
-        QueryExecution qe = null;
         List<MappingDomainError> mappingDomainErrors = new ArrayList<>();
-        try {
-            qe = QueryExecutionFactory.create(sparqlQuery, model);
+        try  ( QueryExecution qe = QueryExecutionFactory.create(sparqlQuery, model))
+        {
 
-            ResultSet results = qe.execSelect();
-
-            while (results.hasNext()) {
-
-                QuerySolution qs = results.next();
+            qe.execSelect().forEachRemaining( qs -> {
 
                 String mapping = qs.get("mapping").toString();
                 String error = qs.get("error").toString();
@@ -116,11 +109,7 @@ public class DBpediaMappingValidator {
 
                 mappingDomainErrors.add(new MappingDomainError(mapping, predicate, error, missing));
 
-            }
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
+            } );
         }
         return mappingDomainErrors;
     }

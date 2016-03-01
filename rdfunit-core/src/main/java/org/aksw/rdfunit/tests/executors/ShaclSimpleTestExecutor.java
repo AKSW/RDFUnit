@@ -12,8 +12,6 @@ import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.SparqlUtils;
 import org.aksw.rdfunit.utils.StringUtils;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 
 import java.util.ArrayList;
@@ -49,11 +47,7 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
         try (QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase)))
         {
 
-            ResultSet results = qe.execSelect();
-
-            while (results.hasNext()) {
-
-                QuerySolution qs = results.next();
+            qe.execSelect().forEachRemaining( qs -> {
 
                 String resource = qs.get("this").toString();
                 if (qs.get("this").isLiteral()) {
@@ -66,7 +60,7 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
                 RLOGLevel logLevel = testCase.getLogLevel();
 
                 testCaseResults.add(new SimpleShaclTestCaseResultImpl(testCase.getTestURI(), logLevel, message, resource));
-            }
+            });
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
         }

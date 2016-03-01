@@ -2,8 +2,6 @@ package org.aksw.rdfunit.statistics;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,13 +39,10 @@ public abstract class DatasetStatistics {
     private Map<String, Long> getStats(String sparqlQuery, QueryExecutionFactory qef) {
         Map<String, Long> stats = new HashMap<>();
 
-        QueryExecution qe = null;
-        try {
-            qe = qef.createQueryExecution(sparqlQuery);
-            ResultSet results = qe.execSelect();
 
-            while (results.hasNext()) {
-                QuerySolution qs = results.next();
+        try (QueryExecution qe =  qef.createQueryExecution(sparqlQuery))
+        {
+            qe.execSelect().forEachRemaining( qs -> {
 
                 String s = qs.get("stats").toString();
                 int c = 0;
@@ -55,11 +50,7 @@ public abstract class DatasetStatistics {
                     c = qs.get("count").asLiteral().getInt();
                 }
                 stats.put(s, (long) c);
-            }
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
+            });
         }
 
         return stats;
