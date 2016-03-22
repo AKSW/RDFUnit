@@ -358,7 +358,7 @@
                 <plugin>
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>
-                    <version>1.16.6.1</version>
+                    <version>1.16.8.0</version>
                 </plugin>
 
             </plugins>
