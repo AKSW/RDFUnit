@@ -1,10 +1,11 @@
 RDFUnit - RDF Unit Testing Suite
 ==========
 
-[![Build Status](https://travis-ci.org/AKSW/RDFUnit.svg?branch=master)](https://travis-ci.org/AKSW/RDFUnit)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.aksw.rdfunit/rdfunit-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.aksw.rdfunit/rdfunit-parent)
+[![Build Status](https://travis-ci.org/AKSW/RDFUnit.svg?branch=master)](https://travis-ci.org/AKSW/RDFUnit)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/2650/badge.svg?flat=1)](https://scan.coverity.com/projects/2650)
 [![Coverage Status](https://coveralls.io/repos/AKSW/RDFUnit/badge.svg?branch=master&service=github)](https://coveralls.io/github/AKSW/RDFUnit?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/02907c27b76141709e5a6e9682fc836c)](https://www.codacy.com/app/jimkont/RDFUnit)
 [![Project Stats](https://www.openhub.net/p/RDFUnit/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/RDFUnit)
 
 

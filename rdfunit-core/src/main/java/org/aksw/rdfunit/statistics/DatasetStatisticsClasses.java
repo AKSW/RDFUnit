@@ -15,14 +15,14 @@ public class DatasetStatisticsClasses extends DatasetStatistics {
     /*
     * Simple SPARQL query to get all class occurrences
     * */
-    private static final String classStatsSPARQL = PrefixNSService.getSparqlPrefixDecl() +
+    private static final String CLASS_STATS_SPARQL = PrefixNSService.getSparqlPrefixDecl() +
             " SELECT DISTINCT ?stats WHERE {" +
             "     ?s a ?stats . } ";
 
     /** {@inheritDoc} */
     @Override
     public String getStatisticsQuery() {
-        return classStatsSPARQL;
+        return CLASS_STATS_SPARQL;
     }
 
 
