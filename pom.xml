@@ -65,7 +65,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jena-sparql-api-version>3.0.1-1</jena-sparql-api-version>
         <org-apache-jena-version>3.0.1</org-apache-jena-version>
-        <slf4j-version>1.7.16</slf4j-version>
+        <slf4j-version>1.7.19</slf4j-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
 
@@ -171,7 +171,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.6</version>
+                <version>1.16.8</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -340,7 +340,7 @@
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.6</version>
+                    <version>1.6.7</version>
                 </plugin>
 
                 <plugin>
@@ -408,7 +408,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8.1</version>
+                <version>2.9</version>
                 <configuration>
                     <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
