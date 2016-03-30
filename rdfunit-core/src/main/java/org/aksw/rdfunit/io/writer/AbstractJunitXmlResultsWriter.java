@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
  * @version $Id: $Id
  */
 public abstract class AbstractJunitXmlResultsWriter implements RdfWriter {
-	protected final TestExecution testExecution;
-	private final OutputStream outputStream;
+    protected final TestExecution testExecution;
+    private final OutputStream outputStream;
 
     /**
      * <p>Constructor for JunitXMLResultsWriter.</p>
@@ -47,10 +47,11 @@ public abstract class AbstractJunitXmlResultsWriter implements RdfWriter {
   
         try {
             // TODO not efficient StringBuilder.toString().getBytes()
-            outputStream.write(getHeader().toString().getBytes("UTF8"));
-            outputStream.write(getTestExecutionStats().toString().getBytes("UTF8"));
-            outputStream.write(getTestExecutionResults().toString().getBytes("UTF8"));
-            outputStream.write(getFooter().toString().getBytes("UTF8"));
+            final String utf8 = "UTF8";
+            outputStream.write(getHeader().toString().getBytes(utf8));
+            outputStream.write(getTestExecutionStats().toString().getBytes(utf8));
+            outputStream.write(getTestExecutionResults().toString().getBytes(utf8));
+            outputStream.write(getFooter().toString().getBytes(utf8));
             outputStream.close();
         } catch (IOException e) {
             throw new RdfWriterException("Cannot write XML", e);
@@ -69,22 +70,24 @@ public abstract class AbstractJunitXmlResultsWriter implements RdfWriter {
     private StringBuilder getFooter() {
         return new StringBuilder("</testsuite>");
     }
-    
+
     private StringBuilder getTestExecutionStats() {
         StringBuilder stats = new StringBuilder();
         stats.append("<testsuite name=\"").append(testExecution.getTestExecutionUri()).append("\" ");
-  
+
         DatasetOverviewResults dor = testExecution.getDatasetOverviewResults();
         stats.append("timestamp=\"").append(dor.getEndTime()).append("\" ");
         String length = testLength(dor.getStartTime(), dor.getEndTime());
         if(length!=null) {
-        	stats.append("time=\"").append(length).append("\" ");
+            stats.append("time=\"").append(length).append("\" ");
         }
-        stats.append("tests=\"").append(dor.getTotalTests()).append("\" ");
-        stats.append("failures=\"").append(dor.getFailedTests()).append("\" ");
-        stats.append("errors=\"").append(dor.getTimeoutTests()+dor.getErrorTests()).append("\" ");
-        stats.append("package=\"").append(testExecution.getTestedDatasetUri()).append("\"");
-        stats.append(">\n");
+        stats
+                .append("tests=\"").append(dor.getTotalTests()).append("\" ")
+                .append("failures=\"").append(dor.getFailedTests()).append("\" ")
+                .append("errors=\"").append(dor.getTimeoutTests()+dor.getErrorTests()).append("\" ")
+                .append("package=\"").append(testExecution.getTestedDatasetUri()).append("\"")
+                .append(">\n");
+
         return stats;
     }
     
