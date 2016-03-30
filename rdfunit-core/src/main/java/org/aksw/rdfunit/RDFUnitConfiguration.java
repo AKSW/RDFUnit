@@ -266,17 +266,21 @@ public class RDFUnitConfiguration {
 
 
         // Set TestSource configuration
-        if (this.endpointQueryCacheTTL > 0)
+        if (this.endpointQueryCacheTTL > 0) {
             testSourceBuilder.setCacheTTL(this.endpointQueryCacheTTL);
+        }
 
-        if (this.endpointQueryDelayMS > 0)
+        if (this.endpointQueryDelayMS > 0) {
             testSourceBuilder.setQueryDelay(this.endpointQueryDelayMS);
+        }
 
-        if (this.endpointQueryPagination > 0)
+        if (this.endpointQueryPagination > 0) {
             testSourceBuilder.setPagination(this.endpointQueryPagination);
+        }
 
-        if (this.endpointQueryLimit > 0)
+        if (this.endpointQueryLimit > 0) {
             testSourceBuilder.setQueryLimit(this.endpointQueryLimit);
+        }
 
         testSource = testSourceBuilder.build();
 

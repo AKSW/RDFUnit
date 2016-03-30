@@ -93,11 +93,11 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getTestFolder(), "/home/rdfunit/tests/");
 
         // Manual / Auto test cases
-        assertEquals(configuration.isManualTestsEnabled(), false);
-        assertEquals(configuration.isAutoTestsEnabled(), true);
-        assertEquals(configuration.isTestCacheEnabled(), true);
+        assertFalse(configuration.isManualTestsEnabled());
+        assertTrue(configuration.isAutoTestsEnabled());
+        assertTrue(configuration.isTestCacheEnabled());
 
-        assertEquals(configuration.isCalculateCoverageEnabled(), false);
+        assertFalse(configuration.isCalculateCoverageEnabled());
         assertTrue(configuration.getTestSource() instanceof DumpTestSource);
 
 
@@ -105,9 +105,9 @@ public class ValidateUtilsTest {
         commandLine = cliParser.parse(cliOptions, args.split(" "));
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
-        assertEquals(configuration.isManualTestsEnabled(), true);
-        assertEquals(configuration.isTestCacheEnabled(), false);
-        assertEquals(configuration.isCalculateCoverageEnabled(), true);
+        assertTrue(configuration.isManualTestsEnabled());
+        assertFalse(configuration.isTestCacheEnabled());
+        assertTrue(configuration.isCalculateCoverageEnabled());
 
         // Expect exception for wrong inputs
         HashMap<String, String> exceptionsExpected = new HashMap<>();

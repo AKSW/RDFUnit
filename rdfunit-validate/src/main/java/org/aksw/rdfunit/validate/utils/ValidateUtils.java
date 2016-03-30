@@ -115,12 +115,12 @@ public final class ValidateUtils {
         return configuration;
     }
 
-    static void setCoverageCalculation(CommandLine commandLine, RDFUnitConfiguration configuration) {
+    private static void setCoverageCalculation(CommandLine commandLine, RDFUnitConfiguration configuration) {
         boolean calculateCoverage = commandLine.hasOption("c");
         configuration.setCalculateCoverageEnabled(calculateCoverage);
     }
 
-    static void setQueryTtlCachePaginationLimit(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+    private static void setQueryTtlCachePaginationLimit(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
         // Get query time to live cache option
         String ttlStr = commandLine.getOptionValue("T");
         if (ttlStr != null) {
@@ -172,7 +172,7 @@ public final class ValidateUtils {
         }
     }
 
-    static void setTestAutogetCacheManual(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+    private static void setTestAutogetCacheManual(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
         // for automatically generated test cases
         boolean testCacheEnabled = !commandLine.hasOption("C");
         configuration.setTestCacheEnabled(testCacheEnabled);
@@ -194,7 +194,7 @@ public final class ValidateUtils {
         }
     }
 
-    static void setOutputFormats(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+    private static void setOutputFormats(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
         // Get output formats (with HTML as default)
         Collection<String> outputFormats = getUriStrs(commandLine.getOptionValue("o", "html"));
         try {
@@ -204,7 +204,7 @@ public final class ValidateUtils {
         }
     }
 
-    static void setTestExecutionType(CommandLine commandLine, RDFUnitConfiguration configuration) {
+    private static void setTestExecutionType(CommandLine commandLine, RDFUnitConfiguration configuration) {
         TestCaseExecutionType resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
         if (commandLine.hasOption("r")) {
             String rl = commandLine.getOptionValue("r", "aggregate");
@@ -238,13 +238,13 @@ public final class ValidateUtils {
         configuration.setTestCaseExecutionType(resultLevel);
     }
 
-    static void setEnrichedSchemas(CommandLine commandLine, RDFUnitConfiguration configuration) {
+    private static void setEnrichedSchemas(CommandLine commandLine, RDFUnitConfiguration configuration) {
         //Get enriched schema
         String enrichedDatasetPrefix = commandLine.getOptionValue("p");
         configuration.setEnrichedSchema(enrichedDatasetPrefix);
     }
 
-    static void setSchemas(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+    private static void setSchemas(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
         if (commandLine.hasOption("s")) {
             try {
                 //Get schema list
@@ -261,7 +261,7 @@ public final class ValidateUtils {
         }
     }
 
-    static void setDumpOrSparqlEndpoint(CommandLine commandLine, RDFUnitConfiguration configuration) {
+    private static void setDumpOrSparqlEndpoint(CommandLine commandLine, RDFUnitConfiguration configuration) {
         // Dump location for dump dereferencing (defaults to dataset uri)
         String customDereferenceURI = commandLine.getOptionValue("u");
         if (customDereferenceURI != null && !customDereferenceURI.isEmpty()) {
@@ -276,14 +276,15 @@ public final class ValidateUtils {
         }
     }
 
-    static RDFUnitConfiguration readDatasetUriAndInitConfiguration(CommandLine commandLine) {
+    private static RDFUnitConfiguration readDatasetUriAndInitConfiguration(CommandLine commandLine) {
         RDFUnitConfiguration configuration;
         String dataFolder = commandLine.getOptionValue("f", "data/");
 
         //Dataset URI, important & required (used to associate manual dataset test cases)
         String datasetURI = commandLine.getOptionValue("d", "");
-        if (!datasetURI.isEmpty() && datasetURI.endsWith("/"))
+        if (!datasetURI.isEmpty() && datasetURI.endsWith("/")) {
             datasetURI = datasetURI.substring(0, datasetURI.length() - 1);
+        }
 
         configuration = new RDFUnitConfiguration(datasetURI, dataFolder);
         return configuration;
