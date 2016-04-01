@@ -40,7 +40,7 @@ public class JunitXmlResultsRlogWriter extends AbstractJunitXmlResultsWriter {
 
         if(result.getSeverity().equals(RLOGLevel.ERROR)||
                 result.getSeverity().equals(RLOGLevel.FATAL)) {
-            results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
+            results.append("\t\t<failure message=\"").append(result.getMessage()).append("\" type=\"").append(result.getSeverity().name()).append("\"/>\n");
         }
         results.append("\t</testcase>\n");
     }

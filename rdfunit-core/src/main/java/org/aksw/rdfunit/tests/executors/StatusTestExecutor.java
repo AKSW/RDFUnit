@@ -58,7 +58,7 @@ public class StatusTestExecutor extends TestExecutor {
 
         }
 
-        return Collections.<TestCaseResult>singletonList(new StatusTestCaseResultImpl(testCase, status));
+        return Collections.singletonList(new StatusTestCaseResultImpl(testCase, status));
     }
 
 }

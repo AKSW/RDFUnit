@@ -64,11 +64,10 @@ ShapeScopeValueShape implements ShapeScope{
 
 
     private static ShapeScope transformScope(ShapeScopeValueShape outerScope, List<Resource> propertyChain) {
-        ShapeScopeValueShape transformScope = outerScope;
         ImmutableList.Builder<Resource> builder = new ImmutableList.Builder<>();
         builder.addAll(propertyChain);
-        builder.addAll(transformScope.propertyChain);
-        return create(transformScope.outerScope, builder.build());
+        builder.addAll(outerScope.propertyChain);
+        return create(outerScope.outerScope, builder.build());
     }
 
     private static String classScopePattern(ShapeScopeValueShape scope) {

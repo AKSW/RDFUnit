@@ -72,7 +72,7 @@ public class AggregatedTestExecutor extends TestExecutor {
         }
 
         // No need to throw exception here, class supports status
-        return Collections.<TestCaseResult>singletonList(new AggregatedTestCaseResultImpl(testCase, total, prevalence));
+        return Collections.singletonList(new AggregatedTestCaseResultImpl(testCase, total, prevalence));
     }
 
     private int getCountNumber(QueryExecutionFactory model, Query query, String var) {

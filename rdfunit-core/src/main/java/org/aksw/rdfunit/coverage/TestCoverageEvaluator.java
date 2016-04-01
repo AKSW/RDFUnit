@@ -143,9 +143,7 @@ public class TestCoverageEvaluator {
         try (QueryExecution qe = model.createQueryExecution(q))
         {
             qe.execSelect().forEachRemaining(
-                    row -> {
-                        references.add("<" + row.get("reference").toString() + ">");
-                    }
+                    row -> references.add("<" + row.get("reference").toString() + ">")
             );
         }
 

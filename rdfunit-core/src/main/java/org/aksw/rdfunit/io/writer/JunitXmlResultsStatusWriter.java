@@ -39,9 +39,9 @@ public class JunitXmlResultsStatusWriter extends AbstractJunitXmlResultsWriter {
         results.append(testcaseElement);
 
         if(result.getStatus().equals(TestCaseResultStatus.Fail)) {
-            results.append("\t\t<failure message=\""+result.getMessage()+"\" type=\""+result.getSeverity().name()+"\"/>\n");
+            results.append("\t\t<failure message=\"").append(result.getMessage()).append("\" type=\"").append(result.getSeverity().name()).append("\"/>\n");
         } else if(result.getStatus().equals(TestCaseResultStatus.Error)||result.getStatus().equals(TestCaseResultStatus.Timeout)) {
-            results.append("\t\t<error message=\""+result.getMessage()+"\" type=\""+result.getStatus().name()+"\"/>\n");
+            results.append("\t\t<error message=\"").append(result.getMessage()).append("\" type=\"").append(result.getStatus().name()).append("\"/>\n");
         }
         results.append("\t</testcase>\n");
     }
