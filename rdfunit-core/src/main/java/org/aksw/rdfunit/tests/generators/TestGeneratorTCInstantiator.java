@@ -67,7 +67,7 @@ public class TestGeneratorTCInstantiator {
         return tests;
     }
 
-    Optional<TestCase> generateTestFromResult(TestGenerator tg, Pattern tgPattern, QuerySolution row) {
+    private Optional<TestCase> generateTestFromResult(TestGenerator tg, Pattern tgPattern, QuerySolution row) {
         Collection<String> references = new ArrayList<>();
         String description;
 

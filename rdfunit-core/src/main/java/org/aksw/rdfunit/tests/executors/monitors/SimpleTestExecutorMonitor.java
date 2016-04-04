@@ -52,7 +52,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
     private long counter = 0;
 
-    Collection<TestCaseResult> results = new ArrayList<>();
+    private Collection<TestCaseResult> results = new ArrayList<>();
 
 
     public SimpleTestExecutorMonitor() {

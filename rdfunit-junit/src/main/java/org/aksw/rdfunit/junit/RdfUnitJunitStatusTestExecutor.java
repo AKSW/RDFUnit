@@ -23,7 +23,7 @@ final class RdfUnitJunitStatusTestExecutor extends ShaclSimpleTestExecutor {
         super(new QueryGenerationSelectFactory());
     }
 
-    Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase)
+    protected Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase)
             throws IllegalAccessException, InvocationTargetException {
 
         try {

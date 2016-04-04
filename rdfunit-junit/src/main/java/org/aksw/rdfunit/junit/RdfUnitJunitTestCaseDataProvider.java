@@ -44,7 +44,7 @@ final class RdfUnitJunitTestCaseDataProvider {
         this.additionalData = additionalData;
     }
 
-    void initialize() throws InitializationError {
+    public void initialize() throws InitializationError {
         if (initialized) {
             return;
         }

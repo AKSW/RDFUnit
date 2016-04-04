@@ -60,7 +60,7 @@ public class RdfHtmlResultsShaclWriter extends AbstractRdfHtmlResultsWriter {
     /**
      * return a css class
      */
-    static String getStatusClass(RLOGLevel level) {
+    protected static String getStatusClass(RLOGLevel level) {
         String rowClass = "";
         switch (level) {
             case WARN:

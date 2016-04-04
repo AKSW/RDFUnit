@@ -45,7 +45,7 @@ public class RdfHtmlResultsStatusWriter extends AbstractRdfHtmlResultsWriter {
     /**
      * return a css class
      */
-    String getStatusClass(TestCaseResultStatus status) {
+    protected String getStatusClass(TestCaseResultStatus status) {
 
         switch (status) {
             case Success:
