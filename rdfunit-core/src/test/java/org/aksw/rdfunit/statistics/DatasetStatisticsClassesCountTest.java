@@ -30,7 +30,7 @@ public class DatasetStatisticsClassesCountTest extends DatasetStatisticsTest {
     public void testGetStats() {
 
         for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
-            assertNotEquals(new Long(0), entry.getValue());
+            assertNotEquals(Long.valueOf(0), entry.getValue());
         }
     }
 }

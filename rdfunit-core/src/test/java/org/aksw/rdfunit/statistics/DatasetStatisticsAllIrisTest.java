@@ -29,7 +29,7 @@ public class DatasetStatisticsAllIrisTest extends DatasetStatisticsTest {
     @Test
     public void testGetStats() {
         for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
-            assertEquals(new Long(0), entry.getValue());
+            assertEquals(Long.valueOf(0), entry.getValue());
         }
     }
 }
