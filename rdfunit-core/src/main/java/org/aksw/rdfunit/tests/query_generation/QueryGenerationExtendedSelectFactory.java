@@ -48,7 +48,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
             if (!existingVariables.contains(value)) {
                 sb.append(" ?");
                 sb.append(value);
-                sb.append(" ");
+                sb.append(' ');
 
                 existingVariables.add(value);
             }

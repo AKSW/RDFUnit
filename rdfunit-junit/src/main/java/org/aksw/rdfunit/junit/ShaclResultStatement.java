@@ -41,7 +41,7 @@ class ShaclResultStatement extends Statement {
         final StringBuilder b = new StringBuilder();
         b.append(testCase.getTestCase().getResultMessage()).append(":\n");
         for (SimpleShaclTestCaseResult r : remainingResults) {
-            b.append("\t").append(r.getFailingResource()).append("\n");
+            b.append('\t').append(r.getFailingResource()).append('\n');
         }
         assertThat(b.toString(), remainingResults.isEmpty());
     }

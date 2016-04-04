@@ -85,7 +85,7 @@ public abstract class AbstractJunitXmlResultsWriter implements RdfWriter {
                 .append("tests=\"").append(dor.getTotalTests()).append("\" ")
                 .append("failures=\"").append(dor.getFailedTests()).append("\" ")
                 .append("errors=\"").append(dor.getTimeoutTests()+dor.getErrorTests()).append("\" ")
-                .append("package=\"").append(testExecution.getTestedDatasetUri()).append("\"")
+                .append("package=\"").append(testExecution.getTestedDatasetUri()).append("\" ")
                 .append(">\n");
 
         return stats;

@@ -38,7 +38,7 @@ public class RdfFirstSuccessReader implements RdfReader {
                 // return on first read() that does not throw an exception
                 return;
             } catch (RdfReaderException e) {
-                message.append("\n");
+                message.append('\n');
                 if (e.getMessage() != null) {
                     message.append(e.getMessage());
                 } else {
