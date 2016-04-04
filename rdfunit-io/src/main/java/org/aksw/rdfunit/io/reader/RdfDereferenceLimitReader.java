@@ -101,8 +101,9 @@ public class RdfDereferenceLimitReader implements RdfReader {
         } catch (IOException e) {
             return -1;
         } finally {
-            if (conn!=null)
+            if (conn!=null) {
                 conn.disconnect();
+            }
         }
     }
 

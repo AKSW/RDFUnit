@@ -46,8 +46,9 @@ public final class ArgumentWriter implements ElementWriter {
         resource.addProperty(SHACL.predicate, argument.getPredicate()) ;
 
         // rdfs:comment
-        if (!argument.getComment().isEmpty())
+        if (!argument.getComment().isEmpty()) {
             resource.addProperty(RDFS.comment, argument.getComment());
+        }
 
         // default value
         if (argument.getDefaultValue().isPresent()) {

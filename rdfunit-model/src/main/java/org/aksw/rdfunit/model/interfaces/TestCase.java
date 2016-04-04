@@ -72,8 +72,9 @@ public interface TestCase extends Element, Comparable<TestCase>{
      * @return a {@link org.apache.jena.query.Query} object.
      */
     default Query getSparqlPrevalenceQuery() {
-        if (getSparqlPrevalence().trim().isEmpty())
+        if (getSparqlPrevalence().trim().isEmpty()) {
             return null;
+        }
         return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence());}
 
     /**
