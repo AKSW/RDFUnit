@@ -6,6 +6,7 @@ import org.aksw.rdfunit.sources.EndpointTestSource;
 import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.validate.ParameterException;
 import org.apache.commons.cli.*;
+import org.junit.Test;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class ValidateUtilsTest {
 
-    @org.junit.Test
+    @Test
     public void testGetConfigurationFromArguments() throws ParseException, ParameterException {
         Options cliOptions = ValidateUtils.getCliOptions();
 

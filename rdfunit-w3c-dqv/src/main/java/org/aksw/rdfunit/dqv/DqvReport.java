@@ -25,7 +25,7 @@ public class DqvReport {
     @NonNull private final TestExecution testExecution;
     @NonNull private final MetricMapper metricMapper;
 
-    Collection<QualityMeasure> getQualityMeasures() {
+    public Collection<QualityMeasure> getQualityMeasures() {
 
 
         Collection<ShaclTestCaseResult> results =

@@ -192,7 +192,7 @@ public class TemplateRegistry {
         return builder.build();
     }
 
-    static ShaclPropertyConstraintTemplate createTemplate(Argument argument, String message, String sparqlSnippet) {
+    private static ShaclPropertyConstraintTemplate createTemplate(Argument argument, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
                 .argument(argument)
                 .argument(CoreArguments.predicate)
@@ -204,7 +204,7 @@ public class TemplateRegistry {
                 .build();
     }
 
-    static ShaclPropertyConstraintTemplate createTemplateWithFilter(Argument argument, String message, String sparqlSnippet, String filter) {
+    private static ShaclPropertyConstraintTemplate createTemplateWithFilter(Argument argument, String message, String sparqlSnippet, String filter) {
         return ShaclPropertyConstraintTemplate.builder()
                 .argument(argument)
                 .argument(CoreArguments.predicate)
@@ -217,7 +217,7 @@ public class TemplateRegistry {
                 .build();
     }
 
-    static ShaclPropertyConstraintTemplate createTemplateWithFilterNF(Argument argument, String message, String sparqlPropSnippet, String sparqlInvPSnippet, String filter) {
+    private static ShaclPropertyConstraintTemplate createTemplateWithFilterNF(Argument argument, String message, String sparqlPropSnippet, String sparqlInvPSnippet, String filter) {
         return ShaclPropertyConstraintTemplate.builder()
                 .argument(argument)
                 .argument(CoreArguments.predicate)
@@ -230,7 +230,7 @@ public class TemplateRegistry {
                 .build();
     }
 
-    static ShaclPropertyConstraintTemplate createTemplate(Argument argument1, Argument argument2, String message, String sparqlSnippet) {
+    private static ShaclPropertyConstraintTemplate createTemplate(Argument argument1, Argument argument2, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
                 .argument(argument1)
                 .argument(argument2)

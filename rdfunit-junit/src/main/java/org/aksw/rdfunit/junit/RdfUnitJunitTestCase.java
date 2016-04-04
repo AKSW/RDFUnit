@@ -22,7 +22,7 @@ final class RdfUnitJunitTestCase {
         this.testCase = checkNotNull(testCase);
     }
 
-    TestCase getTestCase() {
+    public TestCase getTestCase() {
         return testCase;
     }
 

@@ -203,7 +203,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return schema;
     }
 
-    RdfReader getAdditionalDataModel() {
+    protected RdfReader getAdditionalDataModel() {
         return additionalData;
     }
 

@@ -147,7 +147,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 );
     }
 
-    List<ResultAnnotation> createResultAnnotations() {
+    private List<ResultAnnotation> createResultAnnotations() {
         ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
         // add property
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.predicate)

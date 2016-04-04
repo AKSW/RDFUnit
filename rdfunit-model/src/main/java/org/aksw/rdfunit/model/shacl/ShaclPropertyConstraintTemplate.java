@@ -25,7 +25,7 @@ public class ShaclPropertyConstraintTemplate {
     @NonNull @Getter private final String message;
     @Getter private final boolean includePropertyFilter;
 
-    boolean canBind(PropertyValuePairSet propertyValuePairSet) {
+    public boolean canBind(PropertyValuePairSet propertyValuePairSet) {
 
         return argumentFilters.entrySet().stream()
                 .allMatch(entry -> canBind(propertyValuePairSet, entry.getKey(), entry.getValue()));

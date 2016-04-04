@@ -41,7 +41,7 @@ public class ExtendedTestCaseResultImpl extends RLOGTestCaseResultImpl implement
     }
 
     public static class Builder {
-        private RLOGTestCaseResult rlogTestCaseResult;
+        private final RLOGTestCaseResult rlogTestCaseResult;
         private Set<PropertyValuePair> resultAnnotations;
 
         public Builder(String testCaseUri, RLOGLevel severity, String message, String resource) {
