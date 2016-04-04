@@ -147,7 +147,7 @@ public class RunnerTest {
             try {
                 when(mockReader.read()).thenThrow(new RdfReaderException("Failed to read (mock)!"));
             } catch (RdfReaderException e) {
-                throw new RuntimeException(e);
+                throw new IllegalArgumentException(e);
             }
             return mockReader;
         }

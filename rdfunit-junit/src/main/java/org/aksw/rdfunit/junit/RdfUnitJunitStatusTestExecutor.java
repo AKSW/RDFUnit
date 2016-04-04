@@ -35,7 +35,7 @@ final class RdfUnitJunitStatusTestExecutor extends ShaclSimpleTestExecutor {
             );
         } catch (TestCaseExecutionException e) {
             /// Should never happen (TM)
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 }

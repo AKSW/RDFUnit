@@ -21,7 +21,7 @@ public class ShaclTestGenerator implements RdfUnitTestGenerator{
             return shaclModel.generateTestCases();
 
         } catch (RdfReaderException e) {
-            throw new RuntimeException( e);
+            throw new IllegalArgumentException( e);
         }
 
     }

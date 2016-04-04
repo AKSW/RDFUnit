@@ -66,7 +66,7 @@ final class RdfUnitJunitTestCaseDataProvider {
         try {
             testInputModel = testInputReader.read();
         } catch (RdfReaderException readerException) {
-            throw new RuntimeException(readerException);
+            throw new IllegalArgumentException(readerException);
         }
         modelSource = new TestSourceBuilder()
                 // FIXME why do we need at least one source config? If we omit this, it will break...

@@ -60,7 +60,7 @@ final class RdfUnitJunitTestCase {
         try {
             this.rdfUnitJunitTestCaseDataProvider.initialize();
         } catch (InitializationError initializationError) {
-            throw new RuntimeException(initializationError);
+            throw new IllegalArgumentException(initializationError);
         }
 
     }

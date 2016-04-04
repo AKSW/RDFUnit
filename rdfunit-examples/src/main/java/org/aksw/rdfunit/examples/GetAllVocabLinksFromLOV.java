@@ -66,7 +66,7 @@ public class GetAllVocabLinksFromLOV {
             model.write(fos, "TURTLE");
 
         } catch (Exception e) {
-            throw new RuntimeException("Error writing file: " + e.getMessage(), e);
+            throw new UnsupportedOperationException("Error writing file: " + e.getMessage(), e);
         }
 
     }

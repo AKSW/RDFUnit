@@ -43,7 +43,7 @@ public class IntegrationTestHelper {
         try {
             rdfUnit.init();
         } catch (RdfReaderException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         RdfReader ontologyDSPReader = RdfReaderFactory.createResourceReader(schemaSource);
         SchemaSource ontologyDSPSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
@@ -58,7 +58,7 @@ public class IntegrationTestHelper {
         try {
             ontologyShaclReader = new RdfModelReader(createResourceReader(schemaSource).read());
         } catch (RdfReaderException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
         SchemaSource ontologyShaclSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyShaclReader);
         return new TestSuite(new ShaclTestGenerator().generate(ontologyShaclSource));

@@ -47,7 +47,7 @@ public class TestCaseWriterTest {
             try {
                 models.add(new Object[] {RdfReaderFactory.createResourceReader(resource).read(), resource});
             } catch (RdfReaderException e) {
-                throw new RuntimeException("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")", e);
+                throw new IllegalArgumentException("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")", e);
             }
         }
         return models;
