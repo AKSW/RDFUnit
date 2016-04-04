@@ -6,7 +6,6 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
-import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -45,7 +44,7 @@ public class IntegrationTestHelper {
         } catch (RdfReaderException e) {
             throw new IllegalStateException(e);
         }
-        RdfReader ontologyDSPReader = RdfReaderFactory.createResourceReader(schemaSource);
+        RdfReader ontologyDSPReader = createResourceReader(schemaSource);
         SchemaSource ontologyDSPSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
 
 
@@ -71,7 +70,7 @@ public class IntegrationTestHelper {
         final TestSource modelSource = new TestSourceBuilder()
                 .setImMemSingle()
                 .setPrefixUri("test", testSource)
-                .setInMemReader(new RdfModelReader(RdfReaderFactory.createResourceReader(testSource).read()))
+                .setInMemReader(new RdfModelReader(createResourceReader(testSource).read()))
                 .setReferenceSchemata(Collections.singletonList(schemaSource))
                 .build();
 

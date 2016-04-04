@@ -60,7 +60,7 @@ public class RdfFirstSuccessReaderTest {
         try {
             reader.read();
         } catch (RdfReaderException e) {
-            Assert.fail("Should have NOT raised a TripleReaderException");
+            fail("Should have NOT raised a TripleReaderException");
         }
     }
 
