@@ -150,15 +150,17 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         }
     }
 
-    private synchronized Object getTestCaseInstance() throws InitializationError {
-        if (testCaseInstance == null) {
-            try {
-                testCaseInstance = getTestClass().getJavaClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                throw new InitializationError(e);
+    private Object getTestCaseInstance() throws InitializationError {
+        synchronized (this) {
+            if (testCaseInstance == null) {
+                try {
+                    testCaseInstance = getTestClass().getJavaClass().newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new InitializationError(e);
+                }
             }
+            return testCaseInstance;
         }
-        return testCaseInstance;
     }
 
     private void setAdditionalData() throws InitializationError {

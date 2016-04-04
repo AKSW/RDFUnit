@@ -110,14 +110,6 @@ public class Binding implements Element {
         return value.isLiteral() && pc.equals(PatternParameterConstraints.Operator);
     }
 
-    private boolean validatePattern() {
-        if (!parameter.getConstraintPattern().isPresent()) {
-            return true;
-        }
-        // TODO Check the pattern
-        return true;
-    }
-
     /** {@inheritDoc} */
     @Override
     public Resource getElement() {

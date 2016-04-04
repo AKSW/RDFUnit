@@ -58,12 +58,14 @@ public class ValidateWS extends AbstractRDFUnitWebService {
 
     /** {@inheritDoc} */
     @Override
-    protected synchronized TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource dataset) {
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
-                configuration.isAutoTestsEnabled(),
-                configuration.isTestCacheEnabled(),
-                configuration.isManualTestsEnabled());
-        return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, autogenerators);
+    protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource dataset) {
+        synchronized(this) {
+            TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+                    configuration.isAutoTestsEnabled(),
+                    configuration.isTestCacheEnabled(),
+                    configuration.isManualTestsEnabled());
+            return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, autogenerators);
+        }
     }
 
     /** {@inheritDoc} */

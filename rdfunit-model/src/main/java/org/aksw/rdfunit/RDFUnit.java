@@ -81,13 +81,15 @@ public class RDFUnit {
         }
     }
 
-    private synchronized Collection<Pattern> getPatterns() {
-        if (patterns == null) {
-            patterns =
-                    Collections.unmodifiableCollection(
-                            BatchPatternReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
+    private Collection<Pattern> getPatterns() {
+        synchronized(this) {
+            if (patterns == null) {
+                patterns =
+                        Collections.unmodifiableCollection(
+                                BatchPatternReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
+            }
+            return patterns;
         }
-        return patterns;
     }
 
     /**
@@ -95,13 +97,15 @@ public class RDFUnit {
      *
      * @return a {@link java.util.Collection} object.
      */
-    public synchronized Collection<TestGenerator> getAutoGenerators() {
-        if (autoGenerators == null) {
-            autoGenerators =
-                    Collections.unmodifiableCollection(
-                            BatchTestGeneratorReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
+    public Collection<TestGenerator> getAutoGenerators() {
+        synchronized(this) {
+            if (autoGenerators == null) {
+                autoGenerators =
+                        Collections.unmodifiableCollection(
+                                BatchTestGeneratorReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
+            }
+            return autoGenerators;
         }
-        return autoGenerators;
     }
 
     private static RdfReader createReaderFromBaseDirsAndResource(Collection<String> baseDirectories, String relativeName) {
