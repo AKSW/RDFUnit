@@ -78,7 +78,7 @@ public class TestGeneratorTCInstantiator {
                 Binding b;
                 try {
                     b = new Binding(p, n);
-                } catch (Exception e) {
+                } catch (NullPointerException | IllegalArgumentException e) {
                     LOGGER.error("Non valid binding for parameter {} in AutoGenerator: {}", p.getId(), tg.getUri(), e);
                     continue;
                 }

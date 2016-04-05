@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Description
@@ -30,7 +31,7 @@ public final class UriToPathUtils {
             String host = tmp.getHost();
             String path = tmp.getPath();
             retVal = host + path + (path.endsWith("/") ? "" : "/");
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
             LOGGER.debug("Cannot create cache folder for IRI {}", uri, e);
         }
 

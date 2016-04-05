@@ -6,6 +6,7 @@ import org.aksw.rdfunit.Resources;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Map;
@@ -34,7 +35,7 @@ public final class PrefixNSService {
 
             try (InputStream is = PrefixNSService.class.getResourceAsStream(Resources.PREFIXES)) {
                 prefixModel.read(is, null, "TURTLE");
-            } catch (Exception e) {
+            } catch (IOException e) {
                 throw new IllegalArgumentException("Cannot read prefixes.ttl from resources", e);
             }
 
