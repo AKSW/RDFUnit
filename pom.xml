@@ -65,7 +65,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jena-sparql-api-version>3.0.1-1</jena-sparql-api-version>
         <org-apache-jena-version>3.0.1</org-apache-jena-version>
-        <slf4j-version>1.7.19</slf4j-version>
+        <slf4j-version>1.7.21</slf4j-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
 
@@ -218,7 +218,7 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.1</version>
                 <scope>test</scope>
             </dependency>
 
@@ -271,7 +271,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.5</version>
+                <version>3.5.1</version>
                 <configuration>
                     <skipDeploy>true</skipDeploy>
                 </configuration>
@@ -430,7 +430,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
-                <version>2.11</version>
+                <version>2.12</version>
                 <reportSets>
                     <reportSet>
                         <reports>
