@@ -8,6 +8,7 @@ import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
+import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.sources.CacheUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
@@ -117,6 +118,9 @@ public class TestGeneratorExecutor {
 
             // Shacl Generator
             allTests.addAll(new ShaclTestGenerator().generate(s));
+
+            // manual tests
+            allTests.addAll(BatchTestCaseReader.create().getTestCasesFromModel(s.getModel()));
         }
 
         //Find manual tests for dataset (if not canceled
