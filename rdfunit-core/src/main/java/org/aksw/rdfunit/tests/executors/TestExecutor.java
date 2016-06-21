@@ -108,6 +108,7 @@ public abstract class TestExecutor {
             try {
                 results = executeSingleTest(testSource, testCase);
             } catch (TestCaseExecutionException e) {
+                LOGGER.debug("Error (handled) running TC: " + testCase.getAbrTestURI(), e);
                 status = e.getStatus();
             } catch (RuntimeException e) {
                 //try {

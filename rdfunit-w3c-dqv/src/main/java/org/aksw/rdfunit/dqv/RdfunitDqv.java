@@ -15,9 +15,11 @@ import org.apache.jena.vocabulary.RDF;
 
 import java.util.Collection;
 
-public class RdfunitDqv {
+public final class RdfunitDqv {
 
     private static final Options cliOptions = generateCLIOptions();
+
+    private RdfunitDqv() {}
 
     public static void main(String[] args) throws Exception {
 

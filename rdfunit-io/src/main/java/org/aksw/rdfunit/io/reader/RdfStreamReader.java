@@ -5,6 +5,8 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,6 +21,9 @@ import java.io.InputStream;
  * @version $Id: $Id
  */
 public class RdfStreamReader implements RdfReader {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RdfStreamReader.class);
+
     private final InputStream inputStream;
     private final String format;
 
@@ -85,6 +90,7 @@ public class RdfStreamReader implements RdfReader {
         try {
             return new FileInputStream(filename);
         } catch (FileNotFoundException e) {
+            LOGGER.debug("Error initializing RdfStreamReader, not handled atm", e);
             // do not handle exception at construction time
             return null;
         }

@@ -156,7 +156,7 @@ public class TestGeneratorExecutor {
             Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
-            LOGGER.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size());
+            LOGGER.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size(), e);
         }
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -183,6 +183,8 @@ public class TestGeneratorExecutor {
             LOGGER.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
         } catch (RdfReaderException e) {
             // Do nothing, Manual tests do not exist
+            LOGGER.debug("No manual tests found for {}", s.getUri(), e);
+
         }
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {

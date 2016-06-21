@@ -41,7 +41,7 @@ public class RdfReadAndCacheReader implements RdfReader {
         try {
             writer.write(model);
         } catch (RdfWriterException e) {
-
+            LOGGER.warn("Could not cache RdfReader", e);
         }
     }
 

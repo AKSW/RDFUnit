@@ -45,9 +45,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 11/19/13 10:49 AM
  * @version $Id: $Id
  */
-public class ValidateCLI {
+public final class ValidateCLI {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidateCLI.class);
 
+    private ValidateCLI() {}
 
     /**
      * <p>main.</p>
@@ -76,7 +78,7 @@ public class ValidateCLI {
         } catch (ParameterException e) {
             String message = e.getMessage();
             if (message != null) {
-                displayHelpAndExit(message);
+                displayHelpAndExit(message, e);
             } else {
                 displayHelpAndExit();
             }
@@ -92,7 +94,7 @@ public class ValidateCLI {
         try {
             rdfunit.init();
         } catch (RdfReaderException e) {
-            displayHelpAndExit("Cannot read patterns and/or pattern generators");
+            displayHelpAndExit("Cannot read patterns and/or pattern generators", e);
         }
          /*
         // Generates all tests from LOV
@@ -119,7 +121,7 @@ public class ValidateCLI {
 
         TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
         if (testExecutor == null) {
-            displayHelpAndExit("Cannot initialize test executor. Exiting");
+            displayHelpAndExit("Cannot initialize test executor. Exiting", null);
         }
         SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
         testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
@@ -157,7 +159,7 @@ public class ValidateCLI {
             resultWriter.write(model);
             LOGGER.info("Results stored in: " + filename + ".*");
         } catch (RdfWriterException e) {
-            LOGGER.error("Cannot write tests to file: " + e.getMessage());
+            LOGGER.error("Cannot write tests to file", e);
         }
 
 
@@ -174,8 +176,8 @@ public class ValidateCLI {
         }
     }
 
-    private static void displayHelpAndExit(String errorMessage) {
-        LOGGER.error(errorMessage);
+    private static void displayHelpAndExit(String errorMessage, Exception e) {
+        LOGGER.error(errorMessage, e);
         displayHelpAndExit();
     }
 

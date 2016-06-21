@@ -9,7 +9,7 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 
-public class CoreArguments {
+public final class CoreArguments {
 
     public static final Argument predicate = createSimpleArgument(SHACL.predicate, "", ValueKind.IRI);
     public static final Argument severity = createSeverity();
@@ -41,6 +41,8 @@ public class CoreArguments {
     //public static final Argument qualifiedValueShape
     //public static final Argument qualifiedMinCount
     //public static final Argument qualifiedMaxCount
+
+    private CoreArguments() {}
 
     private static Argument createSimpleArgument(Property property) {
         return createSimpleArgument(property, property.getLocalName(), ValueKind.IRI);

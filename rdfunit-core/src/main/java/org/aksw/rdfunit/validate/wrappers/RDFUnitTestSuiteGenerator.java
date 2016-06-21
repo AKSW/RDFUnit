@@ -60,7 +60,7 @@ public final class RDFUnitTestSuiteGenerator {
                     try {
                         rdfunit.init();
                     } catch (RdfReaderException e) {
-                        LOGGER.error("Could not Init RDFUnit");
+                        LOGGER.error("Could not Init RDFUnit", e);
                     }
 
                     TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);

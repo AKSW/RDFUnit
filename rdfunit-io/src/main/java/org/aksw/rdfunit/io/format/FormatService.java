@@ -2,6 +2,8 @@ package org.aksw.rdfunit.io.format;
 
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFLanguages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -14,6 +16,8 @@ import java.util.Collection;
  * @version $Id: $Id
  */
 public final class FormatService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormatService.class);
+
 
     private FormatService() {
     }
@@ -23,6 +27,7 @@ public final class FormatService {
      */
     private static final class Instance {
         private static final Collection<SerializationFormat> serializationFormats = SerialiazationFormatFactory.getAllFormats();
+        private Instance() {}
     }
 
     /**
@@ -65,7 +70,7 @@ public final class FormatService {
         String format = "TURTLE";
         try {
             // try to get if from Jena first
-            String extension = "";
+            String extension;
             Lang jenaLang = RDFLanguages.filenameToLang(filename);
             if (jenaLang != null) {
                 extension = jenaLang.getFileExtensions().get(0);
@@ -78,6 +83,7 @@ public final class FormatService {
                 format = f.getName();
             }
         } catch (Exception e) {
+            LOGGER.debug("No format found, using the default one", e);
             return "TURTLE";
         }
         return format;

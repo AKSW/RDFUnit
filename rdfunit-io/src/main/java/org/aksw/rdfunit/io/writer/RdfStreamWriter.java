@@ -4,6 +4,8 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.rdf.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +20,9 @@ import java.io.OutputStream;
  * @version $Id: $Id
  */
 public class RdfStreamWriter implements RdfWriter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RdfStreamWriter.class);
+
     private final OutputStream outputStream;
     private final String filetype;
 
@@ -69,6 +74,7 @@ public class RdfStreamWriter implements RdfWriter {
         try {
             return new FileOutputStream(filename);
         } catch (FileNotFoundException e) {
+            LOGGER.debug("Error initializing RdfStreamReader, not handled atm", e);
             // do not handle exception at construction time
             return null;
         }

@@ -35,7 +35,7 @@ public class RdfMultipleReader implements RdfReader {
             try {
                 r.read(model);
             } catch (RdfReaderException e) {
-                throw new RdfReaderException("Cannot read from reader: " + e.getMessage());
+                throw new RdfReaderException("Cannot read from reader", e);
             }
         }
 
@@ -50,7 +50,7 @@ public class RdfMultipleReader implements RdfReader {
             try {
                 r.readDataset(dataset);
             } catch (RdfReaderException e) {
-                throw new RdfReaderException("Cannot read from reader: " + e.getMessage());
+                throw new RdfReaderException("Cannot read from reader", e);
             }
         }
 
