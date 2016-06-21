@@ -14,11 +14,11 @@ import org.apache.jena.query.QueryFactory;
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
 
-    private static final String selectClauseSimple = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE ";
+    private static final String SELECT_CLAUSE_SIMPLE = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE ";
 
-    private static final String selectClauseGroupStart = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE {" +
+    private static final String SELECT_CLAUSE_GROUP_START = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE {" +
                                                    " SELECT ?this WHERE ";
-    private static final String selectClauseGroupEnd = "}";
+    private static final String SELECT_CLAUSE_GROUP_END = "}";
 
     /** {@inheritDoc} */
     @Override
@@ -30,7 +30,7 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         Query query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
-                        selectClauseSimple + testCase.getSparqlWhere()
+                SELECT_CLAUSE_SIMPLE + testCase.getSparqlWhere()
         );
         if (!query.hasGroupBy()) {
             return query;
@@ -40,9 +40,9 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
         // This way we enclose the query in a sub-select and calculate the count () correctly
         // See https://issues.apache.org/jira/browse/JENA-766
         query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
-                        selectClauseGroupStart
+                SELECT_CLAUSE_GROUP_START
                         + testCase.getSparqlWhere() +
-                        selectClauseGroupEnd
+                SELECT_CLAUSE_GROUP_END
         );
 
         return query;

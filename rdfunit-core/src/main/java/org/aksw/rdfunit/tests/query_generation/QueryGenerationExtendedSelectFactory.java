@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
 
-    private static final String selectDistinctResource = " SELECT DISTINCT ?this ";
+    private static final String SELECT_DISTINCT_RESOURCE = " SELECT DISTINCT ?this ";
 
-    private static final String resourceVar = "?this";
+    private static final String RESOURCE_VAR = "?this";
 
-    private static final String whereClause = " WHERE ";
+    private static final String WHERE_CLAUSE = " WHERE ";
 
-    private static final String orderByResourceAsc = "  ORDER BY ASC(?this) ";
+    private static final String ORDER_BY_RESOURCE_ASC = "  ORDER BY ASC(?this) ";
 
     /** {@inheritDoc} */
     @Override
@@ -34,10 +34,10 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
         StringBuilder sb = new StringBuilder();
 
         sb.append(PrefixNSService.getSparqlPrefixDecl());
-        sb.append(selectDistinctResource);
+        sb.append(SELECT_DISTINCT_RESOURCE);
 
         Set<String> existingVariables = new HashSet<>();
-        existingVariables.add(resourceVar);
+        existingVariables.add(RESOURCE_VAR);
 
         // Add all defined variables in the query
         for (ResultAnnotation annotation : testCase.getVariableAnnotations()) {
@@ -53,9 +53,9 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
                 existingVariables.add(value);
             }
         }
-        sb.append(whereClause);
+        sb.append(WHERE_CLAUSE);
         sb.append(testCase.getSparqlWhere());
-        sb.append(orderByResourceAsc);
+        sb.append(ORDER_BY_RESOURCE_ASC);
         return sb.toString();
     }
 

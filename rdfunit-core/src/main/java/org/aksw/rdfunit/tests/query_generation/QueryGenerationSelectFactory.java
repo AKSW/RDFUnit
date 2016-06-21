@@ -14,13 +14,13 @@ import org.apache.jena.query.QueryFactory;
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
-    private static final String selectClause = " SELECT DISTINCT ?this WHERE ";
+    private static final String SELECT_CLAUSE = " SELECT DISTINCT ?this WHERE ";
 
     /** {@inheritDoc} */
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
         return PrefixNSService.getSparqlPrefixDecl() +
-                selectClause + testCase.getSparqlWhere();
+                SELECT_CLAUSE + testCase.getSparqlWhere();
     }
 
     /** {@inheritDoc} */
