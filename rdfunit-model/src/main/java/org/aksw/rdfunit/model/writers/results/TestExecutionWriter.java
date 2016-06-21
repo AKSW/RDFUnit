@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.writers.results;
 
+import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.ElementWriter;
@@ -52,23 +53,25 @@ public final class TestExecutionWriter implements ElementWriter {
                 .addProperty(RDFUNITv.source, model.createResource(testExecution.getTestedDatasetUri()))
                 .addProperty(PROV.wasStartedBy, model.createResource(testExecution.getStartedByAgent()));
 
+        DatasetOverviewResults rs = testExecution.getDatasetOverviewResults();
+
                 //dataset overview results
         resource.addProperty(PROV.startedAtTime,
-                        ResourceFactory.createTypedLiteral(testExecution.getDatasetOverviewResults().getStartTime().toString(), XSDDatatype.XSDdateTime))
+                        ResourceFactory.createTypedLiteral(rs.getStartTime().toString(), XSDDatatype.XSDdateTime))
                 .addProperty(PROV.endedAtTime,
-                        ResourceFactory.createTypedLiteral(testExecution.getDatasetOverviewResults().getEndTime().toString(), XSDDatatype.XSDdateTime))
+                        ResourceFactory.createTypedLiteral(rs.getEndTime().toString(), XSDDatatype.XSDdateTime))
                 .addProperty(RDFUNITv.testsRun,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getTotalTests(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral(Long.toString(rs.getTotalTests()), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsSuceedded,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getSuccessfulTests(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral(Long.toString(rs.getSuccessfulTests()), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsFailed,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getFailedTests(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral(Long.toString(rs.getFailedTests()), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsTimeout,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getTimeoutTests(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral(Long.toString(rs.getTimeoutTests()), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.testsError,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getErrorTests(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral(Long.toString(rs.getErrorTests()), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.totalIndividualErrors,
-                        ResourceFactory.createTypedLiteral("" + testExecution.getDatasetOverviewResults().getIndividualErrors(), XSDDatatype.XSDnonNegativeInteger))
+                        ResourceFactory.createTypedLiteral(Long.toString(rs.getIndividualErrors()), XSDDatatype.XSDnonNegativeInteger))
                 ;
 
         // Associate the constraints to the execution

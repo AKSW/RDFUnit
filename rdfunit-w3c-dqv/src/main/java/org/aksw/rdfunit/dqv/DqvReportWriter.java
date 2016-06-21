@@ -36,7 +36,7 @@ public final class DqvReportWriter implements ElementWriter {
             Resource measureResource = model.createResource(JenaUtils.getUniqueIri())
                     .addProperty(ResourceFactory.createProperty(dqvNS + "computedOn"), te)
                     .addProperty(ResourceFactory.createProperty(dqvNS + "hasMetric"), ResourceFactory.createResource(m.getDqvMetricUri()))
-                    .addProperty(ResourceFactory.createProperty(dqvNS + "value"), "" + m.getValue())
+                    .addProperty(ResourceFactory.createProperty(dqvNS + "value"), Double.toString(m.getValue()))
                     ;
 
             te.addProperty(ResourceFactory.createProperty(dqvNS + "dqv:hasQualityMeasure"), measureResource );
