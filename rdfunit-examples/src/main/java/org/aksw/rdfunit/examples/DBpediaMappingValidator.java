@@ -30,16 +30,16 @@ import java.util.stream.Collectors;
  */
 public class DBpediaMappingValidator {
 
-    private static final String mappingServer = "http://mappings.dbpedia.org"; // "http://localhost:9999";
+    private static final String MAPPING_SERVER = "http://mappings.dbpedia.org"; // "http://localhost:9999";
 
-    private static final String dbpediaOntology = mappingServer + "/server/ontology/dbpedia.owl";
-    private static final String rmlManualTests = "/org/aksw/rdfunit/tests/Manual/www.w3.org/ns/r2rml/rr.tests.Manual.ttl";
+    private static final String DBPEDIA_ONTOLOGY = MAPPING_SERVER + "/server/ontology/dbpedia.owl";
+    private static final String RML_MANUAL_TESTS = "/org/aksw/rdfunit/tests/Manual/www.w3.org/ns/r2rml/rr.tests.Manual.ttl";
     private static final Collection<String> languages = Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
     // 2014 languages
     // Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
     // Arrays.asList("el", "bg");
 
-    private static final String sparqlQuery = PrefixNSService.getSparqlPrefixDecl() +
+    private static final String SPARQL_QUERY = PrefixNSService.getSparqlPrefixDecl() +
             " select ?error ?missing ?predicate ?mapping\n" +
             " where {\n" +
             "  ?v a sh:ValidationResult ;\n" +
@@ -51,14 +51,14 @@ public class DBpediaMappingValidator {
             " } ORDER BY ?mapping ";
 
 
-    private String getRMLlink(String lang) {
-        return mappingServer + "/server/mappings/" + lang + "/pages/rdf/all";
+    private static String getRMLlink(String lang) {
+        return MAPPING_SERVER + "/server/mappings/" + lang + "/pages/rdf/all";
     }
 
     private RdfReader getRMLReader() {
         Collection<RdfReader> allReaders = new ArrayList<>();
         // we add the ontology
-        allReaders.add(new RdfDereferenceReader(dbpediaOntology));
+        allReaders.add(new RdfDereferenceReader(DBPEDIA_ONTOLOGY));
         // add all the mapping languages
         allReaders.addAll(
                 languages.stream()
@@ -72,9 +72,9 @@ public class DBpediaMappingValidator {
 
     }
 
-    private TestSuite getDBpMappingsTestSuite() throws RdfReaderException {
+    private static TestSuite getDBpMappingsTestSuite() throws RdfReaderException {
         Collection<TestCase> tests = TestUtils.instantiateTestsFromModel(
-                RdfReaderFactory.createResourceReader(rmlManualTests).read());
+                RdfReaderFactory.createResourceReader(RML_MANUAL_TESTS).read());
 
         return new TestSuite(tests);
     }
@@ -97,7 +97,7 @@ public class DBpediaMappingValidator {
      */
     public List<MappingDomainError> getErrorListFromModel(Model model) {
         List<MappingDomainError> mappingDomainErrors = new ArrayList<>();
-        try  ( QueryExecution qe = QueryExecutionFactory.create(sparqlQuery, model))
+        try  ( QueryExecution qe = QueryExecutionFactory.create(SPARQL_QUERY, model))
         {
 
             qe.execSelect().forEachRemaining( qs -> {

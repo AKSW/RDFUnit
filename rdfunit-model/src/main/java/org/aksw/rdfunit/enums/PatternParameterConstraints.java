@@ -40,7 +40,7 @@ public enum PatternParameterConstraints {
     /**
      * Holds the prefix to resolve this enum
      */
-    private static final String schemaPrefix = "rut";
+    private static final String SCHEMA_PREFIX = "rut";
 
     /**
      * <p>getUri.</p>
@@ -48,7 +48,7 @@ public enum PatternParameterConstraints {
      * @return a full URI/IRI as a String
      */
     public String getUri() {
-        return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
+        return PrefixNSService.getNSFromPrefix(SCHEMA_PREFIX) + name();
     }
 
     /** {@inheritDoc} */
@@ -65,7 +65,7 @@ public enum PatternParameterConstraints {
      */
     public static PatternParameterConstraints resolve(String value) {
 
-        String qName = PrefixNSService.getLocalName(value, schemaPrefix);
+        String qName = PrefixNSService.getLocalName(value, SCHEMA_PREFIX);
         for (PatternParameterConstraints constraint : values()) {
             if (qName.equals(constraint.name())) {
                 return constraint;

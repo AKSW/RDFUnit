@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 @Value
 public class DqvReport {
 
-    private static final String undefinedMetric = "http://rdfunit.aksw.org/ns/rdqv#UndefinedMetric";
-    private static final String unclassifiedMetric = "http://rdfunit.aksw.org/ns/rdqv#UnclassifiedMetric";
+    private static final String UNDEFINED_METRIC = "http://rdfunit.aksw.org/ns/rdqv#UndefinedMetric";
+    private static final String UNCLASSIFIED_METRIC = "http://rdfunit.aksw.org/ns/rdqv#UnclassifiedMetric";
 
     @NonNull private final TestExecution testExecution;
     @NonNull private final MetricMapper metricMapper;
@@ -36,7 +36,7 @@ public class DqvReport {
 
         return results.stream()
                 // get source constraints or use undefined
-                .map(r -> getSourceConstraintFromResult(r).orElse(undefinedMetric))
+                .map(r -> getSourceConstraintFromResult(r).orElse(UNDEFINED_METRIC))
                 // map to metrics or use unclassified metric
                 .map(this::getMetricFromSourceConstraint)
                 // group same metrics and count
@@ -68,7 +68,7 @@ public class DqvReport {
     private String getMetricFromSourceConstraint(String sourceConstraint) {
         return metricMapper
                 .getMetricMap()
-                .getOrDefault(sourceConstraint, unclassifiedMetric);
+                .getOrDefault(sourceConstraint, UNCLASSIFIED_METRIC);
 
     }
 

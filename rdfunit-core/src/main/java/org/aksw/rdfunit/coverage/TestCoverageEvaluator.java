@@ -10,7 +10,6 @@ import org.apache.jena.query.QueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -69,7 +68,7 @@ public class TestCoverageEvaluator {
      * @throws java.io.IOException if any.
      * @param inputSource a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      */
-    public void calculateCoverage(QueryExecutionFactory testSuiteQEF, QueryExecutionFactory inputSource) throws IOException {
+    public void calculateCoverage(QueryExecutionFactory testSuiteQEF, QueryExecutionFactory inputSource) {
 
         Map<String, Long> properties = new DatasetStatisticsPropertiesCount().getStatisticsMap(inputSource);
         long propertiesTotal = properties.size();
