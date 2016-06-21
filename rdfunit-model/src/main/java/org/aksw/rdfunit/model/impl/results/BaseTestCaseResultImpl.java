@@ -44,22 +44,27 @@ class BaseTestCaseResultImpl implements TestCaseResult {
         this.timestamp = timestamp;
     }
 
+    @Override
     public Resource getElement() {
         return element;
     }
 
+    @Override
     public String getTestCaseUri() {
         return testCaseUri;
     }
 
+    @Override
     public XSDDateTime getTimestamp() {
         return timestamp;
     }
 
+    @Override
     public RLOGLevel getSeverity() {
         return severity;
     }
 
+    @Override
     public String  getMessage() {
         return message;
     }

@@ -26,6 +26,7 @@ public class SimpleShaclTestCaseResultImpl extends BaseTestCaseResultImpl implem
         this.resource = resource;
     }
 
+    @Override
     public String getFailingResource() {
         return resource;
     }

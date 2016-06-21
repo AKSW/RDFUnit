@@ -18,14 +18,15 @@ public class ShapeScopeCore implements ShapeScope{
     @Getter private final Optional<String> uri;
     private final Function<Optional<String>, String> generatePattern;
 
-    public String getPattern() {
-        return generatePattern.apply(uri);
-    }
-
     private ShapeScopeCore(ShapeScopeType scopeType, Optional<String> uri, Function<Optional<String>, String> generatePattern) {
         this.scopeType = scopeType;
         this.uri = uri;
         this.generatePattern = generatePattern;
+    }
+
+    @Override
+    public String getPattern() {
+        return generatePattern.apply(uri);
     }
 
     public static ShapeScope create(@NonNull ShapeScopeType scopeType) {

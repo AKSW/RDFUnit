@@ -30,6 +30,7 @@ public class StatusTestCaseResultImpl extends BaseTestCaseResultImpl implements 
         this.status = status;
     }
 
+    @Override
     public TestCaseResultStatus getStatus() {
         return status;
     }

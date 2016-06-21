@@ -36,6 +36,7 @@ public class ExtendedTestCaseResultImpl extends RLOGTestCaseResultImpl implement
                 builder.resultAnnotations);
     }
 
+    @Override
     public Set<PropertyValuePair> getResultAnnotations() {
         return resultAnnotations;
     }

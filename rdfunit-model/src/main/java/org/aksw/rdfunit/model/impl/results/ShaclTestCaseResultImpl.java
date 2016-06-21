@@ -36,6 +36,7 @@ public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl imple
                 builder.resultAnnotations);
     }
 
+    @Override
     public Set<PropertyValuePair> getResultAnnotations() {
         return resultAnnotations;
     }
@@ -58,20 +59,3 @@ public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl imple
         }
     }
 }
-
-    /*
-    public Resource serialize(Model model, String testExecutionURI) {
-        Resource resource = super.serialize(model, testExecutionURI)
-            .addProperty(SHACL.subject, model.createResource(getElement()));
-
-
-        for (Map.Entry<ResultAnnotation, Set<RDFNode>> vaEntry : variableAnnotationsMap.entrySet()) {
-            for (RDFNode rdfNode : vaEntry.getValue()) {
-                resource.addProperty(vaEntry.getKey().getAnnotationProperty(), rdfNode);
-            }
-        }
-
-        return resource;
-    }
-      */
-

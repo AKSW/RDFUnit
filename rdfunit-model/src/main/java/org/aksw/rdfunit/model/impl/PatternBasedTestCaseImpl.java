@@ -55,6 +55,7 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
         return testCaseAnnotation.getAutoGeneratorURI();
     }
 
+    @Override
     public Collection<Binding> getBindings() {
         return bindings;
     }
@@ -75,7 +76,7 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
     }
 
 
-    private String instantiateBindings(Collection<Binding> bindings, String query) {
+    private static String instantiateBindings(Collection<Binding> bindings, String query) {
         String sparql = query;
         for (Binding b : bindings) {
             sparql = sparql.replace("%%" + b.getParameterId() + "%%", b.getValueAsString());

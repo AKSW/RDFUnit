@@ -20,6 +20,7 @@ public class RLOGTestCaseResultImpl extends BaseTestCaseResultImpl implements RL
         this.resource = resource;
     }
 
+    @Override
     public String getFailingResource() {
         return resource;
     }

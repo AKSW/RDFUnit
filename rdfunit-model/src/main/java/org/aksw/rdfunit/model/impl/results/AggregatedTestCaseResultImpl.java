@@ -61,6 +61,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
      *
      * @return the error count
      */
+    @Override
     public long getErrorCount() {
         return errorCount;
     }
@@ -70,6 +71,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
      *
      * @return the prevalence count
      */
+    @Override
     public Optional<Long> getPrevalenceCount() {
         if (prevalenceCount>0) {
             return Optional.of(prevalenceCount);
