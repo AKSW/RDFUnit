@@ -7,6 +7,7 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
+import org.aksw.rdfunit.model.helper.RdfListUtils;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.*;
@@ -88,8 +89,8 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     private String formatRdfValue(RDFNode value) {
             if (value.isResource()) {
                 Resource r = value.asResource();
-                if (r.isAnon() && r.canAs(RDFList.class)) {
-                    return getListItems(r).stream().map(this::formatRdfListValue).collect(Collectors.joining("  "));
+                if (RdfListUtils.isList(r)) {
+                    return RdfListUtils.getListItemsOrEmpty(r).stream().map(this::formatRdfListValue).collect(Collectors.joining("  "));
                 } else {
                     return asFullTurtleUri(r);
                 }
@@ -118,18 +119,6 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
         } else {
             return asFullTurtleLiteral(listVal.asLiteral());
         }
-    }
-
-    private List<RDFNode> getListItems(Resource list) {
-        ImmutableList.Builder<RDFNode> nodes = ImmutableList.builder();
-        try {
-            RDFList rdfList = list.as( RDFList.class );
-            rdfList.iterator().forEachRemaining(nodes::add);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Argument not a list", e);
-        }
-
-        return nodes.build();
     }
 
     // hack for now
