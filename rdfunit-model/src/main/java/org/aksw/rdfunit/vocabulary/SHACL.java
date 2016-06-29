@@ -92,6 +92,9 @@ public final class SHACL {
     public static final Property uniqueLang = property("uniqueLang");
 
     public static final Property valueShape = property("valueShape");
+    public static final Property and = property("and");
+    public static final Property or = property("or");
+    public static final Property not = property("not");
 
 
 
