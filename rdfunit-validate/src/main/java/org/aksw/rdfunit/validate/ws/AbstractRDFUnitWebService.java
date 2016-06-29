@@ -83,15 +83,15 @@ public abstract class AbstractRDFUnitWebService extends HttpServlet {
     /**
      * Writes the output of the validation to the HttpServletResponse
      */
-    private void writeResults(final RDFUnitConfiguration configuration, final TestExecution testExecution, HttpServletResponse httpServletResponse) throws RdfWriterException, IOException {
+    private static void writeResults(final RDFUnitConfiguration configuration, final TestExecution testExecution, HttpServletResponse httpServletResponse) throws RdfWriterException, IOException {
         SerializationFormat serializationFormat = configuration.geFirstOutputFormat();
         if (serializationFormat == null) {
             throw new RdfWriterException("Invalid output format");
         }
 
         httpServletResponse.setContentType(serializationFormat.getHeaderType());
-        RdfWriter RdfWriter = RdfResultsWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, testExecution);
-        RdfWriter.write(ModelFactory.createDefaultModel());
+        RdfWriter rdfWriter = RdfResultsWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, testExecution);
+        rdfWriter.write(ModelFactory.createDefaultModel());
     }
 
     /**

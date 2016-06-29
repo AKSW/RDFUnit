@@ -79,7 +79,7 @@ public class TestCaseAnnotation implements Element {
     /**
      * Get either testCaseLogLevel or generate it from resultAnnotations
      **/
-    private RLOGLevel findAnnotationLevel(RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> givenAnnotations) {
+    private static RLOGLevel findAnnotationLevel(RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> givenAnnotations) {
 
         for (ResultAnnotation annotation : givenAnnotations) {
             if (annotation.getAnnotationProperty().equals(RLOG.level)) {
@@ -90,14 +90,14 @@ public class TestCaseAnnotation implements Element {
         return testCaseLogLevel;
     }
 
-    private Collection<ResultAnnotation> findVariableAnnotations(Collection<ResultAnnotation> givenAnnotations) {
+    private static Collection<ResultAnnotation> findVariableAnnotations(Collection<ResultAnnotation> givenAnnotations) {
 
         return givenAnnotations.stream()
                 .filter(a -> a.getAnnotationVarName().isPresent())
                 .collect(Collectors.toList());
     }
 
-    private Collection<ResultAnnotation> findNonVariableAnnotations(Collection<ResultAnnotation> givenAnnotations) {
+    private static Collection<ResultAnnotation> findNonVariableAnnotations(Collection<ResultAnnotation> givenAnnotations) {
 
         return givenAnnotations.stream()
                 .filter(a -> !a.getAnnotationVarName().isPresent())
