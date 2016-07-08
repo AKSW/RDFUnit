@@ -7,7 +7,7 @@ RDFUnit-JUnit Integration provides an interface to JUnit via a dedicated Runner 
 ```java
 
 @RunWith(RdfUnitJunitRunner.class)
-@Schema(uri = "ontologies/foaf.rdf")
+@Schema(uri = "ontologies/schema.ttl")
 public static class TestRunner {
 
     @AdditionalData
@@ -19,9 +19,9 @@ public static class TestRunner {
 
     @TestInput
     public RDFReader getInputData() {
-        return new RDFModelReader(ModelFactory
-                .createDefaultModel()
-                .read("inputmodels/foaf.rdf"));
+        return new RdfModelReader(
+            RdfReaderFactory.createResourceReader(
+                "/inputmodels/data.ttl").read());
     }
 
 }
