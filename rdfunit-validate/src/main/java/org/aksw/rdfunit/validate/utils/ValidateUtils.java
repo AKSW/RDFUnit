@@ -76,6 +76,7 @@ public final class ValidateUtils {
         cliOptions.addOption("P", "query-pagination", true, "Specify a pagination option for retrieving big results or '0' to disable it.");
         cliOptions.addOption("c", "test-coverage", false, "Calculate test-coverage scores");
         cliOptions.addOption("f", "data-folder", true, "the location of the data folder (defaults to '../data/' or '~/.rdfunit). " +
+                "This is where the results and the caches are stored. " +
                 "If none exists, bundled versions will be loaded.'");
         cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
 
