@@ -58,9 +58,18 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
+            <artifactId>vaadin-client-compiled</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
+
+        <dependency>
+            <!-- see https://vaadin.com/forum#!/thread/9316748 -->
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>5.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!--
           Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
 
