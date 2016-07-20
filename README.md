@@ -6,6 +6,7 @@ RDFUnit - RDF Unit Testing Suite
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/2650/badge.svg?flat=1)](https://scan.coverity.com/projects/2650)
 [![Coverage Status](https://coveralls.io/repos/AKSW/RDFUnit/badge.svg?branch=master&service=github)](https://coveralls.io/github/AKSW/RDFUnit?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/02907c27b76141709e5a6e9682fc836c)](https://www.codacy.com/app/jimkont/RDFUnit)
+[![codebeat badge](https://codebeat.co/badges/fc781acc-0a9f-4796-9d33-28d1ffb3b019)](https://codebeat.co/projects/github-com-aksw-rdfunit)
 [![Project Stats](https://www.openhub.net/p/RDFUnit/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/RDFUnit)
 
 
