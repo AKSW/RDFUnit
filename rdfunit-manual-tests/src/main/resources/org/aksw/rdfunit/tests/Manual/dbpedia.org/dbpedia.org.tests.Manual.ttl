@@ -249,7 +249,7 @@ rutt:dbpedia-org-TYPDEP-placenocoordinates
     rut:basedOnPattern rutp:TYPDEP ;
     rut:generated rut:ManuallyGenerated ;
     rut:references <http://dbpedia.org/ontology/Place> ;
-    rut:references <http://www.opengis.net/gml/_Feature> ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
     rut:source <http://dbpedia.org> ;
     rut:binding
         [ a     rut:Binding ;
@@ -258,7 +258,7 @@ rutt:dbpedia-org-TYPDEP-placenocoordinates
         ] ;
     rut:binding
         [ a     rut:Binding ;
-            rut:bindingValue <http://www.opengis.net/gml/_Feature> ;
+            rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
             rut:parameter rutp:TYPDEP-T2
         ] ;
     rut:testCaseLogLevel
