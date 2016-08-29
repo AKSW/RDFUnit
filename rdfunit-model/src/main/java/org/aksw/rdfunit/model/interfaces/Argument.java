@@ -50,7 +50,7 @@ public interface Argument extends Element{
             values = ImmutableSet.of(getDefaultValue().get()) ;
         }
         if (values.size() >1) {
-            throw new IllegalArgumentException("FIXME: multiple arguments given");
+            throw new IllegalArgumentException("FIXME: multiple arguments given for " + getPredicate().toString());
         }
         return values.stream().findFirst();
     }
