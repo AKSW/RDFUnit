@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.sources;
 
+import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
+import org.apache.jena.rdf.model.Model;
 
 import java.util.Collection;
 
@@ -36,16 +38,6 @@ public final class TestSourceFactory {
         throw new IllegalArgumentException("Cannot initialize TestSource");
     }
 
-    /**
-     * <p>createDumpTestSource.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     * @param dumpReader a {@link RdfReader} object.
-     * @param referenceSchemata a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
-     * @since 0.7.6
-     */
     public static TestSource createDumpTestSource(String prefix, String uri, RdfReader dumpReader, Collection<SchemaSource> referenceSchemata) {
         return new TestSourceBuilder()
                 .setImMemSingle()
@@ -54,6 +46,11 @@ public final class TestSourceFactory {
                 .setReferenceSchemata(referenceSchemata)
                 .build();
     }
+
+    public static TestSource createDumpTestSource(String prefix, String uri, Model model, Collection<SchemaSource> referenceSchemata) {
+        return createDumpTestSource(prefix, uri, new RdfModelReader(model), referenceSchemata);
+    }
+
 
     /**
      * <p>createDatasetTestSource.</p>
