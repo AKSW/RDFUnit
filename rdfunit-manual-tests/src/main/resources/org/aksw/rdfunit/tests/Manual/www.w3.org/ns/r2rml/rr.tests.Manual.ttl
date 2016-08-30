@@ -35,7 +35,7 @@ rutt:rr-subjectmap-template-missing-class
     rut:sparqlWhere """ {
                              ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?this ;
                                        <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
                              ?predicate rdfs:domain ?T1 .
                              FILTER (!isBlank(?T1))
                              FILTER ( ?T1 NOT IN ( owl:Thing , prov:Entity , rdfs:Resource, rdf:Property, rdfs:Class, rdfs:Datatype ))
@@ -46,7 +46,7 @@ rutt:rr-subjectmap-template-missing-class
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?this ;
                                     <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate . } """ ;
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate . } """ ;
 rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty sh:predicate ;
@@ -76,7 +76,7 @@ rutt:rr-predicateObjectMap-wrong-domain
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?this ;
                                       <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
 
                             {   # get the class defined in a normal way
                                 ?this <http://www.w3.org/ns/r2rml#class> ?class .
@@ -100,7 +100,7 @@ rutt:rr-predicateObjectMap-wrong-domain
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap> ?this ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
                                  ?this <http://www.w3.org/ns/r2rml#class> ?class .
-                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate . }  """ ;
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
 	   rut:annotationProperty sh:predicate ;
@@ -133,7 +133,7 @@ rutt:rr-predicateObjectMap-missing-datatype
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . # rr:objectMap
 
                             FILTER EXISTS {
@@ -164,7 +164,7 @@ rutt:rr-predicateObjectMap-missing-datatype
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
@@ -193,7 +193,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
                             ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . # rr:objectMap
                             ?this <http://www.w3.org/ns/r2rml#datatype> ?datatype .
                             ?predicate rdfs:range ?D1 . # we need the range of the predicate defined in the current graph
@@ -226,7 +226,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
                                  ?mapping <http://www.w3.org/ns/r2rml#subjectMap>/<http://www.w3.org/ns/r2rml#class> ?class ;
                                            <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
@@ -259,7 +259,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . # rr:objectMap
                             ?this <http://www.w3.org/ns/r2rml#constant> ?constant ;
                                       <http://www.w3.org/ns/r2rml#termType> <http://www.w3.org/ns/r2rml#IRI> .
@@ -287,7 +287,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
-                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this .
                                  ?this <http://www.w3.org/ns/r2rml#constant> ?constant .}  """ ;
 	rut:resultAnnotation [
@@ -317,7 +317,7 @@ rutt:rr-predicateObjectMap-should-be-IRI
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . # rr:objectMap
                             ?this <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template>|<http://www.w3.org/ns/r2rml#column> ?val .
 
@@ -348,7 +348,7 @@ rutt:rr-predicateObjectMap-should-be-IRI
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
-                                 ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                                 ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 .
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this .
                                  ?this <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template>|<http://www.w3.org/ns/r2rml#column> ?val .}  """ ;
 	rut:resultAnnotation [
@@ -449,7 +449,7 @@ rutt:rr-produces-range-errors
                             }
 
                             ?mappingFrom <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
                             ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?objM .
                             ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
 
@@ -471,7 +471,7 @@ rutt:rr-produces-range-errors
                              }
 
                              ?mappingFrom <http://www.w3.org/ns/r2rml#predicateObjectMap> ?poMap .
-                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?predicate .
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate .
                              ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?objM .
                              ?objM <http://www.w3.org/ns/r2rml#parentTriplesMap> ?mappingTo .
 
@@ -508,7 +508,7 @@ rutt:rr-language-missing
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:ERROR ;
     rut:sparqlWhere """ {
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?this .
 
                             ?P1 rdfs:range rdf:langString .
@@ -518,7 +518,7 @@ rutt:rr-language-missing
                             }
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
-                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?this .}""" ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
@@ -542,13 +542,13 @@ rutt:rr-deprecated-property
     rut:source <http://www.w3.org/ns/r2rml#> ;
     rut:testCaseLogLevel rlog:WARN ;
     rut:sparqlWhere """ {
-                            ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                            ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?this .
 
                             ?P1 rdf:type/rdfs:subClassOf* owl:deprecatedProperty .
                         } """ ;
     rut:sparqlPrevalence """ SELECT (count(distinct ?this) AS ?total) WHERE {
-                             ?poMap <http://www.w3.org/ns/r2rml#predicate> ?P1 ;
+                             ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?P1 ;
                                     <http://www.w3.org/ns/r2rml#objectMap> ?this .}""" ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
