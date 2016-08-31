@@ -113,7 +113,7 @@ rutt:rr-predicateObjectMap-wrong-domain
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:object ;
+        rut:annotationProperty rdf:object ;
         rut:annotationValue """?T1"""
     ];
     rut:resultAnnotation [
@@ -240,7 +240,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
     ];
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:object ;
+        rut:annotationProperty rdf:object ;
         rut:annotationValue """?D1"""
     ];
     rut:resultAnnotation [
