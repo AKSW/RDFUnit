@@ -97,7 +97,7 @@ public class ExtendedTestExecutor extends RLOGTestExecutor {
                 checkNotNull(resultBuilder);
 
                 // get annotations from the SPARQL query
-                for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
+                for (ResultAnnotation resultAnnotation : testCase.getVariableAnnotations()) {
                     // Get the variable name
                     if (resultAnnotation.getAnnotationVarName().isPresent()) {
                         String variable = resultAnnotation.getAnnotationVarName().get().trim();
