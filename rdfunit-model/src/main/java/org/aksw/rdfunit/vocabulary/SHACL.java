@@ -28,7 +28,6 @@ public final class SHACL {
 
     public static final Property targetClass = property("targetClass");
     public static final Property targetNode = property("targetNode");
-    public static final Property scope = property("scope");
     public static final Property targetSubjectsOf = property("targetSubjectsOf");
     public static final Property targetObjectsOf = property("targetObjectsOf");
 

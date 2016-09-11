@@ -19,41 +19,41 @@ public class ShapeTargetValueShape implements ShapeTarget {
 
     @Getter private final ShapeTargetType targetType = ShapeTargetType.ValueShapeTarget;
     private final ImmutableList<Resource> propertyChain;
-    private final ShapeTarget outerScope;
+    private final ShapeTarget outerTarget;
     private final Function<ShapeTargetValueShape, String> generatePattern;
 
-    private ShapeTargetValueShape(ShapeTarget outerScope, List<Resource> propertyChain, Function<ShapeTargetValueShape, String> generatePattern) {
-        this.outerScope = outerScope;
+    private ShapeTargetValueShape(ShapeTarget outerTarget, List<Resource> propertyChain, Function<ShapeTargetValueShape, String> generatePattern) {
+        this.outerTarget = outerTarget;
         this.propertyChain = ImmutableList.copyOf(propertyChain);
         this.generatePattern = generatePattern;
     }
 
-    public static ShapeTarget create(ShapeTarget outerScope, List<Resource> propertyChain) {
-        switch (outerScope.getTargetType()) {
+    public static ShapeTarget create(ShapeTarget outerTarget, List<Resource> propertyChain) {
+        switch (outerTarget.getTargetType()) {
             case ClassTarget:
-                return new ShapeTargetValueShape(outerScope, propertyChain, ShapeTargetValueShape::classTargetPattern);
+                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::classTargetPattern);
             case NodeTarget:
-                return new ShapeTargetValueShape(outerScope, propertyChain, ShapeTargetValueShape::nodeTargetPattern);
-//            case AllObjectsScope:
-//                return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::allObjectsScopePattern);
-//            case AllSubjectsScope:
-//                return new ShapeScopeValueShape(outerScope, propertyChain, ShapeScopeValueShape::allSubjectsScopePattern);
+                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::nodeTargetPattern);
+//            case AllObjectsTarget:
+//                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::allObjectsTargetPattern);
+//            case AllSubjectsTarget:
+//                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::allSubjectsTargetPattern);
             case ObjectsOfTarget:
-                return new ShapeTargetValueShape(outerScope, propertyChain, ShapeTargetValueShape::objectsOfTargetPattern);
+                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::objectsOfTargetPattern);
             case SubjectsOfTarget:
-                return new ShapeTargetValueShape(outerScope, propertyChain, ShapeTargetValueShape::subjectsOfTargetPattern);
+                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::subjectsOfTargetPattern);
             case ValueShapeTarget:
-                if (outerScope instanceof ShapeTargetValueShape) {
-                    return transformScope((ShapeTargetValueShape) outerScope, propertyChain);
+                if (outerTarget instanceof ShapeTargetValueShape) {
+                    return transformTarget((ShapeTargetValueShape) outerTarget, propertyChain);
                 }
             default:
-                throw new IllegalArgumentException("Unsupported scope in sh:valueShape");
+                throw new IllegalArgumentException("Unsupported target in sh:valueShape");
         }
     }
 
     @Override
     public Optional<String> getUri() {
-        return outerScope.getUri();
+        return outerTarget.getUri();
     }
 
     @Override
@@ -62,16 +62,16 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
 
-    private static ShapeTarget transformScope(ShapeTargetValueShape outerScope, List<Resource> propertyChain) {
+    private static ShapeTarget transformTarget(ShapeTargetValueShape outerTargetLocal, List<Resource> propertyChain) {
         ImmutableList.Builder<Resource> builder = new ImmutableList.Builder<>();
         builder.addAll(propertyChain);
-        builder.addAll(outerScope.propertyChain);
-        return create(outerScope.outerScope, builder.build());
+        builder.addAll(outerTargetLocal.propertyChain);
+        return create(outerTargetLocal.outerTarget, builder.build());
     }
 
-    private static String classTargetPattern(ShapeTargetValueShape scope) {
-        return " [] rdf:type/rdfs:subClassOf* <" + scope.getUri().get() + "> ; " +
-                writePropertyChain(scope.propertyChain) + "  ?this . ";
+    private static String classTargetPattern(ShapeTargetValueShape target) {
+        return " [] rdf:type/rdfs:subClassOf* <" + target.getUri().get() + "> ; " +
+                writePropertyChain(target.propertyChain) + "  ?this . ";
     }
 
     private static String writePropertyChain(List<Resource> propertyChain) {
@@ -80,26 +80,26 @@ public class ShapeTargetValueShape implements ShapeTarget {
                 .collect(Collectors.joining("/"));
     }
 
-    private static String nodeTargetPattern(ShapeTargetValueShape scope) {
-        return " <" + scope.getUri().get() + "> " + writePropertyChain(scope.propertyChain) + " ?this . ";
+    private static String nodeTargetPattern(ShapeTargetValueShape target) {
+        return " <" + target.getUri().get() + "> " + writePropertyChain(target.propertyChain) + " ?this . ";
     }
 
-    private static String objectsOfTargetPattern(ShapeTargetValueShape scope) {
-        return " [] (^<" + scope.getUri().get() + ">)/" + writePropertyChain(scope.propertyChain) + " ?this .";
+    private static String objectsOfTargetPattern(ShapeTargetValueShape target) {
+        return " [] (^<" + target.getUri().get() + ">)/" + writePropertyChain(target.propertyChain) + " ?this .";
     }
 
-    private static String subjectsOfTargetPattern(ShapeTargetValueShape scope) {
-        return " [] <" + scope.getUri().get() + ">/" + writePropertyChain(scope.propertyChain) + " ?this .";
+    private static String subjectsOfTargetPattern(ShapeTargetValueShape target) {
+        return " [] <" + target.getUri().get() + ">/" + writePropertyChain(target.propertyChain) + " ?this .";
     }
 
-    //private static String allObjectsScopePattern(ShapeTargetValueShape scope) {
-    //    return " [] ^$shaclAnyPredicate <" + scope.getUri().get() + "> ; " +
-    //            writePropertyChain(scope.propertyChain) + "  ?this . ";
+    //private static String allObjectsTargetPattern(ShapeTargetValueShape target) {
+    //    return " [] ^$shaclAnyPredicate <" + target.getUri().get() + "> ; " +
+    //            writePropertyChain(target.propertyChain) + "  ?this . ";
     //}
 
-    //private static String allSubjectsScopePattern(ShapeTargetValueShape scope) {
-    //    return " [] $shaclAnyPredicate <" + scope.getUri().get() + "> ; " +
-    //            writePropertyChain(scope.propertyChain) + "  ?this . ";
+    //private static String allSubjectsTargetPattern(ShapeTargetValueShape target) {
+    //    return " [] $shaclAnyPredicate <" + target.getUri().get() + "> ; " +
+    //            writePropertyChain(target.propertyChain) + "  ?this . ";
     //}
 
 

@@ -34,18 +34,18 @@ public class BatchShapeTargetReaderTest {
         Model shapesModel = RdfReaderFactory.createResourceReader(shapeResource).read();
 
         Resource r1 = shapesModel.getResource("http://example.org/MyShape");
-        Set<ShapeTarget> scopes1 = BatchShapeTargetReader.create().read(r1);
-        assertThat(scopes1)
+        Set<ShapeTarget> targets1 = BatchShapeTargetReader.create().read(r1);
+        assertThat(targets1)
                 .hasSize(2);
 
         Resource r2 = shapesModel.getResource("http://example.org/MyNestedShape");
-        Set<ShapeTarget> scopes2 = BatchShapeTargetReader.create().read(r2);
-        assertThat(scopes2)
+        Set<ShapeTarget> targets2 = BatchShapeTargetReader.create().read(r2);
+        assertThat(targets2)
                 .hasSize(2);
 
         Resource r3 = shapesModel.getResource("http://example.org/MyNestedShape2");
-        Set<ShapeTarget> scopes3 = BatchShapeTargetReader.create().read(r3);
-        assertThat(scopes3)
+        Set<ShapeTarget> targets3 = BatchShapeTargetReader.create().read(r3);
+        assertThat(targets3)
                 .hasSize(2);
     }
 

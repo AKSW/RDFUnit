@@ -43,10 +43,10 @@ public class ShapeTargetCore implements ShapeTarget {
                 return new ShapeTargetCore(targetType, uri, ShapeTargetCore::classTargetPattern);
             case NodeTarget:
                 return new ShapeTargetCore(targetType, uri, ShapeTargetCore::nodeTargetPattern);
-//            case AllObjectsScope:
-//                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::allObjectsScopePattern);
-//            case AllSubjectsScope:
-//                return new ShapeScopeCore(scopeType, uri, ShapeScopeCore::allSubjectsScopePattern);
+//            case AllObjectsTarget:
+//                return new ShapeTargetCore(targetType, uri, ShapeTargetCore::allObjectsTargetPattern);
+//            case AllSubjectsTarget:
+//                return new ShapeTargetCore(targetType, uri, ShapeTargetCore::allSubjectsTargetPattern);
             case ObjectsOfTarget:
                 return new ShapeTargetCore(targetType, uri, ShapeTargetCore::objectsOfTargetPattern);
             case SubjectsOfTarget:
@@ -72,11 +72,11 @@ public class ShapeTargetCore implements ShapeTarget {
         return "?this <" + uri.get() + "> [] .";
     }
 
-    //private static String allObjectsScopePattern(Optional<String> uri) {
+    //private static String allObjectsTargetPattern(Optional<String> uri) {
     //    return "[] $shaclAnyPredicate ?this .";
     //}
 
-    //private static String allSubjectsScopePattern(Optional<String> uri) {
+    //private static String allSubjectsTargetPattern(Optional<String> uri) {
     //    return "?this $shaclAnyPredicate [] .";
     //}
 

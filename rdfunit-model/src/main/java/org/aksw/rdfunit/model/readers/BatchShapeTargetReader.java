@@ -41,25 +41,25 @@ public final class BatchShapeTargetReader {
     public Set<ShapeTarget> read(Resource resource) {
         checkNotNull(resource);
 
-        ImmutableSet.Builder<ShapeTarget> scopeBuilder = ImmutableSet.builder();
+        ImmutableSet.Builder<ShapeTarget> targetBuilder = ImmutableSet.builder();
 
-        scopeBuilder.addAll(collectExplicitScopes(resource));
+        targetBuilder.addAll(collectExplicitTargets(resource));
 
-        scopeBuilder.addAll(collectValueShapeScopes(resource));
+        targetBuilder.addAll(collectValueShapeTargets(resource));
 
-        return scopeBuilder.build();
+        return targetBuilder.build();
 
     }
 
-    private Set<ShapeTarget> collectExplicitScopes(Resource resource) {
-        ImmutableSet.Builder<ShapeTarget> scopeBuilder = ImmutableSet.builder();
+    private Set<ShapeTarget> collectExplicitTargets(Resource resource) {
+        ImmutableSet.Builder<ShapeTarget> targetBuilder = ImmutableSet.builder();
 
-        scopeBuilder.addAll(collectClassTarget(resource));
-        scopeBuilder.addAll(collectNodeTarget(resource));
-        scopeBuilder.addAll(collectSubjectsOfTarget(resource));
-        scopeBuilder.addAll(collectObjectsOfTarget(resource));
+        targetBuilder.addAll(collectClassTarget(resource));
+        targetBuilder.addAll(collectNodeTarget(resource));
+        targetBuilder.addAll(collectSubjectsOfTarget(resource));
+        targetBuilder.addAll(collectObjectsOfTarget(resource));
 
-        return scopeBuilder.build();
+        return targetBuilder.build();
     }
 
     private List<ShapeTarget> collectClassTarget(Resource resource) {
@@ -90,12 +90,12 @@ public final class BatchShapeTargetReader {
                 .collect(Collectors.toList());
     }
 
-    private Set<ShapeTarget> collectValueShapeScopes(Resource resource){
-        return collectValueShapeScopes(resource, Collections.emptyList());
+    private Set<ShapeTarget> collectValueShapeTargets(Resource resource){
+        return collectValueShapeTargets(resource, Collections.emptyList());
     }
 
-    private Set<ShapeTarget> collectValueShapeScopes(Resource resource, List<Resource> propertyChain){
-        ImmutableSet.Builder<ShapeTarget> scopes = ImmutableSet.builder();
+    private Set<ShapeTarget> collectValueShapeTargets(Resource resource, List<Resource> propertyChain){
+        ImmutableSet.Builder<ShapeTarget> targets = ImmutableSet.builder();
 
         List<Resource> tmp = resource.getModel().listResourcesWithProperty(SHACL.valueShape, resource).toList();
 
@@ -104,14 +104,14 @@ public final class BatchShapeTargetReader {
                     getParentShapeResources(r)
                             .forEach(shape -> {
                                 ImmutableList<Resource> propChainNew = new ImmutableList.Builder<Resource>().add(property).addAll(propertyChain).build();
-                                collectExplicitScopes(shape).forEach(scope ->
-                                        scopes.add(ShapeTargetValueShape.create(scope, propChainNew)));
+                                collectExplicitTargets(shape).forEach(target ->
+                                        targets.add(ShapeTargetValueShape.create(target, propChainNew)));
 
-                                scopes.addAll(collectValueShapeScopes(shape, propChainNew));
+                                targets.addAll(collectValueShapeTargets(shape, propChainNew));
                             });
                 });
 
-        return scopes.build();
+        return targets.build();
     }
 
     private List<Resource> getParentShapeResources(Resource resource) {

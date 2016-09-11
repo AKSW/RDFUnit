@@ -10,4 +10,4 @@ ex:1 rdf:type ex:Person ;
 ex:2 rdf:type ex:DirectClass .
 
 ex:3 ex:checkDirectClass ex:4 .
-ex:4 a ex:SuperClassXYZ. # correct, scope is different
+ex:4 a ex:SuperClassXYZ. # correct, target is different

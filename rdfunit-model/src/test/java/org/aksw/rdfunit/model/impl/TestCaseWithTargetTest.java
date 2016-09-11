@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
  * @since 14/2/2016 1:22 μμ
  */
 @RunWith(Parameterized.class)
-public class ScopedTestCaseTest {
+public class TestCaseWithTargetTest {
 
     @Parameterized.Parameters(name= "{index}")
     public static Collection<Object[]> items() {
@@ -36,16 +36,16 @@ public class ScopedTestCaseTest {
         );
 
         String p = "http://example.com#ex";
-        List<ShapeTarget> scopes = Arrays.stream(ShapeTargetType.values())
+        List<ShapeTarget> targets = Arrays.stream(ShapeTargetType.values())
                 .filter( sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
                 .map(scType -> ShapeTargetCore.create(scType, p))
                 .collect(Collectors.toList());
 
         Collection<Object[]> parameters = new ArrayList<>();
         sparqlSampleQueries
-                .forEach( sparql -> scopes
-                        .forEach(scope ->
-                                parameters.add(new Object[] {sparql, scope})));
+                .forEach( sparql -> targets
+                        .forEach(target ->
+                                parameters.add(new Object[] {sparql, target})));
         return parameters;
     }
 
@@ -53,7 +53,7 @@ public class ScopedTestCaseTest {
     public String sparqlQuery;
 
     @Parameterized.Parameter(value=1)
-    public ShapeTarget scope;
+    public ShapeTarget target;
 
     @Test
     public void test() {
@@ -61,16 +61,16 @@ public class ScopedTestCaseTest {
         TestCase innerTestCAse = Mockito.mock(TestCase.class);
         when(innerTestCAse.getSparqlWhere()).thenReturn(sparqlQuery);
 
-        TestCase scopedTestCase = TestCaseWithTarget.builder()
+        TestCase testCaseWithTarget = TestCaseWithTarget.builder()
                 .testCase(innerTestCAse)
-                .target(scope)
+                .target(target)
                 .filterSpqrql(" ?this <http://example.cpm/p> ?value .")
                 .build();
 
-        String finalSparql = PrefixNSService.getSparqlPrefixDecl() + scopedTestCase.getSparqlWhere();
+        String finalSparql = PrefixNSService.getSparqlPrefixDecl() + testCaseWithTarget.getSparqlWhere();
 
         assertThat(finalSparql)
-                .contains(scope.getPattern());
+                .contains(target.getPattern());
 
         try {
             QueryFactory.create(finalSparql);

@@ -9,7 +9,7 @@ import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.apache.jena.rdf.model.Resource;
 
 /**
- * Used mainly for SHACL in order to inject a scope from a shape to a sparql constraint
+ * Used mainly for SHACL in order to inject a target from a shape to a sparql constraint
  *
  * @author Dimitris Kontokostas
  * @since 14/2/2016 12:55 μμ
@@ -30,7 +30,7 @@ public class TestCaseWithTarget implements TestCase {
 
     @Override
     public String getSparqlPrevalence() {
-        // FIXME we need scope here too
+        // FIXME we need target here too
         return testCase.getSparqlPrevalence();
     }
 

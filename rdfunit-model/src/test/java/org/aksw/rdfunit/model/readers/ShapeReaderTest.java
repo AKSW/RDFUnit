@@ -53,7 +53,7 @@ public class ShapeReaderTest {
 
         Shape sh = shapes.get(0);
 
-        checkScope(sh);
+        checkTarget(sh);
 
         testPropertyGroups(sh);
     }
@@ -77,25 +77,24 @@ public class ShapeReaderTest {
         assertThat(pcg1.getPropertyConstraints().size())
                 .isEqualTo(pcg2.getPropertyConstraints().size());
 
-        pcg1.getPropertyConstraints().stream()
-                .forEach( p -> {
-                    assertThat(pcg2.getPropertyConstraints().contains(p));
-                    assertThat(p.getTestCase(pcg1.isInverse()).getLogLevel().equals(RLOGLevel.WARN));
-                });
+        pcg1.getPropertyConstraints().forEach(p -> {
+            assertThat(pcg2.getPropertyConstraints().contains(p));
+            assertThat(p.getTestCase(pcg1.isInverse()).getLogLevel().equals(RLOGLevel.WARN));
+        });
     }
 
-    private void checkScope(Shape sh) {
+    private void checkTarget(Shape sh) {
         assertThat(sh.getTargets())
                 .hasSize(ShapeTargetType.values().length-1);
 
 
-        List<ShapeTargetType> scopeTypes = sh.getTargets().stream()
+        List<ShapeTargetType> targetTypes = sh.getTargets().stream()
                 .map(ShapeTarget::getTargetType)
                 .distinct()
                 .collect(Collectors.toList());
 
-        // distinct scopes
-        assertThat(scopeTypes)
+        // distinct targets
+        assertThat(targetTypes)
                 .hasSize(ShapeTargetType.values().length-1)
                 ;
     }

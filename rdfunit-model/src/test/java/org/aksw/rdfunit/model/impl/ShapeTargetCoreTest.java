@@ -27,27 +27,27 @@ public class ShapeTargetCoreTest {
 
 //    @Test(expected=NullPointerException.class)
 //    public void testCreateNullValue() {
-//        ShapeScopeCore.create(ShapeTargetType.AllObjectsScope, null);
+//        ShapeTargetCore.create(ShapeTargetType.AllObjectsTarget, null);
 //    }
 
     @Test
     public void testPatternUnique() {
 
-        List<String> scopePatterns = Arrays.stream(ShapeTargetType.values() )
+        List<String> targetPatterns = Arrays.stream(ShapeTargetType.values() )
                 .filter( sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
                 .map( s -> ShapeTargetCore.create(s, "http://example.com"))
                 .map(ShapeTarget::getPattern)
                 .collect(Collectors.toList());
 
-        // each scope results in different pattern
-        assertThat(scopePatterns.size())
-                .isEqualTo(new HashSet<>(scopePatterns).size());
+        // each target results in different pattern
+        assertThat(targetPatterns.size())
+                .isEqualTo(new HashSet<>(targetPatterns).size());
 
 
     }
 
     @Test
-    public void testScopeContainsUri() {
+    public void testTargetContainsUri() {
 
         String uri = "http://example.com";
         Arrays.stream(ShapeTargetType.values() )

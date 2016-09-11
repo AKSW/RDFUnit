@@ -39,14 +39,14 @@ public class ShaclModel {
         ImmutableSet.Builder<TestCase> builder = ImmutableSet.builder();
 
         getShapes().forEach( shape -> // for every shape
-                shape.getTargets().forEach(scope ->  // for every scope (skip if none)
+                shape.getTargets().forEach(target ->  // for every target (skip if none)
                                 shape.getPropertyConstraintGroups().forEach( ppg ->
                                     ppg.getPropertyConstraints().forEach( ppc -> {
                                         String filter = ppg.getPropertyFilter();
                                         if (!ppc.usesValidatorFunction()) {filter = "";}
                                         builder.add(
                                                 TestCaseWithTarget.builder()
-                                                        .target(scope)
+                                                        .target(target)
                                                         .filterSpqrql(filter)
                                                         .testCase(ppc.getTestCase(ppg.isInverse()))
                                                         .build());
