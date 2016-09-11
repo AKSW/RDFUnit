@@ -105,6 +105,12 @@
 
             <dependency>
                 <groupId>org.aksw.rdfunit</groupId>
+                <artifactId>rdfunit-junit</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aksw.rdfunit</groupId>
                 <artifactId>rdfunit-validate</artifactId>
                 <version>${project.version}</version>
             </dependency>

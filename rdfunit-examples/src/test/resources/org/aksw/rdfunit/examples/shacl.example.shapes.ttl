@@ -1,0 +1,32 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+
+
+ex:MyShape
+	a sh:Shape ;
+	sh:targetClass ex:Configuration ;
+
+	sh:property [
+		sh:predicate ex:description ;
+		sh:minCount 1 ;
+		sh:maxCount 1 ;
+		sh:datatype rdf:langString ;
+	] ;
+
+	sh:property [
+		sh:predicate ex:inputFile ;
+		sh:minCount 1 ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:string ;
+	] ;
+	sh:property [
+		sh:predicate ex:outputFile ;
+		sh:minCount 1 ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:string;
+	]  .
+
