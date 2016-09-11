@@ -10,7 +10,7 @@
 
 ex:MyShape
 	a sh:Shape ;
-	sh:scopeClass ex:Person ;
+	sh:targetClass ex:Person ;
 
 	sh:property [
 		sh:predicate ex:classCheckProperty ;
@@ -95,7 +95,7 @@ ex:MyShape
 
 ex:MyCardShapeMin
 	a sh:Shape ;
-	sh:scopeClass ex:CardCheckMin ;
+	sh:targetClass ex:CardCheckMin ;
 
     sh:property [
         sh:predicate ex:checkMinCount0 ;
@@ -114,7 +114,7 @@ ex:MyCardShapeMin
 .
 ex:MyCardShapeMax
 	a sh:Shape ;
-	sh:scopeClass ex:CardCheckMax ;
+	sh:targetClass ex:CardCheckMax ;
 
     sh:property [
         sh:predicate ex:checkMaxCount0 ;
@@ -134,7 +134,7 @@ ex:MyCardShapeMax
 
 ex:ValueShapeExampleShape
 	a sh:Shape ;
-	sh:scopeClass ex:ValueShapeClass;
+	sh:targetClass ex:ValueShapeClass;
 	sh:property [
 		sh:predicate ex:someProperty ;
 		sh:valueShape ex:ValueShapeNested1 ;

@@ -30,14 +30,15 @@ import java.util.stream.Collectors;
  */
 public class DBpediaMappingValidator {
 
-    private static final String MAPPING_SERVER = "http://mappings.dbpedia.org"; // "http://localhost:9999";
+    //private static final String MAPPING_SERVER = "http://mappings.dbpedia.org"; // "http://localhost:9999";
+    private static final String MAPPING_SERVER = "http://localhost:9999";
 
     private static final String DBPEDIA_ONTOLOGY = MAPPING_SERVER + "/server/ontology/dbpedia.owl";
     private static final String RML_MANUAL_TESTS = "/org/aksw/rdfunit/tests/Manual/www.w3.org/ns/r2rml/rr.tests.Manual.ttl";
-    private static final Collection<String> languages = Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
+    private static final Collection<String> languages = //Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
     // 2014 languages
     // Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
-    // Arrays.asList("el", "bg");
+    Arrays.asList("en");
 
     private static final String SPARQL_QUERY = PrefixNSService.getSparqlPrefixDecl() +
             " select ?error ?missing ?predicate ?mapping\n" +

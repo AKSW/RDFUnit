@@ -26,10 +26,11 @@ public final class SHACL {
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource ValidationResult = resource("ValidationResult");
 
-    public static final Resource PropertyScope = resource("PropertyScope");
-    public static final Resource InversePropertyScope = resource("InversePropertyScope");
-    public static final Resource AllSubjectsScope = resource("AllSubjectsScope");
-    public static final Resource AllObjectsScope = resource("AllObjectsScope");
+    public static final Property targetClass = property("targetClass");
+    public static final Property targetNode = property("targetNode");
+    public static final Property scope = property("scope");
+    public static final Property targetSubjectsOf = property("targetSubjectsOf");
+    public static final Property targetObjectsOf = property("targetObjectsOf");
 
 
     public static final Resource Info = resource("Info");
@@ -62,9 +63,6 @@ public final class SHACL {
     public static final Property annotationProperty = property("annotationProperty");
     public static final Property annotationVarName = property("annotationVarName");
     public static final Property annotationValue = property("annotationValue");
-    public static final Property scopeClass = property("scopeClass");
-    public static final Property scopeNode = property("scopeNode");
-    public static final Property scope = property("scope");
     public static final Property property = property("property");
     public static final Property inverseProperty = property("inverseProperty");
     //public static final Property cachable = property("cachable");

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
-import org.aksw.rdfunit.model.impl.ScopedTestCase;
+import org.aksw.rdfunit.model.impl.TestCaseWithTarget;
 import org.aksw.rdfunit.model.interfaces.Shape;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.BatchShapeReader;
@@ -39,14 +39,14 @@ public class ShaclModel {
         ImmutableSet.Builder<TestCase> builder = ImmutableSet.builder();
 
         getShapes().forEach( shape -> // for every shape
-                shape.getScopes().forEach( scope ->  // for every scope (skip if none)
+                shape.getTargets().forEach(scope ->  // for every scope (skip if none)
                                 shape.getPropertyConstraintGroups().forEach( ppg ->
                                     ppg.getPropertyConstraints().forEach( ppc -> {
                                         String filter = ppg.getPropertyFilter();
                                         if (!ppc.usesValidatorFunction()) {filter = "";}
                                         builder.add(
-                                                ScopedTestCase.builder()
-                                                        .scope(scope)
+                                                TestCaseWithTarget.builder()
+                                                        .target(scope)
                                                         .filterSpqrql(filter)
                                                         .testCase(ppc.getTestCase(ppg.isInverse()))
                                                         .build());

@@ -2,12 +2,12 @@ package org.aksw.rdfunit.model.readers;
 
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.enums.ShapeScopeType;
+import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 import org.aksw.rdfunit.model.interfaces.Shape;
-import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.aksw.rdfunit.model.interfaces.ShapeTarget;
 import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
@@ -85,18 +85,18 @@ public class ShapeReaderTest {
     }
 
     private void checkScope(Shape sh) {
-        assertThat(sh.getScopes())
-                .hasSize(ShapeScopeType.values().length-1);
+        assertThat(sh.getTargets())
+                .hasSize(ShapeTargetType.values().length-1);
 
 
-        List<ShapeScopeType> scopeTypes = sh.getScopes().stream()
-                .map(ShapeScope::getScopeType)
+        List<ShapeTargetType> scopeTypes = sh.getTargets().stream()
+                .map(ShapeTarget::getTargetType)
                 .distinct()
                 .collect(Collectors.toList());
 
         // distinct scopes
         assertThat(scopeTypes)
-                .hasSize(ShapeScopeType.values().length-1)
+                .hasSize(ShapeTargetType.values().length-1)
                 ;
     }
 }

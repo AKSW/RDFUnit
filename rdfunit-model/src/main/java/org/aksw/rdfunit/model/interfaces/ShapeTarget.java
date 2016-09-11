@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import org.aksw.rdfunit.enums.ShapeScopeType;
+import org.aksw.rdfunit.enums.ShapeTargetType;
 
 import java.util.Optional;
 
-public interface ShapeScope {
+public interface ShapeTarget {
 
-    ShapeScopeType getScopeType();
+    ShapeTargetType getTargetType();
 
     Optional<String> getUri();
 

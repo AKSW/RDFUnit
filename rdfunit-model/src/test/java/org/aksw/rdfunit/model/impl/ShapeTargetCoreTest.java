@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.impl;
 
-import org.aksw.rdfunit.enums.ShapeScopeType;
-import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.aksw.rdfunit.enums.ShapeTargetType;
+import org.aksw.rdfunit.model.interfaces.ShapeTarget;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -18,25 +18,25 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Dimitris Kontokostas
  * @since 5/2/2016 2:00 μμ
  */
-public class ShapeScopeCoreTest {
+public class ShapeTargetCoreTest {
 
     @Test(expected=NullPointerException.class)
     public void testCreateNullType() {
-        ShapeScopeCore.create(null);
+        ShapeTargetCore.create(null);
     }
 
-    @Test(expected=NullPointerException.class)
-    public void testCreateNullValue() {
-        ShapeScopeCore.create(ShapeScopeType.AllObjectsScope, null);
-    }
+//    @Test(expected=NullPointerException.class)
+//    public void testCreateNullValue() {
+//        ShapeScopeCore.create(ShapeTargetType.AllObjectsScope, null);
+//    }
 
     @Test
     public void testPatternUnique() {
 
-        List<String> scopePatterns = Arrays.stream(ShapeScopeType.values() )
-                .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
-                .map( s -> ShapeScopeCore.create(s, "http://example.com"))
-                .map(ShapeScope::getPattern)
+        List<String> scopePatterns = Arrays.stream(ShapeTargetType.values() )
+                .filter( sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
+                .map( s -> ShapeTargetCore.create(s, "http://example.com"))
+                .map(ShapeTarget::getPattern)
                 .collect(Collectors.toList());
 
         // each scope results in different pattern
@@ -50,10 +50,10 @@ public class ShapeScopeCoreTest {
     public void testScopeContainsUri() {
 
         String uri = "http://example.com";
-        Arrays.stream(ShapeScopeType.values() )
-                .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
-                .map( s -> ShapeScopeCore.create(s, uri))
-                .filter( s -> s.getScopeType().hasArgument())
+        Arrays.stream(ShapeTargetType.values() )
+                .filter( sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
+                .map( s -> ShapeTargetCore.create(s, uri))
+                .filter( s -> s.getTargetType().hasArgument())
                 .forEach( s -> {
                     assertThat(s.getPattern()).contains(uri);
                     assertThat(s.getUri().get()).isEqualTo(uri);

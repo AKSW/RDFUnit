@@ -3,7 +3,7 @@ package org.aksw.rdfunit.model.impl;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.ToString;
-import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.aksw.rdfunit.model.interfaces.ShapeTarget;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.apache.jena.rdf.model.Resource;
@@ -16,16 +16,16 @@ import org.apache.jena.rdf.model.Resource;
  */
 @Builder
 @ToString
-public class ScopedTestCase implements TestCase {
+public class TestCaseWithTarget implements TestCase {
 
-    @NonNull private final ShapeScope scope;
+    @NonNull private final ShapeTarget target;
     @NonNull private final String filterSpqrql;
     @NonNull private final TestCase testCase;
 
 
     @Override
     public String getSparqlWhere() {
-        return injectScopeInSparql(testCase.getSparqlWhere(), this.scope);
+        return injectTargetInSparql(testCase.getSparqlWhere(), this.target);
     }
 
     @Override
@@ -44,10 +44,10 @@ public class ScopedTestCase implements TestCase {
         return testCase.getElement();
     }
 
-    private String injectScopeInSparql(String sparqlQuery, ShapeScope scope) {
+    private String injectTargetInSparql(String sparqlQuery, ShapeTarget target) {
         // FIXME good for now
         int bracketIndex = sparqlQuery.indexOf('{');
-        return sparqlQuery.substring(0,bracketIndex+1) + scope.getPattern() + filterSpqrql + sparqlQuery.substring(bracketIndex+1);
+        return sparqlQuery.substring(0,bracketIndex+1) + target.getPattern() + filterSpqrql + sparqlQuery.substring(bracketIndex+1);
     }
 
 }

@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.impl;
 
-import org.aksw.rdfunit.enums.ShapeScopeType;
-import org.aksw.rdfunit.model.interfaces.ShapeScope;
+import org.aksw.rdfunit.enums.ShapeTargetType;
+import org.aksw.rdfunit.model.interfaces.ShapeTarget;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.query.QueryFactory;
@@ -36,9 +36,9 @@ public class ScopedTestCaseTest {
         );
 
         String p = "http://example.com#ex";
-        List<ShapeScope> scopes = Arrays.stream(ShapeScopeType.values())
-                .filter( sct -> !sct.equals(ShapeScopeType.ValueShapeScope))
-                .map(scType -> ShapeScopeCore.create(scType, p))
+        List<ShapeTarget> scopes = Arrays.stream(ShapeTargetType.values())
+                .filter( sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
+                .map(scType -> ShapeTargetCore.create(scType, p))
                 .collect(Collectors.toList());
 
         Collection<Object[]> parameters = new ArrayList<>();
@@ -53,7 +53,7 @@ public class ScopedTestCaseTest {
     public String sparqlQuery;
 
     @Parameterized.Parameter(value=1)
-    public ShapeScope scope;
+    public ShapeTarget scope;
 
     @Test
     public void test() {
@@ -61,9 +61,9 @@ public class ScopedTestCaseTest {
         TestCase innerTestCAse = Mockito.mock(TestCase.class);
         when(innerTestCAse.getSparqlWhere()).thenReturn(sparqlQuery);
 
-        TestCase scopedTestCase = ScopedTestCase.builder()
+        TestCase scopedTestCase = TestCaseWithTarget.builder()
                 .testCase(innerTestCAse)
-                .scope(scope)
+                .target(scope)
                 .filterSpqrql(" ?this <http://example.cpm/p> ?value .")
                 .build();
 

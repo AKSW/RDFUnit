@@ -28,8 +28,8 @@ public final class ShapeReader implements ElementReader<Shape> {
 
         shapeBuilder
             .element(resource)
-            .scopes(
-                BatchShapeScopeReader.create().read(resource))
+            .targets(
+                BatchShapeTargetReader.create().read(resource))
             .propertyConstraintGroups(
                     BatchShapePropertyGroupReader.create(templateRegistry).readShapePropertyGroups(resource)
             );

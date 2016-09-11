@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface Shape extends Element{
 
-    Collection<ShapeScope> getScopes();
+    Collection<ShapeTarget> getTargets();
 
     List<PropertyConstraintGroup> getPropertyConstraintGroups();
 

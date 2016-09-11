@@ -10,22 +10,9 @@
 
 ex:MyShape
 	a sh:Shape ;
-	sh:scopeNode ex:ValidInstance1 ;
-	sh:scopeClass ex:Person ;
-#	sh:scope [
-#    		a sh:PropertyScope ;
-#    		sh:predicate ex:property ;
-#    	] ;
-#    sh:scope [
-#    		a sh:InversePropertyScope ;
-#    		sh:predicate ex:property ;
-#    	] ;
-#    sh:scope [
-#    		a sh:AllSubjectsScope ;
-#    	] ;
-#    sh:scope [
-#    		a sh:AllObjectsScope ;
-#    	] ;
+	sh:targetNode ex:ValidInstance1 ;
+	sh:targetClass ex:Person ;
+
 	sh:property [
 		sh:predicate ex:value ;
 		sh:valueShape ex:MyNestedShape ;
