@@ -117,7 +117,12 @@ public class TestGeneratorExecutor {
             }
 
             // Shacl Generator
-            allTests.addAll(new ShaclTestGenerator().generate(s));
+            Collection<TestCase> shaclTests = new ShaclTestGenerator().generate(s);
+            if (! shaclTests.isEmpty()) {
+                LOGGER.info("{} generated {} SHACL test cases", s.getUri(), shaclTests.size());
+                allTests.addAll(shaclTests);
+            }
+
 
             // manual tests
             allTests.addAll(BatchTestCaseReader.create().getTestCasesFromModel(s.getModel()));
@@ -156,7 +161,8 @@ public class TestGeneratorExecutor {
             Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
-            LOGGER.info("{} contains {} automatically created tests", s.getUri(), testsAuto.size(), e);
+            LOGGER.info("{} contains {} automatically created tests from TAGs", s.getUri(), testsAuto.size());
+            LOGGER.debug("No cached tests for {}", s.getUri(), e);
         }
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
