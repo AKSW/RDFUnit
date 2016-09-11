@@ -21,12 +21,16 @@ ex:MyShape
 		sh:predicate ex:inputFile ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
+		sh:pattern "^/" ;
+		sh:flags "i";
 		sh:datatype xsd:string ;
 	] ;
 	sh:property [
 		sh:predicate ex:outputFile ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
+        sh:pattern "^/" ;
+        sh:flags "i";
 		sh:datatype xsd:string;
 	]  .
 

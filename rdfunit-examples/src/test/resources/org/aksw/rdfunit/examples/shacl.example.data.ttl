@@ -9,5 +9,5 @@
 ex:conf1 a ex:Configuration ;
     ex:description "descriptions of the conf file"@en ;
     ex:inputFile "/home/input/" ;
-    ex:outputFile "home/output" ;
+    ex:outputFile "/home/output" ;
     .

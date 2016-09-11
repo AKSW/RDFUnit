@@ -112,7 +112,7 @@ public class TemplateRegistry {
                 " HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) ) ",
                 " ASK { FILTER ($minCount > 1)}"));
         builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.minCount,
-                "Minimum cardinality for $predicate is '$minCount'1",
+                "Minimum cardinality for $predicate is '$minCount'",
                 " FILTER NOT EXISTS { ?this $predicate ?value }} ",
                 " FILTER NOT EXISTS { ?this $predicate ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($minCount > 0)}"));

@@ -223,7 +223,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
                 String.format(
                         "[%s] %s",
                         getTestInputBaseName(child.getTestInputMethod()),
-                        child.getTestCase().getAbrTestURI()
+                        child.getTestCase().getResultMessage()
                 )
         );
     }
