@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.6.7</vaadin.version>
+        <vaadin.version>7.7.1</vaadin.version>
     </properties>
     <repositories>
         <repository>
@@ -66,7 +66,7 @@
             <!-- see https://vaadin.com/forum#!/thread/9316748 -->
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>5.0.3</version>
+            <version>5.1</version>
             <scope>compile</scope>
         </dependency>
 
