@@ -13,3 +13,5 @@ nif,http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#,https://raw.
 dataid,https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl
 rr,http://www.w3.org/ns/r2rml#
 foaf,http://xmlns.com/foaf/0.1/
+rml,http://semweb.mmlab.be/ns/rml#
+ql,http://semweb.mmlab.be/ns/ql#
