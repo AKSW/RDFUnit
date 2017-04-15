@@ -1,0 +1,56 @@
+# W3C Shapes Constraint Language (SHACL) Vocabulary
+# Draft last edited 2017-04-13
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix shr:  <http://rdfunit.aksw.org/shacl-ext#> .
+
+
+sh:
+	sh:declare [
+		sh:prefix "sh" ;
+		sh:namespace "http://www.w3.org/ns/shacl#" ;
+	] ;
+	sh:declare [
+		sh:prefix "shr" ;
+		sh:namespace "http://rdfunit.aksw.org/shacl-ext#" ;
+	] ;
+	.
+
+sh:MinLengthConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:minLength ;
+        sh:datatype xsd:integer ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	shr:filter "ASK { FILTER ($minLength > 0)}" ;
+    	sh:message "The minimum length of '$path' is '$minLength'";
+    	sh:ask """
+    		ASK {
+            	FILTER (STRLEN(str($value)) >= $minLength) .
+            }""" ;
+    ] ;
+    .
+
+sh:MaxLengthConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:maxLength ;
+        sh:datatype xsd:integer ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	shr:filter "ASK { FILTER ($maxLength >= 0)}" ;
+    	sh:message "The maximum length of '$path' is '$maxLength'";
+    	sh:ask """
+    		ASK {
+            	FILTER (STRLEN(str($value)) <= $maxLength) .
+            }""" ;
+    ] ;
+    .
