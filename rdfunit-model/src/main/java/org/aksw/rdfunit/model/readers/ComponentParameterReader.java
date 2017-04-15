@@ -36,8 +36,8 @@ public final class ComponentParameterReader implements ElementReader<ComponentPa
 
         argumentBuilder.element(resource);
 
-        // get predicate
-        for (Statement smt : resource.listProperties(SHACL.predicate).toList()) {
+        // get path
+        for (Statement smt : resource.listProperties(SHACL.path).toList()) {
             argumentBuilder = argumentBuilder.predicate(ResourceFactory.createProperty(smt.getObject().asResource().getURI()));
         }
 

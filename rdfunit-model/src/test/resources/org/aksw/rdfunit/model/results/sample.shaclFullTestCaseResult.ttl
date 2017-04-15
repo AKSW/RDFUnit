@@ -24,7 +24,7 @@
         prov:wasGeneratedBy  <11330f8c-2b0a-11b2-800c-a434d927758b> ;
         sh:focusNode         <http://dbpedia.org/ontology/> ;
         sh:message           "http://purl.org/dc/terms/creator contains a literal value" ;
-        sh:predicate         dcterms:creator ;
+        sh:path         dcterms:creator ;
         sh:severity          rlog:ERROR ;
         sh:subject           <http://dbpedia.org/ontology/> .
 
@@ -50,7 +50,7 @@
         prov:wasGeneratedBy  <11330f8c-2b0a-11b2-800c-a434d927758b> ;
         sh:focusNode         <http://en.wikipedia.org/wiki/Thessaloniki> ;
         sh:message           "http://xmlns.com/foaf/0.1/isPrimaryTopicOf is missing proper range" ;
-        sh:predicate         <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ;
+        sh:path         <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ;
         sh:severity          rlog:WARN ;
         sh:sourceConstraint  sh:RangeObjectConstraint ;
         sh:subject           <http://en.wikipedia.org/wiki/Thessaloniki> .
@@ -62,7 +62,7 @@
         prov:wasGeneratedBy  <11330f8c-2b0a-11b2-800c-a434d927758b> ;
         sh:focusNode         <http://dbpedia.org/ontology/> ;
         sh:message           "http://purl.org/dc/terms/contributor contains a literal value" ;
-        sh:predicate         dcterms:contributor ;
+        sh:path         dcterms:contributor ;
         sh:severity          rlog:ERROR ;
         sh:subject           <http://dbpedia.org/ontology/> .
 
@@ -73,7 +73,7 @@
         prov:wasGeneratedBy  <11330f8c-2b0a-11b2-800c-a434d927758b> ;
         sh:focusNode         <http://dbpedia.org/ontology/> ;
         sh:message           "http://purl.org/dc/terms/publisher contains a literal value" ;
-        sh:predicate         dcterms:publisher ;
+        sh:path         dcterms:publisher ;
         sh:severity          rlog:ERROR ;
         sh:subject           <http://dbpedia.org/ontology/> .
 
@@ -84,6 +84,6 @@
         prov:wasGeneratedBy  <11330f8c-2b0a-11b2-800c-a434d927758b> ;
         sh:focusNode         <http://en.wikipedia.org/wiki/Thessaloniki> ;
         sh:message           "http://xmlns.com/foaf/0.1/primaryTopic is missing proper range" ;
-        sh:predicate         <http://xmlns.com/foaf/0.1/primaryTopic> ;
+        sh:path         <http://xmlns.com/foaf/0.1/primaryTopic> ;
         sh:severity          rlog:WARN ;
         sh:subject           <http://en.wikipedia.org/wiki/Thessaloniki> .

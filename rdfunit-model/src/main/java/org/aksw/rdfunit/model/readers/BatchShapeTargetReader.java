@@ -100,7 +100,7 @@ public final class BatchShapeTargetReader {
         List<Resource> tmp = resource.getModel().listResourcesWithProperty(SHACL.valueShape, resource).toList();
 
                 tmp.forEach( r -> {
-                    Resource property = r.getPropertyResourceValue(SHACL.predicate);
+                    Resource property = r.getPropertyResourceValue(SHACL.path);
                     getParentShapeResources(r)
                             .forEach(shape -> {
                                 ImmutableList<Resource> propChainNew = new ImmutableList.Builder<Resource>().add(property).addAll(propertyChain).build();

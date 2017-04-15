@@ -11,14 +11,14 @@ ex:MyShape
 	sh:targetClass ex:Configuration ;
 
 	sh:property [
-		sh:predicate ex:description ;
+		sh:path ex:description ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype rdf:langString ;
 	] ;
 
 	sh:property [
-		sh:predicate ex:inputFile ;
+		sh:path ex:inputFile ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:pattern "^/" ;
@@ -26,7 +26,7 @@ ex:MyShape
 		sh:datatype xsd:string ;
 	] ;
 	sh:property [
-		sh:predicate ex:outputFile ;
+		sh:path ex:outputFile ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
         sh:pattern "^/" ;

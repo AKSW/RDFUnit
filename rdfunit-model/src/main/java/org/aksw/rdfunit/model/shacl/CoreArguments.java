@@ -11,7 +11,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 
 public final class CoreArguments {
 
-    public static final ComponentParameter predicate = createSimpleArgument(SHACL.predicate, "", ValueKind.IRI);
+    public static final ComponentParameter path = createSimpleArgument(SHACL.path, "", ValueKind.IRI);
     public static final ComponentParameter severity = createSeverity();
 
     public static final ComponentParameter clazz = createSimpleArgument(SHACL.clazz);

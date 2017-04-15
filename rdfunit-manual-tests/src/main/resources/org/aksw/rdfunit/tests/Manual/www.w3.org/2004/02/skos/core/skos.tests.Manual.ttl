@@ -50,7 +50,7 @@ rutt:skos-ConseptSchemeWithoutRdfslabel
                                  ?this a <http://www.w3.org/2004/02/skos/core#ConceptScheme> . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue  <http://www.w3.org/2004/02/skos/core#prefLabel> ;
          #<http://www.w3.org/2000/01/rdf-schema#label> ,
     ];
@@ -75,7 +75,7 @@ rutt:skos-ConseptWithoutRdfslabel
                                  ?this a <http://www.w3.org/2004/02/skos/core#Concept> . } """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/2004/02/skos/core#prefLabel> ;
 	   # <http://www.w3.org/2000/01/rdf-schema#label> ,
 	];

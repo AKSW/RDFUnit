@@ -16,7 +16,7 @@ ex:MyShape
     sh:targetObjectsOf ex:property ;
 
 	sh:property [
-		sh:predicate ex:value ;
+		sh:path ex:value ;
 		sh:datatype xsd:string ;
 		sh:datatypeIn ( xsd:string rdf:langString ) ; # not yet supported
 		sh:class ex:SuperClass ;
@@ -43,7 +43,7 @@ ex:MyShape
 	] ;
 
     sh:inverseProperty [
-		sh:predicate ex:value ;
+		sh:path ex:value ;
             sh:datatype xsd:string ;
             sh:datatypeIn ( xsd:string rdf:langString ) ; # not yet supported
             sh:class ex:SuperClass ;

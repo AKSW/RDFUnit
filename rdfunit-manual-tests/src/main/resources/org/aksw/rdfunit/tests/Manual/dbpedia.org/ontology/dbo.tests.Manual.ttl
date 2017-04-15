@@ -147,7 +147,7 @@ rutt:dbo-LITRAN-rangeheightperson
         rlog:WARN ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue <http://dbpedia.org/ontology/Person>
     ];
     rut:resultAnnotation [

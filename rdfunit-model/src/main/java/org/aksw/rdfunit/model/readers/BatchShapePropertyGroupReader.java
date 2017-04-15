@@ -58,7 +58,7 @@ public final class BatchShapePropertyGroupReader {
         PropertyValuePairSet pvp = PropertyValuePairSet.createFromResource(propertyGroup);
         builder.propertyValuePairSet(pvp);
 
-        Set<RDFNode> values = pvp.getPropertyValues(SHACL.predicate);
+        Set<RDFNode> values = pvp.getPropertyValues(SHACL.path);
         checkState(values.size() == 1, "Predicate occurrence in property group different than 1 in shape: %", shapeResource.getLocalName());
         builder.property(ResourceFactory.createProperty(values.stream().findFirst().get().asResource().getURI()));
 

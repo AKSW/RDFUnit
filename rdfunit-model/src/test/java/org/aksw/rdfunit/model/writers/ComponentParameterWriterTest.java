@@ -30,9 +30,9 @@ public class ComponentParameterWriterTest {
 
     @Parameterized.Parameters(name= "{index}: Pattern: {0}")
     public static Collection<Object[]> resources() throws RdfReaderException {
-        Model model = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/shacl/shacl.shacl.ttl").read();
+        Model model = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/shacl/shacl.ttl").read();
         Collection<Object[]> parameters = new ArrayList<>();
-        for (RDFNode node: model.listObjectsOfProperty(SHACL.argument).toList()) {
+        for (RDFNode node: model.listObjectsOfProperty(SHACL.parameter).toList()) {
             parameters.add(new Object[] {node});
         }
         return parameters;

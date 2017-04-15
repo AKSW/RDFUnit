@@ -3,21 +3,21 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 
-<http://example.com/arguments/1> a sh:Argument ;
-	sh:predicate sh:arg1 ;
+<http://example.com/arguments/1> a sh:Parameter ;
+	sh:path sh:arg1 ;
 	sh:datatype xsd:integer ;
 	rdfs:comment "The first operand" ;
     .
 
-<http://example.com/arguments/2> a sh:Argument ;
-	sh:predicate sh:arg2 ;
+<http://example.com/arguments/2> a sh:Parameter ;
+	sh:path sh:arg2 ;
 	sh:datatype xsd:integer ;
 	rdfs:comment "The second operand" ;
 	.
 
 
-<http://example.com/arguments/3> a sh:Argument ;
-	sh:predicate sh:arg1 ;
+<http://example.com/arguments/3> a sh:Parameter ;
+	sh:path sh:arg1 ;
 	sh:datatype xsd:integer ;
 	sh:defaultValue "asdf" ;
 	sh:optional true ;

@@ -48,14 +48,14 @@ public class TemplateRegistry {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.datatype,
-                "sh:datatype of $predicate should be '$datatype'",
+                "sh:datatype of $path should be '$datatype'",
                 " FILTER NOT EXISTS {\n" +
                 "\t\t{ FILTER isLiteral(?value) .} .\n" +
                 "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
                 "\t\tFILTER (?valueDatatype = $datatype) . } }"));
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.datatypeIn,
-                "sh:datatype of $predicate should be ($datatypeIn)",
+                "sh:datatype of $path should be ($datatypeIn)",
                 "FILTER (!isLiteral(?value) || NOT EXISTS {\n" +
                         "\t\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
                         "\t\t\tVALUES ?valueDatatype { $datatypeIn } .\n" +
@@ -63,14 +63,14 @@ public class TemplateRegistry {
                         "\t}\n" ));
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
-                "sh:class of $predicate should be '$class'",
+                "sh:class of $path should be '$class'",
                 " FILTER (isLiteral(?value) || \n" +
                         "\t\t!( $class = rdfs:Resource ||\n" +
                         "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
                         "\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* $class } )) }"));
 
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazzIn,
-                "sh:classIn of $predicate should be in ($classIn)",
+                "sh:classIn of $path should be in ($classIn)",
                 "FILTER (isLiteral(?value) || NOT EXISTS {\n" +
                         "\t\t\tFILTER (?class = rdfs:Resource ||\n" +
                         "\t\t\t\t(?class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
@@ -80,109 +80,109 @@ public class TemplateRegistry {
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
-                "sh:directType of $predicate should be '$directType'",
+                "sh:directType of $path should be '$directType'",
                 " FILTER NOT EXISTS { ?value a $directType .} }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.equals,
-                "$predicate should be equal to '$equals'",
+                "$path should be equal to '$equals'",
                 " FILTER NOT EXISTS { ?this $equals ?value . } }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
-                "$predicate have value: $hasValue",
-                " FILTER NOT EXISTS { ?this $predicate $hasValue . } }"));
+                "$path have value: $hasValue",
+                " FILTER NOT EXISTS { ?this $path $hasValue . } }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.in,
-                "$predicate have value: $in",
+                "$path have value: $in",
         "FILTER NOT EXISTS { VALUES ?value { $in }  } } " ));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThan,
-                "$predicate should be less than '$lessThan'",
+                "$path should be less than '$lessThan'",
                 " ?this $lessThan ?value2 .\n" +
                 "\tFILTER (!(?value < ?value2)) .} "));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThanOrEquals,
-                "$predicate should be less than or equals to '$lessThanOrEquals'",
+                "$path should be less than or equals to '$lessThanOrEquals'",
                 " ?this $lessThan ?value2 .\n" +
                         "\tFILTER (!(?value <= ?value2)) . }"));
 
 
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.minCount,
-                "Minimum cardinality for $predicate is '$minCount'",
+                "Minimum cardinality for $path is '$minCount'",
                 " } GROUP BY ?this\n" +
                 " HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) ) ",
                 " ASK { FILTER ($minCount > 1)}"));
         builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.minCount,
-                "Minimum cardinality for $predicate is '$minCount'",
-                " FILTER NOT EXISTS { ?this $predicate ?value }} ",
-                " FILTER NOT EXISTS { ?this $predicate ?value }} ", // is inverse property like this?
+                "Minimum cardinality for $path is '$minCount'",
+                " FILTER NOT EXISTS { ?this $path ?value }} ",
+                " FILTER NOT EXISTS { ?this $path ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($minCount > 0)}"));
 
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.maxCount,
-                "Maximum cardinality for $predicate is '$maxCount'",
+                "Maximum cardinality for $path is '$maxCount'",
                 " } GROUP BY ?this\n" +
                 " HAVING ( ( count(?value)  > $maxCount ) && ( count(?value)  != 0 ) ) ",
                 " ASK { FILTER ($maxCount > 0)}"));
         builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.maxCount,
-                "Maximum cardinality for $predicate is '$maxCount'0",
-                " FILTER EXISTS { ?this $predicate ?value }} ",
-                " FILTER EXISTS { ?this $predicate ?value }} ", // is inverse property like this?
+                "Maximum cardinality for $path is '$maxCount'0",
+                " FILTER EXISTS { ?this $path ?value }} ",
+                " FILTER EXISTS { ?this $path ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($maxCount = 0)}"));
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
-                "sh:minLength of $predicate should be '$minLength'",
+                "sh:minLength of $path should be '$minLength'",
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) . }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxLength,
-                "sh:maxLength of $predicate should be '$maxLength'",
+                "sh:maxLength of $path should be '$maxLength'",
                 " FILTER (isBlank(?value) || STRLEN(str(?value)) > $maxLength) . }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minExclusive,
-                "sh:minExclusive of $predicate should be '$minExclusive'",
+                "sh:minExclusive of $path should be '$minExclusive'",
                 " FILTER (!(?value > $minExclusive)) . }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minInclusive,
-                "sh:minInclusive of $predicate should be '$minInclusive'",
+                "sh:minInclusive of $path should be '$minInclusive'",
                 " FILTER (!(?value >= $minInclusive)) . }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxExclusive,
-                "sh:maxExclusive of $predicate should be '$maxExclusive'",
+                "sh:maxExclusive of $path should be '$maxExclusive'",
                 " FILTER (!(?value < $maxExclusive)) . }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
-                "sh:maxInclusive of $predicate should be '$maxInclusive'",
+                "sh:maxInclusive of $path should be '$maxInclusive'",
                 " FILTER (!(?value <= $maxInclusive)) . }"));
 
 
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
-                "sh:nodeKind of $predicate should be '$nodeKind'",
+                "sh:nodeKind of $path should be '$nodeKind'",
                 " FILTER (!isIRI(?value)) .  } ",
                 " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)}"));
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
-                "sh:nodeKind of $predicate should be '$nodeKind'",
+                "sh:nodeKind of $path should be '$nodeKind'",
                 " FILTER (!isLiteral(?value)) .  } ",
                 " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#Literal>)}"));
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
-                "sh:nodeKind of $predicate should be '$nodeKind'",
+                "sh:nodeKind of $path should be '$nodeKind'",
                 " FILTER (!isBlank(?value)) .  } ",
                 " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNode>)}"));
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
-                "$predicate should no be equal to '$notEquals'",
+                "$path should no be equal to '$notEquals'",
                 " ?this $notEquals ?value . }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.pattern, CoreArguments.flags,
-                "Value $predicate should conform to pattern: '$pattern'",
+                "Value $path should conform to pattern: '$pattern'",
                 " BIND ('$flags' AS ?myFlags) . FILTER (isBlank(?value) || IF(?myFlags != '', !regex(str(?value), '$pattern', '$flags'), !regex(str(?value), '$pattern'))) .}"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.uniqueLang,
-                "$predicate should have one value per language",
+                "$path should have one value per language",
                 " {FILTER ($uniqueLang) . }\n" +
                 "\tBIND (lang(?value) AS ?lang) .\n" +
                 "\tFILTER (bound(?lang) && ?lang != \"\") . \n" +
                 "\tFILTER EXISTS {\n" +
-                "\t\t?this $predicate ?otherValue .\n" +
+                "\t\t?this $path ?otherValue .\n" +
                 "\t\tFILTER (?otherValue != ?value && ?lang = lang(?otherValue)) . } }" ));
 
         //TODO sh:valueShape
@@ -195,7 +195,7 @@ public class TemplateRegistry {
     private static ShaclPropertyConstraintTemplate createTemplate(ComponentParameter componentParameter, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
                 .componentParameter(componentParameter)
-                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.path)
                 .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlSnippet)
@@ -207,7 +207,7 @@ public class TemplateRegistry {
     private static ShaclPropertyConstraintTemplate createTemplateWithFilter(ComponentParameter componentParameter, String message, String sparqlSnippet, String filter) {
         return ShaclPropertyConstraintTemplate.builder()
                 .componentParameter(componentParameter)
-                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.path)
                 .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlSnippet)
@@ -220,7 +220,7 @@ public class TemplateRegistry {
     private static ShaclPropertyConstraintTemplate createTemplateWithFilterNF(ComponentParameter componentParameter, String message, String sparqlPropSnippet, String sparqlInvPSnippet, String filter) {
         return ShaclPropertyConstraintTemplate.builder()
                 .componentParameter(componentParameter)
-                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.path)
                 .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlPropSnippet)
@@ -234,7 +234,7 @@ public class TemplateRegistry {
         return ShaclPropertyConstraintTemplate.builder()
                 .componentParameter(componentParameter1)
                 .componentParameter(componentParameter2)
-                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.path)
                 .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlSnippet)

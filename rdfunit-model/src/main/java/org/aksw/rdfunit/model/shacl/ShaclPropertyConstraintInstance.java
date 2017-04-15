@@ -129,7 +129,7 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 null,
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
-                Collections.singletonList(bindings.get(CoreArguments.predicate).asResource().getURI()),
+                Collections.singletonList(bindings.get(CoreArguments.path).asResource().getURI()),
                 generateMessage(),
                 RLOGLevel.resolve(bindings.get(CoreArguments.severity).asResource().getURI()),
                 createResultAnnotations()
@@ -139,8 +139,8 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     private List<ResultAnnotation> createResultAnnotations() {
         ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
         // add property
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.predicate)
-                .setValue(bindings.get(CoreArguments.predicate)).build());
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.path)
+                .setValue(bindings.get(CoreArguments.path)).build());
 
         List<Property> nonValueArgs = Arrays.asList(CoreArguments.minCount.getPredicate(), CoreArguments.maxCount.getPredicate());
         if (!nonValueArgs.contains(getFacetProperty())) {

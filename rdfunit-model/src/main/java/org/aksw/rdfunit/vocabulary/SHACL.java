@@ -21,10 +21,12 @@ public final class SHACL {
     //Classes
 
     public static final Resource Shape = resource("Shape");
-    public static final Resource Argument = resource("Argument");
-    public static final Resource Function = resource("Function");
+    public static final Resource PropertyShape = resource("PropertyShape");
+    public static final Resource NodeShape = resource("NodeShape");
+    public static final Resource Parameter = resource("Parameter");
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource ValidationResult = resource("ValidationResult");
+    public static final Resource SPARQLAskValidator  = resource("SPARQLAskValidator");
 
     public static final Property targetClass = property("targetClass");
     public static final Property targetNode = property("targetNode");
@@ -37,15 +39,12 @@ public final class SHACL {
     public static final Resource Violation = resource("Violation");
 
     //properties
-    public static final Property argument = property("argument");
-    public static final Property cachable = property("cachable");
+    public static final Property parameter = property("parameter");
     public static final Property datatype = property("datatype");
     public static final Property datatypeIn = property("datatypeIn");
     public static final Property defaultValue = property("defaultValue");
     public static final Property optional = property("optional");
-    public static final Property returnType = property("returnType");
     public static final Property sparql = property("sparql");
-    public static final Property valueType = property("valueType");
 
     public static final Property clazz = property("class");
     public static final Property clazzIn = property("classIn");
@@ -54,7 +53,7 @@ public final class SHACL {
     public static final Property severity = property("severity");
     public static final Property focusNode = property("focusNode");
     public static final Property subject = property("subject");
-    public static final Property predicate = property("predicate");
+    public static final Property path = property("path");
     public static final Property object = property("object");
     public static final Property message = property("message");
     public static final Property sourceConstraint = property("sourceConstraint");
@@ -95,9 +94,6 @@ public final class SHACL {
 
 
 
-
-
-
     private SHACL() {
     }
 
@@ -109,43 +105,5 @@ public final class SHACL {
     private static Property property(String local) {
         return ResourceFactory.createProperty(namespace, local);
     }
-        /*
-        public static final class Nodes {
-            public static final Node Alt;
-            public static final Node Bag;
-            public static final Node Property;
-            public static final Node Seq;
-            public static final Node Statement;
-            public static final Node List;
-            public static final Node nil;
-            public static final Node first;
-            public static final Node rest;
-            public static final Node subject;
-            public static final Node predicate;
-            public static final Node object;
-            public static final Node type;
-            public static final Node value;
-
-            public Nodes() {
-            }
-
-            static {
-                Alt = RDF.Alt.asNode();
-                Bag = RDF.Bag.asNode();
-                Property = RDF.Property.asNode();
-                Seq = RDF.Seq.asNode();
-                Statement = RDF.Statement.asNode();
-                List = RDF.List.asNode();
-                nil = RDF.nil.asNode();
-                first = RDF.first.asNode();
-                rest = RDF.rest.asNode();
-                subject = RDF.subject.asNode();
-                predicate = RDF.predicate.asNode();
-                object = RDF.object.asNode();
-                type = RDF.type.asNode();
-                value = RDF.value.asNode();
-            }
-        } */
-
 
 }

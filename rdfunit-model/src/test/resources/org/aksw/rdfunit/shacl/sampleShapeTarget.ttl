@@ -14,7 +14,7 @@ ex:MyShape
 	sh:targetClass ex:Person ;
 
 	sh:property [
-		sh:predicate ex:value ;
+		sh:path ex:value ;
 		sh:valueShape ex:MyNestedShape ;
 	] ;
 	.
@@ -22,7 +22,7 @@ ex:MyShape
 ex:MyNestedShape
 	a sh:Shape ;
 	sh:property [
-		sh:predicate ex:value2 ;
+		sh:path ex:value2 ;
 		sh:valueShape ex:MyNestedShape2 ;
 	] ;
 	.
