@@ -15,7 +15,7 @@ import java.util.Set;
  * @since 6 /17/15 3:15 PM
  * @version $Id: $Id
  */
-public interface ShaclCCParameter extends Element{
+public interface ComponentParameter extends Element{
 
     boolean isOptional();
 

@@ -2,8 +2,8 @@ package org.aksw.rdfunit.model.shacl;
 
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.ValueKind;
-import org.aksw.rdfunit.model.impl.ShaclCCParameterImpl;
-import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
+import org.aksw.rdfunit.model.impl.ComponentParameterImpl;
+import org.aksw.rdfunit.model.interfaces.ComponentParameter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -11,56 +11,56 @@ import org.apache.jena.rdf.model.ResourceFactory;
 
 public final class CoreArguments {
 
-    public static final ShaclCCParameter predicate = createSimpleArgument(SHACL.predicate, "", ValueKind.IRI);
-    public static final ShaclCCParameter severity = createSeverity();
+    public static final ComponentParameter predicate = createSimpleArgument(SHACL.predicate, "", ValueKind.IRI);
+    public static final ComponentParameter severity = createSeverity();
 
-    public static final ShaclCCParameter clazz = createSimpleArgument(SHACL.clazz);
-    public static final ShaclCCParameter clazzIn = createSimpleArgument(SHACL.clazzIn);
-    public static final ShaclCCParameter datatype = createSimpleArgument(SHACL.datatype, "", ValueKind.IRI);
-    public static final ShaclCCParameter datatypeIn = createSimpleArgument(SHACL.datatypeIn);
-    public static final ShaclCCParameter directType = createSimpleArgument(SHACL.directType);
-    public static final ShaclCCParameter equals = createSimpleArgument(SHACL.equals);
-    public static final ShaclCCParameter hasValue = createSimpleArgument(SHACL.hasValue);
-    public static final ShaclCCParameter in = createSimpleArgument(SHACL.in);
-    public static final ShaclCCParameter lessThan = createSimpleArgument(SHACL.lessThan);
-    public static final ShaclCCParameter lessThanOrEquals = createSimpleArgument(SHACL.lessThanOrEquals);
-    public static final ShaclCCParameter minCount = createSimpleArgument(SHACL.minCount);
-    public static final ShaclCCParameter maxCount = createSimpleArgument(SHACL.maxCount);
-    public static final ShaclCCParameter minLength = createSimpleArgument(SHACL.minLength);
-    public static final ShaclCCParameter maxLength = createSimpleArgument(SHACL.maxLength);
-    public static final ShaclCCParameter minExclusive = createSimpleArgument(SHACL.minExclusive);
-    public static final ShaclCCParameter minInclusive = createSimpleArgument(SHACL.minInclusive);
-    public static final ShaclCCParameter maxExclusive = createSimpleArgument(SHACL.maxExclusive);
-    public static final ShaclCCParameter maxInclusive = createSimpleArgument(SHACL.maxInclusive);
-    public static final ShaclCCParameter nodeKind = createSimpleArgument(SHACL.nodeKind);
-    public static final ShaclCCParameter notEquals = createSimpleArgument(SHACL.notEquals);
-    public static final ShaclCCParameter pattern = createSimpleArgument(SHACL.pattern);
-    public static final ShaclCCParameter flags = createSimpleArgument(SHACL.flags, "flags", ValueKind.DATATYPE, true);
-    public static final ShaclCCParameter uniqueLang = createSimpleArgument(SHACL.uniqueLang);
-    //public static final ShaclCCParameter valueShape
-    //public static final ShaclCCParameter qualifiedValueShape
-    //public static final ShaclCCParameter qualifiedMinCount
-    //public static final ShaclCCParameter qualifiedMaxCount
+    public static final ComponentParameter clazz = createSimpleArgument(SHACL.clazz);
+    public static final ComponentParameter clazzIn = createSimpleArgument(SHACL.clazzIn);
+    public static final ComponentParameter datatype = createSimpleArgument(SHACL.datatype, "", ValueKind.IRI);
+    public static final ComponentParameter datatypeIn = createSimpleArgument(SHACL.datatypeIn);
+    public static final ComponentParameter directType = createSimpleArgument(SHACL.directType);
+    public static final ComponentParameter equals = createSimpleArgument(SHACL.equals);
+    public static final ComponentParameter hasValue = createSimpleArgument(SHACL.hasValue);
+    public static final ComponentParameter in = createSimpleArgument(SHACL.in);
+    public static final ComponentParameter lessThan = createSimpleArgument(SHACL.lessThan);
+    public static final ComponentParameter lessThanOrEquals = createSimpleArgument(SHACL.lessThanOrEquals);
+    public static final ComponentParameter minCount = createSimpleArgument(SHACL.minCount);
+    public static final ComponentParameter maxCount = createSimpleArgument(SHACL.maxCount);
+    public static final ComponentParameter minLength = createSimpleArgument(SHACL.minLength);
+    public static final ComponentParameter maxLength = createSimpleArgument(SHACL.maxLength);
+    public static final ComponentParameter minExclusive = createSimpleArgument(SHACL.minExclusive);
+    public static final ComponentParameter minInclusive = createSimpleArgument(SHACL.minInclusive);
+    public static final ComponentParameter maxExclusive = createSimpleArgument(SHACL.maxExclusive);
+    public static final ComponentParameter maxInclusive = createSimpleArgument(SHACL.maxInclusive);
+    public static final ComponentParameter nodeKind = createSimpleArgument(SHACL.nodeKind);
+    public static final ComponentParameter notEquals = createSimpleArgument(SHACL.notEquals);
+    public static final ComponentParameter pattern = createSimpleArgument(SHACL.pattern);
+    public static final ComponentParameter flags = createSimpleArgument(SHACL.flags, "flags", ValueKind.DATATYPE, true);
+    public static final ComponentParameter uniqueLang = createSimpleArgument(SHACL.uniqueLang);
+    //public static final ComponentParameter valueShape
+    //public static final ComponentParameter qualifiedValueShape
+    //public static final ComponentParameter qualifiedMinCount
+    //public static final ComponentParameter qualifiedMaxCount
 
     private CoreArguments() {}
 
-    private static ShaclCCParameter createSimpleArgument(Property property) {
+    private static ComponentParameter createSimpleArgument(Property property) {
         return createSimpleArgument(property, property.getLocalName(), ValueKind.IRI);
     }
 
-    private static ShaclCCParameter createSimpleArgument(Property property, String comment, ValueKind valueKind) {
+    private static ComponentParameter createSimpleArgument(Property property, String comment, ValueKind valueKind) {
         return createSimpleArgument(property, comment, valueKind, false);
     }
 
-    private static ShaclCCParameter createSimpleArgument(Property property, String comment, ValueKind valueKind, boolean isOptional) {
-        return ShaclCCParameterImpl.builder().element(ResourceFactory.createResource())
+    private static ComponentParameter createSimpleArgument(Property property, String comment, ValueKind valueKind, boolean isOptional) {
+        return ComponentParameterImpl.builder().element(ResourceFactory.createResource())
                 .predicate(property)
                 .isOptional(isOptional)
                 .build();
     }
 
-    private static ShaclCCParameter createSeverity() {
-        return ShaclCCParameterImpl.builder().element(ResourceFactory.createResource())
+    private static ComponentParameter createSeverity() {
+        return ComponentParameterImpl.builder().element(ResourceFactory.createResource())
                 .predicate(SHACL.severity)
                 .defaultValue(ResourceFactory.createResource(RLOGLevel.ERROR.getUri()))
                 .isOptional(true)

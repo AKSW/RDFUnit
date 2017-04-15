@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Singular;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
+import org.aksw.rdfunit.model.interfaces.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
-import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,14 +29,14 @@ public class TemplateRegistry {
 
         return shaclCoreTemplates.stream()
                 //get all patterns that can bind to the input
-                .filter(p -> p.getShaclCCParameters().stream().allMatch(a -> a.canBind(propertyValuePairSet)))
+                .filter(p -> p.getComponentParameters().stream().allMatch(a -> a.canBind(propertyValuePairSet)))
                 // check if any filter applies
                 .filter(p -> p.canBind(propertyValuePairSet))
                 // create bindings for each and map to ShaclPropertyConstraintInstance
                 .map(p -> {
                     ShaclPropertyConstraintInstance.ShaclPropertyConstraintInstanceBuilder builder = ShaclPropertyConstraintInstance.builder();
 
-                    p.getShaclCCParameters().stream().forEach(arg -> builder.binding(arg, arg.getBindFromValues(propertyValuePairSet).get()));
+                    p.getComponentParameters().stream().forEach(arg -> builder.binding(arg, arg.getBindFromValues(propertyValuePairSet).get()));
 
                     return builder.template(p).build();
 
@@ -192,11 +192,11 @@ public class TemplateRegistry {
         return builder.build();
     }
 
-    private static ShaclPropertyConstraintTemplate createTemplate(ShaclCCParameter shaclCCParameter, String message, String sparqlSnippet) {
+    private static ShaclPropertyConstraintTemplate createTemplate(ComponentParameter componentParameter, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
-                .shaclCCParameter(shaclCCParameter)
-                .shaclCCParameter(CoreArguments.predicate)
-                .shaclCCParameter(CoreArguments.severity)
+                .componentParameter(componentParameter)
+                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlSnippet)
                 .sparqlInvPSnippet(sparqlSnippet)
@@ -204,38 +204,38 @@ public class TemplateRegistry {
                 .build();
     }
 
-    private static ShaclPropertyConstraintTemplate createTemplateWithFilter(ShaclCCParameter shaclCCParameter, String message, String sparqlSnippet, String filter) {
+    private static ShaclPropertyConstraintTemplate createTemplateWithFilter(ComponentParameter componentParameter, String message, String sparqlSnippet, String filter) {
         return ShaclPropertyConstraintTemplate.builder()
-                .shaclCCParameter(shaclCCParameter)
-                .shaclCCParameter(CoreArguments.predicate)
-                .shaclCCParameter(CoreArguments.severity)
+                .componentParameter(componentParameter)
+                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlSnippet)
                 .sparqlInvPSnippet(sparqlSnippet)
-                .argumentFilter(shaclCCParameter, filter)
+                .argumentFilter(componentParameter, filter)
                 .includePropertyFilter(true)
                 .build();
     }
 
-    private static ShaclPropertyConstraintTemplate createTemplateWithFilterNF(ShaclCCParameter shaclCCParameter, String message, String sparqlPropSnippet, String sparqlInvPSnippet, String filter) {
+    private static ShaclPropertyConstraintTemplate createTemplateWithFilterNF(ComponentParameter componentParameter, String message, String sparqlPropSnippet, String sparqlInvPSnippet, String filter) {
         return ShaclPropertyConstraintTemplate.builder()
-                .shaclCCParameter(shaclCCParameter)
-                .shaclCCParameter(CoreArguments.predicate)
-                .shaclCCParameter(CoreArguments.severity)
+                .componentParameter(componentParameter)
+                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlPropSnippet)
                 .sparqlInvPSnippet(sparqlInvPSnippet)
-                .argumentFilter(shaclCCParameter, filter)
+                .argumentFilter(componentParameter, filter)
                 .includePropertyFilter(false)
                 .build();
     }
 
-    private static ShaclPropertyConstraintTemplate createTemplate(ShaclCCParameter shaclCCParameter1, ShaclCCParameter shaclCCParameter2, String message, String sparqlSnippet) {
+    private static ShaclPropertyConstraintTemplate createTemplate(ComponentParameter componentParameter1, ComponentParameter componentParameter2, String message, String sparqlSnippet) {
         return ShaclPropertyConstraintTemplate.builder()
-                .shaclCCParameter(shaclCCParameter1)
-                .shaclCCParameter(shaclCCParameter2)
-                .shaclCCParameter(CoreArguments.predicate)
-                .shaclCCParameter(CoreArguments.severity)
+                .componentParameter(componentParameter1)
+                .componentParameter(componentParameter2)
+                .componentParameter(CoreArguments.predicate)
+                .componentParameter(CoreArguments.severity)
                 .message(message)
                 .sparqlPropSnippet(sparqlSnippet)
                 .sparqlInvPSnippet(sparqlSnippet)

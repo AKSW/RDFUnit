@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.readers;
 
-import org.aksw.rdfunit.model.impl.ShaclCCParameterImpl;
-import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
+import org.aksw.rdfunit.model.impl.ComponentParameterImpl;
+import org.aksw.rdfunit.model.interfaces.ComponentParameter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -16,23 +16,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 6/17/15 5:07 PM
  * @version $Id: $Id
  */
-public final class ShaclCCParameterReader implements ElementReader<ShaclCCParameter> {
+public final class ComponentParameterReader implements ElementReader<ComponentParameter> {
 
-    private ShaclCCParameterReader(){}
+    private ComponentParameterReader(){}
 
     /**
      * <p>create.</p>
      *
-     * @return a {@link ShaclCCParameterReader} object.
+     * @return a {@link ComponentParameterReader} object.
      */
-    public static ShaclCCParameterReader create() { return new ShaclCCParameterReader();}
+    public static ComponentParameterReader create() { return new ComponentParameterReader();}
 
     /** {@inheritDoc} */
     @Override
-    public ShaclCCParameter read(Resource resource) {
+    public ComponentParameter read(Resource resource) {
         checkNotNull(resource);
 
-        ShaclCCParameterImpl.ShaclCCParameterImplBuilder argumentBuilder = ShaclCCParameterImpl.builder();
+        ComponentParameterImpl.ComponentParameterImplBuilder argumentBuilder = ComponentParameterImpl.builder();
 
         argumentBuilder.element(resource);
 

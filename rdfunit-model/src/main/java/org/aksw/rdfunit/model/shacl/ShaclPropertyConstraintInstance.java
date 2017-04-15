@@ -29,17 +29,17 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     @NonNull @Getter private final ShaclPropertyConstraintTemplate template;
-    @NonNull @Getter @Singular private final ImmutableMap<ShaclCCParameter, RDFNode> bindings;
+    @NonNull @Getter @Singular private final ImmutableMap<ComponentParameter, RDFNode> bindings;
 
     @Override
     public Property getFacetProperty() {
-        return template.getShaclCCParameters().stream().findFirst().get().getPredicate();
+        return template.getComponentParameters().stream().findFirst().get().getPredicate();
     }
 
     @Override
     public Set<RDFNode> getFacetValues() {
-       ShaclCCParameter shaclCCParameter =  bindings.keySet().stream().filter(arg -> arg.getPredicate().equals(getFacetProperty())).findFirst().get();
-        return new HashSet<>(Collections.singletonList(bindings.get(shaclCCParameter)));
+       ComponentParameter componentParameter =  bindings.keySet().stream().filter(arg -> arg.getPredicate().equals(getFacetProperty())).findFirst().get();
+        return new HashSet<>(Collections.singletonList(bindings.get(componentParameter)));
     }
 
     @Override
@@ -72,14 +72,14 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
 
     private String replaceBindings(String sparqlSnippet) {
         String bindedSnippet = sparqlSnippet;
-        for (Map.Entry<ShaclCCParameter, RDFNode>  entry:  bindings.entrySet()) {
+        for (Map.Entry<ComponentParameter, RDFNode>  entry:  bindings.entrySet()) {
             bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
         }
         return bindedSnippet;
     }
 
-    private String replaceBinding(String sparql, ShaclCCParameter shaclCCParameter, RDFNode value) {
-        return sparql.replace("$"+ shaclCCParameter.getPredicate().getLocalName(), formatRdfValue(value));
+    private String replaceBinding(String sparql, ComponentParameter componentParameter, RDFNode value) {
+        return sparql.replace("$"+ componentParameter.getPredicate().getLocalName(), formatRdfValue(value));
     }
 
     private String generateMessage() {

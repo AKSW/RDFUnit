@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.model.impl;
 
-import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
+import org.aksw.rdfunit.model.interfaces.ComponentParameter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -17,12 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Dimitris Kontokostas
  * @since 6/17/15 8:36 PM
  */
-public class ShaclCCParameterImplTest {
+public class ComponentParameterImplTest {
 
     private final Resource element = ResourceFactory.createResource("http://example.com/argument/11");
     private final Property predicate = ResourceFactory.createProperty(SHACL.namespace + "arg1");
 
-    private final ShaclCCParameter argDef = ShaclCCParameterImpl.builder().element(element).predicate(predicate).build();
+    private final ComponentParameter argDef = ComponentParameterImpl.builder().element(element).predicate(predicate).build();
 
     @Test
     public void testGetElement()  {
@@ -37,11 +37,11 @@ public class ShaclCCParameterImplTest {
         assertThat(argDef.isOptional())
                 .isFalse();
 
-        ShaclCCParameterImpl arg2 = ShaclCCParameterImpl.builder().element(element).predicate(predicate).isOptional(true).build();
+        ComponentParameterImpl arg2 = ComponentParameterImpl.builder().element(element).predicate(predicate).isOptional(true).build();
         assertThat(arg2.isOptional())
                 .isTrue();
 
-        ShaclCCParameterImpl arg3 = ShaclCCParameterImpl.builder().element(element).predicate(predicate).isOptional(false).build();
+        ComponentParameterImpl arg3 = ComponentParameterImpl.builder().element(element).predicate(predicate).isOptional(false).build();
         assertThat(arg3.isOptional())
                 .isFalse();
     }
@@ -59,7 +59,7 @@ public class ShaclCCParameterImplTest {
                 .isFalse();
 
         RDFNode node = ResourceFactory.createResource("http://example.com");
-        ShaclCCParameterImpl arg2 = ShaclCCParameterImpl.builder().element(element).predicate(predicate).defaultValue(node).build();
+        ComponentParameterImpl arg2 = ComponentParameterImpl.builder().element(element).predicate(predicate).defaultValue(node).build();
 
         assertThat(arg2.getDefaultValue().get())
                 .isEqualTo(node);

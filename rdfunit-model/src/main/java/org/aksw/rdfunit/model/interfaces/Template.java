@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface Template extends Element {
 
     /**
-     * <p>getShaclCCParameters.</p>
+     * <p>getComponentParameters.</p>
      *
      * @return a {@link java.util.Collection} object.
      */
-    Collection<ShaclCCParameter> getArguments();
+    Collection<ComponentParameter> getArguments();
 
     /**
      * <p>getSparql.</p>

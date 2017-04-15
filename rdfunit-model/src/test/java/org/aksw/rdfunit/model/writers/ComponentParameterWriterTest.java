@@ -2,8 +2,8 @@ package org.aksw.rdfunit.model.writers;
 
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
-import org.aksw.rdfunit.model.readers.ShaclCCParameterReader;
+import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.readers.ComponentParameterReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 8/21/15 12:42 AM
  */
 @RunWith(Parameterized.class)
-public class ShaclCCParameterWriterTest {
+public class ComponentParameterWriterTest {
 
     @Parameterized.Parameters(name= "{index}: Pattern: {0}")
     public static Collection<Object[]> resources() throws RdfReaderException {
@@ -44,16 +44,16 @@ public class ShaclCCParameterWriterTest {
 
     @Test
     public void testRead() {
-        // read the ShaclCCParameter
-        ShaclCCParameter shaclCCParameter = ShaclCCParameterReader.create().read(resource);
+        // read the ComponentParameter
+        ComponentParameter componentParameter = ComponentParameterReader.create().read(resource);
 
         // write in new model
         Model m1 = ModelFactory.createDefaultModel();
-        Resource r1 = ShaclCCParameterWriter.create(shaclCCParameter).write(m1);
+        Resource r1 = ComponentParameterWriter.create(componentParameter).write(m1);
         // reread
-        ShaclCCParameter shaclCCParameter2 = ShaclCCParameterReader.create().read(r1);
+        ComponentParameter componentParameter2 = ComponentParameterReader.create().read(r1);
         Model m2 = ModelFactory.createDefaultModel();
-        ShaclCCParameterWriter.create(shaclCCParameter2).write(m2);
+        ComponentParameterWriter.create(componentParameter2).write(m2);
 
         assertThat(m1.isIsomorphicWith(m2))
             .isTrue();
