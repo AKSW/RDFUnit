@@ -29,17 +29,17 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     @NonNull @Getter private final ShaclPropertyConstraintTemplate template;
-    @NonNull @Getter @Singular private final ImmutableMap<Argument, RDFNode> bindings;
+    @NonNull @Getter @Singular private final ImmutableMap<ShaclCCParameter, RDFNode> bindings;
 
     @Override
     public Property getFacetProperty() {
-        return template.getArguments().stream().findFirst().get().getPredicate();
+        return template.getShaclCCParameters().stream().findFirst().get().getPredicate();
     }
 
     @Override
     public Set<RDFNode> getFacetValues() {
-       Argument argument =  bindings.keySet().stream().filter(arg -> arg.getPredicate().equals(getFacetProperty())).findFirst().get();
-        return new HashSet<>(Collections.singletonList(bindings.get(argument)));
+       ShaclCCParameter shaclCCParameter =  bindings.keySet().stream().filter(arg -> arg.getPredicate().equals(getFacetProperty())).findFirst().get();
+        return new HashSet<>(Collections.singletonList(bindings.get(shaclCCParameter)));
     }
 
     @Override
@@ -72,14 +72,14 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
 
     private String replaceBindings(String sparqlSnippet) {
         String bindedSnippet = sparqlSnippet;
-        for (Map.Entry<Argument, RDFNode>  entry:  bindings.entrySet()) {
+        for (Map.Entry<ShaclCCParameter, RDFNode>  entry:  bindings.entrySet()) {
             bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
         }
         return bindedSnippet;
     }
 
-    private String replaceBinding(String sparql, Argument argument, RDFNode value) {
-        return sparql.replace("$"+argument.getPredicate().getLocalName(), formatRdfValue(value));
+    private String replaceBinding(String sparql, ShaclCCParameter shaclCCParameter, RDFNode value) {
+        return sparql.replace("$"+ shaclCCParameter.getPredicate().getLocalName(), formatRdfValue(value));
     }
 
     private String generateMessage() {

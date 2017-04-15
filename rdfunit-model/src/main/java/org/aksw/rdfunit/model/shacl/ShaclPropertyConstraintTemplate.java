@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
-import org.aksw.rdfunit.model.interfaces.Argument;
+import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
@@ -20,8 +20,8 @@ import org.apache.jena.rdf.model.*;
 public class ShaclPropertyConstraintTemplate {
     @NonNull @Getter private final String sparqlPropSnippet;
     @NonNull @Getter private final String sparqlInvPSnippet;
-    @NonNull @Getter @Singular private final ImmutableSet<Argument> arguments;
-    @NonNull @Getter @Singular private final ImmutableMap<Argument, String> argumentFilters;
+    @NonNull @Getter @Singular private final ImmutableSet<ShaclCCParameter> shaclCCParameters;
+    @NonNull @Getter @Singular private final ImmutableMap<ShaclCCParameter, String> argumentFilters;
     @NonNull @Getter private final String message;
     @Getter private final boolean includePropertyFilter;
 
@@ -32,7 +32,7 @@ public class ShaclPropertyConstraintTemplate {
 
     }
 
-    private boolean canBind(PropertyValuePairSet propertyValuePairSet, Argument arg, String sparqlFilter) {
+    private boolean canBind(PropertyValuePairSet propertyValuePairSet, ShaclCCParameter arg, String sparqlFilter) {
         String askQuery = generateQuery(propertyValuePairSet, arg, sparqlFilter);
         return checkFilter(askQuery);
     }
@@ -45,7 +45,7 @@ public class ShaclPropertyConstraintTemplate {
         }
     }
 
-    private String generateQuery(PropertyValuePairSet propertyValuePairSet, Argument arg, String sparqlFilter) {
+    private String generateQuery(PropertyValuePairSet propertyValuePairSet, ShaclCCParameter arg, String sparqlFilter) {
         String replaceStr = "$" + arg.getPredicate().getLocalName();
         RDFNode value = propertyValuePairSet.getPropertyValues(arg.getPredicate()).stream().findFirst().get();
         return sparqlFilter.replace(replaceStr, formatRdfValue(value));

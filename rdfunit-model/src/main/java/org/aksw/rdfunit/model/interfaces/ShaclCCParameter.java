@@ -1,11 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import org.aksw.rdfunit.enums.ValueKind;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.apache.jena.ext.com.google.common.collect.ImmutableSet;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
 
 import java.util.Optional;
 import java.util.Set;
@@ -17,17 +15,11 @@ import java.util.Set;
  * @since 6 /17/15 3:15 PM
  * @version $Id: $Id
  */
-public interface Argument extends Element{
-
-    String getComment();
+public interface ShaclCCParameter extends Element{
 
     boolean isOptional();
 
     Property getPredicate();
-
-    Optional<Resource> getValueType();
-
-    Optional<ValueKind> getValueKind();
 
     Optional<RDFNode> getDefaultValue();
 

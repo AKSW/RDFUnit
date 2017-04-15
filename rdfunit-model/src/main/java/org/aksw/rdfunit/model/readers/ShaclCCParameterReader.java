@@ -1,13 +1,11 @@
 package org.aksw.rdfunit.model.readers;
 
-import org.aksw.rdfunit.enums.ValueKind;
-import org.aksw.rdfunit.model.impl.ArgumentImpl;
-import org.aksw.rdfunit.model.interfaces.Argument;
+import org.aksw.rdfunit.model.impl.ShaclCCParameterImpl;
+import org.aksw.rdfunit.model.interfaces.ShaclCCParameter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.vocabulary.RDFS;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -18,23 +16,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 6/17/15 5:07 PM
  * @version $Id: $Id
  */
-public final class ArgumentReader implements ElementReader<Argument> {
+public final class ShaclCCParameterReader implements ElementReader<ShaclCCParameter> {
 
-    private ArgumentReader(){}
+    private ShaclCCParameterReader(){}
 
     /**
      * <p>create.</p>
      *
-     * @return a {@link org.aksw.rdfunit.model.readers.ArgumentReader} object.
+     * @return a {@link ShaclCCParameterReader} object.
      */
-    public static ArgumentReader create() { return new ArgumentReader();}
+    public static ShaclCCParameterReader create() { return new ShaclCCParameterReader();}
 
     /** {@inheritDoc} */
     @Override
-    public Argument read(Resource resource) {
+    public ShaclCCParameter read(Resource resource) {
         checkNotNull(resource);
 
-        ArgumentImpl.ArgumentImplBuilder argumentBuilder = ArgumentImpl.builder();
+        ShaclCCParameterImpl.ShaclCCParameterImplBuilder argumentBuilder = ShaclCCParameterImpl.builder();
 
         argumentBuilder.element(resource);
 
@@ -45,24 +43,9 @@ public final class ArgumentReader implements ElementReader<Argument> {
 
         checkNotNull(argumentBuilder);
 
-        //comment
-        for (Statement smt : resource.listProperties(RDFS.comment).toList()) {
-            argumentBuilder.comment(smt.getObject().asLiteral().getLexicalForm());
-        }
-
         //default value
         for (Statement smt : resource.listProperties(SHACL.defaultValue).toList()) {
             argumentBuilder.defaultValue(smt.getObject());
-        }
-
-        //get datatype / valueType...
-        for (Statement smt : resource.listProperties(SHACL.datatype).toList()) {
-            argumentBuilder.valueType(smt.getObject().asResource());
-            argumentBuilder.valueKind(ValueKind.DATATYPE);
-        }
-        for (Statement smt : resource.listProperties(SHACL.valueType).toList()) {
-            argumentBuilder.valueType(smt.getObject().asResource());
-            argumentBuilder.valueKind(ValueKind.IRI);
         }
 
         // get optional
