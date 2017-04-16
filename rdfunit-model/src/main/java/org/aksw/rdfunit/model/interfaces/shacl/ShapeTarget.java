@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model.interfaces;
+package org.aksw.rdfunit.model.interfaces.shacl;
 
 import org.aksw.rdfunit.enums.ShapeTargetType;
 

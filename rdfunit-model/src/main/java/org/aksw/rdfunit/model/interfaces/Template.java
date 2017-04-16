@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
+
 import java.util.Collection;
 import java.util.Optional;
 

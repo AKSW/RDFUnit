@@ -1,8 +1,8 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import org.aksw.rdfunit.enums.ShapeTargetType;
-import org.aksw.rdfunit.model.interfaces.ShapeTarget;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.query.QueryFactory;
 import org.assertj.core.api.Fail;

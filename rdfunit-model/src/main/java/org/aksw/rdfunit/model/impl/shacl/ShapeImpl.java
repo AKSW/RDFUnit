@@ -1,9 +1,9 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import lombok.*;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
-import org.aksw.rdfunit.model.interfaces.Shape;
-import org.aksw.rdfunit.model.interfaces.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.List;

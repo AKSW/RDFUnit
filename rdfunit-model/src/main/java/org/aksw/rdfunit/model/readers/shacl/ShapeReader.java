@@ -1,7 +1,8 @@
-package org.aksw.rdfunit.model.readers;
+package org.aksw.rdfunit.model.readers.shacl;
 
-import org.aksw.rdfunit.model.impl.ShapeImpl;
-import org.aksw.rdfunit.model.interfaces.Shape;
+import org.aksw.rdfunit.model.impl.shacl.ShapeImpl;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.apache.jena.rdf.model.Resource;
 

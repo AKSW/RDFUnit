@@ -1,6 +1,7 @@
-package org.aksw.rdfunit.model.interfaces;
+package org.aksw.rdfunit.model.interfaces.shacl;
 
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
+import org.aksw.rdfunit.model.interfaces.Element;
 import org.apache.jena.ext.com.google.common.collect.ImmutableSet;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -15,7 +16,7 @@ import java.util.Set;
  * @since 6 /17/15 3:15 PM
  * @version $Id: $Id
  */
-public interface ComponentParameter extends Element{
+public interface ComponentParameter extends Element {
 
     boolean isOptional();
 

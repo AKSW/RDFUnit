@@ -1,4 +1,4 @@
-package org.aksw.rdfunit.model.readers;
+package org.aksw.rdfunit.model.readers.shacl;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;

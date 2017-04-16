@@ -1,7 +1,8 @@
-package org.aksw.rdfunit.model.readers;
+package org.aksw.rdfunit.model.readers.shacl;
 
-import org.aksw.rdfunit.model.impl.ComponentParameterImpl;
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.impl.shacl.ComponentParameterImpl;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
+import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;

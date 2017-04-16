@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.readers;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.model.readers.shacl.ComponentParameterReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;

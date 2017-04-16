@@ -1,7 +1,7 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import lombok.*;
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;

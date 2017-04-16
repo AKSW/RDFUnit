@@ -1,11 +1,11 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
-import org.aksw.rdfunit.model.interfaces.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.List;

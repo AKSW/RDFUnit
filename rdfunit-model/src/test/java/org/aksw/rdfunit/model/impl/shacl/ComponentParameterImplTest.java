@@ -1,6 +1,6 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;

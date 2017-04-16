@@ -1,6 +1,7 @@
-package org.aksw.rdfunit.model.writers;
+package org.aksw.rdfunit.model.writers.shacl;
 
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
+import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Model;

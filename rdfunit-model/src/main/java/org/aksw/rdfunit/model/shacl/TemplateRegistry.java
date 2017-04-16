@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Singular;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 
 import java.util.Set;
 import java.util.stream.Collectors;

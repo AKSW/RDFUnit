@@ -1,11 +1,11 @@
-package org.aksw.rdfunit.model.readers;
+package org.aksw.rdfunit.model.readers.shacl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.enums.ShapeTargetType;
-import org.aksw.rdfunit.model.impl.ShapeTargetCore;
-import org.aksw.rdfunit.model.impl.ShapeTargetValueShape;
-import org.aksw.rdfunit.model.interfaces.ShapeTarget;
+import org.aksw.rdfunit.model.impl.shacl.ShapeTargetCore;
+import org.aksw.rdfunit.model.impl.shacl.ShapeTargetValueShape;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;

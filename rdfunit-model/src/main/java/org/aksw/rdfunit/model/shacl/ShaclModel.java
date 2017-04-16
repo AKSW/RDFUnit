@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
-import org.aksw.rdfunit.model.impl.TestCaseWithTarget;
-import org.aksw.rdfunit.model.interfaces.Shape;
+import org.aksw.rdfunit.model.impl.shacl.TestCaseWithTarget;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.readers.BatchShapeReader;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.readers.shacl.BatchShapeReader;
 import org.apache.jena.rdf.model.Model;
 
 import java.util.Set;

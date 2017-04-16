@@ -1,10 +1,10 @@
-package org.aksw.rdfunit.model.writers;
+package org.aksw.rdfunit.model.writers.shacl;
 
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
-import org.aksw.rdfunit.model.readers.ComponentParameterReader;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
+import org.aksw.rdfunit.model.readers.shacl.ComponentParameterReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;

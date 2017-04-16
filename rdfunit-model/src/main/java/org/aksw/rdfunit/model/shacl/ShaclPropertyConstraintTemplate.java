@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;

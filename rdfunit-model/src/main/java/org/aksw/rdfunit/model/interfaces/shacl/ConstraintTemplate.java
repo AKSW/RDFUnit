@@ -1,6 +1,8 @@
-package org.aksw.rdfunit.model.interfaces;
+package org.aksw.rdfunit.model.interfaces.shacl;
 
 import org.aksw.rdfunit.enums.RLOGLevel;
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
+import org.aksw.rdfunit.model.interfaces.Template;
 import org.apache.jena.rdf.model.Property;
 
 import java.util.Collection;

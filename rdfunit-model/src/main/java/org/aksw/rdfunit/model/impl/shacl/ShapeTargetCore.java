@@ -1,11 +1,11 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
-import org.aksw.rdfunit.model.interfaces.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 
 import java.util.Optional;
 import java.util.function.Function;

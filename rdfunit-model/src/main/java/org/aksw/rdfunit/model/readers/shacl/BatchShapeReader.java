@@ -1,7 +1,7 @@
-package org.aksw.rdfunit.model.readers;
+package org.aksw.rdfunit.model.readers.shacl;
 
 import com.google.common.collect.ImmutableSet;
-import org.aksw.rdfunit.model.interfaces.Shape;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;

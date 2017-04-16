@@ -2,8 +2,8 @@ package org.aksw.rdfunit.model.shacl;
 
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.ValueKind;
-import org.aksw.rdfunit.model.impl.ComponentParameterImpl;
-import org.aksw.rdfunit.model.interfaces.ComponentParameter;
+import org.aksw.rdfunit.model.impl.shacl.ComponentParameterImpl;
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
