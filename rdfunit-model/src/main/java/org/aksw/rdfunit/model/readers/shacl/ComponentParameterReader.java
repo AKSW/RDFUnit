@@ -21,15 +21,9 @@ public final class ComponentParameterReader implements ElementReader<ComponentPa
 
     private ComponentParameterReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link ComponentParameterReader} object.
-     */
     public static ComponentParameterReader create() { return new ComponentParameterReader();}
 
-    /** {@inheritDoc} */
-    @Override
+   @Override
     public ComponentParameter read(Resource resource) {
         checkNotNull(resource);
 

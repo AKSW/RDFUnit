@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Singular;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
-import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
+import org.aksw.rdfunit.model.interfaces.shacl.PropertyConstraint;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -128,15 +128,6 @@ public class TemplateRegistry {
                 " FILTER EXISTS { ?this $path ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($maxCount = 0)}"));
 
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.minLength,
-                "sh:minLength of $path should be '$minLength'",
-                " FILTER (isBlank(?value) || STRLEN(str(?value)) < $minLength) . }"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.maxLength,
-                "sh:maxLength of $path should be '$maxLength'",
-                " FILTER (isBlank(?value) || STRLEN(str(?value)) > $maxLength) . }"));
-
         builder.shaclCoreTemplate( createTemplate( CoreArguments.minExclusive,
                 "sh:minExclusive of $path should be '$minExclusive'",
                 " FILTER (!(?value > $minExclusive)) . }"));
@@ -154,18 +145,6 @@ public class TemplateRegistry {
                 " FILTER (!(?value <= $maxInclusive)) . }"));
 
 
-        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
-                "sh:nodeKind of $path should be '$nodeKind'",
-                " FILTER (!isIRI(?value)) .  } ",
-                " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)}"));
-        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
-                "sh:nodeKind of $path should be '$nodeKind'",
-                " FILTER (!isLiteral(?value)) .  } ",
-                " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#Literal>)}"));
-        builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.nodeKind,
-                "sh:nodeKind of $path should be '$nodeKind'",
-                " FILTER (!isBlank(?value)) .  } ",
-                " ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNode>)}"));
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
@@ -185,7 +164,7 @@ public class TemplateRegistry {
                 "\t\t?this $path ?otherValue .\n" +
                 "\t\tFILTER (?otherValue != ?value && ?lang = lang(?otherValue)) . } }" ));
 
-        //TODO sh:valueShape
+        //TODO sh:node
 
         //TODO sh:qualifiedValueShape, sh:qualifiedMinCount, sh:qualifiedMaxCount
 

@@ -34,7 +34,12 @@ public final class BatchShapeReader {
 
         Set<Resource> shapeResources = new HashSet<>(
                 model.listResourcesWithProperty(RDF.type, SHACL.Shape).toSet()); // explicit shapes
-        model.listObjectsOfProperty(SHACL.valueShape).toSet().stream() // implicit shapes (through sh:valueShape)
+        model.listObjectsOfProperty(SHACL.node).toSet().stream() // implicit shapes (through sh:node)
+                .filter(RDFNode::isResource)
+                .map(RDFNode::asResource)
+                .forEach(shapeResources::add);
+
+        model.listObjectsOfProperty(SHACL.property).toSet().stream() // implicit shapes (through sh:node)
                 .filter(RDFNode::isResource)
                 .map(RDFNode::asResource)
                 .forEach(shapeResources::add);

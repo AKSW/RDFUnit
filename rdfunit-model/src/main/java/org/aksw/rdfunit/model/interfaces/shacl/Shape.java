@@ -1,14 +1,13 @@
 package org.aksw.rdfunit.model.interfaces.shacl;
 
+import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.interfaces.Element;
-import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 
 /**
  * A SHACL Shape
- * missing ATM: filters, sparql constraints, ...
+ * missing ATM: filter, sparql constraints, ...
  *
  * @author Dimitris Kontokostas
  * @since 8/21/15 12:18 AM
@@ -16,8 +15,20 @@ import java.util.List;
  */
 public interface Shape extends Element {
 
-    Collection<ShapeTarget> getTargets();
+    /** TODO convert to PropertyPath ... */
+    Optional<String> getPath();
 
-    List<PropertyConstraintGroup> getPropertyConstraintGroups();
+    default Boolean isPropertyShape()  {
+        return getPath().isPresent();
+    }
+
+    default Boolean isNodeShape()  {
+        return !isPropertyShape();
+    }
+
+    /**
+     * Raw access to all values in this Shape
+     */
+    PropertyValuePairSet getPropertyValuePairSets();
 
 }

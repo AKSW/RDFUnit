@@ -12,6 +12,7 @@ import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public final class BatchShapeTargetReader {
 
         targetBuilder.addAll(collectExplicitTargets(resource));
 
-        targetBuilder.addAll(collectValueShapeTargets(resource));
+        //targetBuilder.addAll(collectValueShapeTargets(resource));
 
         return targetBuilder.build();
 
@@ -97,19 +98,43 @@ public final class BatchShapeTargetReader {
     private Set<ShapeTarget> collectValueShapeTargets(Resource resource, List<Resource> propertyChain){
         ImmutableSet.Builder<ShapeTarget> targets = ImmutableSet.builder();
 
-        List<Resource> tmp = resource.getModel().listResourcesWithProperty(SHACL.valueShape, resource).toList();
+        List<Resource> tmp = resource.getModel().listResourcesWithProperty(SHACL.node, resource).toList();
 
                 tmp.forEach( r -> {
-                    Resource property = r.getPropertyResourceValue(SHACL.path);
+                    Optional<Resource> property = Optional.ofNullable(r.getPropertyResourceValue(SHACL.path));
                     getParentShapeResources(r)
                             .forEach(shape -> {
-                                ImmutableList<Resource> propChainNew = new ImmutableList.Builder<Resource>().add(property).addAll(propertyChain).build();
+                                ImmutableList<Resource> propChainNew;
+                                if (property.isPresent()) {
+                                    propChainNew = new ImmutableList.Builder<Resource>().add(property.get()).addAll(propertyChain).build();
+                                } else {
+                                    propChainNew = new ImmutableList.Builder<Resource>().addAll(propertyChain).build();
+                                }
                                 collectExplicitTargets(shape).forEach(target ->
                                         targets.add(ShapeTargetValueShape.create(target, propChainNew)));
 
                                 targets.addAll(collectValueShapeTargets(shape, propChainNew));
                             });
                 });
+
+        List<Resource> tmp2 = resource.getModel().listResourcesWithProperty(SHACL.property, resource).toList();
+
+        tmp2.forEach( r -> {
+            Optional<Resource> property = Optional.ofNullable(r.getPropertyResourceValue(SHACL.path));
+            getParentShapeResources(r)
+                    .forEach(shape -> {
+                        ImmutableList<Resource> propChainNew;
+                        if (property.isPresent()) {
+                            propChainNew = new ImmutableList.Builder<Resource>().add(property.get()).addAll(propertyChain).build();
+                        } else {
+                            propChainNew = new ImmutableList.Builder<Resource>().addAll(propertyChain).build();
+                        }
+                        collectExplicitTargets(shape).forEach(target ->
+                                targets.add(ShapeTargetValueShape.create(target, propChainNew)));
+
+                        targets.addAll(collectValueShapeTargets(shape, propChainNew));
+                    });
+        });
 
         return targets.build();
     }

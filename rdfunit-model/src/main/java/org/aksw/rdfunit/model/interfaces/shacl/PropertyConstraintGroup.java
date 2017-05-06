@@ -1,6 +1,7 @@
-package org.aksw.rdfunit.model.interfaces;
+package org.aksw.rdfunit.model.interfaces.shacl;
 
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
+import org.aksw.rdfunit.model.interfaces.Element;
 import org.apache.jena.rdf.model.Property;
 
 import java.util.Set;
@@ -10,7 +11,8 @@ import java.util.Set;
  * @since 8/21/15 12:18 AM
  * @version $Id: $Id
  */
-public interface PropertyConstraintGroup extends Element{
+@Deprecated
+public interface PropertyConstraintGroup extends Element {
 
     /**
      * The property involved in this property constraint group

@@ -4,6 +4,7 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QueryParseException;
 
 /**
  * Factory that returns simple select queries
@@ -26,6 +27,11 @@ public class QueryGenerationSelectFactory implements QueryGenerationFactory {
     /** {@inheritDoc} */
     @Override
     public Query getSparqlQuery(TestCase testCase) {
-        return QueryFactory.create(this.getSparqlQueryAsString(testCase));
+        String query = this.getSparqlQueryAsString(testCase);
+        try {
+            return QueryFactory.create(query);
+        } catch (QueryParseException e) {
+            throw new IllegalArgumentException("Illegal query: \n" + query, e);
+        }
     }
 }

@@ -20,10 +20,6 @@ ex:MyShape
 		sh:path ex:checkClassIn ;
 		sh:classIn (ex:SuperClass1 ex:SuperClass2) ;
 	] ;
-	sh:property [
-        sh:path ex:checkDirectClass ;
-        sh:directType ex:DirectClass ;
-    ] ;
 
     sh:property [
         sh:path ex:checkDatatype ;
@@ -132,23 +128,23 @@ ex:MyCardShapeMax
     ] ;
     .
 
-ex:ValueShapeExampleShape
+ex:NodeExampleShape
 	a sh:Shape ;
-	sh:targetClass ex:ValueShapeClass;
+	sh:targetClass ex:NodeClass;
 	sh:property [
 		sh:path ex:someProperty ;
-		sh:valueShape ex:ValueShapeNested1 ;
+		sh:node ex:NodeNested1 ;
 	] .
 
-ex:ValueShapeNested1
+ex:NodeNested1
     a sh:Shape ;
     sh:property [
         sh:path ex:nestedProperty ;
         sh:minCount 2 ;
-        sh:valueShape ex:ValueShapeNested2;
+        sh:node ex:NodeNested2;
     ].
 
-ex:ValueShapeNested2
+ex:NodeNested2
     a sh:Shape ;
     sh:property [
         sh:path ex:nestedProperty2 ;

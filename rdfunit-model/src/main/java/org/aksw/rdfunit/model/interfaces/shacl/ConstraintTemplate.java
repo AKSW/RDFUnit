@@ -14,6 +14,7 @@ import java.util.Collection;
  * @since 8/21/15 2:12 PM
  * @version $Id: $Id
  */
+@Deprecated
 public interface ConstraintTemplate extends Template {
 
     //TODO multiple languages

@@ -37,7 +37,7 @@ public final class CoreArguments {
     public static final ComponentParameter pattern = createSimpleArgument(SHACL.pattern);
     public static final ComponentParameter flags = createSimpleArgument(SHACL.flags, "flags", ValueKind.DATATYPE, true);
     public static final ComponentParameter uniqueLang = createSimpleArgument(SHACL.uniqueLang);
-    //public static final ComponentParameter valueShape
+    //public static final ComponentParameter node
     //public static final ComponentParameter qualifiedValueShape
     //public static final ComponentParameter qualifiedMinCount
     //public static final ComponentParameter qualifiedMaxCount

@@ -24,7 +24,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
 
     private ShapeTargetValueShape(ShapeTarget outerTarget, List<Resource> propertyChain, Function<ShapeTargetValueShape, String> generatePattern) {
         this.outerTarget = outerTarget;
-        this.propertyChain = ImmutableList.copyOf(propertyChain);
+        this.propertyChain = ImmutableList.copyOf(propertyChain.stream().filter( p -> p != null).collect(Collectors.toList()));
         this.generatePattern = generatePattern;
     }
 
@@ -47,7 +47,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
                     return transformTarget((ShapeTargetValueShape) outerTarget, propertyChain);
                 }
             default:
-                throw new IllegalArgumentException("Unsupported target in sh:valueShape");
+                throw new IllegalArgumentException("Unsupported target in sh:node");
         }
     }
 

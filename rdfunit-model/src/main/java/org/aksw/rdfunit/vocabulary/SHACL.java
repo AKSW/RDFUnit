@@ -27,6 +27,8 @@ public final class SHACL {
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource ValidationResult = resource("ValidationResult");
     public static final Resource SPARQLAskValidator  = resource("SPARQLAskValidator");
+    public static final Resource ConstraintComponent = resource("ConstraintComponent");
+
 
     public static final Property targetClass = property("targetClass");
     public static final Property targetNode = property("targetNode");
@@ -45,6 +47,10 @@ public final class SHACL {
     public static final Property defaultValue = property("defaultValue");
     public static final Property optional = property("optional");
     public static final Property sparql = property("sparql");
+    public static final Property validator = property("validator");
+    public static final Property nodeValidator = property("nodeValidator");
+    public static final Property propertyValidator = property("propertyValidator");
+    public static final Property ask = property("ask");
 
     public static final Property clazz = property("class");
     public static final Property clazzIn = property("classIn");
@@ -87,7 +93,7 @@ public final class SHACL {
     public static final Property flags = property("flags");
     public static final Property uniqueLang = property("uniqueLang");
 
-    public static final Property valueShape = property("valueShape");
+    public static final Property node = property("node");
     public static final Property and = property("and");
     public static final Property or = property("or");
     public static final Property not = property("not");

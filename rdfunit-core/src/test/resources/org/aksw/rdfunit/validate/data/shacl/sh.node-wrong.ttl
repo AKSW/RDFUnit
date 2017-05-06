@@ -4,19 +4,19 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:1  a ex:ValueShapeClass ;
+ex:1  a ex:NodeClass ;
 	ex:someProperty [
 		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
 		#ex:nestedProperty [ ex:nestedProperty2 "2"^^xsd:int ] ;
 	] .
 
-ex:2  a ex:ValueShapeClass ;
+ex:2  a ex:NodeClass ;
 	ex:someProperty [
 		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
 		ex:nestedProperty [ ex:nestedProperty2 "asdf"] ;
 	] .
 
-ex:2  a ex:ValueShapeClass ;
+ex:2  a ex:NodeClass ;
 	ex:someProperty [
 		#ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
 		#ex:nestedProperty [ ex:nestedProperty2 "asdf"] ;

@@ -1,61 +1,50 @@
-package org.aksw.rdfunit.model.shacl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import lombok.*;
+import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.helper.RdfListUtils;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
-import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
-import org.aksw.rdfunit.model.interfaces.shacl.PropertyConstraint;
+import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Hacky code for now
- *
- * @author Dimitris Kontokostas
- * @since 14/2/2016 11:20 μμ
- */
 @Builder
-@ToString
-@EqualsAndHashCode
-public class ShaclPropertyConstraintInstance implements PropertyConstraint{
-    @NonNull @Getter private final ShaclPropertyConstraintTemplate template;
-    @NonNull @Getter @Singular private final ImmutableMap<ComponentParameter, RDFNode> bindings;
+@Value
+public class ConstraintImpl implements Constraint {
+    @Getter @NonNull private final Shape shape;
+    @Getter @NonNull private final String message;
+    @Getter @NonNull private final RLOGLevel severity;
+    @Getter @NonNull private final Component component;
+    @NonNull private final ComponentValidator validator;
+    @Getter @NonNull @Singular private final ImmutableMap<ComponentParameter, RDFNode> bindings;
 
     @Override
-    public Property getFacetProperty() {
-        return template.getComponentParameters().stream().findFirst().get().getPredicate();
-    }
-
-    @Override
-    public Set<RDFNode> getFacetValues() {
-       ComponentParameter componentParameter =  bindings.keySet().stream().filter(arg -> arg.getPredicate().equals(getFacetProperty())).findFirst().get();
-        return new HashSet<>(Collections.singletonList(bindings.get(componentParameter)));
-    }
-
-    @Override
-    public Set<PropertyValuePair> getAdditionalArguments() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
-    public TestCase getTestCase(boolean forInverseProperty) {
+    public TestCase getTestCase() {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
-        String sparql = (forInverseProperty) ? generateSparqlWhere(template.getSparqlInvPSnippet()) : generateSparqlWhere(template.getSparqlPropSnippet());
+        String sparql = "";
+        if (validator.getType().equals(ComponentValidatorType.ASK_VALIDATOR)) {
+            sparql = generateSparqlWhere(validator.getSparqlQuery());
+        } else {
+            throw new UnsupportedOperationException("Only ASK validators for now");
+        }
+
 
         return testBuilder
                 .element(createTestCaseResource())
@@ -64,14 +53,19 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 .testCaseAnnotation(generateTestAnnotations())
                 .build();
     }
-
-    @Override
-    public boolean usesValidatorFunction() {
-        return template.isIncludePropertyFilter();
-    }
-
     private String generateSparqlWhere(String sparqlString) {
-        return "{ " + replaceBindings(sparqlString);
+
+        String valuePath;
+        if (shape.getPath().isPresent()) {
+            valuePath = " ?this <" + shape.getPath().get() + "> ?value . ";
+        } else {
+            valuePath = " BIND ($this AS ?value) . ";
+        }
+
+        String sparqlWhere =  sparqlString.trim()
+                .replaceFirst("\\{", "")
+                .replaceFirst("ASK", "  {\n " + valuePath + "\n MINUS {\n " + valuePath + " ") + "}";
+        return replaceBindings(sparqlWhere);
     }
 
     private String replaceBindings(String sparqlSnippet) {
@@ -87,21 +81,21 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
     }
 
     private String generateMessage() {
-        return replaceBindings(this.template.getMessage());
+        return replaceBindings(this.message);
     }
 
     private String formatRdfValue(RDFNode value) {
-            if (value.isResource()) {
-                Resource r = value.asResource();
-                if (RdfListUtils.isList(r)) {
-                    return RdfListUtils.getListItemsOrEmpty(r).stream().map(this::formatRdfListValue).collect(Collectors.joining("  "));
-                } else {
-                    return asFullTurtleUri(r);
-                }
-
+        if (value.isResource()) {
+            Resource r = value.asResource();
+            if (RdfListUtils.isList(r)) {
+                return RdfListUtils.getListItemsOrEmpty(r).stream().map(this::formatRdfListValue).collect(Collectors.joining("  "));
             } else {
-                return asSimpleLiteral(value.asLiteral());
+                return asFullTurtleUri(r);
             }
+
+        } else {
+            return asSimpleLiteral(value.asLiteral());
+        }
     }
 
     private String asSimpleLiteral(Literal value) {
@@ -133,21 +127,28 @@ public class ShaclPropertyConstraintInstance implements PropertyConstraint{
                 null,
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
-                Collections.singletonList(bindings.get(CoreArguments.path).asResource().getURI()),
+                Collections.emptyList(),
                 generateMessage(),
-                RLOGLevel.resolve(bindings.get(CoreArguments.severity).asResource().getURI()),
+                RLOGLevel.ERROR, //FIXME
                 createResultAnnotations()
-                );
+        );
     }
 
     private List<ResultAnnotation> createResultAnnotations() {
         ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
         // add property
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.path)
-                .setValue(bindings.get(CoreArguments.path)).build());
+        if (shape.getPath().isPresent()) {
+            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.path)
+                    .setValue(ResourceFactory.createResource(shape.getPath().get())).build());
+        }
 
-        List<Property> nonValueArgs = Arrays.asList(CoreArguments.minCount.getPredicate(), CoreArguments.maxCount.getPredicate());
-        if (!nonValueArgs.contains(getFacetProperty())) {
+
+        List<Property> nonValueArgs = Arrays.asList(SHACL.minCount, SHACL.maxCount);
+        List<Property> nonValueBind = getBindings().keySet().stream()
+                .map(ComponentParameter::getPredicate)
+                .filter( p -> !nonValueArgs.contains(p))
+                .collect(Collectors.toList());
+        if (!nonValueBind.isEmpty()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.object)
                     .setVariableName("value").build());
         }

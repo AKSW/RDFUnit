@@ -4,10 +4,8 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:1 rdf:type ex:Person ;
-  ex:checkDirectClass ex:2 .
-
-ex:2 rdf:type ex:DirectClass .
-
-ex:3 ex:checkDirectClass ex:4 .
-ex:4 a ex:SuperClassXYZ. # correct, target is different
+ex:NodeExampleValidResource a ex:NodeClass ;
+	ex:someProperty [
+		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
+		ex:nestedProperty [ ex:nestedProperty2 "2"^^xsd:int ] ;
+	] .

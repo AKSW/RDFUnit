@@ -19,6 +19,7 @@ import java.util.Set;
 public interface ComponentParameter extends Element {
 
     boolean isOptional();
+    default boolean isRequired() {return !isOptional();}
 
     Property getPredicate();
 

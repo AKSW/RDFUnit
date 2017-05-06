@@ -1,14 +1,11 @@
-package org.aksw.rdfunit.model.readers;
+package org.aksw.rdfunit.model.readers.shacl;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
-import org.aksw.rdfunit.model.readers.shacl.ShapeReader;
 import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
@@ -17,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,40 +54,16 @@ public class ShapeReaderTest {
 
         checkTarget(sh);
 
-        testPropertyGroups(sh);
     }
 
-    private void testPropertyGroups(Shape sh) {
-        assertThat(sh.getPropertyConstraintGroups())
-                .hasSize(2);
-
-        // have one normal & one inverse property
-        assertThat(sh.getPropertyConstraintGroups().stream().map(PropertyConstraintGroup::isInverse).distinct().collect(Collectors.toList()))
-                .hasSize(2);
-
-        // make sure exact same with reverse
-        //also verifies equality checks
-        PropertyConstraintGroup pcg1 = sh.getPropertyConstraintGroups().get(0);
-        PropertyConstraintGroup pcg2 = sh.getPropertyConstraintGroups().get(1);
-
-        //assertThat(pcg1.getPropertyConstraints())
-        //        .hasSize(23);
-
-        assertThat(pcg1.getPropertyConstraints().size())
-                .isEqualTo(pcg2.getPropertyConstraints().size());
-
-        pcg1.getPropertyConstraints().forEach(p -> {
-            assertThat(pcg2.getPropertyConstraints().contains(p));
-            assertThat(p.getTestCase(pcg1.isInverse()).getLogLevel().equals(RLOGLevel.WARN));
-        });
-    }
 
     private void checkTarget(Shape sh) {
-        assertThat(sh.getTargets())
+        Set<ShapeTarget> targets = BatchShapeTargetReader.create().read(sh.getElement());
+        assertThat(targets)
                 .hasSize(ShapeTargetType.values().length-1);
 
 
-        List<ShapeTargetType> targetTypes = sh.getTargets().stream()
+        List<ShapeTargetType> targetTypes = targets.stream()
                 .map(ShapeTarget::getTargetType)
                 .distinct()
                 .collect(Collectors.toList());

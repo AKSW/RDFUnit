@@ -15,7 +15,7 @@ ex:MyShape
 
 	sh:property [
 		sh:path ex:value ;
-		sh:valueShape ex:MyNestedShape ;
+		sh:node ex:MyNestedShape ;
 	] ;
 	.
 
@@ -23,7 +23,7 @@ ex:MyNestedShape
 	a sh:Shape ;
 	sh:property [
 		sh:path ex:value2 ;
-		sh:valueShape ex:MyNestedShape2 ;
+		sh:node ex:MyNestedShape2 ;
 	] ;
 	.
 

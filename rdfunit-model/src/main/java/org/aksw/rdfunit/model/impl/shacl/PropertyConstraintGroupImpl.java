@@ -1,10 +1,10 @@
-package org.aksw.rdfunit.model.impl;
+package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
-import org.aksw.rdfunit.model.interfaces.PropertyConstraint;
-import org.aksw.rdfunit.model.interfaces.PropertyConstraintGroup;
+import org.aksw.rdfunit.model.interfaces.shacl.PropertyConstraint;
+import org.aksw.rdfunit.model.interfaces.shacl.PropertyConstraintGroup;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 
