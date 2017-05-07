@@ -37,7 +37,7 @@ ex:MyShape
     ] ;
     sh:property [
         sh:path ex:checkNotEquals ;
-        sh:notEquals ex:checkNotEqualsTo ;
+        sh:disjoint ex:checkNotEqualsTo ;
     ] ;
     sh:property [
         sh:path ex:checkLength ;

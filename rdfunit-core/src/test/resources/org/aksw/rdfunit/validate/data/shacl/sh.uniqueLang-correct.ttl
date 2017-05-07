@@ -12,3 +12,6 @@ ex:1 rdf:type ex:UniqueLangShape ;
   ex:checkUniqueLang "abc"@fr ;
   .
 
+ex:2 rdf:type ex:UniqueLangShape ;
+  ex:checkUniqueLang "a" ;
+  .

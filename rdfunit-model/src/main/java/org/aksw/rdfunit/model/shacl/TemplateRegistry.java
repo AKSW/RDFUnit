@@ -47,26 +47,6 @@ public class TemplateRegistry {
     public static TemplateRegistry createCore() {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
-        builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
-                "sh:class of $path should be '$class'",
-                " FILTER (isLiteral(?value) || \n" +
-                        "\t\t!( $class = rdfs:Resource ||\n" +
-                        "\t\t\t($class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
-                        "\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* $class } )) }"));
-
-        builder.shaclCoreTemplate(createTemplate( CoreArguments.clazzIn,
-                "sh:classIn of $path should be in ($classIn)",
-                "FILTER (isLiteral(?value) || NOT EXISTS {\n" +
-                        "\t\t\tFILTER (?class = rdfs:Resource ||\n" +
-                        "\t\t\t\t(?class = rdf:List && EXISTS { ?value rdf:first ?any }) ||\n" +
-                        "\t\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* ?c . VALUES ?c { $classIn } })\n" +
-                        "\t\t})\n" +
-                        "}"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.equals,
-                "$path should be equal to '$equals'",
-                " FILTER NOT EXISTS { ?this $equals ?value . } }"));
-
         builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
                 "$path have value: $hasValue",
                 " FILTER NOT EXISTS { ?this $path $hasValue . } }"));
@@ -74,16 +54,6 @@ public class TemplateRegistry {
         builder.shaclCoreTemplate( createTemplate( CoreArguments.in,
                 "$path have value: $in",
         "FILTER NOT EXISTS { VALUES ?value { $in }  } } " ));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThan,
-                "$path should be less than '$lessThan'",
-                " ?this $lessThan ?value2 .\n" +
-                "\tFILTER (!(?value < ?value2)) .} "));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.lessThanOrEquals,
-                "$path should be less than or equals to '$lessThanOrEquals'",
-                " ?this $lessThan ?value2 .\n" +
-                        "\tFILTER (!(?value <= ?value2)) . }"));
 
 
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.minCount,

@@ -262,4 +262,73 @@ sh:UniqueLangConstraintComponent
     .
 
 
+################################
+### Property Pair CCs ##########
+################################
+
+sh:EqualsConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:equals ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	sh:message "$path should be equal to '$equals'";
+    	sh:ask """
+    		ASK {
+            	?this $equals ?value .
+            }""" ;
+    ] ;
+    .
+
+sh:DisjointConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:disjoint ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	sh:message "$path should no be equal to '$disjoint'";
+    	sh:ask """
+    		ASK {
+            	?this $equals ?value2 .
+            	FILTER (?value != ?value2) .
+            }""" ;
+    ] ;
+    .
+
+
+
+sh:LessThanConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:lessThan ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	sh:message "$path should be less than '$lessThan'";
+    	sh:ask """
+    		ASK {
+            	?this $lessThan ?value2 .
+                FILTER (?value < ?value2) .
+            }""" ;
+    ] ;
+    .
+
+
+sh:LessThanOrEqualsConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:lessThanOrEquals ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	sh:message "$path should be less than '$lessThanOrEquals'";
+    	sh:ask """
+    		ASK {
+            	?this $lessThanOrEquals ?value2 .
+                FILTER (?value < ?value2) .
+            }""" ;
+    ] ;
+    .
 

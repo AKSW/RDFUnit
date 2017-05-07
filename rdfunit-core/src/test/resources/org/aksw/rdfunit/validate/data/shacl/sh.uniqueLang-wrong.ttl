@@ -6,11 +6,16 @@
 
 ex:1 rdf:type ex:UniqueLangShape ;
   ex:checkUniqueLang "abc"@en ;
-  ex:checkUniqueLang "abcr"@en ;
+  ex:checkUniqueLang "abcr"@en ; # error 1
   .
 
 
-ex:2 rdf:type ex:UniqueLangShape ;
+ex:2 rdf:type ex:UniqueLangShape ; # correct
   ex:checkUniqueLang "abc"@en ;
   ex:checkUniqueLang "abcr"@de ;
+  .
+
+
+ex:2 rdf:type ex:UniqueLangShape ; # correct
+  ex:checkUniqueLang "a" ;
   .

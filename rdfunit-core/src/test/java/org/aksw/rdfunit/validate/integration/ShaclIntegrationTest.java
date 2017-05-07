@@ -27,8 +27,8 @@ public class ShaclIntegrationTest {
 
                 {"shacl/sh.equals-correct.ttl", 0},
                 {"shacl/sh.equals-wrong.ttl", 4},
-                {"shacl/sh.notEquals-correct.ttl", 0},
-                {"shacl/sh.notEquals-wrong.ttl", 4},
+                {"shacl/sh.disjoint-correct.ttl", 0},
+                {"shacl/sh.disjoint-wrong.ttl", 4},
 
                 {"shacl/sh.hasValue-In-correct.ttl", 0},
                 {"shacl/sh.hasValue-In-wrong.ttl", 4},
