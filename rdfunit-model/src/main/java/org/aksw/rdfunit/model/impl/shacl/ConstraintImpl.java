@@ -39,11 +39,7 @@ public class ConstraintImpl implements Constraint {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
         String sparql = "";
-        if (validator.getType().equals(ComponentValidatorType.ASK_VALIDATOR)) {
-            sparql = generateSparqlWhere(validator.getSparqlQuery());
-        } else {
-            throw new UnsupportedOperationException("Only ASK validators for now");
-        }
+        sparql = generateSparqlWhere(validator.getSparqlQuery());
 
 
         return testBuilder
@@ -62,10 +58,18 @@ public class ConstraintImpl implements Constraint {
             valuePath = " BIND ($this AS ?value) . ";
         }
 
-        String sparqlWhere =  sparqlString.trim()
-                .replaceFirst("\\{", "")
-                .replaceFirst("ASK", "  {\n " + valuePath + "\n MINUS {\n " + valuePath + " ") + "}";
-        return replaceBindings(sparqlWhere);
+        if (validator.getType().equals(ComponentValidatorType.ASK_VALIDATOR)) {
+            String sparqlWhere = sparqlString.trim()
+                    .replaceFirst("\\{", "")
+                    .replaceFirst("ASK", "  {\n " + valuePath + "\n MINUS {\n " + valuePath + " ") + "}";
+            return replaceBindings(sparqlWhere);
+        } else {
+            String  sparqlWhere = sparqlString.trim();
+            if (shape.getPath().isPresent()) {
+                    sparqlWhere = sparqlWhere.replace("$path", "<" + shape.getPath().get() + ">");
+            }
+            return replaceBindings(sparqlWhere);
+        }
     }
 
     private String replaceBindings(String sparqlSnippet) {

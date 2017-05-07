@@ -44,7 +44,7 @@ public class ComponentValidatorReader implements ElementReader<ComponentValidato
         }
 
         //default sparql query
-        for (Statement smt : resource.listProperties(SHACL.sparql).toList()) {
+        for (Statement smt : resource.listProperties(SHACL.select).toList()) {
             checkArgument(!type.equals(ComponentValidatorType.ASK_VALIDATOR), "SPARQL ASK-Based Validator contains SELECT query");
             validatorBuilder.sparqlQuery(smt.getObject().asLiteral().getLexicalForm());
         }

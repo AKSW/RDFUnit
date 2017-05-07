@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
  * @since 29/1/2016 9:28 πμ
  */
 
+@Slf4j
 public class ShaclModel {
     @NonNull private final ShapesGraph shapesGraph;
     @NonNull private final ImmutableSet<Shape> shapes;
@@ -136,6 +138,8 @@ public class ShaclModel {
                                                     .build())
                             );
                         }
+                    } else {
+                        log.warn("No validators found for shape {} and component {}", shape, component);
                     }
                 }
             });

@@ -51,6 +51,7 @@ public final class SHACL {
     public static final Property nodeValidator = property("nodeValidator");
     public static final Property propertyValidator = property("propertyValidator");
     public static final Property ask = property("ask");
+    public static final Property select = property("select");
 
     public static final Property clazz = property("class");
     public static final Property clazzIn = property("classIn");

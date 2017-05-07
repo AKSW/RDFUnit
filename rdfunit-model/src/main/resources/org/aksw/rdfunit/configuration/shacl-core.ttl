@@ -31,15 +31,19 @@ sh:ClassConstraintComponent
 	sh:parameter [
         sh:path sh:class ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
     	sh:message "value not of type $class";
-    	sh:ask """
-    		ASK {
-            	$value rdf:type/rdfs:subClassOf* $class .
+    	sh:select """
+    		{
+                $this $path ?value .
+                FILTER NOT EXISTS {
+                    $value rdf:type/rdfs:subClassOf* $class .
+                }
             }""" ;
     ] ;
     .
+
 
 
 sh:DatatypeConstraintComponent
