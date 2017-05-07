@@ -161,6 +161,7 @@ sh:MaxCountConstraintComponent
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
     	sh:message "Maximum cardinality for $PATH is '$maxCount'";
+        shr:filter """ ASK { FILTER ($maxCount > 0)} """ ;
     	sh:select """
     		SELECT $this
             WHERE {
@@ -169,6 +170,17 @@ sh:MaxCountConstraintComponent
             GROUP BY $this
             HAVING (COUNT(?value) > $maxCount)
         """ ;
+    ] ;
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "Maximum cardinality for $PATH is '$maxCount'";
+        shr:filter """ ASK { FILTER ($maxCount = 0)} """ ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                FILTER EXISTS {
+                $this $PATH ?value .
+            }} """ ;
     ] ;
     .
 
