@@ -64,7 +64,8 @@ public class ConstraintImpl implements Constraint {
                     .replaceFirst("ASK", "  {\n " + valuePath + "\n MINUS {\n " + valuePath + " ") + "}";
             return replaceBindings(sparqlWhere);
         } else {
-            String  sparqlWhere = sparqlString.trim();
+            String  sparqlWhere = sparqlString
+                    .substring(sparqlString.indexOf('{'));
             if (shape.getPath().isPresent()) {
                     sparqlWhere = sparqlWhere.replace("$PATH", "<" + shape.getPath().get() + ">");
             }

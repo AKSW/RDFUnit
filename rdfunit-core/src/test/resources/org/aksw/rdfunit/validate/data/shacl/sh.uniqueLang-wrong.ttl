@@ -16,6 +16,7 @@ ex:2 rdf:type ex:UniqueLangShape ; # correct
   .
 
 
-ex:2 rdf:type ex:UniqueLangShape ; # correct
+ex:3 rdf:type ex:UniqueLangShape ; # correct
   ex:checkUniqueLang "a" ;
+  ex:checkUniqueLang "b" ;
   .

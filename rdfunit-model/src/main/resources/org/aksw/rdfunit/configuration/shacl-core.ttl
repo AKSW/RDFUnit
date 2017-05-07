@@ -35,7 +35,8 @@ sh:ClassConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "value not of type $class";
     	sh:select """
-    		{
+    		SELECT DISTINCT ?this ?value
+    		WHERE {
                 $this $PATH ?value .
                 FILTER NOT EXISTS {
                     $value rdf:type/rdfs:subClassOf* $class .
@@ -54,7 +55,8 @@ sh:DatatypeConstraintComponent
         a sh:SPARQLSelectValidator ;
     	sh:message "value not of datatype $datatype";
     	sh:select """
-            {
+            SELECT DISTINCT ?this ?value
+            WHERE {
                 $this $PATH ?value .
                 FILTER ( datatype($value) != $datatype)
             }""";
@@ -63,7 +65,8 @@ sh:DatatypeConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "value not of datatype $datatype";
         sh:select """
-            {
+            SELECT DISTINCT ?this ?value
+            WHERE {
                 BIND ($this AS ?value) .
                 FILTER ( datatype($value) != $datatype)
             }""";
@@ -260,20 +263,23 @@ sh:UniqueLangConstraintComponent
         sh:path sh:uniqueLang ;
         sh:datatype xsd:boolean ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
-    	shr:filter "ASK { FILTER ($uniqueLang) . }" ;
-    	sh:message "$PATH should have one value per language";
-    	sh:ask """
-    		ASK {
-            	BIND (lang(?value) AS ?lang) .
-                FILTER (?lang != "") .
-                FILTER NOT EXISTS {
-                    ?this $PATH ?otherValue .
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "$PATH should have one value per language";
+        sh:select """
+            SELECT DISTINCT ?this ?value
+            WHERE {
+                $this $PATH ?value .
+                BIND (lang(?value) AS ?lang) .
+                FILTER (bound(?lang) && ?lang != "") .
+                FILTER EXISTS {
+                    $this $PATH ?otherValue .
                     FILTER (?otherValue != ?value && ?lang = lang(?otherValue)) .
-            }}""" ;
+                }
+            }""" ;
     ] ;
     .
+
 
 
 ################################
@@ -360,7 +366,8 @@ sh:HasValueConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "should have value $hasValue";
         sh:select """
-            {
+            SELECT DISTINCT ?this ?value
+            WHERE {
                 FILTER NOT EXISTS { ?this $PATH $hasValue . }
             }""" ;
     ] ;
