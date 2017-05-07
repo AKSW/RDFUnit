@@ -47,9 +47,7 @@ public class TemplateRegistry {
     public static TemplateRegistry createCore() {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
-                "$PATH have value: $hasValue",
-                " FILTER NOT EXISTS { ?this $PATH $hasValue . } }"));
+
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.in,
                 "$PATH have value: $in",
@@ -80,10 +78,6 @@ public class TemplateRegistry {
 
 
 
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
-                "$PATH should no be equal to '$notEquals'",
-                " ?this $notEquals ?value . }"));
 
         //TODO sh:node
 

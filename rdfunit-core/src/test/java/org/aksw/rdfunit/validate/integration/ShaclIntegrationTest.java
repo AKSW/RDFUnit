@@ -17,9 +17,9 @@ public class ShaclIntegrationTest {
     public static Collection<Object[]> resources() {
         return Arrays.asList(new Object[][]{
                 {"shacl/sh.class-correct.ttl", 0},
-                {"shacl/sh.class-wrong.ttl", 2},
+                {"shacl/sh.class-wrong.ttl", 1},
                 {"shacl/sh.datatype-correct.ttl", 0},
-                {"shacl/sh.datatype-wrong.ttl", 2},
+                {"shacl/sh.datatype-wrong.ttl", 1},
 
                 {"shacl/sh.uniqueLang-correct.ttl", 0},
                 {"shacl/sh.uniqueLang-wrong.ttl", 1},

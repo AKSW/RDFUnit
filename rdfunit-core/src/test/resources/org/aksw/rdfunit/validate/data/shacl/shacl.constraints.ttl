@@ -16,19 +16,10 @@ ex:MyShape
 		sh:path ex:classCheckProperty ;
 		sh:class ex:SuperClass ;
 	] ;
-	sh:property [
-		sh:path ex:checkClassIn ;
-		sh:classIn (ex:SuperClass1 ex:SuperClass2) ;
-	] ;
 
     sh:property [
         sh:path ex:checkDatatype ;
         sh:datatype xsd:date ;
-    ] ;
-
-    sh:property [
-        sh:path ex:checkDatatypeIn ;
-        sh:datatypeIn (xsd:date xsd:nonNegativeInteger) ;
     ] ;
 
     sh:property [
@@ -61,11 +52,6 @@ ex:MyShape
     ] ;
 
     sh:property [
-        sh:path ex:checkHasValue ;
-        sh:hasValue "100"^^xsd:int ;
-    ] ;
-
-    sh:property [
         sh:path ex:checkIn ;
         sh:in (ex:A "example" ) ;
     ] ;
@@ -87,7 +73,14 @@ ex:MyShape
 
 .
 
-
+ex:MyHasValueShape
+	a sh:Shape ;
+	sh:targetClass ex:HasValueShape ;
+    sh:property [
+        sh:path ex:checkHasValue ;
+        sh:hasValue "100"^^xsd:int ;
+    ] ;
+    .
 
 ex:MyCardShapeMin
 	a sh:Shape ;

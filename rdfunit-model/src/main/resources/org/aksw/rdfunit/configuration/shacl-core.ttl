@@ -45,21 +45,31 @@ sh:ClassConstraintComponent
     .
 
 
-
 sh:DatatypeConstraintComponent
     a sh:ConstraintComponent ;
 	sh:parameter [
         sh:path sh:datatype ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
-    	sh:message "value not of type $datatype";
-    	sh:ask """
-    		ASK {
-            	FILTER ( isLiteral($value) && datatype($value) = $datatype)
-            }""" ;
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+    	sh:message "value not of datatype $datatype";
+    	sh:select """
+            {
+                $this $PATH ?value .
+                FILTER ( datatype($value) != $datatype)
+            }""";
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "value not of datatype $datatype";
+        sh:select """
+            {
+                BIND ($this AS ?value) .
+                FILTER ( datatype($value) != $datatype)
+            }""";
     ] ;
     .
+
 
 sh:NodeKindConstraintComponent
 	a sh:ConstraintComponent ;
@@ -336,3 +346,22 @@ sh:LessThanOrEqualsConstraintComponent
     ] ;
     .
 
+
+################################
+### Other CCs ##########
+################################
+
+sh:HasValueConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:hasValue ;
+    ] ;
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "should have value $hasValue";
+        sh:select """
+            {
+                FILTER NOT EXISTS { ?this $PATH $hasValue . }
+            }""" ;
+    ] ;
+    .
