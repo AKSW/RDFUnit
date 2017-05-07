@@ -238,3 +238,28 @@ sh:PatternConstraintComponent
 
     ]
     .
+
+
+sh:UniqueLangConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:uniqueLang ;
+        sh:datatype xsd:boolean ;
+    ] ;
+    sh:validator [
+    	a sh:SPARQLAskValidator ;
+    	shr:filter "ASK { FILTER ($uniqueLang) . }" ;
+    	sh:message "$path should have one value per language";
+    	sh:ask """
+    		ASK {
+            	BIND (lang(?value) AS ?lang) .
+                FILTER (?lang != "") .
+                FILTER NOT EXISTS {
+                    ?this $path ?otherValue .
+                    FILTER (?otherValue != ?value && ?lang = lang(?otherValue)) .
+            }}""" ;
+    ] ;
+    .
+
+
+

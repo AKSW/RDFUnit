@@ -25,6 +25,8 @@ public interface ComponentParameter extends Element {
 
     Optional<RDFNode> getDefaultValue();
 
+    default String getParameterName() {return getPredicate().getLocalName();}
+
     /**
      * Given a possible list of property/value pairs, returns true if the argument
      * can provide a bind

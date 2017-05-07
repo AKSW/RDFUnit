@@ -47,21 +47,6 @@ public class TemplateRegistry {
     public static TemplateRegistry createCore() {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
-        builder.shaclCoreTemplate(createTemplate( CoreArguments.datatype,
-                "sh:datatype of $path should be '$datatype'",
-                " FILTER NOT EXISTS {\n" +
-                "\t\t{ FILTER isLiteral(?value) .} .\n" +
-                "\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
-                "\t\tFILTER (?valueDatatype = $datatype) . } }"));
-
-        builder.shaclCoreTemplate(createTemplate( CoreArguments.datatypeIn,
-                "sh:datatype of $path should be ($datatypeIn)",
-                "FILTER (!isLiteral(?value) || NOT EXISTS {\n" +
-                        "\t\t\tBIND (datatype(?value) AS ?valueDatatype) .\n" +
-                        "\t\t\tVALUES ?valueDatatype { $datatypeIn } .\n" +
-                        "\t\t})\n" +
-                        "\t}\n" ));
-
         builder.shaclCoreTemplate(createTemplate( CoreArguments.clazz,
                 "sh:class of $path should be '$class'",
                 " FILTER (isLiteral(?value) || \n" +
@@ -77,11 +62,6 @@ public class TemplateRegistry {
                         "\t\t\t\tEXISTS { ?value rdf:type/rdfs:subClassOf* ?c . VALUES ?c { $classIn } })\n" +
                         "\t\t})\n" +
                         "}"));
-
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.directType,
-                "sh:directType of $path should be '$directType'",
-                " FILTER NOT EXISTS { ?value a $directType .} }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.equals,
                 "$path should be equal to '$equals'",
@@ -128,41 +108,12 @@ public class TemplateRegistry {
                 " FILTER EXISTS { ?this $path ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($maxCount = 0)}"));
 
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.minExclusive,
-                "sh:minExclusive of $path should be '$minExclusive'",
-                " FILTER (!(?value > $minExclusive)) . }"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.minInclusive,
-                "sh:minInclusive of $path should be '$minInclusive'",
-                " FILTER (!(?value >= $minInclusive)) . }"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.maxExclusive,
-                "sh:maxExclusive of $path should be '$maxExclusive'",
-                " FILTER (!(?value < $maxExclusive)) . }"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.maxInclusive,
-                "sh:maxInclusive of $path should be '$maxInclusive'",
-                " FILTER (!(?value <= $maxInclusive)) . }"));
-
 
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
                 "$path should no be equal to '$notEquals'",
                 " ?this $notEquals ?value . }"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.pattern, CoreArguments.flags,
-                "Value $path should conform to pattern: '$pattern'",
-                " BIND ('$flags' AS ?myFlags) . FILTER (isBlank(?value) || IF(?myFlags != '', !regex(str(?value), '$pattern', '$flags'), !regex(str(?value), '$pattern'))) .}"));
-
-        builder.shaclCoreTemplate( createTemplate( CoreArguments.uniqueLang,
-                "$path should have one value per language",
-                " {FILTER ($uniqueLang) . }\n" +
-                "\tBIND (lang(?value) AS ?lang) .\n" +
-                "\tFILTER (bound(?lang) && ?lang != \"\") . \n" +
-                "\tFILTER EXISTS {\n" +
-                "\t\t?this $path ?otherValue .\n" +
-                "\t\tFILTER (?otherValue != ?value && ?lang = lang(?otherValue)) . } }" ));
 
         //TODO sh:node
 

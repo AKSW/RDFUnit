@@ -128,6 +128,16 @@ ex:MyCardShapeMax
     ] ;
     .
 
+ex:MyUniqueLangShape
+	a sh:Shape ;
+	sh:targetClass ex:UniqueLangShape ;
+
+    sh:property [
+        sh:path ex:checkUniqueLang ;
+        sh:uniqueLang "true"^^xsd:boolean;
+    ] ;
+.
+
 ex:NodeExampleShape
 	a sh:Shape ;
 	sh:targetClass ex:NodeClass;

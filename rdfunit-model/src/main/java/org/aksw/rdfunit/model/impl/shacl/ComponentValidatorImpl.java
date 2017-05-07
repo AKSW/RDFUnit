@@ -4,8 +4,10 @@ import lombok.*;
 import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.*;
 
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +33,42 @@ public class ComponentValidatorImpl implements ComponentValidator {
             return true;
         }
 
-        return true;
+        return canBind(filter, bindings);
     }
+
+
+    private boolean canBind(String filter, Map<ComponentParameter, RDFNode> bindings) {
+        String filterQ = filter;
+        bindings.entrySet().forEach( e -> {
+            filterQ.replace("$" + e.getKey().getParameterName(), formatRdfValue(e.getValue()));
+        });
+        return checkFilter(filterQ);
+    }
+
+    private boolean checkFilter(String askQuery) {
+        Model m = ModelFactory.createDefaultModel();
+        Query q = QueryFactory.create(askQuery);
+        try (QueryExecution qex = org.apache.jena.query.QueryExecutionFactory.create(q, m)) {
+            return qex.execAsk();
+        }
+    }
+
+    private String formatRdfValue(RDFNode value) {
+        if (value.isResource()) {
+            return asFullTurtleUri(value.asResource());
+        } else {
+            return asSimpleLiteral(value.asLiteral());
+        }
+    }
+
+    private String asSimpleLiteral(Literal value) {
+        return value.getLexicalForm();
+    }
+
+    private String asFullTurtleUri(Resource value) {
+        // some vocabularies use spaces in uris
+        return "<" + value.getURI().trim().replace(" ", "") + ">";
+    }
+
 
 }
