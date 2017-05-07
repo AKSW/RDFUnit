@@ -69,7 +69,7 @@ sh:NodeKindConstraintComponent
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)} """ ;
         sh:ask """
             ASK {
-                FILTER (isIRI(?value)) .
+                FILTER (isIRI(?value) ) .
             }""" ;
     ] ;
     sh:validator [

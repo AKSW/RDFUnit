@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.interfaces.shacl;
 
+import org.aksw.rdfunit.enums.ShapeType;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.interfaces.Element;
 
@@ -24,6 +25,10 @@ public interface Shape extends Element {
 
     default Boolean isNodeShape()  {
         return !isPropertyShape();
+    }
+
+    default ShapeType getShapeType() {
+        return (isPropertyShape()? ShapeType.PROPERTY_SHAPE : ShapeType.NODE_SHAPE);
     }
 
     /**

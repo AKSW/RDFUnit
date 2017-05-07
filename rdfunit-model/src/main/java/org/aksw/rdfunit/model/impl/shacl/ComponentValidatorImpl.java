@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import lombok.*;
 import org.aksw.rdfunit.enums.ComponentValidatorType;
+import org.aksw.rdfunit.enums.ShapeType;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
 import org.apache.jena.query.Query;
@@ -9,6 +10,8 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,13 +25,22 @@ public class ComponentValidatorImpl implements ComponentValidator {
     @Getter @NonNull private final ComponentValidatorType type;
     @Getter private String filter;
 
+    private static final List<ComponentValidatorType> propertyValidators = Arrays.asList(ComponentValidatorType.ASK_VALIDATOR, ComponentValidatorType.PROPERTY_VALIDATOR);
+    private static final List<ComponentValidatorType> nodeValidators = Arrays.asList(ComponentValidatorType.ASK_VALIDATOR, ComponentValidatorType.NODE_VALIDATOR);
+
     @Override
     public Optional<String> getDefaultMessage() {
         return Optional.ofNullable(message);
     }
 
     @Override
-    public boolean filterAppliesForBindings(Map<ComponentParameter, RDFNode> bindings) {
+    public boolean filterAppliesForBindings(ShapeType shapeType, Map<ComponentParameter, RDFNode> bindings) {
+        if (shapeType.equals(ShapeType.PROPERTY_SHAPE)  && !propertyValidators.contains(type)) {
+            return false;
+        }
+        if (shapeType.equals(ShapeType.NODE_SHAPE)  && !nodeValidators.contains(type)) {
+            return false;
+        }
         if (filter == null || filter.isEmpty()) {
             return true;
         }
@@ -39,10 +51,11 @@ public class ComponentValidatorImpl implements ComponentValidator {
 
     private boolean canBind(String filter, Map<ComponentParameter, RDFNode> bindings) {
         String filterQ = filter;
-        bindings.entrySet().forEach( e -> {
-            filterQ.replace("$" + e.getKey().getParameterName(), formatRdfValue(e.getValue()));
-        });
-        return checkFilter(filterQ);
+        for ( Map.Entry<ComponentParameter, RDFNode> e: bindings.entrySet()) {
+            filterQ = filterQ.replace("$" + e.getKey().getParameterName(), formatRdfValue(e.getValue()));
+        }
+        boolean canBind = checkFilter(filterQ);
+        return canBind;
     }
 
     private boolean checkFilter(String askQuery) {

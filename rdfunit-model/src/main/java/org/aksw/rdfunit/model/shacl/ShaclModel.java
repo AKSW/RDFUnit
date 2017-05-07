@@ -114,7 +114,7 @@ public class ShaclModel {
                     //validator picking
                     Optional<ComponentValidator> validator =
                             component.getValidators().stream()
-                                    .filter(v -> v.filterAppliesForBindings(bindings))
+                                    .filter(v -> v.filterAppliesForBindings(shape.getShapeType(), bindings))
                                     .findFirst();
                     if (validator.isPresent()) {
                     //FIXME

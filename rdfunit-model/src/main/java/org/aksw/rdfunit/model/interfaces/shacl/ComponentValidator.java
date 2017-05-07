@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.interfaces.shacl;
 
 
 import org.aksw.rdfunit.enums.ComponentValidatorType;
+import org.aksw.rdfunit.enums.ShapeType;
 import org.aksw.rdfunit.model.interfaces.Element;
 import org.apache.jena.rdf.model.RDFNode;
 
@@ -19,6 +20,6 @@ public interface ComponentValidator extends Element {
 
     ComponentValidatorType getType();
 
-    boolean filterAppliesForBindings(Map<ComponentParameter, RDFNode> bindings);
+    boolean filterAppliesForBindings(ShapeType shapeType, Map<ComponentParameter, RDFNode> bindings);
 
 }
