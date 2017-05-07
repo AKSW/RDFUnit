@@ -66,7 +66,7 @@ public class ConstraintImpl implements Constraint {
         } else {
             String  sparqlWhere = sparqlString.trim();
             if (shape.getPath().isPresent()) {
-                    sparqlWhere = sparqlWhere.replace("$path", "<" + shape.getPath().get() + ">");
+                    sparqlWhere = sparqlWhere.replace("$PATH", "<" + shape.getPath().get() + ">");
             }
             return replaceBindings(sparqlWhere);
         }

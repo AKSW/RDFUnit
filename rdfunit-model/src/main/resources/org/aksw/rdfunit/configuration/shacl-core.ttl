@@ -36,7 +36,7 @@ sh:ClassConstraintComponent
     	sh:message "value not of type $class";
     	sh:select """
     		{
-                $this $path ?value .
+                $this $PATH ?value .
                 FILTER NOT EXISTS {
                     $value rdf:type/rdfs:subClassOf* $class .
                 }
@@ -69,7 +69,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind of $path should be '$nodeKind'" ;
+        sh:message "sh:nodeKind of $PATH should be '$nodeKind'" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)} """ ;
         sh:ask """
             ASK {
@@ -79,7 +79,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind of $path should be '$nodeKind'" ;
+        sh:message "sh:nodeKind of $PATH should be '$nodeKind'" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#Literal>)} """ ;
         sh:ask """
             ASK {
@@ -89,7 +89,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind of $path should be '$nodeKind'" ;
+        sh:message "sh:nodeKind of $PATH should be '$nodeKind'" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNode>)} """ ;
         sh:ask """
             ASK {
@@ -112,7 +112,7 @@ sh:MinExclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:minExclusive of $path should be '$minExclusive'";
+    	sh:message "sh:minExclusive of $PATH should be '$minExclusive'";
     	sh:ask """
     		ASK {
             	FILTER (?value > $minExclusive) .
@@ -129,7 +129,7 @@ sh:MaxExclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:maxExclusive of $path should be '$maxExclusive'";
+    	sh:message "sh:maxExclusive of $PATH should be '$maxExclusive'";
     	sh:ask """
     		ASK {
             	FILTER (?value < $maxExclusive) .
@@ -145,7 +145,7 @@ sh:MinInclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:minInclusive of $path should be '$minInclusive'";
+    	sh:message "sh:minInclusive of $PATH should be '$minInclusive'";
     	sh:ask """
     		ASK {
             	FILTER (?value >= $minInclusive) .
@@ -162,7 +162,7 @@ sh:MaxInclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:maxExclusive of $path should be '$maxInclusive'";
+    	sh:message "sh:maxExclusive of $PATH should be '$maxInclusive'";
     	sh:ask """
     		ASK {
             	FILTER (?value <= $maxInclusive) .
@@ -183,7 +183,7 @@ sh:MinLengthConstraintComponent
     sh:validator [
     	a sh:SPARQLAskValidator ;
     	shr:filter "ASK { FILTER ($minLength > 0)}" ;
-    	sh:message "The minimum length of '$path' is '$minLength'";
+    	sh:message "The minimum length of '$PATH' is '$minLength'";
     	sh:ask """
     		ASK {
             	FILTER (
@@ -201,7 +201,7 @@ sh:MaxLengthConstraintComponent
     sh:validator [
     	a sh:SPARQLAskValidator ;
     	#shr:filter "ASK { FILTER ($maxLength >= 0)}" ;
-    	sh:message "The maximum length of '$path' is '$maxLength'";
+    	sh:message "The maximum length of '$PATH' is '$maxLength'";
     	sh:ask """
     		ASK {
             	FILTER (
@@ -253,13 +253,13 @@ sh:UniqueLangConstraintComponent
     sh:validator [
     	a sh:SPARQLAskValidator ;
     	shr:filter "ASK { FILTER ($uniqueLang) . }" ;
-    	sh:message "$path should have one value per language";
+    	sh:message "$PATH should have one value per language";
     	sh:ask """
     		ASK {
             	BIND (lang(?value) AS ?lang) .
                 FILTER (?lang != "") .
                 FILTER NOT EXISTS {
-                    ?this $path ?otherValue .
+                    ?this $PATH ?otherValue .
                     FILTER (?otherValue != ?value && ?lang = lang(?otherValue)) .
             }}""" ;
     ] ;
@@ -277,7 +277,7 @@ sh:EqualsConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "$path should be equal to '$equals'";
+    	sh:message "$PATH should be equal to '$equals'";
     	sh:ask """
     		ASK {
             	?this $equals ?value .
@@ -292,7 +292,7 @@ sh:DisjointConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "$path should no be equal to '$disjoint'";
+    	sh:message "$PATH should no be equal to '$disjoint'";
     	sh:ask """
     		ASK {
             	?this $equals ?value2 .
@@ -310,7 +310,7 @@ sh:LessThanConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "$path should be less than '$lessThan'";
+    	sh:message "$PATH should be less than '$lessThan'";
     	sh:ask """
     		ASK {
             	?this $lessThan ?value2 .
@@ -327,7 +327,7 @@ sh:LessThanOrEqualsConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "$path should be less than '$lessThanOrEquals'";
+    	sh:message "$PATH should be less than '$lessThanOrEquals'";
     	sh:ask """
     		ASK {
             	?this $lessThanOrEquals ?value2 .

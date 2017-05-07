@@ -48,41 +48,41 @@ public class TemplateRegistry {
         TemplateRegistryBuilder builder = TemplateRegistry.builder();
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.hasValue,
-                "$path have value: $hasValue",
-                " FILTER NOT EXISTS { ?this $path $hasValue . } }"));
+                "$PATH have value: $hasValue",
+                " FILTER NOT EXISTS { ?this $PATH $hasValue . } }"));
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.in,
-                "$path have value: $in",
+                "$PATH have value: $in",
         "FILTER NOT EXISTS { VALUES ?value { $in }  } } " ));
 
 
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.minCount,
-                "Minimum cardinality for $path is '$minCount'",
+                "Minimum cardinality for $PATH is '$minCount'",
                 " } GROUP BY ?this\n" +
                 " HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) ) ",
                 " ASK { FILTER ($minCount > 1)}"));
         builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.minCount,
-                "Minimum cardinality for $path is '$minCount'",
-                " FILTER NOT EXISTS { ?this $path ?value }} ",
-                " FILTER NOT EXISTS { ?this $path ?value }} ", // is inverse property like this?
+                "Minimum cardinality for $PATH is '$minCount'",
+                " FILTER NOT EXISTS { ?this $PATH ?value }} ",
+                " FILTER NOT EXISTS { ?this $PATH ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($minCount > 0)}"));
 
         builder.shaclCoreTemplate( createTemplateWithFilter( CoreArguments.maxCount,
-                "Maximum cardinality for $path is '$maxCount'",
+                "Maximum cardinality for $PATH is '$maxCount'",
                 " } GROUP BY ?this\n" +
                 " HAVING ( ( count(?value)  > $maxCount ) && ( count(?value)  != 0 ) ) ",
                 " ASK { FILTER ($maxCount > 0)}"));
         builder.shaclCoreTemplate( createTemplateWithFilterNF( CoreArguments.maxCount,
-                "Maximum cardinality for $path is '$maxCount'0",
-                " FILTER EXISTS { ?this $path ?value }} ",
-                " FILTER EXISTS { ?this $path ?value }} ", // is inverse property like this?
+                "Maximum cardinality for $PATH is '$maxCount'0",
+                " FILTER EXISTS { ?this $PATH ?value }} ",
+                " FILTER EXISTS { ?this $PATH ?value }} ", // is inverse property like this?
                 " ASK { FILTER ($maxCount = 0)}"));
 
 
 
 
         builder.shaclCoreTemplate( createTemplate( CoreArguments.notEquals,
-                "$path should no be equal to '$notEquals'",
+                "$PATH should no be equal to '$notEquals'",
                 " ?this $notEquals ?value . }"));
 
         //TODO sh:node
