@@ -4,7 +4,6 @@ import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.shacl.ShapeImpl;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.readers.ElementReader;
-import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
 
@@ -12,14 +11,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class ShapeReader implements ElementReader<Shape> {
 
-    private final TemplateRegistry templateRegistry;
+    private ShapeReader() {}
 
-    private ShapeReader(TemplateRegistry templateRegistry) {
-        this.templateRegistry = templateRegistry;
-    }
-
-    public static ShapeReader create(TemplateRegistry templateRegistry) {
-        return new ShapeReader(templateRegistry);
+    public static ShapeReader create() {
+        return new ShapeReader();
     }
 
     /** {@inheritDoc} */

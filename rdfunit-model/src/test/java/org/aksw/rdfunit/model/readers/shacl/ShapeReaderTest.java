@@ -6,7 +6,6 @@ import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
-import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
@@ -44,7 +43,7 @@ public class ShapeReaderTest {
 
         List<Shape> shapes = shapesModel.listResourcesWithProperty(RDF.type, SHACL.Shape).toList()
                 .stream()
-                .map( r -> ShapeReader.create(TemplateRegistry.createCore()).read(r))
+                .map( r -> ShapeReader.create().read(r))
                 .collect(Collectors.toList());
 
         assertThat(shapes)

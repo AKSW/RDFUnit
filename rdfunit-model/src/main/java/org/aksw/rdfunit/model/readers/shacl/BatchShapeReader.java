@@ -2,7 +2,6 @@ package org.aksw.rdfunit.model.readers.shacl;
 
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
-import org.aksw.rdfunit.model.shacl.TemplateRegistry;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
@@ -22,11 +21,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public final class BatchShapeReader {
 
-    private final TemplateRegistry templateRegistry;
+    private BatchShapeReader(){}
 
-    private BatchShapeReader(TemplateRegistry templateRegistry){ this.templateRegistry = templateRegistry;}
-
-    public static BatchShapeReader create(TemplateRegistry templateRegistry) { return new BatchShapeReader(templateRegistry);}
+    public static BatchShapeReader create() { return new BatchShapeReader();}
 
     public Set<Shape> getShapesFromModel(Model model) {
         ConcurrentLinkedQueue<Shape> shapes = new ConcurrentLinkedQueue<>();
@@ -45,7 +42,7 @@ public final class BatchShapeReader {
                 .forEach(shapeResources::add);
 
         shapeResources.parallelStream()
-                .forEach(resource -> shapes.add(ShapeReader.create(templateRegistry).read(resource)));
+                .forEach(resource -> shapes.add(ShapeReader.create().read(resource)));
 
         return ImmutableSet.copyOf(shapes);
 

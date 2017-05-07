@@ -2,7 +2,6 @@ package org.aksw.rdfunit.model.shacl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
@@ -43,15 +42,12 @@ public class ShaclModel {
     @NonNull private final ImmutableMap<Resource, Shape> resourceShapeMap;
 
 
-
-    @Getter @NonNull private final TemplateRegistry templateRegistry;
-
     // TODO do not use Model for instantiation, change later
     public ShaclModel(Model shaclGraph) throws RdfReaderException {
 
         // read templates from Model, for now only use fixed core
-        this.templateRegistry = TemplateRegistry.createCore();
-        this.shapes = ImmutableSet.copyOf(BatchShapeReader.create(templateRegistry).getShapesFromModel(shaclGraph));
+
+        this.shapes = ImmutableSet.copyOf(BatchShapeReader.create().getShapesFromModel(shaclGraph));
 
         this.shapesGraph = ShapesGraph.builder()
                 .shapes(this.shapes)
