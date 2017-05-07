@@ -111,6 +111,66 @@ sh:NodeKindConstraintComponent
     ]
     .
 
+###############################
+### Cardinality CCs ##########
+###############################
+
+sh:MinCountConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:minCount ;
+    ] ;
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "Minimum cardinality for $PATH is '$minCount'";
+        shr:filter """ ASK { FILTER ($minCount > 1)} """ ;
+    	sh:select """
+    		SELECT $this
+            WHERE {
+            		$this $PATH ?value .
+            }
+            GROUP BY $this
+            HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) )
+        """ ;
+    ] ;
+    .
+
+sh:MinCountConstraintComponent1
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:minCount ;
+    ] ;
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "Minimum cardinality for $PATH is '$minCount'";
+        shr:filter """ ASK { FILTER ($minCount > 0)} """ ;
+    	sh:select """
+    		SELECT $this
+            WHERE {
+                FILTER NOT EXISTS {
+            		$this $PATH ?value .
+            }}""" ;
+    ] ;
+    .
+
+sh:MaxCountConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:maxCount ;
+    ] ;
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "Maximum cardinality for $PATH is '$maxCount'";
+    	sh:select """
+    		SELECT $this
+            WHERE {
+            	$this $PATH ?value .
+            }
+            GROUP BY $this
+            HAVING (COUNT(?value) > $maxCount)
+        """ ;
+    ] ;
+    .
 
 ###############################
 ### Value range CCs ##########
