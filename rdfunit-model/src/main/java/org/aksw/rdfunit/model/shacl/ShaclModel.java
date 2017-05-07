@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
-import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
@@ -119,11 +118,16 @@ public class ShaclModel {
                                     .filter(v -> v.filterAppliesForBindings(shape.getShapeType(), bindings))
                                     .findFirst();
                     if (validator.isPresent()) {
-                    //FIXME
-                    constraintBuilder
-                            .message("test message")
+
+                        // FIXME get message from Shape for override
+                        String errorMessage = "Test Message";
+                        if (validator.get().getDefaultMessage().isPresent()) {
+                            errorMessage = validator.get().getDefaultMessage().get();
+                        }
+                        constraintBuilder
+                            .message(errorMessage)
                             .validator(validator.get())
-                            .severity(RLOGLevel.ERROR);
+                            .severity(shape.getSeverity());
 
 
                         constraintBuilder.build();
