@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableList;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -12,7 +14,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
+@ToString
+@EqualsAndHashCode
 public class TestExecutionImpl implements TestExecution {
 
     private final Resource element;
