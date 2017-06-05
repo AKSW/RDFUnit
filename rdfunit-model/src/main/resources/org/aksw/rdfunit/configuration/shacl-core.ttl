@@ -338,6 +338,7 @@ sh:UniqueLangConstraintComponent
     sh:propertyValidator [
         a sh:SPARQLSelectValidator ;
         sh:message "$PATH should have one value per language";
+        shr:filter "ASK { FILTER ($uniqueLang = true)}" ;
         sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
@@ -346,7 +347,7 @@ sh:UniqueLangConstraintComponent
                 FILTER (bound(?lang) && ?lang != "") .
                 FILTER EXISTS {
                     $this $PATH ?otherValue .
-                    FILTER (?otherValue != ?value && ?lang = lang(?otherValue)) .
+                    FILTER (?otherValue != ?value && lang(?value) = lang(?otherValue)) .
                 }
             }""" ;
     ] ;
@@ -383,7 +384,7 @@ sh:DisjointConstraintComponent
     	sh:message "$PATH should no be equal to '$disjoint'";
     	sh:ask """
     		ASK {
-            	?this $equals ?value2 .
+            	?this $disjoint ?value2 .
             	FILTER (?value != ?value2) .
             }""" ;
     ] ;
