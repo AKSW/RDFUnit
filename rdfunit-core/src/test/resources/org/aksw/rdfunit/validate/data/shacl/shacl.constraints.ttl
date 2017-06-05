@@ -86,10 +86,10 @@ ex:MyCardShapeMin
 	a sh:Shape ;
 	sh:targetClass ex:CardCheckMin ;
 
-    sh:property [
-        sh:path ex:checkMinCount0 ;
-        sh:minCount "0"^^xsd:int ;
-    ] ;
+#    sh:property [
+#        sh:path ex:checkMinCount0 ;
+#        sh:minCount "0"^^xsd:int ;
+#    ] ;
 
     sh:property [
         sh:path ex:checkMinCount1 ;
