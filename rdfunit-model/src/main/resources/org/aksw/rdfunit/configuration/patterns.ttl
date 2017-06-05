@@ -15,14 +15,14 @@ rutp:RDFSRANGE a rut:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain and checks when range is wrongly defined""" ;
     rut:sparqlWherePattern """ {
-                                    ?this %%P1%% ?s .
+                                    ?s %%P1%% ?this .
                                     FILTER EXISTS {
-                                        ?s rdf:type ?anyClass . }
+                                        ?this rdf:type ?anyClass . }
                                     FILTER NOT EXISTS {
-                                        ?s rdf:type/rdfs:subClassOf* %%T1%%  }
+                                        ?this rdf:type/rdfs:subClassOf* %%T1%%  }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total)
-                                     WHERE { ?this %%P1%% ?s .} """ ;
+                                     WHERE { ?s %%P1%% ?this .} """ ;
     rut:parameter rutp:RDFSRANGE-P1 ;
     rut:parameter rutp:RDFSRANGE-T1 ;
     rut:resultAnnotation [
