@@ -7,7 +7,9 @@ import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -18,28 +20,39 @@ public class ShapeTargetValueShape implements ShapeTarget {
 
     @Getter private final ShapeTargetType targetType = ShapeTargetType.ValueShapeTarget;
     private final ImmutableList<Resource> propertyChain;
-    private final ShapeTarget outerTarget;
+    private final ShapeTarget innerTarget;
     private final Function<ShapeTargetValueShape, String> generatePattern;
 
-    private ShapeTargetValueShape(ShapeTarget outerTarget, List<Resource> propertyChain, Function<ShapeTargetValueShape, String> generatePattern) {
-        this.outerTarget = outerTarget;
+    private ShapeTargetValueShape(ShapeTarget innerTarget, List<Resource> propertyChain, Function<ShapeTargetValueShape, String> generatePattern) {
+        this.innerTarget = innerTarget;
         this.propertyChain = ImmutableList.copyOf(propertyChain.stream().filter( p -> p != null).collect(Collectors.toList()));
         this.generatePattern = generatePattern;
     }
 
-    public static ShapeTarget create(ShapeTarget outerTarget, List<Resource> propertyChain) {
-        switch (outerTarget.getTargetType()) {
+
+    public static ShapeTarget create(ShapeTarget outerTarget, String property) {
+        return create(outerTarget, ResourceFactory.createProperty(property));
+    }
+
+    public static ShapeTarget create(ShapeTarget outerTarget, Resource property) {
+        return create(outerTarget, Arrays.asList(property));
+    }
+
+    public static ShapeTarget create(ShapeTarget innerTarget, List<Resource> propertyChain) {
+        switch (innerTarget.getTargetType()) {
             case ClassTarget:
-                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::classTargetPattern);
+                return new ShapeTargetValueShape(innerTarget, propertyChain, ShapeTargetValueShape::classTargetPattern);
             case NodeTarget:
-                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::nodeTargetPattern);
+                return new ShapeTargetValueShape(innerTarget, propertyChain, ShapeTargetValueShape::nodeTargetPattern);
             case ObjectsOfTarget:
-                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::objectsOfTargetPattern);
+                return new ShapeTargetValueShape(innerTarget, propertyChain, ShapeTargetValueShape::objectsOfTargetPattern);
             case SubjectsOfTarget:
-                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::subjectsOfTargetPattern);
+                return new ShapeTargetValueShape(innerTarget, propertyChain, ShapeTargetValueShape::subjectsOfTargetPattern);
             case ValueShapeTarget:
-                if (outerTarget instanceof ShapeTargetValueShape) {
-                    return transformTarget((ShapeTargetValueShape) outerTarget, propertyChain);
+                if (innerTarget instanceof ShapeTargetValueShape) {
+                    return transformTarget( (ShapeTargetValueShape) innerTarget, propertyChain);
+                }  else {
+                    throw new IllegalArgumentException("Unsupported target in sh:node");
                 }
             default:
                 throw new IllegalArgumentException("Unsupported target in sh:node");
@@ -48,7 +61,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
 
     @Override
     public String getUri() {
-        return outerTarget.getUri();
+        return innerTarget.getUri();
     }
 
     @Override
@@ -57,11 +70,11 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
 
-    private static ShapeTarget transformTarget(ShapeTargetValueShape outerTargetLocal, List<Resource> propertyChain) {
+    private static ShapeTarget transformTarget(ShapeTargetValueShape innerTarget, List<Resource> propertyChain) {
         ImmutableList.Builder<Resource> builder = new ImmutableList.Builder<>();
+        builder.addAll(innerTarget.propertyChain);
         builder.addAll(propertyChain);
-        builder.addAll(outerTargetLocal.propertyChain);
-        return create(outerTargetLocal.outerTarget, builder.build());
+        return create(innerTarget.innerTarget, builder.build());
     }
 
     private static String classTargetPattern(ShapeTargetValueShape target) {

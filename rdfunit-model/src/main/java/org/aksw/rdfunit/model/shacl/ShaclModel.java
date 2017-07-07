@@ -8,6 +8,7 @@ import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.impl.shacl.ConstraintTestCaseFactory;
+import org.aksw.rdfunit.model.impl.shacl.ShapeTargetValueShape;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
@@ -138,6 +139,14 @@ public class ShaclModel {
         if (shape.isNodeShape()) {
             // use the exact same target
             childShapes.forEach(cs -> mergeValues(implicitTargets, cs, targets));
+        } else {
+            if (shape.isPropertyShape()) {
+                // use the exact same target
+                Set<ShapeTarget> propertyTargets = targets.stream()
+                        .map(target -> ShapeTargetValueShape.create(target, shape.getPath().get()))
+                        .collect(Collectors.toSet());
+                childShapes.forEach(cs -> mergeValues(implicitTargets, cs, propertyTargets));
+            }
         }
 
         // recursive
