@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -21,6 +21,19 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public final class BatchShapeReader {
 
+    private static final ImmutableSet<Resource> shapesAsInstancesOf = ImmutableSet.of(SHACL.Shape, SHACL.NodeShape, SHACL.PropertyShape);
+    private static final ImmutableSet<Property> shapesAsObjectsOf = ImmutableSet.of(SHACL.node, SHACL.property, SHACL.and, SHACL.or);
+    private static final ImmutableSet<Property> shapesAsSubjectsOf = ImmutableSet.of(SHACL.node, SHACL.property, SHACL.and, SHACL.or,
+            SHACL.clazz, SHACL.datatype, SHACL.nodeKind,
+            SHACL.minCount, SHACL.maxCount,
+            SHACL.minInclusive, SHACL.minExclusive, SHACL.maxInclusive, SHACL.maxExclusive,
+            SHACL.minLength, SHACL.maxLength, SHACL.pattern, SHACL.flags, SHACL.uniqueLang,
+            SHACL.equals, SHACL.notEquals, SHACL.lessThan, SHACL.lessThanOrEquals,
+            SHACL.hasValue, SHACL.in,
+            SHACL.targetClass, SHACL.targetNode, SHACL.targetObjectsOf, SHACL.targetSubjectsOf,
+            SHACL.path
+            );
+
     private BatchShapeReader(){}
 
     public static BatchShapeReader create() { return new BatchShapeReader();}
@@ -28,24 +41,41 @@ public final class BatchShapeReader {
     public Set<Shape> getShapesFromModel(Model model) {
         ConcurrentLinkedQueue<Shape> shapes = new ConcurrentLinkedQueue<>();
 
+        ImmutableSet.Builder<Resource> shapeResourceBuilder = ImmutableSet.builder();
 
-        Set<Resource> shapeResources = new HashSet<>(
-                model.listResourcesWithProperty(RDF.type, SHACL.Shape).toSet()); // explicit shapes
-        model.listObjectsOfProperty(SHACL.node).toSet().stream() // implicit shapes (through sh:node)
-                .filter(RDFNode::isResource)
-                .map(RDFNode::asResource)
-                .forEach(shapeResources::add);
 
-        model.listObjectsOfProperty(SHACL.property).toSet().stream() // implicit shapes (through sh:node)
-                .filter(RDFNode::isResource)
-                .map(RDFNode::asResource)
-                .forEach(shapeResources::add);
+        addShapesAsInstancesOf(model, shapeResourceBuilder);
+        addShapesAsObjectsOf(model, shapeResourceBuilder);
+        addShapesAsSubjectsOf(model, shapeResourceBuilder);
 
-        shapeResources.parallelStream()
+        shapeResourceBuilder.build().parallelStream()
                 .forEach(resource -> shapes.add(ShapeReader.create().read(resource)));
 
         return ImmutableSet.copyOf(shapes);
 
+    }
+
+    private void addShapesAsInstancesOf(Model model, ImmutableSet.Builder<Resource> shapes) {
+        shapesAsInstancesOf.forEach(r -> shapes.addAll(model.listResourcesWithProperty(RDF.type, SHACL.Shape)));
+    }
+
+    private void addShapesAsObjectsOf(Model model, ImmutableSet.Builder<Resource> shapes) {
+        shapesAsObjectsOf.forEach(r -> {
+            model.listObjectsOfProperty(r).toSet().stream()
+                    .filter(RDFNode::isResource)
+                    .map(RDFNode::asResource)
+                    .forEach(shapes::add);
+        });
+    }
+
+
+    private void addShapesAsSubjectsOf(Model model, ImmutableSet.Builder<Resource> shapes) {
+        shapesAsSubjectsOf.forEach(r -> {
+            model.listSubjectsWithProperty(r).toSet().stream()
+                    .filter(RDFNode::isResource)
+                    .map(RDFNode::asResource)
+                    .forEach(shapes::add);
+        });
     }
 
 }
