@@ -267,8 +267,10 @@ public class ShaclModel {
         ImmutableSet.Builder<RDFNode> nodeBuilder = ImmutableSet.builder();
         nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(property));
         return nodeBuilder.build().stream()
-                .map(n -> n.asResource())
+                .filter(RDFNode::isResource)
+                .map(RDFNode::asResource)
                 .map(resourceShapeMap::get)
+                .filter(s -> s != null)
                 .collect(Collectors.toList());
     }
 }
