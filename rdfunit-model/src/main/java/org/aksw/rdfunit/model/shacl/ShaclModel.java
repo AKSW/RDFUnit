@@ -228,14 +228,13 @@ public class ShaclModel {
 
     private void getImplicitTargetsForSingleShape(Map<Shape, Set<ShapeTarget>> implicitTargets, Shape shape, Set<ShapeTarget> targets) {
         List<Shape> childShapes = getChildShapes(shape);
-        if (shape.getPath().isPresent()) {
 
-        } else {
+        if (shape.isNodeShape()) {
             // use the exact same target
             childShapes.forEach(cs -> mergeValues(implicitTargets, cs, targets));
-
         }
-        // recursive ... FIXME
+
+        // recursive
         childShapes.forEach( cs -> {
             getImplicitTargetsForSingleShape(implicitTargets, cs, implicitTargets.getOrDefault(cs, Collections.emptySet()));
         });
@@ -249,10 +248,24 @@ public class ShaclModel {
         }
     }
 
-    List<Shape> getChildShapes(Shape shape) {
+    private List<Shape> getChildShapes(Shape shape) {
+        List<Shape> shapes = new ArrayList<>();
+        shapes.addAll(getChildNodeShapes(shape));
+        shapes.addAll(getChildPropertyShapes(shape));
+        return shapes;
+    }
+
+    private List<Shape> getChildNodeShapes(Shape shape) {
+        return getChildShapes(shape, SHACL.node);
+    }
+
+    private List<Shape> getChildPropertyShapes(Shape shape) {
+        return getChildShapes(shape, SHACL.property);
+    }
+
+    private List<Shape> getChildShapes(Shape shape, Property property) {
         ImmutableSet.Builder<RDFNode> nodeBuilder = ImmutableSet.builder();
-        nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(SHACL.node));
-        nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(SHACL.property));
+        nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(property));
         return nodeBuilder.build().stream()
                 .map(n -> n.asResource())
                 .map(resourceShapeMap::get)
