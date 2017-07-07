@@ -7,7 +7,6 @@ import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 @ToString(exclude = "generatePattern")
@@ -15,10 +14,10 @@ import java.util.function.Function;
 public class ShapeTargetCore implements ShapeTarget {
 
     @Getter private final ShapeTargetType targetType;
-    @Getter private final Optional<String> uri;
-    private final Function<Optional<String>, String> generatePattern;
+    @Getter private final String uri;
+    private final Function<String, String> generatePattern;
 
-    private ShapeTargetCore(ShapeTargetType targetType, Optional<String> uri, Function<Optional<String>, String> generatePattern) {
+    private ShapeTargetCore(ShapeTargetType targetType, String uri, Function<String, String> generatePattern) {
         this.targetType = targetType;
         this.uri = uri;
         this.generatePattern = generatePattern;
@@ -29,24 +28,13 @@ public class ShapeTargetCore implements ShapeTarget {
         return generatePattern.apply(uri);
     }
 
-    public static ShapeTarget create(@NonNull ShapeTargetType targetType) {
-        return create(targetType, Optional.empty());
-    }
 
     public static ShapeTarget create(@NonNull ShapeTargetType targetType, @NonNull String uri) {
-        return create(targetType, Optional.of(uri));
-    }
-
-    private static ShapeTarget create(ShapeTargetType targetType, Optional<String> uri) {
         switch (targetType) {
             case ClassTarget:
                 return new ShapeTargetCore(targetType, uri, ShapeTargetCore::classTargetPattern);
             case NodeTarget:
                 return new ShapeTargetCore(targetType, uri, ShapeTargetCore::nodeTargetPattern);
-//            case AllObjectsTarget:
-//                return new ShapeTargetCore(targetType, uri, ShapeTargetCore::allObjectsTargetPattern);
-//            case AllSubjectsTarget:
-//                return new ShapeTargetCore(targetType, uri, ShapeTargetCore::allSubjectsTargetPattern);
             case ObjectsOfTarget:
                 return new ShapeTargetCore(targetType, uri, ShapeTargetCore::objectsOfTargetPattern);
             case SubjectsOfTarget:
@@ -56,29 +44,19 @@ public class ShapeTargetCore implements ShapeTarget {
         }
     }
 
-    private static String classTargetPattern(Optional<String> uri) {
-        return " ?this rdf:type/rdfs:subClassOf* <" + uri.get() + "> . ";
+    private static String classTargetPattern(String uri) {
+        return " ?this rdf:type/rdfs:subClassOf* <" + uri + "> . ";
     }
 
-    private static String nodeTargetPattern(Optional<String> uri) {
-        return " BIND (<" + uri.get() + "> AS ?this) . ";
+    private static String nodeTargetPattern(String uri) {
+        return " BIND (<" + uri + "> AS ?this) . ";
+    }
+    private static String objectsOfTargetPattern(String uri) {
+        return " [] <" + uri + "> ?this .";
     }
 
-    private static String objectsOfTargetPattern(Optional<String> uri) {
-        return " [] <" + uri.get() + "> ?this .";
+    private static String subjectsOfTargetPattern(String uri) {
+        return "?this <" + uri + "> [] .";
     }
-
-    private static String subjectsOfTargetPattern(Optional<String> uri) {
-        return "?this <" + uri.get() + "> [] .";
-    }
-
-    //private static String allObjectsTargetPattern(Optional<String> uri) {
-    //    return "[] $shaclAnyPredicate ?this .";
-    //}
-
-    //private static String allSubjectsTargetPattern(Optional<String> uri) {
-    //    return "?this $shaclAnyPredicate [] .";
-    //}
-
 
 }

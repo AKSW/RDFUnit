@@ -9,7 +9,6 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,10 +33,6 @@ public class ShapeTargetValueShape implements ShapeTarget {
                 return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::classTargetPattern);
             case NodeTarget:
                 return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::nodeTargetPattern);
-//            case AllObjectsTarget:
-//                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::allObjectsTargetPattern);
-//            case AllSubjectsTarget:
-//                return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::allSubjectsTargetPattern);
             case ObjectsOfTarget:
                 return new ShapeTargetValueShape(outerTarget, propertyChain, ShapeTargetValueShape::objectsOfTargetPattern);
             case SubjectsOfTarget:
@@ -52,7 +47,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     @Override
-    public Optional<String> getUri() {
+    public String getUri() {
         return outerTarget.getUri();
     }
 
@@ -70,7 +65,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     private static String classTargetPattern(ShapeTargetValueShape target) {
-        return " [] rdf:type/rdfs:subClassOf* <" + target.getUri().get() + "> ; " +
+        return " [] rdf:type/rdfs:subClassOf* <" + target.getUri() + "> ; " +
                 writePropertyChain(target.propertyChain) + "  ?this . ";
     }
 
@@ -81,26 +76,15 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     private static String nodeTargetPattern(ShapeTargetValueShape target) {
-        return " <" + target.getUri().get() + "> " + writePropertyChain(target.propertyChain) + " ?this . ";
+        return " <" + target.getUri() + "> " + writePropertyChain(target.propertyChain) + " ?this . ";
     }
 
     private static String objectsOfTargetPattern(ShapeTargetValueShape target) {
-        return " [] (^<" + target.getUri().get() + ">)/" + writePropertyChain(target.propertyChain) + " ?this .";
+        return " [] (^<" + target.getUri() + ">)/" + writePropertyChain(target.propertyChain) + " ?this .";
     }
 
     private static String subjectsOfTargetPattern(ShapeTargetValueShape target) {
-        return " [] <" + target.getUri().get() + ">/" + writePropertyChain(target.propertyChain) + " ?this .";
+        return " [] <" + target.getUri() + ">/" + writePropertyChain(target.propertyChain) + " ?this .";
     }
-
-    //private static String allObjectsTargetPattern(ShapeTargetValueShape target) {
-    //    return " [] ^$shaclAnyPredicate <" + target.getUri().get() + "> ; " +
-    //            writePropertyChain(target.propertyChain) + "  ?this . ";
-    //}
-
-    //private static String allSubjectsTargetPattern(ShapeTargetValueShape target) {
-    //    return " [] $shaclAnyPredicate <" + target.getUri().get() + "> ; " +
-    //            writePropertyChain(target.propertyChain) + "  ?this . ";
-    //}
-
 
 }

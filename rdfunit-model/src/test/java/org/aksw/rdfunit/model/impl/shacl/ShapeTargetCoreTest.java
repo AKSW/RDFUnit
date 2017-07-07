@@ -22,7 +22,7 @@ public class ShapeTargetCoreTest {
 
     @Test(expected=NullPointerException.class)
     public void testCreateNullType() {
-        ShapeTargetCore.create(null);
+        ShapeTargetCore.create(null, null);
     }
 
 //    @Test(expected=NullPointerException.class)
@@ -56,7 +56,7 @@ public class ShapeTargetCoreTest {
                 .filter( s -> s.getTargetType().hasArgument())
                 .forEach( s -> {
                     assertThat(s.getPattern()).contains(uri);
-                    assertThat(s.getUri().get()).isEqualTo(uri);
+                    assertThat(s.getUri()).isEqualTo(uri);
                 });
 
     }
