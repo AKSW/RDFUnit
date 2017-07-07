@@ -82,7 +82,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind of $PATH should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be '$nodeKind'" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)} """ ;
         sh:ask """
             ASK {
@@ -92,7 +92,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind of $PATH should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be '$nodeKind'" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#Literal>)} """ ;
         sh:ask """
             ASK {
@@ -102,13 +102,44 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind of $PATH should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be '$nodeKind'" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNode>)} """ ;
         sh:ask """
             ASK {
                 FILTER (isBlank(?value)) .
             }""" ;
-    ]
+    ] ;
+    sh:validator [
+        # when flags are present
+        a sh:SPARQLAskValidator ;
+        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNodeOrIRI>)} """ ;
+        sh:ask """
+            ASK {
+                FILTER (isBlank(?value) || isIRI(?value)) .
+            }""" ;
+    ] ;
+    sh:validator [
+        # when flags are present
+        a sh:SPARQLAskValidator ;
+        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNodeOrLiteral>)} """ ;
+        sh:ask """
+            ASK {
+                FILTER (isBlank(?value) || isLiteral(?value)) .
+            }""" ;
+    ] ;
+    sh:validator [
+        # when flags are present
+        a sh:SPARQLAskValidator ;
+        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRIOrLiteral>)} """ ;
+        sh:ask """
+            ASK {
+                FILTER (isIRI(?value) || isLiteral(?value) ) .
+            }""" ;
+    ] ;
+
     .
 
 ###############################

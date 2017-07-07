@@ -50,10 +50,13 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.node-correct.ttl", 0},
                 {"shacl/sh.node-wrong.ttl", 3},
 
-                {"shacl/sh.nodeType-correct.ttl", 0},
-                {"shacl/sh.nodeType-wrong-IRI.ttl", 2},
-                {"shacl/sh.nodeType-wrong-Literal.ttl", 2},
-                {"shacl/sh.nodeType-wrong-BlankNode.ttl", 2},
+                {"shacl/sh.nodeKind-correct.ttl", 0},
+                {"shacl/sh.nodeKind-wrong-IRI.ttl", 2},
+                {"shacl/sh.nodeKind-wrong-Literal.ttl", 2},
+                {"shacl/sh.nodeKind-wrong-BlankNode.ttl", 2},
+                {"shacl/sh.nodeKind-wrong-BlankNodeOrIri.ttl", 1},
+                {"shacl/sh.nodeKind-wrong-BlankNodeOrLiteral.ttl", 1},
+                {"shacl/sh.nodeKind-wrong-IriOrLiteral.ttl", 1},
 
         });
 

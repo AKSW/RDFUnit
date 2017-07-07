@@ -12,6 +12,9 @@ ex:MyShape
 	a sh:Shape ;
 	sh:targetClass ex:Person ;
 
+####
+# ValueTypeConstraints
+
 	sh:property [
 		sh:path ex:classCheckProperty ;
 		sh:class ex:SuperClass ;
@@ -21,6 +24,36 @@ ex:MyShape
         sh:path ex:checkDatatype ;
         sh:datatype xsd:date ;
     ] ;
+
+
+    # sh:nodeType
+	sh:property [
+		sh:path ex:checkNodeKindIRI ;
+		sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNodeKindLiteral ;
+        sh:nodeKind sh:Literal ;
+    ]  ;
+    sh:property [
+        sh:path ex:checkNodeKindBlankNode ;
+        sh:nodeKind sh:BlankNode ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNodeKindBlankNodeOrIRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNodeKindBlankNodeOrLiteral ;
+        sh:nodeKind sh:BlankNodeOrLiteral ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNodeKindIRIOrLiteral ;
+        sh:nodeKind sh:IRIOrLiteral ;
+    ] ;
+
+####
+##
 
     sh:property [
         sh:path ex:checkEquals ;
@@ -56,20 +89,6 @@ ex:MyShape
         sh:in (ex:A "example" ) ;
     ] ;
 
-
-    # sh:nodeType
-	sh:property [
-		sh:path ex:checkNodeKindIRI ;
-		sh:nodeKind sh:IRI ;
-    ] ;
-    sh:property [
-        sh:path ex:checkNodeKindLiteral ;
-        sh:nodeKind sh:Literal ;
-    ]  ;
-    sh:property [
-        sh:path ex:checkNodeKindBlankNode ;
-        sh:nodeKind sh:BlankNode ;
-    ] ;
 
 .
 
