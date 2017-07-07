@@ -78,6 +78,9 @@ public class ConstraintImpl implements Constraint {
         for (Map.Entry<ComponentParameter, RDFNode>  entry:  bindings.entrySet()) {
             bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
         }
+        if (shape.isPropertyShape()) {
+            bindedSnippet = bindedSnippet.replace("$PATH", shape.getPath().get());
+        }
         return bindedSnippet;
     }
 
