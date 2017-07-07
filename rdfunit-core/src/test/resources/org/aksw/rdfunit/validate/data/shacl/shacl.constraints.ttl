@@ -47,7 +47,7 @@ ex:MyShape
     ] ;
     sh:property [
         sh:path ex:checkPattern ;
-        sh:pattern "^Ali" ;
+        sh:pattern """^\\\\S""" ; # start with non whitespace
         sh:flags "i" ;
     ] ;
 
