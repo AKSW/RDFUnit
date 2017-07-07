@@ -7,19 +7,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.helper.PropertyValuePair;
-import org.aksw.rdfunit.model.impl.shacl.ConstraintImpl;
-import org.aksw.rdfunit.model.impl.shacl.TestCaseWithTarget;
+import org.aksw.rdfunit.model.impl.shacl.ConstraintTestCaseFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.interfaces.shacl.*;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.model.readers.shacl.BatchComponentReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeTargetReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.*;
 import java.util.function.Function;
@@ -81,108 +80,15 @@ public class ShaclModel {
         ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
 
         shapesGraph.getComponents().forEach(component -> {
-            shapesGraph.getShapes().forEach(shape -> {
-                //bind component to shape
-                if (canBindComponentToShape(component, shape)) {
-                    ConstraintImpl.ConstraintImplBuilder constraintBuilder = ConstraintImpl.builder();
-                    constraintBuilder
-                            .shape(shape)
-                            .component(component);
-
-
-                    Set<Property> parameterProperties = component.getParameters().stream().map(ComponentParameter::getPredicate).collect(Collectors.toSet());
-                    Set<PropertyValuePair> bindingPairs = shape.getPropertyValuePairSets().getAnnotations().stream()
-                            .filter(p -> parameterProperties.contains(p.getProperty()))
-                            .collect(Collectors.toSet());
-
-                    // TODO take multiple values into account
-                    Map<ComponentParameter, RDFNode> bindings = new HashMap<>();
-                    component.getParameters().forEach(parameter -> {
-                        Optional<RDFNode> node = bindingPairs.stream()
-                                .filter(p -> p.getProperty().equals(parameter.getPredicate()))
-                                .flatMap(p -> p.getValues().stream())
-                                .findFirst();
-                        if (node.isPresent()) {
-                            bindings.put(parameter, node.get());
-                        }
-                    });
-                    constraintBuilder.bindings(bindings);
-
-                    //validator picking
-                    Optional<ComponentValidator> validator =
-                            component.getValidators().stream()
-                                    .filter(v -> v.filterAppliesForBindings(shape.getShapeType(), bindings))
-                                    .findFirst();
-                    if (validator.isPresent()) {
-
-                        // FIXME get message from Shape for override
-                        String errorMessage = "Test Message";
-                        if (validator.get().getDefaultMessage().isPresent()) {
-                            errorMessage = validator.get().getDefaultMessage().get();
-                        }
-                        constraintBuilder
-                            .message(errorMessage)
-                            .validator(validator.get())
-                            .severity(shape.getSeverity());
-
-
-                        constraintBuilder.build();
-
-                        if (allTargets.containsKey(shape)) {
-                            allTargets.get(shape).forEach(target ->
-                                    testCaseBuilder.add(
-                                            TestCaseWithTarget.builder()
-                                                    .target(target)
-                                                    .filterSpqrql("")
-                                                    .testCase(constraintBuilder.build().getTestCase())
-                                                    .build())
-                            );
-                        }
-                    } else {
-                        log.warn("No validators found for shape {} and component {}", shape, component);
-                    }
-                }
+            allTargets.entrySet().forEach(entry -> {
+                testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, entry.getKey(), entry.getValue()));
             });
         });
-
-
-
 
         return testCaseBuilder.build();
     }
 
-    private boolean canBindComponentToShape(Component component, Shape shape) {
 
-        Set<Property> parameterPropertiesRequired = component.getParameters().stream().filter(ComponentParameter::isRequired).map(ComponentParameter::getPredicate).collect(Collectors.toSet());
-        Set<Property> availableProperties = shape.getPropertyValuePairSets().getAnnotations().stream().map(PropertyValuePair::getProperty).collect(Collectors.toSet());
-
-        return availableProperties.containsAll(parameterPropertiesRequired);
-    }
-
-
-/*
-    private Optional<ComponentValidator> getBindingValidator(PropertyValuePairSet propertyValuePairSet, Component component) {
-        component.getValidators().stream()
-                .filter(v -> )
-        String askQuery = generateQuery(propertyValuePairSet, arg, sparqlFilter);
-        checkFilter(askQuery);
-    }*/
-/*
-    private String generateQuery(PropertyValuePairSet propertyValuePairSet, ComponentParameter arg, String sparqlFilter) {
-        String replaceStr = "$" + arg.getPredicate().getLocalName();
-        RDFNode value = propertyValuePairSet.getPropertyValues(arg.getPredicate()).stream().findFirst().get();
-        return sparqlFilter.replace(replaceStr, formatRdfValue(value));
-    }*/
-
-    private boolean checkFilter(ComponentValidator validator) {
-        String askQuery = validator.getFilter();
-        Model m = ModelFactory.createDefaultModel();
-        Query q = QueryFactory.create(askQuery);
-        try (QueryExecution qex = org.apache.jena.query.QueryExecutionFactory.create(q, m)) {
-            return qex.execAsk();
-        }
-
-    }
 /*
     public Set<TestCase> generateTestCasesOld() {
         ImmutableSet.Builder<TestCase> builder = ImmutableSet.builder();
