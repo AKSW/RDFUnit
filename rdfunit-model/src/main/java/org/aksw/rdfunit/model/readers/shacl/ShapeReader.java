@@ -26,8 +26,6 @@ public final class ShapeReader implements ElementReader<Shape> {
 
         shapeBuilder
             .element(resource)
-            .targets(
-                BatchShapeTargetReader.create().read(resource))
             .propertyValuePairSets(PropertyValuePairSet.createFromResource(resource));
 
         Resource path = resource.getPropertyResourceValue(SHACL.path);

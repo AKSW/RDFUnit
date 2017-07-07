@@ -1,12 +1,13 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Value;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
-import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,7 +23,6 @@ public class ShapeImpl implements Shape {
 
     @Getter @NonNull private final Resource element;
     private final String shaclPath;
-    @Getter @NonNull @Singular private final List<ShapeTarget> targets;
     @Getter @NonNull private final PropertyValuePairSet propertyValuePairSets;
 
     @Override

@@ -5,6 +5,7 @@ import org.aksw.rdfunit.enums.ShapeType;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.interfaces.Element;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.Optional;
@@ -21,6 +22,12 @@ public interface Shape extends Element {
 
     /** TODO convert to PropertyPath ... */
     Optional<String> getPath();
+
+    /**
+     * Raw access to all values in this Shape
+     */
+    PropertyValuePairSet getPropertyValuePairSets();
+
 
     default Boolean isPropertyShape()  {
         return getPath().isPresent();
@@ -42,12 +49,15 @@ public interface Shape extends Element {
             .map( r -> RLOGLevel.resolve(r.getURI()) )
             .filter( s -> s != null)
             .findFirst()
-                .orElse(RLOGLevel.ERROR);
+            .orElse(RLOGLevel.ERROR);
     }
 
-    /**
-     * Raw access to all values in this Shape
-     */
-    PropertyValuePairSet getPropertyValuePairSets();
+    default Optional<String> getMessage() {
+        return getPropertyValuePairSets().getPropertyValues(SHACL.message).stream()
+                .filter(RDFNode::isLiteral)
+                .map(RDFNode::asLiteral)
+                .map(Literal::getLexicalForm)
+                .findFirst();
+    }
 
 }
