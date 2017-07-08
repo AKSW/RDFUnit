@@ -150,6 +150,16 @@ ex:MyUniqueLangShape
     ] ;
 .
 
+ex:MyLanguageInShape
+	a sh:Shape ;
+	sh:targetClass ex:LanguageInShape ;
+
+    sh:property [
+        sh:path ex:checkLanguageIn ;
+        sh:languageIn ("en" "el") ;
+    ] ;
+.
+
 ex:NodeExampleShape
 	a sh:Shape ;
 	sh:targetClass ex:NodeClass;

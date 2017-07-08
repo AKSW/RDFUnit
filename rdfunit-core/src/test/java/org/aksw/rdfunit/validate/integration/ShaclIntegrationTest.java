@@ -23,6 +23,8 @@ public class ShaclIntegrationTest {
 
                 {"shacl/sh.uniqueLang-correct.ttl", 0},
                 {"shacl/sh.uniqueLang-wrong.ttl", 1},
+                {"shacl/sh.languageIn-correct.ttl", 0},
+                {"shacl/sh.languageIn-wrong.ttl", 1},
 
 
                 {"shacl/sh.equals-correct.ttl", 0},

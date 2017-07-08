@@ -385,6 +385,35 @@ sh:UniqueLangConstraintComponent
     .
 
 
+sh:LanguageInConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:languageIn ;
+    ] ;
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "language in $PATH not one of: $languageIn";
+        sh:select """
+            SELECT DISTINCT ?this ?value
+            WHERE {
+                $this $PATH ?value .
+                BIND (lang(?value) AS ?lang) .
+                FILTER ( ?lang NOT IN ( $languageIn )  )
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "language not one of: $languageIn";
+        sh:select """
+            SELECT DISTINCT ?this ?value
+            WHERE {
+                BIND ($this AS ?value) .
+                BIND (lang(?value) AS ?lang) .
+                FILTER ( ?lang NOT IN ( $languageIn )  )
+            }""" ;
+    ] ;
+    .
+
 
 ################################
 ### Property Pair CCs ##########
