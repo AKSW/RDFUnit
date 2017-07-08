@@ -9,9 +9,3 @@ ex:1 rdf:type ex:HasValueShape ;
 
 ex:1b rdf:type ex:HasValueShape ;
   ex:checkHasValue ex:A .  # error
-
-ex:2 rdf:type ex:HasValueShape ;
-  ex:checkIn ex:B .     # error
-
-ex:2b rdf:type ex:HasValueShape ;
-  ex:checkIn "exampleeee" .  #error

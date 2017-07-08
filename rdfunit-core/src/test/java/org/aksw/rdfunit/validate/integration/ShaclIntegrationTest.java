@@ -30,8 +30,10 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.disjoint-correct.ttl", 0},
                 {"shacl/sh.disjoint-wrong.ttl", 4},
 
-                {"shacl/sh.hasValue-In-correct.ttl", 0},
-                {"shacl/sh.hasValue-In-wrong.ttl", 4},
+                {"shacl/sh.hasValue-correct.ttl", 0},
+                {"shacl/sh.hasValue-wrong.ttl", 2},
+                {"shacl/sh.in-correct.ttl", 0},
+                {"shacl/sh.in-wrong.ttl", 2},
 
                 {"shacl/sh.min.maxCount-correct.ttl", 0},
                 {"shacl/sh.minCount-wrong.ttl", 3},

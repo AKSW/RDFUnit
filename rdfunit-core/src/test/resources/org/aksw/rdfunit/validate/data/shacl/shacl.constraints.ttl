@@ -86,7 +86,7 @@ ex:MyShape
 
     sh:property [
         sh:path ex:checkIn ;
-        sh:in (ex:A "example" ) ;
+        sh:in (ex:Example "example" ) ;
     ] ;
 
 

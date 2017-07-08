@@ -476,3 +476,33 @@ sh:HasValueConstraintComponent
             }""" ;
     ] ;
     .
+
+
+
+
+sh:InConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:in ;
+    ] ;
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "$PATH should have one of: $in";
+        sh:select """
+            SELECT DISTINCT ?this ?value
+            WHERE {
+                $this $PATH ?value .
+                FILTER NOT EXISTS { VALUES ?value { $in }  }
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "node should have one of: $in";
+        sh:select """
+            SELECT DISTINCT ?this ?value
+            WHERE {
+                BIND ($this AS ?value) .
+                FILTER NOT EXISTS { VALUES ?value { $in }  }
+            }""" ;
+    ] ;
+    .
