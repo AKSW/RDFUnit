@@ -1,21 +1,16 @@
 package org.aksw.rdfunit.model.readers.shacl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.impl.shacl.ShapeTargetCore;
-import org.aksw.rdfunit.model.impl.shacl.ShapeTargetValueShape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -90,46 +85,6 @@ public final class BatchShapeTargetReader {
                 .filter(smt -> smt.getObject().isResource())
                 .map(smt -> ShapeTargetCore.create(shapeTargetType, smt.getObject().asResource().getURI()))
                 .collect(Collectors.toList());
-    }
-
-    private Set<ShapeTarget> collectValueShapeTargets(Resource resource){
-        return collectValueShapeTargets(resource, Collections.emptyList());
-    }
-
-    private Set<ShapeTarget> collectValueShapeTargets(Resource resource, List<Resource> propertyChain){
-        ImmutableSet.Builder<ShapeTarget> targets = ImmutableSet.builder();
-
-        Optional<Resource> currentPath = Optional.ofNullable(resource.getPropertyResourceValue(SHACL.path));
-        List<Resource> resourcesLinkingWithShNode = resource.getModel().listResourcesWithProperty(SHACL.node, resource).toList();
-        List<Resource> resourcesLinkingWithShProperty = resource.getModel().listResourcesWithProperty(SHACL.property, resource).toList();
-
-        Stream.concat(resourcesLinkingWithShNode.stream(), resourcesLinkingWithShProperty.stream())
-            .distinct()
-            .forEach( shape -> {
-                // path of parent shape
-                Optional<Resource> parentShapeProperty = Optional.ofNullable(shape.getPropertyResourceValue(SHACL.path));
-
-                ImmutableList.Builder<Resource> propChainBuilder = ImmutableList.builder();
-                if (parentShapeProperty.isPresent()) {
-                    propChainBuilder.add(parentShapeProperty.get());
-                }
-                if (currentPath.isPresent()) {
-                    propChainBuilder.add(currentPath.get());
-                }
-                propChainBuilder.addAll(propertyChain).build();
-
-                ImmutableList<Resource> propChainNew = propChainBuilder.build();
-
-                collectExplicitTargets(shape).forEach(target ->
-                        targets.add(ShapeTargetValueShape.create(target, propChainNew)));
-
-                targets.addAll(collectValueShapeTargets(shape, propChainNew));
-            });
-        return targets.build();
-    }
-
-    private List<Resource> getParentShapeResources(Resource resource) {
-        return resource.getModel().listResourcesWithProperty(SHACL.property, resource).toList();
     }
 }
 

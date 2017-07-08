@@ -30,7 +30,9 @@ public final class ShapeReader implements ElementReader<Shape> {
 
         Resource path = resource.getPropertyResourceValue(SHACL.path);
         if (path != null) {
-            shapeBuilder.shaclPath(path.getURI());
+            shapeBuilder.shaclPath(
+                    ShapePathReader.create().read(path)
+            );
         }
 
 

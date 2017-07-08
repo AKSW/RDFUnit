@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.Value;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Optional;
@@ -22,11 +23,11 @@ import java.util.Optional;
 public class ShapeImpl implements Shape {
 
     @Getter @NonNull private final Resource element;
-    private final String shaclPath;
+    private final ShapePath shaclPath;
     @Getter @NonNull private final PropertyValuePairSet propertyValuePairSets;
 
     @Override
-    public Optional<String> getPath() {
+    public Optional<ShapePath> getPath() {
         return Optional.ofNullable(shaclPath);
     }
 

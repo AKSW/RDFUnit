@@ -21,7 +21,7 @@ import java.util.Optional;
 public interface Shape extends Element {
 
     /** TODO convert to PropertyPath ... */
-    Optional<String> getPath();
+    Optional<ShapePath> getPath();
 
     /**
      * Raw access to all values in this Shape

@@ -53,7 +53,7 @@ public class ConstraintImpl implements Constraint {
 
         String valuePath;
         if (shape.getPath().isPresent()) {
-            valuePath = " ?this <" + shape.getPath().get() + "> ?value . ";
+            valuePath = " ?this " + shape.getPath().get().asSparqlPropertyPath() + " ?value . ";
         } else {
             valuePath = " BIND ($this AS ?value) . ";
         }
@@ -67,7 +67,7 @@ public class ConstraintImpl implements Constraint {
             String  sparqlWhere = sparqlString
                     .substring(sparqlString.indexOf('{'));
             if (shape.getPath().isPresent()) {
-                    sparqlWhere = sparqlWhere.replace("$PATH", "<" + shape.getPath().get() + ">");
+                    sparqlWhere = sparqlWhere.replace("$PATH", shape.getPath().get().asSparqlPropertyPath());
             }
             return replaceBindings(sparqlWhere);
         }
@@ -79,7 +79,7 @@ public class ConstraintImpl implements Constraint {
             bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
         }
         if (shape.isPropertyShape()) {
-            bindedSnippet = bindedSnippet.replace("$PATH", shape.getPath().get());
+            bindedSnippet = bindedSnippet.replace("$PATH", shape.getPath().get().asSparqlPropertyPath());
         }
         return bindedSnippet;
     }
@@ -147,7 +147,7 @@ public class ConstraintImpl implements Constraint {
         // add property
         if (shape.getPath().isPresent()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.path)
-                    .setValue(ResourceFactory.createResource(shape.getPath().get())).build());
+                    .setValue(shape.getPath().get().getElement()).build());
         }
 
 
