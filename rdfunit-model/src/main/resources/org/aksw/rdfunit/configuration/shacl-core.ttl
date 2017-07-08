@@ -492,7 +492,7 @@ sh:InConstraintComponent
             SELECT DISTINCT ?this ?value
             WHERE {
                 $this $PATH ?value .
-                FILTER NOT EXISTS { VALUES ?value { $in }  }
+                FILTER ( ?value NOT IN ( $in )  )
             }""" ;
     ] ;
     sh:nodeValidator [
@@ -502,7 +502,7 @@ sh:InConstraintComponent
             SELECT DISTINCT ?this ?value
             WHERE {
                 BIND ($this AS ?value) .
-                FILTER NOT EXISTS { VALUES ?value { $in }  }
+                FILTER ( ?value NOT IN ( $in )  )
             }""" ;
     ] ;
     .

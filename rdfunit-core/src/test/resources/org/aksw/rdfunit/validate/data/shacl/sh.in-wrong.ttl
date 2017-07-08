@@ -6,8 +6,8 @@
 
 
 ex:1 a ex:Person ;
-  ex:checkIn ex:Example2 .
+  ex:checkIn ex:Example2 . # error
 
 
 ex:2 a ex:Person ;
-  ex:checkIn "example2" .
+  ex:checkIn "example2" .  # error

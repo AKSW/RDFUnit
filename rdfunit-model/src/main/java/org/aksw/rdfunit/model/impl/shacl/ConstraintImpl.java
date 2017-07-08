@@ -96,7 +96,7 @@ public class ConstraintImpl implements Constraint {
         if (value.isResource()) {
             Resource r = value.asResource();
             if (RdfListUtils.isList(r)) {
-                return RdfListUtils.getListItemsOrEmpty(r).stream().map(this::formatRdfListValue).collect(Collectors.joining("  "));
+                return RdfListUtils.getListItemsOrEmpty(r).stream().map(this::formatRdfListValue).collect(Collectors.joining(" , "));
             } else {
                 return asFullTurtleUri(r);
             }
