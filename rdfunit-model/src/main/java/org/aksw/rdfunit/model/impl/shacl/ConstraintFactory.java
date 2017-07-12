@@ -64,6 +64,7 @@ public final class ConstraintFactory {
                 return Optional.of(constraintBuilder.build());
 
             } else {
+                if(!component.isPartial())
                 log.warn("No validators found for shape {} and component {}", shape, component);
             }
         }

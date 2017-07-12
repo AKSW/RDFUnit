@@ -23,7 +23,7 @@ public class ComponentValidatorImpl implements ComponentValidator {
     @Getter private final String message;
     @Getter @NonNull private final String sparqlQuery;
     @Getter @NonNull private final ComponentValidatorType type;
-    @Getter private String filter;
+    @Getter private final String filter;
 
     private static final List<ComponentValidatorType> propertyValidators = Arrays.asList(ComponentValidatorType.ASK_VALIDATOR, ComponentValidatorType.PROPERTY_VALIDATOR);
     private static final List<ComponentValidatorType> nodeValidators = Arrays.asList(ComponentValidatorType.ASK_VALIDATOR, ComponentValidatorType.NODE_VALIDATOR);

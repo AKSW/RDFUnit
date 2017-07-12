@@ -148,6 +148,7 @@ sh:NodeKindConstraintComponent
 
 sh:MinCountConstraintComponent
     a sh:ConstraintComponent ;
+	shr:partial "true"^^xsd:boolean ;
 	sh:parameter [
         sh:path sh:minCount ;
     ] ;
@@ -168,6 +169,7 @@ sh:MinCountConstraintComponent
 
 sh:MinCountConstraintComponent1
     a sh:ConstraintComponent ;
+	shr:partial "true"^^xsd:boolean ;
 	sh:parameter [
         sh:path sh:minCount ;
     ] ;
