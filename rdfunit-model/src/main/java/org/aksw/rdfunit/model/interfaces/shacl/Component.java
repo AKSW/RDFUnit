@@ -10,4 +10,6 @@ public interface Component extends Element {
     Collection<ComponentParameter> getParameters();
 
     Collection<ComponentValidator> getValidators();
+
+    boolean isPartial();
 }
