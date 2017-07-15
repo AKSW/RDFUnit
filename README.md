@@ -25,7 +25,7 @@ RDFUnit also strictly defines the results of a TestSuite execution along with [d
 
 ### Basic usage
 
-See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) for (a lot) more options but the simplest setting is as follows:
+See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) or `bin/rdfunit -h` for (a lot) more options but the simplest setting is as follows:
 
 ```console
 $ bin/rdfunit -d <local-or-remote-location-URI>
