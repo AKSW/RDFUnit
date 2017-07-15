@@ -12,6 +12,82 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 
+#classes under owl:Thing must be one of a pre-selected list
+rutt:dbo-restrict-TopClasses
+      a rut:ManualTestCase ;
+      dcterms:description "(TEST NOT WORKING CORRECTLY) DBpedia Ontology only allows 9 top level classes, any new top level classes need to be discussed here -link missing-";
+      rut:appliesTo rut:Schema ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://www.w3.org/2002/07/owl#Class> ;
+      rut:source <http://dbpedia.org/ontology/> ;
+	  # TODO set to error once test is working 	
+      rut:testCaseLogLevel rlog:WARN ;
+      rut:sparqlWhere """ {
+                          ?this rdfs:subClassOf owl:Thing  .
+                          #OPTIONAL {?this rdfs:subClassOf ?otherClass .
+						  #		FILTER(?otherClass != owl:Thing) .}
+                          #FILTER (!bound (?otherClass)) .
+                          #FILTER NOT EXISTS { ?this rdfs:subClassOf ?otherClass .
+						  #		               FILTER(?otherClass != owl:Thing) .}
+                          FILTER(?this != <http://dbpedia.org/ontology/Activity>).
+                          FILTER(?this != <http://dbpedia.org/ontology/Agent>).
+                          FILTER(?this != <http://dbpedia.org/ontology/Concept>).
+                          FILTER(?this != <http://dbpedia.org/ontology/CommunicationSystem>).
+                          FILTER(?this != <http://dbpedia.org/ontology/Condition>).
+                          FILTER(?this != <http://dbpedia.org/ontology/Event>).
+                          FILTER(?this != <http://dbpedia.org/ontology/PhysicalThing>).
+                          FILTER(?this != <http://dbpedia.org/ontology/Place>).
+                          FILTER(?this != <http://dbpedia.org/ontology/TimePeriod>).
+      } """ ;
+      rut:sparqlPrevalence """ """  .
+
+                  
+
+rutt:dbo-checkLabels
+    a       rut:ManualTestCase ;
+    dcterms:description "Each owl:Class should have at least one rdfs:label";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                             ?this a owl:Class.
+                             FILTER NOT EXISTS {?this rdfs:label ?v1 }} """ ;
+    rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty sh:predicate ;
+	   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+	];
+	.      
+	
+rutt:dbo-checkLabels2
+    a       rut:ManualTestCase ;
+    dcterms:description "Each owl:Class should not have more than one rdfs:label with the same language";
+    rut:appliesTo rut:Schema ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+    rut:source <http://dbpedia.org/ontology/> ;
+    rut:testCaseLogLevel rlog:WARN ;
+    rut:sparqlWhere """ {
+                             ?this a owl:Class.
+                             ?this rdfs:label ?v1 .
+                             ?this rdfs:label ?v2 .
+                             FILTER (?v1 != ?v2 ) .
+                             FILTER (lang(?v1) = lang(?v2)) .
+                         }""" ;
+    # TODO count of all rdfs:labels of all classes                     
+    rut:sparqlPrevalence """ """ ;
+    #rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+	rut:resultAnnotation [
+	   a rut:ResultAnnotation ;
+	   rut:annotationProperty sh:predicate ;
+	   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+	];
+	.      	
+           
+                  
 # dbo:deathDate after dbo:birthDate
 rutt:dbo-COMP-birthdeatdate
     a       rut:PatternBasedTestCase ;
