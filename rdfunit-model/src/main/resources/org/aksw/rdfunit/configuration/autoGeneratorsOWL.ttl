@@ -32,8 +32,8 @@ rutg:RDFSRANGEC a rut:TestGenerator ;
                               # don't check for general classes
                               FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class ))
 
-							  # Keep unique ranges only
-                              FILTER NOT EXISTS {?P1 (rdfs:range|schema:rangeIncludes) ?T2 .
+							  # Keep unique schema:rangeIncludes only (rdfs:range is cinjunctive)
+                              FILTER NOT EXISTS {?P1 schema:rangeIncludes ?T2 .
                                                     FILTER (?T1 != ?T2)
                               }
 
@@ -71,10 +71,11 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
 							  # don't check for general classes
 							  FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class ))
 
-							  # Keep unique ranges only
-                              FILTER NOT EXISTS {?P1 (rdfs:range|schema:rangeIncludes) ?T2 .
-                                                  FILTER (?T1 != ?T2)
+							  # Keep unique schema:rangeIncludes only (rdfs:range is cinjunctive)
+                              FILTER NOT EXISTS {?P1 schema:rangeIncludes ?T2 .
+                                                    FILTER (?T1 != ?T2)
                               }
+
                               FILTER (!isBlank(?T1))
 							  BIND (concat(str(?P1),' is missing proper range') AS ?DESCRIPTION)}   """ ;
     rut:basedOnPattern rutp:RDFSRANGE-MISS ;
