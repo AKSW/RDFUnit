@@ -98,7 +98,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
 
     private static String writePropertyChain(List<ShapePath> propertyChain) {
         return propertyChain.stream()
-                .map( p -> p.asSparqlPropertyPath())
+                .map(ShapePath::asSparqlPropertyPath)
                 .collect(Collectors.joining(" / "));
     }
 }
