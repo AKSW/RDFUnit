@@ -63,6 +63,7 @@ public final class SHACL {
     public static final Property path = property("path");
     public static final Property object = property("object");
     public static final Property message = property("message");
+    public static final Property resultMessage = property("resultMessage");
     public static final Property sourceConstraint = property("sourceConstraint");
 
     public static final Property annotationProperty = property("annotationProperty");
