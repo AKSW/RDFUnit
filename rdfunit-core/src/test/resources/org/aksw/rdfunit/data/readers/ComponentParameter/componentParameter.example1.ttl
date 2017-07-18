@@ -17,10 +17,9 @@
 
 
 <http://example.com/arguments/3> a sh:Parameter ;
-	sh:path sh:arg1 ;
+	sh:path sh:arg3 ;
 	sh:datatype xsd:integer ;
-	sh:defaultValue "asdf" ;
+	sh:defaultValue "42"^^xsd:integer ;
 	sh:optional true ;
-	rdfs:comment "The second operand" ;
+	rdfs:comment "The third operand" ;
 	.
-
