@@ -1,0 +1,8 @@
+<http://ex.com/a>   <http://ex.com/path> <http://ex.com/p1> ;
+                    <http://ex.com/pathExp> "<http://ex.com/p1>" .
+
+<http://ex.com/b>   <http://ex.com/path> ( <http://ex.com/p1> <http://ex.com/p2> ) ;
+                    <http://ex.com/pathExp> "<http://ex.com/p1>/<http://ex.com/p2>" .
+
+<http://ex.com/c>   <http://ex.com/path> ( <http://ex.com/p1> <http://ex.com/p2> <http://ex.com/p3> ) ;
+                    <http://ex.com/pathExp> "(<http://ex.com/p1>/<http://ex.com/p2>)/<http://ex.com/p3>" .
