@@ -28,7 +28,7 @@ public final class BatchShapeReader {
             SHACL.minCount, SHACL.maxCount,
             SHACL.minInclusive, SHACL.minExclusive, SHACL.maxInclusive, SHACL.maxExclusive,
             SHACL.minLength, SHACL.maxLength, SHACL.pattern, SHACL.flags, SHACL.uniqueLang,
-            SHACL.equals, SHACL.notEquals, SHACL.lessThan, SHACL.lessThanOrEquals,
+            SHACL.equalz, SHACL.notEquals, SHACL.lessThan, SHACL.lessThanOrEquals,
             SHACL.hasValue, SHACL.in,
             SHACL.targetClass, SHACL.targetNode, SHACL.targetObjectsOf, SHACL.targetSubjectsOf,
             SHACL.path

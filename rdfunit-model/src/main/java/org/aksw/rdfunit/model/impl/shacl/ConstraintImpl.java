@@ -38,7 +38,7 @@ public class ConstraintImpl implements Constraint {
     public TestCase getTestCase() {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
-        String sparql = "";
+        String sparql;
         sparql = generateSparqlWhere(validator.getSparqlQuery());
 
 
@@ -146,7 +146,7 @@ public class ConstraintImpl implements Constraint {
         ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
         // add property
         if (shape.getPath().isPresent()) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.path)
+            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
                     .setValue(shape.getPath().get().getElement()).build());
         }
 
@@ -157,7 +157,7 @@ public class ConstraintImpl implements Constraint {
                 .filter( p -> !nonValueArgs.contains(p))
                 .collect(Collectors.toList());
         if (!nonValueBind.isEmpty()) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.object)
+            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
                     .setVariableName("value").build());
         }
 

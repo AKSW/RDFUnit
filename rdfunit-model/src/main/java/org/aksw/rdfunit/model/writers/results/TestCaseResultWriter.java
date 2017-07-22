@@ -88,18 +88,40 @@ public class TestCaseResultWriter implements ElementWriter {
         }
 
         if (testCaseResult instanceof SimpleShaclTestCaseResult) {
+            // create sh:result links (RDFUnit creates them the other way around
+            model.createStatement(model.createResource(executionUri), SHACL.result, resource);
+            // calculate severity (RDFUnit still uses RLOG)
+            Resource severity = SHACL.Violation;
+            switch (testCaseResult.getSeverity()) {
+                case ERROR:
+                case FATAL:
+                    severity = SHACL.Violation;
+                    break;
+                case WARN:
+                    severity = SHACL.Warning;
+                    break;
+                case INFO:
+                case DEBUG:
+                case TRACE:
+                    severity = SHACL.Info;
+                    break;
+                case OFF:
+                case ALL:
+                    break;
+                default:
+                    severity = SHACL.Violation;
+            }
+
+
             resource
                     .addProperty(RDF.type, SHACL.ValidationResult)
                     .addProperty(SHACL.focusNode, model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()))    //TODO double check later, might not always be the current resource
-                    .addProperty(SHACL.message, testCaseResult.getMessage())
-                    .addProperty(SHACL.severity, model.createResource(testCaseResult.getSeverity().getUri()))
+                    .addProperty(SHACL.resultMessage, testCaseResult.getMessage())
+                    .addProperty(SHACL.resultSeverity, severity)
             ;
         }
 
         if (testCaseResult instanceof ShaclTestCaseResult) {
-            resource
-                    .addProperty(SHACL.subject,model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()));
-
 
             for (PropertyValuePair annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {
                 for (RDFNode rdfNode : annotation.getValues()) {

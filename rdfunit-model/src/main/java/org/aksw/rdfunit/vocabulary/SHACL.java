@@ -26,6 +26,7 @@ public final class SHACL {
     public static final Resource Parameter = resource("Parameter");
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource ValidationResult = resource("ValidationResult");
+    public static final Resource ValidationReport = resource("ValidationReport");
     public static final Resource SPARQLAskValidator  = resource("SPARQLAskValidator");
     public static final Resource ConstraintComponent = resource("ConstraintComponent");
 
@@ -58,13 +59,17 @@ public final class SHACL {
     public static final Property directType = property("directType");
 
     public static final Property severity = property("severity");
+    public static final Property resultSeverity = property("resultSeverity");
     public static final Property focusNode = property("focusNode");
-    public static final Property subject = property("subject");
+    //public static final Property subject = property("subject");
     public static final Property path = property("path");
-    public static final Property object = property("object");
+    public static final Property value = property("value");
     public static final Property message = property("message");
     public static final Property resultMessage = property("resultMessage");
+    public static final Property resultPath = property("resultPath");
     public static final Property sourceConstraint = property("sourceConstraint");
+    public static final Property conforms = property("conforms");
+    public static final Property result = property("result");
 
     public static final Property annotationProperty = property("annotationProperty");
     public static final Property annotationVarName = property("annotationVarName");
@@ -84,7 +89,7 @@ public final class SHACL {
     public static final Property maxLength = property("maxLength");
     public static final Property nodeKind = property("nodeKind");
     public static final Property notEquals = property("notEquals");
-    public static final Property equals = property("equals");
+    public static final Property equalz = property("equals");
     public static final Property hasValue = property("hasValue");
     public static final Property in = property("in");
     public static final Property lessThan = property("lessThan");
