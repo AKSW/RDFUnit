@@ -68,6 +68,8 @@ public final class SHACL {
     public static final Property resultMessage = property("resultMessage");
     public static final Property resultPath = property("resultPath");
     public static final Property sourceConstraint = property("sourceConstraint");
+    public static final Property sourceShape = property("sourceShape");
+    public static final Property sourceConstraintComponent = property("sourceConstraintComponent");
     public static final Property conforms = property("conforms");
     public static final Property result = property("result");
 

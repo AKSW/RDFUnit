@@ -150,6 +150,11 @@ public class ConstraintImpl implements Constraint {
                     .setValue(shape.getPath().get().getElement()).build());
         }
 
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)
+                    .setValue(shape.getElement()).build());
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraintComponent)
+                .setValue(component.getElement()).build());
+
 
         List<Property> nonValueArgs = Arrays.asList(SHACL.minCount, SHACL.maxCount);
         List<Property> nonValueBind = getBindings().keySet().stream()
