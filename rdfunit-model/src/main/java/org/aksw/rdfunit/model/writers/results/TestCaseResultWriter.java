@@ -88,8 +88,6 @@ public class TestCaseResultWriter implements ElementWriter {
         }
 
         if (testCaseResult instanceof SimpleShaclTestCaseResult) {
-            // create sh:result links (RDFUnit creates them the other way around
-            model.createStatement(model.createResource(executionUri), SHACL.result, resource);
             // calculate severity (RDFUnit still uses RLOG)
             Resource severity = SHACL.Violation;
             switch (testCaseResult.getSeverity()) {

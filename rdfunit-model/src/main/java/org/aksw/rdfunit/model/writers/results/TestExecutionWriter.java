@@ -86,7 +86,9 @@ public final class TestExecutionWriter implements ElementWriter {
 
         // Write individual results
         for (TestCaseResult result : testExecution.getTestCaseResults()) {
-            TestCaseResultWriter.create(result, testExecution.getTestExecutionUri()).write(model);
+            Resource resultIri = TestCaseResultWriter.create(result, testExecution.getTestExecutionUri()).write(model);
+            resource.addProperty(SHACL.result, resultIri);
+
         }
 
         return resource;
