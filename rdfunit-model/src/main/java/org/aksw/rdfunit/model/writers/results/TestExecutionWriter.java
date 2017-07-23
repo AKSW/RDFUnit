@@ -27,28 +27,12 @@ public final class TestExecutionWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
+
         Resource resource = ElementWriter.copyElementResourceInModel(testExecution, model);
-
-
-        //Resource testSuiteResource = testSuite.serialize(getModel());
-
 
         resource.addProperty(RDF.type, PROV.Activity)
                 .addProperty(RDF.type, RDFUNITv.TestExecution)
                 .addProperty(RDF.type, SHACL.ValidationReport);
-
-        //Test suite
-        /*
-        Resource testSuiteResource = testExecution.getTestSuite().serialize(model);
-
-        testSuiteResource
-                .addProperty(RDF.type, RDFUNITv.TestSuite)
-                .addProperty(RDF.type, PROV.Collection);
-
-        for (String tc: testExecution.getTestCasesUris()) {
-            testSuiteResource.addProperty(PROV.hadMember, model.createResource(tc));
-        }
-        resource.addProperty(PROV.used, testSuiteResource);   */
 
         // metadata
         resource.addProperty(RDFUNITv.executionType, testExecution.getTestExecutionType().name())
