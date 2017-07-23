@@ -38,7 +38,7 @@ public final class ComponentParameterWriter implements ElementWriter {
         Resource resource = ElementWriter.copyElementResourceInModel(componentParameter, model);
 
         // rdf:type sh:ComponentParameter
-        resource.addProperty(RDF.type, SHACL.Parameter);
+        resource.addProperty(RDF.type, SHACL.ParameterCls);
 
         // sh:path sh:argX
         resource.addProperty(SHACL.path, componentParameter.getPredicate()) ;
