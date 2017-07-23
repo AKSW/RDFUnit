@@ -61,7 +61,6 @@ public final class SHACL {
     public static final Property severity = property("severity");
     public static final Property resultSeverity = property("resultSeverity");
     public static final Property focusNode = property("focusNode");
-    //public static final Property subject = property("subject");
     public static final Property path = property("path");
     public static final Property value = property("value");
     public static final Property message = property("message");
@@ -77,7 +76,12 @@ public final class SHACL {
     public static final Property annotationVarName = property("annotationVarName");
     public static final Property annotationValue = property("annotationValue");
     public static final Property property = property("property");
-    public static final Property inverseProperty = property("inverseProperty");
+
+    public static final Property inversePath = property("inversePath");
+    public static final Property zeroOrMorePath = property("zeroOrMorePath");
+    public static final Property oneOrMorePath = property("oneOrMorePath");
+    public static final Property zeroOrOnePath = property("zeroOrOnePath");
+    public static final Property alternativePath = property("alternativePath");
 
     public static final Property minExclusive = property("minExclusive");
     public static final Property minInclusive = property("minInclusive");
