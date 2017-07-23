@@ -78,10 +78,6 @@ public final class SHACL {
     public static final Property annotationValue = property("annotationValue");
     public static final Property property = property("property");
     public static final Property inverseProperty = property("inverseProperty");
-    //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
-
 
     public static final Property minExclusive = property("minExclusive");
     public static final Property minInclusive = property("minInclusive");
