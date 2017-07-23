@@ -23,7 +23,7 @@ public final class SHACL {
     public static final Resource Shape = resource("Shape");
     public static final Resource PropertyShape = resource("PropertyShape");
     public static final Resource NodeShape = resource("NodeShape");
-    public static final Resource Parameter = resource("Parameter");
+    public static final Resource ParameterCls = resource("Parameter");
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource ValidationResult = resource("ValidationResult");
     public static final Resource ValidationReport = resource("ValidationReport");
