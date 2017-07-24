@@ -6,7 +6,6 @@ import org.aksw.rdfunit.commons.RdfUnitModelFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.vocabulary.DOAP;
 import org.apache.jena.sparql.vocabulary.EARL;
 import org.apache.jena.vocabulary.RDF;
@@ -22,9 +21,9 @@ import java.nio.file.Paths;
 @Slf4j
 public class ShaclEARLReporter {
 
-    @Getter @NonNull private final String authorUri;
+    @NonNull private final String authorUri;
 
-    @Getter @NonNull private final String subjectUri;
+    @NonNull private final String testSubjectUri;
 
     @Getter @NonNull private final String projectName;
 
@@ -32,7 +31,7 @@ public class ShaclEARLReporter {
 
     @Getter(lazy = true) @NonNull private final Resource author = ResourceFactory.createResource(authorUri);
 
-    @Getter(lazy = true) @NonNull private final Resource testSubject = ResourceFactory.createResource(subjectUri);
+    @Getter(lazy = true) @NonNull private final Resource testSubject = ResourceFactory.createResource(testSubjectUri);
 
     @Getter(lazy = true) @NonNull private final Model reportModel = generateReport();
 
@@ -42,6 +41,7 @@ public class ShaclEARLReporter {
 
         val report =  RdfUnitModelFactory.createDefaultModel();
         report.setNsPrefix("earl", "http://www.w3.org/ns/earl#");
+        report.setNsPrefix("doap", "http://usefulinc.com/ns/doap#");
 
         report.add(getTestSubject(), RDF.type, DOAP.Project);
         report.add(getTestSubject(), RDF.type, EARL.Software);
@@ -53,8 +53,8 @@ public class ShaclEARLReporter {
 
             val assertion = report.createResource();
             assertion.addProperty(RDF.type, EARL.Assertion);
-            assertion.addProperty(EARL.assertedBy, getAuthorUri());
-            assertion.addProperty(EARL.subject, getSubjectUri());
+            assertion.addProperty(EARL.assertedBy, getAuthor());
+            assertion.addProperty(EARL.subject, getTestSubject());
 
             val testUri = report.createResource("urn:x-shacl-test:" + test.getId());
             assertion.addProperty(EARL.test, testUri);
@@ -81,12 +81,12 @@ public class ShaclEARLReporter {
 
         val reporter = ShaclEARLReporter.builder()
                 .authorUri("http://aksw.org/DimitrisKontokostas")
-                .subjectUri("http://aksw.org/projects/RDFUnit")
+                .testSubjectUri("http://aksw.org/projects/RDFUnit")
                 .projectName("RDFUnit")
                 .testSuite(suite).build();
 
         val reportModel = reporter.generateReport();
 
-        reportModel.write(System.out);
+        reportModel.write(System.out, "Turtle");
     }
 }
