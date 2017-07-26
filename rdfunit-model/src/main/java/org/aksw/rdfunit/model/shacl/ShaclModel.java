@@ -138,14 +138,14 @@ public class ShaclModel {
 
         if (shape.isNodeShape()) {
             // use the exact same target
-            childShapes.forEach(cs -> mergeValues(implicitTargets, cs, targets));
+            childShapes.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(implicitTargets, cs, targets));
         } else {
             if (shape.isPropertyShape()) {
                 // use the exact same target
                 Set<ShapeTarget> propertyTargets = targets.stream()
                         .map(target -> ShapeTargetValueShape.create(target, shape.getPath().get()))
                         .collect(Collectors.toSet());
-                childShapes.forEach(cs -> mergeValues(implicitTargets, cs, propertyTargets));
+                childShapes.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(implicitTargets, cs, propertyTargets));
             }
         }
 
