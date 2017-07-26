@@ -10,12 +10,17 @@ import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 
 @ToString
 @EqualsAndHashCode(exclude={"element"})
@@ -55,7 +60,7 @@ public class ComponentValidatorImpl implements ComponentValidator {
     private boolean canBind(String filter, Map<ComponentParameter, RDFNode> bindings) {
         String filterQ = filter;
         for ( Map.Entry<ComponentParameter, RDFNode> e: bindings.entrySet()) {
-            filterQ = filterQ.replace("$" + e.getKey().getParameterName(), formatRdfValue(e.getValue()));
+            filterQ = filterQ.replace("$" + e.getKey().getParameterName(), formatNode(e.getValue()));
         }
         boolean canBind = checkFilter(filterQ);
         return canBind;
@@ -69,22 +74,6 @@ public class ComponentValidatorImpl implements ComponentValidator {
         }
     }
 
-    private String formatRdfValue(RDFNode value) {
-        if (value.isResource()) {
-            return asFullTurtleUri(value.asResource());
-        } else {
-            return asSimpleLiteral(value.asLiteral());
-        }
-    }
-
-    private String asSimpleLiteral(Literal value) {
-        return value.getLexicalForm();
-    }
-
-    private String asFullTurtleUri(Resource value) {
-        // some vocabularies use spaces in uris
-        return "<" + value.getURI().trim().replace(" ", "") + ">";
-    }
 
 
 }

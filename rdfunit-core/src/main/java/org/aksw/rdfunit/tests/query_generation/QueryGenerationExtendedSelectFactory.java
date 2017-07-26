@@ -2,12 +2,13 @@ package org.aksw.rdfunit.tests.query_generation;
 
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPrefixDeclarations;
 
 /**
  * Factory that returns select queries and besides
@@ -33,7 +34,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(PrefixNSService.getSparqlPrefixDecl());
+        sb.append(getPrefixDeclarations(testCase));
         sb.append(SELECT_DISTINCT_RESOURCE);
 
         Set<String> existingVariables = new HashSet<>();

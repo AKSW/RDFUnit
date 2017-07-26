@@ -5,6 +5,8 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.assertj.core.api.Fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +37,7 @@ public class TestCaseWithTargetTest {
                 "select ?s where { ?this ?p ?o ; ?p2 ?o}"
         );
 
-        String p = "http://example.com#ex";
+        Resource p = ResourceFactory.createResource("http://example.com#ex");
         List<ShapeTarget> targets = Arrays.stream(ShapeTargetType.values())
                 .filter( sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
                 .map(scType -> ShapeTargetCore.create(scType, p))

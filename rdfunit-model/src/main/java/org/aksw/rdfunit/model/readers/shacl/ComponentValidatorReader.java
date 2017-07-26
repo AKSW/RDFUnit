@@ -38,7 +38,7 @@ public class ComponentValidatorReader implements ElementReader<ComponentValidato
             validatorBuilder.message(smt.getObject().asLiteral().getLexicalForm());
         }
 
-        // get message
+        // get prefixes
         for (Statement smt : resource.listProperties(SHACL.prefixes).toList()) {
             RDFNode obj = smt.getObject();
             if (obj.isResource()) {

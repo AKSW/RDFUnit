@@ -8,12 +8,15 @@ import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.model.readers.shacl.ShapePathReader;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 
 @ToString(exclude = "generatePattern")
 @EqualsAndHashCode
@@ -61,8 +64,8 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     @Override
-    public String getUri() {
-        return innerTarget.getUri();
+    public RDFNode getNode() {
+        return innerTarget.getNode();
     }
 
     @Override
@@ -79,21 +82,21 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     private static String classTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode rdf:type/rdfs:subClassOf* <" + target.getUri() + "> ; " +
+        return " ?focusNode rdf:type/rdfs:subClassOf* " + formatNode(target.getNode()) + " ; " +
                 writePropertyChain(target.pathChain) + "  ?this . ";
     }
 
     // FIXME add focus node
     private static String nodeTargetPattern(ShapeTargetValueShape target) {
-        return " <" + target.getUri() + "> " + writePropertyChain(target.pathChain) + " ?this . ";
+        return " " + formatNode(target.getNode()) + " " + writePropertyChain(target.pathChain) + " ?this . ";
     }
 
     private static String objectsOfTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode (^<" + target.getUri() + ">)/" + writePropertyChain(target.pathChain) + " ?this .";
+        return " ?focusNode (^" + formatNode(target.getNode()) + ")/" + writePropertyChain(target.pathChain) + " ?this .";
     }
 
     private static String subjectsOfTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode <" + target.getUri() + ">/" + writePropertyChain(target.pathChain) + " ?this .";
+        return " ?focusNode " + formatNode(target.getNode()) + "/" + writePropertyChain(target.pathChain) + " ?this .";
     }
 
     private static String writePropertyChain(List<ShapePath> propertyChain) {

@@ -5,8 +5,11 @@ import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
+import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
+
+import java.util.Collection;
 
 /**
  * Used mainly for SHACL in order to inject a target from a shape to a sparql constraint
@@ -37,6 +40,11 @@ public class TestCaseWithTarget implements TestCase {
     @Override
     public TestCaseAnnotation getTestCaseAnnotation() {
         return testCase.getTestCaseAnnotation();
+    }
+
+    @Override
+    public Collection<PrefixDeclaration> getPrefixDeclarations() {
+        return testCase.getPrefixDeclarations();
     }
 
     @Override

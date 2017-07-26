@@ -1,10 +1,11 @@
 package org.aksw.rdfunit.tests.query_generation;
 
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.services.PrefixNSService;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QueryParseException;
+
+import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPrefixDeclarations;
 
 /**
  * Factory that returns aggregate count queries
@@ -30,7 +31,7 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
     /** {@inheritDoc} */
     @Override
     public Query getSparqlQuery(TestCase testCase) {
-        String sparqlQuery = PrefixNSService.getSparqlPrefixDecl() +
+        String sparqlQuery = getPrefixDeclarations(testCase) +
                 SELECT_CLAUSE_SIMPLE + testCase.getSparqlWhere();
 
         try {
@@ -46,7 +47,7 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
         // When we have HAVING the aggregate is calculated against the HAVING expression
         // This way we enclose the query in a sub-select and calculate the count () correctly
         // See https://issues.apache.org/jira/browse/JENA-766
-        Query query = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() +
+        Query query = QueryFactory.create(getPrefixDeclarations(testCase) +
                 SELECT_CLAUSE_GROUP_START
                         + testCase.getSparqlWhere() +
                 SELECT_CLAUSE_GROUP_END

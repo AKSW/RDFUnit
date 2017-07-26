@@ -47,6 +47,7 @@ public class ConstraintImpl implements Constraint {
                 .element(createTestCaseResource())
                 .sparqlPrevalence("")
                 .sparqlWhere(sparql)
+                .prefixDeclarations(validator.getPrefixDeclarations())
                 .testCaseAnnotation(generateTestAnnotations())
                 .build();
     }

@@ -72,14 +72,14 @@ public final class BatchShapeTargetReader {
         return resource.listProperties(SHACL.targetClass)
                 .toList().stream()
                 .filter(smt -> smt.getObject().isResource())
-                .map(smt -> ShapeTargetCore.create(ShapeTargetType.ClassTarget, smt.getObject().asResource().getURI()))
+                .map(smt -> ShapeTargetCore.create(ShapeTargetType.ClassTarget, smt.getObject()))
                 .collect(Collectors.toList());
     }
 
     private List<ShapeTarget> collectImplicitClassTarget(Resource resource) {
         if (resource.hasProperty(RDF.type, RDFS.Class) || resource.hasProperty(RDF.type, OWL.Class)) {
             return Collections.singletonList(
-                    ShapeTargetCore.create(ShapeTargetType.ClassTarget, resource.getURI()
+                    ShapeTargetCore.create(ShapeTargetType.ClassTarget, resource
             ));
         } else {
             return Collections.emptyList();
@@ -102,7 +102,7 @@ public final class BatchShapeTargetReader {
         return resourceShape.listProperties(targetProperty)
                 .toList().stream()
                 .filter(smt -> smt.getObject().isResource())
-                .map(smt -> ShapeTargetCore.create(shapeTargetType, smt.getObject().asResource().getURI()))
+                .map(smt -> ShapeTargetCore.create(shapeTargetType, smt.getObject()))
                 .collect(Collectors.toList());
     }
 }

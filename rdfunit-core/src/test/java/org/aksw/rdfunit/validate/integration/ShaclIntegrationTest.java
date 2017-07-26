@@ -66,6 +66,7 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.nodeKind-wrong-BlankNodeOrIri.ttl", 1},
                 {"shacl/sh.nodeKind-wrong-BlankNodeOrLiteral.ttl", 1},
                 {"shacl/sh.nodeKind-wrong-IriOrLiteral.ttl", 1},
+                {"shacl/sh.nodeKind-wrong-node-constraint.ttl", 1},
 
         });
 
