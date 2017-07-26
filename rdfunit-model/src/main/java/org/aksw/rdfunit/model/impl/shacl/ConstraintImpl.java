@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @Builder
@@ -61,7 +62,8 @@ public class ConstraintImpl implements Constraint {
         if (validator.getType().equals(ComponentValidatorType.ASK_VALIDATOR)) {
             String sparqlWhere = sparqlString.trim()
                     .replaceFirst("\\{", "")
-                    .replaceFirst("ASK", "  {\n " + valuePath + "\n MINUS {\n " + valuePath + " ") + "}";
+                    .replaceFirst("ASK", Matcher.quoteReplacement("  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
+                    + "}";
             return replaceBindings(sparqlWhere);
         } else {
             String  sparqlWhere = sparqlString

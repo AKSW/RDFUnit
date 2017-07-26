@@ -8,9 +8,10 @@
 
 # A sample shape, meant only to test the shape readers (ATM)
 
-ex:MyShape
+ex:Person
 	a sh:Shape ;
-	sh:targetClass ex:Person ;
+	a rdfs:Class ;
+	# sh:targetClass ex:Person ; implicit target
 
 ####
 # ValueTypeConstraints

@@ -6,6 +6,7 @@ import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
 import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.vocabulary.RDFUNIT_SHACL_EXT;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 
@@ -37,15 +38,23 @@ public class ComponentValidatorReader implements ElementReader<ComponentValidato
             validatorBuilder.message(smt.getObject().asLiteral().getLexicalForm());
         }
 
+        // get message
+        for (Statement smt : resource.listProperties(SHACL.prefixes).toList()) {
+            RDFNode obj = smt.getObject();
+            if (obj.isResource()) {
+                validatorBuilder.prefixDeclarations(BatchPrefixDeclarationReader.create().getPrefixDeclarations(obj.asResource()));
+            }
+        }
+
         //default ask query
         for (Statement smt : resource.listProperties(SHACL.ask).toList()) {
-            checkArgument(type.equals(ComponentValidatorType.ASK_VALIDATOR), "SPARQL SELECT-Based Validator contains ASK query");
+            checkArgument(type.equals(ComponentValidatorType.ASK_VALIDATOR), "SPARQL SELECT-Based Validator contains ASK query: %s", smt.getObject().asLiteral().getLexicalForm());
             validatorBuilder.sparqlQuery(smt.getObject().asLiteral().getLexicalForm());
         }
 
         //default sparql query
         for (Statement smt : resource.listProperties(SHACL.select).toList()) {
-            checkArgument(!type.equals(ComponentValidatorType.ASK_VALIDATOR), "SPARQL ASK-Based Validator contains SELECT query");
+            checkArgument(!type.equals(ComponentValidatorType.ASK_VALIDATOR), "SPARQL ASK-Based Validator contains SELECT query %s", smt.getObject().asLiteral().getLexicalForm());
             validatorBuilder.sparqlQuery(smt.getObject().asLiteral().getLexicalForm());
         }
 

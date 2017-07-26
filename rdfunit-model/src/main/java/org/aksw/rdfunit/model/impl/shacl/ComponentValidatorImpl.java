@@ -1,10 +1,12 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.ShapeType;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
+import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
@@ -23,6 +25,7 @@ public class ComponentValidatorImpl implements ComponentValidator {
     @Getter private final String message;
     @Getter @NonNull private final String sparqlQuery;
     @Getter @NonNull private final ComponentValidatorType type;
+    @Getter @NonNull @Singular private final ImmutableSet<PrefixDeclaration> prefixDeclarations;
     @Getter private final String filter;
 
     private static final List<ComponentValidatorType> propertyValidators = Arrays.asList(ComponentValidatorType.ASK_VALIDATOR, ComponentValidatorType.PROPERTY_VALIDATOR);

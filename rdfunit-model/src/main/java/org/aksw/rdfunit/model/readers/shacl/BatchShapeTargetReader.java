@@ -7,7 +7,11 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,6 +56,7 @@ public final class BatchShapeTargetReader {
         ImmutableSet.Builder<ShapeTarget> targetBuilder = ImmutableSet.builder();
 
         targetBuilder.addAll(collectClassTarget(resource));
+        targetBuilder.addAll(collectImplicitClassTarget(resource));
         targetBuilder.addAll(collectNodeTarget(resource));
         targetBuilder.addAll(collectSubjectsOfTarget(resource));
         targetBuilder.addAll(collectObjectsOfTarget(resource));
@@ -65,6 +70,16 @@ public final class BatchShapeTargetReader {
                 .filter(smt -> smt.getObject().isResource())
                 .map(smt -> ShapeTargetCore.create(ShapeTargetType.ClassTarget, smt.getObject().asResource().getURI()))
                 .collect(Collectors.toList());
+    }
+
+    private List<ShapeTarget> collectImplicitClassTarget(Resource resource) {
+        if (resource.hasProperty(RDF.type, RDFS.Class) || resource.hasProperty(RDF.type, OWL.Class)) {
+            return Collections.singletonList(
+                    ShapeTargetCore.create(ShapeTargetType.ClassTarget, resource.getURI()
+            ));
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private List<ShapeTarget> collectNodeTarget(Resource resource) {

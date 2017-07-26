@@ -8,6 +8,7 @@ import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 
 public interface ComponentValidator extends Element {
@@ -19,6 +20,8 @@ public interface ComponentValidator extends Element {
     String getSparqlQuery();
 
     ComponentValidatorType getType();
+
+    Set<PrefixDeclaration> getPrefixDeclarations();
 
     boolean filterAppliesForBindings(ShapeType shapeType, Map<ComponentParameter, RDFNode> bindings);
 
