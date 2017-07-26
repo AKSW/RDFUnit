@@ -23,6 +23,8 @@ public class ShaclIntegrationTest {
 
                 {"shacl/sh.datatype-correct.ttl", 0},
                 {"shacl/sh.datatype-wrong.ttl", 1},
+                {"shacl/sh.datatype-correct-node.ttl", 0},
+                {"shacl/sh.datatype-wrong-node.ttl", 1},
 
                 {"shacl/sh.uniqueLang-correct.ttl", 0},
                 //{"shacl/sh.uniqueLang-wrong.ttl", 1},

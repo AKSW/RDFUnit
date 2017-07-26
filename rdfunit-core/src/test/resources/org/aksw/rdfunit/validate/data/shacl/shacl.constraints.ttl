@@ -94,9 +94,14 @@ ex:Person
 
 .
 
-ex:NodeConstraintShape a sh:Shape ;
+ex:NodeConstraintClassShape a sh:Shape ;
     sh:targetClass ex:NodeConstraintClass ;
     sh:class ex:Person ;
+    .
+
+ex:NodeConstraintDatatypeShape a sh:Shape ;
+    sh:targetObjectsOf ex:booleanValues ;
+    sh:datatype xsd:boolean ;
     .
 
 ex:MyHasValueShape
