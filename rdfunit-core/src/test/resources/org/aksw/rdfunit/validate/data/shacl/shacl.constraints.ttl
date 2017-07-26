@@ -21,6 +21,7 @@ ex:Person
 		sh:class ex:SuperClass ;
 	] ;
 
+
     sh:property [
         sh:path ex:checkDatatype ;
         sh:datatype xsd:date ;
@@ -92,6 +93,11 @@ ex:Person
 
 
 .
+
+ex:NodeConstraintShape a sh:Shape ;
+    sh:targetClass ex:NodeConstraintClass ;
+    sh:class ex:Person ;
+    .
 
 ex:MyHasValueShape
 	a sh:Shape ;

@@ -18,6 +18,9 @@ public class ShaclIntegrationTest {
         return Arrays.asList(new Object[][]{
                 {"shacl/sh.class-correct.ttl", 0},
                 {"shacl/sh.class-wrong.ttl", 1},
+                {"shacl/sh.class-correct-node.ttl", 0},
+                {"shacl/sh.class-wrong-node.ttl", 2},
+
                 {"shacl/sh.datatype-correct.ttl", 0},
                 {"shacl/sh.datatype-wrong.ttl", 1},
 

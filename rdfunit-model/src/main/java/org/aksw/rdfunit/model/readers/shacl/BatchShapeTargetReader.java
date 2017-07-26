@@ -55,6 +55,10 @@ public final class BatchShapeTargetReader {
     private Set<ShapeTarget> collectExplicitTargets(Resource resource) {
         ImmutableSet.Builder<ShapeTarget> targetBuilder = ImmutableSet.builder();
 
+        if (resource.hasLiteral(SHACL.deactivated, true)) {
+            return targetBuilder.build();
+        }
+
         targetBuilder.addAll(collectClassTarget(resource));
         targetBuilder.addAll(collectImplicitClassTarget(resource));
         targetBuilder.addAll(collectNodeTarget(resource));

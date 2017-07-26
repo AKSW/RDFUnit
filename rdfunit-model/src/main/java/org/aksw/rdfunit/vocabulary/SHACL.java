@@ -112,6 +112,8 @@ public final class SHACL {
     public static final Property prefix = property("prefix");
     public static final Property prefixNamespace = property("namespace");
 
+    public static final Property deactivated = property("deactivated");
+
 
     private SHACL() {
     }

@@ -60,4 +60,9 @@ public interface Shape extends Element {
                 .findFirst();
     }
 
+    default boolean isDeactivated() {
+
+        return getElement().hasLiteral(SHACL.deactivated, true);
+    }
+
 }
