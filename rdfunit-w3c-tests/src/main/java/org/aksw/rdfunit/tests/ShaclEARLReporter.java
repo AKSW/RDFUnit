@@ -1,7 +1,10 @@
 package org.aksw.rdfunit.tests;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.aksw.rdfunit.commons.RdfUnitModelFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -73,7 +76,7 @@ public class ShaclEARLReporter {
 
     public static void main(String[] args) {
 
-        val rootManifestPath = Paths.get("/home/mack/projects/ALIGNED/RDFUnit/data-shapes-repo/" +
+        val rootManifestPath = Paths.get("/home/dimitris/bck/home/jim/work/code/docs/data-shapes/" +
                 "data-shapes-test-suite/tests/manifest.ttl");
 
         val suite = W3CShaclTestSuite.load(rootManifestPath, false);

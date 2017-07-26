@@ -22,7 +22,7 @@
         <module>rdfunit-model</module>
         <module>rdfunit-io</module>
         <module>rdfunit-w3c-dqv</module>
-        <module>rdfunit-w3c-tests</module>
+        <!--module>rdfunit-w3c-tests</module--> <!-- removed from aggregation, kept as inheritance -->
     </modules>
 
     <issueManagement>

@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Streams;
 import io.vavr.Function1;
 import io.vavr.collection.List;
@@ -9,10 +10,13 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.commons.RdfUnitModelFactory;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
+import org.aksw.rdfunit.io.writer.RdfFileWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.results.TestCaseResultWriter;
+import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
@@ -34,6 +38,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Streams.stream;
@@ -49,6 +56,8 @@ import static org.aksw.rdfunit.enums.TestCaseExecutionType.shaclFullTestCaseResu
 @RequiredArgsConstructor
 @Slf4j
 public class W3CShaclTestSuite {
+
+    private static final Resource PartialResult = ResourceFactory.createResource("http://www.w3.org/ns/shacl-test#partial");
 
     @RequiredArgsConstructor
     public static class TestCase {
@@ -123,9 +132,74 @@ public class W3CShaclTestSuite {
          */
         private Model adjustActualReport(Model actualReport) {
 
-            val adjustedReport = RdfUnitModelFactory.createDefaultModel().add(actualReport);
+            try {
+                new RdfFileWriter("actual.before.ttl").write(actualReport);
+            } catch (RdfWriterException e) {
+                e.printStackTrace();
+            }
 
-            adjustedReport.removeAll(null, SHACL.message, (RDFNode)null);
+
+            val adjustedReport = ModelFactory.createDefaultModel();
+
+            //remove RDFUnit types
+            val keepOnlyTypes = ImmutableSet.of(SHACL.ValidationReport.getURI(), SHACL.ValidationResult.getURI());
+            val keepOnlyPredicates = ImmutableSet.of(SHACL.result, SHACL.conforms,
+                                                        SHACL.focusNode,
+                                                        SHACL.resultPath,
+                                                        SHACL.resultSeverity,
+                                                        SHACL.sourceConstraint,
+                                                        SHACL.sourceConstraintComponent,
+                                                        SHACL.sourceShape,
+                                                        SHACL.value,
+                                                        RDF.first,
+                                                        RDF.nil,
+                                                        RDF.rest,
+                                                        SHACL.inversePath,
+                                                        SHACL.zeroOrMorePath,
+                                                        SHACL.oneOrMorePath,
+                                                        SHACL.zeroOrOnePath,
+                                                        SHACL.alternativePath).stream().map(Resource::getURI).collect(Collectors.toSet());
+
+            actualReport.listStatements().forEachRemaining(s -> {
+                if (keepOnlyPredicates.contains(s.getPredicate().getURI())) {
+                    adjustedReport.add(s);
+                }
+                if (RDF.type.equals(s.getPredicate())) {
+                    if (keepOnlyTypes.contains(s.getObject().toString())) {
+                        adjustedReport.add(s);
+                    }
+                }
+            });
+
+            // convert to blank nodes
+            Set<Statement> statementsForRemoval = new HashSet<>();
+            adjustedReport.listObjectsOfProperty(SHACL.result).forEachRemaining( n -> {
+                if (n.isResource()) {
+                    Resource r = n.asResource();
+                    Resource newBNode = ResourceFactory.createResource();
+                    adjustedReport.listStatements(r, null, (RDFNode)null).forEachRemaining( s-> {
+                        adjustedReport.add(newBNode, s.getPredicate(), s.getObject());
+                        statementsForRemoval.add(s);
+                    });
+                    adjustedReport.listStatements(null, null, r).forEachRemaining( s-> {
+                        adjustedReport.add(s.getSubject(), s.getPredicate(), newBNode);
+                        statementsForRemoval.add(s);
+                    });
+                }
+            });
+            statementsForRemoval.forEach(adjustedReport::remove);
+            statementsForRemoval.clear();
+            adjustedReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationReport).forEachRemaining( r-> {
+                Resource newBNode = ResourceFactory.createResource();
+                adjustedReport.listStatements(r, null, (RDFNode)null).forEachRemaining( sn-> {
+                    adjustedReport.add(newBNode, sn.getPredicate(), sn.getObject());
+                    statementsForRemoval.add(sn);
+                });
+            });
+
+            statementsForRemoval.forEach(adjustedReport::remove);
+
+            adjustedReport.removeAll(null, SHACL.message, null);
             for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
                 if(!getAdjustedExpectedReport().contains(null, SHACL.resultMessage, s.getObject())) {
                     adjustedReport.remove(s);
@@ -178,22 +252,58 @@ public class W3CShaclTestSuite {
                 return model;
             };
 
+            try {
+                new RdfFileWriter("expected.ttl").write(getAdjustedExpectedReport());
 
-            val adjustedActualReport = getExecution().map(ex -> toShaclReportGraph.apply(ex.getTestCaseResults())).
-                    map(this::adjustActualReport);
+            } catch (RdfWriterException e) {
+                e.printStackTrace();
+            }
 
-            if(adjustedActualReport.isSuccess()) {
-
-                val isIsomorphic = getAdjustedExpectedReport().getGraph().isIsomorphicWith(
-                        adjustedActualReport.get().getGraph());
-
-                return isIsomorphic ? EARL.passed : EARL.failed;
-            } else {
-
-                log.warn("test case was not successfully executed {}", getId());
+            if (getExecution().isFailure()) {
+                // expected error
+                if (getAdjustedExpectedReport().isEmpty()) {
+                    return EARL.passed;
+                }
+                log.error("test case raised an error during execution: {}", getId());
+                log.error("error was: ", getExecution().failed().get());
 
                 return EARL.failed;
             }
+
+            final Model originalActualReport = ModelFactory.createDefaultModel();
+            TestExecutionWriter.create(getExecution().get()).write(originalActualReport);
+            final Model adjustedActualReport = this.adjustActualReport(originalActualReport);
+            try {
+                new RdfFileWriter("expected.ttl").write(getAdjustedExpectedReport());
+
+            } catch (RdfWriterException e) {
+                e.printStackTrace();
+            }
+
+
+            val isIsomorphic = getAdjustedExpectedReport().isIsomorphicWith(adjustedActualReport);
+
+
+
+                if (isIsomorphic) {
+                    return EARL.passed;
+                } else {
+                    // check for partial
+
+                    int expectedViolations = getAdjustedExpectedReport().listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
+                    int actualViolations = adjustedActualReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
+
+                    if (
+                            (expectedViolations == 0 && actualViolations == 0 )
+                            || (expectedViolations > 0 && actualViolations > 0 ))
+                    {
+                        return W3CShaclTestSuite.PartialResult;
+                    }
+                    log.error("test case failed {}", getId());
+                    return EARL.Fail;
+                }
+
+
         }
 
 
@@ -308,7 +418,7 @@ public class W3CShaclTestSuite {
 
     public static void main(String[] args) {
 
-        val rootManifestPath = Paths.get("/home/mack/projects/ALIGNED/RDFUnit/data-shapes-repo/" +
+        val rootManifestPath = Paths.get("/home/dimitris/bck/home/jim/work/code/docs/data-shapes/" +
                 "data-shapes-test-suite/tests/manifest.ttl");
 
         log.info("{} test cases found.", new Manifest(rootManifestPath).getTestCasesRecursive().count());
