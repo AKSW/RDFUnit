@@ -357,7 +357,7 @@ sh:PatternConstraintComponent
         shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) != '')}" ;
         sh:ask """
             ASK {
-                FILTER (!isBlank($value) &&  regex(str($value), "$pattern", "$flags"))
+                FILTER (!isBlank($value) &&  regex(str($value), $pattern, $flags))
             }""" ;
     ] ,
     [

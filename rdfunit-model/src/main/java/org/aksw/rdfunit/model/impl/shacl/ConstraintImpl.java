@@ -7,6 +7,7 @@ import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
+import org.aksw.rdfunit.model.helper.NodeFormatter;
 import org.aksw.rdfunit.model.helper.RdfListUtils;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
@@ -16,7 +17,10 @@ import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -96,37 +100,10 @@ public class ConstraintImpl implements Constraint {
     }
 
     private String formatRdfValue(RDFNode value) {
-        if (value.isResource()) {
-            Resource r = value.asResource();
-            if (RdfListUtils.isList(r)) {
-                return RdfListUtils.getListItemsOrEmpty(r).stream().map(this::formatRdfListValue).collect(Collectors.joining(" , "));
-            } else {
-                return asFullTurtleUri(r);
-            }
-
+        if (RdfListUtils.isList(value)) {
+            return RdfListUtils.getListItemsOrEmpty(value).stream().map(NodeFormatter::formatNode).collect(Collectors.joining(" , "));
         } else {
-            return asSimpleLiteral(value.asLiteral());
-        }
-    }
-
-    private String asSimpleLiteral(Literal value) {
-        return value.getLexicalForm();
-    }
-
-    private String asFullTurtleLiteral(Literal value) {
-        return "\""+value.getLexicalForm()+"\"^^<"+value.getDatatypeURI()+">";
-    }
-
-    private String asFullTurtleUri(Resource value) {
-        // some vocabularies use spaces in uris
-        return "<" + value.getURI().trim().replace(" ", "") + ">";
-    }
-
-    private String formatRdfListValue(RDFNode listVal) {
-        if (listVal.isResource()) {
-            return asFullTurtleUri(listVal.asResource());
-        } else {
-            return asFullTurtleLiteral(listVal.asLiteral());
+            return NodeFormatter.formatNode(value);
         }
     }
 

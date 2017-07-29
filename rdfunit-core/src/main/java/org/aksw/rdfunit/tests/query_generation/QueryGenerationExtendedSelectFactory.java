@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.query_generation;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.apache.jena.query.Query;
@@ -18,6 +19,7 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  * @since 7/25/14 10:02 PM
  * @version $Id: $Id
  */
+@Slf4j
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
 
     private static final String SELECT_DISTINCT_RESOURCE = " SELECT DISTINCT ?this ";
@@ -63,6 +65,12 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
     /** {@inheritDoc} */
     @Override
     public Query getSparqlQuery(TestCase testCase) {
-        return QueryFactory.create(this.getSparqlQueryAsString(testCase));
+        String query = this.getSparqlQueryAsString(testCase);
+        try {
+            return QueryFactory.create(query);
+        } catch (Exception e) {
+            log.error("Error in SPARQL query:\n{}", query);
+            throw e;
+        }
     }
 }

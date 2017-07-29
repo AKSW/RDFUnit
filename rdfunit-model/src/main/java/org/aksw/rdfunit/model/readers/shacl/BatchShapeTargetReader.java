@@ -101,7 +101,6 @@ public final class BatchShapeTargetReader {
     private List<ShapeTarget> collectPropertyHelper(Resource resourceShape, Property targetProperty, ShapeTargetType shapeTargetType) {
         return resourceShape.listProperties(targetProperty)
                 .toList().stream()
-                .filter(smt -> smt.getObject().isResource())
                 .map(smt -> ShapeTargetCore.create(shapeTargetType, smt.getObject()))
                 .collect(Collectors.toList());
     }

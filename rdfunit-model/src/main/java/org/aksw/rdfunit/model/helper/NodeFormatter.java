@@ -15,11 +15,13 @@ public final class NodeFormatter {
         }
         if (node.isLiteral()){
             Literal value = node.asLiteral();
-            String formattedValue = "\"" + value.getLexicalForm() + "\"";
+            String formattedValue = "\"\"\"" + value.getLexicalForm() + "\"\"\"";
             if (!value.getLanguage().isEmpty()) {
                 formattedValue += "@" + value.getLanguage() ;
             }
-            if (!value.getDatatypeURI().isEmpty() && !value.getDatatypeURI().endsWith("langString")) {
+            if (!value.getDatatypeURI().isEmpty()
+                    && !value.getDatatypeURI().endsWith("langString")
+                    && !value.getDatatypeURI().equals("http://www.w3.org/2001/XMLSchema#string")) {
                 formattedValue += "^^<" + value.getDatatypeURI() + ">" ;
             }
 
