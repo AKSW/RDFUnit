@@ -106,6 +106,7 @@ public final class SHACL {
     public static final Property and = property("and");
     public static final Property or = property("or");
     public static final Property not = property("not");
+    public static final Property xone = property("xone");
 
     public static final Property declare = property("declare");
     public static final Property prefixes = property("prefixes");

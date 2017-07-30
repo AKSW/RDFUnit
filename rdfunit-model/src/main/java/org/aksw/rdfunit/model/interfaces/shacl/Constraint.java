@@ -1,15 +1,15 @@
 package org.aksw.rdfunit.model.interfaces.shacl;
 
 
-import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Map;
 
 public interface Constraint {
     Shape getShape();
-    RLOGLevel getSeverity();
+    Resource getSeverity();
 
     /**
      * default message for constraint, if there are multiple picks one, if there are none, provides one

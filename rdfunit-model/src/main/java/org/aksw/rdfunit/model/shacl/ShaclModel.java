@@ -138,6 +138,9 @@ public class ShaclModel {
     private void getImplicitTargetsForSingleShape(Map<Shape, Set<ShapeTarget>> implicitTargets, Shape shape, Set<ShapeTarget> targets) {
         List<Shape> childShapes = getChildShapes(shape);
         childShapes.addAll(getChildAndShapes(shape)); // TODO
+        //childShapes.addAll(getChildOrShapes(shape)); // TODO
+        //childShapes.addAll(getChildXorShapes(shape)); // TODO
+        //childShapes.addAll(getChildNotShapes(shape)); // TODO
 
         if (shape.isNodeShape()) {
             // use the exact same target
@@ -192,9 +195,33 @@ public class ShaclModel {
                 .collect(Collectors.toList());
     }
 
+    private List<Shape> getChildNotShapes(Shape shape) {
+        return getChildShapes(shape, SHACL.not);
+    }
+
     private List<Shape> getChildAndShapes(Shape shape) {
+        return getChildListShapes(shape, SHACL.and);
+    }
+
+    private List<Shape> getChildOrShapes(Shape shape) {
+        List<Shape> orShapes = getChildListShapes(shape, SHACL.or);
+        if (orShapes.isEmpty()) {
+            throw new IllegalArgumentException("Shape (" + shape.getElement()+ ") contains an sh:or and it is not yet supported in RDFUnit");
+        }
+        return orShapes;
+    }
+
+    private List<Shape> getChildXorShapes(Shape shape) {
+        List<Shape> xoneShapes = getChildListShapes(shape, SHACL.xone);
+        if (xoneShapes.isEmpty()) {
+            throw new IllegalArgumentException("Shape (" + shape.getElement()+ ") contains an sh:xone and it is not yet supported in RDFUnit");
+        }
+        return xoneShapes;
+    }
+
+    private List<Shape> getChildListShapes(Shape shape, Property property) {
         ImmutableSet.Builder<RDFNode> nodeBuilder = ImmutableSet.builder();
-        nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(SHACL.and));
+        nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(property));
         return nodeBuilder.build().stream()
                 .flatMap(r -> RdfListUtils.getListItemsOrEmpty(r).stream())
                 .filter(RDFNode::isResource)

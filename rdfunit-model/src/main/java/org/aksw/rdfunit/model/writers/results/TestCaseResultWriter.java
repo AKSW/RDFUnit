@@ -88,34 +88,10 @@ public class TestCaseResultWriter implements ElementWriter {
         }
 
         if (testCaseResult instanceof SimpleShaclTestCaseResult) {
-            // calculate severity (RDFUnit still uses RLOG)
-            Resource severity = SHACL.Violation;
-            switch (testCaseResult.getSeverity()) {
-                case ERROR:
-                case FATAL:
-                    severity = SHACL.Violation;
-                    break;
-                case WARN:
-                    severity = SHACL.Warning;
-                    break;
-                case INFO:
-                case DEBUG:
-                case TRACE:
-                    severity = SHACL.Info;
-                    break;
-                case OFF:
-                case ALL:
-                    break;
-                default:
-                    severity = SHACL.Violation;
-            }
-
-
             resource
                     .addProperty(RDF.type, SHACL.ValidationResult)
                     .addProperty(SHACL.focusNode, model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()))    //TODO double check later, might not always be the current resource
                     .addProperty(SHACL.resultMessage, testCaseResult.getMessage())
-                    .addProperty(SHACL.resultSeverity, severity)
             ;
         }
 

@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class ConstraintImpl implements Constraint {
     @Getter @NonNull private final Shape shape;
     @Getter @NonNull private final String message;
-    @Getter @NonNull private final RLOGLevel severity;
+    @Getter @NonNull private final Resource severity;
     @Getter @NonNull private final Component component;
     @NonNull private final ComponentValidator validator;
     @Getter @NonNull @Singular private final ImmutableMap<ComponentParameter, RDFNode> bindings;
@@ -97,7 +97,8 @@ public class ConstraintImpl implements Constraint {
     }
 
     private String generateMessage() {
-        return replaceBindings(this.message);
+        return shape.getMessage()
+                .orElse(replaceBindings(this.message));
     }
 
     private String formatRdfValue(RDFNode value) {
@@ -131,6 +132,8 @@ public class ConstraintImpl implements Constraint {
                     .setValue(shape.getPath().get().getPathAsRdf()).build());
         }
 
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultSeverity)
+                .setValue(shape.getSeverity()).build());
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)
                     .setValue(shape.getElement()).build());
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraintComponent)
