@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.interfaces.shacl;
 
 import org.aksw.rdfunit.model.interfaces.Element;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.path.Path;
 
 /**
  * @author Dimitris Kontokostas
@@ -10,5 +12,6 @@ public interface ShapePath extends Element {
 
     boolean isPredicatePath();
     String asSparqlPropertyPath();
-    org.apache.jena.sparql.path.Path getJenaPath();
+    Path getJenaPath();
+    Resource getPathAsRdf();
 }

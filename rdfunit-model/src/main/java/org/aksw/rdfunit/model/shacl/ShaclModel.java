@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.model.helper.RdfListUtils;
 import org.aksw.rdfunit.model.impl.shacl.ConstraintTestCaseFactory;
 import org.aksw.rdfunit.model.impl.shacl.ShapeTargetValueShape;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -16,10 +17,8 @@ import org.aksw.rdfunit.model.readers.shacl.BatchComponentReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeTargetReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.rdf.model.*;
 
 import java.util.*;
 import java.util.function.Function;
@@ -43,8 +42,11 @@ public class ShaclModel {
 
 
     // TODO do not use Model for instantiation, change later
-    public ShaclModel(Model shaclGraph) throws RdfReaderException {
+    public ShaclModel(Model inputShaclGraph) throws RdfReaderException {
 
+        Model shaclGraph = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF);
+        //shaclGraph.read(ShaclModel.class.getResourceAsStream("/org/aksw/rdfunit/configuration/shacl.ttl"), null, RDFLanguages.TURTLE.getName());
+        shaclGraph.add(inputShaclGraph);
         // read templates from Model, for now only use fixed core
 
         this.shapes = ImmutableSet.copyOf(BatchShapeReader.create().getShapesFromModel(shaclGraph));
@@ -135,6 +137,7 @@ public class ShaclModel {
 
     private void getImplicitTargetsForSingleShape(Map<Shape, Set<ShapeTarget>> implicitTargets, Shape shape, Set<ShapeTarget> targets) {
         List<Shape> childShapes = getChildShapes(shape);
+        childShapes.addAll(getChildAndShapes(shape)); // TODO
 
         if (shape.isNodeShape()) {
             // use the exact same target
@@ -185,7 +188,20 @@ public class ShaclModel {
                 .filter(RDFNode::isResource)
                 .map(RDFNode::asResource)
                 .map(resourceShapeMap::get)
-                .filter(s -> s != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
+
+    private List<Shape> getChildAndShapes(Shape shape) {
+        ImmutableSet.Builder<RDFNode> nodeBuilder = ImmutableSet.builder();
+        nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(SHACL.and));
+        return nodeBuilder.build().stream()
+                .flatMap(r -> RdfListUtils.getListItemsOrEmpty(r).stream())
+                .filter(RDFNode::isResource)
+                .map(RDFNode::asResource)
+                .map(resourceShapeMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
 }

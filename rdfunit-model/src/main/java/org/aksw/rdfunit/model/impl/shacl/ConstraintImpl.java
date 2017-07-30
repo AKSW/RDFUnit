@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Builder
@@ -74,7 +75,7 @@ public class ConstraintImpl implements Constraint {
             String  sparqlWhere = sparqlString
                     .substring(sparqlString.indexOf('{'));
             if (shape.getPath().isPresent()) {
-                    sparqlWhere = sparqlWhere.replace("$PATH", shape.getPath().get().asSparqlPropertyPath());
+                    sparqlWhere = sparqlWhere.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
             }
             return replaceBindings(sparqlWhere);
         }
@@ -86,13 +87,13 @@ public class ConstraintImpl implements Constraint {
             bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
         }
         if (shape.isPropertyShape()) {
-            bindedSnippet = bindedSnippet.replace("$PATH", shape.getPath().get().asSparqlPropertyPath());
+            bindedSnippet = bindedSnippet.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
         }
         return bindedSnippet;
     }
 
     private String replaceBinding(String sparql, ComponentParameter componentParameter, RDFNode value) {
-        return sparql.replace("$"+ componentParameter.getPredicate().getLocalName(), formatRdfValue(value));
+        return sparql.replaceAll(Pattern.quote("$"+ componentParameter.getPredicate().getLocalName()), Matcher.quoteReplacement(formatRdfValue(value)));
     }
 
     private String generateMessage() {
@@ -127,7 +128,7 @@ public class ConstraintImpl implements Constraint {
         // add property
         if (shape.getPath().isPresent()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                    .setValue(shape.getPath().get().getElement()).build());
+                    .setValue(shape.getPath().get().getPathAsRdf()).build());
         }
 
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)
