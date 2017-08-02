@@ -20,74 +20,305 @@ rutt:dbo-restrict-TopClasses
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://www.w3.org/2002/07/owl#Class> ;
       rut:source <http://dbpedia.org/ontology/> ;
-	  # TODO set to error once test is working 	
+	  # TODO set to error once test is working
       rut:testCaseLogLevel rlog:WARN ;
       rut:sparqlWhere """ {
                           ?this rdfs:subClassOf owl:Thing  .
-                          #OPTIONAL {?this rdfs:subClassOf ?otherClass .
-						  #		FILTER(?otherClass != owl:Thing) .}
-                          #FILTER (!bound (?otherClass)) .
-                          #FILTER NOT EXISTS { ?this rdfs:subClassOf ?otherClass .
-						  #		               FILTER(?otherClass != owl:Thing) .}
-                          FILTER(?this != <http://dbpedia.org/ontology/Activity>).
-                          FILTER(?this != <http://dbpedia.org/ontology/Agent>).
-                          FILTER(?this != <http://dbpedia.org/ontology/Concept>).
-                          FILTER(?this != <http://dbpedia.org/ontology/CommunicationSystem>).
-                          FILTER(?this != <http://dbpedia.org/ontology/Condition>).
-                          FILTER(?this != <http://dbpedia.org/ontology/Event>).
-                          FILTER(?this != <http://dbpedia.org/ontology/PhysicalThing>).
-                          FILTER(?this != <http://dbpedia.org/ontology/Place>).
-                          FILTER(?this != <http://dbpedia.org/ontology/TimePeriod>).
+                          FILTER NOT EXISTS {
+                            ?this rdfs:subClassOf ?otherClass .
+                            FILTER(?otherClass != owl:Thing) .
+                          }
+                          FILTER(?this NOT IN (
+                              <http://dbpedia.org/ontology/Activity>,
+                              <http://dbpedia.org/ontology/Agent>,
+                              <http://dbpedia.org/ontology/Concept>,
+                              <http://dbpedia.org/ontology/CommunicationSystem>,
+                              <http://dbpedia.org/ontology/Condition>,
+                              <http://dbpedia.org/ontology/Event>,
+                              <http://dbpedia.org/ontology/PhysicalThing>,
+                              <http://dbpedia.org/ontology/Place>,
+                              <http://dbpedia.org/ontology/TimePeriod>)
+                          ).
       } """ ;
       rut:sparqlPrevalence """ """  .
 
-                  
 
-rutt:dbo-checkLabels
-    a       rut:ManualTestCase ;
-    dcterms:description "Each owl:Class should have at least one rdfs:label";
-    rut:appliesTo rut:Schema ;
-    rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-    rut:source <http://dbpedia.org/ontology/> ;
-    rut:testCaseLogLevel rlog:WARN ;
-    rut:sparqlWhere """ {
-                             ?this a owl:Class.
-                             FILTER NOT EXISTS {?this rdfs:label ?v1 }} """ ;
-    rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
-	rut:resultAnnotation [
-	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
-	   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
-	];
-	.      
-	
-rutt:dbo-checkLabels2
-    a       rut:ManualTestCase ;
-    dcterms:description "Each owl:Class should not have more than one rdfs:label with the same language";
-    rut:appliesTo rut:Schema ;
-    rut:generated rut:ManuallyGenerated ;
-    rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
-    rut:source <http://dbpedia.org/ontology/> ;
-    rut:testCaseLogLevel rlog:WARN ;
-    rut:sparqlWhere """ {
-                             ?this a owl:Class.
-                             ?this rdfs:label ?v1 .
-                             ?this rdfs:label ?v2 .
-                             FILTER (?v1 != ?v2 ) .
-                             FILTER (lang(?v1) = lang(?v2)) .
-                         }""" ;
-    # TODO count of all rdfs:labels of all classes                     
-    rut:sparqlPrevalence """ """ ;
-    #rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
-	rut:resultAnnotation [
-	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
-	   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
-	];
-	.      	
-           
-                  
+
+rutt:dbo-checkClassesLabels
+a       rut:ManualTestCase ;
+dcterms:description "Each owl:Class should have at least one rdfs:label";
+rut:appliesTo rut:Schema ;
+rut:generated rut:ManuallyGenerated ;
+rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+rut:source <http://dbpedia.org/ontology/> ;
+rut:testCaseLogLevel rlog:WARN ;
+rut:sparqlWhere """ {
+                         ?this a owl:Class.
+                         FILTER NOT EXISTS {?this rdfs:label ?v1 }} """ ;
+rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+rut:resultAnnotation [
+ a rut:ResultAnnotation ;
+ rut:annotationProperty sh:predicate ;
+ rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+];
+.
+
+rutt:dbo-checkClassesLabels2
+a       rut:ManualTestCase ;
+dcterms:description "Each owl:Class should not have more than one rdfs:label with the same language";
+rut:appliesTo rut:Schema;
+rut:generated rut:ManuallyGenerated ;
+rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+rut:source <http://dbpedia.org/ontology/> ;
+rut:testCaseLogLevel rlog:WARN ;
+rut:sparqlWhere """ {
+                         ?this a owl:Class.
+                         ?this rdfs:label ?v1 .
+                         ?this rdfs:label ?v2 .
+                         FILTER (?v1 != ?v2 ) .
+                         FILTER (lang(?v1) = lang(?v2)) .
+                     }""" ;
+# TODO count of all rdfs:labels of all classes
+rut:sparqlPrevalence """ """ ;
+#rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+rut:resultAnnotation [
+ a rut:ResultAnnotation ;
+ rut:annotationProperty sh:predicate ;
+ rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+];
+.
+
+rutt:dbo-checkClassesComments
+  a       rut:ManualTestCase ;
+  dcterms:description "Each owl:Class should have at least one rdfs:comment";
+  rut:appliesTo rut:Schema ;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#comment> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                           ?this a owl:Class.
+                           FILTER NOT EXISTS {?this rdfs:comment ?v1 }} """ ;
+  rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#comment> ;
+];
+.
+
+rutt:dbo-checkClassesComments2
+  a       rut:ManualTestCase ;
+  dcterms:description "Each owl:Class should not have more than one rdfs:comment with the same language";
+  rut:appliesTo rut:Schema;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#comment> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                           ?this a owl:Class.
+                           ?this rdfs:comment ?v1 .
+                           ?this rdfs:comment ?v2 .
+                           FILTER (?v1 != ?v2 ) .
+                           FILTER (lang(?v1) = lang(?v2)) .
+                       }""" ;
+  # TODO count of all rdfs:labels of all classes
+  rut:sparqlPrevalence """ """ ;
+  #rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#comment> ;
+];
+.
+
+rutt:dbo-checkPropertiesLabels
+a       rut:ManualTestCase ;
+dcterms:description "Each property should have at least one rdfs:label";
+rut:appliesTo rut:Schema ;
+rut:generated rut:ManuallyGenerated ;
+rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+rut:source <http://dbpedia.org/ontology/> ;
+rut:testCaseLogLevel rlog:WARN ;
+rut:sparqlWhere """ {
+                         ?this rdf:type ?property
+                         FILTER NOT EXISTS {?this rdfs:label ?v1 }
+                         filter(?property IN (rdf:Property, owl:DatatypeProperty, owl:FunctionalProperty)) .
+                         } """ ;
+rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a rdf:Property|owl:DatatypeProperty|owl:FunctionalProperty . } """ ;
+rut:resultAnnotation [
+ a rut:ResultAnnotation ;
+ rut:annotationProperty sh:predicate ;
+ rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+];
+.
+
+rutt:dbo-checkPropertiesLabels2
+a       rut:ManualTestCase ;
+dcterms:description "Each property should not have more than one rdfs:label with the same language";
+rut:appliesTo rut:Schema;
+rut:generated rut:ManuallyGenerated ;
+rut:references <http://www.w3.org/2000/01/rdf-schema#label> ;
+rut:source <http://dbpedia.org/ontology/> ;
+rut:testCaseLogLevel rlog:WARN ;
+rut:sparqlWhere """ {
+                         ?this rdf:type ?property .
+                         ?this rdfs:label ?v1 .
+                         ?this rdfs:label ?v2 .
+                         FILTER (?v1 != ?v2 ) .
+                         FILTER (lang(?v1) = lang(?v2)) .
+                         filter(?property IN (rdf:Property, owl:DatatypeProperty, owl:FunctionalProperty)) .
+                     }""" ;
+# TODO count of all rdfs:labels of all classes
+rut:sparqlPrevalence """ """ ;
+#rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+rut:resultAnnotation [
+ a rut:ResultAnnotation ;
+ rut:annotationProperty sh:predicate ;
+ rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#label> ;
+];
+.
+
+rutt:dbo-checkPropertiesComments
+  a       rut:ManualTestCase ;
+  dcterms:description "Each property should have at least one rdfs:comment";
+  rut:appliesTo rut:Schema ;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#comment> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                           ?this rdf:type ?property .
+                           FILTER NOT EXISTS {?this rdfs:comment ?v1 }
+                           filter(?property IN (rdf:Property, owl:DatatypeProperty, owl:FunctionalProperty)) .
+                           } """ ;
+  rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this rdf:type ?property . filter(?property IN (rdf:Property, owl:DatatypeProperty, owl:FunctionalProperty)) .} """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#comment> ;
+];
+.
+
+rutt:dbo-checkPropertyComments2
+  a       rut:ManualTestCase ;
+  dcterms:description "Each property should not have more than one rdfs:comment with the same language";
+  rut:appliesTo rut:Schema;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#comment> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                           ?this rdf:type ?property .
+                           ?this rdfs:comment ?v1 .
+                           ?this rdfs:comment ?v2 .
+                           FILTER (?v1 != ?v2 ) .
+                           FILTER (lang(?v1) = lang(?v2)) .
+                           filter(?property IN (rdf:Property, owl:DatatypeProperty, owl:FunctionalProperty)) .
+                       }""" ;
+  # TODO count of all rdfs:labels of all classes
+  rut:sparqlPrevalence """ """ ;
+  #rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {?this a owl:Class . } """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#comment> ;
+];
+.
+
+rutt:dbo-noPersonSubclass
+  a       rut:ManualTestCase ;
+  dcterms:description "No subclasses of Person are allowed";
+  rut:appliesTo rut:Schema;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#subClassOf> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                           ?this rdfs:subClassOf <http://dbpedia.org/ontology/Person> .
+                       }""" ;
+  #
+  rut:sparqlPrevalence """ """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#subClassOf> ;
+];
+.
+
+rutt:dbo-noDualSuperClass
+  a       rut:ManualTestCase ;
+  dcterms:description "Each owl:Class should not have two or more superclasses";
+  rut:appliesTo rut:Schema;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#subClassOf> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                        ?this rdf:type owl:Class .
+                        ?this rdfs:subClassOf ?v1 .
+                        ?this rdfs:subClassOf ?v2 .
+                        filter(?v1 != ?v2) .
+                       }""" ;
+  #
+  rut:sparqlPrevalence """ """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#subClassOf> ;
+];
+.
+
+rutt:dbo-noDualSuperProperty
+  a       rut:ManualTestCase ;
+  dcterms:description "Each property should not have two or more superproperties";
+  rut:appliesTo rut:Schema;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                          ?this rdf:type ?property .
+                          ?this rdfs:subPropertyOf ?v1 .
+                          ?this rdfs:subPropertyOf ?v2 .
+                          filter(?v1 != ?v2) .
+                          filter(?property IN (rdf:Property, owl:DatatypeProperty, owl:FunctionalProperty)) .
+                      }""" ;
+  #
+  rut:sparqlPrevalence """ """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> ;
+];
+.
+
+
+
+rutt:dbo-checkDomainRange
+  a       rut:ManualTestCase ;
+  dcterms:description "Each resource should have rdfs:domain and rdfs:range";
+  rut:appliesTo rut:Schema;
+  rut:generated rut:ManuallyGenerated ;
+  rut:references <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> ;
+  rut:source <http://dbpedia.org/ontology/> ;
+  rut:testCaseLogLevel rlog:WARN ;
+  rut:sparqlWhere """ {
+                        ?this rdfs:domain ?v1 .
+                        ?this rdfs:range ?v2 .
+                        filter(?v1 = '') .
+                        filter(?v2 = '') .
+                      }""" ;
+  #
+  rut:sparqlPrevalence """ """ ;
+rut:resultAnnotation [
+   a rut:ResultAnnotation ;
+   rut:annotationProperty sh:predicate ;
+   rut:annotationValue <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> ;
+];
+.
+
+
 # dbo:deathDate after dbo:birthDate
 rutt:dbo-COMP-birthdeatdate
     a       rut:PatternBasedTestCase ;
