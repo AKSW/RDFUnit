@@ -518,6 +518,16 @@ sh:HasValueConstraintComponent
                 FILTER NOT EXISTS { ?this $PATH $hasValue . }
             }""" ;
     ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "should have value $hasValue";
+        sh:select """
+            SELECT DISTINCT ?this ?value
+            BIND ($this AS ?value) .
+            WHERE {
+                FILTER NOT EXISTS { FILTER(?value = $hasValue) . }
+            }""" ;
+    ] ;
     .
 
 
