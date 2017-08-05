@@ -132,13 +132,6 @@ public class W3CShaclTestSuite {
          */
         private Model adjustActualReport(Model actualReport) {
 
-            try {
-                new RdfFileWriter("actual.before.ttl").write(actualReport);
-            } catch (RdfWriterException e) {
-                e.printStackTrace();
-            }
-
-
             val adjustedReport = ModelFactory.createDefaultModel();
 
             //remove RDFUnit types
@@ -252,12 +245,7 @@ public class W3CShaclTestSuite {
                 return model;
             };
 
-            try {
-                new RdfFileWriter("expected.ttl").write(getAdjustedExpectedReport());
 
-            } catch (RdfWriterException e) {
-                e.printStackTrace();
-            }
 
             if (getExecution().isFailure()) {
                 // expected error
@@ -273,12 +261,7 @@ public class W3CShaclTestSuite {
             final Model originalActualReport = ModelFactory.createDefaultModel();
             TestExecutionWriter.create(getExecution().get()).write(originalActualReport);
             final Model adjustedActualReport = this.adjustActualReport(originalActualReport);
-            try {
-                new RdfFileWriter("expected.ttl").write(getAdjustedExpectedReport());
 
-            } catch (RdfWriterException e) {
-                e.printStackTrace();
-            }
 
 
             val isIsomorphic = getAdjustedExpectedReport().isIsomorphicWith(adjustedActualReport);
@@ -299,6 +282,16 @@ public class W3CShaclTestSuite {
                     {
                         return W3CShaclTestSuite.PartialResult;
                     }
+
+                    try {
+                        new RdfFileWriter("data/" +this.getId() + ".expected.ttl").write(getAdjustedExpectedReport());
+                        new RdfFileWriter("data/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
+                        new RdfFileWriter("data/" +this.getId() + ".actual.ttl").write(adjustedActualReport);
+
+                    } catch (RdfWriterException e) {
+                        e.printStackTrace();
+                    }
+
                     log.error("test case failed {}", getId());
                     return EARL.Fail;
                 }

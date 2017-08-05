@@ -71,7 +71,8 @@ public class TestCaseResultWriter implements ElementWriter {
                     .addProperty(RDF.type, RDFUNITv.RLOGTestCaseResult)
                     .addProperty(RDF.type, RLOG.Entry)
                     .addProperty(RLOG.resource, model.createResource(((RLOGTestCaseResult) testCaseResult).getFailingResource()))
-                    .addProperty(RLOG.message, testCaseResult.getMessage())
+                    // get it from annotations
+                    //.addProperty(RLOG.message, testCaseResult.getMessage())
                     .addProperty(RLOG.level, model.createResource(testCaseResult.getSeverity().getUri()))
             ;
         }

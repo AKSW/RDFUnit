@@ -17,10 +17,7 @@ import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,7 +31,7 @@ import java.util.stream.Collectors;
 @Value
 public class ConstraintImpl implements Constraint {
     @Getter @NonNull private final Shape shape;
-    @Getter @NonNull private final String message;
+    @Getter @NonNull private final Literal message;
     @Getter @NonNull private final Resource severity;
     @Getter @NonNull private final Component component;
     @NonNull private final ComponentValidator validator;
@@ -96,9 +93,19 @@ public class ConstraintImpl implements Constraint {
         return sparql.replaceAll(Pattern.quote("$"+ componentParameter.getPredicate().getLocalName()), Matcher.quoteReplacement(formatRdfValue(value)));
     }
 
-    private String generateMessage() {
-        return shape.getMessage()
-                .orElse(replaceBindings(this.message));
+    private Literal generateMessage() {
+
+        if (shape.getMessage().isPresent()) {
+            return shape.getMessage().get();
+        } else {
+            String messageLanguage = message.getLanguage();
+            String message = replaceBindings(this.message.getLexicalForm());
+            if (messageLanguage == null || messageLanguage.isEmpty()) {
+                return ResourceFactory.createStringLiteral(message);
+            } else {
+                return ResourceFactory.createLangLiteral(message, messageLanguage);
+            }
+        }
     }
 
     private String formatRdfValue(RDFNode value) {
@@ -118,7 +125,7 @@ public class ConstraintImpl implements Constraint {
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
                 Collections.emptyList(),
-                generateMessage(),
+                generateMessage().getLexicalForm(),
                 RLOGLevel.ERROR, //FIXME
                 createResultAnnotations()
         );
@@ -130,6 +137,11 @@ public class ConstraintImpl implements Constraint {
         if (shape.getPath().isPresent()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
                     .setValue(shape.getPath().get().getPathAsRdf()).build());
+        }
+
+        if (shape.getMessage().isPresent()) {
+            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
+                    .setValue(shape.getMessage().get()).build());
         }
 
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultSeverity)

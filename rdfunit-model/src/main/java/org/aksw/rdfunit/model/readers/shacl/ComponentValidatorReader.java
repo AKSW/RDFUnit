@@ -35,7 +35,7 @@ public class ComponentValidatorReader implements ElementReader<ComponentValidato
 
         // get message
         for (Statement smt : resource.listProperties(SHACL.message).toList()) {
-            validatorBuilder.message(smt.getObject().asLiteral().getLexicalForm());
+            validatorBuilder.message(smt.getObject().asLiteral());
         }
 
         // get prefixes

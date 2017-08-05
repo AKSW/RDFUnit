@@ -50,11 +50,11 @@ public interface Shape extends Element {
             .orElse(SHACL.Violation);
     }
 
-    default Optional<String> getMessage() {
+    default Optional<Literal> getMessage() {
         return getPropertyValuePairSets().getPropertyValues(SHACL.message).stream()
                 .filter(RDFNode::isLiteral)
                 .map(RDFNode::asLiteral)
-                .map(Literal::getLexicalForm)
+                //.map(Literal::getLexicalForm)
                 .findFirst();
     }
 

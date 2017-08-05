@@ -10,10 +10,7 @@ import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +24,7 @@ import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 @Builder
 public class ComponentValidatorImpl implements ComponentValidator {
     @Getter @NonNull private final Resource element;
-    @Getter private final String message;
+    @Getter private final Literal message;
     @Getter @NonNull private final String sparqlQuery;
     @Getter @NonNull private final ComponentValidatorType type;
     @Getter @NonNull @Singular private final ImmutableSet<PrefixDeclaration> prefixDeclarations;
@@ -37,7 +34,7 @@ public class ComponentValidatorImpl implements ComponentValidator {
     private static final List<ComponentValidatorType> nodeValidators = Arrays.asList(ComponentValidatorType.ASK_VALIDATOR, ComponentValidatorType.NODE_VALIDATOR);
 
     @Override
-    public Optional<String> getDefaultMessage() {
+    public Optional<Literal> getDefaultMessage() {
         return Optional.ofNullable(message);
     }
 

@@ -70,7 +70,7 @@ sh:DatatypeConstraintComponent
             SELECT DISTINCT ?this ?value
             WHERE {
                 $this $PATH ?value .
-                FILTER ( datatype($value) != $datatype)
+                FILTER ( !isLiteral(?value) || datatype(?value) != $datatype)
             }""";
     ] ;
     sh:nodeValidator [
@@ -80,7 +80,7 @@ sh:DatatypeConstraintComponent
             SELECT DISTINCT ?this ?value
             WHERE {
                 BIND ($this AS ?value) .
-                FILTER ( datatype($value) != $datatype)
+                FILTER ( !isLiteral(?value) || datatype(?value) != $datatype)
             }""";
     ] ;
     .

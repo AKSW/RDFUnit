@@ -3,8 +3,10 @@ package org.aksw.rdfunit.model.impl.shacl;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +53,7 @@ public final class ConstraintFactory {
             if (validator.isPresent()) {
 
                 // FIXME get message from Shape for override
-                String errorMessage = shape.getMessage().orElse("Unknown Error");
+                Literal errorMessage = shape.getMessage().orElse(ResourceFactory.createStringLiteral("Unknown Error"));
                 if (validator.get().getDefaultMessage().isPresent()) {
                     errorMessage = validator.get().getDefaultMessage().get();
                 }
