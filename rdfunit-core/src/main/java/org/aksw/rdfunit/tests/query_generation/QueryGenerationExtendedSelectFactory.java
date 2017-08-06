@@ -24,7 +24,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
 
     private static final String SELECT_DISTINCT_RESOURCE = " SELECT DISTINCT ?this ";
 
-    private static final String RESOURCE_VAR = "?this";
+    private static final String RESOURCE_VAR = "this";
 
     private static final String WHERE_CLAUSE = " WHERE ";
 

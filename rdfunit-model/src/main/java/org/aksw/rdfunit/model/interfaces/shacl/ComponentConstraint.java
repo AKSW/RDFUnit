@@ -4,13 +4,11 @@ package org.aksw.rdfunit.model.interfaces.shacl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
 
 import java.util.Map;
 
-public interface Constraint {
+public interface ComponentConstraint {
     Shape getShape();
-    Resource getSeverity();
 
     /**
      * default message for constraint, if there are multiple picks one, if there are none, provides one
@@ -36,5 +34,5 @@ public interface Constraint {
     /**
      * return parent constraint, if nested
      */
-    // Optional<Constraint> getParentConstraint();
+    // Optional<ComponentConstraint> getParentConstraint();
 }

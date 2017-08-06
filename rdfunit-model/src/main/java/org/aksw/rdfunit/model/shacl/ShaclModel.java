@@ -85,6 +85,7 @@ public class ShaclModel {
         shapesGraph.getComponents().forEach(component -> {
             allTargets.entrySet().forEach(entry -> {
                 testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, entry.getKey(), entry.getValue()));
+                testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(entry.getKey(), entry.getValue()));
             });
         });
 

@@ -19,9 +19,9 @@ public final class ConstraintFactory {
 
     private ConstraintFactory() {}
 
-    public static Optional<Constraint> createFromShapeAndComponent(Shape shape, Component component) {
+    public static Optional<ComponentConstraint> createFromShapeAndComponent(Shape shape, Component component) {
         if (canBindComponentToShape(component, shape)) {
-            ConstraintImpl.ConstraintImplBuilder constraintBuilder = ConstraintImpl.builder();
+            ComponentConstraintImpl.ComponentConstraintImplBuilder constraintBuilder = ComponentConstraintImpl.builder();
             constraintBuilder
                     .shape(shape)
                     .component(component);
@@ -60,7 +60,7 @@ public final class ConstraintFactory {
                 constraintBuilder
                         .message(errorMessage)
                         .validator(validator.get())
-                        .severity(shape.getSeverity());
+                ;
 
 
                 return Optional.of(constraintBuilder.build());

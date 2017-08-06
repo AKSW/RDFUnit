@@ -1,16 +1,19 @@
 package org.aksw.rdfunit.model.readers.shacl;
 
+import com.google.common.collect.ImmutableSet;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
-import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.query.QueryExecution;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 public final class BatchPrefixDeclarationReader {
+
+    private static final String sparqlQuery =
+            "SELECT distinct ?declare where {?resource (<http://www.w3.org/2002/07/owl#imports>*/<http://www.w3.org/ns/shacl#declare>) ?declare }";
 
     private BatchPrefixDeclarationReader(){}
 
@@ -18,15 +21,21 @@ public final class BatchPrefixDeclarationReader {
 
     public Set<PrefixDeclaration> getPrefixDeclarations(Resource resource) {
 
-        // TODO handle owl:imports
-        return resource.listProperties(SHACL.declare)
-                .toSet().stream()
-                .distinct()
-                .map(Statement::getObject)
-                .filter(RDFNode::isResource)
-                .map(RDFNode::asResource)
-                .map(r -> PrefixDeclarationReader.create().read(r))
-                .collect(Collectors.toSet());
+        ImmutableSet.Builder<PrefixDeclaration> prefixes = ImmutableSet.builder();
+        try (
+                QueryExecutionFactory qef = new QueryExecutionFactoryModel(resource.getModel());
+                QueryExecution qe =  qef.createQueryExecution(sparqlQuery))
+        {
+            qe.execSelect().forEachRemaining(solution -> {
+                PrefixDeclaration pr = PrefixDeclarationReader.create().read(solution.getResource("declare"));
+                prefixes.add(pr);
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return prefixes.build();
     }
 
 }

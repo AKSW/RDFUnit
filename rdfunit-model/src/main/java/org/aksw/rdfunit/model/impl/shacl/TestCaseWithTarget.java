@@ -25,7 +25,6 @@ public class TestCaseWithTarget implements TestCase {
     @NonNull private final String filterSpqrql;
     @NonNull private final TestCase testCase;
 
-
     @Override
     public String getSparqlWhere() {
         return injectTargetInSparql(testCase.getSparqlWhere(), this.target);

@@ -385,7 +385,7 @@ sh:UniqueLangConstraintComponent
         sh:message "$PATH should have one value per language";
         shr:filter "ASK { FILTER ($uniqueLang = true)}" ;
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT DISTINCT ?this
             WHERE {
                 $this $PATH ?value .
                 BIND (lang(?value) AS ?lang) .
