@@ -89,10 +89,7 @@ public class TestCaseResultWriter implements ElementWriter {
         }
 
         if (testCaseResult instanceof SimpleShaclTestCaseResult) {
-            resource
-                    .addProperty(RDF.type, SHACL.ValidationResult)
-                    .addProperty(SHACL.focusNode, model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()))    //TODO double check later, might not always be the current resource
-                    .addProperty(SHACL.resultMessage, testCaseResult.getMessage())
+            resource.addProperty(RDF.type, SHACL.ValidationResult)
             ;
         }
 

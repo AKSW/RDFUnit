@@ -280,13 +280,23 @@ public class W3CShaclTestSuite {
                             (expectedViolations == 0 && actualViolations == 0 )
                             || (expectedViolations > 0 && actualViolations > 0 ))
                     {
+                        try {
+                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".expected.ttl").write(getAdjustedExpectedReport());
+                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
+                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".actual.ttl").write(adjustedActualReport);
+                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".diff-a2e.ttl").write(adjustedActualReport.difference(getAdjustedExpectedReport()));
+                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".diff-e2a.ttl").write(getAdjustedExpectedReport().difference(adjustedActualReport));
+
+                        } catch (RdfWriterException e) {
+                            e.printStackTrace();
+                        }
                         return W3CShaclTestSuite.PartialResult;
                     }
 
                     try {
-                        new RdfFileWriter("data/" +this.getId() + ".expected.ttl").write(getAdjustedExpectedReport());
-                        new RdfFileWriter("data/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                        new RdfFileWriter("data/" +this.getId() + ".actual.ttl").write(adjustedActualReport);
+                        new RdfFileWriter("data/shacl/fail/" +this.getId() + ".expected.ttl").write(getAdjustedExpectedReport());
+                        new RdfFileWriter("data/shacl/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
+                        new RdfFileWriter("data/shacl/fail/" +this.getId() + ".actual.ttl").write(adjustedActualReport);
 
                     } catch (RdfWriterException e) {
                         e.printStackTrace();

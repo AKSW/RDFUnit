@@ -144,6 +144,8 @@ public class ConstraintImpl implements Constraint {
                     .setValue(shape.getMessage().get()).build());
         }
 
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
+                .setVariableName("this").build());
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultSeverity)
                 .setValue(shape.getSeverity()).build());
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)

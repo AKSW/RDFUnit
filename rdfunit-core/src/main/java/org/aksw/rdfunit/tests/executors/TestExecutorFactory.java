@@ -33,7 +33,7 @@ public final class TestExecutorFactory {
             case shaclSimpleTestCaseResult:
                 return new ShaclSimpleTestExecutor(new QueryGenerationSelectFactory());
             case shaclFullTestCaseResult:
-                return new ShaclFullTestExecutor(new QueryGenerationExtendedSelectFactory());
+                return new ShaclTestExecutor(new QueryGenerationExtendedSelectFactory());
             case rlogTestCaseResult:
                 return new RLOGTestExecutor(new QueryGenerationSelectFactory());
             case extendedTestCaseResult:

@@ -29,14 +29,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2 /2/14 6:13 PM
  * @version $Id: $Id
  */
-public class ShaclFullTestExecutor extends ShaclSimpleTestExecutor {
+public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
 
     /**
      * Instantiates a new ExtendedTestExecutor
      *
      * @param queryGenerationFactory a QueryGenerationFactory
      */
-    public ShaclFullTestExecutor(QueryGenerationFactory queryGenerationFactory) {
+    public ShaclTestExecutor(QueryGenerationFactory queryGenerationFactory) {
         super(queryGenerationFactory);
     }
 
