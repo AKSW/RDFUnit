@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -40,6 +41,8 @@ public class SparqlConstraintImpl implements SparqlConstraint {
     @Override
     public TestCase getTestCase() {
 
+        validateSparqlQuery(validator.getSparqlQuery());
+
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
         String sparql;
         sparql = generateSparqlWhere(validator.getSparqlQuery());
@@ -53,6 +56,25 @@ public class SparqlConstraintImpl implements SparqlConstraint {
                 .testCaseAnnotation(generateTestAnnotations(validator.getSparqlQuery()))
                 .build();
     }
+
+    protected static void validateSparqlQuery(String sparqlQuery) {
+        String originalSparqlQueryLowerCase =  sparqlQuery.toUpperCase();
+        if (
+                        originalSparqlQueryLowerCase.contains("VALUES") ||
+                        originalSparqlQueryLowerCase.contains("SERVICE") ||
+                        originalSparqlQueryLowerCase.contains("MINUS") ) {
+            throw new IllegalArgumentException("Pre-binding failed in query because of illegal constructs (VALUES, SERVICE, MINUS):\n" + sparqlQuery);
+        }
+
+        ImmutableSet<String> preboundVars = ImmutableSet.of("this", "shapesGraph", "currentShape", "value");
+        preboundVars.forEach( var ->{
+            if (sparqlQuery.matches("(?s).*[Aa][Ss]\\s+[\\?\\$]" + var + "\\W.*")) {
+                throw new IllegalArgumentException("Pre-binding failed in query because of use of pre-bind variable with AS:\n" + sparqlQuery);
+            }
+        });
+
+    }
+
     private String generateSparqlWhere(String sparqlString) {
 
         String  sparqlWhere = sparqlString
@@ -125,23 +147,30 @@ public class SparqlConstraintImpl implements SparqlConstraint {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
                     .setVariableName("message").build());
         } else {
-            if (shape.getMessage().isPresent()) {
+            if (validator.getDefaultMessage().isPresent()) {
                 annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
-                        .setValue(shape.getMessage().get()).build());
+                        .setValue(validator.getDefaultMessage().get()).build());
+            } else {
+                if (shape.getMessage().isPresent()) {
+                    annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
+                            .setValue(shape.getMessage().get()).build());
+                }
             }
-        }
-
-        if (variableNames.contains("value")) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
-                    .setVariableName("value").build());
         }
 
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
                 .setVariableName("this").build());
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
+                .setVariableName("value").build());
+
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultSeverity)
                 .setValue(shape.getSeverity()).build());
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)
                     .setValue(shape.getElement()).build());
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraintComponent)
+                .setValue(SHACL.SPARQLConstraintComponent).build());
+        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraint)
+                .setValue(validator.getElement()).build());
 
         return annotations.build();
     }

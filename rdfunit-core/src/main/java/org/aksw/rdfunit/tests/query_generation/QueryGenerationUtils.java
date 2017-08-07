@@ -17,7 +17,7 @@ final class QueryGenerationUtils {
         String givenPrefixes = testCase.getPrefixDeclarations().stream()
                 .map(p -> "PREFIX " + p.getPrefix() + ": <" + p.getNamespace() + ">")
                 .collect(Collectors.joining("\n"));
-        return  standardPrefixes + givenPrefixes;
+        return  standardPrefixes + givenPrefixes + "\n";
 
     }
 }

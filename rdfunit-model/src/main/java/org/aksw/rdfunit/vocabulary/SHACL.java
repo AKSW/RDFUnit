@@ -29,6 +29,7 @@ public final class SHACL {
     public static final Resource ValidationReport = resource("ValidationReport");
     public static final Resource SPARQLAskValidator  = resource("SPARQLAskValidator");
     public static final Resource ConstraintComponent = resource("ConstraintComponent");
+    public static final Resource SPARQLConstraintComponent = resource("SPARQLConstraintComponent");
 
 
     public static final Property targetClass = property("targetClass");
