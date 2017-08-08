@@ -39,7 +39,7 @@ sh:ClassConstraintComponent
     		WHERE {
                 ?this $PATH ?value .
                 FILTER NOT EXISTS {
-                    $value rdf:type/rdfs:subClassOf* $class .
+                    ?value rdf:type/rdfs:subClassOf* $class .
                 }
             }""" ;
     ] ;
@@ -51,7 +51,7 @@ sh:ClassConstraintComponent
     		WHERE {
                 BIND (?this AS ?value) .
                 FILTER NOT EXISTS {
-                    $value rdf:type/rdfs:subClassOf* $class .
+                    ?value rdf:type/rdfs:subClassOf* $class .
                 }
             }""" ;
     ] ;
@@ -317,7 +317,7 @@ sh:MinLengthConstraintComponent
     	sh:ask """
     		ASK {
             	FILTER (
-            	    STRLEN(str($value)) >= $minLength) .
+            	    STRLEN(str(?value)) >= $minLength && !isBlank(?value)) .
             }""" ;
     ] ;
     .
@@ -335,7 +335,7 @@ sh:MaxLengthConstraintComponent
     	sh:ask """
     		ASK {
             	FILTER (
-            	    STRLEN(str($value)) <= $maxLength) .
+            	    STRLEN(str(?value)) <= $maxLength && !isBlank(?value)) .
             }""" ;
     ] ;
     .
@@ -358,7 +358,9 @@ sh:PatternConstraintComponent
         sh:select """
             SELECT ?this {
                 ?this $PATH ?value .
-                FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
+                FILTER NOT EXISTS {
+                    FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
+                }
             }""" ;
     ] ,
     [
@@ -369,7 +371,9 @@ sh:PatternConstraintComponent
         sh:select """
             SELECT ?this ?value {
                 ?this $PATH ?value .
-                FILTER (isBlank(?value) || !regex(str(?value), $pattern))
+                FILTER NOT EXISTS {
+                    FILTER(isBlank(?value) || !regex(str(?value), $pattern))
+                }
             }""" ;
 
     ];
@@ -381,7 +385,9 @@ sh:PatternConstraintComponent
         sh:select """
             SELECT ?this {
                 BIND (?this AS ?value) .
-                FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
+                FILTER NOT EXISTS {
+                    FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
+                }
             }""" ;
     ] ,
     [
@@ -392,7 +398,9 @@ sh:PatternConstraintComponent
         sh:select """
             SELECT ?this {
                 BIND (?this AS ?value) .
-                FILTER (isBlank(?value) || !regex(str(?value), $pattern))
+                FILTER NOT EXISTS {
+                    FILTER (isBlank(?value) || !regex(str(?value), $pattern))
+                }
             }""" ;
 
     ]
@@ -463,14 +471,45 @@ sh:EqualsConstraintComponent
 	sh:parameter [
         sh:path sh:equals ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
+
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
     	sh:message "$PATH should be equal to '$equals'";
-    	sh:ask """
-    		ASK {
-            	?this $equals ?value .
+    	sh:select """
+    		SELECT DISTINCT ?this ?value
+            WHERE {
+               {
+               		$this $PATH ?value .
+               		MINUS {
+               			$this $equals ?value .
+               		}
+               	}
+               	UNION
+               	{
+               		$this $equals ?value .
+               		MINUS {
+               			$this $PATH ?value .
+               		}
+               	}
             }""" ;
     ] ;
+    sh:nodeValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "node should be equal to '$equals'";
+    	sh:select """
+    		SELECT DISTINCT ?this ?value
+            WHERE {
+                {
+                    BIND (?this AS ?value2) .
+                    ?this $equals ?value .
+                    FILTER (?value != ?value2)
+                } UNION {
+                    BIND (?this AS ?value) .
+                    FILTER NOT EXISTS {?this $equals ?value}
+                }
+            }""" ;
+    ] ;
+
     .
 
 sh:DisjointConstraintComponent
@@ -478,13 +517,24 @@ sh:DisjointConstraintComponent
 	sh:parameter [
         sh:path sh:disjoint ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
-    	sh:message "$PATH should no be equal to '$disjoint'";
-    	sh:ask """
-    		ASK {
-            	?this $disjoint ?value2 .
-            	FILTER (?value != ?value2) .
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "$PATH should not be equal to '$disjoint'";
+    	sh:select """
+    		SELECT DISTINCT ?this ?value
+            WHERE {
+                ?this $PATH ?value .
+                ?this $disjoint ?value .
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "node should not be equal to '$disjoint'";
+    	sh:select """
+    		SELECT DISTINCT ?this ?value
+            WHERE {
+                BIND (?this AS ?value) .
+                ?this $disjoint ?value .
             }""" ;
     ] ;
     .
@@ -502,7 +552,8 @@ sh:LessThanConstraintComponent
     	sh:ask """
     		ASK {
             	?this $lessThan ?value2 .
-                FILTER (?value < ?value2) .
+            	BIND (?value < ?value2 AS ?result) .
+                FILTER (bound(?result) && (?result)) .
             }""" ;
     ] ;
     .
@@ -519,7 +570,8 @@ sh:LessThanOrEqualsConstraintComponent
     	sh:ask """
     		ASK {
             	?this $lessThanOrEquals ?value2 .
-                FILTER (?value < ?value2) .
+                BIND (?value <= ?value2 AS ?result) .
+                FILTER (bound(?result) && (?result)) .
             }""" ;
     ] ;
     .
