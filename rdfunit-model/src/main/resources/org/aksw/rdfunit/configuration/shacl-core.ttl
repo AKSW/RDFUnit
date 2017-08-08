@@ -480,14 +480,14 @@ sh:EqualsConstraintComponent
             WHERE {
                {
                		$this $PATH ?value .
-               		MINUS {
+               		FILTER NOT EXISTS {
                			$this $equals ?value .
                		}
                	}
                	UNION
                	{
                		$this $equals ?value .
-               		MINUS {
+               		FILTER NOT EXISTS {
                			$this $PATH ?value .
                		}
                	}
