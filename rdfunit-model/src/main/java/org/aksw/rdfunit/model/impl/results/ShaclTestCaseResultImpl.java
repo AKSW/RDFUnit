@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
@@ -12,7 +14,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
+@ToString
+@EqualsAndHashCode(exclude = "element")
 public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl implements ShaclTestCaseResult{
 
     private final ImmutableSet<PropertyValuePair> resultAnnotations;

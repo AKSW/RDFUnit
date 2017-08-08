@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.impl.results;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
@@ -12,6 +14,8 @@ import org.apache.jena.rdf.model.Resource;
  * @since 2 /2/14 3:28 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode(exclude = "element")
 public class SimpleShaclTestCaseResultImpl extends BaseTestCaseResultImpl implements SimpleShaclTestCaseResult{
 
     private final String resource;

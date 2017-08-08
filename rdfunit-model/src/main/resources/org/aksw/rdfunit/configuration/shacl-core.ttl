@@ -37,7 +37,7 @@ sh:ClassConstraintComponent
     	sh:select """
     		SELECT DISTINCT ?this ?value
     		WHERE {
-                $this $PATH ?value .
+                ?this $PATH ?value .
                 FILTER NOT EXISTS {
                     $value rdf:type/rdfs:subClassOf* $class .
                 }
@@ -49,7 +49,7 @@ sh:ClassConstraintComponent
     	sh:select """
     		SELECT DISTINCT ?this ?value
     		WHERE {
-                BIND ($this AS ?value) .
+                BIND (?this AS ?value) .
                 FILTER NOT EXISTS {
                     $value rdf:type/rdfs:subClassOf* $class .
                 }
@@ -69,7 +69,7 @@ sh:DatatypeConstraintComponent
     	sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
-                $this $PATH ?value .
+                ?this $PATH ?value .
                 FILTER ( !isLiteral(?value) || datatype(?value) != $datatype)
             }""";
     ] ;
@@ -79,7 +79,7 @@ sh:DatatypeConstraintComponent
         sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
-                BIND ($this AS ?value) .
+                BIND (?this AS ?value) .
                 FILTER ( !isLiteral(?value) || datatype(?value) != $datatype)
             }""";
     ] ;
@@ -169,11 +169,11 @@ sh:MinCountConstraintComponent
     	sh:message "Minimum cardinality for $PATH is '$minCount'";
         shr:filter """ ASK { FILTER ($minCount > 1)} """ ;
     	sh:select """
-    		SELECT $this
+    		SELECT ?this
             WHERE {
-            		$this $PATH ?value .
+            		?this $PATH ?value .
             }
-            GROUP BY $this
+            GROUP BY ?this
             HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) )
         """ ;
     ] ;
@@ -190,10 +190,10 @@ sh:MinCountConstraintComponent1
     	sh:message "Minimum cardinality for $PATH is '$minCount'";
         shr:filter """ ASK { FILTER ($minCount > 0)} """ ;
     	sh:select """
-    		SELECT $this
+    		SELECT ?this
             WHERE {
                 FILTER NOT EXISTS {
-            		$this $PATH ?value .
+            		?this $PATH ?value .
             }}""" ;
     ] ;
     .
@@ -208,11 +208,11 @@ sh:MaxCountConstraintComponent
     	sh:message "Maximum cardinality for $PATH is '$maxCount'";
         shr:filter """ ASK { FILTER ($maxCount > 0)} """ ;
     	sh:select """
-    		SELECT $this
+    		SELECT ?this
             WHERE {
-            	$this $PATH ?value .
+            	?this $PATH ?value .
             }
-            GROUP BY $this
+            GROUP BY ?this
             HAVING (COUNT(?value) > $maxCount)
         """ ;
     ] ;
@@ -221,10 +221,10 @@ sh:MaxCountConstraintComponent
         sh:message "Maximum cardinality for $PATH is '$maxCount'";
         shr:filter """ ASK { FILTER ($maxCount = 0)} """ ;
         sh:select """
-            SELECT $this
+            SELECT ?this
             WHERE {
                 FILTER EXISTS {
-                $this $PATH ?value .
+                ?this $PATH ?value .
             }} """ ;
     ] ;
     .
@@ -350,24 +350,49 @@ sh:PatternConstraintComponent
 		sh:path sh:flags ;
 		sh:optional true ;
 	] ;
-    sh:validator [
+    sh:propertyValidator [
         # when flags are present
-        a sh:SPARQLAskValidator ;
+        a sh:SPARQLSelectValidator ;
         sh:message "Value does not match pattern {$pattern} and flags {$flags}" ;
         shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) != '')}" ;
-        sh:ask """
-            ASK {
-                FILTER (!isBlank($value) &&  regex(str($value), $pattern, $flags))
+        sh:select """
+            SELECT ?this {
+                ?this $PATH ?value .
+                FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
             }""" ;
     ] ,
     [
         # when flags are not present
-        a sh:SPARQLAskValidator ;
+        a sh:SPARQLSelectValidator ;
         sh:message "Value does not match pattern {$pattern}" ;
         shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) = '')}" ;
-        sh:ask """
-            ASK {
-                FILTER (!isBlank($value) && regex(str($value), "$pattern"))
+        sh:select """
+            SELECT ?this ?value {
+                ?this $PATH ?value .
+                FILTER (isBlank(?value) || !regex(str(?value), $pattern))
+            }""" ;
+
+    ];
+    sh:nodeValidator [
+        # when flags are present
+        a sh:SPARQLSelectValidator ;
+        sh:message "Value does not match pattern {$pattern} and flags {$flags}" ;
+        shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) != '')}" ;
+        sh:select """
+            SELECT ?this {
+                BIND (?this AS ?value) .
+                FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
+            }""" ;
+    ] ,
+    [
+        # when flags are not present
+        a sh:SPARQLSelectValidator ;
+        sh:message "Value does not match pattern {$pattern}" ;
+        shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) = '')}" ;
+        sh:select """
+            SELECT ?this {
+                BIND (?this AS ?value) .
+                FILTER (isBlank(?value) || !regex(str(?value), $pattern))
             }""" ;
 
     ]
@@ -387,11 +412,11 @@ sh:UniqueLangConstraintComponent
         sh:select """
             SELECT DISTINCT ?this
             WHERE {
-                $this $PATH ?value .
+                ?this $PATH ?value .
                 BIND (lang(?value) AS ?lang) .
                 FILTER (bound(?lang) && ?lang != "") .
                 FILTER EXISTS {
-                    $this $PATH ?otherValue .
+                    ?this $PATH ?otherValue .
                     FILTER (?otherValue != ?value && lang(?value) = lang(?otherValue)) .
                 }
             }""" ;
@@ -410,9 +435,9 @@ sh:LanguageInConstraintComponent
         sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
-                $this $PATH ?value .
+                ?this $PATH ?value .
                 BIND (lang(?value) AS ?lang) .
-                FILTER ( ?lang NOT IN ( $languageIn )  )
+                FILTER (!isLiteral(?value) || ?lang NOT IN ( $languageIn )  )
             }""" ;
     ] ;
     sh:nodeValidator [
@@ -421,9 +446,9 @@ sh:LanguageInConstraintComponent
         sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
-                BIND ($this AS ?value) .
+                BIND (?this AS ?value) .
                 BIND (lang(?value) AS ?lang) .
-                FILTER ( ?lang NOT IN ( $languageIn )  )
+                FILTER (!isLiteral(?value) || ?lang NOT IN ( $languageIn )  )
             }""" ;
     ] ;
     .
@@ -523,8 +548,8 @@ sh:HasValueConstraintComponent
         sh:message "should have value $hasValue";
         sh:select """
             SELECT DISTINCT ?this ?value
-            BIND ($this AS ?value) .
             WHERE {
+                BIND (?this AS ?value) .
                 FILTER NOT EXISTS { FILTER(?value = $hasValue) . }
             }""" ;
     ] ;
@@ -544,7 +569,7 @@ sh:InConstraintComponent
         sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
-                $this $PATH ?value .
+                ?this $PATH ?value .
                 FILTER ( ?value NOT IN ( $in )  )
             }""" ;
     ] ;
@@ -554,7 +579,7 @@ sh:InConstraintComponent
         sh:select """
             SELECT DISTINCT ?this ?value
             WHERE {
-                BIND ($this AS ?value) .
+                BIND (?this AS ?value) .
                 FILTER ( ?value NOT IN ( $in )  )
             }""" ;
     ] ;
