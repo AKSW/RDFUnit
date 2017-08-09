@@ -15,18 +15,18 @@
 #classes under owl:Thing must be one of a pre-selected list
 rutt:dbo-restrict-TopClasses
       a rut:ManualTestCase ;
-      dcterms:description "(TEST NOT WORKING CORRECTLY) DBpedia Ontology only allows 9 top level classes, any new top level classes need to be discussed here -link missing-";
+      dcterms:description "DBpedia Ontology only allows 9 top level classes, any new top level classes need to be discussed here -link missing-";
       rut:appliesTo rut:Schema ;
       rut:generated rut:ManuallyGenerated ;
       rut:references <http://www.w3.org/2002/07/owl#Class> ;
       rut:source <http://dbpedia.org/ontology/> ;
-	  # TODO set to error once test is working
-      rut:testCaseLogLevel rlog:WARN ;
+      rut:testCaseLogLevel rlog:ERROR ;
       rut:sparqlWhere """ {
                           ?this rdfs:subClassOf owl:Thing  .
                           FILTER NOT EXISTS {
                             ?this rdfs:subClassOf ?otherClass .
                             FILTER(?otherClass != owl:Thing) .
+                            FILTER(?otherClass != ?this) .
                           }
                           FILTER(?this NOT IN (
                               <http://dbpedia.org/ontology/Activity>,
