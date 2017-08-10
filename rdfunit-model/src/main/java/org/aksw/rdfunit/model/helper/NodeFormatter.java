@@ -15,7 +15,7 @@ public final class NodeFormatter {
         }
         if (node.isLiteral()){
             Literal value = node.asLiteral();
-            String formattedValue = "\"\"\"" + value.getLexicalForm() + "\"\"\"";
+            String formattedValue = "\"" + value.getLexicalForm() + "\"";
             if (!value.getLanguage().isEmpty()) {
                 formattedValue += "@" + value.getLanguage() ;
             }

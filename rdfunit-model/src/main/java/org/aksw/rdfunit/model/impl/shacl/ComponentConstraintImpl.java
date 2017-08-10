@@ -54,25 +54,45 @@ public class ComponentConstraintImpl implements ComponentConstraint {
     }
     private String generateSparqlWhere(String sparqlString) {
 
-        String valuePath;
-        if (shape.getPath().isPresent()) {
-            valuePath = " ?this " + shape.getPath().get().asSparqlPropertyPath() + " ?value . ";
-        } else {
-            valuePath = " BIND ($this AS ?value) . ";
-        }
-
         if (validator.getType().equals(ComponentValidatorType.ASK_VALIDATOR)) {
-            String sparqlWhere = sparqlString.trim()
-                    .replaceFirst("\\{", "")
-                    .replaceFirst("ASK", Matcher.quoteReplacement("  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
-                    + "}";
-            return replaceBindings(sparqlWhere);
+
+            String valuePath;
+            if (shape.getPath().isPresent()) {
+                valuePath = " ?this " + shape.getPath().get().asSparqlPropertyPath() + " ?value . ";
+            } else {
+                valuePath = " BIND ($this AS ?value) . ";
+            }
+
+
+            // First check if filter is simple and extract it
+            // the we use simple filter not exists
+            Pattern p = Pattern.compile("(?i)ASK\\s*\\{\\s*FILTER\\s*\\(([\\s\\S]*)\\)[\\s\\.]*\\}");
+            Matcher matcher = p.matcher(sparqlString.trim());
+
+            if ( matcher.find()) {
+                String filter = matcher.group(1);
+                return replaceBindings(
+                        "{ " + valuePath + " \n" +
+                            "FILTER EXISTS {\n" +
+                                "BIND ( (!(" + filter +")) AS ?tmp123456)\n" +
+                                "FILTER ( bound(?tmp123456) && (?tmp123456) )\n" +
+                            "}" +
+                        "}"
+                );
+            } else {
+                // otherwise we use MINUS
+
+                String sparqlWhere = sparqlString.trim()
+                        .replaceFirst("\\{", "")
+                        .replaceFirst("ASK", Matcher.quoteReplacement("  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
+                        + "}";
+
+               return replaceBindings(sparqlWhere);
+            }
         } else {
             String  sparqlWhere = sparqlString
                     .substring(sparqlString.indexOf('{'));
-            if (shape.getPath().isPresent()) {
-                    sparqlWhere = sparqlWhere.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-            }
+
             return replaceBindings(sparqlWhere);
         }
     }

@@ -6,8 +6,6 @@
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 
 ex:
-	a owl:Ontology ;
-	owl:imports sh: ;
 	sh:declare [
 		sh:prefix "ex" ;
 		sh:namespace "http://example.com/ns#"^^xsd:anyURI ;

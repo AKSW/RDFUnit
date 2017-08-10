@@ -138,7 +138,7 @@ sh:NodeKindConstraintComponent
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNodeOrLiteral>)} """ ;
         sh:ask """
             ASK {
-                FILTER (isBlank(?value) || isLiteral(?value)) .
+                FILTER (isBlank(?value) || isLiteral(?value))
             }""" ;
     ] ;
     sh:validator [
@@ -148,7 +148,7 @@ sh:NodeKindConstraintComponent
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRIOrLiteral>)} """ ;
         sh:ask """
             ASK {
-                FILTER (isIRI(?value) || isLiteral(?value) ) .
+                FILTER (isIRI(?value) || isLiteral(?value) )
             }""" ;
     ] ;
 
@@ -245,7 +245,7 @@ sh:MinExclusiveConstraintComponent
     	sh:message "sh:minExclusive of $PATH should be '$minExclusive'";
     	sh:ask """
     		ASK {
-            	FILTER (?value > $minExclusive) .
+            	FILTER ( ?value > $minExclusive)
             }""" ;
     ] ;
     .
@@ -262,7 +262,7 @@ sh:MaxExclusiveConstraintComponent
     	sh:message "sh:maxExclusive of $PATH should be '$maxExclusive'";
     	sh:ask """
     		ASK {
-            	FILTER (?value < $maxExclusive) .
+            	FILTER (?value < $maxExclusive)
             }""" ;
     ] ;
     .
@@ -278,7 +278,7 @@ sh:MinInclusiveConstraintComponent
     	sh:message "sh:minInclusive of $PATH should be '$minInclusive'";
     	sh:ask """
     		ASK {
-            	FILTER (?value >= $minInclusive) .
+            	FILTER (?value >= $minInclusive)
             }""" ;
     ] ;
     .
@@ -295,7 +295,7 @@ sh:MaxInclusiveConstraintComponent
     	sh:message "sh:maxExclusive of $PATH should be '$maxInclusive'";
     	sh:ask """
     		ASK {
-            	FILTER (?value <= $maxInclusive) .
+            	FILTER (?value <= $maxInclusive)
             }""" ;
     ] ;
     .
@@ -316,8 +316,7 @@ sh:MinLengthConstraintComponent
     	sh:message "The minimum length of '$PATH' is '$minLength'";
     	sh:ask """
     		ASK {
-            	FILTER (
-            	    STRLEN(str(?value)) >= $minLength && !isBlank(?value)) .
+            	FILTER (STRLEN(str(?value)) >= $minLength && !isBlank(?value))
             }""" ;
     ] ;
     .
@@ -334,8 +333,7 @@ sh:MaxLengthConstraintComponent
     	sh:message "The maximum length of '$PATH' is '$maxLength'";
     	sh:ask """
     		ASK {
-            	FILTER (
-            	    STRLEN(str(?value)) <= $maxLength && !isBlank(?value)) .
+            	FILTER (STRLEN(str(?value)) <= $maxLength && !isBlank(?value))
             }""" ;
     ] ;
     .
@@ -425,7 +423,7 @@ sh:UniqueLangConstraintComponent
                 FILTER (bound(?lang) && ?lang != "") .
                 FILTER EXISTS {
                     ?this $PATH ?otherValue .
-                    FILTER (?otherValue != ?value && lang(?value) = lang(?otherValue)) .
+                    FILTER (?otherValue != ?value && lang(?value) = lang(?otherValue))
                 }
             }""" ;
     ] ;

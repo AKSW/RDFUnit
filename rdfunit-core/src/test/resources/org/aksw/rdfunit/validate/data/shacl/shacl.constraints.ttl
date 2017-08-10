@@ -82,7 +82,7 @@ ex:Person
     ] ;
     sh:property [
         sh:path ex:checkPattern ;
-        sh:pattern """^\\\\S""" ; # start with non whitespace
+        sh:pattern "^\\s"; # start with whitespace
         sh:flags "i" ;
     ] ;
 

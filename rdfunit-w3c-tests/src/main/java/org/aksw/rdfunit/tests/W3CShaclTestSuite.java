@@ -32,6 +32,7 @@ import org.topbraid.shacl.arq.SHACLPaths;
 import org.topbraid.shacl.testcases.GraphValidationTestCaseType;
 import org.topbraid.spin.util.JenaUtil;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -275,6 +276,12 @@ public class W3CShaclTestSuite {
 
                     int expectedViolations = getAdjustedExpectedReport().listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     int actualViolations = adjustedActualReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
+                    String file = this.manifest.sourceFile.toString().replace("/", "_");
+                    file = file.substring(file.indexOf("tests"));
+                    File dirs1 = new File("data/shacl/partial");
+                    dirs1.mkdirs();
+                    File dirs2 = new File("data/shacl/failed");
+                    dirs2.mkdirs();
 
                     if (
                             (!getAdjustedExpectedReport().isEmpty() && (
@@ -282,9 +289,9 @@ public class W3CShaclTestSuite {
                             || (expectedViolations > 0 && actualViolations > 0 )))
                     {
                         try {
-                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".expected.ttl").write(getAdjustedExpectedReport());
+                            new RdfFileWriter("data/shacl/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
                             //new RdfFileWriter("data/shacl/partial/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                            new RdfFileWriter("data/shacl/partial/" +this.getId() + ".actual.ttl").write(adjustedActualReport);
+                            new RdfFileWriter("data/shacl/partial/" + file + ".actual.ttl").write(adjustedActualReport);
                         } catch (RdfWriterException e) {
                             e.printStackTrace();
                         }
@@ -292,15 +299,15 @@ public class W3CShaclTestSuite {
                     }
 
                     try {
-                        new RdfFileWriter("data/shacl/fail/" +this.getId() + ".expected.ttl").write(getAdjustedExpectedReport());
+                        new RdfFileWriter("data/shacl/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
                         //new RdfFileWriter("data/shacl/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                        new RdfFileWriter("data/shacl/fail/" +this.getId() + ".actual.ttl").write(adjustedActualReport);
+                        new RdfFileWriter("data/shacl/fail/" + file + ".actual.ttl").write(adjustedActualReport);
 
                     } catch (RdfWriterException e) {
                         e.printStackTrace();
                     }
 
-                    log.error("test case failed {}", getId());
+                    log.error("test case failed {}", this.getManifest().sourceFile);
                     return EARL.Fail;
                 }
 
