@@ -29,7 +29,7 @@ rutt:nif-Deprecated-schema
     rut:sparqlPrevalence """  """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
@@ -60,7 +60,7 @@ rutt:nif-beginIndex-of-Context-MUST-be-zero
                                 ?this <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex> ?begin .} """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex>
     ];
     rut:resultAnnotation [
@@ -96,7 +96,7 @@ rutt:nif-length-of-isString-equal-with-endIndex
                                 ?this <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex> ?length . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>
     ];
     rut:resultAnnotation [
@@ -137,7 +137,7 @@ rutt:nif-anchorOf-must-match-the-substring-of-isString-calculated-with-begin-and
                                 ?this <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext> [ <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#isString> ?isString ]  . } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>
     ];
     rut:resultAnnotation [
@@ -168,7 +168,7 @@ rutt:nif-string-length-not-zero
         } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#endIndex>
     ];
     rut:resultAnnotation [
@@ -197,7 +197,7 @@ rutt:nif-rdftype-is-misspelled
                                 ?this a ?class .  } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type ;
     ];
     rut:resultAnnotation [
@@ -226,7 +226,7 @@ rutt:nif-non-context-CString-must-have-explicit-referenceContext
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#referenceContext>
     ];
     .
@@ -275,7 +275,7 @@ rutt:nif-Context-must-have-rdftype-of-a-subclass-of-CString
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
@@ -302,7 +302,7 @@ rutt:nif-CString-is-abstract-it-MUST-only-exist-with-a-subclass
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type
     ];
     .
@@ -324,7 +324,7 @@ rutt:nif-CString-is-abstract-it-SHOULD-not-be-serialized
                             } """ ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [

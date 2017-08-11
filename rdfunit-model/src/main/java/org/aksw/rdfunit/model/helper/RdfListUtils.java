@@ -1,10 +1,13 @@
 package org.aksw.rdfunit.model.helper;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFList;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Utility functions for rdf:Lists
@@ -44,5 +47,11 @@ public final class RdfListUtils {
         }
 
         return getListItemsOrEmpty(node);
+    }
+
+    public static Resource createListOfNodes(List<RDFNode> nodes) {
+        return ModelFactory
+                .createDefaultModel()
+                .createList(nodes.iterator());
     }
 }

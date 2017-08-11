@@ -18,8 +18,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Reads an argument
- *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
  * @version $Id: $Id
@@ -28,15 +26,8 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
 
     private TestGeneratorReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.TestGeneratorReader} object.
-     */
     public static TestGeneratorReader create() { return new TestGeneratorReader();}
 
-
-    /** {@inheritDoc} */
     @Override
     public TestGenerator read(Resource resource) {
         checkNotNull(resource, "Cannot read a TestGenerator from a null resource");

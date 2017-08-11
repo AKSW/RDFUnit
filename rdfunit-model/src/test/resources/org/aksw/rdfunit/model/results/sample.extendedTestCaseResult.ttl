@@ -40,7 +40,7 @@
         dcterms:date         "2016-01-14T14:16:22.709Z"^^xsd:dateTime ;
         rut:testCase         rutt:foaf-RDFSRANGE-MISS-b8ece41dca0325fdadf670d9bf7f2c7f417fe36f00225d75027a9608fe9ff042 ;
         prov:wasGeneratedBy  <98728448-2b08-11b2-80c9-a434d927758b> ;
-        sh:predicate         <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> .
+        sh:path         <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> .
 
 <98728448-2b08-11b2-80c9-a434d927758b/9872844a-2b08-11b2-80c9-a434d927758b>
         a                    rut:ExtendedTestCaseResult , rut:RLOGTestCaseResult , rlog:Entry , rut:TestCaseResult ;
@@ -50,4 +50,4 @@
         dcterms:date         "2016-01-14T14:16:22.768Z"^^xsd:dateTime ;
         rut:testCase         rutt:foaf-RDFSDOMAIN-MISS-26617c6f41149c17ea0f8ec06e041d4edb4d1c06e1f441ced15558fcb85c7ef0 ;
         prov:wasGeneratedBy  <98728448-2b08-11b2-80c9-a434d927758b> ;
-        sh:predicate         <http://xmlns.com/foaf/0.1/primaryTopic> .
+        sh:path         <http://xmlns.com/foaf/0.1/primaryTopic> .

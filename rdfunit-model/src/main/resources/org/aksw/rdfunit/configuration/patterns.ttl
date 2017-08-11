@@ -15,19 +15,19 @@ rutp:RDFSRANGE a rut:Pattern ;
     dcterms:identifier "RDFSRANGE" ;
     dcterms:description """Emulates the rdfs:range constrain and checks when range is wrongly defined""" ;
     rut:sparqlWherePattern """ {
-                                    ?this %%P1%% ?s .
+                                    ?s %%P1%% ?this .
                                     FILTER EXISTS {
-                                        ?s rdf:type ?anyClass . }
+                                        ?this rdf:type ?anyClass . }
                                     FILTER NOT EXISTS {
-                                        ?s rdf:type/rdfs:subClassOf* %%T1%%  }
+                                        ?this rdf:type/rdfs:subClassOf* %%T1%%  }
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total)
-                                     WHERE { ?this %%P1%% ?s .} """ ;
+                                     WHERE { ?s %%P1%% ?this .} """ ;
     rut:parameter rutp:RDFSRANGE-P1 ;
     rut:parameter rutp:RDFSRANGE-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -65,7 +65,7 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
     rut:parameter rutp:RDFSRANGE-MISS-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -92,7 +92,7 @@ rutp:RDFSRANGED a rut:Pattern ;
     rut:parameter rutp:RDFSRANGED-D1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -132,7 +132,7 @@ rutp:RDFSDOMAIN a rut:Pattern ;
     rut:parameter rutp:RDFSDOMAIN-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -167,7 +167,7 @@ rutp:RDFSDOMAIN-MISS a rut:Pattern ;
     rut:parameter rutp:RDFSDOMAIN-MISS-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -198,7 +198,7 @@ rutp:OWLDISJC a rut:Pattern ;
     rut:parameter rutp:OWLDISJC-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
@@ -237,7 +237,7 @@ rutp:OWLDISJP a rut:Pattern ;
     rut:parameter rutp:OWLDISJP-P2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -273,7 +273,7 @@ rutp:OWLCARD a rut:Pattern ;
     rut:parameter rutp:OWLCARD-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -314,7 +314,7 @@ rutp:OWLCARDT a rut:Pattern ;
     rut:parameter rutp:OWLCARDT-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -362,7 +362,7 @@ rutp:OWLQCARDT a rut:Pattern ;
     rut:parameter rutp:OWLQCARDT-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -412,7 +412,7 @@ rutp:TYPRODEP a rut:Pattern ;
     rut:parameter rutp:TYPRODEP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -455,7 +455,7 @@ rutp:TYPROTYPEDEP a rut:Pattern ;
     rut:parameter rutp:TYPROTYPEDEP-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -494,7 +494,7 @@ rutp:INVFUNC a rut:Pattern ;
     rut:parameter rutp:INVFUNC-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -528,7 +528,7 @@ rutp:INVFUNCT a rut:Pattern ;
     rut:parameter rutp:INVFUNCT-T1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -564,7 +564,7 @@ rutp:OWLSYMMETRICPROP a rut:Pattern ;
     rut:parameter rutp:OWLSYMMETRICPROP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -596,7 +596,7 @@ rutp:OWLASYMMETRICPROP a rut:Pattern ;
     rut:parameter rutp:OWLASYMMETRICPROP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -631,7 +631,7 @@ rutp:OWLTRANSPROP a rut:Pattern ;
     rut:parameter rutp:OWLTRANSPROP-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -661,7 +661,7 @@ rutp:OWLIRREFLEXIVE a rut:Pattern ;
     rut:parameter rutp:OWLIRREFLEXIVE-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -697,7 +697,7 @@ rutp:COMP a rut:Pattern ;
     rut:parameter rutp:COMP-OP ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -739,7 +739,7 @@ rutp:MATCH a rut:Pattern ;
     rut:parameter rutp:MATCH-REGEX ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -787,7 +787,7 @@ rutp:LITRAN a rut:Pattern ;
     rut:parameter rutp:LITRAN-valueMax ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -839,7 +839,7 @@ rutp:TYPDEP a rut:Pattern ;
     rut:parameter rutp:TYPDEP-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue rdf:type
     ];
     rut:resultAnnotation [
@@ -877,7 +877,7 @@ rutp:PVT a rut:Pattern ;
     rut:parameter rutp:PVT-P2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P2%%"""
     ];
     .
@@ -911,7 +911,7 @@ rutp:TRIPLE a rut:Pattern ;
     rut:parameter rutp:TRIPLE-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -950,7 +950,7 @@ rutp:TRIPLEDR a rut:Pattern ;
     rut:parameter rutp:TRIPLEDR-T2 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     .
@@ -986,7 +986,7 @@ rutp:OBJFUNC a rut:Pattern ;
     rut:parameter rutp:OBJFUNC-FUNC ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -1032,7 +1032,7 @@ rutp:OBJFUNCD a rut:Pattern ;
     rut:parameter rutp:OBJFUNCD-FUNC ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -1082,7 +1082,7 @@ rutp:OBJVALIND a rut:Pattern ;
     rut:parameter rutp:OBJVALIND-VALUES ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -1129,7 +1129,7 @@ rutp:CHECKLANG a rut:Pattern ;
     rut:parameter rutp:CHECKLANG-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -1173,7 +1173,7 @@ rutp:ONELANG a rut:Pattern ;
     rut:parameter rutp:ONELANG-V1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [
@@ -1216,7 +1216,7 @@ rutp:ONELANGGLOBAL a rut:Pattern ;
     rut:parameter rutp:ONELANGGLOBAL-P1 ;
     rut:resultAnnotation [
         a rut:ResultAnnotation ;
-        rut:annotationProperty sh:predicate ;
+        rut:annotationProperty sh:path ;
         rut:annotationValue """%%P1%%"""
     ];
     rut:resultAnnotation [

@@ -71,7 +71,8 @@ public class TestCaseResultWriter implements ElementWriter {
                     .addProperty(RDF.type, RDFUNITv.RLOGTestCaseResult)
                     .addProperty(RDF.type, RLOG.Entry)
                     .addProperty(RLOG.resource, model.createResource(((RLOGTestCaseResult) testCaseResult).getFailingResource()))
-                    .addProperty(RLOG.message, testCaseResult.getMessage())
+                    // get it from annotations
+                    //.addProperty(RLOG.message, testCaseResult.getMessage())
                     .addProperty(RLOG.level, model.createResource(testCaseResult.getSeverity().getUri()))
             ;
         }
@@ -88,18 +89,11 @@ public class TestCaseResultWriter implements ElementWriter {
         }
 
         if (testCaseResult instanceof SimpleShaclTestCaseResult) {
-            resource
-                    .addProperty(RDF.type, SHACL.ValidationResult)
-                    .addProperty(SHACL.focusNode, model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()))    //TODO double check later, might not always be the current resource
-                    .addProperty(SHACL.message, testCaseResult.getMessage())
-                    .addProperty(SHACL.severity, model.createResource(testCaseResult.getSeverity().getUri()))
+            resource.addProperty(RDF.type, SHACL.ValidationResult)
             ;
         }
 
         if (testCaseResult instanceof ShaclTestCaseResult) {
-            resource
-                    .addProperty(SHACL.subject,model.createResource(((SimpleShaclTestCaseResult) testCaseResult).getFailingResource()));
-
 
             for (PropertyValuePair annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {
                 for (RDFNode rdfNode : annotation.getValues()) {

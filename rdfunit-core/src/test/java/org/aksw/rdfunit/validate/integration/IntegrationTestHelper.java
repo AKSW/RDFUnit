@@ -20,7 +20,8 @@ import java.util.Collections;
 
 import static org.aksw.rdfunit.io.reader.RdfReaderFactory.createResourceReader;
 import static org.aksw.rdfunit.sources.SchemaSourceFactory.createSchemaSourceSimple;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class IntegrationTestHelper {
 
@@ -84,16 +85,23 @@ public class IntegrationTestHelper {
 
             // For status results we don't get violation instances
             if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
-                assertEquals(executionType + ": Errors not as expected in " + testSource, expectedErrors, overviewResults.getIndividualErrors());
+
+                assertThat(overviewResults.getIndividualErrors())
+                        .as("%s: Errors not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
+                        .isEqualTo(expectedErrors);
             }
 
             if (failedTestCases == -1) {
                 failedTestCases = overviewResults.getFailedTests();
             } else {
-                assertEquals(executionType + ": Failed test cases not as expected in " + testSource, failedTestCases, overviewResults.getFailedTests());
+                assertThat(overviewResults.getFailedTests())
+                        .as("%s: Failed test cases not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
+                        .isEqualTo(failedTestCases);
             }
 
-            assertEquals(executionType + ": There should be no failed test cases in " + testSource, 0, overviewResults.getErrorTests());
+            assertThat(overviewResults.getErrorTests())
+                    .as("%s: There should be no failed test cases in  %s", executionType, testSource)
+                    .isEqualTo(0);
         }
 
 

@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
+import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -13,11 +15,11 @@ import java.util.Optional;
 public interface Template extends Element {
 
     /**
-     * <p>getArguments.</p>
+     * <p>getComponentParameters.</p>
      *
      * @return a {@link java.util.Collection} object.
      */
-    Collection<Argument> getArguments();
+    Collection<ComponentParameter> getArguments();
 
     /**
      * <p>getSparql.</p>

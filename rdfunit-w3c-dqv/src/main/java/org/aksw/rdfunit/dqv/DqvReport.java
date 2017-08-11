@@ -32,7 +32,7 @@ public class DqvReport {
             testExecution.getTestCaseResults().stream()   // go through all results
                 .filter(t -> t instanceof ShaclTestCaseResult)
                 .map(ShaclTestCaseResult.class::cast) // use only Shacl results
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         return results.stream()
                 // get source constraints or use undefined

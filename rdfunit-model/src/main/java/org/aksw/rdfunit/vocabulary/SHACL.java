@@ -21,10 +21,16 @@ public final class SHACL {
     //Classes
 
     public static final Resource Shape = resource("Shape");
-    public static final Resource Argument = resource("Argument");
-    public static final Resource Function = resource("Function");
+    public static final Resource PropertyShape = resource("PropertyShape");
+    public static final Resource NodeShape = resource("NodeShape");
+    public static final Resource ParameterCls = resource("Parameter");
     public static final Resource ResultAnnotation = resource("ResultAnnotation");
     public static final Resource ValidationResult = resource("ValidationResult");
+    public static final Resource ValidationReport = resource("ValidationReport");
+    public static final Resource SPARQLAskValidator  = resource("SPARQLAskValidator");
+    public static final Resource ConstraintComponent = resource("ConstraintComponent");
+    public static final Resource SPARQLConstraintComponent = resource("SPARQLConstraintComponent");
+
 
     public static final Property targetClass = property("targetClass");
     public static final Property targetNode = property("targetNode");
@@ -37,37 +43,46 @@ public final class SHACL {
     public static final Resource Violation = resource("Violation");
 
     //properties
-    public static final Property argument = property("argument");
-    public static final Property cachable = property("cachable");
+    public static final Property parameter = property("parameter");
     public static final Property datatype = property("datatype");
     public static final Property datatypeIn = property("datatypeIn");
     public static final Property defaultValue = property("defaultValue");
     public static final Property optional = property("optional");
-    public static final Property returnType = property("returnType");
     public static final Property sparql = property("sparql");
-    public static final Property valueType = property("valueType");
+    public static final Property validator = property("validator");
+    public static final Property nodeValidator = property("nodeValidator");
+    public static final Property propertyValidator = property("propertyValidator");
+    public static final Property ask = property("ask");
+    public static final Property select = property("select");
 
     public static final Property clazz = property("class");
     public static final Property clazzIn = property("classIn");
     public static final Property directType = property("directType");
 
     public static final Property severity = property("severity");
+    public static final Property resultSeverity = property("resultSeverity");
     public static final Property focusNode = property("focusNode");
-    public static final Property subject = property("subject");
-    public static final Property predicate = property("predicate");
-    public static final Property object = property("object");
+    public static final Property path = property("path");
+    public static final Property value = property("value");
     public static final Property message = property("message");
+    public static final Property resultMessage = property("resultMessage");
+    public static final Property resultPath = property("resultPath");
     public static final Property sourceConstraint = property("sourceConstraint");
+    public static final Property sourceShape = property("sourceShape");
+    public static final Property sourceConstraintComponent = property("sourceConstraintComponent");
+    public static final Property conforms = property("conforms");
+    public static final Property result = property("result");
 
     public static final Property annotationProperty = property("annotationProperty");
     public static final Property annotationVarName = property("annotationVarName");
     public static final Property annotationValue = property("annotationValue");
     public static final Property property = property("property");
-    public static final Property inverseProperty = property("inverseProperty");
-    //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
-    //public static final Property cachable = property("cachable");
 
+    public static final Property inversePath = property("inversePath");
+    public static final Property zeroOrMorePath = property("zeroOrMorePath");
+    public static final Property oneOrMorePath = property("oneOrMorePath");
+    public static final Property zeroOrOnePath = property("zeroOrOnePath");
+    public static final Property alternativePath = property("alternativePath");
 
     public static final Property minExclusive = property("minExclusive");
     public static final Property minInclusive = property("minInclusive");
@@ -77,7 +92,7 @@ public final class SHACL {
     public static final Property maxLength = property("maxLength");
     public static final Property nodeKind = property("nodeKind");
     public static final Property notEquals = property("notEquals");
-    public static final Property equals = property("equals");
+    public static final Property equalz = property("equals");
     public static final Property hasValue = property("hasValue");
     public static final Property in = property("in");
     public static final Property lessThan = property("lessThan");
@@ -88,14 +103,18 @@ public final class SHACL {
     public static final Property flags = property("flags");
     public static final Property uniqueLang = property("uniqueLang");
 
-    public static final Property valueShape = property("valueShape");
+    public static final Property node = property("node");
     public static final Property and = property("and");
     public static final Property or = property("or");
     public static final Property not = property("not");
+    public static final Property xone = property("xone");
 
+    public static final Property declare = property("declare");
+    public static final Property prefixes = property("prefixes");
+    public static final Property prefix = property("prefix");
+    public static final Property prefixNamespace = property("namespace");
 
-
-
+    public static final Property deactivated = property("deactivated");
 
 
     private SHACL() {
@@ -109,43 +128,5 @@ public final class SHACL {
     private static Property property(String local) {
         return ResourceFactory.createProperty(namespace, local);
     }
-        /*
-        public static final class Nodes {
-            public static final Node Alt;
-            public static final Node Bag;
-            public static final Node Property;
-            public static final Node Seq;
-            public static final Node Statement;
-            public static final Node List;
-            public static final Node nil;
-            public static final Node first;
-            public static final Node rest;
-            public static final Node subject;
-            public static final Node predicate;
-            public static final Node object;
-            public static final Node type;
-            public static final Node value;
-
-            public Nodes() {
-            }
-
-            static {
-                Alt = RDF.Alt.asNode();
-                Bag = RDF.Bag.asNode();
-                Property = RDF.Property.asNode();
-                Seq = RDF.Seq.asNode();
-                Statement = RDF.Statement.asNode();
-                List = RDF.List.asNode();
-                nil = RDF.nil.asNode();
-                first = RDF.first.asNode();
-                rest = RDF.rest.asNode();
-                subject = RDF.subject.asNode();
-                predicate = RDF.predicate.asNode();
-                object = RDF.object.asNode();
-                type = RDF.type.asNode();
-                value = RDF.value.asNode();
-            }
-        } */
-
 
 }

@@ -12,6 +12,3 @@ ex:3 ex:classCheckProperty ex:4 .
 ex:4 a ex:SuperClassXYZ. # correct, target is different
 
 
-ex:5 a ex:Person ;
-  ex:checkClassIn ex:2 .   # error
-

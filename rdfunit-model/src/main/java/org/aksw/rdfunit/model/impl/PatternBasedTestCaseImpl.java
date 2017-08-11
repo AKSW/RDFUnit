@@ -1,14 +1,16 @@
 package org.aksw.rdfunit.model.impl;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.*;
-import org.apache.jena.ext.com.google.common.collect.ImmutableSet;
+import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * <p>PatternBasedTestCase class.</p>
@@ -58,6 +60,11 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
     @Override
     public Collection<Binding> getBindings() {
         return bindings;
+    }
+
+    @Override
+    public Collection<PrefixDeclaration> getPrefixDeclarations() {
+        return Collections.emptyList();
     }
 
     private String initSparqlWhere() {

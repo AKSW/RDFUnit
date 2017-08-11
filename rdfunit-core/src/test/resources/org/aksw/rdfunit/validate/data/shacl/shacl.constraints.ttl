@@ -8,107 +8,127 @@
 
 # A sample shape, meant only to test the shape readers (ATM)
 
-ex:MyShape
+ex:Person
 	a sh:Shape ;
-	sh:targetClass ex:Person ;
+	a rdfs:Class ;
+	# sh:targetClass ex:Person ; implicit target
+
+####
+# ValueTypeConstraints
 
 	sh:property [
-		sh:predicate ex:classCheckProperty ;
+		sh:path ex:classCheckProperty ;
 		sh:class ex:SuperClass ;
 	] ;
-	sh:property [
-		sh:predicate ex:checkClassIn ;
-		sh:classIn (ex:SuperClass1 ex:SuperClass2) ;
-	] ;
-	sh:property [
-        sh:predicate ex:checkDirectClass ;
-        sh:directType ex:DirectClass ;
-    ] ;
+
 
     sh:property [
-        sh:predicate ex:checkDatatype ;
+        sh:path ex:checkDatatype ;
         sh:datatype xsd:date ;
-    ] ;
-
-    sh:property [
-        sh:predicate ex:checkDatatypeIn ;
-        sh:datatypeIn (xsd:date xsd:nonNegativeInteger) ;
-    ] ;
-
-    sh:property [
-        sh:predicate ex:checkEquals ;
-        sh:equals ex:checkEqualsTo ;
-    ] ;
-    sh:property [
-        sh:predicate ex:checkNotEquals ;
-        sh:notEquals ex:checkNotEqualsTo ;
-    ] ;
-    sh:property [
-        sh:predicate ex:checkLength ;
-        sh:minLength 3;
-        sh:maxLength 5;
-    ];
-    sh:property [
-        sh:predicate ex:checkMinMaxExclusive ;
-        sh:minExclusive 5 ;
-        sh:maxExclusive 10 ;
-    ] ;
-    sh:property [
-        sh:predicate ex:checkMinMaxInclusive ;
-        sh:minInclusive 5 ;
-        sh:maxInclusive 10 ;
-    ] ;
-    sh:property [
-        sh:predicate ex:checkPattern ;
-        sh:pattern "^Ali" ;
-        sh:flags "i" ;
-    ] ;
-
-    sh:property [
-        sh:predicate ex:checkHasValue ;
-        sh:hasValue "100"^^xsd:int ;
-    ] ;
-
-    sh:property [
-        sh:predicate ex:checkIn ;
-        sh:in (ex:A "example" ) ;
     ] ;
 
 
     # sh:nodeType
 	sh:property [
-		sh:predicate ex:checkNodeKindIRI ;
+		sh:path ex:checkNodeKindIRI ;
 		sh:nodeKind sh:IRI ;
     ] ;
     sh:property [
-        sh:predicate ex:checkNodeKindLiteral ;
+        sh:path ex:checkNodeKindLiteral ;
         sh:nodeKind sh:Literal ;
     ]  ;
     sh:property [
-        sh:predicate ex:checkNodeKindBlankNode ;
+        sh:path ex:checkNodeKindBlankNode ;
         sh:nodeKind sh:BlankNode ;
     ] ;
+    sh:property [
+        sh:path ex:checkNodeKindBlankNodeOrIRI ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNodeKindBlankNodeOrLiteral ;
+        sh:nodeKind sh:BlankNodeOrLiteral ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNodeKindIRIOrLiteral ;
+        sh:nodeKind sh:IRIOrLiteral ;
+    ] ;
+
+####
+##
+
+    sh:property [
+        sh:path ex:checkEquals ;
+        sh:equals ex:checkEqualsTo ;
+    ] ;
+    sh:property [
+        sh:path ex:checkNotEquals ;
+        sh:disjoint ex:checkNotEqualsTo ;
+    ] ;
+    sh:property [
+        sh:path ex:checkLength ;
+        sh:minLength 3;
+        sh:maxLength 5;
+    ];
+    sh:property [
+        sh:path ex:checkMinMaxExclusive ;
+        sh:minExclusive 5 ;
+        sh:maxExclusive 10 ;
+    ] ;
+    sh:property [
+        sh:path ex:checkMinMaxInclusive ;
+        sh:minInclusive 5 ;
+        sh:maxInclusive 10 ;
+    ] ;
+    sh:property [
+        sh:path ex:checkPattern ;
+        sh:pattern "^\\s"; # start with whitespace
+        sh:flags "i" ;
+    ] ;
+
+    sh:property [
+        sh:path ex:checkIn ;
+        sh:in (ex:Example "example" ) ;
+    ] ;
+
 
 .
 
+ex:NodeConstraintClassShape a sh:Shape ;
+    sh:targetClass ex:NodeConstraintClass ;
+    sh:class ex:Person ;
+    .
 
+ex:NodeConstraintDatatypeShape a sh:Shape ;
+    sh:targetObjectsOf ex:booleanValues ;
+    sh:datatype xsd:boolean ;
+    .
+
+ex:MyHasValueShape
+	a sh:Shape ;
+	sh:targetClass ex:HasValueShape ;
+    sh:property [
+        sh:path ex:checkHasValue ;
+        sh:hasValue "100"^^xsd:int ;
+    ] ;
+    .
 
 ex:MyCardShapeMin
 	a sh:Shape ;
 	sh:targetClass ex:CardCheckMin ;
 
-    sh:property [
-        sh:predicate ex:checkMinCount0 ;
-        sh:minCount "0"^^xsd:int ;
-    ] ;
+#    sh:property [
+#        sh:path ex:checkMinCount0 ;
+#        sh:minCount "0"^^xsd:int ;
+#    ] ;
 
     sh:property [
-        sh:predicate ex:checkMinCount1 ;
+        sh:path ex:checkMinCount1 ;
         sh:minCount "1"^^xsd:int ;
     ] ;
 
     sh:property [
-        sh:predicate ex:checkMinCount3 ;
+        sh:path ex:checkMinCount3 ;
         sh:minCount "3"^^xsd:int ;
     ] ;
 .
@@ -117,41 +137,61 @@ ex:MyCardShapeMax
 	sh:targetClass ex:CardCheckMax ;
 
     sh:property [
-        sh:predicate ex:checkMaxCount0 ;
+        sh:path ex:checkMaxCount0 ;
         sh:maxCount "0"^^xsd:int ;
     ] ;
 
     sh:property [
-        sh:predicate ex:checkMaxCount1 ;
+        sh:path ex:checkMaxCount1 ;
         sh:maxCount "1"^^xsd:int ;
     ] ;
 
     sh:property [
-        sh:predicate ex:checkMaxCount3 ;
+        sh:path ex:checkMaxCount3 ;
         sh:maxCount "3"^^xsd:int ;
     ] ;
     .
 
-ex:ValueShapeExampleShape
+ex:MyUniqueLangShape
 	a sh:Shape ;
-	sh:targetClass ex:ValueShapeClass;
+	sh:targetClass ex:UniqueLangShape ;
+
+    sh:property [
+        sh:path ex:checkUniqueLang ;
+        sh:uniqueLang "true"^^xsd:boolean;
+    ] ;
+.
+
+ex:MyLanguageInShape
+	a sh:Shape ;
+	sh:targetClass ex:LanguageInShape ;
+
+    sh:property [
+        sh:path ex:checkLanguageIn ;
+        sh:languageIn ("en" "el") ;
+    ] ;
+.
+
+ex:NodeExampleShape
+	a sh:Shape ;
+	sh:targetClass ex:NodeClass;
 	sh:property [
-		sh:predicate ex:someProperty ;
-		sh:valueShape ex:ValueShapeNested1 ;
+		sh:path ex:someProperty ;
+		sh:node ex:NodeNested1 ;
 	] .
 
-ex:ValueShapeNested1
+ex:NodeNested1
     a sh:Shape ;
     sh:property [
-        sh:predicate ex:nestedProperty ;
+        sh:path ex:nestedProperty ;
         sh:minCount 2 ;
-        sh:valueShape ex:ValueShapeNested2;
+        sh:node ex:NodeNested2;
     ].
 
-ex:ValueShapeNested2
+ex:NodeNested2
     a sh:Shape ;
     sh:property [
-        sh:predicate ex:nestedProperty2 ;
+        sh:path ex:nestedProperty2 ;
         sh:datatype xsd:int;
     ].
 

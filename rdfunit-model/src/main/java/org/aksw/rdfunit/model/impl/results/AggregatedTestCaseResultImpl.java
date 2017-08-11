@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.impl.results;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -17,6 +19,8 @@ import java.util.Optional;
  * @since 1 /2/14 3:44 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode(exclude = "element")
 public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl implements AggregatedTestCaseResult {
     private final long errorCount;
     private final long prevalenceCount;

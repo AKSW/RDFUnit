@@ -47,7 +47,7 @@ public class DBpediaMappingValidator {
             "     rut:testCase rutt:rr-predicateObjectMap-wrong-domain ;\n" +
             "     rdf:predicate ?predicate ;\n" +
             "     sh:expectedObject ?missing ;\n" +
-            "     sh:object ?error ;\n" +
+            "     sh:value ?error ;\n" +
             "     rlog:resource ?mapping .\n" +
             " } ORDER BY ?mapping ";
 

@@ -1,6 +1,9 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -12,7 +15,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
+@ToString
+@EqualsAndHashCode
 public class TestExecutionImpl implements TestExecution {
 
     private final Resource element;
@@ -36,7 +40,7 @@ public class TestExecutionImpl implements TestExecution {
         this.startedByAgent = checkNotNull(builder.startedByAgent, "Agent starting the execution is needed in TestExecution");
 
         this.schemata= ImmutableList.copyOf(checkNotNull(builder.schemata, "Used schemata are needed in TestExecution"));
-        this.results = ImmutableList.copyOf(checkNotNull(builder.results, "Results are needed in TestExecution"));
+        this.results = ImmutableSet.copyOf(checkNotNull(builder.results, "Results are needed in TestExecution"));
         //this.testCaseUris = ImmutableSet.copyOf(checkNotNull(builder.testCaseUris));
 
         this.datasetOverviewResults = checkNotNull(builder.datasetOverviewResults, "Overview results are needed in TestExecution");

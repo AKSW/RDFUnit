@@ -1,0 +1,43 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+
+<http://ex.com/seq1>   <http://ex.com/path> <http://ex.com/p1> ;
+                    <http://ex.com/pathExp> "<http://ex.com/p1>" .
+
+<http://ex.com/seq2>   <http://ex.com/path> ( <http://ex.com/p1> <http://ex.com/p2> ) ;
+                    <http://ex.com/pathExp> "<http://ex.com/p1>/<http://ex.com/p2>" .
+
+<http://ex.com/seq3>   <http://ex.com/path> ( <http://ex.com/p1> <http://ex.com/p2> <http://ex.com/p3> ) ;
+                    <http://ex.com/pathExp> "(<http://ex.com/p1>/<http://ex.com/p2>)/<http://ex.com/p3>" .
+
+<http://ex.com/inv1>   <http://ex.com/path> [ sh:inversePath <http://ex.com/p1> ] ;
+                    <http://ex.com/pathExp> "^<http://ex.com/p1>" .
+
+<http://ex.com/inv2>   <http://ex.com/path> [ sh:inversePath ( <http://ex.com/p1> <http://ex.com/p2> ) ] ;
+                    <http://ex.com/pathExp> "^(<http://ex.com/p1>/<http://ex.com/p2>)" .
+
+<http://ex.com/alt1>   <http://ex.com/path> [ sh:alternativePath ( <http://ex.com/p1> <http://ex.com/p2> ) ];
+                    <http://ex.com/pathExp> "<http://ex.com/p1>|<http://ex.com/p2>" .
+
+<http://ex.com/alt3>   <http://ex.com/path> [ sh:alternativePath ( <http://ex.com/p1> <http://ex.com/p2> <http://ex.com/p3> )] ;
+                    <http://ex.com/pathExp> "(<http://ex.com/p1>|<http://ex.com/p2>)|<http://ex.com/p3>" .
+
+<http://ex.com/zom1>   <http://ex.com/path> [ sh:zeroOrMorePath [ sh:alternativePath ( <http://ex.com/p1> <http://ex.com/p2> ) ] ];
+                    <http://ex.com/pathExp> "(<http://ex.com/p1>|<http://ex.com/p2>)*" .
+
+<http://ex.com/zom2>   <http://ex.com/path> [ sh:zeroOrMorePath ( <http://ex.com/p1> <http://ex.com/p2> <http://ex.com/p3> )] ;
+                    <http://ex.com/pathExp> "((<http://ex.com/p1>/<http://ex.com/p2>)/<http://ex.com/p3>)*" .
+
+
+<http://ex.com/zoo1>   <http://ex.com/path> [ sh:zeroOrOnePath [ sh:alternativePath ( <http://ex.com/p1> <http://ex.com/p2> ) ] ];
+                    <http://ex.com/pathExp> "(<http://ex.com/p1>|<http://ex.com/p2>)?" .
+
+<http://ex.com/zoo2>   <http://ex.com/path> [ sh:zeroOrOnePath ( <http://ex.com/p1> <http://ex.com/p2> <http://ex.com/p3> )] ;
+                    <http://ex.com/pathExp> "((<http://ex.com/p1>/<http://ex.com/p2>)/<http://ex.com/p3>)?" .
+
+
+<http://ex.com/oom1>   <http://ex.com/path> [ sh:oneOrMorePath [ sh:alternativePath ( <http://ex.com/p1> <http://ex.com/p2> ) ] ];
+                    <http://ex.com/pathExp> "(<http://ex.com/p1>|<http://ex.com/p2>)+" .
+
+<http://ex.com/oom2>   <http://ex.com/path> [ sh:oneOrMorePath ( <http://ex.com/p1> <http://ex.com/p2> <http://ex.com/p3> )] ;
+                    <http://ex.com/pathExp> "((<http://ex.com/p1>/<http://ex.com/p2>)/<http://ex.com/p3>)+" .

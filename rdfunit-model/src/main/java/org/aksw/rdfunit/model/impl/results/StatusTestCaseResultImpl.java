@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.impl.results;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -13,6 +15,8 @@ import org.apache.jena.rdf.model.Resource;
  * @since 1 /6/14 3:26 PM
  * @version $Id: $Id
  */
+@ToString
+@EqualsAndHashCode(exclude = "element")
 public class StatusTestCaseResultImpl extends BaseTestCaseResultImpl implements StatusTestCaseResult {
     private final TestCaseResultStatus status;
 

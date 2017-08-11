@@ -22,6 +22,7 @@
         <module>rdfunit-model</module>
         <module>rdfunit-io</module>
         <module>rdfunit-w3c-dqv</module>
+        <!--module>rdfunit-w3c-tests</module--> <!-- removed from aggregation, kept as inheritance -->
     </modules>
 
     <issueManagement>
@@ -63,9 +64,9 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>3.1.0-1</jena-sparql-api-version>
-        <org-apache-jena-version>3.1.0</org-apache-jena-version>
-        <slf4j-version>1.7.21</slf4j-version>
+        <jena-sparql-api-version>3.4.0-1 </jena-sparql-api-version>
+        <org-apache-jena-version>3.4.0</org-apache-jena-version>
+        <slf4j-version>1.7.25</slf4j-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
 
@@ -169,7 +170,15 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>19.0</version>
+                <version>22.0</version>
+            </dependency>
+
+            <!-- Vavr -->
+
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>0.9.0</version>
             </dependency>
 
             <!-- Lombok -->
@@ -177,7 +186,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.10</version>
+                <version>1.16.16</version>
                 <scope>provided</scope>
             </dependency>
 

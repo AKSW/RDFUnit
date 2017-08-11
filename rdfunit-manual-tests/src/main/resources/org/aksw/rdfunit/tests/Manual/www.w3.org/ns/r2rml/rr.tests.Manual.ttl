@@ -49,7 +49,7 @@ rutt:rr-subjectmap-template-missing-class
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate . } """ ;
 rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
 	];
     rut:resultAnnotation [
@@ -103,7 +103,7 @@ rutt:rr-predicateObjectMap-wrong-domain
                                  ?poMap <http://www.w3.org/ns/r2rml#predicate>|(<http://www.w3.org/ns/r2rml#predicateMap>/<http://www.w3.org/ns/r2rml#constant>) ?predicate . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
 	];
 	rut:resultAnnotation [
@@ -168,7 +168,7 @@ rutt:rr-predicateObjectMap-missing-datatype
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#datatype> ;
 	];
     rut:resultAnnotation [
@@ -230,7 +230,7 @@ rutt:rr-predicateObjectMap-incorrect-datatype
                                  ?poMap <http://www.w3.org/ns/r2rml#objectMap> ?this . }  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#datatype> ;
 	];
 	rut:resultAnnotation [
@@ -292,7 +292,7 @@ rutt:rr-predicateObjectMap-constant-should-NOT-be-IRI
                                  ?this <http://www.w3.org/ns/r2rml#constant> ?constant .}  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#termType> ;
 	];
 	rut:resultAnnotation [
@@ -353,7 +353,7 @@ rutt:rr-predicateObjectMap-should-be-IRI
                                  ?this <http://www.w3.org/ns/r2rml#constant>|<http://www.w3.org/ns/r2rml#template>|<http://www.w3.org/ns/r2rml#column> ?val .}  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#termType> ;
 	];
 	rut:resultAnnotation [
@@ -414,7 +414,7 @@ rutt:rr-produces-disjoint-class-errors
     rut:sparqlPrevalence """  """ ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
 	];
     rut:resultAnnotation [
@@ -478,7 +478,7 @@ rutt:rr-produces-range-errors
                              ?predicate rdfs:range ?T2 .  }""" ;
     rut:resultAnnotation [
        a rut:ResultAnnotation ;
-       rut:annotationProperty sh:predicate ;
+       rut:annotationProperty sh:path ;
        rut:annotationValue <http://www.w3.org/ns/r2rml#class> ;
     ];
     rut:resultAnnotation [
@@ -522,7 +522,7 @@ rutt:rr-language-missing
                                     <http://www.w3.org/ns/r2rml#objectMap> ?this .}""" ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#language> ;
 	];
     rut:resultAnnotation [
@@ -552,7 +552,7 @@ rutt:rr-deprecated-property
                                     <http://www.w3.org/ns/r2rml#objectMap> ?this .}""" ;
 	rut:resultAnnotation [
 	   a rut:ResultAnnotation ;
-	   rut:annotationProperty sh:predicate ;
+	   rut:annotationProperty sh:path ;
 	   rut:annotationValue <http://www.w3.org/ns/r2rml#language> ;
 	];
     rut:resultAnnotation [

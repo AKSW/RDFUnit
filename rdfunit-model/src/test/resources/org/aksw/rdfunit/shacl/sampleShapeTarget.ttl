@@ -14,16 +14,16 @@ ex:MyShape
 	sh:targetClass ex:Person ;
 
 	sh:property [
-		sh:predicate ex:value ;
-		sh:valueShape ex:MyNestedShape ;
+		sh:path ex:value ;
+		sh:node ex:MyNestedShape ;
 	] ;
 	.
 
 ex:MyNestedShape
 	a sh:Shape ;
 	sh:property [
-		sh:predicate ex:value2 ;
-		sh:valueShape ex:MyNestedShape2 ;
+		sh:path ex:value2 ;
+		sh:node ex:MyNestedShape2 ;
 	] ;
 	.
 

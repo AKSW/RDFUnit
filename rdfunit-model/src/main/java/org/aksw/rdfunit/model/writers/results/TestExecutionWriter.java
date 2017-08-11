@@ -6,6 +6,7 @@ import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
+import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -26,27 +27,12 @@ public final class TestExecutionWriter implements ElementWriter {
     /** {@inheritDoc} */
     @Override
     public Resource write(Model model) {
+
         Resource resource = ElementWriter.copyElementResourceInModel(testExecution, model);
 
-
-        //Resource testSuiteResource = testSuite.serialize(getModel());
-
-
         resource.addProperty(RDF.type, PROV.Activity)
-                .addProperty(RDF.type, RDFUNITv.TestExecution);
-
-        //Test suite
-        /*
-        Resource testSuiteResource = testExecution.getTestSuite().serialize(model);
-
-        testSuiteResource
-                .addProperty(RDF.type, RDFUNITv.TestSuite)
-                .addProperty(RDF.type, PROV.Collection);
-
-        for (String tc: testExecution.getTestCasesUris()) {
-            testSuiteResource.addProperty(PROV.hadMember, model.createResource(tc));
-        }
-        resource.addProperty(PROV.used, testSuiteResource);   */
+                .addProperty(RDF.type, RDFUNITv.TestExecution)
+                .addProperty(RDF.type, SHACL.ValidationReport);
 
         // metadata
         resource.addProperty(RDFUNITv.executionType, testExecution.getTestExecutionType().name())
@@ -72,16 +58,21 @@ public final class TestExecutionWriter implements ElementWriter {
                         ResourceFactory.createTypedLiteral(Long.toString(rs.getErrorTests()), XSDDatatype.XSDnonNegativeInteger))
                 .addProperty(RDFUNITv.totalIndividualErrors,
                         ResourceFactory.createTypedLiteral(Long.toString(rs.getIndividualErrors()), XSDDatatype.XSDnonNegativeInteger))
+                .addProperty(SHACL.conforms,
+                        ResourceFactory.createTypedLiteral((rs.getIndividualErrors() == 0 ? "true" : "false"), XSDDatatype.XSDboolean))
                 ;
 
         // Associate the constraints to the execution
         for (String src : testExecution.getSchemataUris()) {
-            resource.addProperty( PROV.wasAssociatedWith, model.createResource(src));
+            Resource resultIri = model.createResource(src);
+            resource.addProperty( PROV.wasAssociatedWith, resultIri);
         }
 
         // Write individual results
         for (TestCaseResult result : testExecution.getTestCaseResults()) {
-            TestCaseResultWriter.create(result, testExecution.getTestExecutionUri()).write(model);
+            Resource resultIri = TestCaseResultWriter.create(result, testExecution.getTestExecutionUri()).write(model);
+            resource.addProperty(SHACL.result, resultIri);
+
         }
 
         return resource;

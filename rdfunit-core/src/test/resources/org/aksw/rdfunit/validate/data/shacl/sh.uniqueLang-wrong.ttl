@@ -1,0 +1,23 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:11 a ex:UniqueLangShape ;
+  ex:checkUniqueLang "abc"@en ;
+  ex:checkUniqueLang "abc"@de ;
+  ex:checkUniqueLang "abcr"@de ; # error 1
+  .
+
+
+ex:12 a ex:UniqueLangShape ; # correct
+  ex:checkUniqueLang "abc"@en ;
+  ex:checkUniqueLang "abcr"@de ;
+  .
+
+
+ex:13 a ex:UniqueLangShape ; # correct
+  ex:checkUniqueLang "a" ;
+  ex:checkUniqueLang "b" ;
+  .

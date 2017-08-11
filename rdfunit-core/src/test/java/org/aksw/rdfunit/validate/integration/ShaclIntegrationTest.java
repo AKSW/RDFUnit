@@ -17,19 +17,30 @@ public class ShaclIntegrationTest {
     public static Collection<Object[]> resources() {
         return Arrays.asList(new Object[][]{
                 {"shacl/sh.class-correct.ttl", 0},
-                {"shacl/sh.class-wrong.ttl", 2},
-                {"shacl/sh.directType-correct.ttl", 0},
-                {"shacl/sh.directType-wrong.ttl", 2},
+                {"shacl/sh.class-wrong.ttl", 1},
+                {"shacl/sh.class-correct-node.ttl", 0},
+                {"shacl/sh.class-wrong-node.ttl", 2},
+
                 {"shacl/sh.datatype-correct.ttl", 0},
-                {"shacl/sh.datatype-wrong.ttl", 2},
+                {"shacl/sh.datatype-wrong.ttl", 1},
+                {"shacl/sh.datatype-correct-node.ttl", 0},
+                {"shacl/sh.datatype-wrong-node.ttl", 1},
+
+                {"shacl/sh.uniqueLang-correct.ttl", 0},
+                //{"shacl/sh.uniqueLang-wrong.ttl", 1},
+                {"shacl/sh.languageIn-correct.ttl", 0},
+                {"shacl/sh.languageIn-wrong.ttl", 1},
+
 
                 {"shacl/sh.equals-correct.ttl", 0},
-                {"shacl/sh.equals-wrong.ttl", 4},
-                {"shacl/sh.notEquals-correct.ttl", 0},
-                {"shacl/sh.notEquals-wrong.ttl", 4},
+                //{"shacl/sh.equals-wrong.ttl", 4},
+                {"shacl/sh.disjoint-correct.ttl", 0},
+                {"shacl/sh.disjoint-wrong.ttl", 4},
 
-                {"shacl/sh.hasValue-In-correct.ttl", 0},
-                {"shacl/sh.hasValue-In-wrong.ttl", 4},
+                {"shacl/sh.hasValue-correct.ttl", 0},
+                {"shacl/sh.hasValue-wrong.ttl", 2},
+                {"shacl/sh.in-correct.ttl", 0},
+                {"shacl/sh.in-wrong.ttl", 2},
 
                 {"shacl/sh.min.maxCount-correct.ttl", 0},
                 {"shacl/sh.minCount-wrong.ttl", 3},
@@ -45,14 +56,16 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.pattern-correct.ttl", 0},
                 {"shacl/sh.pattern-wrong.ttl", 3},
 
-                {"shacl/sh.valueShape-correct.ttl", 0},
-                {"shacl/sh.valueShape-wrong.ttl", 3},
+                {"shacl/sh.node-correct.ttl", 0},
+                {"shacl/sh.node-wrong.ttl", 3},
 
-                {"shacl/sh.nodeType-correct.ttl", 0},
-                {"shacl/sh.nodeType-wrong-IRI.ttl", 2},
-                {"shacl/sh.nodeType-wrong-Literal.ttl", 2},
-                {"shacl/sh.nodeType-wrong-BlankNode.ttl", 2},
-
+                {"shacl/sh.nodeKind-correct.ttl", 0},
+                {"shacl/sh.nodeKind-wrong-IRI.ttl", 2},
+                {"shacl/sh.nodeKind-wrong-Literal.ttl", 2},
+                {"shacl/sh.nodeKind-wrong-BlankNode.ttl", 2},
+                {"shacl/sh.nodeKind-wrong-BlankNodeOrIri.ttl", 1},
+                {"shacl/sh.nodeKind-wrong-BlankNodeOrLiteral.ttl", 1},
+                {"shacl/sh.nodeKind-wrong-IriOrLiteral.ttl", 1},
         });
 
     }
