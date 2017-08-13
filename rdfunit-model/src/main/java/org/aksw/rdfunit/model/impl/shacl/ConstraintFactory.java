@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.helper.PropertySingleValuePair;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
-import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,13 +44,7 @@ public final class ConstraintFactory {
                             .findFirst();
             if (validator.isPresent()) {
 
-                // FIXME get message from Shape for override
-                Literal errorMessage = shape.getMessage().orElse(ResourceFactory.createStringLiteral("Unknown Error"));
-                if (validator.get().getDefaultMessage().isPresent()) {
-                    errorMessage = validator.get().getDefaultMessage().get();
-                }
                 constraintBuilder
-                        .message(errorMessage)
                         .validator(validator.get())
                 ;
 

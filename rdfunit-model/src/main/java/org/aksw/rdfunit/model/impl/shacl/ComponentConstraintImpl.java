@@ -33,10 +33,29 @@ import java.util.stream.Collectors;
 @Value
 public class ComponentConstraintImpl implements ComponentConstraint {
     @Getter @NonNull private final Shape shape;
-    @Getter @NonNull private final Literal message;
     @Getter @NonNull private final Component component;
     @NonNull private final ComponentValidator validator;
     @Getter @NonNull @Singular private final ImmutableMap<ComponentParameter, RDFNode> bindings;
+
+    @Override
+    public Literal getMessage() {
+        if (shape.getMessage().isPresent()) {
+            return shape.getMessage().get();
+        } else {
+            if (validator.getDefaultMessage().isPresent()) {
+                String messageLanguage = validator.getDefaultMessage().get().getLanguage();
+                String message = replaceMessageBindings(validator.getDefaultMessage().get().getLexicalForm());
+                if (messageLanguage == null || messageLanguage.isEmpty()) {
+                    return ResourceFactory.createStringLiteral(message);
+                } else {
+                    return ResourceFactory.createLangLiteral(message, messageLanguage);
+                }
+            }
+            else {
+                return ResourceFactory.createStringLiteral("Unknown Violation");
+            }
+        }
+    }
 
     @Override
     public TestCase getTestCase() {
@@ -129,24 +148,20 @@ public class ComponentConstraintImpl implements ComponentConstraint {
             return sparqlSnippet;
     }
 
-    private String replaceBinding(String sparql, ComponentParameter componentParameter, RDFNode value) {
-        return sparql.replaceAll(Pattern.quote("$"+ componentParameter.getPredicate().getLocalName()), Matcher.quoteReplacement(formatRdfValue(value).replace("\\", "\\\\")));
+    private String replaceMessageBindings(String lexicalForm) {
+
+        String message = lexicalForm;
+        if (shape.isPropertyShape()) {
+            message = message.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
+        }
+        for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
+            message = replaceMessageBinding(message, entry.getKey(), entry.getValue());
+        }
+        return message;
     }
 
-    private Literal generateMessage() {
-
-        if (shape.getMessage().isPresent()) {
-            return shape.getMessage().get();
-        } else {
-            String messageLanguage = message.getLanguage();
-            String message = this.message.getLexicalForm();
-            //String message = replaceBindings(this.message.getLexicalForm());
-            if (messageLanguage == null || messageLanguage.isEmpty()) {
-                return ResourceFactory.createStringLiteral(message);
-            } else {
-                return ResourceFactory.createLangLiteral(message, messageLanguage);
-            }
-        }
+    private String replaceMessageBinding(String sparql, ComponentParameter componentParameter, RDFNode value) {
+        return sparql.replaceAll("[\\$\\?]"+ componentParameter.getPredicate().getLocalName(), Matcher.quoteReplacement(formatRdfValue(value).replace("\\", "\\\\")));
     }
 
     private String formatRdfValue(RDFNode value) {
@@ -166,7 +181,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
                 Collections.emptyList(),
-                generateMessage().getLexicalForm(),
+                getMessage().getLexicalForm(),
                 RLOGLevel.ERROR, //FIXME
                 createResultAnnotations()
         );
@@ -182,7 +197,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
 
         if (shape.getMessage().isPresent()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
-                    .setValue(shape.getMessage().get()).build());
+                    .setValue(getMessage()).build());
         }
 
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)

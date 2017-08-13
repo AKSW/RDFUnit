@@ -194,8 +194,9 @@ public class W3CShaclTestSuite {
             statementsForRemoval.forEach(adjustedReport::remove);
 
             adjustedReport.removeAll(null, SHACL.message, null);
+
             for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
-                if(!getAdjustedExpectedReport().contains(null, SHACL.resultMessage, s.getObject())) {
+                if(getAdjustedExpectedReport().listSubjectsWithProperty(SHACL.resultMessage, s.getObject()).toSet().isEmpty()) {
                     adjustedReport.remove(s);
                 }
             }
