@@ -21,7 +21,7 @@ public final class ConstraintTestCaseFactory {
         ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
 
         ConstraintFactory.createFromShapeAndComponent(shape, component)
-                .ifPresent(c -> testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromConstraintAndTargets(c, shapeTargets)));
+                .forEach(c -> testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromConstraintAndTargets(c, shapeTargets)));
 
         return testCaseBuilder.build();
     }

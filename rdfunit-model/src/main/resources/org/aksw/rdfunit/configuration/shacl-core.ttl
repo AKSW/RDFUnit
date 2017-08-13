@@ -94,7 +94,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be $nodeKind" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRI>)} """ ;
         sh:ask """
             ASK {
@@ -104,7 +104,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be $nodeKind" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#Literal>)} """ ;
         sh:ask """
             ASK {
@@ -114,7 +114,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be $nodeKind" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNode>)} """ ;
         sh:ask """
             ASK {
@@ -124,7 +124,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be $nodeKind" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNodeOrIRI>)} """ ;
         sh:ask """
             ASK {
@@ -134,7 +134,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be $nodeKind" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#BlankNodeOrLiteral>)} """ ;
         sh:ask """
             ASK {
@@ -144,7 +144,7 @@ sh:NodeKindConstraintComponent
     sh:validator [
         # when flags are present
         a sh:SPARQLAskValidator ;
-        sh:message "sh:nodeKind should be '$nodeKind'" ;
+        sh:message "sh:nodeKind should be $nodeKind" ;
         shr:filter """ ASK { FILTER ($nodeKind = <http://www.w3.org/ns/shacl#IRIOrLiteral>)} """ ;
         sh:ask """
             ASK {
@@ -166,7 +166,7 @@ sh:MinCountConstraintComponent
     ] ;
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "Minimum cardinality for $PATH is '$minCount'";
+    	sh:message "Minimum cardinality for $PATH is $minCount";
         shr:filter """ ASK { FILTER ($minCount > 1)} """ ;
     	sh:select """
     		SELECT ?this
@@ -187,7 +187,7 @@ sh:MinCountConstraintComponent1
     ] ;
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "Minimum cardinality for $PATH is '$minCount'";
+    	sh:message "Minimum cardinality for $PATH is $minCount";
         shr:filter """ ASK { FILTER ($minCount > 0)} """ ;
     	sh:select """
     		SELECT ?this
@@ -205,7 +205,7 @@ sh:MaxCountConstraintComponent
     ] ;
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "Maximum cardinality for $PATH is '$maxCount'";
+    	sh:message "Maximum cardinality for $PATH is $maxCount";
         shr:filter """ ASK { FILTER ($maxCount > 0)} """ ;
     	sh:select """
     		SELECT ?this
@@ -218,7 +218,7 @@ sh:MaxCountConstraintComponent
     ] ;
     sh:propertyValidator [
         a sh:SPARQLSelectValidator ;
-        sh:message "Maximum cardinality for $PATH is '$maxCount'";
+        sh:message "Maximum cardinality for $PATH is $maxCount";
         shr:filter """ ASK { FILTER ($maxCount = 0)} """ ;
         sh:select """
             SELECT ?this
@@ -242,7 +242,7 @@ sh:MinExclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:minExclusive of $PATH should be '$minExclusive'";
+    	sh:message "sh:minExclusive of $PATH should be $minExclusive";
     	sh:ask """
     		ASK {
             	FILTER ( ?value > $minExclusive)
@@ -259,7 +259,7 @@ sh:MaxExclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:maxExclusive of $PATH should be '$maxExclusive'";
+    	sh:message "sh:maxExclusive of $PATH should be $maxExclusive";
     	sh:ask """
     		ASK {
             	FILTER (?value < $maxExclusive)
@@ -275,7 +275,7 @@ sh:MinInclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:minInclusive of $PATH should be '$minInclusive'";
+    	sh:message "sh:minInclusive of $PATH should be $minInclusive";
     	sh:ask """
     		ASK {
             	FILTER (?value >= $minInclusive)
@@ -292,7 +292,7 @@ sh:MaxInclusiveConstraintComponent
     ] ;
     sh:validator [
     	a sh:SPARQLAskValidator ;
-    	sh:message "sh:maxExclusive of $PATH should be '$maxInclusive'";
+    	sh:message "sh:maxExclusive of $PATH should be $maxInclusive";
     	sh:ask """
     		ASK {
             	FILTER (?value <= $maxInclusive)
@@ -313,7 +313,7 @@ sh:MinLengthConstraintComponent
     sh:validator [
     	a sh:SPARQLAskValidator ;
     	shr:filter "ASK { FILTER ($minLength > 0)}" ;
-    	sh:message "The minimum length of '$PATH' is '$minLength'";
+    	sh:message "The minimum length of $PATH is $minLength";
     	sh:ask """
     		ASK {
             	FILTER (STRLEN(str(?value)) >= $minLength && !isBlank(?value))
@@ -330,7 +330,7 @@ sh:MaxLengthConstraintComponent
     sh:validator [
     	a sh:SPARQLAskValidator ;
     	#shr:filter "ASK { FILTER ($maxLength >= 0)}" ;
-    	sh:message "The maximum length of '$PATH' is '$maxLength'";
+    	sh:message "The maximum length of $PATH is $maxLength";
     	sh:ask """
     		ASK {
             	FILTER (STRLEN(str(?value)) <= $maxLength && !isBlank(?value))
@@ -348,17 +348,14 @@ sh:PatternConstraintComponent
 		sh:path sh:flags ;
 		sh:optional true ;
 	] ;
-    sh:propertyValidator [
+    sh:validator [
         # when flags are present
         a sh:SPARQLSelectValidator ;
         sh:message "Value does not match pattern {$pattern} and flags {$flags}" ;
         shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) != '')}" ;
-        sh:select """
-            SELECT ?this {
-                ?this $PATH ?value .
-                FILTER NOT EXISTS {
-                    FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
-                }
+        sh:ask """
+            ASK {
+                FILTER ((!isBlank(?value)) && regex(str(?value), $pattern, $flags))
             }""" ;
     ] ,
     [
@@ -366,42 +363,11 @@ sh:PatternConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "Value does not match pattern {$pattern}" ;
         shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) = '')}" ;
-        sh:select """
-            SELECT ?this ?value {
-                ?this $PATH ?value .
-                FILTER NOT EXISTS {
-                    FILTER(isBlank(?value) || !regex(str(?value), $pattern))
-                }
+        sh:ask """
+            ASK {
+                FILTER(!isBlank(?value) && regex(str(?value), $pattern))
             }""" ;
-
     ];
-    sh:nodeValidator [
-        # when flags are present
-        a sh:SPARQLSelectValidator ;
-        sh:message "Value does not match pattern {$pattern} and flags {$flags}" ;
-        shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) != '')}" ;
-        sh:select """
-            SELECT ?this {
-                BIND (?this AS ?value) .
-                FILTER NOT EXISTS {
-                    FILTER (isBlank(?value) || !regex(str(?value), $pattern, $flags))
-                }
-            }""" ;
-    ] ,
-    [
-        # when flags are not present
-        a sh:SPARQLSelectValidator ;
-        sh:message "Value does not match pattern {$pattern}" ;
-        shr:filter "ASK { BIND ('$flags' AS ?myFlags) .FILTER (str(?myFlags) = '')}" ;
-        sh:select """
-            SELECT ?this {
-                BIND (?this AS ?value) .
-                FILTER NOT EXISTS {
-                    FILTER (isBlank(?value) || !regex(str(?value), $pattern))
-                }
-            }""" ;
-
-    ]
     .
 
 
@@ -472,7 +438,7 @@ sh:EqualsConstraintComponent
 
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "$PATH should be equal to '$equals'";
+    	sh:message "$PATH should be equal to $equals";
     	sh:select """
     		SELECT DISTINCT ?this ?value
             WHERE {
@@ -493,7 +459,7 @@ sh:EqualsConstraintComponent
     ] ;
     sh:nodeValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "node should be equal to '$equals'";
+    	sh:message "node should be equal to $equals";
     	sh:select """
     		SELECT DISTINCT ?this ?value
             WHERE {
@@ -517,7 +483,7 @@ sh:DisjointConstraintComponent
     ] ;
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "$PATH should not be equal to '$disjoint'";
+    	sh:message "$PATH should not be equal to $disjoint";
     	sh:select """
     		SELECT DISTINCT ?this ?value
             WHERE {
@@ -527,7 +493,7 @@ sh:DisjointConstraintComponent
     ] ;
     sh:nodeValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "node should not be equal to '$disjoint'";
+    	sh:message "node should not be equal to $disjoint";
     	sh:select """
     		SELECT DISTINCT ?this ?value
             WHERE {
@@ -544,14 +510,28 @@ sh:LessThanConstraintComponent
 	sh:parameter [
         sh:path sh:lessThan ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
-    	sh:message "$PATH should be less than '$lessThan'";
-    	sh:ask """
-    		ASK {
-            	?this $lessThan ?value2 .
-            	BIND (?value < ?value2 AS ?result) .
-                FILTER (bound(?result) && (?result)) .
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "$PATH should be less than $lessThan";
+    	sh:select """
+    		SELECT $this ?value
+            WHERE {
+            	$this $PATH ?value .
+            	$this $lessThan ?otherValue .
+            	BIND (?value < ?otherValue AS ?result) .
+            	FILTER (!bound(?result) || !(?result)) .
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "$PATH should be less than $lessThan";
+    	sh:select """
+    		SELECT $this ?value
+            WHERE {
+                BIND (?this AS ?value) .
+            	$this $lessThan ?otherValue .
+            	BIND (?value < ?otherValue AS ?result) .
+            	FILTER (!bound(?result) || !(?result)) .
             }""" ;
     ] ;
     .
@@ -562,14 +542,28 @@ sh:LessThanOrEqualsConstraintComponent
 	sh:parameter [
         sh:path sh:lessThanOrEquals ;
     ] ;
-    sh:validator [
-    	a sh:SPARQLAskValidator ;
-    	sh:message "$PATH should be less than '$lessThanOrEquals'";
-    	sh:ask """
-    		ASK {
-            	?this $lessThanOrEquals ?value2 .
-                BIND (?value <= ?value2 AS ?result) .
-                FILTER (bound(?result) && (?result)) .
+    sh:propertyValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "$PATH should be less than $lessThan";
+    	sh:select """
+    		SELECT $this ?value
+            WHERE {
+            	$this $PATH ?value .
+            	$this $lessThan ?otherValue .
+            	BIND (?value <= ?otherValue AS ?result) .
+            	FILTER (!bound(?result) || !(?result)) .
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+    	a sh:SPARQLSelectValidator ;
+    	sh:message "$PATH should be less than $lessThan";
+    	sh:select """
+    		SELECT $this ?value
+            WHERE {
+                BIND (?this AS ?value) .
+            	$this $lessThan ?otherValue .
+            	BIND (?value <= ?otherValue AS ?result) .
+            	FILTER (!bound(?result) || !(?result)) .
             }""" ;
     ] ;
     .

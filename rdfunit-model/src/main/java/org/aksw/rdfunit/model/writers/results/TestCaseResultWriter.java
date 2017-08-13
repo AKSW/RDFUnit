@@ -98,6 +98,9 @@ public class TestCaseResultWriter implements ElementWriter {
             for (PropertyValuePair annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {
                 for (RDFNode rdfNode : annotation.getValues()) {
                     resource.addProperty(annotation.getProperty(), rdfNode);
+                    if (rdfNode.isAnon() && annotation.getProperty().equals(SHACL.resultPath)) {
+                        resource.getModel().add(rdfNode.getModel());
+                    }
                 }
             }
         }

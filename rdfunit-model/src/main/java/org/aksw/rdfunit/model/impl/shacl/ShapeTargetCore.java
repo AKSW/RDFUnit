@@ -6,11 +6,10 @@ import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.function.Function;
-
-import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 
 @ToString(exclude = "generatePattern")
 @EqualsAndHashCode
@@ -48,18 +47,27 @@ public class ShapeTargetCore implements ShapeTarget {
     }
 
     private static String classTargetPattern(RDFNode node) {
-        return " ?this rdf:type/rdfs:subClassOf* " + formatNode(node) + " . ";
+        return getBindedSparql(" ?this rdf:type/rdfs:subClassOf* ?target . ", node);
     }
 
     private static String nodeTargetPattern(RDFNode node) {
-        return " BIND (" + formatNode(node) + " AS ?this) . ";
+        return getBindedSparql(" BIND (?target AS ?this) . ", node);
     }
     private static String objectsOfTargetPattern(RDFNode node) {
-        return " [] " + formatNode(node) + " ?this .";
+        return getBindedSparql(" [] ?target ?this .", node);
     }
 
     private static String subjectsOfTargetPattern(RDFNode node) {
-        return "?this " + formatNode(node) + " [] .";
+        return getBindedSparql("?this ?target [] .", node);
+    }
+
+    static String getBindedSparql(String sparql, RDFNode node) {
+        ParameterizedSparqlString parameterizedSparqlString = new ParameterizedSparqlString("ASK{" +sparql+ "}");
+        parameterizedSparqlString.setParam("target", node);
+        return parameterizedSparqlString
+                .toString()
+                .replace("ASK{", "")
+                .replace("}", "");
     }
 
 }

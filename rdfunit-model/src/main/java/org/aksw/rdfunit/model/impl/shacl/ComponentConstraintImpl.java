@@ -17,7 +17,9 @@ import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.ARQException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,20 +73,21 @@ public class ComponentConstraintImpl implements ComponentConstraint {
 
             if ( matcher.find()) {
                 String filter = matcher.group(1);
-                return replaceBindings(
-                        "{ " + valuePath + " \n" +
-                            "FILTER EXISTS {\n" +
-                                "BIND ( (!(" + filter +")) AS ?tmp123456)\n" +
-                                "FILTER ( bound(?tmp123456) && (?tmp123456) )\n" +
-                            "}" +
-                        "}"
-                );
+
+                String adjustedSparql =
+                        "ASK { " + valuePath + " \n" +
+                            //"FILTER EXISTS {\n" +
+                                "BIND ( (" + filter +") AS ?tmp123456)\n" +
+                                "FILTER ( !?tmp123456 || !bound(?tmp123456) )\n" +
+                            //"}" +
+                        "}";
+                return replaceBindings(adjustedSparql);
             } else {
                 // otherwise we use MINUS
 
                 String sparqlWhere = sparqlString.trim()
                         .replaceFirst("\\{", "")
-                        .replaceFirst("ASK", Matcher.quoteReplacement("  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
+                        .replaceFirst("ASK", Matcher.quoteReplacement("ASK  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
                         + "}";
 
                return replaceBindings(sparqlWhere);
@@ -99,13 +102,31 @@ public class ComponentConstraintImpl implements ComponentConstraint {
 
     private String replaceBindings(String sparqlSnippet) {
         String bindedSnippet = sparqlSnippet;
-        for (Map.Entry<ComponentParameter, RDFNode>  entry:  bindings.entrySet()) {
-            bindedSnippet = replaceBinding(bindedSnippet, entry.getKey(), entry.getValue());
-        }
+
         if (shape.isPropertyShape()) {
             bindedSnippet = bindedSnippet.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
         }
-        return bindedSnippet;
+        ParameterizedSparqlString query = new ParameterizedSparqlString(bindedSnippet);
+
+        try {
+            for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
+                RDFNode node = entry.getValue();
+                if (RdfListUtils.isList(node)) {
+                    String value = RdfListUtils.getListItemsOrEmpty(node).stream().map(NodeFormatter::formatNode).collect(Collectors.joining(" , "));
+                    query = new ParameterizedSparqlString(
+                            query.toString().replaceAll(
+                                    Pattern.quote("$"+ entry.getKey().getPredicate().getLocalName()), Matcher.quoteReplacement(value)));
+                } else {
+                    query.setParam(entry.getKey().getPredicate().getLocalName(), entry.getValue());
+                }
+            }
+            // FIXME add fixed bindings e.g. $shape etc
+
+            return query.toString().trim().replaceFirst("ASK", ""); // remove ASK...
+            } catch (ARQException e) {
+                // skip this exception
+            }
+            return sparqlSnippet;
     }
 
     private String replaceBinding(String sparql, ComponentParameter componentParameter, RDFNode value) {
@@ -118,7 +139,8 @@ public class ComponentConstraintImpl implements ComponentConstraint {
             return shape.getMessage().get();
         } else {
             String messageLanguage = message.getLanguage();
-            String message = replaceBindings(this.message.getLexicalForm());
+            String message = this.message.getLexicalForm();
+            //String message = replaceBindings(this.message.getLexicalForm());
             if (messageLanguage == null || messageLanguage.isEmpty()) {
                 return ResourceFactory.createStringLiteral(message);
             } else {
