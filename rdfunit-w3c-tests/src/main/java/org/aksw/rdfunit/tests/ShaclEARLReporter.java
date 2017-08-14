@@ -76,8 +76,7 @@ public class ShaclEARLReporter {
 
     public static void main(String[] args) {
 
-        val rootManifestPath = Paths.get("/home/dimitris/bck/home/jim/work/code/docs/data-shapes/" +
-                "data-shapes-test-suite/tests/manifest.ttl");
+        val rootManifestPath = Paths.get("tests/manifest.ttl");
 
         val suite = W3CShaclTestSuite.load(rootManifestPath, false);
 

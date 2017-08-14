@@ -14,5 +14,4 @@ public class ComponentImpl implements Component{
     @Getter @NonNull private final Resource element;
     @Getter @NonNull @Singular private ImmutableList<ComponentParameter> parameters;
     @Getter @NonNull @Singular private ImmutableList<ComponentValidator> validators;
-    @Getter private final boolean partial;
 }

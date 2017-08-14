@@ -6,7 +6,6 @@ import org.aksw.rdfunit.model.interfaces.shacl.Component;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
 import org.aksw.rdfunit.model.readers.ElementReader;
-import org.aksw.rdfunit.vocabulary.RDFUNIT_SHACL_EXT;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -55,11 +54,6 @@ public class ComponentReader implements ElementReader<Component> {
             Resource obj = smt.getObject().asResource();
             ComponentValidator cv = ComponentValidatorReader.create(ComponentValidatorType.PROPERTY_VALIDATOR).read(obj);
             componentBuilder.validator(cv);
-        }
-
-        // get partial
-        for (Statement smt : resource.listProperties(RDFUNIT_SHACL_EXT.partial).toList()) {
-            componentBuilder.partial(smt.getObject().asLiteral().getBoolean());
         }
 
         return componentBuilder.build();

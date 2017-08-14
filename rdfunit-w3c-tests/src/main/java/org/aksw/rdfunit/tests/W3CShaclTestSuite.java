@@ -3,19 +3,15 @@ package org.aksw.rdfunit.tests;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Streams;
-import io.vavr.Function1;
 import io.vavr.collection.List;
 import io.vavr.control.Try;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.aksw.rdfunit.commons.RdfUnitModelFactory;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
-import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
-import org.aksw.rdfunit.model.writers.results.TestCaseResultWriter;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
@@ -38,7 +34,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -195,8 +190,8 @@ public class W3CShaclTestSuite {
 
             adjustedReport.removeAll(null, SHACL.message, null);
 
-            for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
-                if(getAdjustedExpectedReport().listSubjectsWithProperty(SHACL.resultMessage, s.getObject()).toSet().isEmpty()) {
+            if (!getAdjustedExpectedReport().contains(null, SHACL.resultMessage, (RDFNode)null)) {
+                for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
                     adjustedReport.remove(s);
                 }
             }
@@ -235,20 +230,6 @@ public class W3CShaclTestSuite {
 
         private Resource computeOutcome() {
 
-            Function1<Collection<TestCaseResult>, Model> toShaclReportGraph = testCaseResults -> {
-
-                val model = RdfUnitModelFactory.createDefaultModel();
-
-                for(val tcr: testCaseResults) {
-                    val writer = TestCaseResultWriter.create(tcr, "urn:x-todo-check-this");
-                    writer.write(model);
-                }
-
-                return model;
-            };
-
-
-
             if (getExecution().isFailure()) {
                 // expected error
                 if (getAdjustedExpectedReport().isEmpty()) {
@@ -264,8 +245,6 @@ public class W3CShaclTestSuite {
             TestExecutionWriter.create(getExecution().get()).write(originalActualReport);
             final Model adjustedActualReport = this.adjustActualReport(originalActualReport);
 
-
-
             val isIsomorphic = getAdjustedExpectedReport().isIsomorphicWith(adjustedActualReport);
 
 
@@ -278,10 +257,10 @@ public class W3CShaclTestSuite {
                     int expectedViolations = getAdjustedExpectedReport().listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     int actualViolations = adjustedActualReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     String file = this.manifest.sourceFile.toString().replace("/", "_");
-                    file = file.substring(file.indexOf("tests"));
-                    File dirs1 = new File("data/shacl/partial");
+                    file = file.substring(file.lastIndexOf("tests")+6);
+                    File dirs1 = new File("results/partial");
                     dirs1.mkdirs();
-                    File dirs2 = new File("data/shacl/failed");
+                    File dirs2 = new File("results/failed");
                     dirs2.mkdirs();
 
                     if (
@@ -290,9 +269,9 @@ public class W3CShaclTestSuite {
                             || (expectedViolations > 0 && actualViolations > 0 )))
                     {
                         try {
-                            new RdfFileWriter("data/shacl/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
-                            //new RdfFileWriter("data/shacl/partial/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                            new RdfFileWriter("data/shacl/partial/" + file + ".actual.ttl").write(adjustedActualReport);
+                            new RdfFileWriter("results/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
+                            new RdfFileWriter("results/partial/" + file + ".actual.before.ttl").write(originalActualReport);
+                            new RdfFileWriter("results/partial/" + file + ".actual.ttl").write(adjustedActualReport);
                         } catch (RdfWriterException e) {
                             e.printStackTrace();
                         }
@@ -300,9 +279,9 @@ public class W3CShaclTestSuite {
                     }
 
                     try {
-                        new RdfFileWriter("data/shacl/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
-                        //new RdfFileWriter("data/shacl/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                        new RdfFileWriter("data/shacl/fail/" + file + ".actual.ttl").write(adjustedActualReport);
+                        new RdfFileWriter("results/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
+                        //new RdfFileWriter("results/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
+                        new RdfFileWriter("results/fail/" + file + ".actual.ttl").write(adjustedActualReport);
 
                     } catch (RdfWriterException e) {
                         e.printStackTrace();
@@ -427,8 +406,7 @@ public class W3CShaclTestSuite {
 
     public static void main(String[] args) {
 
-        val rootManifestPath = Paths.get("/home/dimitris/bck/home/jim/work/code/docs/data-shapes/" +
-                "data-shapes-test-suite/tests/manifest.ttl");
+        val rootManifestPath = Paths.get("tests/manifest.ttl");
 
         log.info("{} test cases found.", new Manifest(rootManifestPath).getTestCasesRecursive().count());
 

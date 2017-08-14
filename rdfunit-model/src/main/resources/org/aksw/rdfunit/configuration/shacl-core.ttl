@@ -160,7 +160,6 @@ sh:NodeKindConstraintComponent
 
 sh:MinCountConstraintComponent
     a sh:ConstraintComponent ;
-	shr:partial "true"^^xsd:boolean ;
 	sh:parameter [
         sh:path sh:minCount ;
     ] ;
@@ -176,14 +175,6 @@ sh:MinCountConstraintComponent
             GROUP BY ?this
             HAVING ( ( count(?value)  < $minCount ) && ( count(?value)  != 0 ) )
         """ ;
-    ] ;
-    .
-
-sh:MinCountConstraintComponent1
-    a sh:ConstraintComponent ;
-	shr:partial "true"^^xsd:boolean ;
-	sh:parameter [
-        sh:path sh:minCount ;
     ] ;
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;

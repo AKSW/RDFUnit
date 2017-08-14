@@ -16,8 +16,6 @@ public final class RDFUNIT_SHACL_EXT {
 
     //properties
     public static final Property filter = property("filter");
-    public static final Property partial = property("partial");
-
 
     private RDFUNIT_SHACL_EXT() {
 

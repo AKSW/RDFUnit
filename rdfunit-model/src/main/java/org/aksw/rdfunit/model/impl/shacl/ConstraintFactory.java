@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.helper.PropertySingleValuePair;
-import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
@@ -22,49 +21,45 @@ public final class ConstraintFactory {
         ImmutableSet.Builder<ComponentConstraint> constraints = ImmutableSet.builder();
 
         getComponentShapeBindings(component, shape).forEach( bindingPairs -> {
-            ComponentConstraintImpl.ComponentConstraintImplBuilder constraintBuilder = ComponentConstraintImpl.builder();
-            constraintBuilder
-                    .shape(shape)
-                    .component(component);
 
+            // get bindings
             Map<ComponentParameter, RDFNode> bindings = new HashMap<>();
             component.getParameters().forEach(parameter -> {
                 Optional<RDFNode> node = bindingPairs.stream()
                         .filter(p -> p.getProperty().equals(parameter.getPredicate()))
-                        .map(p -> p.getValue())
-                        .findFirst();
+                        .map(PropertySingleValuePair::getValue)
+                        .findAny();
                 node.ifPresent(rdfNode -> bindings.put(parameter, rdfNode));
             });
-            constraintBuilder.bindings(bindings);
 
-            //validator picking
-            Optional<ComponentValidator> validator =
+            // get validators
+            Set<ComponentValidator> validators =
                     component.getValidators().stream()
                             .filter(v -> v.filterAppliesForBindings(shape.getShapeType(), bindings))
-                            .findFirst();
-            if (validator.isPresent()) {
+                            .collect(Collectors.toSet());
+
+
+            if (validators.isEmpty()) {
+                log.warn("No validators found for shape {} and component {}", shape, component);
+            }
+
+            // for multiple validators
+            validators.forEach(validator -> {
+                ComponentConstraintImpl.ComponentConstraintImplBuilder constraintBuilder = ComponentConstraintImpl.builder();
 
                 constraintBuilder
-                        .validator(validator.get())
+                        .shape(shape)
+                        .component(component)
+                        .bindings(bindings)
+                        .validator(validator)
                 ;
 
                 constraints.add(constraintBuilder.build());
-            } else {
-                if(!component.isPartial())
-                    log.warn("No validators found for shape {} and component {}", shape, component);
-            }
+            });
 
         });
 
         return constraints.build();
-    }
-
-    private static boolean canBindComponentToShape(Component component, Shape shape) {
-
-        Set<Property> parameterPropertiesRequired = component.getParameters().stream().filter(ComponentParameter::isRequired).map(ComponentParameter::getPredicate).collect(Collectors.toSet());
-        Set<Property> availableProperties = shape.getPropertyValuePairSets().getAnnotations().stream().map(PropertyValuePair::getProperty).collect(Collectors.toSet());
-
-        return availableProperties.containsAll(parameterPropertiesRequired);
     }
 
     private static Set<Set<PropertySingleValuePair>> getComponentShapeBindings(Component component, Shape shape) {
