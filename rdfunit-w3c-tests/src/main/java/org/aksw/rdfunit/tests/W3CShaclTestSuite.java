@@ -136,6 +136,7 @@ public class W3CShaclTestSuite {
                                                         SHACL.focusNode,
                                                         SHACL.resultPath,
                                                         SHACL.resultSeverity,
+                                                        SHACL.resultMessage,
                                                         SHACL.sourceConstraint,
                                                         SHACL.sourceConstraintComponent,
                                                         SHACL.sourceShape,
@@ -189,9 +190,8 @@ public class W3CShaclTestSuite {
             statementsForRemoval.forEach(adjustedReport::remove);
 
             adjustedReport.removeAll(null, SHACL.message, null);
-
-            if (!getAdjustedExpectedReport().contains(null, SHACL.resultMessage, (RDFNode)null)) {
-                for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
+            for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
+                if(!getAdjustedExpectedReport().contains(null, SHACL.resultMessage, s.getObject())) {
                     adjustedReport.remove(s);
                 }
             }
