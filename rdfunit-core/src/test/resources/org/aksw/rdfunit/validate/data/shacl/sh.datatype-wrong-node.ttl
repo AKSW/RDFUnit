@@ -4,4 +4,4 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:1 ex:booleanValues "100000"^^xsd:int . ## should be boolean
+ex:1 ex:booleanValues "true"^^xsd:int . ## should be boolean

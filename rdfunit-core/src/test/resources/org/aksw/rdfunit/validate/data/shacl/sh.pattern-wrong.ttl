@@ -5,14 +5,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:1 rdf:type ex:Person ;
-  ex:checkPattern " start with space" ;
+  ex:checkPattern "does not start with space" ;
   .
 
 ex:2 rdf:type ex:Person ;
-  ex:checkPattern " start with Tab" ;
-  .
-
-ex:3 rdf:type ex:Person ;
-  ex:checkPattern """
-  start with new line""" ;
+  ex:checkPattern "ends with space " ;
   .

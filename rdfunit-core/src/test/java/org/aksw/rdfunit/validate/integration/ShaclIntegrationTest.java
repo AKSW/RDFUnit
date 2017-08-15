@@ -54,7 +54,7 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.min.maxExclusive-wrong.ttl", 2},
 
                 {"shacl/sh.pattern-correct.ttl", 0},
-                {"shacl/sh.pattern-wrong.ttl", 3},
+                {"shacl/sh.pattern-wrong.ttl", 2},
 
                 {"shacl/sh.node-correct.ttl", 0},
                 {"shacl/sh.node-wrong.ttl", 3},

@@ -5,13 +5,14 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:1 rdf:type ex:Person ;
-  ex:checkPattern "Ali...anything" ;
+  ex:checkPattern " withSpace" ;
   .
 
 ex:2 rdf:type ex:Person ;
-  ex:checkPattern "AlIIII" ;
+  ex:checkPattern " with tab" ;
   .
 
 ex:3 rdf:type ex:Person ;
-  ex:checkPattern "ali" ;
+  ex:checkPattern """
+with new line""" ;
   .
