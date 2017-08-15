@@ -354,7 +354,7 @@ sh:PatternConstraintComponent
         # when flags are present
         a sh:SPARQLSelectValidator ;
         sh:message "Value does not match pattern {$pattern} and flags {$flags}" ;
-        shr:filter "ASK { FILTER ($flags != '')}" ;
+        shr:filter "ASK { FILTER (isLiteral($flags) && $flags != '')}" ;
         sh:ask """
             ASK {
                 FILTER ((!isBlank(?value)) && regex(str(?value), $pattern, $flags))
@@ -365,7 +365,7 @@ sh:PatternConstraintComponent
         # when flags are not present
         a sh:SPARQLSelectValidator ;
         sh:message "Value does not match pattern {$pattern}" ;
-        shr:filter "ASK { FILTER ($flags = '')}" ;
+        shr:filter "ASK { FILTER (!( isLiteral($flags) && $flags != '' ) )}" ;
         sh:ask """
             ASK {
                 FILTER(!isBlank(?value) && regex(str(?value), $pattern))
