@@ -70,23 +70,52 @@ public final class ConstraintFactory {
                 .flatMap(p -> PropertySingleValuePair.create(p).stream())
                 .collect(Collectors.toSet());
 
+
         if (bindingPairs.isEmpty()) {
             return ImmutableSet.of();
         }
 
         int maxParametersSize = parameterProperties.size();
-        Set<Property> requiredParameters = component.getParameters().stream().filter(p -> !p.isOptional()).map(ComponentParameter::getPredicate).collect(Collectors.toSet());
+        Set<Property> requiredParameters = component.getParameters().stream()
+                .filter(p -> !p.isOptional())
+                .map(ComponentParameter::getPredicate)
+                .collect(Collectors.toSet());
         int requiredParameterSize = requiredParameters.size();
 
+        // add defaultvalues if no values are defined
+        Set<Property> optionalParametersWithDefaultValue = component.getParameters().stream()
+                .filter(ComponentParameter::isOptional)
+                .filter(p -> p.getDefaultValue().isPresent())
+                .map(ComponentParameter::getPredicate).collect(Collectors.toSet());
+        Set<Property> existingPropertiesInBindings = bindingPairs.stream().map(PropertySingleValuePair::getProperty).collect(Collectors.toSet());
+        optionalParametersWithDefaultValue.forEach(opPar -> {
+            if (!existingPropertiesInBindings.contains(opPar)) {
+                component.getParameter(opPar).get().getDefaultValue()
+                        .ifPresent(v -> bindingPairs.add(PropertySingleValuePair.create(opPar, v)));
+            }
+        });
+
+        Set<Property> finalTotalPropertiesInBindings = bindingPairs.stream().map(PropertySingleValuePair::getProperty).collect(Collectors.toSet());
+
+
         ImmutableSet.Builder<Set<PropertySingleValuePair>> pairs = ImmutableSet.builder();
-        for (int i = requiredParameterSize; i<=maxParametersSize && i <= bindingPairs.size(); i++ ) {
+        for (int i = Math.max(requiredParameterSize, finalTotalPropertiesInBindings.size()); i<=maxParametersSize && i <= bindingPairs.size(); i++ ) {
             pairs.addAll(Sets.combinations(bindingPairs, i));
+        }
+
+        if (!optionalParametersWithDefaultValue.isEmpty()) {
+            int i = 0;
         }
 
         return pairs.build().stream()
                 .filter( pairA -> {
                     // delete pairs without the required parameters
                     List<Property> pairAProperties = pairA.stream().map(PropertySingleValuePair::getProperty).collect(Collectors.toList());
+
+                    //delete pairs that do not have parameters for all values
+                    if (ImmutableSet.copyOf(pairAProperties).size() < finalTotalPropertiesInBindings.size()) {
+                        return false;
+                    }
 
                     // check if it has duplicates (if set size is smaller that list size)
                     if (ImmutableSet.copyOf(pairAProperties).size() != pairAProperties.size()) {

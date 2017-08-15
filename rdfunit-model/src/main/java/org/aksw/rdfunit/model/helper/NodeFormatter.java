@@ -9,6 +9,8 @@ import org.apache.jena.rdf.model.RDFNode;
  */
 public final class NodeFormatter {
 
+    private NodeFormatter(){}
+
     public static String formatNode(RDFNode node) {
         if (node.isURIResource()) {
             return "<" + node.asResource().getURI().trim().replace(" ", "") + ">";

@@ -270,7 +270,7 @@ public class W3CShaclTestSuite {
                     {
                         try {
                             new RdfFileWriter("results/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
-                            new RdfFileWriter("results/partial/" + file + ".actual.before.ttl").write(originalActualReport);
+                            //new RdfFileWriter("results/partial/" + file + ".actual.before.ttl").write(originalActualReport);
                             new RdfFileWriter("results/partial/" + file + ".actual.ttl").write(adjustedActualReport);
                         } catch (RdfWriterException e) {
                             e.printStackTrace();

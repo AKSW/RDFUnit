@@ -2,12 +2,12 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.ShapeType;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
-import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.*;
@@ -22,6 +22,7 @@ import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 @ToString
 @EqualsAndHashCode(exclude={"element"})
 @Builder
+@Slf4j
 public class ComponentValidatorImpl implements ComponentValidator {
     @Getter @NonNull private final Resource element;
     @Getter private final Literal message;
@@ -65,9 +66,11 @@ public class ComponentValidatorImpl implements ComponentValidator {
 
     private boolean checkFilter(String askQuery) {
         Model m = ModelFactory.createDefaultModel();
-        Query q = QueryFactory.create(askQuery);
-        try (QueryExecution qex = org.apache.jena.query.QueryExecutionFactory.create(q, m)) {
+        try (QueryExecution qex = org.apache.jena.query.QueryExecutionFactory.create(QueryFactory.create(askQuery), m)) {
             return qex.execAsk();
+        } catch (Exception e) {
+            log.error("Error evaluating filter query: {}", askQuery, e);
+            return false;
         }
     }
 
