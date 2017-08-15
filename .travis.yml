@@ -4,11 +4,12 @@ env:
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "NL/phgmDhcrvMZ5FO6IOkwxJXZmOtNLFf9cFPEeY0Ei0PawSvCH4MiqF2eZdsf+pP0VpQqitTqDgrRPCGWqDdzCVGvbpPYWsV+T1iFEeX1b3FDaSgpjLg1CGVqbtgmOeap1UYVu0cmfDg2lZe/7ncNDTIjAwiXKAW4EaLJXBklA="
 
+dist: trusty
 sudo: false
 language: java
 jdk:
   - oraclejdk8
-#  - openjdk8 not supported, see https://github.com/travis-ci/travis-ci/issues/1647
+  - openjdk8
 branches:
   only:
     - master
