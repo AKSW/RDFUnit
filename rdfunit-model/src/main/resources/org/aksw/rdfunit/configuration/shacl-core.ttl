@@ -403,6 +403,8 @@ sh:LanguageInConstraintComponent
     a sh:ConstraintComponent ;
 	sh:parameter [
         sh:path sh:languageIn ;
+        shr:doRawStringReplace true;
+        shr:formatParameterValueAs shr:FormatListCommaSeparated ;
     ] ;
     sh:propertyValidator [
         a sh:SPARQLSelectValidator ;
@@ -614,12 +616,13 @@ sh:HasValueConstraintComponent
     .
 
 
-
-
 sh:InConstraintComponent
     a sh:ConstraintComponent ;
 	sh:parameter [
         sh:path sh:in ;
+        shr:doRawStringReplace true;
+        shr:formatParameterValueAs shr:FormatListCommaSeparated ;
+
     ] ;
     sh:propertyValidator [
         a sh:SPARQLSelectValidator ;

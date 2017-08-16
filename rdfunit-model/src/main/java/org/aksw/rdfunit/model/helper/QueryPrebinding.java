@@ -12,7 +12,6 @@ import org.apache.jena.sparql.ARQException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * @author Dimitris Kontokostas
@@ -33,12 +32,14 @@ public class QueryPrebinding {
 
         try {
             for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
-                RDFNode node = entry.getValue();
-                if (RdfListUtils.isList(node)) {
-                    String value = RdfListUtils.getListItemsOrEmpty(node).stream().map(NodeFormatter::formatNode).collect(Collectors.joining(" , "));
+                // get same value or formatted based on query
+                RDFNode node = entry.getKey().getBindingValue(entry.getValue(), shape);
+
+                if (entry.getKey().isParameterForRawStringReplace()) {
+                    String value =  node.asLiteral().getLexicalForm();
                     query = new ParameterizedSparqlString(
                             query.toString().replaceAll(
-                                    Pattern.quote("$"+ entry.getKey().getPredicate().getLocalName()), Matcher.quoteReplacement(value)));
+                                    Pattern.quote("$"+ entry.getKey().getParameterName()), Matcher.quoteReplacement(value)));
                 } else {
                     query.setParam(entry.getKey().getPredicate().getLocalName(), entry.getValue());
                 }

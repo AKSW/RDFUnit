@@ -103,10 +103,6 @@ public final class ConstraintFactory {
             pairs.addAll(Sets.combinations(bindingPairs, i));
         }
 
-        if (!optionalParametersWithDefaultValue.isEmpty()) {
-            int i = 0;
-        }
-
         return pairs.build().stream()
                 .filter( pairA -> {
                     // delete pairs without the required parameters

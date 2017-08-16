@@ -13,9 +13,13 @@ public final class RDFUNIT_SHACL_EXT {
 
     //Classes
     //public static final Resource Binding = resource("Binding");
+    public static final Resource FormatListCommaSeparated = resource("FormatListCommaSeparated");
+    public static final Resource FormatListSpaceSeparated = resource("FormatListCommaSeparated");
 
     //properties
     public static final Property filter = property("filter");
+    public static final Property doRawStringReplace = property("doRawStringReplace");
+    public static final Property formatParameterValueAs = property("formatParameterValueAs");
 
     private RDFUNIT_SHACL_EXT() {
 
