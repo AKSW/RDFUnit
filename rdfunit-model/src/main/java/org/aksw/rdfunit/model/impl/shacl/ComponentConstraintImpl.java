@@ -7,8 +7,8 @@ import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.helper.NodeFormatter;
-import org.aksw.rdfunit.model.helper.RdfListUtils;
+import org.aksw.rdfunit.model.helper.MessagePrebinding;
+import org.aksw.rdfunit.model.helper.QueryPrebinding;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
@@ -17,14 +17,11 @@ import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.sparql.ARQException;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -44,7 +41,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
         } else {
             if (validator.getDefaultMessage().isPresent()) {
                 String messageLanguage = validator.getDefaultMessage().get().getLanguage();
-                String message = replaceMessageBindings(validator.getDefaultMessage().get().getLexicalForm());
+                String message = new MessagePrebinding(validator.getDefaultMessage().get().getLexicalForm(), shape).applyBindings();
                 if (messageLanguage == null || messageLanguage.isEmpty()) {
                     return ResourceFactory.createStringLiteral(message);
                 } else {
@@ -120,56 +117,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
     }
 
     private String replaceBindings(String sparqlSnippet) {
-        String bindedSnippet = sparqlSnippet;
-
-        if (shape.isPropertyShape()) {
-            bindedSnippet = bindedSnippet.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-        }
-        ParameterizedSparqlString query = new ParameterizedSparqlString(bindedSnippet);
-
-        try {
-            for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
-                RDFNode node = entry.getValue();
-                if (RdfListUtils.isList(node)) {
-                    String value = RdfListUtils.getListItemsOrEmpty(node).stream().map(NodeFormatter::formatNode).collect(Collectors.joining(" , "));
-                    query = new ParameterizedSparqlString(
-                            query.toString().replaceAll(
-                                    Pattern.quote("$"+ entry.getKey().getPredicate().getLocalName()), Matcher.quoteReplacement(value)));
-                } else {
-                    query.setParam(entry.getKey().getPredicate().getLocalName(), entry.getValue());
-                }
-            }
-            // FIXME add fixed bindings e.g. $shape etc
-
-            return query.toString().trim().replaceFirst("ASK", ""); // remove ASK...
-            } catch (ARQException e) {
-                // skip this exception
-            }
-            return sparqlSnippet;
-    }
-
-    private String replaceMessageBindings(String lexicalForm) {
-
-        String message = lexicalForm;
-        if (shape.isPropertyShape()) {
-            message = message.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-        }
-        for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
-            message = replaceMessageBinding(message, entry.getKey(), entry.getValue());
-        }
-        return message;
-    }
-
-    private String replaceMessageBinding(String sparql, ComponentParameter componentParameter, RDFNode value) {
-        return sparql.replaceAll("[\\$\\?]"+ componentParameter.getPredicate().getLocalName(), Matcher.quoteReplacement(formatRdfValue(value).replace("\\", "\\\\")));
-    }
-
-    private String formatRdfValue(RDFNode value) {
-        if (RdfListUtils.isList(value)) {
-            return RdfListUtils.getListItemsOrEmpty(value).stream().map(NodeFormatter::formatNode).collect(Collectors.joining(" , "));
-        } else {
-            return NodeFormatter.formatNode(value);
-        }
+        return new QueryPrebinding(sparqlSnippet, shape).applyBindings(bindings);
     }
 
     // hack for now

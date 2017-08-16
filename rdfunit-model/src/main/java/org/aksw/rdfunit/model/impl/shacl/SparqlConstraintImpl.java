@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableMap;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -9,6 +9,8 @@ import lombok.Value;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
+import org.aksw.rdfunit.model.helper.MessagePrebinding;
+import org.aksw.rdfunit.model.helper.QueryPrebinding;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
@@ -26,8 +28,6 @@ import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Builder
@@ -40,8 +40,6 @@ public class SparqlConstraintImpl implements SparqlConstraint {
 
     @Override
     public TestCase getTestCase() {
-
-        validateSparqlQuery(validator.getSparqlQuery());
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
         String sparql;
@@ -57,40 +55,17 @@ public class SparqlConstraintImpl implements SparqlConstraint {
                 .build();
     }
 
-    protected static void validateSparqlQuery(String sparqlQuery) {
-        String originalSparqlQueryLowerCase =  sparqlQuery.toUpperCase();
-        if (
-                        originalSparqlQueryLowerCase.contains("VALUES") ||
-                        originalSparqlQueryLowerCase.contains("SERVICE") ||
-                        originalSparqlQueryLowerCase.contains("MINUS") ) {
-            throw new IllegalArgumentException("Pre-binding failed in query because of illegal constructs (VALUES, SERVICE, MINUS):\n" + sparqlQuery);
-        }
-
-        ImmutableSet<String> preboundVars = ImmutableSet.of("this", "shapesGraph", "currentShape", "value");
-        preboundVars.forEach( var ->{
-            if (sparqlQuery.matches("(?s).*[Aa][Ss]\\s+[\\?\\$]" + var + "\\W.*")) {
-                throw new IllegalArgumentException("Pre-binding failed in query because of use of pre-bind variable with AS:\n" + sparqlQuery);
-            }
-        });
-
-    }
-
     private String generateSparqlWhere(String sparqlString) {
 
         String  sparqlWhere = sparqlString
                 .substring(sparqlString.indexOf('{'));
-        if (shape.getPath().isPresent()) {
-                sparqlWhere = sparqlWhere.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-        }
         return replaceBindings(sparqlWhere);
     }
 
     private String replaceBindings(String sparqlSnippet) {
-        String bindedSnippet = sparqlSnippet;
-        if (shape.isPropertyShape()) {
-            bindedSnippet = bindedSnippet.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-        }
-        return bindedSnippet;
+        QueryPrebinding queryPrebinding = new QueryPrebinding(sparqlSnippet, shape);
+        queryPrebinding.validateSparqlQuery();
+        return queryPrebinding.applyBindings(ImmutableMap.of());
     }
 
 
@@ -100,7 +75,7 @@ public class SparqlConstraintImpl implements SparqlConstraint {
             return shape.getMessage().get();
         } else {
             String messageLanguage = message.getLanguage();
-            String message = replaceBindings(this.message.getLexicalForm());
+            String message = new MessagePrebinding(this.message.getLexicalForm(), shape).applyBindings();
             if (messageLanguage == null || messageLanguage.isEmpty()) {
                 return ResourceFactory.createStringLiteral(message);
             } else {
