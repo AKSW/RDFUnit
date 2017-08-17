@@ -56,7 +56,7 @@ public final class BatchShapeReader {
     }
 
     private void addShapesAsInstancesOf(Model model, ImmutableSet.Builder<Resource> shapes) {
-        shapesAsInstancesOf.forEach(r -> shapes.addAll(model.listResourcesWithProperty(RDF.type, SHACL.Shape)));
+        shapesAsInstancesOf.forEach(shapeType -> shapes.addAll(model.listSubjectsWithProperty(RDF.type, shapeType)));
     }
 
     private void addShapesAsObjectsOf(Model model, ImmutableSet.Builder<Resource> shapes) {

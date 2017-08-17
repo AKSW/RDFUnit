@@ -72,28 +72,13 @@ sh:DatatypeConstraintComponent
             }""";
     ] ;
     # check for valid literal value
-    sh:propertyValidator [
+    sh:validator [
         a sh:SPARQLSelectValidator ;
     	sh:message "value not of datatype $datatype";
     	shr:filter """ ASK { FILTER (STRSTARTS(str($datatype), "http://www.w3.org/2001/XMLSchema#"))} """ ;
-    	sh:select """
-            SELECT ?this ?value WHERE {
-                ?this $PATH ?value .
-                FILTER ( isLiteral(?value) && datatype(?value) = $datatype) # do not report same errors as above
-                BIND ($datatype(?value) = ?value AS ?datatypeValue).
-                FILTER ( !BOUND(?datatypeValue) || !?datatypeValue)
-            }""";
-    ] ;
-    sh:nodeValidator [
-        a sh:SPARQLSelectValidator ;
-    	sh:message "value not of datatype $datatype";
-    	shr:filter """ ASK { FILTER (STRSTARTS(str($datatype), "http://www.w3.org/2001/XMLSchema#"))} """ ;
-    	sh:select """
-            SELECT ?this ?value WHERE {
-                BIND (?this AS ?value) .
-                FILTER ( isLiteral(?value) && datatype(?value) = $datatype) # do not report same errors as above
-                BIND ($datatype(?value) = ?value AS ?datatypeValue).
-                FILTER ( !BOUND(?datatypeValue) || !?datatypeValue)
+    	sh:ask """
+            ASK {
+                FILTER ( $datatype(?value) = ?value)
             }""";
     ] ;
     .
@@ -648,7 +633,7 @@ sh:InConstraintComponent
     ] ;
     .
 
-sh:CLosedConstraintComponent
+sh:ClosedConstraintComponent
     a sh:ConstraintComponent ;
 	sh:parameter [
         sh:path sh:closed ;
