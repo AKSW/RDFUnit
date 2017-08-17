@@ -79,8 +79,9 @@ sh:DatatypeConstraintComponent
     	sh:select """
             SELECT ?this ?value WHERE {
                 ?this $PATH ?value .
-                BIND ($datatype(?value) AS ?datatypeValue).
-                FILTER ( !BOUND(?datatypeValue))
+                FILTER ( isLiteral(?value) && datatype(?value) = $datatype) # do not report same errors as above
+                BIND ($datatype(?value) = ?value AS ?datatypeValue).
+                FILTER ( !BOUND(?datatypeValue) || !?datatypeValue)
             }""";
     ] ;
     sh:nodeValidator [
@@ -90,8 +91,9 @@ sh:DatatypeConstraintComponent
     	sh:select """
             SELECT ?this ?value WHERE {
                 BIND (?this AS ?value) .
-                BIND ($datatype(?value) AS ?datatypeValue).
-                FILTER ( !BOUND(?datatypeValue))
+                FILTER ( isLiteral(?value) && datatype(?value) = $datatype) # do not report same errors as above
+                BIND ($datatype(?value) = ?value AS ?datatypeValue).
+                FILTER ( !BOUND(?datatypeValue) || !?datatypeValue)
             }""";
     ] ;
     .

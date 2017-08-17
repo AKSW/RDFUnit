@@ -40,7 +40,7 @@ public final class ConstraintFactory {
 
 
             if (validators.isEmpty()) {
-                log.warn("No validators found for shape {} / component {} and bindings {}", shape.getElement(), component.getElement(), bindingPairs);
+                log.warn("No validators found for {} Shape {} / component {} and bindings {}", shape.isPropertyShape()? "Property" : "Node", shape.getElement(), component.getElement(), bindingPairs);
             }
 
             // for multiple validators
