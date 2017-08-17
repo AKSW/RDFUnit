@@ -35,12 +35,12 @@ public final class ConstraintFactory {
             // get validators
             Set<ComponentValidator> validators =
                     component.getValidators().stream()
-                            .filter(v -> v.filterAppliesForBindings(shape.getShapeType(), bindings))
+                            .filter(v -> v.filterAppliesForBindings(shape, bindings))
                             .collect(Collectors.toSet());
 
 
             if (validators.isEmpty()) {
-                log.warn("No validators found for shape {} and component {}", shape, component);
+                log.warn("No validators found for shape {} / component {} and bindings {}", shape.getElement(), component.getElement(), bindingPairs);
             }
 
             // for multiple validators

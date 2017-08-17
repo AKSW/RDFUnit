@@ -15,6 +15,7 @@ public final class RDFUNIT_SHACL_EXT {
     //public static final Resource Binding = resource("Binding");
     public static final Resource FormatListCommaSeparated = resource("FormatListCommaSeparated");
     public static final Resource FormatListSpaceSeparated = resource("FormatListCommaSeparated");
+    public static final Resource FormatClosedPredicatesAsCommaSeparated = resource("FormatClosedPredicatesAsCommaSeparated");
 
     //properties
     public static final Property filter = property("filter");

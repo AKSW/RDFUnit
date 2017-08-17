@@ -4,6 +4,7 @@ import org.aksw.rdfunit.model.helper.NodeFormatter;
 import org.aksw.rdfunit.model.helper.RdfListUtils;
 import org.aksw.rdfunit.model.interfaces.Element;
 import org.aksw.rdfunit.vocabulary.RDFUNIT_SHACL_EXT;
+import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.*;
 
 import java.util.Optional;
@@ -50,14 +51,31 @@ public interface ComponentParameter extends Element {
             return ResourceFactory.createStringLiteral(
                     RdfListUtils.getListItemsOrEmpty(node).stream()
                             .map(NodeFormatter::formatNode)
-                            .collect(Collectors.joining(" , "))
+                            .collect(Collectors.joining(" , ")).trim()
             );
         }
         if (RDFUNIT_SHACL_EXT.FormatListSpaceSeparated.equals(formatter)) {
             return ResourceFactory.createStringLiteral(
                     RdfListUtils.getListItemsOrEmpty(node).stream()
                             .map(NodeFormatter::formatNode)
-                            .collect(Collectors.joining("  "))
+                            .collect(Collectors.joining("  ")).trim()
+            );
+        }
+
+        // get sh:property/sh:path (where sh:path is not a blank node
+        if (RDFUNIT_SHACL_EXT.FormatClosedPredicatesAsCommaSeparated.equals(formatter)) {
+            return ResourceFactory.createStringLiteral(
+                    shape.getElement().listProperties(SHACL.property).toSet().stream()
+                    .map(Statement::getObject)
+                    .filter(RDFNode::isResource)
+                    .map(RDFNode::asResource)
+                    .flatMap(s -> s.listProperties(SHACL.path).toSet().stream())
+                    .map(Statement::getObject)
+                    .filter(RDFNode::isResource)
+                    .map(RDFNode::asResource)
+                    .filter(Resource::isURIResource)
+                    .map(NodeFormatter::formatNode)
+                    .collect(Collectors.joining(" , ")).trim()
             );
         }
 

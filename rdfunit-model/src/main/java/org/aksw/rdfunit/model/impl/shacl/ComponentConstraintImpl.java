@@ -141,6 +141,11 @@ public class ComponentConstraintImpl implements ComponentConstraint {
         if (shape.getPath().isPresent()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
                     .setValue(shape.getPath().get().getPathAsRdf()).build());
+        } else {
+            if (validator.getSparqlQuery().contains("$path") || validator.getSparqlQuery().contains("?path")) {
+                annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
+                        .setVariableName("path").build());
+            }
         }
 
         if (shape.getMessage().isPresent()) {

@@ -5,9 +5,11 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.ShapeType;
+import org.aksw.rdfunit.model.helper.QueryPrebinding;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentValidator;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.*;
@@ -16,8 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 
 @ToString
 @EqualsAndHashCode(exclude={"element"})
@@ -40,27 +40,25 @@ public class ComponentValidatorImpl implements ComponentValidator {
     }
 
     @Override
-    public boolean filterAppliesForBindings(ShapeType shapeType, Map<ComponentParameter, RDFNode> bindings) {
-        if (shapeType.equals(ShapeType.PROPERTY_SHAPE)  && !propertyValidators.contains(type)) {
+    public boolean filterAppliesForBindings(Shape shape, Map<ComponentParameter, RDFNode> bindings) {
+        if (shape.getShapeType().equals(ShapeType.PROPERTY_SHAPE)  && !propertyValidators.contains(type)) {
             return false;
         }
-        if (shapeType.equals(ShapeType.NODE_SHAPE)  && !nodeValidators.contains(type)) {
+        if (shape.getShapeType().equals(ShapeType.NODE_SHAPE)  && !nodeValidators.contains(type)) {
             return false;
         }
         if (filter == null || filter.isEmpty()) {
             return true;
         }
 
-        return canBind(filter, bindings);
+        return canBind(filter, bindings, shape);
     }
 
 
-    private boolean canBind(String filter, Map<ComponentParameter, RDFNode> bindings) {
-        String filterQ = filter;
-        for ( Map.Entry<ComponentParameter, RDFNode> e: bindings.entrySet()) {
-            filterQ = filterQ.replace("$" + e.getKey().getParameterName(), formatNode(e.getValue()));
-        }
-        boolean canBind = checkFilter(filterQ);
+    private boolean canBind(String filter, Map<ComponentParameter, RDFNode> bindings, Shape shape) {
+        QueryPrebinding queryPrebinding = new QueryPrebinding(filter, shape);
+        String filterBinded = queryPrebinding.applyBindings(bindings);
+        boolean canBind = checkFilter("ASK" + filterBinded);
         return canBind;
     }
 

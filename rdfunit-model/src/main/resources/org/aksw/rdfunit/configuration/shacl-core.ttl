@@ -645,3 +645,70 @@ sh:InConstraintComponent
             }""" ;
     ] ;
     .
+
+sh:CLosedConstraintComponent
+    a sh:ConstraintComponent ;
+	sh:parameter [
+        sh:path sh:closed ;
+    ] ;
+    sh:parameter [
+        sh:path sh:ignoredProperties ;
+        sh:optional true ;
+        sh:defaultValue "";
+        shr:doRawStringReplace true;
+        shr:formatParameterValueAs shr:FormatListCommaSeparated ;
+    ] ;
+    # captures the values of allowed predicates
+    sh:parameter [
+        sh:path sh:allowedProperties;
+        sh:optional true ;
+        sh:defaultValue "";
+        shr:doRawStringReplace true;
+        shr:formatParameterValueAs shr:FormatClosedPredicatesAsCommaSeparated ;
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') != '' && str('$allowedProperties') != '' )}""" ;
+        sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
+        sh:select """
+            SELECT DISTINCT ?this ?path ?value
+            WHERE {
+                ?this ?path ?value.
+                FILTER ( ?path NOT IN ( $ignoredProperties , $allowedProperties ) )
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') = '' && str('$allowedProperties') != '' )}""" ;
+        sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
+        sh:select """
+            SELECT DISTINCT ?this ?path ?value
+            WHERE {
+                ?this ?path ?value.
+                FILTER ( ?path NOT IN ( $allowedProperties ) )
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') != '' && str('$allowedProperties') = '' )}""" ;
+        sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
+        sh:select """
+            SELECT DISTINCT ?this ?path ?value
+            WHERE {
+                ?this ?path ?value.
+                FILTER ( ?path NOT IN ( $ignoredProperties ) )
+            }""" ;
+    ] ;
+    sh:nodeValidator [
+        a sh:SPARQLSelectValidator ;
+        shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') = '' && str('$allowedProperties') = '' )}""" ;
+        sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
+        sh:select """
+            SELECT DISTINCT ?this ?path ?value
+            WHERE {
+                FILTER EXISTS {
+                    ?this ?path ?value.
+                }
+            }""" ;
+    ] ;
+    .
