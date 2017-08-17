@@ -66,6 +66,7 @@ sh:DatatypeConstraintComponent
     sh:validator [
         a sh:SPARQLASKValidator ;
     	sh:message "value not of datatype $datatype";
+    	shr:filter """ ASK { FILTER (!STRSTARTS(str($datatype), "http://www.w3.org/2001/XMLSchema#"))} """ ;
     	sh:ask """
             ASK {
                 FILTER ( isLiteral(?value) && datatype(?value) = $datatype)
@@ -78,7 +79,7 @@ sh:DatatypeConstraintComponent
     	shr:filter """ ASK { FILTER (STRSTARTS(str($datatype), "http://www.w3.org/2001/XMLSchema#"))} """ ;
     	sh:ask """
             ASK {
-                FILTER ( $datatype(?value) = ?value)
+                FILTER ( isLiteral(?value) && datatype(?value) = $datatype && $datatype(?value) = ?value)
             }""";
     ] ;
     .
