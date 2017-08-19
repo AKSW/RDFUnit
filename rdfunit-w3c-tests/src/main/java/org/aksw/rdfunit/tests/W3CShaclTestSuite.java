@@ -14,7 +14,6 @@ import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
-import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
@@ -105,18 +104,11 @@ public class W3CShaclTestSuite {
 
                 val shapesSource = SchemaSourceFactory.createSchemaSourceSimple(
                         getId(), getShapesGraphUri(),
-                        new RdfModelReader(getDataGraph())
+                        new RdfModelReader(getShapesGraph())
                 );
 
 
                 val testSuite = new TestSuite(new ShaclTestGenerator().generate(shapesSource));
-
-                val testSource = new TestSourceBuilder()
-                        .setImMemSingle()
-                        .setInMemReader(new RdfModelReader(getDataGraph()))
-                        .setPrefixUri(getId(), getDataGraphUri())
-                        .setReferenceSchemata(SchemaSourceFactory.createSchemaSourceSimple(getShapesGraphUri()))
-                        .build();
 
                 return RDFUnitStaticValidator.validate(shaclFullTestCaseResult, getDataGraph(), testSuite);
             });
