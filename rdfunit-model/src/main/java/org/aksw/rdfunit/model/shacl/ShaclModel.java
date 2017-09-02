@@ -82,10 +82,13 @@ public class ShaclModel {
     public Set<TestCase> generateTestCases() {
         ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
 
-        shapesGraph.getComponents().forEach(component -> {
-            allTargets.entrySet().forEach(entry -> {
+        allTargets.entrySet().forEach(entry -> {
+            // SPARQL constraints
+            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(entry.getKey(), entry.getValue()));
+
+            // Constraint components
+            shapesGraph.getComponents().forEach(component -> {
                 testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, entry.getKey(), entry.getValue()));
-                testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(entry.getKey(), entry.getValue()));
             });
         });
 
