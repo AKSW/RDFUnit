@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.2-SNAPSHOT</version>
+        <version>0.8.2</version>
     </parent>
 
     <artifactId>rdfunit-core</artifactId>
