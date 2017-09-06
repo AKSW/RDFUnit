@@ -12,6 +12,7 @@ import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.model.readers.shacl.ShapePathReader;
 import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
@@ -23,9 +24,7 @@ import org.aksw.rdfunit.vocabulary.SHACL_TEST;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.EARL;
 import org.apache.jena.vocabulary.RDF;
-import org.topbraid.shacl.arq.SHACLPaths;
 import org.topbraid.shacl.testcases.GraphValidationTestCaseType;
-import org.topbraid.spin.util.JenaUtil;
 
 import java.io.File;
 import java.net.URI;
@@ -197,7 +196,7 @@ public class W3CShaclTestSuite {
          */
         private Model computeAdjustedExpectedReport() {
 
-            Model expectedModel = JenaUtil.createDefaultModel();
+            Model expectedModel = ModelFactory.createDefaultModel();
 
             for(Statement s : getExpectedValidationReport().listProperties().toList()) {
                 expectedModel.add(s);
@@ -208,8 +207,9 @@ public class W3CShaclTestSuite {
                         GraphValidationTestCaseType.addStatements(expectedModel, t);
                     }
                     else if(SHACL.resultPath.equals(t.getPredicate())) {
-                        expectedModel.add(t.getSubject(), t.getPredicate(),
-                                SHACLPaths.clonePath(t.getResource(), expectedModel));
+                        Resource path = ShapePathReader.create().read(t.getResource()).getPathAsRdf();
+                        expectedModel.add(path.getModel());
+                        expectedModel.add(t.getSubject(), t.getPredicate(),path);
                     }
                     else {
                         expectedModel.add(t);
