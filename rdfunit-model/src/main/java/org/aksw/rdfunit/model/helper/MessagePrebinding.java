@@ -28,12 +28,12 @@ public class MessagePrebinding {
 
         String newMessage = message;
         if (shape.isPropertyShape()) {
-            newMessage.replaceAll(getVariablePattern("PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
+            newMessage = newMessage.replaceAll(getVariablePattern("PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
         }
 
         for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
             String value = formatRdfValue(entry.getValue());
-            newMessage.replaceAll(
+            newMessage = newMessage.replaceAll(
                     getVariablePattern(entry.getKey().getParameterName()), Matcher.quoteReplacement(value));
         }
         // FIXME add fixed bindings e.g. $shape etc
