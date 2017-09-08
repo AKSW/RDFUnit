@@ -16,6 +16,8 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
+import java.util.Collection;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
@@ -95,7 +97,8 @@ public class TestCaseResultWriter implements ElementWriter {
 
         if (testCaseResult instanceof ShaclTestCaseResult) {
 
-            for (PropertyValuePair annotation : ((ShaclTestCaseResult) testCaseResult).getResultAnnotations()) {
+            Collection<PropertyValuePair> annotations = ((ShaclTestCaseResult) testCaseResult).getResultAnnotations();
+            for (PropertyValuePair annotation : annotations) {
                 for (RDFNode rdfNode : annotation.getValues()) {
                     resource.addProperty(annotation.getProperty(), rdfNode);
                     if (rdfNode.isAnon() && annotation.getProperty().equals(SHACL.resultPath)) {
@@ -103,6 +106,11 @@ public class TestCaseResultWriter implements ElementWriter {
                     }
                 }
             }
+            boolean containsMessage = annotations.stream().anyMatch(an -> an.getProperty().equals(SHACL.message));
+            if (!containsMessage) {
+                resource.addProperty(SHACL.message, testCaseResult.getMessage());
+            }
+
         }
 
 
