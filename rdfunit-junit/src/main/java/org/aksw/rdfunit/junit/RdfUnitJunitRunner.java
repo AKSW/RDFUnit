@@ -190,7 +190,9 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return new RDFUnitTestSuiteGenerator.Builder()
                 .addSchemaURI("custom", getSchema().uri(), getSchemaReader())
                 .enableAutotests()
-                .build().getTestSuite().getTestCases();
+                .build()
+                    .getTestSuite()
+                        .getTestCases();
     }
 
     private RdfReader getSchemaReader() {

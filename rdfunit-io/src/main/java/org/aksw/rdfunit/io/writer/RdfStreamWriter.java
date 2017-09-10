@@ -74,7 +74,7 @@ public class RdfStreamWriter implements RdfWriter {
         try {
             return new FileOutputStream(filename);
         } catch (FileNotFoundException e) {
-            LOGGER.debug("Error initializing RdfStreamReader, not handled atm", e);
+            LOGGER.debug("Error initializing RdfStreamReader, file '{}' not found", filename);
             // do not handle exception at construction time
             return null;
         }

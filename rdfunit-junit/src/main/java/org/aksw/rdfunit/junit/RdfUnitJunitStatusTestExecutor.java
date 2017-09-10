@@ -5,7 +5,6 @@ import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.tests.executors.ShaclSimpleTestExecutor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -23,8 +22,7 @@ final class RdfUnitJunitStatusTestExecutor extends ShaclSimpleTestExecutor {
         super(new QueryGenerationSelectFactory());
     }
 
-    protected Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase)
-            throws IllegalAccessException, InvocationTargetException {
+    protected Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase) {
 
         try {
             rdfUnitJunitTestCase.prepareForExecution();
