@@ -2,9 +2,8 @@ FROM ubuntu:xenial
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install git maven openjdk-8-jdk -y
-
-RUN apt-get clean \
+  && apt-get install git maven openjdk-8-jdk -y \
+  && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN git clone https://github.com/AKSW/RDFUnit.git \
