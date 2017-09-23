@@ -1,8 +1,8 @@
-FROM ubuntu:xenial
+FROM openjdk:8-jdk-slim
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install git maven openjdk-8-jdk -y \
+  && apt-get install git maven -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
