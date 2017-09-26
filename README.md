@@ -18,9 +18,9 @@ RDFUnit - RDF Unit Testing Suite
 **Brief Overview**: https://github.com/AKSW/RDFUnit/wiki/Overview
 
 RDFUnit is implemented on top of the [Test-Driven Data Validation Ontology](http://rdfunit.aksw.org/ns/core#) and designed to read and produce RDF that complies to that ontology only.
-The main components that RDFUnit reads are 
-[TestCases (manual & automatic), TestSuites](https://github.com/AKSW/RDFUnit/wiki/TestCases), 
-[Patterns & TestAutoGenerators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators). 
+The main components that RDFUnit reads are
+[TestCases (manual & automatic), TestSuites](https://github.com/AKSW/RDFUnit/wiki/TestCases),
+[Patterns & TestAutoGenerators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators).
 RDFUnit also strictly defines the results of a TestSuite execution along with [different levels of result granularity](https://github.com/AKSW/RDFUnit/wiki/Results).
 
 ### Basic usage
@@ -47,6 +47,25 @@ $ bin/rdfunit -d <dataset-uri> -s <schema1,schema2,schema3,...>
 
 Where you define your own schemas and we pick up from step 3. You can also use prefixes directly (e.g. `-s foaf,skos`) we can get everything that is defined in [LOV](http://lov.okfn.org).
 
+### Using Docker
+
+A Dockerfile is provided to create a Docker image of the CLI of RDFUnit.
+
+To create the Docker image:
+
+```console
+$ docker build -t rdfunit .
+```
+
+It is meant to execute a rdfunit command and then shutdown the container. If the output of rdfunit on stdout is not enough or you want to include files in the container, a directory could be mounted via Docker in order to create the output/result there or include files.
+
+Here an example of usage:
+
+```console
+$ docker run --rm -it rdfunit -d https://awesome.url/file -r aggregate
+```
+
+This creates a temporary Docker container which runs the command, prints the results on stdout and stops plus removes itself. For further usage of CLI visit https://github.com/AKSW/RDFUnit/wiki/CLI.
 
 ### Supported Schemas
 
@@ -55,7 +74,7 @@ RDFUnit supports the following types of schemas
 1. **OWL** (using CWA): We pick the most commons OWL axioms as well as schema.org. (see [[1]](https://github.com/AKSW/RDFUnit/labels/OWL),[[2]](https://github.com/AKSW/RDFUnit/issues/20) for details
 1. **SHACL**: SHACL is still in progress but we support [the most stable parts of the language](https://github.com/AKSW/RDFUnit/labels/SHACL). Whatever constructs we support can also run on SPARQL Endpoints (SHACL does not support SPARQL endpoints by design)
 1. IBM **Resource Shapes**: The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/23) bus as soon as SHACL becomes stable we will drop support for RS
-1. **DSP** (Dublin Core Set Profiles): The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/22) bus as soon as SHACL becomes stable we will drop support for RS 
+1. **DSP** (Dublin Core Set Profiles): The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/22) bus as soon as SHACL becomes stable we will drop support for RS
 
 Note that you can mix all of these constraints together and RDFUnit will validate the dataset against all of them.
 
