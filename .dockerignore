@@ -1,0 +1,12 @@
+rdfunit-w3c-tests
+rdfunit-webdemo
+
+archive
+data
+ns
+
+*.md
+Dockerfile
+LICENSE
+
+.git
