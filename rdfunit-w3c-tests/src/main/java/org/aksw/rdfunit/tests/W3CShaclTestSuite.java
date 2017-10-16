@@ -304,7 +304,12 @@ public class W3CShaclTestSuite {
 
             val pathSegments = Arrays.asList(testIRI.getPath().split("/"));
 
-            return pathSegments.get(pathSegments.size() - 1);
+            assert pathSegments.size() >= 3;
+
+            val p1 = pathSegments.get(pathSegments.size() - 3);
+            val p2 = pathSegments.get(pathSegments.size() - 2);
+            val p3 = pathSegments.get(pathSegments.size() - 1);
+            return "/" + p1 + "/" + p2 + "/" + p3;
         }
 
         private Resource extractExpectedValidationReport() {
