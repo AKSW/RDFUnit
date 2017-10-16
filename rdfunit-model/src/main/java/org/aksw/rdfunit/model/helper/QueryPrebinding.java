@@ -54,11 +54,11 @@ public class QueryPrebinding {
     }
 
     public void validateSparqlQuery() {
-        String originalSparqlQueryLowerCase = sparqlQuery.toUpperCase();
+        String originalSparqlQueryUpperCase = sparqlQuery.toUpperCase();
         if (
-                originalSparqlQueryLowerCase.contains("VALUES") ||
-                        originalSparqlQueryLowerCase.contains("SERVICE") ||
-                        originalSparqlQueryLowerCase.contains("MINUS")) {
+                originalSparqlQueryUpperCase.contains("VALUES") ||
+                        originalSparqlQueryUpperCase.contains("SERVICE") ||
+                        originalSparqlQueryUpperCase.contains("MINUS")) {
             throw new IllegalArgumentException("Pre-binding failed in query because of illegal constructs (VALUES, SERVICE, MINUS):\n" + sparqlQuery);
         }
 
