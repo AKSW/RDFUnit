@@ -36,7 +36,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
 
     @Override
     public Literal getMessage() {
-        Literal messageLiteral =  shape.getMessage().orElseGet(() -> validator.getDefaultMessage().get());
+        Literal messageLiteral =  shape.getMessage().orElseGet(() -> validator.getDefaultMessage().orElse(ResourceFactory.createStringLiteral("Error")));
 
         String messageLanguage = messageLiteral.getLanguage();
         String message = new MessagePrebinding(messageLiteral.getLexicalForm(), shape).applyBindings(bindings);
