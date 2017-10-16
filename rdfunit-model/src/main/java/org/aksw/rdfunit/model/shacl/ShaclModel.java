@@ -169,7 +169,8 @@ public class ShaclModel {
         if (implicitTargets.containsKey(shape)) {
             implicitTargets.get(shape).addAll(targets);
         } else {
-            implicitTargets.put(shape, targets);
+            HashSet<ShapeTarget> targetsCopy = new HashSet<>(targets);
+            implicitTargets.put(shape, targetsCopy);
         }
     }
 
