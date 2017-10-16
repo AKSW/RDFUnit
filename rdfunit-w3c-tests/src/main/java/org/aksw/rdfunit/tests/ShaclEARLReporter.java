@@ -13,6 +13,8 @@ import org.apache.jena.sparql.vocabulary.DOAP;
 import org.apache.jena.sparql.vocabulary.EARL;
 import org.apache.jena.vocabulary.RDF;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.nio.file.Paths;
 
 /**
@@ -74,7 +76,7 @@ public class ShaclEARLReporter {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         val rootManifestPath = Paths.get("tests/manifest.ttl");
 
@@ -89,6 +91,6 @@ public class ShaclEARLReporter {
 
         val reportModel = reporter.generateReport();
 
-        reportModel.write(System.out, "Turtle");
+        reportModel.write(new FileOutputStream("rdfunit-shacl-earl.ttl"), "Turtle");
     }
 }
