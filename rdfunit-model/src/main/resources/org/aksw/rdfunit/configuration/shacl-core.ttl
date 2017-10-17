@@ -371,7 +371,7 @@ sh:UniqueLangConstraintComponent
     sh:propertyValidator [
         a sh:SPARQLSelectValidator ;
         sh:message "{$PATH} should have one value per language";
-        shr:filter "ASK { FILTER ($uniqueLang = true)}" ;
+        shr:filter """ASK { FILTER (sameTerm($uniqueLang, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>))}""" ;
         sh:select """
             SELECT DISTINCT ?this
             WHERE {
