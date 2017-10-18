@@ -29,6 +29,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public final class ExtendedTestCaseResultReader implements ElementReader<ExtendedTestCaseResult> {
 
+    private static Set<Property> excludesProperties = ImmutableSet.of(RDF.type, RLOG.level, RLOG.resource, RLOG.message, PROV.wasGeneratedBy, DCTerms.date, RDFUNITv.testCase);
+    private static Set<Resource> excludesTypes = ImmutableSet.of(RDFUNITv.RLOGTestCaseResult, RDFUNITv.TestCaseResult, RLOG.Entry);
+
+
     private ExtendedTestCaseResultReader(){}
 
     /**
@@ -47,8 +51,6 @@ public final class ExtendedTestCaseResultReader implements ElementReader<Extende
 
         PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
-        Set<Property> excludesProperties = ImmutableSet.of(RLOG.level, RLOG.resource, RLOG.message, PROV.wasGeneratedBy, DCTerms.date, RDFUNITv.testCase);
-        Set<Resource> excludesTypes = ImmutableSet.of(RDFUNITv.RLOGTestCaseResult, RDFUNITv.TestCaseResult, RLOG.Entry);
 
         for (Statement smt: resource.listProperties().toList()) {
             if (excludesProperties.contains(smt.getPredicate())) {

@@ -2,7 +2,7 @@ package org.aksw.rdfunit.dqv;
 
 import lombok.NonNull;
 import lombok.Value;
-import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.ExtendedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.RDFNode;
@@ -28,15 +28,16 @@ public class DqvReport {
     public Collection<QualityMeasure> getQualityMeasures() {
 
 
-        Collection<ShaclTestCaseResult> results =
+        Collection<ExtendedTestCaseResult> results =
             testExecution.getTestCaseResults().stream()   // go through all results
-                .filter(t -> t instanceof ShaclTestCaseResult)
-                .map(ShaclTestCaseResult.class::cast) // use only Shacl results
+                .filter(t -> t instanceof ExtendedTestCaseResult)
+                .map(ExtendedTestCaseResult.class::cast) // use only Shacl results
                 .collect(Collectors.toSet());
 
         return results.stream()
                 // get source constraints or use undefined
-                .map(r -> getSourceConstraintFromResult(r).orElse(UNDEFINED_METRIC))
+                .map(r -> getSourceConstraintFromResult(r)
+                        .orElse(UNDEFINED_METRIC))
                 // map to metrics or use unclassified metric
                 .map(this::getMetricFromSourceConstraint)
                 // group same metrics and count
@@ -55,7 +56,7 @@ public class DqvReport {
 
     }
 
-    private Optional<String> getSourceConstraintFromResult(ShaclTestCaseResult r) {
+    private Optional<String> getSourceConstraintFromResult(ExtendedTestCaseResult r) {
         return r.getResultAnnotations().stream()
                 .filter(p -> p.getProperty().equals(SHACL.sourceConstraint))
                 .flatMap(p2 -> p2.getValues().stream())
