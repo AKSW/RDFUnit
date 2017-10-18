@@ -10,6 +10,7 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Used mainly for SHACL in order to inject a target from a shape to a sparql constraint
@@ -38,6 +39,11 @@ public class TestCaseWithTarget implements TestCase {
 
     @Override
     public TestCaseAnnotation getTestCaseAnnotation() {
+
+        Set<Resource> references = target.getRelatedOntologyResources();
+        if (references.size()>2) {
+            int k = 0;
+        }
         return testCase.getTestCaseAnnotation();
     }
 

@@ -6,9 +6,12 @@ import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.apache.jena.ext.com.google.common.collect.ImmutableSet;
 import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
+import java.util.Set;
 import java.util.function.Function;
 
 @ToString(exclude = "generatePattern")
@@ -28,6 +31,16 @@ public class ShapeTargetCore implements ShapeTarget {
     @Override
     public String getPattern() {
         return generatePattern.apply(node);
+    }
+
+    @Override
+    public Set<Resource> getRelatedOntologyResources() {
+        if (node.isURIResource() && !targetType.equals(ShapeTargetType.NodeTarget)) {
+            return ImmutableSet.of(node.asResource());
+        } else {
+            return ImmutableSet.of();
+        }
+
     }
 
 

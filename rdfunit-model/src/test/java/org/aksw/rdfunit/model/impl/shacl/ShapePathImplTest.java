@@ -26,17 +26,27 @@ public class ShapePathImplTest {
 
     @Test
     public void testComplexPath() {
-        ShapePath p = fromString("<http://example.com/p1> / <http://example.com/p2>");
+        ShapePath p = fromString("<http://example.com/p1> / <http://example.com/p2> / <http://example.com/p3>");
         assertThat(p.isPredicatePath()).isFalse();
+        assertThat(p.getUsedProperties()).hasSize(3);
         log.info("Complex path: {}", p.asSparqlPropertyPath());
     }
 
+
+    @Test
+    public void testComplexPathStar() {
+        ShapePath p = fromString("<http://example.com/p1>+ / <http://example.com/p2>*");
+        assertThat(p.isPredicatePath()).isFalse();
+        assertThat(p.getUsedProperties()).hasSize(2);
+        log.info("Complex path: {}", p.asSparqlPropertyPath());
+    }
 
     @Test
     public void testEquality() {
         String property = "<http://example.com/p1>";
         ShapePath path = fromString(property);
         assertThat(property).isEqualTo(path.asSparqlPropertyPath());
+        assertThat(path.getUsedProperties()).hasSize(1);
     }
 
 

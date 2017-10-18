@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,10 +10,12 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.model.readers.shacl.ShapePathReader;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -71,6 +74,15 @@ public class ShapeTargetValueShape implements ShapeTarget {
     @Override
     public String getPattern() {
         return generatePattern.apply(this);
+    }
+
+    @Override
+    public Set<Resource> getRelatedOntologyResources() {
+        ImmutableSet.Builder<Resource> builder = ImmutableSet.builder();
+
+        pathChain.forEach(p -> builder.addAll(p.getUsedProperties()));
+        builder.addAll(innerTarget.getRelatedOntologyResources());
+        return builder.build();
     }
 
 

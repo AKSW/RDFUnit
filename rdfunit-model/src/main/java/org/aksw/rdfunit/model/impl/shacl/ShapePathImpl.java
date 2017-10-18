@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -7,13 +8,13 @@ import lombok.Value;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.graph.Node;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.path.*;
+import org.apache.jena.vocabulary.RDF;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Dimitris Kontokostas
@@ -41,6 +42,22 @@ public class ShapePathImpl implements ShapePath {
     public Resource getPathAsRdf() {
 
         return createPath(jenaPath);
+    }
+
+    @Override
+    public Set<Resource> getUsedProperties() {
+        Resource path = getPathAsRdf();
+        if (path.isURIResource()) {
+            return ImmutableSet.of(path);
+        } else {
+            return path.getModel().listObjects()
+                    .toSet().stream()
+                    .filter(RDFNode::isURIResource)
+                    .map(RDFNode::asResource)
+                    .filter(r -> !r.getNameSpace().equals(RDF.getURI()))
+                    .filter(r -> !r.getNameSpace().equals(SHACL.namespace))
+                    .collect(Collectors.toSet());
+        }
     }
 
     private Resource createPath(Path path) {
