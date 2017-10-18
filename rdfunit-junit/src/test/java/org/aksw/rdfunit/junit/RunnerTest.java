@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.junit;
 
-import com.google.common.collect.FluentIterable;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
@@ -90,11 +89,11 @@ public class RunnerTest {
     }
 
     private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
-        return FluentIterable.from(mockRunListener.getFailures())
-                .filter(failure -> {
-                    return failure.getDescription().getDisplayName().contains(containedInDescription);
-                })
-                .first().orNull();
+        return mockRunListener.getFailures().stream().filter(
+                failure ->
+                        failure.getDescription().getDisplayName().contains(containedInDescription))
+                .findFirst()
+                .orElse(null);
     }
 
     @Test
@@ -104,10 +103,7 @@ public class RunnerTest {
 
     @Test
     public void testInputNameValueIsUsed() {
-        int size = FluentIterable.from(mockRunListener.getIgnored())
-                .filter(input -> {
-                    return input.getDisplayName().contains("inputs name");
-                }).size();
+        int size = (int) mockRunListener.getIgnored().stream().filter(input -> input.getDisplayName().contains("inputs name")).count();
         assertThat(size).isGreaterThan(0);
     }
 

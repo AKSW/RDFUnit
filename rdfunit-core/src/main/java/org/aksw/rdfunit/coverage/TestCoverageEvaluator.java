@@ -65,7 +65,6 @@ public class TestCoverageEvaluator {
      * <p>calculateCoverage.</p>
      *
      * @param testSuiteQEF a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @throws java.io.IOException if any.
      * @param inputSource a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
      */
     public void calculateCoverage(QueryExecutionFactory testSuiteQEF, QueryExecutionFactory inputSource) {

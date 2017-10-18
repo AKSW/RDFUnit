@@ -15,7 +15,7 @@ import org.apache.jena.rdf.model.Resource;
  * @version $Id: $Id
  */
 @ToString
-@EqualsAndHashCode(exclude = "element")
+@EqualsAndHashCode(exclude = "element", callSuper = false)
 public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implements ShaclLiteTestCaseResult {
 
     private final String resource;

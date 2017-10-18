@@ -29,9 +29,6 @@ public class ValidateUtilsTest {
         SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
 
-        /**
-         * Sample endpoint configuration
-         */
         args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -s rdfs,owl -p dbo -A -T 10 -P 10 -D 10 -L 10";
         commandLine = cliParser.parse(cliOptions, args.split(" "));
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
@@ -72,10 +69,6 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getEndpointQueryLimit(), 10L);
         assertEquals(configuration.getEndpointQueryLimit(), endpointTestSource.getQueryLimit());
 
-
-        /**
-         * Sample dereference configuration
-         */
 
         args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle";
         commandLine = cliParser.parse(cliOptions, args.split(" "));

@@ -82,14 +82,13 @@ public class ShaclModel {
     public Set<TestCase> generateTestCases() {
         ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
 
-        allTargets.entrySet().forEach(entry -> {
+        allTargets.forEach((key, value) -> {
             // SPARQL constraints
-            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(entry.getKey(), entry.getValue()));
+            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(key, value));
 
             // Constraint components
-            shapesGraph.getComponents().forEach(component -> {
-                testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, entry.getKey(), entry.getValue()));
-            });
+            shapesGraph.getComponents().forEach(component ->
+                    testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, key, value)));
         });
 
         return testCaseBuilder.build();
@@ -131,10 +130,7 @@ public class ShaclModel {
     public Map<Shape, Set<ShapeTarget>> getImplicitShapeTargets(ImmutableSet<Shape> shapes, ImmutableMap<Shape, Set<ShapeTarget>> explicitTargets) {
         Map<Shape, Set<ShapeTarget>> implicitTargets = new HashMap<>();
 
-        explicitTargets.forEach( (shape, targets) -> {
-            getImplicitTargetsForSingleShape(implicitTargets, shape, targets);
-
-        });
+        explicitTargets.forEach( (shape, targets) -> getImplicitTargetsForSingleShape(implicitTargets, shape, targets));
 
         return  implicitTargets;
     }
@@ -160,9 +156,7 @@ public class ShaclModel {
         }
 
         // recursive
-        childShapes.forEach( cs -> {
-            getImplicitTargetsForSingleShape(implicitTargets, cs, implicitTargets.getOrDefault(cs, Collections.emptySet()));
-        });
+        childShapes.forEach( cs -> getImplicitTargetsForSingleShape(implicitTargets, cs, implicitTargets.getOrDefault(cs, Collections.emptySet())));
     }
 
     private void mergeValues(Map<Shape, Set<ShapeTarget>> implicitTargets, Shape shape, Set<ShapeTarget> targets) {

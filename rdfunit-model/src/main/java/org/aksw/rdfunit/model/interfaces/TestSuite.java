@@ -7,11 +7,10 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * <p>TestSuite class.</p>
@@ -32,15 +31,12 @@ public class TestSuite {
     public TestSuite(Collection<TestCase> testCases) {
         //First, let's order the TestSuit alphabetically by TestURI,
         //so the results will always be shown in the same order (makes it easier to compare different runs)
-        List<TestCase> list = new ArrayList<TestCase>(testCases);
-        Comparator<TestCase> comparator = new Comparator<TestCase>() {
-            @Override
-            public int compare(TestCase left, TestCase right) {
-                //sorting by AbrTestURI (ignoring case)
-                return left.getAbrTestURI().compareToIgnoreCase(right.getAbrTestURI());
-            }
+        List<TestCase> list = new ArrayList<>(testCases);
+        Comparator<TestCase> comparator = (left, right) -> {
+            //sorting by AbrTestURI (ignoring case)
+            return left.getAbrTestURI().compareToIgnoreCase(right.getAbrTestURI());
         };
-        Collections.sort(list, comparator); //sort the list with our comparator
+        list.sort(comparator); //sort the list with our comparator
         this.testCases = list; //return the sorted list
     }
 

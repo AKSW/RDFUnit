@@ -46,15 +46,6 @@ public final class PatternReader implements ElementReader<Pattern> {
         int count; // used to count duplicates
 
 
-        /**
-
-         private final String description;
-         private final String sparqlWherePattern;
-         private final String sparqlPatternPrevalence;
-         private final Collection<PatternParameter> parameters;
-         private final Collection<ResultAnnotation> annotations;
-         */
-
         // get ID
         count = 0;
         for (Statement smt : resource.listProperties(DCTerms.identifier).toList()) {

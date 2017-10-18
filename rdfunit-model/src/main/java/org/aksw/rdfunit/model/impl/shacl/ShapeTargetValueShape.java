@@ -13,8 +13,8 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -32,7 +32,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
 
     private ShapeTargetValueShape(ShapeTarget innerTarget, List<ShapePath> pathChain, Function<ShapeTargetValueShape, String> generatePattern) {
         this.innerTarget = innerTarget;
-        this.pathChain = ImmutableList.copyOf(pathChain.stream().filter(p -> p != null).collect(Collectors.toList()));
+        this.pathChain = ImmutableList.copyOf(pathChain.stream().filter(Objects::nonNull).collect(Collectors.toList()));
         this.generatePattern = generatePattern;
     }
 
@@ -42,7 +42,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     public static ShapeTarget create(ShapeTarget outerTarget, ShapePath path) {
-        return create(outerTarget, Arrays.asList(path));
+        return create(outerTarget, ImmutableList.of(path));
     }
 
     public static ShapeTarget create(ShapeTarget innerTarget, List<ShapePath> pathChain) {

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Streams;
 import io.vavr.collection.List;
+import io.vavr.collection.Traversable;
 import io.vavr.control.Try;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -346,7 +347,7 @@ public class W3CShaclTestSuite {
             return stream(getManifestResource().listProperties(DATA_ACCESS_TESTS.include))
                     .map(stmt -> resolvePathURI(stmt.getResource().getURI()))
                     .sorted()
-                    .map(path -> new Manifest(path));
+                    .map(Manifest::new);
         }
 
         public Stream<TestCase> getTestCases() {
@@ -354,13 +355,13 @@ public class W3CShaclTestSuite {
             return stream(getManifestResource().listProperties(DATA_ACCESS_TESTS.entries))
                     .flatMap(stmt -> Streams.stream(stmt.getObject().as(RDFList.class).iterator()))
                     .filter(Resource.class::isInstance).map(Resource.class::cast)
-                    .sorted(comparing(res -> res.getURI()))
+                    .sorted(comparing(Resource::getURI))
                     .map(res -> new TestCase(res, this));
         }
 
         public Stream<TestCase> getTestCasesRecursive() {
 
-            return Stream.concat(getTestCases(), getIncludes().flatMap(m -> m.getTestCasesRecursive()));
+            return Stream.concat(getTestCases(), getIncludes().flatMap(Manifest::getTestCasesRecursive));
         }
 
         private Resource findManifestResource() {
@@ -409,13 +410,13 @@ public class W3CShaclTestSuite {
 
         val suite = W3CShaclTestSuite.load(rootManifestPath, false);
 
-        suite.getTestCases().parallelStream().forEach(tc -> tc.getExecution());
+        suite.getTestCases().parallelStream().forEach(TestCase::getExecution);
 
         val failureCount = suite.getTestCases().stream().filter(t -> t.getExecution().isFailure()).count();
 
         log.info("{} tests had failures.", failureCount);
 
-        val hist = List.ofAll(suite.getTestCases()).groupBy(tc -> tc.getEarlOutcome()).mapValues(l -> l.size());
+        val hist = List.ofAll(suite.getTestCases()).groupBy(TestCase::getEarlOutcome).mapValues(Traversable::size);
 
         log.info("EARL outcome histogram: {}", hist);
     }

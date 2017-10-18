@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.examples;
 
+import com.google.common.collect.ImmutableList;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -38,7 +39,7 @@ public class DBpediaMappingValidator {
     private static final Collection<String> languages = //Arrays.asList("ar", "az", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "tr", "uk", "ur", "zh");
     // 2014 languages
     // Arrays.asList("ar", "be", "bg", "bn", "ca", "commons", "cs", "cy", "de", "el", "en", "eo", "es", "et", "eu", "fr", "ga", "hi", "hr", "hu", "id", "it", "ja", "ko", "nl", "pl", "pt", "ru", "sk", "sl", "sr", "tr", "ur", "zh");
-    Arrays.asList("en");
+    ImmutableList.of("en");
 
     private static final String SPARQL_QUERY = PrefixNSService.getSparqlPrefixDecl() +
             " select ?error ?missing ?predicate ?mapping\n" +
@@ -124,11 +125,7 @@ public class DBpediaMappingValidator {
     public Map<String, List<MappingDomainError>> getErrorsAsMap(Collection<MappingDomainError> mappingDomainErrors) {
         Map<String, List<MappingDomainError>> errorsAsMap = new HashMap<>();
         for (MappingDomainError error : mappingDomainErrors) {
-            List<MappingDomainError> langErrors = errorsAsMap.get(error.language);
-            if (langErrors == null) {
-                langErrors = new ArrayList<>();
-                errorsAsMap.put(error.language, langErrors);
-            }
+            List<MappingDomainError> langErrors = errorsAsMap.computeIfAbsent(error.language, k -> new ArrayList<>());
             langErrors.add(error);
 
         }

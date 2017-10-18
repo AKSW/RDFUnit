@@ -24,7 +24,7 @@ public final class BatchComponentReader {
         return model.listResourcesWithProperty(RDF.type, SHACL.ConstraintComponent)
                 .toSet().stream()
                 .distinct()
-                .map(r -> cr.read(r))
+                .map(cr::read)
                 .collect(Collectors.toSet());
     }
 

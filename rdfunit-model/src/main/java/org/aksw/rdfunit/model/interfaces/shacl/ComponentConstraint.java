@@ -15,9 +15,6 @@ public interface ComponentConstraint {
      */
     Literal getMessage();
 
-    /**
-     * message for a specific language, if there are multiple picks one
-     */
     // Optional<String> getMessageForLang(String langTag);
 
     /**
@@ -31,8 +28,5 @@ public interface ComponentConstraint {
 
     TestCase getTestCase();
 
-    /**
-     * return parent constraint, if nested
-     */
     // Optional<ComponentConstraint> getParentConstraint();
 }

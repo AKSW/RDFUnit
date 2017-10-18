@@ -60,22 +60,18 @@ public final class BatchShapeReader {
     }
 
     private void addShapesAsObjectsOf(Model model, ImmutableSet.Builder<Resource> shapes) {
-        shapesAsObjectsOf.forEach(r -> {
-            model.listObjectsOfProperty(r).toSet().stream()
-                    .filter(RDFNode::isResource)
-                    .map(RDFNode::asResource)
-                    .forEach(shapes::add);
-        });
+        shapesAsObjectsOf.forEach(r -> model.listObjectsOfProperty(r).toSet().stream()
+                .filter(RDFNode::isResource)
+                .map(RDFNode::asResource)
+                .forEach(shapes::add));
     }
 
 
     private void addShapesAsSubjectsOf(Model model, ImmutableSet.Builder<Resource> shapes) {
-        shapesAsSubjectsOf.forEach(r -> {
-            model.listSubjectsWithProperty(r).toSet().stream()
-                    .filter(RDFNode::isResource)
-                    .map(RDFNode::asResource)
-                    .forEach(shapes::add);
-        });
+        shapesAsSubjectsOf.forEach(r -> model.listSubjectsWithProperty(r).toSet().stream()
+                .filter(RDFNode::isResource)
+                .map(RDFNode::asResource)
+                .forEach(shapes::add));
     }
 
 }

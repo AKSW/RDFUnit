@@ -4,8 +4,6 @@ import java.lang.annotation.*;
 
 @Documented
 /**
- * <p>AdditionalData class.</p>
- *
  * @author Michael Leuthold
  * @version $Id: $Id
  */

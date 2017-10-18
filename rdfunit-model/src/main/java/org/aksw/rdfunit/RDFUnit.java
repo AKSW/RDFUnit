@@ -81,7 +81,7 @@ public class RDFUnit {
     /**
      * Initializes the patterns library, required
      *
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if files do not exist
      */
     public void init() {
 
