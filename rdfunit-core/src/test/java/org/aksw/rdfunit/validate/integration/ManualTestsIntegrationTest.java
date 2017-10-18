@@ -30,7 +30,7 @@ public class ManualTestsIntegrationTest {
         RDFUnit rdfunit = new RDFUnit();
         try {
             rdfunit.init();
-        } catch (RdfReaderException e) {
+        } catch (IllegalArgumentException e) {
             fail("Cannot read patterns and/or pattern generators");
         }
 

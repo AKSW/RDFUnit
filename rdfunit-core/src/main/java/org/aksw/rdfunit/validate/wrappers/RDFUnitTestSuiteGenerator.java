@@ -3,7 +3,6 @@ package org.aksw.rdfunit.validate.wrappers;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfFirstSuccessReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
-import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -59,7 +58,7 @@ public final class RDFUnitTestSuiteGenerator {
                     RDFUnit rdfunit = new RDFUnit();
                     try {
                         rdfunit.init();
-                    } catch (RdfReaderException e) {
+                    } catch (IllegalArgumentException e) {
                         LOGGER.error("Could not Init RDFUnit", e);
                     }
 

@@ -2,7 +2,6 @@ package org.aksw.rdfunit.webdemo.utils;
 
 import com.vaadin.ui.UI;
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
 
@@ -24,7 +23,7 @@ public class CommonAccessUtils {
                 rdfUnit = new RDFUnit();
                 try {
                     rdfUnit.init();
-                } catch (RdfReaderException e) {
+                } catch (IllegalArgumentException e) {
                     // show error
                 }
             }

@@ -5,7 +5,6 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.coverage.TestCoverageEvaluator;
 import org.aksw.rdfunit.io.IOUtils;
-import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.writer.RdfMultipleWriter;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
 import org.aksw.rdfunit.io.writer.RdfWriter;
@@ -93,7 +92,7 @@ public final class ValidateCLI {
         RDFUnit rdfunit = new RDFUnit(configuration.getDataFolder());
         try {
             rdfunit.init();
-        } catch (RdfReaderException e) {
+        } catch (IllegalArgumentException e) {
             displayHelpAndExit("Cannot read patterns and/or pattern generators", e);
         }
          /*

@@ -1,5 +1,8 @@
 package org.aksw.rdfunit;
 
+import com.google.common.collect.ImmutableSet;
+import lombok.Getter;
+import lombok.NonNull;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.*;
 import org.aksw.rdfunit.model.interfaces.Pattern;
@@ -27,9 +30,9 @@ public class RDFUnit {
 
     private final Collection<String> baseDirectories;
 
-    private volatile Collection<TestGenerator> autoGenerators;
-    private volatile Collection<Pattern> patterns;
-    private volatile QueryExecutionFactoryModel patternQueryFactory;
+    @Getter(lazy = true) @NonNull private final ImmutableSet<TestGenerator> autoGenerators = generateAutoGenerators();
+    @Getter(lazy = true) @NonNull private final ImmutableSet<Pattern> patterns = generatePatterns();
+    @Getter(lazy = true) @NonNull private final QueryExecutionFactoryModel patternQueryFactory = generateExecutionFactory();
 
     /**
      * <p>Constructor for RDFUnit.</p>
@@ -56,12 +59,7 @@ public class RDFUnit {
         this(new ArrayList<>());
     }
 
-    /**
-     * <p>init.</p>
-     *
-     * @throws RdfReaderException if any.
-     */
-    public void init() throws RdfReaderException {
+    private QueryExecutionFactoryModel generateExecutionFactory(){
         Model model = ModelFactory.createDefaultModel();
         // Set the defined prefixes
         PrefixNSService.setNSPrefixesInModel(model);
@@ -70,10 +68,22 @@ public class RDFUnit {
             getPatternsReader(baseDirectories).read(model);
             getAutoGeneratorsALLReader(baseDirectories).read(model);
         } catch (RdfReaderException e) {
-            throw new RdfReaderException(e.getMessage(), e);
+            throw new IllegalArgumentException(e.getMessage(), e);
         }
 
-        patternQueryFactory = new QueryExecutionFactoryModel(model);
+        return new QueryExecutionFactoryModel(model);
+
+        // Update pattern service
+
+    }
+
+
+    /**
+     * Initializes the patterns library, required
+     *
+     * @throws IllegalArgumentException
+     */
+    public void init() {
 
         // Update pattern service
         for (Pattern pattern : getPatterns()) {
@@ -81,31 +91,14 @@ public class RDFUnit {
         }
     }
 
-    private Collection<Pattern> getPatterns() {
-        synchronized(this) {
-            if (patterns == null) {
-                patterns =
-                        Collections.unmodifiableCollection(
-                                BatchPatternReader.create().getPatternsFromModel(patternQueryFactory.getModel()));
-            }
-            return patterns;
-        }
+    private ImmutableSet<TestGenerator> generateAutoGenerators() {
+         return ImmutableSet.copyOf(
+            BatchTestGeneratorReader.create().getTestGeneratorsFromModel(getPatternQueryFactory().getModel()));
     }
 
-    /**
-     * <p>Getter for the field <code>autoGenerators</code>.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
-    public Collection<TestGenerator> getAutoGenerators() {
-        synchronized(this) {
-            if (autoGenerators == null) {
-                autoGenerators =
-                        Collections.unmodifiableCollection(
-                                BatchTestGeneratorReader.create().getTestGeneratorsFromModel(patternQueryFactory.getModel()));
-            }
-            return autoGenerators;
-        }
+    private ImmutableSet<Pattern> generatePatterns() {
+        return ImmutableSet.copyOf(
+                BatchPatternReader.create().getPatternsFromModel(getPatternQueryFactory().getModel()));
     }
 
     private static RdfReader createReaderFromBaseDirsAndResource(Collection<String> baseDirectories, String relativeName) {
@@ -126,15 +119,6 @@ public class RDFUnit {
      */
     public static RdfReader getPatternsReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "patterns.ttl");
-    }
-
-    /**
-     * <p>getPatternsReader.</p>
-     *
-     * @return a {@link RdfReader} object.
-     */
-    public static RdfReader getPatternsReader() {
-        return getPatternsReader(new ArrayList<>());
     }
 
     /**

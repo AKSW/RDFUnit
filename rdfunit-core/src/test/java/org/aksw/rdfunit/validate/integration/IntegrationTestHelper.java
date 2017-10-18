@@ -42,7 +42,7 @@ public class IntegrationTestHelper {
     public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {
         try {
             rdfUnit.init();
-        } catch (RdfReaderException e) {
+        } catch (IllegalArgumentException e) {
             throw new IllegalStateException(e);
         }
         RdfReader ontologyDSPReader = createResourceReader(schemaSource);
