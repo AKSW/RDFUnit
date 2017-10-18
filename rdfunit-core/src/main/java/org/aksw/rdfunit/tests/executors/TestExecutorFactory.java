@@ -30,14 +30,10 @@ public final class TestExecutorFactory {
                 return new StatusTestExecutor(new QueryGenerationAskFactory());
             case aggregatedTestCaseResult:
                 return new AggregatedTestExecutor(new QueryGenerationCountFactory());
-            case shaclSimpleTestCaseResult:
+            case shaclLiteTestCaseResult:
                 return new ShaclSimpleTestExecutor(new QueryGenerationSelectFactory());
-            case shaclFullTestCaseResult:
+            case shaclTestCaseResult:
                 return new ShaclTestExecutor(new QueryGenerationExtendedSelectFactory());
-            case rlogTestCaseResult:
-                return new RLOGTestExecutor(new QueryGenerationSelectFactory());
-            case extendedTestCaseResult:
-                return new ExtendedTestExecutor(new QueryGenerationExtendedSelectFactory());
             default:
                 return null;
         }

@@ -45,16 +45,11 @@ public final class RdfResultsWriterFactory {
                 return new RdfHtmlResultsStatusWriter(testExecution, outputStream);
             case aggregatedTestCaseResult:
                 return new RdfHtmlResultsAggregateWriter(testExecution, outputStream);
-            case shaclSimpleTestCaseResult:
+            case shaclLiteTestCaseResult:
                 return new RdfHtmlResultsShaclWriter(testExecution, outputStream);
-            case shaclFullTestCaseResult:
+            case shaclTestCaseResult:
                 // TODO extended not supported ATM, use RLOG instead
                 return new RdfHtmlResultsShaclWriter(testExecution, outputStream);
-            case rlogTestCaseResult:
-                return new RdfHtmlResultsRlogWriter(testExecution, outputStream);
-            case extendedTestCaseResult:
-                // TODO extended not supported ATM, use RLOG instead
-                return new RdfHtmlResultsRlogWriter(testExecution, outputStream);
             default:
                 throw new IllegalArgumentException("Unsupported TestExecution in createHTMLWriter");
         }
@@ -70,14 +65,10 @@ public final class RdfResultsWriterFactory {
             return new JunitXmlResultsStatusWriter(testExecution, outputStream);
         case aggregatedTestCaseResult:
             return new JunitXmlResultsAggregateWriter(testExecution, outputStream);
-    	case shaclFullTestCaseResult:
+    	case shaclTestCaseResult:
     		return new JunitXmlResultsShaclWriter(testExecution, outputStream);
-    	case shaclSimpleTestCaseResult:
+    	case shaclLiteTestCaseResult:
     		return new JunitXmlResultsShaclWriter(testExecution, outputStream);
-    	case rlogTestCaseResult:
-    		return new JunitXmlResultsRlogWriter(testExecution, outputStream);
-    	case extendedTestCaseResult:
-    		return new JunitXmlResultsRlogWriter(testExecution, outputStream);
         default:
             throw new IllegalArgumentException("Unsupported TestExecution in JunitXmlResultsWriter");
         }

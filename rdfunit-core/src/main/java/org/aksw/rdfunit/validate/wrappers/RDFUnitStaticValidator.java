@@ -42,7 +42,7 @@ public final class RDFUnitStaticValidator {
 
 
     public static TestExecution validate(final Model inputModel) {
-        return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult);
+        return validate(inputModel, TestCaseExecutionType.shaclTestCaseResult);
     }
 
 
@@ -52,7 +52,7 @@ public final class RDFUnitStaticValidator {
 
 
     public static TestExecution validate(final Model inputModel, final String inputURI) {
-        return validate(inputModel, TestCaseExecutionType.rlogTestCaseResult, inputURI);
+        return validate(inputModel, TestCaseExecutionType.shaclTestCaseResult, inputURI);
     }
 
     public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) {

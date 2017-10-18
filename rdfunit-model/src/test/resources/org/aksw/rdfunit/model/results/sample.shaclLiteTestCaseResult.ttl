@@ -37,7 +37,7 @@
 
 <6471ab7e-2b08-11b2-8060-a434d927758b>
         a                          rut:TestExecution , prov:Activity ;
-        rut:executionType          "shaclSimpleTestCaseResult" ;
+        rut:executionType          "shaclLiteTestCaseResult" ;
         rut:source                 <http://dbpedia.org/resource/Thessaloniki> ;
         rut:testsError             "0"^^xsd:nonNegativeInteger ;
         rut:testsFailed            "5"^^xsd:nonNegativeInteger ;

@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 
 import static com.google.common.collect.Streams.stream;
 import static java.util.Comparator.comparing;
-import static org.aksw.rdfunit.enums.TestCaseExecutionType.shaclFullTestCaseResult;
+import static org.aksw.rdfunit.enums.TestCaseExecutionType.shaclTestCaseResult;
 
 /**
  *
@@ -109,7 +109,7 @@ public class W3CShaclTestSuite {
 
                 val testSuite = new TestSuite(new ShaclTestGenerator().generate(shapesSource));
 
-                return RDFUnitStaticValidator.validate(shaclFullTestCaseResult, getDataGraph(), testSuite);
+                return RDFUnitStaticValidator.validate(shaclTestCaseResult, getDataGraph(), testSuite);
             });
         }
 

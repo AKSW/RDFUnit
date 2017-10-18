@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
 import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -43,7 +43,7 @@ public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestC
     public ShaclTestCaseResult read(final Resource resource) {
         checkNotNull(resource);
 
-        SimpleShaclTestCaseResult test = ShaclSimpleTestCaseResultReader.create().read(resource);
+        ShaclLiteTestCaseResult test = ShaclLiteTestCaseResultReader.create().read(resource);
 
         PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 

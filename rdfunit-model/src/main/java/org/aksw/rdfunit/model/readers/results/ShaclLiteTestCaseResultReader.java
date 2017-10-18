@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.readers.results;
 
-import org.aksw.rdfunit.model.impl.results.SimpleShaclTestCaseResultImpl;
-import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
+import org.aksw.rdfunit.model.impl.results.ShaclLiteTestCaseResultImpl;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -17,20 +17,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 6/17/15 5:07 PM
  * @version $Id: $Id
  */
-public final class ShaclSimpleTestCaseResultReader implements ElementReader<SimpleShaclTestCaseResult> {
+public final class ShaclLiteTestCaseResultReader implements ElementReader<ShaclLiteTestCaseResult> {
 
-    private ShaclSimpleTestCaseResultReader(){}
+    private ShaclLiteTestCaseResultReader(){}
 
     /**
      * <p>create.</p>
      *
-     * @return a {@link ShaclSimpleTestCaseResultReader} object.
+     * @return a {@link ShaclLiteTestCaseResultReader} object.
      */
-    public static ShaclSimpleTestCaseResultReader create() { return new ShaclSimpleTestCaseResultReader();}
+    public static ShaclLiteTestCaseResultReader create() { return new ShaclLiteTestCaseResultReader();}
 
     /** {@inheritDoc} */
     @Override
-    public SimpleShaclTestCaseResult read(final Resource resource) {
+    public ShaclLiteTestCaseResult read(final Resource resource) {
         checkNotNull(resource);
 
         TestCaseResult test = TestCaseResultReader.create(SHACL.message, SHACL.severity).read(resource);
@@ -41,6 +41,6 @@ public final class ShaclSimpleTestCaseResultReader implements ElementReader<Simp
         }
         checkNotNull(focusNode);
 
-        return new SimpleShaclTestCaseResultImpl(resource, test.getTestCaseUri(), test.getSeverity(), test.getMessage(), test.getTimestamp(), focusNode);
+        return new ShaclLiteTestCaseResultImpl(resource, test.getTestCaseUri(), test.getSeverity(), test.getMessage(), test.getTimestamp(), focusNode);
     }
 }

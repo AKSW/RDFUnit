@@ -153,21 +153,13 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
                 typeToSearch = RDFUNITv.AggregatedTestResult;
                 reader = AggregatedTestCaseResultReader.create();
                 break;
-            case extendedTestCaseResult:
-                typeToSearch = RDFUNITv.ExtendedTestCaseResult;
-                reader = ExtendedTestCaseResultReader.create();
-                break;
-            case rlogTestCaseResult:
-                typeToSearch = RDFUNITv.RLOGTestCaseResult;
-                reader = RLOGTestCaseResultReader.create();
-                break;
-            case shaclFullTestCaseResult:
+            case shaclTestCaseResult:
                 typeToSearch = SHACL.ValidationResult;
                 reader = ShaclTestCaseResultReader.create();
                 break;
-            case shaclSimpleTestCaseResult:
+            case shaclLiteTestCaseResult:
                 typeToSearch = SHACL.ValidationResult;
-                reader = ShaclSimpleTestCaseResultReader.create();
+                reader = ShaclLiteTestCaseResultReader.create();
                 break;
             default:
                 throw new IllegalArgumentException("unsupported execution type: " + executionType.toString());

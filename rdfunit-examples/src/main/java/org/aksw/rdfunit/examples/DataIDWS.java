@@ -72,7 +72,7 @@ public class DataIDWS extends AbstractRDFUnitWebService {
         }
 
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(datasetName, "../data/");
-        configuration.setTestCaseExecutionType(TestCaseExecutionType.rlogTestCaseResult);
+        configuration.setTestCaseExecutionType(TestCaseExecutionType.shaclTestCaseResult);
 
         if (isText) {
             try {

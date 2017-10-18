@@ -25,7 +25,7 @@ public class MyCustomSkosValidator {
 
     public TestExecution validate(Model input) {
         // uses the TestSuite initiated above
-        return RDFUnitStaticValidator.validate(input, TestCaseExecutionType.shaclFullTestCaseResult);
+        return RDFUnitStaticValidator.validate(input, TestCaseExecutionType.shaclTestCaseResult);
     }
 
     public boolean isValid(Model input) {

@@ -217,19 +217,13 @@ public final class ValidateUtils {
                     resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
                     break;
                 case "shacl-lite":
-                    resultLevel = TestCaseExecutionType.shaclSimpleTestCaseResult;
+                    resultLevel = TestCaseExecutionType.shaclLiteTestCaseResult;
                     break;
                 case "shacllite":
-                    resultLevel = TestCaseExecutionType.shaclSimpleTestCaseResult;
+                    resultLevel = TestCaseExecutionType.shaclLiteTestCaseResult;
                     break;
                 case "shacl":
-                    resultLevel = TestCaseExecutionType.shaclFullTestCaseResult;
-                    break;
-                case "rlog":
-                    resultLevel = TestCaseExecutionType.rlogTestCaseResult;
-                    break;
-                case "extended":
-                    resultLevel = TestCaseExecutionType.extendedTestCaseResult;
+                    resultLevel = TestCaseExecutionType.shaclTestCaseResult;
                     break;
                 default:
                     LOGGER.warn("Option --result-level defined but not recognised. Using 'aggregate' by default.");

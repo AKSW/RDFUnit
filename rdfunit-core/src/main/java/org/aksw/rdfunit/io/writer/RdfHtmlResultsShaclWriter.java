@@ -2,7 +2,7 @@ package org.aksw.rdfunit.io.writer;
 
 import com.google.common.html.HtmlEscapers;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -41,12 +41,12 @@ public class RdfHtmlResultsShaclWriter extends AbstractRdfHtmlResultsWriter {
         String template = "<tr class=\"%s\"><td>%s</td><td>%s</td><td><a href=\"%s\">%s</a></td><td>%s</td></tr>\n";
 
         testExecution.getTestCaseResults().stream()
-                .map(SimpleShaclTestCaseResult.class::cast)
+                .map(ShaclLiteTestCaseResult.class::cast)
                 .forEach(result -> printResult(htmlString, template, result));
         return htmlString;
     }
 
-    private StringBuilder printResult(StringBuilder htmlString, String template, SimpleShaclTestCaseResult result) {
+    private StringBuilder printResult(StringBuilder htmlString, String template, ShaclLiteTestCaseResult result) {
         return htmlString.append(
                 String.format(template,
                         getStatusClass(result.getSeverity()),

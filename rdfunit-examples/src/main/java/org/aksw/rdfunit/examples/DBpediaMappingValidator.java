@@ -87,7 +87,7 @@ public class DBpediaMappingValidator {
      * @throws RdfReaderException if any.
      */
     public TestExecution validateAllMappings() throws RdfReaderException {
-        return RDFUnitStaticValidator.validate(TestCaseExecutionType.shaclFullTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
+        return RDFUnitStaticValidator.validate(TestCaseExecutionType.shaclTestCaseResult, getMappingSource(), getDBpMappingsTestSuite());
     }
 
     /**

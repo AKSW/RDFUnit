@@ -6,7 +6,6 @@ import org.aksw.rdfunit.model.writers.ElementWriter;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
-import org.aksw.rdfunit.vocabulary.RLOG;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.Model;
@@ -68,29 +67,7 @@ public class TestCaseResultWriter implements ElementWriter {
                             ResourceFactory.createTypedLiteral(Long.toString(((AggregatedTestCaseResult) testCaseResult).getPrevalenceCount().orElse(-1L)), XSDDatatype.XSDinteger));
         }
 
-        if (testCaseResult instanceof RLOGTestCaseResult) {
-            resource
-                    .addProperty(RDF.type, RDFUNITv.RLOGTestCaseResult)
-                    .addProperty(RDF.type, RLOG.Entry)
-                    .addProperty(RLOG.resource, model.createResource(((RLOGTestCaseResult) testCaseResult).getFailingResource()))
-                    // get it from annotations
-                    //.addProperty(RLOG.message, testCaseResult.getMessage())
-                    .addProperty(RLOG.level, model.createResource(testCaseResult.getSeverity().getUri()))
-            ;
-        }
-
-        if (testCaseResult instanceof ExtendedTestCaseResult) {
-            resource
-                    .addProperty(RDF.type, RDFUNITv.ExtendedTestCaseResult);
-
-            for (PropertyValuePair annotation : ((ExtendedTestCaseResult) testCaseResult).getResultAnnotations()) {
-                for (RDFNode rdfNode : annotation.getValues()) {
-                    resource.addProperty(annotation.getProperty(), rdfNode);
-                }
-            }
-        }
-
-        if (testCaseResult instanceof SimpleShaclTestCaseResult) {
+        if (testCaseResult instanceof ShaclLiteTestCaseResult) {
             resource.addProperty(RDF.type, SHACL.ValidationResult)
             ;
         }

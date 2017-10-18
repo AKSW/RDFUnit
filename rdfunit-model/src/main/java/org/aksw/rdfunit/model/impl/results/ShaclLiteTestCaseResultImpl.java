@@ -3,7 +3,7 @@ package org.aksw.rdfunit.model.impl.results;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.rdf.model.Resource;
 
@@ -16,16 +16,16 @@ import org.apache.jena.rdf.model.Resource;
  */
 @ToString
 @EqualsAndHashCode(exclude = "element")
-public class SimpleShaclTestCaseResultImpl extends BaseTestCaseResultImpl implements SimpleShaclTestCaseResult{
+public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implements ShaclLiteTestCaseResult {
 
     private final String resource;
 
-    public SimpleShaclTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, String resource) {
+    public ShaclLiteTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, String resource) {
         super(testCaseUri, severity, message);
         this.resource = resource;
     }
 
-    public SimpleShaclTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, String resource) {
+    public ShaclLiteTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, String resource) {
         super(element, testCaseUri, severity, message, timestamp);
         this.resource = resource;
     }

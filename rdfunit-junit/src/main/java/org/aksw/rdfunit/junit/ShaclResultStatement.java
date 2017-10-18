@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.junit;
 
-import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.runners.model.Statement;
@@ -30,9 +30,9 @@ class ShaclResultStatement extends Statement {
     @Override
     public void evaluate() throws Throwable {
         final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(testCase);
-        final Collection<SimpleShaclTestCaseResult> remainingResults = new ArrayList<>();
+        final Collection<ShaclLiteTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {
-            SimpleShaclTestCaseResult r = (SimpleShaclTestCaseResult) t;
+            ShaclLiteTestCaseResult r = (ShaclLiteTestCaseResult) t;
             if (!resourceIsPartOfInputModel(r)) {
                 continue;
             }
@@ -40,13 +40,13 @@ class ShaclResultStatement extends Statement {
         }
         final StringBuilder b = new StringBuilder();
         b.append(testCase.getTestCase().getResultMessage()).append(":\n");
-        for (SimpleShaclTestCaseResult r : remainingResults) {
+        for (ShaclLiteTestCaseResult r : remainingResults) {
             b.append('\t').append(r.getFailingResource()).append('\n');
         }
         assertThat(b.toString(), remainingResults.isEmpty());
     }
 
-    private boolean resourceIsPartOfInputModel(SimpleShaclTestCaseResult r) {
+    private boolean resourceIsPartOfInputModel(ShaclLiteTestCaseResult r) {
         return testCase.getTestInputModel().contains(
                 ResourceFactory.createResource(r.getFailingResource()), null);
     }

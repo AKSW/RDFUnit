@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
-import org.aksw.rdfunit.model.interfaces.results.RLOGTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.rdf.model.Resource;
@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @ToString
 @EqualsAndHashCode(exclude = "element")
-public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl implements ShaclTestCaseResult{
+public class ShaclTestCaseResultImpl extends ShaclLiteTestCaseResultImpl implements ShaclTestCaseResult {
 
     private final ImmutableSet<PropertyValuePair> resultAnnotations;
 
@@ -32,10 +32,10 @@ public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl imple
     }
 
     private ShaclTestCaseResultImpl(Builder builder) {
-        this(builder.rlogTestCaseResult.getTestCaseUri(),
-                builder.rlogTestCaseResult.getSeverity(),
-                builder.rlogTestCaseResult.getMessage(),
-                builder.rlogTestCaseResult.getFailingResource(),
+        this(builder.shaclLiteTestCaseResult.getTestCaseUri(),
+                builder.shaclLiteTestCaseResult.getSeverity(),
+                builder.shaclLiteTestCaseResult.getMessage(),
+                builder.shaclLiteTestCaseResult.getFailingResource(),
                 builder.resultAnnotations);
     }
 
@@ -45,11 +45,11 @@ public class ShaclTestCaseResultImpl extends SimpleShaclTestCaseResultImpl imple
     }
 
     public static class Builder {
-        private RLOGTestCaseResult rlogTestCaseResult;
+        private ShaclLiteTestCaseResult shaclLiteTestCaseResult;
         private Set<PropertyValuePair> resultAnnotations;
 
         public Builder(String testCaseUri, RLOGLevel severity, String message, String resource) {
-            rlogTestCaseResult = new RLOGTestCaseResultImpl(testCaseUri, severity, message, resource);
+            shaclLiteTestCaseResult = new ShaclLiteTestCaseResultImpl(testCaseUri, severity, message, resource);
         }
 
         public Builder setResultAnnotations(Set<PropertyValuePair> annotations) {

@@ -4,7 +4,7 @@ package org.aksw.rdfunit.tests.executors;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
-import org.aksw.rdfunit.model.impl.results.SimpleShaclTestCaseResultImpl;
+import org.aksw.rdfunit.model.impl.results.ShaclLiteTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
@@ -59,7 +59,7 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
                 }
                 RLOGLevel logLevel = testCase.getLogLevel();
 
-                testCaseResults.add(new SimpleShaclTestCaseResultImpl(testCase.getTestURI(), logLevel, message, resource));
+                testCaseResults.add(new ShaclLiteTestCaseResultImpl(testCase.getTestURI(), logLevel, message, resource));
             });
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);

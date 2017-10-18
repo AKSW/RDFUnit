@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.io.writer;
 
 import org.aksw.rdfunit.enums.RLOGLevel;
-import org.aksw.rdfunit.model.interfaces.results.SimpleShaclTestCaseResult;
+import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.services.PrefixNSService;
 
@@ -27,13 +27,13 @@ public class JunitXmlResultsShaclWriter extends AbstractJunitXmlResultsWriter {
         String template = "\t<testcase name=\"%s\" classname=\"%s\">\n";
 
         testExecution.getTestCaseResults().stream()
-                .map(SimpleShaclTestCaseResult.class::cast)
+                .map(ShaclLiteTestCaseResult.class::cast)
                 .forEach( result -> printResult(results, template, result));
 
         return results;
     }
 
-    private void printResult(StringBuilder results, String template, SimpleShaclTestCaseResult result) {
+    private void printResult(StringBuilder results, String template, ShaclLiteTestCaseResult result) {
         String testcaseElement = String.format(template,
                 result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                 result.getFailingResource());
