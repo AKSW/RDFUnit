@@ -135,6 +135,10 @@ public final class NamespaceStatistics {
         String breakChar = "/";
         if (uri.contains("#")) {
             breakChar = "#";
+        } else {
+            if (uri.substring(6).contains(":")) {
+                breakChar = ":";
+            }
         }
 
         int pos = Math.min(uri.lastIndexOf(breakChar), uri.length());
