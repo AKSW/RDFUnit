@@ -87,6 +87,15 @@ public class TestCaseResultWriter implements ElementWriter {
             if (!containsMessage) {
                 resource.addProperty(SHACL.message, testCaseResult.getMessage());
             }
+            boolean containsFocusNode = annotations.stream().anyMatch(an -> an.getProperty().equals(SHACL.focusNode));
+            if (!containsFocusNode) {
+                resource.addProperty(SHACL.focusNode, ResourceFactory.createResource(((ShaclTestCaseResult) testCaseResult).getFailingResource()));
+            }
+            boolean containsSeverity = annotations.stream().anyMatch(an -> an.getProperty().equals(SHACL.severity));
+            if (!containsSeverity) {
+                resource.addProperty(SHACL.severity, ResourceFactory.createResource(testCaseResult.getSeverity().getUri()));
+            }
+
 
         }
 

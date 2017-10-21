@@ -29,6 +29,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestCaseResult> {
 
+    private static Set<Property> excludesProperties = ImmutableSet.of(SHACL.severity, SHACL.focusNode, SHACL.message, PROV.wasGeneratedBy, DCTerms.date);
+    private static Set<Resource> excludesTypes = ImmutableSet.of(SHACL.ValidationResult, RDFUNITv.TestCaseResult);
+
     private ShaclTestCaseResultReader(){}
 
     /**
@@ -47,8 +50,6 @@ public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestC
 
         PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
-        Set<Property> excludesProperties = ImmutableSet.of(SHACL.severity, SHACL.focusNode, SHACL.message, PROV.wasGeneratedBy, DCTerms.date);
-        Set<Resource> excludesTypes = ImmutableSet.of(SHACL.ValidationResult, RDFUNITv.TestCaseResult);
 
         for (Statement smt: resource.listProperties().toList()) {
             if (excludesProperties.contains(smt.getPredicate())) {

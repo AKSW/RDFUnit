@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.enums;
 
 import org.aksw.rdfunit.services.PrefixNSService;
+import org.aksw.rdfunit.vocabulary.SHACL;
 
 /**
  * <p>RLOGLevel class.</p>
@@ -87,6 +88,12 @@ public enum RLOGLevel {
                 return level;
             }
         }
+        if (value.equals(SHACL.Violation.getURI()))
+            return ERROR;
+        if (value.equals(SHACL.Warning.getURI()))
+            return WARN;
+        if (value.equals(SHACL.Info.getURI()))
+            return INFO;
         return null;
 
     }

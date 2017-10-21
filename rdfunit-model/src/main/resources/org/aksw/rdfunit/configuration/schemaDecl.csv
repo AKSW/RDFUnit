@@ -15,3 +15,4 @@ rr,http://www.w3.org/ns/r2rml#
 foaf,http://xmlns.com/foaf/0.1/
 rml,http://semweb.mmlab.be/ns/rml#
 ql,http://semweb.mmlab.be/ns/ql#
+sider_vocabulary,http://bio2rdf.org/sider_vocabulary:,http://download.bio2rdf.org/release/3/sider/sider.schema.owl

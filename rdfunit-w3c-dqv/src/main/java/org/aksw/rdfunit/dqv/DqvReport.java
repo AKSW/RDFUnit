@@ -28,13 +28,11 @@ public class DqvReport {
     public Collection<QualityMeasure> getQualityMeasures() {
 
 
-        Collection<ShaclTestCaseResult> results =
-            testExecution.getTestCaseResults().stream()   // go through all results
+        return testExecution.getTestCaseResults().stream()   // go through all results
+                // use only Shacl results
                 .filter(t -> t instanceof ShaclTestCaseResult)
-                .map(ShaclTestCaseResult.class::cast) // use only Shacl results
-                .collect(Collectors.toSet());
+                .map(ShaclTestCaseResult.class::cast)
 
-        return results.stream()
                 // get source constraints or use undefined
                 .map(r -> getSourceConstraintFromResult(r).orElse(UNDEFINED_METRIC))
                 // map to metrics or use unclassified metric
