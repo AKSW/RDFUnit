@@ -281,7 +281,7 @@ public class W3CShaclTestSuite {
                     }
 
                     log.error("test case failed {}", this.getManifest().sourceFile);
-                    return EARL.Fail;
+                    return EARL.failed;
                 }
 
 
