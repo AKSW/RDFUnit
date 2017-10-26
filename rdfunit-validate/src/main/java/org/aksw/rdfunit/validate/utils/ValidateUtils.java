@@ -56,6 +56,10 @@ public final class ValidateUtils {
                 "the URI of the dataset (required)");
         cliOptions.addOption("e", "endpoint", true,
                 "the endpoint to run the tests on (If no endpoint is provided RDFUnit will try to dereference the dataset-uri)");
+        cliOptions.addOption("eu", "endpoint-username", true,
+                "The username for endpoint basic authentication");
+        cliOptions.addOption("ep", "endpoint-password", true,
+                "The password for endpoint basic authentication");
         cliOptions.addOption("g", "graph", true, "the graphs to use (separate multiple graphs with ',' (no whitespaces) (defaults to '')");
         cliOptions.addOption("u", "uri", true, "the uri to use for dereferencing if not the same with `dataset`");
         cliOptions.addOption("s", "schemas", true,
@@ -267,7 +271,9 @@ public final class ValidateUtils {
         if (commandLine.hasOption('e')) {
             String endpointURI = commandLine.getOptionValue("e");
             Collection<String> endpointGraphs = getUriStrs(commandLine.getOptionValue("g", ""));
-            configuration.setEndpointConfiguration(endpointURI, endpointGraphs);
+            String username = commandLine.getOptionValue("eu", "");
+            String password = commandLine.getOptionValue("ep", "");
+            configuration.setEndpointConfiguration(endpointURI, endpointGraphs, username, password);
         }
     }
 

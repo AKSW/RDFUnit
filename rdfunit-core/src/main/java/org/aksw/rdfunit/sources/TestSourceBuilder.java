@@ -33,14 +33,9 @@ public class TestSourceBuilder {
     private RdfReader inMemReader = null;
     private String sparqlEndpoint = null;
     private Collection<String> endpointGraphs = null;
+    private String endpointUsername = null;
+    private String endpointPassword = null;
 
-    /**
-     * <p>setPrefixUri.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setPrefixUri(String prefix, String uri) {
         this.sourceConfig = new SourceConfig(prefix, uri);
         return this;
@@ -54,9 +49,14 @@ public class TestSourceBuilder {
      * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
      */
     public TestSourceBuilder setEndpoint(String sparqlEndpoint, Collection<String> endpointGraphs) {
+        return setEndpoint(sparqlEndpoint, endpointGraphs, "", "");
+    }
+    public TestSourceBuilder setEndpoint(String sparqlEndpoint, Collection<String> endpointGraphs, String username, String password) {
         testSourceType = TestSourceType.Endpoint;
-        this.sparqlEndpoint = sparqlEndpoint;
+        this.sparqlEndpoint = sparqlEndpoint.trim();
         this.endpointGraphs = endpointGraphs;
+        this.endpointUsername = username.trim();
+        this.endpointPassword = password.trim();
         if (queryingConfig == null) {
             queryingConfig = QueryingConfig.createEndpoint();
         }
@@ -236,7 +236,7 @@ public class TestSourceBuilder {
             }
             checkNotNull(sparqlEndpoint);
             checkNotNull(endpointGraphs);
-            return new EndpointTestSource (sourceConfig, queryingConfig, referenceSchemata, sparqlEndpoint, endpointGraphs);
+            return new EndpointTestSource (sourceConfig, queryingConfig, referenceSchemata, sparqlEndpoint, endpointGraphs, endpointUsername, endpointPassword);
         }
 
         if (queryingConfig == null) {

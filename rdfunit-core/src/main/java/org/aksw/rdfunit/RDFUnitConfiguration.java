@@ -111,8 +111,8 @@ public class RDFUnitConfiguration {
      * @param endpointGraphs a
      * object.
      */
-    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs) {
-        this.testSourceBuilder.setEndpoint(endpointURI, endpointGraphs);
+    public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, String username, String password) {
+        this.testSourceBuilder.setEndpoint(endpointURI, endpointGraphs, username, password);
     }
 
     /**
