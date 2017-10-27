@@ -24,7 +24,7 @@ The main components that RDFUnit reads are
 RDFUnit also strictly defines the results of a TestSuite execution along with [different levels of result granularity](https://github.com/AKSW/RDFUnit/wiki/Results).
 
 ### Contents
- * [basic-usage](#basic-usage)
+ * [Basic Usage](#basic-usage)
  * [Using Docker](#using-docker)
  * [Supported Schemas](#supported-schemas)
 
