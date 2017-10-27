@@ -27,6 +27,7 @@ RDFUnit also strictly defines the results of a TestSuite execution along with [d
  * [Basic Usage](#basic-usage)
  * [Using Docker](#using-docker)
  * [Supported Schemas](#supported-schemas)
+ * [Acknowledgements](#acknowledgements)
 
 
 ### Basic usage
@@ -83,5 +84,10 @@ RDFUnit supports the following types of schemas
 1. **DSP** (Dublin Core Set Profiles): The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/22) bus as soon as SHACL becomes stable we will drop support for RS
 
 Note that you can mix all of these constraints together and RDFUnit will validate the dataset against all of them.
+
+### Acknowledgements
+
+The first version  of RDFUnit (formely known as Databugger) was developed by AKSW as part of the PhD thesis of Dimitris Kontokostas. 
+A lot of additional work for improvement, requirements & refactoring was performed through the [EU funded project ALIGNED](http://aligned-project.eu). Through the project, a lot of project partners provided feedback and contributed code like e.g.  Wolters Kluwers Germany and Semantic Web Company that are also users of RDFUnit.
 
 [![Java profiler](http://www.ej-technologies.com/images/product_banners/jprofiler_small.png)](http://www.ej-technologies.com/products/jprofiler/overview.html)
