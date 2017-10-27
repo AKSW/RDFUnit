@@ -23,6 +23,13 @@ The main components that RDFUnit reads are
 [Patterns & TestAutoGenerators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators).
 RDFUnit also strictly defines the results of a TestSuite execution along with [different levels of result granularity](https://github.com/AKSW/RDFUnit/wiki/Results).
 
+[basic-usage](#basic-usage)
+
+[Using Docker](#using-docker)
+
+[Supported Schemas](#supported-schemas)
+
+
 ### Basic usage
 
 See [RDFUnit from Command Line](https://github.com/AKSW/RDFUnit/wiki/CLI) or `bin/rdfunit -h` for (a lot) more options but the simplest setting is as follows:
