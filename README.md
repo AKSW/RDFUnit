@@ -38,7 +38,7 @@ What RDFUnit will do is:
 1. Run our [Test Generators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators) on the schemas and generate RDFUnit Test cases
 1. Run the RDFUnit test cases on the dataset
 1. You get a results report in html (by default) but you can request it in [RDF](http://rdfunit.aksw.org/ns/core#) or even multiple serializations with e.g.  `-o html,turtle,jsonld`
-  * The results are by default aggregated with counts, you can request different levels of result details using `-r {status|aggregated|shacl|shacllite|rlog|extended}`. See [here](https://github.com/AKSW/RDFUnit/wiki/Results) for more details.
+  * The results are by default aggregated with counts, you can request different levels of result details using `-r {status|aggregated|shacl|shacllite}`. See [here](https://github.com/AKSW/RDFUnit/wiki/Results) for more details.
 
 You can also run:
 ```console
@@ -72,7 +72,7 @@ This creates a temporary Docker container which runs the command, prints the res
 RDFUnit supports the following types of schemas
 
 1. **OWL** (using CWA): We pick the most commons OWL axioms as well as schema.org. (see [[1]](https://github.com/AKSW/RDFUnit/labels/OWL),[[2]](https://github.com/AKSW/RDFUnit/issues/20) for details
-1. **SHACL**: SHACL is still in progress but we support [the most stable parts of the language](https://github.com/AKSW/RDFUnit/labels/SHACL). Whatever constructs we support can also run on SPARQL Endpoints (SHACL does not support SPARQL endpoints by design)
+1. **SHACL**: Full SHACL is almost available except from [a few SHACL constructs](https://github.com/AKSW/RDFUnit/issues/62). Whatever constructs we support can also run directly on SPARQL Endpoints
 1. IBM **Resource Shapes**: The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/23) bus as soon as SHACL becomes stable we will drop support for RS
 1. **DSP** (Dublin Core Set Profiles): The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/22) bus as soon as SHACL becomes stable we will drop support for RS
 
