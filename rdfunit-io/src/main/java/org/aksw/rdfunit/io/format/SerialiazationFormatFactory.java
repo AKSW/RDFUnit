@@ -169,7 +169,7 @@ public final class SerialiazationFormatFactory {
     public static SerializationFormat createRDFXMLIn() {
         // RDF/XML -> input
 
-        HashSet<String> currentSynonyms = Sets.newHashSet("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV", "RDF", "XML");
+        HashSet<String> currentSynonyms = Sets.newHashSet("RDF/XML", "RDF-XML", "RDFXML", "RDF/XML-ABBREV", "RDF-XML-ABBREV", "RDFXML-ABBREV", "RDFXMLABBREV", "RDF", "XML", "OWL");
         return new SerializationFormat(
                 "RDF/XML", SerializationFormatIOType.input, SerializationFormatGraphType.singleGraph, "rdf", "application/rdf+xml", currentSynonyms);
 
