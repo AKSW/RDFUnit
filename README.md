@@ -90,6 +90,6 @@ Note that you can mix all of these constraints together and RDFUnit will validat
 The first version  of RDFUnit (formely known as Databugger) was developed by AKSW as part of the PhD thesis of Dimitris Kontokostas. 
 A lot of additional work for improvement, requirements & refactoring was performed through the [EU funded project ALIGNED](http://aligned-project.eu). Through the project, a lot of project partners provided feedback and contributed code like e.g.  Wolters Kluwers Germany and Semantic Web Company that are also users of RDFUnit.
 
-There are also many other [contributors](https://github.com/AKSW/RDFUnit/graphs/contributors) that contributed code or provided bug reports & constructive feedback
+There are also many [code contributors](https://github.com/AKSW/RDFUnit/graphs/contributors) as well as people submitted bug reports or provided constructive feedback.
 
 In addition, RDFUnit used [Java profiler (JProfiler)](http://www.ej-technologies.com/products/jprofiler/overview.html) for optimizations
