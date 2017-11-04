@@ -1,0 +1,62 @@
+@prefix schema: <http://schema.org/> .
+@prefix dsp:   <http://dublincore.org/dc-dsp#> .
+@prefix rutg:  <http://rdfunit.aksw.org/data/generators#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rlog:  <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rutp:  <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix oslc:  <http://open-services.net/ns/core#> .
+@prefix rut:   <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutr:  <http://rdfunit.aksw.org/data/results#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rutt:  <http://rdfunit.aksw.org/data/tests#> .
+@prefix ruts:  <http://rdfunit.aksw.org/data/testsuite#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  <http://example.org/shacl/tests/i> ;
+                 sh:resultPath                 ( [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                                 [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                               ) ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                <http://example.org/shacl/tests/s1> ;
+                 sh:value                      <http://example.org/shacl/tests/k>
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  <http://example.org/shacl/tests/i> ;
+                 sh:resultPath                 ( [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                                 [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                               ) ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                <http://example.org/shacl/tests/s1> ;
+                 sh:value                      <http://example.org/shacl/tests/l>
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  <http://example.org/shacl/tests/i> ;
+                 sh:resultPath                 ( [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                                 [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                               ) ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                <http://example.org/shacl/tests/s2> ;
+                 sh:value                      <http://example.org/shacl/tests/l>
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  <http://example.org/shacl/tests/i> ;
+                 sh:resultPath                 ( [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                                 [ sh:inversePath  <http://example.org/shacl/tests/p> ]
+                                               ) ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                <http://example.org/shacl/tests/s2> ;
+                 sh:value                      <http://example.org/shacl/tests/k>
+               ]
+] .

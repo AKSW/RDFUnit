@@ -247,14 +247,15 @@ public class W3CShaclTestSuite {
                 } else {
                     // check for partial
 
+                    String resultFolder = "tests-results-nonconformant";
+
                     int expectedViolations = getAdjustedExpectedReport().listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     int actualViolations = adjustedActualReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     String file = this.manifest.sourceFile.toString().replace("/", "_");
                     file = file.substring(file.lastIndexOf("tests")+6);
-                    File dirs1 = new File("results/partial");
+                    File dirs1 = new File(resultFolder  + "/partial");
                     dirs1.mkdirs();
-                    File dirs2 = new File("results/failed");
-                    dirs2.mkdirs();
+
 
                     if (
                             (!getAdjustedExpectedReport().isEmpty() && (
@@ -262,9 +263,9 @@ public class W3CShaclTestSuite {
                             || (expectedViolations > 0 && actualViolations > 0 )))
                     {
                         try {
-                            new RdfFileWriter("results/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
+                            new RdfFileWriter(resultFolder  + "/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
                             //new RdfFileWriter("results/partial/" + file + ".actual.before.ttl").write(originalActualReport);
-                            new RdfFileWriter("results/partial/" + file + ".actual.ttl").write(adjustedActualReport);
+                            new RdfFileWriter(resultFolder + "/partial/" + file + ".actual.ttl").write(adjustedActualReport);
                         } catch (RdfWriterException e) {
                             e.printStackTrace();
                         }
@@ -272,9 +273,9 @@ public class W3CShaclTestSuite {
                     }
 
                     try {
-                        new RdfFileWriter("results/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
+                        new RdfFileWriter(resultFolder  + "/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
                         //new RdfFileWriter("results/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                        new RdfFileWriter("results/fail/" + file + ".actual.ttl").write(adjustedActualReport);
+                        new RdfFileWriter(resultFolder + "/fail/" + file + ".actual.ttl").write(adjustedActualReport);
 
                     } catch (RdfWriterException e) {
                         e.printStackTrace();
