@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.ToString;
@@ -10,7 +11,7 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Used mainly for SHACL in order to inject a target from a shape to a sparql constraint
@@ -26,6 +27,12 @@ public class TestCaseWithTarget implements TestCase {
     @NonNull private final String filterSpqrql;
     @NonNull private final TestCase testCase;
 
+    public TestCaseWithTarget(ShapeTarget target, String filterSpqrql, TestCase testCase) {
+        this.target = target;
+        this.filterSpqrql = filterSpqrql;
+        this.testCase = testCase;
+    }
+
     @Override
     public String getSparqlWhere() {
         return injectTargetInSparql(testCase.getSparqlWhere(), this.target);
@@ -39,12 +46,9 @@ public class TestCaseWithTarget implements TestCase {
 
     @Override
     public TestCaseAnnotation getTestCaseAnnotation() {
-
-        Set<Resource> references = target.getRelatedOntologyResources();
-        if (references.size()>2) {
-            int k = 0;
-        }
-        return testCase.getTestCaseAnnotation();
+        // inject SHACL annotations
+        // TODO this is not efficient, recreates it on every request but needs major refactoring to improve
+        return createFromReferences(testCase.getTestCaseAnnotation(), target.getRelatedOntologyResources());
     }
 
     @Override
@@ -61,6 +65,14 @@ public class TestCaseWithTarget implements TestCase {
         // FIXME good for now
         int bracketIndex = sparqlQuery.indexOf('{');
         return sparqlQuery.substring(0,bracketIndex+1) + target.getPattern() + filterSpqrql + sparqlQuery.substring(bracketIndex+1);
+    }
+
+    private static TestCaseAnnotation createFromReferences(TestCaseAnnotation annotation, Collection<Resource> references) {
+
+        ImmutableSet.Builder<String> referencesBuilder = ImmutableSet.builder();
+        ImmutableSet<String> finalReferences = referencesBuilder.addAll(references.stream().map(r -> r.getURI()).collect(Collectors.toSet())).addAll(annotation.getReferences()).build();
+
+        return new TestCaseAnnotation(annotation.getElement(), annotation.getGenerated(), annotation.getAutoGeneratorURI(), annotation.getAppliesTo(), annotation.getSourceUri(), finalReferences, annotation.getDescription(), annotation.getTestCaseLogLevel(), annotation.getResultAnnotations());
     }
 
 }
