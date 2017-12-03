@@ -77,10 +77,12 @@ public class ShapeTargetCore implements ShapeTarget {
     static String getBindedSparql(String sparql, RDFNode node) {
         ParameterizedSparqlString parameterizedSparqlString = new ParameterizedSparqlString("ASK{" +sparql+ "}");
         parameterizedSparqlString.setParam("target", node);
-        return parameterizedSparqlString
+        String queryPattern = parameterizedSparqlString
                 .toString()
-                .replace("ASK{", "")
-                .replace("}", "");
+                .trim()
+                .replace("ASK{", "");
+        // remove last '}'
+        return queryPattern.substring(0, queryPattern.length()-1);
     }
 
 }

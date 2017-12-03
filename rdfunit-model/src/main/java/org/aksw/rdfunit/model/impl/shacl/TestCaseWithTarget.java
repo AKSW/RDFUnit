@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.ToString;
+import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
@@ -40,8 +41,16 @@ public class TestCaseWithTarget implements TestCase {
 
     @Override
     public String getSparqlPrevalence() {
-        // FIXME we need target here too
+
+        if (testCase.getSparqlPrevalence().trim().isEmpty()
+                // skip node targets
+                && (! target.getTargetType().equals(ShapeTargetType.NodeTarget))) {
+
+            return "SELECT (count(?this) AS ?total) WHERE { " + target.getPattern() + "}";
+        }
+
         return testCase.getSparqlPrevalence();
+
     }
 
     @Override

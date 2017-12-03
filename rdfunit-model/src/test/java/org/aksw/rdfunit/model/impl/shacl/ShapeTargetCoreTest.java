@@ -28,10 +28,6 @@ public class ShapeTargetCoreTest {
         ShapeTargetCore.create(null, null);
     }
 
-//    @Test(expected=NullPointerException.class)
-//    public void testCreateNullValue() {
-//        ShapeTargetCore.create(ShapeTargetType.AllObjectsTarget, null);
-//    }
 
     @Test
     public void testPatternUnique() {
@@ -62,6 +58,20 @@ public class ShapeTargetCoreTest {
                     assertThat(s.getNode()).isEqualTo(uri);
                 });
 
+    }
+
+    @Test
+    public void testTargetNode() {
+        ShapeTarget st = ShapeTargetCore.create(ShapeTargetType.NodeTarget, ResourceFactory.createResource("http://a.com"));
+        assertThat("BIND (<http://a.com> AS ?this) .")
+                .isEqualTo(st.getPattern().trim());
+    }
+
+    @Test
+    public void testSubjectOf() {
+        ShapeTarget st = ShapeTargetCore.create(ShapeTargetType.SubjectsOfTarget, ResourceFactory.createResource("http://p.com"));
+        assertThat("?this <http://p.com> [] .")
+                .isEqualTo(st.getPattern().trim());
     }
 
 }
