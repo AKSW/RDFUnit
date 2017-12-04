@@ -13,9 +13,11 @@ RDFUnit - RDF Unit Testing Suite
 
 **Homepage**: http://rdfunit.aksw.org <br/>
 **Documentation**: https://github.com/AKSW/RDFUnit/wiki  <br/>
+**Slack #rdfunit**: https://dbpedia-slack.herokuapp.com/ <br/>
 **Mailing list**: https://groups.google.com/d/forum/rdfunit (rdfunit [at] googlegroups.com)  <br/>
 **Presentations**: http://www.slideshare.net/jimkont  <br/>
 **Brief Overview**: https://github.com/AKSW/RDFUnit/wiki/Overview
+
 
 RDFUnit is implemented on top of the [Test-Driven Data Validation Ontology](http://rdfunit.aksw.org/ns/core#) and designed to read and produce RDF that complies to that ontology only.
 The main components that RDFUnit reads are
