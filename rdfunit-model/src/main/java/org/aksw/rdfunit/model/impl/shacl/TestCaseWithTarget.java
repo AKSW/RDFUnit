@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
@@ -12,6 +13,7 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -61,6 +63,11 @@ public class TestCaseWithTarget implements TestCase {
     }
 
     @Override
+    public Set<ResultAnnotation> getVariableAnnotations() {
+        return getTestCaseAnnotation().getVariableAnnotations();
+    }
+
+    @Override
     public Collection<PrefixDeclaration> getPrefixDeclarations() {
         return testCase.getPrefixDeclarations();
     }
@@ -79,9 +86,16 @@ public class TestCaseWithTarget implements TestCase {
     private static TestCaseAnnotation createFromReferences(TestCaseAnnotation annotation, Collection<Resource> references) {
 
         ImmutableSet.Builder<String> referencesBuilder = ImmutableSet.builder();
-        ImmutableSet<String> finalReferences = referencesBuilder.addAll(references.stream().map(r -> r.getURI()).collect(Collectors.toSet())).addAll(annotation.getReferences()).build();
+        ImmutableSet<String> finalReferences = referencesBuilder
+                .addAll(references.stream().map(r -> r.getURI()).collect(Collectors.toSet()))
+                .addAll(annotation.getReferences()).build();
 
-        return new TestCaseAnnotation(annotation.getElement(), annotation.getGenerated(), annotation.getAutoGeneratorURI(), annotation.getAppliesTo(), annotation.getSourceUri(), finalReferences, annotation.getDescription(), annotation.getTestCaseLogLevel(), annotation.getResultAnnotations());
+        ImmutableSet.Builder<ResultAnnotation> resultAnnotationBuilder = ImmutableSet.builder();
+        resultAnnotationBuilder
+                .addAll(annotation.getResultAnnotations())
+                .addAll(annotation.getVariableAnnotations());
+
+        return new TestCaseAnnotation(annotation.getElement(), annotation.getGenerated(), annotation.getAutoGeneratorURI(), annotation.getAppliesTo(), annotation.getSourceUri(), finalReferences, annotation.getDescription(), annotation.getTestCaseLogLevel(), resultAnnotationBuilder.build());
     }
 
 }
