@@ -1,6 +1,6 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
@@ -9,7 +9,7 @@ import org.aksw.rdfunit.vocabulary.RLOG;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -30,11 +30,11 @@ public class TestCaseAnnotation implements Element {
     @Getter private final String autoGeneratorURI;
     @Getter private final TestAppliesTo appliesTo;
     @Getter private final String sourceUri;
-    private final Collection<String> references;
+    private final ImmutableSet<String> references;
     @Getter private final String description;
     @Getter private final RLOGLevel testCaseLogLevel;
-    private final ImmutableList<ResultAnnotation> resultAnnotations;
-    private final ImmutableList<ResultAnnotation> variableAnnotations;
+    private final ImmutableSet<ResultAnnotation> resultAnnotations;
+    private final ImmutableSet<ResultAnnotation> variableAnnotations;
 
     /**
      * <p>Constructor for TestCaseAnnotation.</p>
@@ -49,29 +49,29 @@ public class TestCaseAnnotation implements Element {
      * @param testCaseLogLevel a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
      * @param resultAnnotations a {@link java.util.Collection} object.
      */
-    public TestCaseAnnotation(Resource element, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Collection<String> references, String description, RLOGLevel testCaseLogLevel, Collection<ResultAnnotation> resultAnnotations) {
+    public TestCaseAnnotation(Resource element, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Set<String> references, String description, RLOGLevel testCaseLogLevel, Set<ResultAnnotation> resultAnnotations) {
         this.element = checkNotNull(element);
         this.generated = checkNotNull(generated);
         this.autoGeneratorURI = autoGeneratorURI;
         this.appliesTo = checkNotNull(appliesTo);
         this.sourceUri = checkNotNull(sourceUri);
-        this.references = checkNotNull(references);
+        this.references = ImmutableSet.copyOf(checkNotNull(references));
         this.description = checkNotNull(description);
 
         this.testCaseLogLevel = findAnnotationLevel(testCaseLogLevel, checkNotNull(resultAnnotations));
-        this.variableAnnotations = ImmutableList.copyOf(findVariableAnnotations(resultAnnotations));
-        this.resultAnnotations = ImmutableList.copyOf(findNonVariableAnnotations(resultAnnotations));
+        this.variableAnnotations = ImmutableSet.copyOf(findVariableAnnotations(resultAnnotations));
+        this.resultAnnotations = ImmutableSet.copyOf(findNonVariableAnnotations(resultAnnotations));
     }
 
-    public Collection<String> getReferences() {
+    public Set<String> getReferences() {
         return references;
     }
 
-    public List<ResultAnnotation> getResultAnnotations() {
+    public Set<ResultAnnotation> getResultAnnotations() {
         return resultAnnotations;
     }
 
-    public List<ResultAnnotation> getVariableAnnotations() {
+    public Set<ResultAnnotation> getVariableAnnotations() {
         return variableAnnotations;
     }
 

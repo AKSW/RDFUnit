@@ -5,6 +5,7 @@ import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 
 /**
@@ -18,21 +19,21 @@ import org.apache.jena.rdf.model.Resource;
 @EqualsAndHashCode(exclude = "element", callSuper = false)
 public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implements ShaclLiteTestCaseResult {
 
-    private final String resource;
+    private final RDFNode focusNode;
 
-    public ShaclLiteTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, String resource) {
+    public ShaclLiteTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, RDFNode focusNode) {
         super(testCaseUri, severity, message);
-        this.resource = resource;
+        this.focusNode = focusNode;
     }
 
-    public ShaclLiteTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, String resource) {
+    public ShaclLiteTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, RDFNode focusNode) {
         super(element, testCaseUri, severity, message, timestamp);
-        this.resource = resource;
+        this.focusNode = focusNode;
     }
 
     @Override
-    public String getFailingResource() {
-        return resource;
+    public RDFNode getFailingNode() {
+        return focusNode;
     }
 
 }

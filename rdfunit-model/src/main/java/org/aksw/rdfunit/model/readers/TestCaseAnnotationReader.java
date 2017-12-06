@@ -10,8 +10,8 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.vocabulary.DCTerms;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -46,8 +46,8 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
         TestGenerationType generated = null;
         String source = null;
         RLOGLevel testCaseLogLevel = null;//RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
-        Collection<String> referencesLst = new ArrayList<>();
-        Collection<ResultAnnotation> testAnnotations = new ArrayList<>();
+        Set<String> referencesLst = new HashSet<>();
+        Set<ResultAnnotation> testAnnotations = new HashSet<>();
         String testGenerator = null;
 
         int count = 0; // used to count duplicates

@@ -5,6 +5,7 @@ import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.readers.ElementReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 
@@ -35,9 +36,9 @@ public final class ShaclLiteTestCaseResultReader implements ElementReader<ShaclL
 
         TestCaseResult test = TestCaseResultReader.create(SHACL.message, SHACL.severity).read(resource);
 
-        String focusNode = null;
+        RDFNode focusNode = null;
         for (Statement smt : resource.listProperties(SHACL.focusNode).toList()) {
-            focusNode = smt.getObject().asResource().getURI();
+            focusNode = smt.getObject();
         }
         checkNotNull(focusNode);
 

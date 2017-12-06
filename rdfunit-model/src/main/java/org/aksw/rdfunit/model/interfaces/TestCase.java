@@ -7,6 +7,7 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * <p>TestCase interface.</p>
@@ -29,11 +30,11 @@ public interface TestCase extends Element, Comparable<TestCase>{
         return getTestCaseAnnotation().getTestCaseLogLevel();
     }
 
-    default Collection<ResultAnnotation> getResultAnnotations()  {
+    default Set<ResultAnnotation> getResultAnnotations()  {
         return getTestCaseAnnotation().getResultAnnotations();
     }
 
-    default Collection<ResultAnnotation> getVariableAnnotations() {
+    default Set<ResultAnnotation> getVariableAnnotations() {
         return getTestCaseAnnotation().getVariableAnnotations();
     }
 

@@ -9,10 +9,7 @@ import org.aksw.rdfunit.model.interfaces.PatternParameter;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.apache.jena.rdf.model.Resource;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -64,8 +61,8 @@ public final class PatternImpl implements Pattern {
 
     /** {@inheritDoc} */
     @Override
-    public Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
-        Collection<ResultAnnotation> finalAnnotations = new ArrayList<>();
+    public Set<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
+        Set<ResultAnnotation> finalAnnotations = new HashSet<>();
 
         for (ResultAnnotation externalAnnotation : annotations) {
             ResultAnnotation sanitizedAnnotation = externalAnnotation;

@@ -10,10 +10,10 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
-import org.aksw.rdfunit.utils.StringUtils;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 
 import java.util.ArrayList;
@@ -52,16 +52,13 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
             ResultSet results = qe.execSelect();
 
             ShaclTestCaseResultImpl.Builder resultBuilder = null;
-            String prevResource = "";
+            RDFNode prevFocusNode = null;
 
             while (results.hasNext()) {
 
                 QuerySolution qs = results.next();
 
-                String resource = qs.get("this").toString();
-                if (qs.get("this").isLiteral()) {
-                    resource = StringUtils.getHashFromString(resource);
-                }
+                RDFNode focusNode = qs.get("this");
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {
                     message = qs.get("message").toString();
@@ -70,7 +67,7 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
 
                 // If resource != before
                 // we add the previous result in the list
-                if (!prevResource.equals(resource)) {
+                if (prevFocusNode == null || !prevFocusNode.toString().equals(focusNode.toString())) {
                     // The very first time we enter, result = null and we don't add any result
                     if (resultBuilder != null) {
                         testCaseResults.add(
@@ -79,7 +76,7 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
                                         .build());
                     }
 
-                    resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getTestURI(), logLevel, message, resource );
+                    resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getTestURI(), logLevel, message, focusNode );
 
                     annotationSetBuilder = PropertyValuePairSet.builder(); //reset
 
@@ -91,6 +88,7 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
                                     PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get()));
                         }
                     }
+                    //prevFocusNode = focusNode;
                 }
 
                 // result must be initialized by now

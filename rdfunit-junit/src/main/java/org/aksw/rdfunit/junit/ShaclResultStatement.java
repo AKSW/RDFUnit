@@ -2,7 +2,7 @@ package org.aksw.rdfunit.junit;
 
 import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
-import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.junit.runners.model.Statement;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ class ShaclResultStatement extends Statement {
         final Collection<ShaclLiteTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {
             ShaclLiteTestCaseResult r = (ShaclLiteTestCaseResult) t;
-            if (!resourceIsPartOfInputModel(r)) {
+            if (!nodeIsPartOfInputModel(r)) {
                 continue;
             }
             remainingResults.add(r);
@@ -41,14 +41,17 @@ class ShaclResultStatement extends Statement {
         final StringBuilder b = new StringBuilder();
         b.append(testCase.getTestCase().getResultMessage()).append(":\n");
         for (ShaclLiteTestCaseResult r : remainingResults) {
-            b.append('\t').append(r.getFailingResource()).append('\n');
+            b.append('\t').append(r.getFailingNode().toString()).append('\n');
         }
         assertThat(b.toString(), remainingResults.isEmpty());
     }
 
-    private boolean resourceIsPartOfInputModel(ShaclLiteTestCaseResult r) {
-        return testCase.getTestInputModel().contains(
-                ResourceFactory.createResource(r.getFailingResource()), null);
+    private boolean nodeIsPartOfInputModel(ShaclLiteTestCaseResult r) {
+        boolean isResourceAsSubject =
+                r.getFailingNode().isResource() &&
+                testCase.getTestInputModel().contains(r.getFailingNode().asResource(), null, (RDFNode) null);
+        boolean asObject = testCase.getTestInputModel().contains(null, null, r.getFailingNode());
+        return isResourceAsSubject || asObject ;
     }
 
 }

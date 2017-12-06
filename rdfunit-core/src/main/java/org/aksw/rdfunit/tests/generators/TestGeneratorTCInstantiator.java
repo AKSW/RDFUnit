@@ -19,9 +19,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Instantiates TestCases based on a test generator and a schema
@@ -68,7 +66,7 @@ public class TestGeneratorTCInstantiator {
     }
 
     private Optional<TestCase> generateTestFromResult(TestGenerator tg, Pattern tgPattern, QuerySolution row) {
-        Collection<String> references = new ArrayList<>();
+        Set<String> references = new HashSet<>();
         String description;
 
         Collection<Binding> bindings = new ArrayList<>();
@@ -104,7 +102,7 @@ public class TestGeneratorTCInstantiator {
         }
 
 
-        Collection<ResultAnnotation> patternBindedAnnotations = tgPattern.getBindedAnnotations(bindings);
+        Set<ResultAnnotation> patternBindedAnnotations = tgPattern.getBindedAnnotations(bindings);
         patternBindedAnnotations.addAll(tg.getAnnotations());
         Resource tcResource = ResourceFactory.createResource(TestUtils.generateTestURI(source.getPrefix(), tgPattern, bindings, tg.getUri()));
         PatternBasedTestCaseImpl tc = new PatternBasedTestCaseImpl(

@@ -10,8 +10,8 @@ import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.SparqlUtils;
-import org.aksw.rdfunit.utils.StringUtils;
 import org.apache.jena.query.QueryExecution;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 
 import java.util.ArrayList;
@@ -49,17 +49,14 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
 
             qe.execSelect().forEachRemaining( qs -> {
 
-                String resource = qs.get("this").toString();
-                if (qs.get("this").isLiteral()) {
-                    resource = StringUtils.getHashFromString(resource);
-                }
+                RDFNode focusNode = qs.get("this");
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {
                     message = qs.get("message").toString();
                 }
                 RLOGLevel logLevel = testCase.getLogLevel();
 
-                testCaseResults.add(new ShaclLiteTestCaseResultImpl(testCase.getTestURI(), logLevel, message, resource));
+                testCaseResults.add(new ShaclLiteTestCaseResultImpl(testCase.getTestURI(), logLevel, message, focusNode));
             });
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);

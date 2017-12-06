@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.interfaces;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Defines an RDFUnitL Pattern
@@ -28,7 +29,7 @@ public interface Pattern extends Element{
      * @param bindings a {@link java.util.Collection} object.
      * @return a {@link java.util.Collection} object.
      */
-    Collection<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings);
+    Set<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings);
 
     /**
      * <p>Getter for the field <code>iri</code>.</p>

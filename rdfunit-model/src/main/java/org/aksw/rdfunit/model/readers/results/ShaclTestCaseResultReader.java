@@ -61,6 +61,6 @@ public final class ShaclTestCaseResultReader implements ElementReader<ShaclTestC
             annotationSetBuilder.annotation(PropertyValuePair.create(smt.getPredicate(), smt.getObject()));
         }
 
-        return new ShaclTestCaseResultImpl(resource, test.getTestCaseUri(), test.getSeverity(), test.getMessage(), test.getTimestamp(), test.getFailingResource(), annotationSetBuilder.build().getAnnotations());
+        return new ShaclTestCaseResultImpl(resource, test.getTestCaseUri(), test.getSeverity(), test.getMessage(), test.getTimestamp(), test.getFailingNode(), annotationSetBuilder.build().getAnnotations());
     }
 }

@@ -52,7 +52,7 @@ public class RdfHtmlResultsShaclWriter extends AbstractRdfHtmlResultsWriter {
                         getStatusClass(result.getSeverity()),
                         "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
                         HtmlEscapers.htmlEscaper().escape(result.getMessage()),
-                        result.getFailingResource(), result.getFailingResource(), // <a href=%s>%s</a>
+                        result.getFailingNode(), result.getFailingNode(), // <a href=%s>%s</a>
                         result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"))
         );
     }
