@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.enums.ComponentValidatorType;
 import org.aksw.rdfunit.enums.RLOGLevel;
@@ -20,11 +20,11 @@ import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.*;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Builder
 @Value
@@ -121,25 +121,19 @@ public class ComponentConstraintImpl implements ComponentConstraint {
                 null,
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
-                Collections.emptyList(),
+                ImmutableSet.of(),
                 getMessage().getLexicalForm(),
                 RLOGLevel.ERROR, //FIXME
                 createResultAnnotations()
         );
     }
 
-    private List<ResultAnnotation> createResultAnnotations() {
-        ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
+    private Set<ResultAnnotation> createResultAnnotations() {
+        ImmutableSet.Builder<ResultAnnotation> annotations = ImmutableSet.builder();
         // add property
-        if (shape.getPath().isPresent()) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                    .setValue(shape.getPath().get().getPathAsRdf()).build());
-        } else {
-            if (validator.getSparqlQuery().contains("$path") || validator.getSparqlQuery().contains("?path")) {
-                annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                        .setVariableName("path").build());
-            }
-        }
+        getPathAnnotation().ifPresent(annotations::add);
+        getValueAnnotation().ifPresent(annotations::add);
+
 
         if (shape.getMessage().isPresent()) {
             annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
@@ -156,21 +150,45 @@ public class ComponentConstraintImpl implements ComponentConstraint {
                 .setValue(component.getElement()).build());
 
 
-        List<Property> nonValueArgs = Arrays.asList(SHACL.minCount, SHACL.maxCount, SHACL.uniqueLang);
-        List<Property> nonValueBind = getBindings().keySet().stream()
-                .map(ComponentParameter::getPredicate)
-                .filter( p -> !nonValueArgs.contains(p))
-                .collect(Collectors.toList());
-        if (!nonValueBind.isEmpty()) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
-                    .setVariableName("value").build());
-        }
-
         return annotations.build();
     }
 
     private Resource createTestCaseResource() {
         // FIXME temporary solution until we decide how to build stable unique test uris
         return ResourceFactory.createProperty(JenaUtils.getUniqueIri());
+    }
+
+    private Optional<ResultAnnotation> getPathAnnotation() {
+        ResultAnnotation ra= null;
+        if (shape.getPath().isPresent()) {
+            ra = new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
+                    .setValue(shape.getPath().get().getPathAsRdf()).build();
+        } else {
+            if (validator.getSparqlQuery().contains("$path") || validator.getSparqlQuery().contains("?path")) {
+                ra = new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
+                        .setVariableName("path").build();
+            }
+
+        }
+        return Optional.ofNullable(ra);
+    }
+
+    private Optional<ResultAnnotation> getValueAnnotation() {
+        ResultAnnotation ra= null;
+
+        List<Property> nonValueArgs = Arrays.asList(SHACL.minCount, SHACL.maxCount, SHACL.uniqueLang);
+        boolean canValueBind = ! getBindings().keySet().stream()
+                .map(ComponentParameter::getPredicate)
+                .filter( p -> nonValueArgs.contains(p))
+                .findFirst().isPresent();
+                //.collect(Collectors.toList());
+
+        if (canValueBind && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") )
+                ||shape.isNodeShape()) {
+            ra = new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
+                    .setVariableName("value").build();
+        }
+
+        return Optional.ofNullable(ra);
     }
 }

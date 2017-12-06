@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -26,8 +26,8 @@ import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Builder
@@ -92,15 +92,15 @@ public class SparqlConstraintImpl implements SparqlConstraint {
                 null,
                 TestAppliesTo.Schema, // TODO check
                 SHACL.namespace,      // TODO check
-                Collections.emptyList(),
+                ImmutableSet.of(),
                 generateMessage().getLexicalForm(),
                 RLOGLevel.ERROR, //FIXME
                 createResultAnnotations(originalSelectQuery)
         );
     }
 
-    private List<ResultAnnotation> createResultAnnotations(String originalSelectQuery) {
-        ImmutableList.Builder<ResultAnnotation> annotations = ImmutableList.builder();
+    private Set<ResultAnnotation> createResultAnnotations(String originalSelectQuery) {
+        ImmutableSet.Builder<ResultAnnotation> annotations = ImmutableSet.builder();
 
         String prefixes = validator.getPrefixDeclarations().stream()
                 .map(p -> "PREFIX " + p.getPrefix() + ": <" + p.getNamespace() + ">")
@@ -133,8 +133,8 @@ public class SparqlConstraintImpl implements SparqlConstraint {
             }
         }
 
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
-                .setVariableName("this").build());
+        //annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
+        //        .setVariableName("this").build());
         annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
                 .setVariableName("value").build());
 
