@@ -1,4 +1,4 @@
 #
 # Rename this file to patterns.ttl in order to override the java resource located in
-# rdfunit-core/src/main/resources/org/aksw/rdfunit/configuration/patterns.ttl
+# rdfunit-model/src/main/resources/org/aksw/rdfunit/configuration/patterns.ttl
 #

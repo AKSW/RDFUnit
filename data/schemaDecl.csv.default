@@ -1,0 +1,6 @@
+#
+# Rename this file to patterns.ttl in order to override the java resource located in
+# rdfunit-model/src/main/resources/org/aksw/rdfunit/configuration/schemaDecl.csv
+#
+# expected columns:
+# prefix,URI,URL(if URI does not dereference)

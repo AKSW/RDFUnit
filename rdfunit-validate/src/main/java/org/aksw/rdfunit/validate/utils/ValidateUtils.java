@@ -4,11 +4,17 @@ import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
+import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.validate.ParameterException;
+import org.aksw.rdfunit.validate.cli.ValidateCLI;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -102,6 +108,18 @@ public final class ValidateUtils {
 
         setDumpOrSparqlEndpoint(commandLine, configuration);
 
+        try (InputStream customSchemaDeclStream =
+                     Files.newInputStream(Paths.get(configuration.getDataFolder() + "schemaDecl.csv"))){
+            RDFUnitUtils.fillSchemaServiceFromFile(customSchemaDeclStream);
+        } catch(NoSuchFileException nsfe) {
+            RDFUnitUtils.fillSchemaServiceFromFile(
+                    ValidateCLI.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
+        } catch(Exception e) {
+            LOGGER.warn("Loading custom scheme declarations failed.\n" +
+                    "Falling back to bundled declarations in classpath due to", e);
+            RDFUnitUtils.fillSchemaServiceFromFile(
+                    ValidateCLI.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
+        }
 
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
