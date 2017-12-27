@@ -63,7 +63,8 @@ public final class CacheUtils {
     }
 
     private static String getFile(String testFolder, Source source, String type, String sourceType) {
-        return testFolder + sourceType + "/" + UriToPathUtils.getCacheFolderForURI(source.getUri()) + source.getPrefix() + "." + type + "." + sourceType + ".ttl";
+        return testFolder + sourceType + "/" + UriToPathUtils.getCacheFolderForURI(source.getUri()) +
+                source.getPrefix() + "." + type + "." + sourceType + ".ttl";
     }
 
 }

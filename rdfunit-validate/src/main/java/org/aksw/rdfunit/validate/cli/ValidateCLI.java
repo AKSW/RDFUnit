@@ -67,9 +67,6 @@ public final class ValidateCLI {
         if (!commandLine.hasOption('v')) { // explicitely do not use LOV
             RDFUnitUtils.fillSchemaServiceFromLOV();
         }
-        //TODO hack until we fix this, configuration tries to load schemas so they must be initialized before
-        RDFUnitUtils.fillSchemaServiceFromFile(ValidateCLI.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
-        //RDFUnitUtils.fillSchemaServiceFromFile(configuration.getDataFolder() + "schemaDecl.csv");
 
         RDFUnitConfiguration configuration = null;
         try {
