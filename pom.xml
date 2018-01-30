@@ -64,8 +64,8 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>3.4.0-1 </jena-sparql-api-version>
-        <org-apache-jena-version>3.4.0</org-apache-jena-version>
+        <jena-sparql-api-version>3.5.0-2</jena-sparql-api-version>
+        <org-apache-jena-version>3.5.0</org-apache-jena-version>
         <slf4j-version>1.7.25</slf4j-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
