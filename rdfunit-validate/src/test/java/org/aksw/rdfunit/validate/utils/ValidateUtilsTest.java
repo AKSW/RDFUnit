@@ -115,8 +115,8 @@ public class ValidateUtilsTest {
                 " -d http://dbpedia.org -e http://dbpedia.org/sparql -s rdf -l log",
                 "Expected exception for asking unsupported -l");
         exceptionsExpected.put(
-                " -d http://dbpedia.org -s foaf ",
-                "Expected exception for asking for undefined 'foaf' schema ");
+                " -d http://dbpedia.org -s ex ",
+                "Expected exception for asking for undefined 'ex' schema ");
         exceptionsExpected.put(
                 " -d http://dbpedia.org -s rdf -o htmln",
                 "Expected exception for asking for undefined serialization 'htmln'");
