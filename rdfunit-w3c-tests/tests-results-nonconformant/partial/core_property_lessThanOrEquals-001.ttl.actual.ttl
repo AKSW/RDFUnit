@@ -28,19 +28,19 @@
                  sh:value                      3.2
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#InvalidResource1> ;
-                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property1> ;
-                 sh:resultSeverity             sh:Violation ;
-                 sh:sourceConstraintComponent  sh:LessThanOrEqualsConstraintComponent ;
-                 sh:sourceShape                <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#TestShape-property1> ;
-                 sh:value                      5
-               ] ;
-  sh:result    [ a                             sh:ValidationResult ;
                  sh:focusNode                  <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#InvalidResource2> ;
                  sh:resultPath                 <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property1> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:LessThanOrEqualsConstraintComponent ;
                  sh:sourceShape                <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#TestShape-property1> ;
                  sh:value                      6
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#InvalidResource1> ;
+                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property1> ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:LessThanOrEqualsConstraintComponent ;
+                 sh:sourceShape                <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#TestShape-property1> ;
+                 sh:value                      5
                ]
 ] .

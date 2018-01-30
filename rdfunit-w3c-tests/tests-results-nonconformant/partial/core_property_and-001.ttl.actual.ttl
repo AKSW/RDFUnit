@@ -20,31 +20,31 @@
 [ a            sh:ValidationReport ;
   sh:conforms  false ;
   sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  _:b0 ;
+                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/and-001.test#postalCode> ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                _:b1
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  _:b0 ;
+                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/and-001.test#suburb> ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                _:b2
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
                  sh:focusNode                  []  ;
                  sh:resultPath                 <http://datashapes.org/sh/tests/core/property/and-001.test#postalCode> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
-                 sh:sourceShape                _:b0
+                 sh:sourceShape                _:b1
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
                  sh:focusNode                  []  ;
                  sh:resultPath                 <http://datashapes.org/sh/tests/core/property/and-001.test#suburb> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
-                 sh:sourceShape                _:b1
-               ] ;
-  sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  _:b2 ;
-                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/and-001.test#postalCode> ;
-                 sh:resultSeverity             sh:Violation ;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
-                 sh:sourceShape                _:b0
-               ] ;
-  sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  _:b2 ;
-                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/and-001.test#suburb> ;
-                 sh:resultSeverity             sh:Violation ;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
-                 sh:sourceShape                _:b1
+                 sh:sourceShape                _:b2
                ]
 ] .

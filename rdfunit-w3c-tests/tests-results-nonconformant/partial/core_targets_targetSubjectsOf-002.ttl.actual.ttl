@@ -27,14 +27,14 @@
                  sh:sourceShape                <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#TestShape-myProperty>
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance1> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance2> ;
                  sh:resultPath                 <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#myProperty> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:MaxCountConstraintComponent ;
                  sh:sourceShape                <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#TestShape-myProperty>
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance2> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance1> ;
                  sh:resultPath                 <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#myProperty> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:MaxCountConstraintComponent ;

@@ -20,15 +20,15 @@
 [ a            sh:ValidationReport ;
   sh:conforms  false ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2> ;
-                 sh:resultPath                 <http://datashapes.org/sh/tests/core/node/and-001.test#height> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1> ;
+                 sh:resultPath                 <http://datashapes.org/sh/tests/core/node/and-001.test#width> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
                  sh:sourceShape                [] 
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1> ;
-                 sh:resultPath                 <http://datashapes.org/sh/tests/core/node/and-001.test#width> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2> ;
+                 sh:resultPath                 <http://datashapes.org/sh/tests/core/node/and-001.test#height> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
                  sh:sourceShape                [] 

@@ -29,6 +29,14 @@
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
                  sh:focusNode                  <http://example.org/shacl/tests/i> ;
+                 sh:resultPath                 _:b1 ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                <http://example.org/shacl/tests/s2> ;
+                 sh:value                      <http://example.org/shacl/tests/k>
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  <http://example.org/shacl/tests/i> ;
                  sh:resultPath                 _:b0 ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
@@ -41,28 +49,20 @@
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
                  sh:sourceShape                <http://example.org/shacl/tests/s2> ;
-                 sh:value                      <http://example.org/shacl/tests/k>
-               ] ;
-  sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://example.org/shacl/tests/i> ;
-                 sh:resultPath                 _:b1 ;
-                 sh:resultSeverity             sh:Violation ;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
-                 sh:sourceShape                <http://example.org/shacl/tests/s2> ;
                  sh:value                      <http://example.org/shacl/tests/l>
                ]
 ] .
 
-_:b0  rdf:first _:b2 ;
+_:b1  rdf:first _:b2 ;
 rdf:rest  ( [ sh:inversePath  <http://example.org/shacl/tests/p> ]
           ) .
 
-_:b1  rdf:first _:b3 ;
+_:b0  rdf:first _:b3 ;
 rdf:rest  ( [ sh:inversePath  <http://example.org/shacl/tests/p> ]
           ) .
 
-_:b0  rdf:first  _:b2 ;
+_:b0  rdf:first  _:b3 ;
 rdf:rest  _:b4 .
 
-_:b1  rdf:first  _:b3 ;
+_:b1  rdf:first  _:b2 ;
 rdf:rest  _:b5 .

@@ -27,11 +27,11 @@
                  sh:value                      <http://datashapes.org/sh/tests/core/node/class-001.test#John>
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/class-001.test#Quokki> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/class-001.test#John> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
                  sh:sourceShape                <http://datashapes.org/sh/tests/core/node/class-001.test#TestShape> ;
-                 sh:value                      <http://datashapes.org/sh/tests/core/node/class-001.test#Quokki>
+                 sh:value                      <http://datashapes.org/sh/tests/core/node/class-001.test#John>
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
                  sh:focusNode                  <http://datashapes.org/sh/tests/core/node/class-001.test#Typeless> ;
@@ -55,10 +55,10 @@
                  sh:value                      <http://datashapes.org/sh/tests/core/node/class-001.test#Quokkip>
                ] ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/class-001.test#John> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/core/node/class-001.test#Quokki> ;
                  sh:resultSeverity             sh:Violation ;
                  sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
                  sh:sourceShape                <http://datashapes.org/sh/tests/core/node/class-001.test#TestShape> ;
-                 sh:value                      <http://datashapes.org/sh/tests/core/node/class-001.test#John>
+                 sh:value                      <http://datashapes.org/sh/tests/core/node/class-001.test#Quokki>
                ]
 ] .
