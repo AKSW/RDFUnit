@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.generators;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfStreamReader;
@@ -14,8 +15,6 @@ import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor;
 import org.aksw.rdfunit.utils.TestUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,8 +30,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @since 11/20/13 7:31 PM
  * @version $Id: $Id
  */
+@Slf4j
 public class TestGeneratorExecutor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestGeneratorExecutor.class);
     private volatile boolean isCanceled = false;
     private final boolean loadFromCache;
     private final boolean useManualTests;
@@ -101,7 +100,7 @@ public class TestGeneratorExecutor {
             }
 
             if (s.getModel() == null || s.getModel().isEmpty()) {
-                LOGGER.error("Trying to generate tests for {} but cannot read source", s.getUri());
+                log.error("Trying to generate tests for {} but cannot read source", s.getUri());
                 continue;
             }
 
@@ -118,7 +117,7 @@ public class TestGeneratorExecutor {
             // Shacl Generator
             Collection<TestCase> shaclTests = new ShaclTestGenerator().generate(s);
             if (! shaclTests.isEmpty()) {
-                LOGGER.info("{} generated {} SHACL test cases", s.getUri(), shaclTests.size());
+                log.info("{} generated {} SHACL test cases", s.getUri(), shaclTests.size());
                 allTests.addAll(shaclTests);
             }
 
@@ -153,15 +152,15 @@ public class TestGeneratorExecutor {
             Collection<TestCase> testsAutoCached = TestUtils.instantiateTestsFromModel(
                     new RdfStreamReader(cachedTestsLocation).read());
             tests.addAll(testsAutoCached);
-            LOGGER.info("{} contains {} automatically created tests (loaded from cache)", s.getUri(), testsAutoCached.size());
+            log.info("{} contains {} automatically created tests (loaded from cache)", s.getUri(), testsAutoCached.size());
 
         } catch (RdfReaderException e) {
             // cannot read from file  / generate
             Collection<TestCase> testsAuto = new TestGeneratorTCInstantiator(autoGenerators, s).generate();
             tests.addAll(testsAuto);
             TestUtils.writeTestsToFile(testsAuto, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, s)));
-            LOGGER.info("{} contains {} automatically created tests from TAGs", s.getUri(), testsAuto.size());
-            LOGGER.debug("No cached tests for {}", s.getUri());
+            log.info("{} contains {} automatically created tests from TAGs", s.getUri(), testsAuto.size());
+            log.debug("No cached tests for {}", s.getUri());
         }
 
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -182,10 +181,10 @@ public class TestGeneratorExecutor {
             Collection<TestCase> testsManuals = new ManualRdfunitTestGenerator(testFolder).generate(s);
 
             tests.addAll(testsManuals);
-            LOGGER.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
+            log.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
         } catch (IllegalArgumentException e) {
             // Do nothing, Manual tests do not exist
-            LOGGER.debug("No manual tests found for {}", s.getUri());
+            log.debug("No manual tests found for {}", s.getUri());
 
         }
 

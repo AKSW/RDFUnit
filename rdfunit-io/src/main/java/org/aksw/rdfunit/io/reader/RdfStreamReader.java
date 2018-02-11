@@ -1,12 +1,11 @@
 package org.aksw.rdfunit.io.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,9 +19,8 @@ import java.io.InputStream;
  * @since 11/14/13 8:37 AM
  * @version $Id: $Id
  */
+@Slf4j
 public class RdfStreamReader implements RdfReader {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RdfStreamReader.class);
 
     private final InputStream inputStream;
     private final String format;
@@ -90,7 +88,7 @@ public class RdfStreamReader implements RdfReader {
         try {
             return new FileInputStream(filename);
         } catch (FileNotFoundException e) {
-            LOGGER.debug("Error initializing RdfStreamReader, file '{}' not found", filename);
+            log.debug("Error initializing RdfStreamReader, file '{}' not found", filename);
             // do not handle exception at construction time
             return null;
         }

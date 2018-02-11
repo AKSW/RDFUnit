@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
@@ -13,8 +14,6 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.core.Var;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -32,8 +31,8 @@ import static com.google.common.base.Preconditions.checkState;
  */
 @ToString
 @EqualsAndHashCode
+@Slf4j
 public final class TestGeneratorImpl implements TestGenerator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestGeneratorImpl.class);
 
     @Getter private final Resource element;
     @Getter private final String description;
@@ -80,19 +79,19 @@ public final class TestGeneratorImpl implements TestGenerator {
     public boolean isValid() {
         Query q;
         if (pattern == null) {
-            LOGGER.error("{} : Pattern {} does not exist", getUri(), getPattern());
+            log.error("{} : Pattern {} does not exist", getUri(), getPattern());
             return false;
         }
         try {
             q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getQuery());
         } catch (Exception e) {
-            LOGGER.error("{} Cannot parse query:\n{}", getUri(), PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
+            log.error("{} Cannot parse query:\n{}", getUri(), PrefixNSService.getSparqlPrefixDecl() + getQuery(), e);
             return false;
         }
 
         Collection<Var> sv = q.getProjectVars();
         if (sv.size() != pattern.getParameters().size() + 1) {
-            LOGGER.error("{} Select variables are different than Pattern parameters", getUri());
+            log.error("{} Select variables are different than Pattern parameters", getUri());
             return false;
         }
 

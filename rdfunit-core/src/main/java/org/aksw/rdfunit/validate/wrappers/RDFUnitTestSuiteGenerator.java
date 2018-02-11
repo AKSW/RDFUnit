@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.validate.wrappers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfFirstSuccessReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
@@ -10,8 +11,6 @@ import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceFactory;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,9 +26,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 9/7/15 10:13 AM
  * @version $Id: $Id
  */
+@Slf4j
 public final class RDFUnitTestSuiteGenerator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RDFUnitTestSuiteGenerator.class);
-
 
     private final Collection<SchemaSource> schemas;
 
@@ -59,7 +57,7 @@ public final class RDFUnitTestSuiteGenerator {
                     try {
                         rdfunit.init();
                     } catch (IllegalArgumentException e) {
-                        LOGGER.error("Could not Init RDFUnit", e);
+                        log.error("Could not Init RDFUnit", e);
                     }
 
                     TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);

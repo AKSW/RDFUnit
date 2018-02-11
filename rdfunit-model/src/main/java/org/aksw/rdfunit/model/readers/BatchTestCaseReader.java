@@ -1,12 +1,11 @@
 package org.aksw.rdfunit.model.readers;
 
 import com.google.common.collect.ImmutableList;
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -18,9 +17,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @since 9/26/15 12:33 PM
  * @version $Id: $Id
  */
+@Slf4j
 public final class BatchTestCaseReader {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BatchTestCaseReader.class);
 
     private BatchTestCaseReader(){}
 
@@ -52,7 +50,7 @@ public final class BatchTestCaseReader {
                     try {
                         testCases.add(PatternBasedTestCaseReader.create().read(resource));
                     } catch (IllegalArgumentException ex) {
-                        LOGGER.warn("Cannot create PatternBasedTestCase {}", resource.toString(), ex);
+                        log.warn("Cannot create PatternBasedTestCase {}", resource.toString(), ex);
                     }
                 });
 

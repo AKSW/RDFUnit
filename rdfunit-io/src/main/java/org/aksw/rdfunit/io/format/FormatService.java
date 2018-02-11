@@ -1,9 +1,8 @@
 package org.aksw.rdfunit.io.format;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFLanguages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
@@ -15,9 +14,8 @@ import java.util.Collection;
  * @since 6/18/14 7:23 PM
  * @version $Id: $Id
  */
+@Slf4j
 public final class FormatService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FormatService.class);
-
 
     private FormatService() {
     }
@@ -83,7 +81,7 @@ public final class FormatService {
                 format = f.getName();
             }
         } catch (Exception e) {
-            LOGGER.debug("No format found, using the default one", e);
+            log.debug("No format found, using the default one", e);
             return "TURTLE";
         }
         return format;

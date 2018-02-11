@@ -1,10 +1,9 @@
 package org.aksw.rdfunit.prefix;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.query.QueryExecution;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Collections;
@@ -19,9 +18,8 @@ import java.util.List;
  * @since 3 /31/15 4:15 PM
  * @version $Id: $Id
  */
+@Slf4j
 public final class LOVEndpoint {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LOVEndpoint.class);
 
     private static final String LOV_ENDPOINT_URI = "http://lov.okfn.org/dataset/lov/sparql";
     private static final String LOV_GRAPH = "http://lov.okfn.org/dataset/lov";
@@ -63,7 +61,7 @@ public final class LOVEndpoint {
                 lovEntries.add(new SchemaEntry(prefix, vocab, ns, definedBy));
             });
         } catch (Exception e) {
-            LOGGER.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
+            log.error("Encountered error when reading schema information from LOV, schema prefixes & auto schema discovery might not work as expected", e);
         }
 
         return lovEntries;
@@ -101,7 +99,7 @@ public final class LOVEndpoint {
                 out.write('\n');
             }
         } catch (IOException e) {
-            LOGGER.info("Cannot write to file", e);
+            log.info("Cannot write to file", e);
         }
 
     }

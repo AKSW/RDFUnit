@@ -1,12 +1,11 @@
 package org.aksw.rdfunit.statistics;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.utils.UriToPathUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,9 +17,8 @@ import java.util.stream.Collectors;
  * @since 6/27/15 1:20 PM
  * @version $Id: $Id
  */
+@Slf4j
 public final class NamespaceStatistics {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(NamespaceStatistics.class);
 
     private final boolean skipUnknownNamespaces;
 
@@ -115,7 +113,7 @@ public final class NamespaceStatistics {
                 sources.add(source.get());
             } else {
                 if (skipUnknownNamespaces) {
-                    LOGGER.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
+                    log.warn("Undefined namespace in LOV or schemaDecl.csv: " + namespace);
                 } else {
                     sources.add(SchemaSourceFactory.createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(namespace), namespace));
                 }

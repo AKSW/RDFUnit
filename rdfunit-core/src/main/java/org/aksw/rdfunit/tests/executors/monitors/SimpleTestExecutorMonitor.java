@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
@@ -16,8 +17,6 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,9 +33,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 5/6/14 2:49 PM
  * @version $Id: $Id
  */
+@Slf4j
 public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTestExecutorMonitor.class);
     private final boolean loggingEnabled;
     @Getter private TestExecution testExecution;
 
@@ -81,7 +80,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         overviewResults.setTotalTests(testSuite.size());
 
         if (loggingEnabled) {
-            LOGGER.info("Testing {}", testedDataset.getUri());
+            log.info("Testing {}", testedDataset.getUri());
         }
     }
 
@@ -123,7 +122,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 statusResult = true;
 
                 if (loggingEnabled) {
-                    LOGGER.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result);
+                    log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + result);
                 }
 
 
@@ -144,7 +143,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
             overviewResults.increaseIndividualErrors(individualErrors);
 
             if (loggingEnabled) {
-                LOGGER.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + results.size() + " violation instances / TC: " + test.getAbrTestURI());
+                log.info("Test " + counter + "/" + overviewResults.getTotalTests() + " returned " + results.size() + " violation instances / TC: " + test.getAbrTestURI());
             }
 
         }
@@ -175,7 +174,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .build();
 
         if (loggingEnabled) {
-            LOGGER.info("Tests run: " + overviewResults.getTotalTests() +
+            log.info("Tests run: " + overviewResults.getTotalTests() +
                     ", Failed: " + overviewResults.getFailedTests() +
                     ", Timeout: " + overviewResults.getTimeoutTests() +
                     ", Error: " + overviewResults.getErrorTests() +

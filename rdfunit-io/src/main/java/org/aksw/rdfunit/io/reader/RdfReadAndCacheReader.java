@@ -1,11 +1,10 @@
 package org.aksw.rdfunit.io.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>RDFReadAndCacheReader class.</p>
@@ -15,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * @since 11/14/13 1:09 PM
  * @version $Id: $Id
  */
+@Slf4j
 public class RdfReadAndCacheReader implements RdfReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RdfReadAndCacheReader.class);
 
     private final RdfReader reader;
     private final RdfWriter writer;
@@ -41,7 +40,7 @@ public class RdfReadAndCacheReader implements RdfReader {
         try {
             writer.write(model);
         } catch (RdfWriterException e) {
-            LOGGER.warn("Could not cache RdfReader", e);
+            log.warn("Could not cache RdfReader", e);
         }
     }
 
@@ -54,7 +53,7 @@ public class RdfReadAndCacheReader implements RdfReader {
             //TODO change this
             writer.write(dataset.getDefaultModel());
         } catch (RdfWriterException e) {
-            LOGGER.warn("Could not cache RdfReader", e);
+            log.warn("Could not cache RdfReader", e);
         }
     }
 

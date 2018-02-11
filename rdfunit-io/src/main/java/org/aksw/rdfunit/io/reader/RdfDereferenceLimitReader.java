@@ -1,9 +1,8 @@
 package org.aksw.rdfunit.io.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -18,10 +17,8 @@ import java.net.URL;
  * @since 11 /14/13 8:48 AM
  * @version $Id: $Id
  */
+@Slf4j
 public class RdfDereferenceLimitReader implements RdfReader {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RdfDereferenceLimitReader.class);
-
 
     /**
      * the URI to be dereferenced
@@ -104,7 +101,7 @@ public class RdfDereferenceLimitReader implements RdfReader {
             conn.getInputStream();
             return conn.getContentLengthLong();
         } catch (IOException e) {
-            LOGGER.debug("Error", e);
+            log.debug("Error", e);
             return -1;
         } finally {
             if (conn!=null) {

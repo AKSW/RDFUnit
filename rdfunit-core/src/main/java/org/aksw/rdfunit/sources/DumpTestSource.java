@@ -68,7 +68,7 @@ public class DumpTestSource extends AbstractTestSource implements TestSource {
             // Note that the ontologies have reasoning enabled but not the dump source
             dumpModel.add(ontModel);
         } catch (Exception e) {
-            LOGGER.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
+            log.error("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage());
             throw new IllegalArgumentException("Cannot read dump URI: " + getUri() + " Reason: " + e.getMessage(), e);
         }
         return masqueradeQEF(new QueryExecutionFactoryModel(dumpModel), this);

@@ -1,10 +1,9 @@
 package org.aksw.rdfunit.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.prefix.LOVEndpoint;
 import org.aksw.rdfunit.prefix.SchemaEntry;
 import org.aksw.rdfunit.sources.SchemaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Collection;
@@ -17,8 +16,8 @@ import java.util.Collection;
  * @since 9/24/13 11:25 AM
  * @version $Id: $Id
  */
+@Slf4j
 public final class RDFUnitUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RDFUnitUtils.class);
 
     private RDFUnitUtils() {
     }
@@ -33,7 +32,7 @@ public final class RDFUnitUtils {
         try (InputStream inputStream = new FileInputStream(additionalCSV)) {
             fillSchemaServiceFromFile(inputStream);
         } catch (IOException e) {
-            LOGGER.error("File " + additionalCSV + " not fount!", e);
+            log.error("File " + additionalCSV + " not fount!", e);
         }
     }
 
@@ -69,25 +68,25 @@ public final class RDFUnitUtils {
                             SchemaService.addSchemaDecl(parts[0], parts[1], parts[2]);
                             break;
                         default:
-                            LOGGER.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);
+                            log.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);
                             count--;
                             break;
                     }
                 }
 
             } catch (IOException e) {
-                LOGGER.debug("IOException reading schemas", e);
+                log.debug("IOException reading schemas", e);
                 return;
             }
 
-            LOGGER.info("Loaded " + count + " schema declarations from: " + additionalCSV);
+            log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
         }
 
         if (additionalCSV != null) {
             try {
                 additionalCSV.close();
             } catch (IOException e) {
-                LOGGER.debug("IOException: ", e);
+                log.debug("IOException: ", e);
             }
         }
     }
@@ -104,7 +103,7 @@ public final class RDFUnitUtils {
 
         count = SchemaService.getSize() - count;
 
-        LOGGER.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
+        log.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
     }
 
 

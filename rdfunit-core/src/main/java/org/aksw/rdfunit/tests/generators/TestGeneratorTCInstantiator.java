@@ -1,11 +1,10 @@
 package org.aksw.rdfunit.tests.generators;
 
 import com.google.common.collect.ImmutableList;
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,10 +16,8 @@ import java.util.Collection;
  * @version $Id: $Id
  * @since 9/26/15 1:23 PM
  */
+@Slf4j
 public class TestGeneratorTCInstantiator {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestGeneratorTCInstantiator.class);
-
 
     private final ImmutableList<TestGenerator> testGenerators;
     private final SchemaSource source;

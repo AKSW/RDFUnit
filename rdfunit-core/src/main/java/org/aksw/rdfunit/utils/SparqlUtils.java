@@ -1,13 +1,12 @@
 package org.aksw.rdfunit.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,9 +20,8 @@ import java.util.Collection;
  * @since 1/24/14 6:08 PM
  * @version $Id: $Id
  */
+@Slf4j
 public final class SparqlUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SparqlUtils.class);
-
 
     private SparqlUtils() {
     }
@@ -55,8 +53,8 @@ public final class SparqlUtils {
             });
 
         } catch (Exception e) {
-            LOGGER.error("Error in sparql query",e);
-            LOGGER.debug(sparql);
+            log.error("Error in sparql query",e);
+            log.debug(sparql);
         }
 
         return annotations;
@@ -76,7 +74,7 @@ public final class SparqlUtils {
             qe = qef.createQueryExecution(askQuery);
             return qe.execAsk();
         } catch (Exception e) {
-            LOGGER.debug("Exception when running query {}", askQuery, e);
+            log.debug("Exception when running query {}", askQuery, e);
         } finally {
             if (qe != null) {
                 qe.close();

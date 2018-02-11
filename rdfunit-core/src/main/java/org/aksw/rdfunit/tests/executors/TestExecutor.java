@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -11,8 +12,6 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,8 +23,8 @@ import java.util.Collection;
  * @since 9 /30/13 11:11 AM
  * @version $Id: $Id
  */
+@Slf4j
 public abstract class TestExecutor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestExecutor.class);
     /**
      * Used in {@code cancel()} to stop the current execution
      */
@@ -102,12 +101,12 @@ public abstract class TestExecutor {
 
             // Test case execution and debug logging
             long executionTimeStartInMS = System.currentTimeMillis();
-            LOGGER.debug("{} : started execution", testCase.getAbrTestURI());
+            log.debug("{} : started execution", testCase.getAbrTestURI());
 
             try {
                 results = executeSingleTest(testSource, testCase);
             } catch (TestCaseExecutionException e) {
-                LOGGER.debug("Error (handled) running TC: " + testCase.getAbrTestURI(), e);
+                log.debug("Error (handled) running TC: " + testCase.getAbrTestURI(), e);
                 status = e.getStatus();
             } catch (RuntimeException e) {
                 //try {
@@ -115,15 +114,15 @@ public abstract class TestExecutor {
                 //} catch (InterruptedException e1) {
                 //    e1.printStackTrace();
                 //}
-                LOGGER.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
+                log.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
                 //throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
             } catch (Exception e) {
-                LOGGER.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
+                log.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
                 status = TestCaseResultStatus.Error;
             }
 
             long executionTimeEndInMS = System.currentTimeMillis();
-            LOGGER.debug("{} : execution completed in {}ms", testCase.getAbrTestURI(), (executionTimeEndInMS - executionTimeStartInMS));
+            log.debug("{} : execution completed in {}ms", testCase.getAbrTestURI(), (executionTimeEndInMS - executionTimeStartInMS));
 
             if (results.isEmpty()) {
                 status = TestCaseResultStatus.Success;
