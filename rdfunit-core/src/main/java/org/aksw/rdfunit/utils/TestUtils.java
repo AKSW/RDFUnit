@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.Binding;
@@ -28,13 +27,8 @@ public final class TestUtils {
     }
 
     public static Collection<TestCase> instantiateTestsFromModel(Model model) {
-        try {
-            return instantiateTestsFromModel(model, false);
-        } catch (TestCaseInstantiationException e) {
-            log.warn("TestCase instantiation failed", e);
+        return instantiateTestsFromModel(model, false);
         }
-        throw new IllegalArgumentException("Unexpected exception...");
-    }
 
     public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) {
         return BatchTestCaseReader.create().getTestCasesFromModel(model);

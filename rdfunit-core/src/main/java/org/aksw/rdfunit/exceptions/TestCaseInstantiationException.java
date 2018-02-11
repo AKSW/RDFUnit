@@ -2,9 +2,7 @@ package org.aksw.rdfunit.exceptions;
 
 /**
  * @author Dimitris Kontokostas
-
  * @since 1/5/14 2:27 PM
-
  */
 public class TestCaseInstantiationException extends Exception {
 
