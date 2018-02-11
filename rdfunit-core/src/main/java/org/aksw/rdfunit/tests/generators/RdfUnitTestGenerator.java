@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.tests.generators;
 
 import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.Source;
 
 import java.util.Set;
 
@@ -11,5 +11,5 @@ import java.util.Set;
  */
 public interface RdfUnitTestGenerator {
 
-    Set<TestCase> generate(SchemaSource source);
+    Set<TestCase> generate(Source source);
 }

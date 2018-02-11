@@ -2,7 +2,6 @@ package org.aksw.rdfunit.tests.generators;
 
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
-import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.io.reader.RdfStreamReader;
 import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -179,15 +178,12 @@ public class TestGeneratorExecutor {
             monitor.sourceGenerationStarted(s, TestGenerationType.ManuallyGenerated);
         }
         try {
-            Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    RdfReaderFactory.createFileOrResourceReader(
-                            CacheUtils.getSourceManualTestFile(testFolder, s),                 // check for local directory first
-                            CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", s)  // otherwise check if it exists in resources
-                    ).read());
+
+            Collection<TestCase> testsManuals = new ManualRdfunitTestGenerator(testFolder).generate(s);
 
             tests.addAll(testsManuals);
             LOGGER.info("{} contains {} manually created tests", s.getUri(), testsManuals.size());
-        } catch (RdfReaderException e) {
+        } catch (IllegalArgumentException e) {
             // Do nothing, Manual tests do not exist
             LOGGER.debug("No manual tests found for {}", s.getUri());
 
