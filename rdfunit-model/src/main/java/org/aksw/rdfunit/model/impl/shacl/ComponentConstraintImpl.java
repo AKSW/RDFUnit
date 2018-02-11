@@ -177,10 +177,9 @@ public class ComponentConstraintImpl implements ComponentConstraint {
         ResultAnnotation ra= null;
 
         List<Property> nonValueArgs = Arrays.asList(SHACL.minCount, SHACL.maxCount, SHACL.uniqueLang);
-        boolean canValueBind = ! getBindings().keySet().stream()
+        boolean canValueBind = getBindings().keySet().stream()
                 .map(ComponentParameter::getPredicate)
-                .filter( p -> nonValueArgs.contains(p))
-                .findFirst().isPresent();
+                .noneMatch(nonValueArgs::contains);
                 //.collect(Collectors.toList());
 
         if (canValueBind && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") )

@@ -120,8 +120,7 @@ public final class SchemaService {
 
 
     public static Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) throws UndefinedSchemaException {
-        Collection<String> prefixes = new ArrayList<>();
-        prefixes.addAll(schemata.keySet());
+        Collection<String> prefixes = new ArrayList<>(schemata.keySet());
 
         if (fileCache) {
             return getSourceList(baseFolder, prefixes);

@@ -19,12 +19,14 @@ public class RdfFirstSuccessReaderTest {
             reader.read();
             fail("Should have raised a TripleReaderException");
         } catch (RdfReaderException e) {
+            // Good to be here
         }
 
         try {
             reader.readDataset();
             fail("Should have raised a TripleReaderException");
         } catch (RdfReaderException e) {
+            // Good to be here
         }
     }
 
@@ -38,12 +40,14 @@ public class RdfFirstSuccessReaderTest {
             reader.read();
             fail("Should have raised a TripleReaderException");
         } catch (RdfReaderException e) {
+            // Good to be here
         }
 
         try {
             reader.readDataset();
             fail("Should have raised a TripleReaderException");
         } catch (RdfReaderException e) {
+            // Good to be here
         }
 
     }

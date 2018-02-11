@@ -54,7 +54,7 @@ public class ShaclEARLReporter {
         report.add(getTestSubject(), DOAP.developer, getAuthor());
         report.add(getTestSubject(), DOAP.name, projectName);
 
-         getTestSuite().getTestCases().stream().forEach(test -> {
+         getTestSuite().getTestCases().forEach(test -> {
 
             val assertion = report.createResource();
             assertion.addProperty(RDF.type, EARL.Assertion);

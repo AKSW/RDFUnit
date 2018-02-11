@@ -43,7 +43,7 @@ public class RDFUnitStaticValidatorTest {
 
 
     @Test
-    public void testValidateModel() throws RdfReaderException {
+    public void testValidateModel() {
         RDFUnitStaticValidator.validate(ModelFactory.createDefaultModel(), testCaseExecutionType);
     }
 

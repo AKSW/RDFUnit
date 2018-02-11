@@ -50,9 +50,7 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
             qe.execSelect().forEachRemaining(result -> {
 
                 Optional<TestCase> tc = generateTestFromResult(testGenerator, tgPattern, result, schemaSource);
-                if (tc.isPresent()) {
-                    tests.add(tc.get());
-                }
+                tc.ifPresent(tests::add);
 
             });
         }

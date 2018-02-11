@@ -41,8 +41,6 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
         TestGenerationType generated = null;
         String source = null;
         RLOGLevel testCaseLogLevel = null;//RLOGLevel.resolve(qs.get("testCaseLogLevel").toString());
-        Set<String> referencesLst = new HashSet<>();
-        Set<ResultAnnotation> testAnnotations = new HashSet<>();
         String testGenerator = null;
 
         int count = 0; // used to count duplicates
@@ -84,12 +82,12 @@ public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnn
         }
 
         //references
-        referencesLst.addAll(resource.listProperties(RDFUNITv.references).toList().stream()
+        Set<String> referencesLst = new HashSet<>(resource.listProperties(RDFUNITv.references).toList().stream()
                 .map(smt -> smt.getObject().asResource().getURI())
                 .collect(Collectors.toList()));
 
         //annotations
-        testAnnotations.addAll(resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
+        Set<ResultAnnotation> testAnnotations = new HashSet<>(resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
                 .map(smt -> ResultAnnotationReader.create().read(smt.getResource()))
                 .collect(Collectors.toList()));
 

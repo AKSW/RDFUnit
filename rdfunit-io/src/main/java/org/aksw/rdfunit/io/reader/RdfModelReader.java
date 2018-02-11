@@ -32,7 +32,7 @@ public class RdfModelReader implements RdfReader {
 
 
     @Override
-    public void readDataset(Dataset dataset) throws RdfReaderException {
+    public void readDataset(Dataset dataset){
         dataset.setDefaultModel(dataset.getDefaultModel().union(read()));
     }
 

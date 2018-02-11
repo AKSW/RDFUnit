@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.RDFUnit;
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.resources.ManualTestResources;
@@ -37,7 +36,7 @@ public class ManualTestsIntegrationTest {
     }
 
     @Test
-    public void testManualTestCases() throws TestCaseInstantiationException {
+    public void testManualTestCases() {
 
         for (Map.Entry<String, String> entry : ManualTestResources.getInstance().entrySet()) {
             String prefix = entry.getKey();

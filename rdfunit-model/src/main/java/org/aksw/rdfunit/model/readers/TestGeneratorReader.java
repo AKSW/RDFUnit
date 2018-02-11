@@ -35,7 +35,6 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
         String description = null;
         String query = null;
         Pattern pattern = null;
-        Collection<ResultAnnotation> generatorAnnotations = new ArrayList<>();
 
         int count = 0; // used to count duplicates
 
@@ -61,7 +60,7 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
         }
 
         //annotations
-        generatorAnnotations.addAll(resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
+        Collection<ResultAnnotation> generatorAnnotations = new ArrayList<>(resource.listProperties(RDFUNITv.resultAnnotation).toList().stream()
                 .map(smt -> ResultAnnotationReader.create().read(smt.getResource()))
                 .collect(Collectors.toList()));
 

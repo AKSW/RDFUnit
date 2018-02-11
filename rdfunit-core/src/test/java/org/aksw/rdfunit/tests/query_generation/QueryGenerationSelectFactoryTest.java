@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.tests.query_generation;
 
 
-import org.aksw.rdfunit.exceptions.TestCaseInstantiationException;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
@@ -24,7 +23,7 @@ public class QueryGenerationSelectFactoryTest {
     private QueryGenerationSelectFactory queryGenerationSelectFactory;
 
     @Before
-    public void init() throws TestCaseInstantiationException {
+    public void init() {
 
         queryGenerationSelectFactory = new QueryGenerationSelectFactory();
 

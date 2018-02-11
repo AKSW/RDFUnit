@@ -87,7 +87,7 @@ public class TestCaseWithTarget implements TestCase {
 
         ImmutableSet.Builder<String> referencesBuilder = ImmutableSet.builder();
         ImmutableSet<String> finalReferences = referencesBuilder
-                .addAll(references.stream().map(r -> r.getURI()).collect(Collectors.toSet()))
+                .addAll(references.stream().map(Resource::getURI).collect(Collectors.toSet()))
                 .addAll(annotation.getReferences()).build();
 
         ImmutableSet.Builder<ResultAnnotation> resultAnnotationBuilder = ImmutableSet.builder();

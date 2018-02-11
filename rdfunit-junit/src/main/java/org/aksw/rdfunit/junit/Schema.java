@@ -2,11 +2,11 @@ package org.aksw.rdfunit.junit;
 
 import java.lang.annotation.*;
 
-@Documented
 /**
+ *
  * @author Michael Leuthold
-
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Schema {

@@ -19,7 +19,7 @@ public class ShaclModelTest {
     private static final String shapeResource = "/org/aksw/rdfunit/shacl/sampleShape.ttl" ;
 
     @Before
-    public void setUp() throws RdfReaderException {
+    public void setUp() {
         // Needed to resolve the patterns
         RDFUnit rdfUnit = new RDFUnit();
         rdfUnit.init();
