@@ -9,7 +9,7 @@ import org.apache.jena.rdf.model.Model;
  *
  * @author Dimitris Kontokostas
  * @since 11 /14/13 12:59 PM
- * @version $Id: $Id
+
  */
 public interface RdfWriter {
 

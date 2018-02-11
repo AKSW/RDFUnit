@@ -7,12 +7,10 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 
 /**
- * <p>RDFReadAndCacheReader class.</p>
+ * reads from a RDFReader and caches result
  *
  * @author Dimitris Kontokostas
- *         reads from a RDFReader and caches result
  * @since 11/14/13 1:09 PM
- * @version $Id: $Id
  */
 @Slf4j
 public class RdfReadAndCacheReader implements RdfReader {
@@ -20,19 +18,13 @@ public class RdfReadAndCacheReader implements RdfReader {
     private final RdfReader reader;
     private final RdfWriter writer;
 
-    /**
-     * <p>Constructor for RDFReadAndCacheReader.</p>
-     *
-     * @param reader a {@link RdfReader} object.
-     * @param writer a {@link RdfWriter} object.
-     */
     public RdfReadAndCacheReader(RdfReader reader, RdfWriter writer) {
         super();
         this.reader = reader;
         this.writer = writer;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void read(Model model) throws RdfReaderException {
         reader.read(model);
@@ -44,7 +36,7 @@ public class RdfReadAndCacheReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void readDataset(Dataset dataset) throws RdfReaderException {
         reader.readDataset(dataset);
@@ -57,7 +49,7 @@ public class RdfReadAndCacheReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return "RDFReadAndCacheReader{" +

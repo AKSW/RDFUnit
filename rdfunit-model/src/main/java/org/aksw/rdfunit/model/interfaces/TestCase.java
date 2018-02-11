@@ -10,11 +10,8 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * <p>TestCase interface.</p>
- *
  * @author Dimitris Kontokostas
  * @since 9/23/13 6:31 AM
- * @version $Id: $Id
  */
 public interface TestCase extends Element, Comparable<TestCase>{
 

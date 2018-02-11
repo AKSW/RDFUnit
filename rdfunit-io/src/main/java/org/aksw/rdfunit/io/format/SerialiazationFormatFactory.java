@@ -5,12 +5,8 @@ import com.google.common.collect.Sets;
 import java.util.*;
 
 /**
- * <p>SerialiazationFormatFactory class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 6/18/14 4:27 PM
- * @version $Id: $Id
  */
 public final class SerialiazationFormatFactory {
 
@@ -49,8 +45,6 @@ public final class SerialiazationFormatFactory {
 
 
     /**
-     * <p>createHTML.</p>
-     *
      * @return an HTML format as output only
      */
     public static SerializationFormat createHTML() {
@@ -62,8 +56,6 @@ public final class SerialiazationFormatFactory {
     }
     
     /**
-     * <p>createJUnit/XML.</p>
-     *
      * @return an XML format as output only
      */
     public static SerializationFormat createJunitXml() {
@@ -75,8 +67,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createTurtle.</p>
-     *
      * @return a new TURTLE format for input/output
      */
     public static SerializationFormat createTurtle() {
@@ -88,8 +78,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createN3.</p>
-     *
      * @return a new N3 format for input/output
      */
     public static SerializationFormat createN3() {
@@ -100,8 +88,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createNTriples.</p>
-     *
      * @return a new NTRIPLES format for input/output
      */
     public static SerializationFormat createNTriples() {
@@ -113,8 +99,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createJsonLD.</p>
-     *
      * @return a new JSON-LD format for input/output
      */
     public static SerializationFormat createJsonLD() {
@@ -125,8 +109,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createRDFJson.</p>
-     *
      * @return a new RDF/JSON format for input/output
      */
     public static SerializationFormat createRDFJson() {
@@ -137,8 +119,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createRDFXMLAbbrevOut.</p>
-     *
      * @return a new XML/RDF-ABBREV format for output only
      */
     public static SerializationFormat createRDFXMLAbbrevOut() {
@@ -149,8 +129,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createRDFXMLOut.</p>
-     *
      * @return a new XML/RDF format for output only
      */
     public static SerializationFormat createRDFXMLOut() {
@@ -162,8 +140,6 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createRDFXMLIn.</p>
-     *
      * @return a new XML/RDF format for input only
      */
     public static SerializationFormat createRDFXMLIn() {
@@ -176,10 +152,7 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createRDFa.</p>
-     *
      * @return a new RDFa format for input only
-     * @since 0.7.2
      */
     public static SerializationFormat createRDFa() {
         // RDF/XML -> input
@@ -190,10 +163,7 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createNQads.</p>
-     *
      * @return a new N-Quads format for input only
-     * @since 0.7.2
      */
     public static SerializationFormat createNQads() {
         // RDF/XML -> input
@@ -204,10 +174,7 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createTriX.</p>
-     *
      * @return a new N-Quads format for input only
-     * @since 0.7.2
      */
     public static SerializationFormat createTriX() {
         // RDF/XML -> input
@@ -218,10 +185,7 @@ public final class SerialiazationFormatFactory {
     }
 
     /**
-     * <p>createTriX.</p>
-     *
      * @return a new N-Quads format for input only
-     * @since 0.7.2
      */
     public static SerializationFormat createTriG() {
         // RDF/XML -> input

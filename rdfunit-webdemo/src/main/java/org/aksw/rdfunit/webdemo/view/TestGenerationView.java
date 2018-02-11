@@ -20,7 +20,7 @@ import java.io.File;
 
 /**
  * @author Dimitris Kontokostas
- *         Description
+
  * @since 11/20/13 5:20 PM
  */
 final class TestGenerationView extends VerticalLayout implements TestGeneratorExecutorMonitor, WorkflowItem {
@@ -41,9 +41,6 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
     private volatile boolean inProgress = false;
 
 
-    /**
-     * <p>Constructor for TestGenerationView.</p>
-     */
     public TestGenerationView() {
         initLayout();
 
@@ -99,7 +96,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
 //        resultsTable.setVisible(false);
 //    }
 
-    /** {@inheritDoc} */
+
     @Override
     public void generationStarted(final Source source, final long numberOfSources) {
         UI.getCurrent().access(() -> {
@@ -110,7 +107,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
         });
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void sourceGenerationStarted(final Source source, TestGenerationType generationType) {
         UI.getCurrent().access(() -> {
@@ -125,7 +122,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
 
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void sourceGenerationExecuted(final Source source, final TestGenerationType generationType, final long testsCreated) {
         UI.getCurrent().access(() -> {
@@ -148,7 +145,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
 
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void generationFinished() {
         UI.getCurrent().access(() -> {
@@ -160,50 +157,50 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
 
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setMessage(String message, boolean isError) {
         this.isReady = !isError;
         WorkflowUtils.setMessage(messageLabel, message, isError);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean isReady() {
         return isReady;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setReady(boolean isReady) {
         this.isReady = isReady;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setPreviousItem(WorkflowItem item) {
         this.previous = item;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setNextItem(WorkflowItem item) {
         this.next = item;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public WorkflowItem getPreviousItem() {
         return previous;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public WorkflowItem getNextItem() {
         return next;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean execute() {
         if (RDFUnitDemoSession.getRDFUnitConfiguration() == null) {

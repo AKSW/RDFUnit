@@ -14,7 +14,7 @@ import java.util.Calendar;
  *
  * @author Dimitris Kontokostas
  * @since 1 /2/14 3:44 PM
- * @version $Id: $Id
+
  */
 class BaseTestCaseResultImpl implements TestCaseResult {
     private final Resource element;

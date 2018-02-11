@@ -10,14 +10,11 @@ import java.util.Collection;
 /**
  *
  * @author Michael Leuthold
- * @version $Id: $Id
+
  */
 
 final class RdfUnitJunitStatusTestExecutor extends ShaclSimpleTestExecutor {
 
-    /**
-     * <p>Constructor for RdfUnitJunitStatusTestExecutor.</p>
-     */
     public RdfUnitJunitStatusTestExecutor() {
         super(new QueryGenerationSelectFactory());
     }

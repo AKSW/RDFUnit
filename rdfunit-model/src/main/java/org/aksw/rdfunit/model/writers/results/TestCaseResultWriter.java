@@ -32,7 +32,7 @@ public class TestCaseResultWriter implements ElementWriter {
 
     public static TestCaseResultWriter create(TestCaseResult testCaseResult, String executionUri) {return new TestCaseResultWriter(testCaseResult, executionUri);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource;

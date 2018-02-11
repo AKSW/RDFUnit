@@ -24,7 +24,7 @@ public final class TestExecutionWriter implements ElementWriter {
 
     public static TestExecutionWriter create(TestExecution testExecution) {return new TestExecutionWriter(testExecution);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
 

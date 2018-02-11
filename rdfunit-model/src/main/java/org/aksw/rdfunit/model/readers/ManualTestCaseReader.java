@@ -14,21 +14,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class ManualTestCaseReader implements ElementReader<TestCase> {
 
     private ManualTestCaseReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.ManualTestCaseReader} object.
-     */
     public static ManualTestCaseReader create() { return new ManualTestCaseReader();}
 
 
-    /** {@inheritDoc} */
+
     @Override
     public TestCase read(Resource resource) {
         checkNotNull(resource, "Cannot read a ManualTestCase from a null resource");

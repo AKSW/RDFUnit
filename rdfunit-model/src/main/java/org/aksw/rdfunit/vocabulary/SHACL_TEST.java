@@ -9,7 +9,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
  *
  * @author Markus Ackermann
  * @since 7/14/17 4:17 PM
- * @version $Id: $Id
+
  */
 @SuppressWarnings("ClassWithTooManyFields")
 public final class SHACL_TEST {

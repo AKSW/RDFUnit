@@ -2,7 +2,6 @@ package org.aksw.rdfunit.examples;
 
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
-import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -12,32 +11,29 @@ import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
 import org.aksw.rdfunit.validate.ws.AbstractRDFUnitWebService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
 /**
- * <p>DataIDWS class.</p>
+ * a DataID Validator
  *
  * @author Dimitris Kontokostas
- *         a DataID Validator
  * @since 6/18/14 10:13 AM
- * @version $Id: $Id
  */
 public class DataIDWS extends AbstractRDFUnitWebService {
 
-    /** {@inheritDoc} */
+
     @Override
-    public void init() throws ServletException {
+    public void init() {
         RDFUnitTestSuiteGenerator testSuiteGenerator =
                 new RDFUnitTestSuiteGenerator.Builder()
                 .addSchemaURI("dataid", "https://raw.githubusercontent.com/dbpedia/dataId/master/ontology/dataid.ttl").build();
         RDFUnitStaticValidator.initWrapper(testSuiteGenerator);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
 
@@ -92,19 +88,19 @@ public class DataIDWS extends AbstractRDFUnitWebService {
         return configuration;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource testSource) {
         return RDFUnitStaticValidator.getTestSuite();
     }
 
-    /** {@inheritDoc} */
+
     @Override
-    protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) throws TestCaseExecutionException {
+    protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource testSource, final TestSuite testSuite) {
         return RDFUnitStaticValidator.validate(configuration.getTestCaseExecutionType(), testSource, testSuite);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         String helpMessage =

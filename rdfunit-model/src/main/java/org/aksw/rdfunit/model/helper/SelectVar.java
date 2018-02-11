@@ -7,7 +7,7 @@ import lombok.*;
  *
  * @author Dimitris Kontokostas
  * @since 8/28/15 4:39 PM
- * @version $Id: $Id
+
  */
 @Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

@@ -19,12 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * <p>ValidateUtils class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 6/13/14 4:35 PM
- * @version $Id: $Id
  */
 public final class ValidateUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidateUtils.class);
@@ -33,22 +29,10 @@ public final class ValidateUtils {
 
     private ValidateUtils(){}
 
-    /**
-     * <p>Getter for the field <code>cliOptions</code>.</p>
-     *
-     * @return a {@link org.apache.commons.cli.Options} object.
-     */
     public static Options getCliOptions() {
         return cliOptions;
     }
 
-    /**
-     * <p>parseArguments.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     * @return a {@link org.apache.commons.cli.CommandLine} object.
-     * @throws org.apache.commons.cli.ParseException if any.
-     */
     public static CommandLine parseArguments(String[] args) throws ParseException {
         CommandLineParser cliParser = new DefaultParser();
         return cliParser.parse(getCliOptions(), args);
@@ -93,13 +77,6 @@ public final class ValidateUtils {
         return cliOptions;
     }
 
-    /**
-     * <p>getConfigurationFromArguments.</p>
-     *
-     * @param commandLine a {@link org.apache.commons.cli.CommandLine} object.
-     * @return a {@link org.aksw.rdfunit.RDFUnitConfiguration} object.
-     * @throws org.aksw.rdfunit.validate.ParameterException if any.
-     */
     public static RDFUnitConfiguration getConfigurationFromArguments(CommandLine commandLine) throws ParameterException {
 
         checkIfRequiredParametersMissing(commandLine);

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * @author Dimitris Kontokostas
  * @since 6 /18/14 4:05 PM
- * @version $Id: $Id
+
  */
 public class SerializationFormat {
     /**
@@ -135,13 +135,13 @@ public class SerializationFormat {
         return headerType;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public int hashCode() {
         return Objects.hashCode(name, ioType, graphType, extension, headerType, synonyms);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -9,22 +9,13 @@ import org.apache.jena.shared.NotFoundException;
 import java.io.File;
 
 /**
- * <p>RDFDereferenceReader class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 11/14/13 8:48 AM
- * @version $Id: $Id
  */
 public class RdfDereferenceReader implements RdfReader {
 
     private final String uri;
 
-    /**
-     * <p>Constructor for RDFDereferenceReader.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     */
     public RdfDereferenceReader(String uri) {
         super();
         if (IOUtils.isFile(uri)) {
@@ -34,7 +25,7 @@ public class RdfDereferenceReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void read(Model model) throws RdfReaderException {
         try {
@@ -52,7 +43,7 @@ public class RdfDereferenceReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void readDataset(Dataset dataset) throws RdfReaderException {
         try {
@@ -70,7 +61,7 @@ public class RdfDereferenceReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return "RDFDereferenceReader{" +

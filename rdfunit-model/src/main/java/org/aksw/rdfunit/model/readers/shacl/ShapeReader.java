@@ -17,7 +17,7 @@ public final class ShapeReader implements ElementReader<Shape> {
         return new ShapeReader();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Shape read(Resource resource) {
         checkNotNull(resource);

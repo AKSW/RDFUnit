@@ -14,11 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>SchemaSource class.</p>
- *
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:51 PM
- * @version $Id: $Id
  */
 @ToString
 @EqualsAndHashCode(exclude={"model", "schemaReader"})

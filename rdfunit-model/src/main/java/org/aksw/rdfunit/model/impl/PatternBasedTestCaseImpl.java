@@ -13,11 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * <p>PatternBasedTestCase class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
- * @version $Id: $Id
  * @since 1/3/14 3:49 PM
  */
 @ToString
@@ -33,14 +29,6 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
     @Getter(lazy = true) @NonNull private final String sparqlWhere = initSparqlWhere();
     @Getter(lazy = true) @NonNull private final String sparqlPrevalence = initSparqlPrevalence();
 
-    /**
-     * <p>Constructor for PatternBasedTestCaseImpl.</p>
-     *
-     * @param resource   a {@link org.apache.jena.rdf.model.Resource} object.
-     * @param annotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
-     * @param pattern    a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     * @param bindings   a {@link java.util.Collection} object.
-     */
     public PatternBasedTestCaseImpl(@NonNull Resource resource, @NonNull TestCaseAnnotation annotation, @NonNull Pattern pattern, @NonNull Collection<Binding> bindings) {
         this.element = resource;
         this.testCaseAnnotation = annotation;

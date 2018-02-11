@@ -16,20 +16,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class ShaclLiteTestCaseResultReader implements ElementReader<ShaclLiteTestCaseResult> {
 
     private ShaclLiteTestCaseResultReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link ShaclLiteTestCaseResultReader} object.
-     */
     public static ShaclLiteTestCaseResultReader create() { return new ShaclLiteTestCaseResultReader();}
 
-    /** {@inheritDoc} */
+
     @Override
     public ShaclLiteTestCaseResult read(final Resource resource) {
         checkNotNull(resource);

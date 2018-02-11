@@ -36,9 +36,6 @@ final class SchemaSelectorComponent extends VerticalLayout {
 
     private final TokenField tokenField;
 
-    /**
-     * <p>Constructor for SchemaSelectorComponent.</p>
-     */
     public SchemaSelectorComponent() {
 
         VerticalLayout p = new VerticalLayout();
@@ -292,11 +289,6 @@ final class SchemaSelectorComponent extends VerticalLayout {
         }
     }
 
-    /**
-     * <p>getSelections.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
     public java.util.Collection<SchemaSource> getSelections() {
         java.util.Collection<SchemaSource> sources = new ArrayList<>();
 
@@ -311,11 +303,6 @@ final class SchemaSelectorComponent extends VerticalLayout {
         return sources;
     }
 
-    /**
-     * <p>setSelections.</p>
-     *
-     * @param sources a {@link java.util.Collection} object.
-     */
     public void setSelections(java.util.Collection<SchemaSource> sources) {
         clearSelections();
         sources.forEach(tokenField::addToken);

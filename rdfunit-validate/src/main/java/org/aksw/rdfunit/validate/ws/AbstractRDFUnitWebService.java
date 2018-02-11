@@ -20,23 +20,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * <p>Abstract RDFUnitWebService class.</p>
+ * A super class that can serve as an easy validation service based on RDFUnit
  *
  * @author Dimitris Kontokostas
- *         A super class that can serve as an easy validation service based on RDFUnit
  * @since 6/18/14 8:52 AM
- * @version $Id: $Id
  */
 public abstract class AbstractRDFUnitWebService extends HttpServlet {
 
 
-    /** {@inheritDoc} */
+
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         handleRequestAndRespond(httpServletRequest, httpServletResponse);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         handleRequestAndRespond(httpServletRequest, httpServletResponse);
@@ -45,7 +43,7 @@ public abstract class AbstractRDFUnitWebService extends HttpServlet {
     /**
      * Has all the workflow logic for getting the parameters, performing a validation and writing the output
      */
-    private void handleRequestAndRespond(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+    private void handleRequestAndRespond(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         RDFUnitConfiguration configuration = null;
         try {
             configuration = getConfiguration(httpServletRequest);

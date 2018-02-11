@@ -12,7 +12,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class PatternParameterWriter implements ElementWriter {
 
@@ -22,15 +22,9 @@ public final class PatternParameterWriter implements ElementWriter {
         this.patternParameter = patternParameter;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param patternParameter a {@link org.aksw.rdfunit.model.interfaces.PatternParameter} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.PatternParameterWriter} object.
-     */
     public static PatternParameterWriter create(PatternParameter patternParameter) {return new PatternParameterWriter(patternParameter);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(patternParameter, model);

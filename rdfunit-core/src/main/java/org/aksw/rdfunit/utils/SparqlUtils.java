@@ -13,12 +13,8 @@ import java.util.Collection;
 
 
 /**
- * <p>SparqlUtils class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 1/24/14 6:08 PM
- * @version $Id: $Id
  */
 @Slf4j
 public final class SparqlUtils {
@@ -26,13 +22,6 @@ public final class SparqlUtils {
     private SparqlUtils() {
     }
 
-    /**
-     * <p>getResultAnnotations.</p>
-     *
-     * @param queryFactory a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link java.util.Collection} object.
-     */
     public static Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
         Collection<ResultAnnotation> annotations = new ArrayList<>();
         String sparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
@@ -60,13 +49,6 @@ public final class SparqlUtils {
         return annotations;
     }
 
-    /**
-     * <p>checkAskQuery.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param askQuery a {@link java.lang.String} object.
-     * @return a boolean.
-     */
     public static boolean checkAskQuery(QueryExecutionFactory qef, String askQuery) {
         QueryExecution qe = null;
 
@@ -83,12 +65,6 @@ public final class SparqlUtils {
         return false;
     }
 
-    /**
-     * <p>checkStatusForTimeout.</p>
-     *
-     * @param e a {@link org.apache.jena.sparql.engine.http.QueryExceptionHTTP} object.
-     * @return a boolean.
-     */
     public static boolean checkStatusForTimeout(QueryExceptionHTTP e) {
         int httpCode = e.getResponseCode();
 

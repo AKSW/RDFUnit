@@ -12,7 +12,7 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 1/3/14 3:57 PM
- * @version $Id: $Id
+
  */
 @Builder
 @EqualsAndHashCode(exclude = "element")

@@ -10,22 +10,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * Description
  *
  * @author Dimitris Kontokostas
  * @since 12/17/14 4:48 PM
- * @version $Id: $Id
+
  */
 public final class IOUtils {
     private IOUtils() {
     }
 
-    /**
-     * <p>getModelFromQueryFactory.</p>
-     *
-     * @param qef a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
     public static Model getModelFromQueryFactory(QueryExecutionFactory qef) {
         if (qef instanceof QueryExecutionFactoryModel) {
             return ((QueryExecutionFactoryModel) qef).getModel();
@@ -43,13 +36,6 @@ public final class IOUtils {
     }
 
 
-    /**
-     * <p>isURI.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a boolean.
-     * @since 0.7.2
-     */
     public static boolean isURI(String uri) {
         try {
             new URI(uri);
@@ -59,12 +45,6 @@ public final class IOUtils {
         }
     }
 
-    /**
-     * <p>isFile.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     * @return a boolean.
-     */
     public static boolean isFile(String filename) {
         return new File(filename).exists();
     }

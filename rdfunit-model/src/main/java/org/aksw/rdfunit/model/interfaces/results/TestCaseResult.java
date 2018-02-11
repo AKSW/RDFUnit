@@ -9,7 +9,7 @@ import org.apache.jena.datatypes.xsd.XSDDateTime;
  *
  * @author Dimitris Kontokostas
  * @since 1 /2/14 3:44 PM
- * @version $Id: $Id
+
  */
 public interface TestCaseResult extends Element {
 

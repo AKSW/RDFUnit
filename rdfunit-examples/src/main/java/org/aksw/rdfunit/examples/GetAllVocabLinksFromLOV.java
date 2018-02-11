@@ -18,22 +18,15 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 /**
- * Description
  *
  * @author Dimitris Kontokostas
  * @since 1/9/15 2:59 PM
- * @version $Id: $Id
+
  */
 public class GetAllVocabLinksFromLOV {
 
     private GetAllVocabLinksFromLOV(){}
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     * @throws java.lang.Exception if any.
-     */
     public static void main(String[] args) throws Exception {
         RDFUnitUtils.fillSchemaServiceFromLOV();
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RULE_INF, ModelFactory.createDefaultModel());

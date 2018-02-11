@@ -16,7 +16,7 @@ import java.util.Optional;
  *
  * @author Dimitris Kontokostas
  * @since 10/19/15 7:07 PM
- * @version $Id: $Id
+
  */
 @Builder
 @Value

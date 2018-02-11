@@ -16,12 +16,10 @@ import java.util.Collection;
 
 
 /**
- * <p>TestUtils class.</p>
+ * Various utility test functions for tests
  *
  * @author Dimitris Kontokostas
- *         Various utility test functions for tests
  * @since 9/24/13 10:59 AM
- * @version $Id: $Id
  */
 @Slf4j
 public final class TestUtils {
@@ -29,12 +27,6 @@ public final class TestUtils {
     private TestUtils() {
     }
 
-    /**
-     * <p>instantiateTestsFromModel.</p>
-     *
-     * @param model a {@link org.apache.jena.rdf.model.Model} object.
-     * @return a {@link java.util.Collection} object.
-     */
     public static Collection<TestCase> instantiateTestsFromModel(Model model) {
         try {
             return instantiateTestsFromModel(model, false);
@@ -44,25 +36,10 @@ public final class TestUtils {
         throw new IllegalArgumentException("Unexpected exception...");
     }
 
-    /**
-     * <p>instantiateTestsFromModel.</p>
-     *
-     * @param model a {@link org.apache.jena.rdf.model.Model} object.
-     * @param strict a boolean.
-     * @return a {@link java.util.Collection} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseInstantiationException if any.
-     */
     public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) {
         return BatchTestCaseReader.create().getTestCasesFromModel(model);
     }
 
-
-    /**
-     * <p>writeTestsToFile.</p>
-     *
-     * @param tests a {@link java.util.Collection} object.
-     * @param testCache a {@link RdfWriter} object.
-     */
     public static void writeTestsToFile(Collection<TestCase> tests, RdfWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
         for (TestCase t : tests) {
@@ -76,15 +53,6 @@ public final class TestUtils {
         }
     }
 
-    /**
-     * <p>generateTestURI.</p>
-     *
-     * @param sourcePrefix a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     * @param bindings a {@link java.util.Collection} object.
-     * @param generatorURI a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     public static String generateTestURI(String sourcePrefix, Pattern pattern, Collection<Binding> bindings, String generatorURI) {
         String testURI = org.aksw.rdfunit.services.PrefixNSService.getNSFromPrefix("rutt") + sourcePrefix + "-" + pattern.getId() + "-";
         StringBuilder string2hash = new StringBuilder(generatorURI);

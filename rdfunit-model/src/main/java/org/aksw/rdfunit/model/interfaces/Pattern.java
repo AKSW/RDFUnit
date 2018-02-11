@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:14 PM
- * @version $Id: $Id
+
  */
 public interface Pattern extends Element{
 
@@ -31,61 +31,20 @@ public interface Pattern extends Element{
      */
     Set<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings);
 
-    /**
-     * <p>Getter for the field <code>iri</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     String getIRI();
 
-    /**
-     * <p>Getter for the field <code>id</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     String getId();
 
-    /**
-     * <p>Getter for the field <code>description</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     String getDescription();
 
-    /**
-     * <p>Getter for the field <code>sparqlWherePattern</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     String getSparqlWherePattern();
 
-    /**
-     * <p>Getter for the field <code>sparqlPatternPrevalence</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     Optional<String> getSparqlPatternPrevalence();
 
-    /**
-     * Returns the Pattern Parameters as an immutable Collection
-     *
-     * @return the pattern parameters as an Collections.unmodifiableCollection()
-     */
     Collection<PatternParameter> getParameters();
 
-    /**
-     * Returns a parameter object from a parameter URI
-     *
-     * @param parameterURI the parameter uRI
-     * @return the parameter object
-     */
     Optional<PatternParameter> getParameter(String parameterURI);
 
-    /**
-     * <p>getResultAnnotations.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
     Collection<ResultAnnotation> getResultAnnotations();
 
 

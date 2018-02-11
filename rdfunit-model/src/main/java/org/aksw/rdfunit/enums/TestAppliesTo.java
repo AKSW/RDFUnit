@@ -3,12 +3,11 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * <p>TestAppliesTo class.</p>
+ * Describes where a test can apply to
  *
  * @author Dimitris Kontokostas
- *         Describes where a test can apply to
  * @since 9/25/13 9:06 AM
- * @version $Id: $Id
+
  */
 public enum TestAppliesTo {
     /**
@@ -38,15 +37,13 @@ public enum TestAppliesTo {
     private static final String schemaPrefix = "rut";
 
     /**
-     * <p>getUri.</p>
-     *
      * @return a full URI/IRI as a String
      */
     public String getUri() {
         return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return getUri();

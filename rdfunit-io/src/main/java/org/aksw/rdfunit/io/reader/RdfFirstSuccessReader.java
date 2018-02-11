@@ -6,28 +6,19 @@ import org.apache.jena.rdf.model.Model;
 import java.util.Collection;
 
 /**
- * <p>RDFFirstSuccessReader class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 11/14/13 8:51 AM
- * @version $Id: $Id
  */
 public class RdfFirstSuccessReader implements RdfReader {
 
     private final Collection<RdfReader> readers;
 
-    /**
-     * <p>Constructor for RDFFirstSuccessReader.</p>
-     *
-     * @param readers a {@link java.util.Collection} object.
-     */
     public RdfFirstSuccessReader(Collection<RdfReader> readers) {
         super();
         this.readers = readers;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void read(Model model) throws RdfReaderException {
         StringBuilder message = new StringBuilder();
@@ -50,7 +41,7 @@ public class RdfFirstSuccessReader implements RdfReader {
         throw new RdfReaderException("Cannot read from any reader: " + message.toString());
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void readDataset(Dataset dataset) throws RdfReaderException {
         StringBuilder message = new StringBuilder();
@@ -73,7 +64,7 @@ public class RdfFirstSuccessReader implements RdfReader {
         throw new RdfReaderException("Cannot read from any reader: " + message.toString());
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return "RDFFirstSuccessReader{" +

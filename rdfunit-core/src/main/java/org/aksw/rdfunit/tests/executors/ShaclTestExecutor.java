@@ -27,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 6:13 PM
- * @version $Id: $Id
+
  */
 public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
 

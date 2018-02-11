@@ -12,20 +12,20 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  *
  * @author Dimitris Kontokostas
  * @since 7/25/14 10:02 PM
- * @version $Id: $Id
+
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
     private static final String SELECT_CLAUSE = " SELECT DISTINCT ?this WHERE ";
 
-    /** {@inheritDoc} */
+
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
         return getPrefixDeclarations(testCase) +
                 SELECT_CLAUSE + testCase.getSparqlWhere();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         String query = this.getSparqlQueryAsString(testCase);

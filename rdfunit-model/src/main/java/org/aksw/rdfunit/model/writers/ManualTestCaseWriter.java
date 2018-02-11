@@ -11,7 +11,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 final class ManualTestCaseWriter implements ElementWriter {
 
@@ -21,15 +21,9 @@ final class ManualTestCaseWriter implements ElementWriter {
         this.manualTestCase = manualTestCase;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param manualTC a {@link org.aksw.rdfunit.model.impl.ManualTestCaseImpl} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.ManualTestCaseWriter} object.
-     */
     public static ManualTestCaseWriter create(ManualTestCaseImpl manualTC) {return new ManualTestCaseWriter(manualTC);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(manualTestCase, model);

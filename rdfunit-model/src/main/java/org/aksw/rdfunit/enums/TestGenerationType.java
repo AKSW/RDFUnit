@@ -3,12 +3,10 @@ package org.aksw.rdfunit.enums;
 import org.aksw.rdfunit.services.PrefixNSService;
 
 /**
- * <p>TestGenerationType class.</p>
+ * Describes the test generation methods
  *
  * @author Dimitris Kontokostas
- *         Describes the test generation methods
  * @since 9/25/13 9:05 AM
- * @version $Id: $Id
  */
 public enum TestGenerationType {
 
@@ -28,15 +26,13 @@ public enum TestGenerationType {
     private static final String schemaPrefix = "rut";
 
     /**
-     * <p>getUri.</p>
-     *
      * @return a full URI/IRI as a String
      */
     public String getUri() {
         return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return getUri();

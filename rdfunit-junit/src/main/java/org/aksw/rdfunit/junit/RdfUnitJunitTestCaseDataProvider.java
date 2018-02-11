@@ -24,14 +24,6 @@ final class RdfUnitJunitTestCaseDataProvider {
     private Model testInputModel;
     private TestSource modelSource;
 
-    /**
-     * <p>Constructor for RdfUnitJunitTestCaseDataProvider.</p>
-     *
-     * @param testInputMethod a {@link org.junit.runners.model.FrameworkMethod} object.
-     * @param testCaseInstance a {@link java.lang.Object} object.
-     * @param schemaSource a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     * @param additionalData a {@link RdfReader} object.
-     */
     public RdfUnitJunitTestCaseDataProvider(
             FrameworkMethod testInputMethod,
             Object testCaseInstance,
@@ -80,29 +72,14 @@ final class RdfUnitJunitTestCaseDataProvider {
         initialized = true;
     }
 
-    /**
-     * <p>Getter for the field <code>testInputModel</code>.</p>
-     *
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
     public Model getTestInputModel() {
         return testInputModel;
     }
 
-    /**
-     * <p>Getter for the field <code>modelSource</code>.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
-     */
     public TestSource getModelSource() {
         return modelSource;
     }
 
-    /**
-     * <p>Getter for the field <code>testInputMethod</code>.</p>
-     *
-     * @return a {@link org.junit.runners.model.FrameworkMethod} object.
-     */
     public FrameworkMethod getTestInputMethod() {
         return testInputMethod;
     }

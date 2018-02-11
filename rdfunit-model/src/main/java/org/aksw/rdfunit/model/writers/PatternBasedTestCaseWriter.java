@@ -12,7 +12,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 final class PatternBasedTestCaseWriter implements ElementWriter {
 
@@ -22,15 +22,9 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
         this.patternBasedTestCase = patternBasedTestCase;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param patternBasedTestCase a {@link org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.PatternBasedTestCaseWriter} object.
-     */
     public static PatternBasedTestCaseWriter create(PatternBasedTestCaseImpl patternBasedTestCase) {return new PatternBasedTestCaseWriter(patternBasedTestCase);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(patternBasedTestCase, model);

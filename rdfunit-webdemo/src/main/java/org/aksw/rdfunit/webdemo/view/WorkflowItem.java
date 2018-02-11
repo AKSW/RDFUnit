@@ -5,7 +5,7 @@ package org.aksw.rdfunit.webdemo.view;
  *
  * @author Dimitris Kontokostas
  * @since 8 /30/14 11:13 PM
- * @version $Id: $Id
+
  */
 public interface WorkflowItem {
     /**

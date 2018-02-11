@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * A simple Property / RDFNode(s) structure that is mainly used in annotations
  *
  * @author Dimitris Kontokostas
- * @version $Id: $Id
+
  * @since 8/28/15 8:36 PM
  */
 @Value

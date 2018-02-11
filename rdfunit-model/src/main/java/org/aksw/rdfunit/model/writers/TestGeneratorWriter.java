@@ -13,7 +13,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class TestGeneratorWriter implements ElementWriter {
 
@@ -23,15 +23,9 @@ public final class TestGeneratorWriter implements ElementWriter {
         this.testGenerator = testGenerator;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param testGenerator a {@link org.aksw.rdfunit.model.interfaces.TestGenerator} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.TestGeneratorWriter} object.
-     */
     public static TestGeneratorWriter create(TestGenerator testGenerator) {return new TestGeneratorWriter(testGenerator);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(testGenerator, model);

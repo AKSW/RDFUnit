@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class TestCaseResultReader implements ElementReader<TestCaseResult> {
 
@@ -30,14 +30,9 @@ public final class TestCaseResultReader implements ElementReader<TestCaseResult>
         this.severityProperty = severityProperty;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link TestCaseResultReader} object.
-     */
     public static TestCaseResultReader create(Property messageProperty, Property severityProperty) { return new TestCaseResultReader(messageProperty, severityProperty);}
 
-    /** {@inheritDoc} */
+
     @Override
     public TestCaseResult read(final Resource resource) {
         checkNotNull(resource);

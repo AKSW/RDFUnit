@@ -43,73 +43,28 @@ final class QueryingConfig {
         this.pagination = pagination;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
     private static QueryingConfig create() {
         return new QueryingConfig(CACHE_TTL, QUERY_DELAY, QUERY_LIMIT, PAGINATION);
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param cacheTTL a long.
-     * @param queryDelay a long.
-     * @param queryLimit a long.
-     * @param pagination a long.
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
     public static QueryingConfig create(long cacheTTL, long queryDelay, long queryLimit, long pagination) {
         return new QueryingConfig(cacheTTL, queryDelay, queryLimit, pagination);
     }
 
-    /**
-     * <p>createEndpoint.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
     public static QueryingConfig createEndpoint() {
         return create();
     }
 
-    /**
-     * <p>createInMemory.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
     public static QueryingConfig createInMemory() {
         return new QueryingConfig(0,0,0,0);
     }
 
-    /**
-     * <p>copyWithNewCacheTTL.</p>
-     *
-     * @param newCacheTTL a long.
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
     public QueryingConfig copyWithNewCacheTTL(long newCacheTTL) {return create(newCacheTTL, getQueryDelay(), getQueryLimit(), getPagination());}
-    /**
-     * <p>copyWithNewQueryDelay.</p>
-     *
-     * @param newQueryDelay a long.
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
+
     public QueryingConfig copyWithNewQueryDelay(long newQueryDelay) {return create(getCacheTTL(), newQueryDelay, getQueryLimit(), getPagination());}
-    /**
-     * <p>copyWithNewQueryLimit.</p>
-     *
-     * @param newQueryLimit a long.
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
+
     public QueryingConfig copyWithNewQueryLimit(long newQueryLimit) {return create(getCacheTTL(), getQueryDelay(), newQueryLimit, getPagination());}
-    /**
-     * <p>copyWithNewPagination.</p>
-     *
-     * @param newPagination a long.
-     * @return a {@link org.aksw.rdfunit.sources.QueryingConfig} object.
-     */
+
     public QueryingConfig copyWithNewPagination(long newPagination) {return create(getCacheTTL(), getQueryDelay(), getQueryLimit(), newPagination);}
 
 
@@ -152,13 +107,13 @@ final class QueryingConfig {
     }
 
 
-    /** {@inheritDoc} */
+
     @Override
     public int hashCode() {
         return Objects.hashCode(cacheTTL, queryDelay, queryLimit, pagination);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

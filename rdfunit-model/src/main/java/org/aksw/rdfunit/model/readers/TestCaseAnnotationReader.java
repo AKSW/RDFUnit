@@ -22,21 +22,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class TestCaseAnnotationReader implements ElementReader<TestCaseAnnotation> {
 
     private TestCaseAnnotationReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.TestCaseAnnotationReader} object.
-     */
     public static TestCaseAnnotationReader create() { return new TestCaseAnnotationReader();}
 
 
-    /** {@inheritDoc} */
+
     @Override
     public TestCaseAnnotation read(Resource resource) {
         checkNotNull(resource, "Cannot read a TestCaseAnnotation from a null resource");

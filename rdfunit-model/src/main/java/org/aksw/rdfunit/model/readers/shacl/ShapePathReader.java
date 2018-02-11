@@ -21,7 +21,7 @@ public final class ShapePathReader implements ElementReader<ShapePath> {
         return new ShapePathReader();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public ShapePath read(Resource resource) {
         checkNotNull(resource);

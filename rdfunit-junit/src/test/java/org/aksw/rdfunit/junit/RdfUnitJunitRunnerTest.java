@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michael Leuthold
- * @version $Id: $Id
+
  */
 public class RdfUnitJunitRunnerTest {
 
@@ -36,7 +36,7 @@ public class RdfUnitJunitRunnerTest {
     }
 
     @Test
-    public void descriptionIsNotATest() throws InitializationError {
+    public void descriptionIsNotATest() {
         assertThat(underTest.getDescription().isTest()).isFalse();
     }
 

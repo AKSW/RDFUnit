@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 2/6/14 9:32 AM
- * @version $Id: $Id
+
  */
 public class DatasetTestSource extends AbstractTestSource implements TestSource {
 
@@ -44,7 +44,7 @@ public class DatasetTestSource extends AbstractTestSource implements TestSource 
         this(datasetTestSource.sourceConfig, datasetTestSource.queryingConfig, referenceSchemata, datasetTestSource.dumpReader, datasetTestSource.dumpDataset);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected QueryExecutionFactory initQueryFactory() {
 

@@ -8,12 +8,8 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 /**
- * <p>JunitXMLResultsAggregateWriter class.</p>
- *
  * @author Martin Bruemmer
- *         Description
  * @since 4/23/14 8:55 AM
- * @version $Id: $Id
  */
 public class JunitXmlResultsAggregateWriter extends JunitXmlResultsStatusWriter {
 

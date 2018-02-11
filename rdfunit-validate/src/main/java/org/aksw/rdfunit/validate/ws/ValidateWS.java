@@ -20,7 +20,6 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,12 +27,10 @@ import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
- * <p>ValidateWS class.</p>
+ * Validation as a web service
  *
  * @author Dimitris Kontokostas
- *         Validation as a web service
  * @since 6/13/14 1:50 PM
- * @version $Id: $Id
  */
 public class ValidateWS extends AbstractRDFUnitWebService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidateWS.class);
@@ -41,9 +38,9 @@ public class ValidateWS extends AbstractRDFUnitWebService {
     // TODO: pass dataFolder in configuration initialization
     private Collection<TestGenerator> autogenerators;
 
-    /** {@inheritDoc} */
+
     @Override
-    public void init() throws ServletException {
+    public void init() {
         RDFUnitUtils.fillSchemaServiceFromLOV();
         RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
         try {
@@ -55,7 +52,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource dataset) {
         synchronized(this) {
@@ -67,7 +64,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource dataset, final TestSuite testSuite) throws TestCaseExecutionException {
         final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
@@ -83,7 +80,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
         return testExecutorMonitor.getTestExecution();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
         String[] arguments = convertArgumentsToStringArray(httpServletRequest);
@@ -111,7 +108,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
         return configuration;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setContentType("text/html");
@@ -140,7 +137,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
     }
 
 
-    /** {@inheritDoc} */
+
     @Override
     public void destroy() {
         // do nothing.

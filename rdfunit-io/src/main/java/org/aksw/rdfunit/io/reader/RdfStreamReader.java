@@ -12,12 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
- * <p>RDFStreamReader class.</p>
+ * Reads a model from an InputStream (or a filename)
  *
  * @author Dimitris Kontokostas
- *         Reads a model from an InputStream (or a filename)
  * @since 11/14/13 8:37 AM
- * @version $Id: $Id
  */
 @Slf4j
 public class RdfStreamReader implements RdfReader {
@@ -25,11 +23,6 @@ public class RdfStreamReader implements RdfReader {
     private final InputStream inputStream;
     private final String format;
 
-    /**
-     * <p>Constructor for RDFStreamReader.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
     public RdfStreamReader(String filename) {
         this(getInputStreamFromFilename(filename), FormatService.getFormatFromExtension(filename));
     }
@@ -38,29 +31,17 @@ public class RdfStreamReader implements RdfReader {
     //    this(inputStream, "TURTLE");
     //}
 
-    /**
-     * <p>Constructor for RDFStreamReader.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     * @param format a {@link java.lang.String} object.
-     */
     public RdfStreamReader(String filename, String format) {
         this(getInputStreamFromFilename(filename), format);
     }
 
-    /**
-     * <p>Constructor for RDFStreamReader.</p>
-     *
-     * @param inputStream a {@link java.io.InputStream} object.
-     * @param format a {@link java.lang.String} object.
-     */
     public RdfStreamReader(InputStream inputStream, String format) {
         super();
         this.inputStream = inputStream;
         this.format = format;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void read(Model model) throws RdfReaderException {
         try {
@@ -71,7 +52,7 @@ public class RdfStreamReader implements RdfReader {
 
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void readDataset(Dataset dataset) throws RdfReaderException {
         try {
@@ -94,7 +75,7 @@ public class RdfStreamReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return "RDFStreamReader{" +

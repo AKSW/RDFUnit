@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/14 8:30 PM
- * @version $Id: $Id
+
  */
 public final class RDFUnitStaticValidator {
 

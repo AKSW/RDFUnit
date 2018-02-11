@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * SImilar to propertyValuePair but here, each object holds a singel value
  *
  * @author Dimitris Kontokostas
- * @version $Id: $Id
+
  * @since 8/28/15 8:36 PM
  */
 @Value

@@ -8,7 +8,7 @@ import org.aksw.rdfunit.sources.Source;
  *
  * @author Dimitris Kontokostas
  * @since 1 /3/14 12:23 PM
- * @version $Id: $Id
+
  */
 public interface TestGeneratorExecutorMonitor {
     /**

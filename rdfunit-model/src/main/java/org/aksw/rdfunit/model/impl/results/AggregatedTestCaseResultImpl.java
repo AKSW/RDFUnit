@@ -15,9 +15,9 @@ import java.util.Optional;
  * The type Aggregated test case result.
  *
  * @author Dimitris Kontokostas
- *         Description
+
  * @since 1 /2/14 3:44 PM
- * @version $Id: $Id
+
  */
 @ToString
 @EqualsAndHashCode(exclude = "element")
@@ -85,7 +85,7 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
 

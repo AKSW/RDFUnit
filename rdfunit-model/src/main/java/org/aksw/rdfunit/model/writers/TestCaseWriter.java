@@ -11,7 +11,7 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class TestCaseWriter implements ElementWriter {
 
@@ -21,15 +21,9 @@ public final class TestCaseWriter implements ElementWriter {
         this.testCase = testCase;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param testCase a {@link org.aksw.rdfunit.model.interfaces.TestCase} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.TestCaseWriter} object.
-     */
     public static TestCaseWriter create(TestCase testCase) {return new TestCaseWriter(testCase);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
 

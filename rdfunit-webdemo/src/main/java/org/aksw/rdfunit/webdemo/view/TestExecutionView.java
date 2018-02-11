@@ -38,7 +38,7 @@ import java.util.Random;
 
 /**
  * @author Dimitris Kontokostas
- *         Description
+
  * @since 11/20/13 5:20 PM
  */
 final class TestExecutionView extends VerticalLayout implements WorkflowItem {
@@ -68,9 +68,6 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
     private volatile boolean isReady = false;
     private volatile boolean inProgress = false;
 
-    /**
-     * <p>Constructor for TestExecutionView.</p>
-     */
     public TestExecutionView() {
 
         initData();
@@ -320,50 +317,50 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
 
     //progressMonitor =
 
-    /** {@inheritDoc} */
+
     @Override
     public void setMessage(String message, boolean isError) {
         this.isReady = !isError;
         WorkflowUtils.setMessage(messageLabel, message, isError);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean isReady() {
         return isReady;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setReady(boolean isReady) {
         this.isReady = isReady;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setPreviousItem(WorkflowItem item) {
         this.previous = item;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setNextItem(WorkflowItem item) {
         this.next = item;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public WorkflowItem getPreviousItem() {
         return previous;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public WorkflowItem getNextItem() {
         return next;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean execute() {
 

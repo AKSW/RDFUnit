@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Dimitris Kontokostas
  * @since 10/2/13 12:24 PM
- * @version $Id: $Id
+
  */
 public final class SchemaService {
     /**
@@ -29,52 +29,23 @@ public final class SchemaService {
     private SchemaService() {
     }
 
-    /**
-     * <p>getSize.</p>
-     *
-     * @return a int.
-     */
     public static int getSize() {return schemata.size();}
 
-    /**
-     * <p>addSchemaDecl.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     * @param url a {@link java.lang.String} object.
-     */
     public static void addSchemaDecl(String prefix, String uri, String url) {
         schemata.forcePut(prefix, uri);
         definedBy.put(uri, url);
     }
 
-    /**
-     * <p>addSchemaDecl.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     */
     public static void addSchemaDecl(String prefix, String uri) {
         schemata.put(prefix, uri);
     }
 
-    /**
-     * <p>getSourceFromUri.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     */
+
     public static Optional<SchemaSource> getSourceFromUri(String uri) {
         return getSourceFromUri(null, uri);
     }
 
-    /**
-     * <p>getSourceFromUri.</p>
-     *
-     * @param baseFolder a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     */
+
     public static Optional<SchemaSource> getSourceFromUri(String baseFolder, String uri) {
         String prefix = schemata.inverse().get(uri);
         if (prefix == null) {
@@ -84,23 +55,12 @@ public final class SchemaService {
         return getSourceFromPrefix(baseFolder, prefix);
     }
 
-    /**
-     * <p>getSourceFromPrefix.</p>
-     *
-     * @param prefix a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     */
+
     public static Optional<SchemaSource> getSourceFromPrefix(String prefix) {
         return getSourceFromPrefix(null, prefix);
     }
 
-    /**
-     * <p>getSourceFromPrefix.</p>
-     *
-     * @param baseFolder a {@link java.lang.String} object.
-     * @param prefix a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     */
+
     public static Optional<SchemaSource> getSourceFromPrefix(String baseFolder, String prefix) {
         String namespace = schemata.get(prefix);
         if (namespace == null) {
@@ -144,14 +104,7 @@ public final class SchemaService {
 
     }
 
-    /**
-     * <p>getSourceList.</p>
-     *
-     * @param baseFolder a {@link java.lang.String} object.
-     * @param prefixes a {@link java.util.Collection} object.
-     * @return a {@link java.util.Collection} object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSchemaException if any.
-     */
+
     public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixes) throws UndefinedSchemaException {
         Collection<SchemaSource> sources = new ArrayList<>();
         for (String id : prefixes) {
@@ -165,14 +118,7 @@ public final class SchemaService {
         return sources;
     }
 
-    /**
-     * <p>getSourceListAll.</p>
-     *
-     * @param fileCache a boolean.
-     * @param baseFolder a {@link java.lang.String} object.
-     * @return a {@link java.util.Collection} object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSchemaException if any.
-     */
+
     public static Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder) throws UndefinedSchemaException {
         Collection<String> prefixes = new ArrayList<>();
         prefixes.addAll(schemata.keySet());

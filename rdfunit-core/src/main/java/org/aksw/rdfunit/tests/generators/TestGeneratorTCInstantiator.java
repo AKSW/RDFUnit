@@ -13,7 +13,7 @@ import java.util.Collection;
  * Instantiates TestCases based on a test generator and a schema
  *
  * @author Dimitris Kontokostas
- * @version $Id: $Id
+
  * @since 9/26/15 1:23 PM
  */
 @Slf4j

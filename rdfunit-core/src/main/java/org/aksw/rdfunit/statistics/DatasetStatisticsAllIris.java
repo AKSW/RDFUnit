@@ -7,7 +7,7 @@ import org.aksw.rdfunit.services.PrefixNSService;
  *
  * @author Dimitris Kontokostas
  * @since 6/27/15 1:02 PM
- * @version $Id: $Id
+
  */
 public final class DatasetStatisticsAllIris extends DatasetStatistics {
 
@@ -26,7 +26,7 @@ public final class DatasetStatisticsAllIris extends DatasetStatistics {
             "  }\n" +
             "} ";
 
-    /** {@inheritDoc} */
+
     @Override
     public String getStatisticsQuery() {
         return iriListSPARQL;

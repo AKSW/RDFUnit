@@ -21,7 +21,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 9 /30/13 11:11 AM
- * @version $Id: $Id
+
  */
 @Slf4j
 public abstract class TestExecutor {

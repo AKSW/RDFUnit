@@ -45,9 +45,6 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
 
     private volatile boolean isReady = false;
 
-    /**
-     * <p>Constructor for SchemaSelectorView.</p>
-     */
     public SchemaSelectorView() {
         initLayout();
 
@@ -125,7 +122,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
 
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setMessage(final String message, final boolean isError) {
 
@@ -237,43 +234,43 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                 "Even if you mix different types of constraints  RDFUnit will still work but the result will have to make sense ;)<br/>&nbsp;");
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean isReady() {
         return isReady;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setReady(boolean isReady) {
         this.isReady = isReady;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setPreviousItem(WorkflowItem item) {
         previous = item;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void setNextItem(WorkflowItem item) {
         next = item;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public WorkflowItem getPreviousItem() {
         return previous;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public WorkflowItem getNextItem() {
         return next;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean execute() {
         this.setReady(false);

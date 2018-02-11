@@ -15,12 +15,10 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * <p>TestCoverageEvaluator class.</p>
+ * Calculates test coverage based on www paper
  *
  * @author Dimitris Kontokostas
- *         Calculates test coverage based on www paper
  * @since 10/8/13 9:06 PM
- * @version $Id: $Id
  */
 @Slf4j
 public class TestCoverageEvaluator {
@@ -59,12 +57,6 @@ public class TestCoverageEvaluator {
         return inClause.toString();
     }
 
-    /**
-     * <p>calculateCoverage.</p>
-     *
-     * @param testSuiteQEF a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     * @param inputSource a {@link org.aksw.jena_sparql_api.core.QueryExecutionFactory} object.
-     */
     public void calculateCoverage(QueryExecutionFactory testSuiteQEF, QueryExecutionFactory inputSource) {
 
         Map<String, Long> properties = new DatasetStatisticsPropertiesCount().getStatisticsMap(inputSource);

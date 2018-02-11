@@ -5,7 +5,7 @@ package org.aksw.rdfunit;
  *
  * @author Dimitris Kontokostas
  * @since 9/24/15 4:43 PM
- * @version $Id: $Id
+
  */
 public final class Resources {
 

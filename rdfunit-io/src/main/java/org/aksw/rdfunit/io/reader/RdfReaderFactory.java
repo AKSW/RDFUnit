@@ -12,12 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * <p>RDFReaderFactory class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 11/14/13 9:01 AM
- * @version $Id: $Id
  */
 public final class RdfReaderFactory {
 
@@ -28,13 +24,6 @@ public final class RdfReaderFactory {
 //        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
 //    }
 
-    /**
-     * <p>createFileOrDereferenceReader.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
         Collection<RdfReader> readers = new ArrayList<>();
@@ -47,23 +36,10 @@ public final class RdfReaderFactory {
 
     }
 
-    /**
-     * <p>createResourceReader.</p>
-     *
-     * @param resource a {@link java.lang.String} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader createResourceReader(String resource) {
         return new RdfStreamReader(RdfReaderFactory.class.getResourceAsStream(resource), FormatService.getFormatFromExtension(resource));
     }
 
-    /**
-     * <p>createFileOrResourceReader.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     * @param resource a {@link java.lang.String} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader createFileOrResourceReader(String filename, String resource) {
         Collection<RdfReader> readers = new ArrayList<>();
         readers.add(new RdfStreamReader(filename));
@@ -72,13 +48,6 @@ public final class RdfReaderFactory {
         return new RdfFirstSuccessReader(readers);
     }
 
-    /**
-     * <p>createResourceOrFileOrDereferenceReader.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link RdfReader} object.
-     * @since 0.7.20
-     */
     public static RdfReader createResourceOrFileOrDereferenceReader(String uri) {
         Collection<RdfReader> readers = new ArrayList<>();
         readers.add(createResourceReader(uri));
@@ -107,13 +76,6 @@ public final class RdfReaderFactory {
         return new RdfFirstSuccessReader(readers);
     }
 
-    /**
-     * <p>createReaderFromText.</p>
-     *
-     * @param text a {@link java.lang.String} object.
-     * @param format a {@link java.lang.String} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader createReaderFromText(String text, String format) {
         InputStream is;
         try {
@@ -124,12 +86,6 @@ public final class RdfReaderFactory {
         return new RdfStreamReader(is, format);
     }
 
-    /**
-     * <p>createEmptyReader.</p>
-     *
-     * @return a {@link RdfReader} object.
-     * @since 0.7.19
-     */
     public static RdfReader createEmptyReader() {
         return RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/io/empty.ttl");
     }

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author Dimitris Kontokostas
  * @since 11 /15/13 9:52 AM
- * @version $Id: $Id
+
  */
 public class RDFUnitDemoSession extends VaadinSession {
 
@@ -149,20 +149,10 @@ public class RDFUnitDemoSession extends VaadinSession {
         return VaadinSession.getCurrent().getAttribute(RDFUnitConfiguration.class);
     }
 
-    /**
-     * <p>setExecutorMonitor.</p>
-     *
-     * @param monitor a {@link org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor} object.
-     */
     public static void setExecutorMonitor(SimpleTestExecutorMonitor monitor) {
         VaadinSession.getCurrent().setAttribute(SimpleTestExecutorMonitor.class, monitor);
     }
 
-    /**
-     * <p>getExecutorMonitor.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor} object.
-     */
     public static SimpleTestExecutorMonitor getExecutorMonitor() {
         return VaadinSession.getCurrent().getAttribute(SimpleTestExecutorMonitor.class);
     }

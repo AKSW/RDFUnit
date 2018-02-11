@@ -7,12 +7,8 @@ import org.aksw.rdfunit.utils.StringUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
 /**
- * <p>SourceFactory class.</p>
- *
  * @author Dimitris Kontokostas
- *         Source factory
  * @since 10/3/13 6:45 PM
- * @version $Id: $Id
  */
 public final class SchemaSourceFactory {
 

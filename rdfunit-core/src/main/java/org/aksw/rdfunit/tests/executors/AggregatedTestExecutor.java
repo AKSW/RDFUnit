@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.impl.results.AggregatedTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -24,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 4:05 PM
- * @version $Id: $Id
+
  */
 public class AggregatedTestExecutor extends TestExecutor {
 
@@ -37,9 +36,9 @@ public class AggregatedTestExecutor extends TestExecutor {
         super(queryGenerationFactory);
     }
 
-    /** {@inheritDoc} */
+
     @Override
-    protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
+    protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) {
         int total = -1, prevalence = -1;
 
         try {

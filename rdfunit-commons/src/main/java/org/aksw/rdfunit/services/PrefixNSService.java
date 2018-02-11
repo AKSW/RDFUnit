@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author Dimitris Kontokostas
  * @since 10/1/13 7:06 PM
- * @version $Id: $Id
+
  */
 public final class PrefixNSService {
 
@@ -70,20 +70,11 @@ public final class PrefixNSService {
 
     /**
      * Given a prefix it returns the prefix namespace.
-     *
-     * @param prefix the prefix we want to get
-     * @return the namespace or null if it does not exists
      */
     public static String getNSFromPrefix(final String prefix) {
         return MapInstance.prefixNsBidiMap.get(prefix);
     }
 
-    /**
-     * <p>getPrefixFromNS.</p>
-     *
-     * @param namespace a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     public static String getPrefixFromNS(final String namespace) {
         return MapInstance.prefixNsBidiMap.inverse().get(namespace);
     }
@@ -97,11 +88,6 @@ public final class PrefixNSService {
         model.setNsPrefixes(getPrefixMap());
     }
 
-    /**
-     * <p>getSparqlPrefixDecl.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     public static String getSparqlPrefixDecl() {
         return DeclInstance.SPARQL_PREFIX_DECL;
     }

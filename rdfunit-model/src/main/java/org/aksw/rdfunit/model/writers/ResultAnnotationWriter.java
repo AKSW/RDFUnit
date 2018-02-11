@@ -13,7 +13,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class ResultAnnotationWriter implements ElementWriter {
 
@@ -33,32 +33,16 @@ public final class ResultAnnotationWriter implements ElementWriter {
         this.varNameP = varNameP;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param resultAnnotation a {@link org.aksw.rdfunit.model.interfaces.ResultAnnotation} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.ResultAnnotationWriter} object.
-     */
     public static ResultAnnotationWriter create(ResultAnnotation resultAnnotation) { return createResultAnnotationWriterRut(resultAnnotation); }
-    /**
-     * <p>createResultAnnotationWriterRut.</p>
-     *
-     * @param resultAnnotation a {@link org.aksw.rdfunit.model.interfaces.ResultAnnotation} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.ResultAnnotationWriter} object.
-     */
+
     public static ResultAnnotationWriter createResultAnnotationWriterRut(ResultAnnotation resultAnnotation) {
         return new ResultAnnotationWriter(resultAnnotation, RDFUNITv.ResultAnnotation, RDFUNITv.annotationProperty, RDFUNITv.annotationValue, RDFUNITv.annotationValue);}
-    /**
-     * <p>createResultAnnotationWriterShacl.</p>
-     *
-     * @param resultAnnotation a {@link org.aksw.rdfunit.model.interfaces.ResultAnnotation} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.ResultAnnotationWriter} object.
-     */
+
     public static ResultAnnotationWriter createResultAnnotationWriterShacl(ResultAnnotation resultAnnotation) {
         return new ResultAnnotationWriter(resultAnnotation, SHACL.ResultAnnotation, SHACL.annotationProperty, SHACL.annotationValue, SHACL.annotationVarName);}
 
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(resultAnnotation, model);

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class BindingReader implements ElementReader<Binding> {
 
@@ -26,15 +26,9 @@ public final class BindingReader implements ElementReader<Binding> {
         this.pattern = checkNotNull(pattern, "Pattern must not be bull in BindingReader");
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.BindingReader} object.
-     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     */
     public static BindingReader create(Pattern pattern) { return new BindingReader(pattern);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Binding read(Resource resource) {
         checkNotNull(resource);

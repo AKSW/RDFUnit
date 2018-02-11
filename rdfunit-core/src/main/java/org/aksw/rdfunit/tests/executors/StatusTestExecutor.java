@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
-import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.impl.results.StatusTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -20,7 +19,7 @@ import java.util.Collections;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:49 PM
- * @version $Id: $Id
+
  */
 public class StatusTestExecutor extends TestExecutor {
     /**
@@ -32,9 +31,9 @@ public class StatusTestExecutor extends TestExecutor {
         super(queryGenerationFactory);
     }
 
-    /** {@inheritDoc} */
+
     @Override
-    protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
+    protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) {
 
         TestCaseResultStatus status = TestCaseResultStatus.Error;
 

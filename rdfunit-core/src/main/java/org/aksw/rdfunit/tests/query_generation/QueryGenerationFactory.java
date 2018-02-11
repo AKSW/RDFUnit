@@ -8,7 +8,7 @@ import org.apache.jena.query.Query;
  *
  * @author Dimitris Kontokostas
  * @since 7 /25/14 9:57 PM
- * @version $Id: $Id
+
  */
 public interface QueryGenerationFactory {
 

@@ -15,20 +15,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class AggregatedTestCaseResultReader implements ElementReader<AggregatedTestCaseResult> {
 
     private AggregatedTestCaseResultReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link AggregatedTestCaseResultReader} object.
-     */
     public static AggregatedTestCaseResultReader create() { return new AggregatedTestCaseResultReader();}
 
-    /** {@inheritDoc} */
+
     @Override
     public AggregatedTestCaseResult read(final Resource resource) {
         checkNotNull(resource);

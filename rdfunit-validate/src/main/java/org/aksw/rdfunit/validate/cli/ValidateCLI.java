@@ -37,12 +37,8 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>ValidateCLI class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 11/19/13 10:49 AM
- * @version $Id: $Id
  */
 public final class ValidateCLI {
 
@@ -50,12 +46,6 @@ public final class ValidateCLI {
 
     private ValidateCLI() {}
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     * @throws java.lang.Exception if any.
-     */
     public static void main(String[] args) throws Exception {
 
         CommandLine commandLine = ValidateUtils.parseArguments(args);

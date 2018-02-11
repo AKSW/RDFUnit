@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  *
  * @author Michael Leuthold
- * @version $Id: $Id
+
  */
 class ShaclResultStatement extends Statement {
 
@@ -26,9 +26,9 @@ class ShaclResultStatement extends Statement {
         this.testCase = testCase;
     }
 
-    /** {@inheritDoc} */
+
     @Override
-    public void evaluate() throws Throwable {
+    public void evaluate() {
         final Collection<TestCaseResult> testCaseResults = rdfUnitJunitStatusTestExecutor.runTest(testCase);
         final Collection<ShaclLiteTestCaseResult> remainingResults = new ArrayList<>();
         for (TestCaseResult t : testCaseResults) {

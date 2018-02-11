@@ -21,21 +21,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class PatternBasedTestCaseReader implements ElementReader<TestCase> {
 
     private PatternBasedTestCaseReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.PatternBasedTestCaseReader} object.
-     */
     public static PatternBasedTestCaseReader create() { return new PatternBasedTestCaseReader();}
 
 
-    /** {@inheritDoc} */
+
     @Override
     public TestCase read(Resource resource) {
         checkNotNull(resource, "Cannot read a PatternBasedTestCase from a null resource");

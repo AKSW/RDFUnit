@@ -10,38 +10,26 @@ import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p>Abstract JunitXMLResultsWriter class.</p>
+ * Writes results in JUnit XML format
  *
  * @author Martin Bruemmer
- *         Writes results in JUnit XML format
  * @since 11/14/13 1:04 PM
- * @version $Id: $Id
  */
 public abstract class AbstractJunitXmlResultsWriter implements RdfWriter {
     protected final TestExecution testExecution;
     private final OutputStream outputStream;
 
-    /**
-     * <p>Constructor for JunitXMLResultsWriter.</p>
-     *
-     * @param outputStream a {@link java.io.OutputStream} object.
-     */
     public AbstractJunitXmlResultsWriter(TestExecution testExecution, OutputStream outputStream) {
         super();
         this.testExecution = testExecution;
         this.outputStream = outputStream;
     }
 
-    /**
-     * <p>Constructor for JunitXMLResultsWriter.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
     public AbstractJunitXmlResultsWriter(TestExecution testExecution, String filename) {
         this(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void write(QueryExecutionFactory qef) throws RdfWriterException {
   

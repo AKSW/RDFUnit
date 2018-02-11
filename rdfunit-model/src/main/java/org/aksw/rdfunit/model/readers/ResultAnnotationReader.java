@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class ResultAnnotationReader implements ElementReader<ResultAnnotation> {
 
@@ -28,29 +28,16 @@ public final class ResultAnnotationReader implements ElementReader<ResultAnnotat
         this.varNameP = varNameP;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.ResultAnnotationReader} object.
-     */
     public static ResultAnnotationReader create() { return createArgumentReaderRut(); }
-    /**
-     * <p>createArgumentReaderRut.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.ResultAnnotationReader} object.
-     */
+
     public static ResultAnnotationReader createArgumentReaderRut() {
         return new ResultAnnotationReader(RDFUNITv.annotationProperty, RDFUNITv.annotationValue, RDFUNITv.annotationValue);}
-    /**
-     * <p>createArgumentReaderShacl.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.model.readers.ResultAnnotationReader} object.
-     */
+
     public static ResultAnnotationReader createArgumentReaderShacl() {
         return new ResultAnnotationReader(SHACL.annotationProperty, SHACL.annotationValue, SHACL.annotationVarName);}
 
 
-    /** {@inheritDoc} */
+
     @Override
     public ResultAnnotation read(Resource resource) {
         checkNotNull(resource);

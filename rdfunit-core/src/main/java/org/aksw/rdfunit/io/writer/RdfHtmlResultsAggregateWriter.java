@@ -8,12 +8,8 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import java.io.OutputStream;
 
 /**
- * <p>RDFHTMLResultsAggregateWriter class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 4/23/14 8:55 AM
- * @version $Id: $Id
  */
 public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
 
@@ -22,13 +18,13 @@ public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
         super(testExecution, outputStream);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected StringBuilder getResultsHeader() {
         return new StringBuilder("<tr><th>Status</th><th>Level</th><th>Test Case</th><th>Errors</th><th>Prevalence</th></tr>\n");
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected StringBuilder getResultsList() {
         StringBuilder htmlString = new StringBuilder();

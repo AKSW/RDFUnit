@@ -7,7 +7,7 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 4:19 PM
- * @version $Id: $Id
+
  */
 public interface Element {
 

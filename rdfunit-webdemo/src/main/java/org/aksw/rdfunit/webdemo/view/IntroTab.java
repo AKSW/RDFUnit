@@ -5,18 +5,13 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
 /**
- * <p>IntroTab class.</p>
+ * displayes general information about the tool
  *
  * @author Dimitris Kontokostas
- *         displayes general information about the tool
  * @since 11/15/13 7:41 PM
- * @version $Id: $Id
  */
 public class IntroTab extends VerticalLayout {
 
-    /**
-     * <p>Constructor for IntroTab.</p>
-     */
     public IntroTab() {
         initLayout();
 

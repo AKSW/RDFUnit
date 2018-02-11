@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author Dimitris Kontokostas
  * @since 3/29/15 5:00 PM
- * @version $Id: $Id
+
  */
 public final class StringUtils {
     private StringUtils() {}

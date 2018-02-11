@@ -16,13 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 
 /**
- * <p>TestCaseAnnotation class.</p>
  * TODO: make this an interface and move to Impl
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 1/3/14 3:40 PM
- * @version $Id: $Id
  */
 public class TestCaseAnnotation implements Element {
     @Getter private final Resource element;
@@ -36,19 +32,6 @@ public class TestCaseAnnotation implements Element {
     private final ImmutableSet<ResultAnnotation> resultAnnotations;
     private final ImmutableSet<ResultAnnotation> variableAnnotations;
 
-    /**
-     * <p>Constructor for TestCaseAnnotation.</p>
-     *
-     * @param element a {@link org.apache.jena.rdf.model.Resource} object.
-     * @param generated a {@link org.aksw.rdfunit.enums.TestGenerationType} object.
-     * @param autoGeneratorURI a {@link java.lang.String} object.
-     * @param appliesTo a {@link org.aksw.rdfunit.enums.TestAppliesTo} object.
-     * @param sourceUri a {@link java.lang.String} object.
-     * @param references a {@link java.util.Collection} object.
-     * @param description a {@link java.lang.String} object.
-     * @param testCaseLogLevel a {@link org.aksw.rdfunit.enums.RLOGLevel} object.
-     * @param resultAnnotations a {@link java.util.Collection} object.
-     */
     public TestCaseAnnotation(Resource element, TestGenerationType generated, String autoGeneratorURI, TestAppliesTo appliesTo, String sourceUri, Set<String> references, String description, RLOGLevel testCaseLogLevel, Set<ResultAnnotation> resultAnnotations) {
         this.element = checkNotNull(element);
         this.generated = checkNotNull(generated);

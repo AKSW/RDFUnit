@@ -17,7 +17,7 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  *
  * @author Dimitris Kontokostas
  * @since 7/25/14 10:02 PM
- * @version $Id: $Id
+
  */
 @Slf4j
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
@@ -30,7 +30,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
 
     private static final String ORDER_BY_RESOURCE_ASC = "  ORDER BY ASC(?this) ";
 
-    /** {@inheritDoc} */
+
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
 
@@ -62,7 +62,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
         return sb.toString();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         String query = this.getSparqlQueryAsString(testCase);

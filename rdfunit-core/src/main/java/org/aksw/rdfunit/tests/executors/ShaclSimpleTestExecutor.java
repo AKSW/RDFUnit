@@ -24,7 +24,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 4:25 PM
- * @version $Id: $Id
+
  */
 public class ShaclSimpleTestExecutor extends TestExecutor {
 
@@ -37,7 +37,7 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
         super(queryGenerationFactory);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
@@ -66,12 +66,6 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
 
     }
 
-    /**
-     * <p>checkQueryResultStatus.</p>
-     *
-     * @param e a {@link org.apache.jena.sparql.engine.http.QueryExceptionHTTP} object.
-     * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException if any.
-     */
     protected void checkQueryResultStatus(QueryExceptionHTTP e) throws TestCaseExecutionException {
         if (SparqlUtils.checkStatusForTimeout(e)) {
             throw new TestCaseExecutionException(TestCaseResultStatus.Timeout, e);

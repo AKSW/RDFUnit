@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 8/15/15 4:37 PM
- * @version $Id: $Id
+
  */
 @ToString
 @EqualsAndHashCode
@@ -35,25 +35,25 @@ public final class ResultAnnotationImpl implements ResultAnnotation {
         this.variableName = builder.variableName;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource getElement() {
         return element;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Property getAnnotationProperty() {
         return property;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Optional<RDFNode> getAnnotationValue() {
         return Optional.ofNullable(value);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Optional<String> getAnnotationVarName() {
         return Optional.ofNullable(variableName);

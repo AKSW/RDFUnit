@@ -11,7 +11,7 @@ import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
  *
  * @author Dimitris Kontokostas
  * @since 6 /16/14 10:44 AM
- * @version $Id: $Id
+
  */
 public final class TestExecutorFactory {
 

@@ -13,9 +13,9 @@ import java.net.URL;
  * If the size cannot be determined, {@code strict} determines what to do
  *
  * @author Dimitris Kontokostas
- *         Description
+
  * @since 11 /14/13 8:48 AM
- * @version $Id: $Id
+
  */
 @Slf4j
 public class RdfDereferenceLimitReader implements RdfReader {
@@ -59,7 +59,7 @@ public class RdfDereferenceLimitReader implements RdfReader {
         this.strict = strict;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void read(Model model) throws RdfReaderException {
         checkUriSizeOrThrowExceprion();
@@ -68,7 +68,7 @@ public class RdfDereferenceLimitReader implements RdfReader {
         RdfReaderFactory.createDereferenceReader(uri).read(model);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void readDataset(Dataset dataset) throws RdfReaderException {
         checkUriSizeOrThrowExceprion();
@@ -110,7 +110,7 @@ public class RdfDereferenceLimitReader implements RdfReader {
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return "RDFDereferenceLimitReader{" +

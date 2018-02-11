@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 8/19/15 11:58 PM
- * @version $Id: $Id
+
  */
 public class TestSourceBuilder {
 
@@ -41,13 +41,6 @@ public class TestSourceBuilder {
         return this;
     }
 
-    /**
-     * <p>setEndpoint.</p>
-     *
-     * @param sparqlEndpoint a {@link java.lang.String} object.
-     * @param endpointGraphs a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setEndpoint(String sparqlEndpoint, Collection<String> endpointGraphs) {
         return setEndpoint(sparqlEndpoint, endpointGraphs, "", "");
     }
@@ -63,11 +56,6 @@ public class TestSourceBuilder {
         return  this;
     }
 
-    /**
-     * <p>setImMemSingle.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setImMemSingle() {
         testSourceType = TestSourceType.InMemSingle;
         if (queryingConfig == null) {
@@ -76,11 +64,6 @@ public class TestSourceBuilder {
         return this;
     }
 
-    /**
-     * <p>setImMemDataset.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setImMemDataset() {
         testSourceType = TestSourceType.InMemDataset;
         if (queryingConfig == null) {
@@ -89,12 +72,6 @@ public class TestSourceBuilder {
         return this;
     }
 
-    /**
-     * <p>setImMemFromUri.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setImMemFromUri(String uri) {
         SerializationFormat format = FormatService.getInputFormat(FormatService.getFormatFromExtension(uri));
         if (format != null && format.getGraphType().equals(SerializationFormatGraphType.dataset)) {
@@ -106,12 +83,6 @@ public class TestSourceBuilder {
         return this;
     }
 
-    /**
-     * <p>Setter for the field <code>inMemReader</code>.</p>
-     *
-     * @param reader a {@link RdfReader} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setInMemReader(RdfReader reader) {
         this.inMemReader = reader;
         if (queryingConfig == null) {
@@ -120,25 +91,12 @@ public class TestSourceBuilder {
         return this;
     }
 
-    /**
-     * <p>setInMemFromPipe.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setInMemFromPipe() {
         this.inMemReader = new RdfStreamReader(new BufferedInputStream(System.in), "TURTLE");
         setImMemSingle();
         return this;
     }
 
-    /**
-     * <p>setInMemFromCustomText.</p>
-     *
-     * @param customTextSource a {@link java.lang.String} object.
-     * @param customTextFormat a {@link java.lang.String} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
-     */
     public TestSourceBuilder setInMemFromCustomText(String customTextSource, String customTextFormat) throws UndefinedSerializationException {
 
         SerializationFormat format = FormatService.getInputFormat(customTextFormat);
@@ -154,78 +112,37 @@ public class TestSourceBuilder {
         return this;
     }
 
-    /**
-     * <p>Setter for the field <code>referenceSchemata</code>.</p>
-     *
-     * @param referenceSchemata a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setReferenceSchemata(Collection<SchemaSource> referenceSchemata) {
         this.referenceSchemata = referenceSchemata;
         return this;
     }
 
-    /**
-     * <p>Setter for the field <code>referenceSchemata</code>.</p>
-     *
-     * @param referenceSchema a {@link org.aksw.rdfunit.sources.SchemaSource} object.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setReferenceSchemata(SchemaSource referenceSchema) {
         this.referenceSchemata = Collections.singletonList(referenceSchema);
         return this;
     }
 
-    /**
-     * <p>setCacheTTL.</p>
-     *
-     * @param cacheTTL a long.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setCacheTTL(long cacheTTL) {
         queryingConfig = queryingConfig.copyWithNewCacheTTL(cacheTTL);
         return this;
     }
 
-    /**
-     * <p>setQueryLimit.</p>
-     *
-     * @param queryLimit a long.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setQueryLimit(long queryLimit) {
         queryingConfig = queryingConfig.copyWithNewQueryLimit(queryLimit);
         return this;
     }
 
-    /**
-     * <p>setQueryDelay.</p>
-     *
-     * @param queryDelay a long.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setQueryDelay(long queryDelay) {
         queryingConfig = queryingConfig.copyWithNewQueryDelay(queryDelay);
         return this;
     }
 
-    /**
-     * <p>setPagination.</p>
-     *
-     * @param pagination a long.
-     * @return a {@link org.aksw.rdfunit.sources.TestSourceBuilder} object.
-     */
     public TestSourceBuilder setPagination(long pagination) {
         queryingConfig = queryingConfig.copyWithNewPagination(pagination);
         return this;
     }
 
 
-    /**
-     * <p>build.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
-     */
     public TestSource build() {
         checkNotNull(sourceConfig , "Source configuration not set in TestSourceBuilder");
         checkNotNull(referenceSchemata, "Referenced schemata not set in TestSourceBuilder");
@@ -255,20 +172,10 @@ public class TestSourceBuilder {
         throw new IllegalStateException("Should not be here");
     }
 
-    /**
-     * <p>Getter for the field <code>sparqlEndpoint</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     public String getSparqlEndpoint() {
         return sparqlEndpoint;
     }
 
-    /**
-     * <p>Getter for the field <code>endpointGraphs</code>.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
     public Collection<String> getEndpointGraphs() {
         return endpointGraphs;
     }

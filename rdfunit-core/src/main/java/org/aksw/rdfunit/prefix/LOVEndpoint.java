@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Dimitris Kontokostas
  * @since 3 /31/15 4:15 PM
- * @version $Id: $Id
+
  */
 @Slf4j
 public final class LOVEndpoint {
@@ -67,11 +67,6 @@ public final class LOVEndpoint {
         return lovEntries;
     }
 
-    /**
-     * <p>writeAllLOVEntriesToFile.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
     public void writeAllLOVEntriesToFile(String filename)  {
 
         List<SchemaEntry> lovEntries = getAllLOVEntries();

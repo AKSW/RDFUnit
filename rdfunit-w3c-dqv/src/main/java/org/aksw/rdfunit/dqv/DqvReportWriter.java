@@ -13,7 +13,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class DqvReportWriter implements ElementWriter {
 
@@ -26,7 +26,7 @@ public final class DqvReportWriter implements ElementWriter {
 
     public static DqvReportWriter create(Collection<QualityMeasure> measures) {return new DqvReportWriter(measures);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
 

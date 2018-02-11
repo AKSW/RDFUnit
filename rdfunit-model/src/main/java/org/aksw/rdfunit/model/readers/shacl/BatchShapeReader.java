@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * @author Dimitris Kontokostas
  * @since 9/26/15 12:33 PM
- * @version $Id: $Id
+
  */
 public final class BatchShapeReader {
 

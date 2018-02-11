@@ -14,7 +14,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class PatternWriter implements ElementWriter {
 
@@ -24,15 +24,9 @@ public final class PatternWriter implements ElementWriter {
         this.pattern = pattern;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.PatternWriter} object.
-     */
     public static PatternWriter create(Pattern pattern) {return new PatternWriter(pattern);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(pattern, model);

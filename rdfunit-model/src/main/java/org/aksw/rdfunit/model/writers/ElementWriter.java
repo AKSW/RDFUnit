@@ -9,16 +9,10 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:55 PM
- * @version $Id: $Id
+
  */
 public interface ElementWriter {
 
-    /**
-     * <p>write.</p>
-     *
-     * @return a {@link org.apache.jena.rdf.model.Resource} object.
-     * @param model a {@link org.apache.jena.rdf.model.Model} object.
-     */
     Resource write(Model model);
 
     static Resource copyElementResourceInModel(Element element, Model model) {

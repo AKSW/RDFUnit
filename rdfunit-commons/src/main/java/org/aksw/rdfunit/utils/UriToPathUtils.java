@@ -18,12 +18,6 @@ public final class UriToPathUtils {
 
     private UriToPathUtils(){}
 
-    /**
-     * <p>getCacheFolderForURI.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     public static String getCacheFolderForURI(String uri) {
         String retVal = "";
         try {
@@ -38,12 +32,6 @@ public final class UriToPathUtils {
         return retVal;
     }
 
-    /**
-     * <p>getAutoPrefixForURI.</p>
-     *
-     * @param uri a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     public static String getAutoPrefixForURI(String uri) {
         return uri
                 .replace("http://", "")

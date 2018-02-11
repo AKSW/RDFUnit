@@ -12,34 +12,24 @@ import java.io.OutputStream;
  * initialized in construction and not the model provided in write(Model)
  *
  * @since 11/14/13 1:04 PM
- * @version $Id: $Id
+
  */
 public abstract class AbstractRdfHtmlResultsWriter implements RdfWriter {
     protected final TestExecution testExecution;
     private final OutputStream outputStream;
 
 
-    /**
-     * <p>Constructor for RDFHTMLResultsWriter.</p>
-     *
-     * @param outputStream a {@link java.io.OutputStream} object.
-     */
     public AbstractRdfHtmlResultsWriter(TestExecution testExecution, OutputStream outputStream) {
         super();
         this.testExecution = testExecution;
         this.outputStream = outputStream;
     }
 
-    /**
-     * <p>Constructor for RDFHTMLResultsWriter.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
     public AbstractRdfHtmlResultsWriter(TestExecution testExecution, String filename) {
         this(testExecution, RdfStreamWriter.getOutputStreamFromFilename(filename));
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void write(QueryExecutionFactory qef) throws RdfWriterException {
 
@@ -83,7 +73,7 @@ public abstract class AbstractRdfHtmlResultsWriter implements RdfWriter {
         return new StringBuilder("</body>\n</html>");
     }
 
-    private StringBuilder getTestExecutionStats() throws RdfWriterException {
+    private StringBuilder getTestExecutionStats() {
         StringBuilder stats = new StringBuilder();
         stats.append("<h2>TestExecution: ").append(testExecution.getTestExecutionUri()).append("</h2>\n");
         //TODO for some reason, using the "testExecution" URI does not work :/
@@ -105,7 +95,7 @@ public abstract class AbstractRdfHtmlResultsWriter implements RdfWriter {
         return stats;
     }
 
-    private StringBuilder getTestExecutionResults() throws RdfWriterException {
+    private StringBuilder getTestExecutionResults() {
         StringBuilder results = new StringBuilder();
         results
                 .append("<h3>Results</h3>\n")

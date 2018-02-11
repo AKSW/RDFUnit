@@ -13,7 +13,7 @@ import java.util.Optional;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 6:04 PM
- * @version $Id: $Id
+
  */
 @ToString
 @EqualsAndHashCode(exclude={"element"})

@@ -12,7 +12,7 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  *
  * @author Dimitris Kontokostas
  * @since 7/25/14 10:07 PM
- * @version $Id: $Id
+
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
 
@@ -22,13 +22,13 @@ public class QueryGenerationCountFactory implements QueryGenerationFactory {
                                                    " SELECT ?this WHERE ";
     private static final String SELECT_CLAUSE_GROUP_END = "}";
 
-    /** {@inheritDoc} */
+
     @Override
     public String getSparqlQueryAsString(TestCase testCase) {
         return getSparqlQuery(testCase).toString();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Query getSparqlQuery(TestCase testCase) {
         String sparqlQuery = getPrefixDeclarations(testCase) +

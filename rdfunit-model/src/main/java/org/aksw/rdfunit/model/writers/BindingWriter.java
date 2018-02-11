@@ -11,7 +11,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class BindingWriter implements ElementWriter {
 
@@ -21,15 +21,9 @@ public final class BindingWriter implements ElementWriter {
         this.binding = binding;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param binding a {@link org.aksw.rdfunit.model.interfaces.Binding} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.BindingWriter} object.
-     */
     public static BindingWriter create(Binding binding) {return new BindingWriter(binding);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(binding, model);

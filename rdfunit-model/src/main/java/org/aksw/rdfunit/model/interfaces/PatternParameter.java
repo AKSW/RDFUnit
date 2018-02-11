@@ -9,7 +9,7 @@ import java.util.Optional;
  *
  * @author Dimitris Kontokostas
  * @since 9 /20/13 2:47 PM
- * @version $Id: $Id
+
  */
 public interface PatternParameter extends Element{
 

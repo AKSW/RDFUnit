@@ -7,12 +7,11 @@ import org.apache.jena.riot.RDFLanguages;
 import java.util.Collection;
 
 /**
- * <p>FormatService class.</p>
+ * Static service that contains all the supported formats for input/output
  *
  * @author Dimitris Kontokostas
- *         Static service that contains all the supported formats for input/output
  * @since 6/18/14 7:23 PM
- * @version $Id: $Id
+
  */
 @Slf4j
 public final class FormatService {
@@ -58,12 +57,6 @@ public final class FormatService {
         return null;
     }
 
-    /**
-     * <p>getFormatFromExtension.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     public static String getFormatFromExtension(String filename) {
         String format = "TURTLE";
         try {

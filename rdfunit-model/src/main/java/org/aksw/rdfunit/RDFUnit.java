@@ -24,7 +24,7 @@ import java.util.Collections;
  *
  * @author Dimitris Kontokostas
  * @since 9/20/13 5:59 PM
- * @version $Id: $Id
+
  */
 public class RDFUnit {
 
@@ -34,27 +34,14 @@ public class RDFUnit {
     @Getter(lazy = true) @NonNull private final ImmutableSet<Pattern> patterns = generatePatterns();
     @Getter(lazy = true) @NonNull private final QueryExecutionFactoryModel patternQueryFactory = generateExecutionFactory();
 
-    /**
-     * <p>Constructor for RDFUnit.</p>
-     *
-     * @param baseDirectories a {@link java.util.Collection} object.
-     */
     public RDFUnit(Collection<String> baseDirectories) {
         this.baseDirectories = baseDirectories;
     }
 
-    /**
-     * <p>Constructor for RDFUnit.</p>
-     *
-     * @param baseDirectory a {@link java.lang.String} object.
-     */
     public RDFUnit(String baseDirectory) {
         this(Collections.singletonList(baseDirectory));
     }
 
-    /**
-     * <p>Constructor for RDFUnit.</p>
-     */
     public RDFUnit() {
         this(new ArrayList<>());
     }
@@ -111,79 +98,34 @@ public class RDFUnit {
         return new RdfFirstSuccessReader(readers);
     }
 
-    /**
-     * <p>getPatternsReader.</p>
-     *
-     * @param baseDirectories a {@link java.util.Collection} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getPatternsReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "patterns.ttl");
     }
 
-    /**
-     * <p>getAutoGeneratorsOWLReader.</p>
-     *
-     * @param baseDirectories a {@link java.util.Collection} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsOWLReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl");
     }
 
-    /**
-     * <p>getAutoGeneratorsOWLReader.</p>
-     *
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsOWLReader() {
         return getAutoGeneratorsOWLReader(new ArrayList<>());
     }
 
-    /**
-     * <p>getAutoGeneratorsDSPReader.</p>
-     *
-     * @param baseDirectories a {@link java.util.Collection} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsDSPReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsDSP.ttl");
     }
 
-    /**
-     * <p>getAutoGeneratorsDSPReader.</p>
-     *
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsDSPReader() {
         return getAutoGeneratorsDSPReader(new ArrayList<>());
     }
 
-    /**
-     * <p>getAutoGeneratorsRSReader.</p>
-     *
-     * @param baseDirectories a {@link java.util.Collection} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsRSReader(Collection<String> baseDirectories) {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsRS.ttl");
     }
 
-    /**
-     * <p>getAutoGeneratorsRSReader.</p>
-     *
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsRSReader() {
         return getAutoGeneratorsRSReader(new ArrayList<>());
     }
 
-    /**
-     * <p>getAutoGeneratorsALLReader.</p>
-     *
-     * @param baseDirectories a {@link java.util.Collection} object.
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {
         Collection<RdfReader> readers = Arrays.asList(
                 getAutoGeneratorsOWLReader(baseDirectories),
@@ -194,11 +136,6 @@ public class RDFUnit {
         return new RdfMultipleReader(readers);
     }
 
-    /**
-     * <p>getAutoGeneratorsALLReader.</p>
-     *
-     * @return a {@link RdfReader} object.
-     */
     public static RdfReader getAutoGeneratorsALLReader() {
         return getAutoGeneratorsALLReader(new ArrayList<>());
     }

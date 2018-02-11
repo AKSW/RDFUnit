@@ -7,7 +7,7 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 3:10 PM
- * @version $Id: $Id
+
  */
 public interface TestGenerator extends Element {
 

@@ -18,13 +18,11 @@ import java.util.Collection;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>RDFUnitConfiguration class.</p>
+ * Holds a configuration for a complete test
+ * TODO: Got too big, maybe break it down a bit
+ * TODO: Got really really big!!!
  *
  * @author Dimitris Kontokostas
- *         Holds a configuration for a complete test
- *         TODO: Got too big, maybe break it down a bit
- *         TODO: Got really really big!!!
- * @version $Id : $Id
  * @since 11 /15/13 11:50 AM
  */
 public class RDFUnitConfiguration {
@@ -73,28 +71,10 @@ public class RDFUnitConfiguration {
     /*  */
     private boolean calculateCoverageEnabled = false;
 
-    /**
-     * <p>Constructor for RDFUnitConfiguration.</p>
-     *
-     * @param datasetURI a
-     * object.
-     * @param dataFolder a
-     * object.
-     */
     public RDFUnitConfiguration(String datasetURI, String dataFolder) {
         this(datasetURI, dataFolder, dataFolder + "tests/");
     }
 
-    /**
-     * <p>Constructor for RDFUnitConfiguration.</p>
-     *
-     * @param datasetURI a
-     * object.
-     * @param dataFolder a
-     * object.
-     * @param testFolder a
-     * object.
-     */
     public RDFUnitConfiguration(String datasetURI, String dataFolder, String testFolder) {
         this.datasetURI = datasetURI;
         this.dataFolder = dataFolder;
@@ -103,70 +83,27 @@ public class RDFUnitConfiguration {
         prefix = UriToPathUtils.getAutoPrefixForURI(datasetURI); // default prefix
     }
 
-    /**
-     * <p>setEndpointConfiguration.</p>
-     *
-     * @param endpointURI a
-     * object.
-     * @param endpointGraphs a
-     * object.
-     */
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, String username, String password) {
         this.testSourceBuilder.setEndpoint(endpointURI, endpointGraphs, username, password);
     }
 
-    /**
-     * <p>Setter for the field <code>customDereferenceURI</code>.</p>
-     *
-     * @param customDereferenceURI a
-     * object.
-     */
     public void setCustomDereferenceURI(String customDereferenceURI) {
         this.testSourceBuilder.setImMemFromUri(customDereferenceURI);
         this.customDereferenceURI = customDereferenceURI;
     }
 
-    /**
-     * <p>Setter for the field <code>customTextSource</code>.</p>
-     *
-     * @param text a
-     * object.
-     * @param format a
-     * object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
-     */
     public void setCustomTextSource(String text, String format) throws UndefinedSerializationException {
         testSourceBuilder.setInMemFromCustomText(text, format);
     }
 
-    /**
-     * <p>setAutoSchemataFromQEF.</p>
-     *
-     * @param qef a
-     * object.
-     */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef) {
         setAutoSchemataFromQEF(qef, false);
     }
 
-    /**
-     * <p>setAutoSchemataFromQEF.</p>
-     *
-     * @param qef a
-     * object.
-     * @param all the all
-     */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all) {
         setAutoSchemataFromQEF(qef, all, true);
     }
 
-    /**
-     * Sets auto schemata from qEF.
-     *
-     * @param qef the qef
-     * @param all the all
-     * @param limitToKnown the limit to known
-     */
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all, boolean limitToKnown) {
 
         NamespaceStatistics namespaceStatistics;
@@ -179,45 +116,21 @@ public class RDFUnitConfiguration {
         this.schemas = namespaceStatistics.getNamespaces(qef);
     }
 
-    /**
-     * <p>setSchemataFromPrefixes.</p>
-     *
-     * @param schemaPrefixes a
-     * object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSchemaException if any.
-     */
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
         this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
     }
 
-    /**
-     * <p>setSchemata.</p>
-     *
-     * @param schemata a
-     * object.
-     */
     public void setSchemata(Collection<SchemaSource> schemata) {
         this.schemas = new ArrayList<>();
         this.schemas.addAll(schemata);
     }
 
-    /**
-     * <p>Setter for the field <code>enrichedSchema</code>.</p>
-     *
-     * @param enrichedSchemaPrefix a
-     * object.
-     */
     public void setEnrichedSchema(String enrichedSchemaPrefix) {
         if (enrichedSchemaPrefix != null && !enrichedSchemaPrefix.isEmpty()) {
             enrichedSchema = SchemaSourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedSchemaPrefix, datasetURI);
         }
     }
 
-    /**
-     * <p>getAllSchemata.</p>
-     *
-     * @return a  object.
-     */
     public Collection<SchemaSource> getAllSchemata() {
         Collection<SchemaSource> allSchemas = new ArrayList<>();
         if (this.schemas != null) {
@@ -230,11 +143,6 @@ public class RDFUnitConfiguration {
         return allSchemas;
     }
 
-    /**
-     * <p>Getter for the field <code>testSource</code>.</p>
-     *
-     * @return a  object.
-     */
     public TestSource getTestSource() {
 
         if (testSource != null) {
@@ -287,13 +195,6 @@ public class RDFUnitConfiguration {
         return testSource;
     }
 
-    /**
-     * <p>setOutputFormatTypes.</p>
-     *
-     * @param outputNames a
-     * object.
-     * @throws org.aksw.rdfunit.exceptions.UndefinedSerializationException if any.
-     */
     public void setOutputFormatTypes(Collection<String> outputNames) throws UndefinedSerializationException {
         outputFormats = new ArrayList<>();
         for (String name : outputNames) {
@@ -309,56 +210,26 @@ public class RDFUnitConfiguration {
         }
     }
 
-    /**
-     * <p>isTestCacheEnabled.</p>
-     *
-     * @return a boolean.
-     */
     public boolean isTestCacheEnabled() {
         return testCacheEnabled;
     }
 
-    /**
-     * <p>Setter for the field <code>testCacheEnabled</code>.</p>
-     *
-     * @param testCacheEnabled a boolean.
-     */
     public void setTestCacheEnabled(boolean testCacheEnabled) {
         this.testCacheEnabled = testCacheEnabled;
     }
 
-    /**
-     * <p>isManualTestsEnabled.</p>
-     *
-     * @return a boolean.
-     */
     public boolean isManualTestsEnabled() {
         return manualTestsEnabled;
     }
 
-    /**
-     * <p>Setter for the field <code>manualTestsEnabled</code>.</p>
-     *
-     * @param manualTestsEnabled a boolean.
-     */
     public void setManualTestsEnabled(boolean manualTestsEnabled) {
         this.manualTestsEnabled = manualTestsEnabled;
     }
 
-    /**
-     * <p>isAutoTestsEnabled.</p>
-     *
-     * @return a boolean.
-     */
     public boolean isAutoTestsEnabled() {
         return autoTestsEnabled;
     }
 
-    /**
-     * <p>Setter for the field <code>autoTestsEnabled</code>.</p>
-     *
-     * @param autoTestsEnabled a boolean.
-     */
     public void setAutoTestsEnabled(boolean autoTestsEnabled) {
         this.autoTestsEnabled = autoTestsEnabled;
         if (!this.autoTestsEnabled) {
@@ -366,211 +237,94 @@ public class RDFUnitConfiguration {
         }
     }
 
-    /**
-     * <p>Getter for the field <code>testCaseExecutionType</code>.</p>
-     *
-     * @return a  object.
-     */
     public TestCaseExecutionType getTestCaseExecutionType() {
         return testCaseExecutionType;
     }
 
-    /**
-     * <p>Setter for the field <code>testCaseExecutionType</code>.</p>
-     *
-     * @param testCaseExecutionType a
-     * object.
-     */
     public void setTestCaseExecutionType(TestCaseExecutionType testCaseExecutionType) {
         this.testCaseExecutionType = testCaseExecutionType;
     }
 
-    /**
-     * <p>isCalculateCoverageEnabled.</p>
-     *
-     * @return a boolean.
-     */
     public boolean isCalculateCoverageEnabled() {
         return calculateCoverageEnabled;
     }
 
-    /**
-     * <p>Setter for the field <code>calculateCoverageEnabled</code>.</p>
-     *
-     * @param calculateCoverageEnabled a boolean.
-     */
     public void setCalculateCoverageEnabled(boolean calculateCoverageEnabled) {
         this.calculateCoverageEnabled = calculateCoverageEnabled;
     }
 
-    /**
-     * <p>Getter for the field <code>dataFolder</code>.</p>
-     *
-     * @return a  object.
-     */
     public String getDataFolder() {
         return dataFolder;
     }
 
-    /**
-     * <p>Getter for the field <code>testFolder</code>.</p>
-     *
-     * @return a  object.
-     */
     public String getTestFolder() {
         return testFolder;
     }
 
-    /**
-     * <p>Getter for the field <code>prefix</code>.</p>
-     *
-     * @return a  object.
-     */
     public String getPrefix() {
         return prefix;
     }
 
-    /**
-     * <p>Setter for the field <code>prefix</code>.</p>
-     *
-     * @param prefix a
-     * object.
-     */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 
-    /**
-     * <p>Getter for the field <code>datasetURI</code>.</p>
-     *
-     * @return a  object.
-     */
     public String getDatasetURI() {
         return datasetURI;
     }
 
-    /**
-     * <p>Getter for the field <code>endpointURI</code>.</p>
-     *
-     * @return a  object.
-     */
     public String getEndpointURI() {
         return testSourceBuilder.getSparqlEndpoint();
     }
 
-    /**
-     * <p>Getter for the field <code>endpointGraphs</code>.</p>
-     *
-     * @return a  object.
-     */
     public Collection<String> getEndpointGraphs() {
         return testSourceBuilder.getEndpointGraphs();
     }
 
-    /**
-     * <p>Getter for the field <code>customDereferenceURI</code>.</p>
-     *
-     * @return a  object.
-     */
     public String getCustomDereferenceURI() {
         return customDereferenceURI;
     }
 
-    /**
-     * <p>Getter for the field <code>enrichedSchema</code>.</p>
-     *
-     * @return a  object.
-     */
     public EnrichedSchemaSource getEnrichedSchema() {
         return enrichedSchema;
     }
 
-    /**
-     * <p>Getter for the field <code>outputFormats</code>.</p>
-     *
-     * @return a  object.
-     */
     public Collection<SerializationFormat> getOutputFormats() {
         return outputFormats;
     }
 
-    /**
-     * <p>geFirstOutputFormat.</p>
-     *
-     * @return a  object.
-     */
     public SerializationFormat geFirstOutputFormat() {
         return RDFUnitUtils.getFirstItemInCollection(outputFormats);
     }
 
-    /**
-     * <p>Getter for the field <code>endpointQueryDelayMS</code>.</p>
-     *
-     * @return a long.
-     */
     public long getEndpointQueryDelayMS() {
         return endpointQueryDelayMS;
     }
 
-    /**
-     * <p>Setter for the field <code>endpointQueryDelayMS</code>.</p>
-     *
-     * @param endpointQueryDelayMS a long.
-     */
     public void setEndpointQueryDelayMS(long endpointQueryDelayMS) {
         this.endpointQueryDelayMS = endpointQueryDelayMS;
     }
 
-    /**
-     * <p>Getter for the field <code>endpointQueryCacheTTL</code>.</p>
-     *
-     * @return a long.
-     */
     public long getEndpointQueryCacheTTL() {
         return endpointQueryCacheTTL;
     }
 
-    /**
-     * <p>Setter for the field <code>endpointQueryCacheTTL</code>.</p>
-     *
-     * @param endpointQueryCacheTTL a long.
-     */
     public void setEndpointQueryCacheTTL(long endpointQueryCacheTTL) {
         this.endpointQueryCacheTTL = endpointQueryCacheTTL;
     }
 
-    /**
-     * <p>Getter for the field <code>endpointQueryPagination</code>.</p>
-     *
-     * @return a long.
-     */
     public long getEndpointQueryPagination() {
         return endpointQueryPagination;
     }
 
-    /**
-     * <p>Setter for the field <code>endpointQueryPagination</code>.</p>
-     *
-     * @param endpointQueryPagination a long.
-     */
     public void setEndpointQueryPagination(long endpointQueryPagination) {
         this.endpointQueryPagination = endpointQueryPagination;
     }
 
-    /**
-     * <p>Getter for the field <code>endpointQueryLimit</code>.</p>
-     *
-     * @return a long.
-     */
     public long getEndpointQueryLimit() {
         return endpointQueryLimit;
     }
 
-    /**
-     * <p>Setter for the field <code>endpointQueryLimit</code>.</p>
-     *
-     * @param endpointQueryLimit a long.
-     */
     public void setEndpointQueryLimit(long endpointQueryLimit) {
         this.endpointQueryLimit = endpointQueryLimit;
     }

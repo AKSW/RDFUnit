@@ -14,7 +14,7 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class ComponentParameterWriter implements ElementWriter {
 
@@ -24,15 +24,9 @@ public final class ComponentParameterWriter implements ElementWriter {
         this.componentParameter = componentParameter;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param componentParameter a {@link ComponentParameter} object.
-     * @return a {@link ComponentParameterWriter} object.
-     */
     public static ComponentParameterWriter create(ComponentParameter componentParameter) {return new ComponentParameterWriter(componentParameter);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(componentParameter, model);

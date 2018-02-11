@@ -10,7 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Michael Leuthold
- * @version $Id: $Id
+
  */
 final class RdfUnitJunitTestCase {
 
@@ -26,36 +26,18 @@ final class RdfUnitJunitTestCase {
         return testCase;
     }
 
-    /**
-     * <p>Getter for the field <code>testInputMethod</code>.</p>
-     *
-     * @return a {@link org.junit.runners.model.FrameworkMethod} object.
-     */
     public FrameworkMethod getTestInputMethod() {
         return this.rdfUnitJunitTestCaseDataProvider.getTestInputMethod();
     }
 
-    /**
-     * <p>Getter for the field <code>modelSource</code>.</p>
-     *
-     * @return a {@link org.aksw.rdfunit.sources.TestSource} object.
-     */
     public TestSource getModelSource() {
         return this.rdfUnitJunitTestCaseDataProvider.getModelSource();
     }
 
-    /**
-     * <p>Getter for the field <code>testInputModel</code>.</p>
-     *
-     * @return a {@link org.apache.jena.rdf.model.Model} object.
-     */
     public Model getTestInputModel() {
         return this.rdfUnitJunitTestCaseDataProvider.getTestInputModel();
     }
 
-    /**
-     * <p>prepareForExecution.</p>
-     */
     public void prepareForExecution() {
         try {
             this.rdfUnitJunitTestCaseDataProvider.initialize();

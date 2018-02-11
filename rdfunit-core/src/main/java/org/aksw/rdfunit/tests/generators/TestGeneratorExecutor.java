@@ -23,12 +23,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 
 /**
- * <p>TestGeneratorExecutor class.</p>
+ * handles test generation form a schema or a cache
  *
  * @author Dimitris Kontokostas
- *         handles test generation form a schema or a cache
  * @since 11/20/13 7:31 PM
- * @version $Id: $Id
  */
 @Slf4j
 public class TestGeneratorExecutor {
@@ -37,20 +35,12 @@ public class TestGeneratorExecutor {
     private final boolean useManualTests;
     private final boolean useAutoTests;
 
-    /**
-     * <p>Constructor for TestGeneratorExecutor.</p>
-     */
     public TestGeneratorExecutor() {
         this(true, true, true);
     }
 
     /**
-     * TestGenerator constructor
      * TODO: loadFromCache does not make sense if useAutoTests is false
-     *
-     * @param useAutoTests a boolean.
-     * @param loadFromCache a boolean.
-     * @param useManualTests a boolean.
      */
     public TestGeneratorExecutor(boolean useAutoTests, boolean loadFromCache, boolean useManualTests) {
         this.useAutoTests = useAutoTests;
@@ -67,22 +57,11 @@ public class TestGeneratorExecutor {
     private final Collection<TestGeneratorExecutorMonitor> progressMonitors = new ArrayList<>();
 
 
-    /**
-     * <p>cancel.</p>
-     */
     public void cancel() {
         isCanceled = true;
     }
 
 
-    /**
-     * <p>generateTestSuite.</p>
-     *
-     * @param testFolder a {@link java.lang.String} object.
-     * @param dataset a {@link org.aksw.rdfunit.sources.Source} object.
-     * @param autoGenerators a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.model.interfaces.TestSuite} object.
-     */
     public TestSuite generateTestSuite(String testFolder, TestSource dataset, Collection<TestGenerator> autoGenerators) {
 
         Collection<SchemaSource> sources = dataset.getReferencesSchemata();
@@ -198,11 +177,6 @@ public class TestGeneratorExecutor {
     }
 
 
-    /**
-     * <p>addTestExecutorMonitor.</p>
-     *
-     * @param monitor a {@link org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor} object.
-     */
     public void addTestExecutorMonitor(TestGeneratorExecutorMonitor monitor) {
 
         if (!progressMonitors.contains(monitor)) {
@@ -210,11 +184,6 @@ public class TestGeneratorExecutor {
         }
     }
 
-    /**
-     * <p>removeTestExecutorMonitor.</p>
-     *
-     * @param monitor a {@link org.aksw.rdfunit.tests.generators.monitors.TestGeneratorExecutorMonitor} object.
-     */
     public void removeTestExecutorMonitor(TestGeneratorExecutorMonitor monitor) {
         progressMonitors.remove(monitor);
     }

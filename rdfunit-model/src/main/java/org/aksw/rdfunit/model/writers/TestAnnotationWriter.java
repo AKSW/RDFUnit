@@ -13,7 +13,7 @@ import org.apache.jena.vocabulary.DCTerms;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
- * @version $Id: $Id
+
  */
 public final class TestAnnotationWriter implements ElementWriter {
 
@@ -23,15 +23,9 @@ public final class TestAnnotationWriter implements ElementWriter {
         this.tcAnnotation = tcAnnotation;
     }
 
-    /**
-     * <p>create.</p>
-     *
-     * @param tcAnnotation a {@link org.aksw.rdfunit.model.interfaces.TestCaseAnnotation} object.
-     * @return a {@link org.aksw.rdfunit.model.writers.TestAnnotationWriter} object.
-     */
     public static TestAnnotationWriter create(TestCaseAnnotation tcAnnotation) {return new TestAnnotationWriter(tcAnnotation);}
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource write(Model model) {
         Resource resource = ElementWriter.copyElementResourceInModel(tcAnnotation, model);

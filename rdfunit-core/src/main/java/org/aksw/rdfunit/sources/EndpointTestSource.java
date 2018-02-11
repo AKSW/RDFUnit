@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Describes a SPARQL Endpoint source
  *
  * @author Dimitris Kontokostas
- * @version $Id: $Id
+
  */
 public class EndpointTestSource extends AbstractTestSource implements TestSource {
 
@@ -45,7 +45,7 @@ public class EndpointTestSource extends AbstractTestSource implements TestSource
         this(endpointTestSource.sourceConfig, endpointTestSource.queryingConfig, referenceSchemata, endpointTestSource.sparqlEndpoint, endpointTestSource.sparqlGraph, endpointTestSource.username, endpointTestSource.password);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected QueryExecutionFactory initQueryFactory() {
 
@@ -69,20 +69,10 @@ public class EndpointTestSource extends AbstractTestSource implements TestSource
         return masqueradeQEF(qef, this);
     }
 
-    /**
-     * <p>Getter for the field <code>sparqlEndpoint</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     public String getSparqlEndpoint() {
         return sparqlEndpoint;
     }
 
-    /**
-     * <p>getSparqlGraphs.</p>
-     *
-     * @return a {@link java.util.Collection} object.
-     */
     public Collection<String> getSparqlGraphs() {
         return sparqlGraph;
     }

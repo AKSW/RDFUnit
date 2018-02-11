@@ -9,12 +9,8 @@ import java.io.*;
 import java.util.Collection;
 
 /**
- * <p>RDFUnitUtils class.</p>
- *
  * @author Dimitris Kontokostas
- *         Description
  * @since 9/24/13 11:25 AM
- * @version $Id: $Id
  */
 @Slf4j
 public final class RDFUnitUtils {
@@ -22,11 +18,6 @@ public final class RDFUnitUtils {
     private RDFUnitUtils() {
     }
 
-    /**
-     * <p>fillSchemaServiceFromFile.</p>
-     *
-     * @param additionalCSV a {@link java.lang.String} object.
-     */
     public static void fillSchemaServiceFromFile(String additionalCSV) {
 
         try (InputStream inputStream = new FileInputStream(additionalCSV)) {
@@ -36,11 +27,6 @@ public final class RDFUnitUtils {
         }
     }
 
-    /**
-     * <p>fillSchemaServiceFromFile.</p>
-     *
-     * @param additionalCSV a {@link java.io.InputStream} object.
-     */
     public static void fillSchemaServiceFromFile(InputStream additionalCSV) {
 
         int count = 0;
@@ -91,9 +77,6 @@ public final class RDFUnitUtils {
         }
     }
 
-    /**
-     * <p>fillSchemaServiceFromLOV.</p>
-     */
     public static void fillSchemaServiceFromLOV() {
 
         int count = SchemaService.getSize();
@@ -108,13 +91,6 @@ public final class RDFUnitUtils {
 
 
 
-    /**
-     * <p>getFirstItemInCollection.</p>
-     *
-     * @param collection a {@link java.util.Collection} object.
-     * @param <T> a T object.
-     * @return a T object.
-     */
     public static <T> T getFirstItemInCollection(Collection<T> collection) {
         return collection.stream().findFirst().orElseGet(null);
     }

@@ -21,13 +21,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * <p>TestGenerator class.</p>
+ * Takes a sparqlPattern and a SPARQL query and based on the data
+ * returned from that query we generate test cases
  *
  * @author Dimitris Kontokostas
- *         Takes a sparqlPattern and a SPARQL query and based on the data
- *         returned from that query we generate test cases
  * @since 9/20/13 2:48 PM
- * @version $Id: $Id
  */
 @ToString
 @EqualsAndHashCode
@@ -55,16 +53,6 @@ public final class TestGeneratorImpl implements TestGenerator {
         this.annotations = ImmutableList.copyOf(checkNotNull(generatorAnnotations));
     }
 
-    /**
-     * <p>createTAG.</p>
-     *
-     * @param element a {@link org.apache.jena.rdf.model.Resource} object.
-     * @param description a {@link java.lang.String} object.
-     * @param query a {@link java.lang.String} object.
-     * @param pattern a {@link org.aksw.rdfunit.model.interfaces.Pattern} object.
-     * @param generatorAnnotations a {@link java.util.Collection} object.
-     * @return a {@link org.aksw.rdfunit.model.interfaces.TestGenerator} object.
-     */
     public static TestGenerator createTAG(Resource element, String description, String query, Pattern pattern, Collection<ResultAnnotation> generatorAnnotations) {
         return new TestGeneratorImpl(element,description,query,pattern,generatorAnnotations);
     }
@@ -74,7 +62,7 @@ public final class TestGeneratorImpl implements TestGenerator {
         return element.getURI();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean isValid() {
         Query q;

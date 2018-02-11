@@ -17,20 +17,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class StatusTestCaseResultReader implements ElementReader<StatusTestCaseResult> {
 
     private StatusTestCaseResultReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link StatusTestCaseResultReader} object.
-     */
     public static StatusTestCaseResultReader create() { return new StatusTestCaseResultReader();}
 
-    /** {@inheritDoc} */
+
     @Override
     public StatusTestCaseResult read(final Resource resource) {
         checkNotNull(resource);

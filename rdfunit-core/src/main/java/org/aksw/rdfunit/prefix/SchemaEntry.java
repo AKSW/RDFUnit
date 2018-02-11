@@ -6,7 +6,7 @@ import com.google.common.base.Objects;
  * Encapsulates an LOV Entry
  *
  * @author jim
- * @version $Id: $Id
+
  * @since 0.7.6
  */
 public final class SchemaEntry implements Comparable<SchemaEntry>{
@@ -78,13 +78,13 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
         return vocabularyDefinedBy;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public int hashCode() {
         return Objects.hashCode(prefix, vocabularyURI, vocabularyNamespace, vocabularyDefinedBy);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -100,7 +100,7 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
                 && Objects.equal(this.vocabularyDefinedBy, other.vocabularyDefinedBy);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return "SchemaEntry{" +
@@ -111,7 +111,7 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
                 '}';
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public int compareTo(SchemaEntry o) {
         return this.prefix.compareTo(o.getPrefix());

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author Michael Leuthold
- * @version $Id: $Id
+
  */
 public class RunnerTest {
 
@@ -33,7 +33,7 @@ public class RunnerTest {
 
 
     @BeforeClass
-    public static void addNotifierListener() throws RdfReaderException {
+    public static void addNotifierListener() {
         notifier.addListener(mockRunListener);
 
         assertThat(TestRunner.beforeClassCalled).isEqualTo(0);

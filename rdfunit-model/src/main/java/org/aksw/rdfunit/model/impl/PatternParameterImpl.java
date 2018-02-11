@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 9 /20/13 2:47 PM
- * @version $Id: $Id
+
  */
 @ToString
 @EqualsAndHashCode
@@ -37,31 +37,31 @@ public final class PatternParameterImpl implements PatternParameter {
         this.constraintPattern = builder.constraintPattern;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource getElement() {
         return element;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String getUri() {
         return element.getURI();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String getId() {
         return id;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public PatternParameterConstraints getConstraint() {
         return constraint;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Optional<String> getConstraintPattern() {
         return Optional.ofNullable(constraintPattern);

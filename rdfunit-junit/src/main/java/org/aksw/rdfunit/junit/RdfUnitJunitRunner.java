@@ -25,10 +25,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>RdfUnitJunitRunner class.</p>
- *
  * @author Michael Leuthold
- * @version $Id: $Id
  */
 public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
 
@@ -42,12 +39,6 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private RdfReader schemaReader;
     private Object testCaseInstance;
 
-    /**
-     * <p>Constructor for RdfUnitJunitRunner.</p>
-     *
-     * @param testClass a {@link java.lang.Class} object.
-     * @throws org.junit.runners.model.InitializationError if any.
-     */
     public RdfUnitJunitRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
 
@@ -56,7 +47,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         generateRdfUnitTestCases();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
@@ -211,13 +202,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return additionalData;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected List<RdfUnitJunitTestCase> getChildren() {
         return Collections.unmodifiableList(testCases);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected Description describeChild(RdfUnitJunitTestCase child) {
         return Description.createTestDescription(
@@ -235,13 +226,13 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return basename.isEmpty() ? method.getName() : basename;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected boolean isIgnored(RdfUnitJunitTestCase child) {
         return child.getTestInputMethod().getAnnotation(Ignore.class) != null;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {
         if(isIgnored(child)) {

@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:14 PM
- * @version $Id: $Id
+
  */
 @ToString (exclude = {"sparqlWherePattern", "sparqlPatternPrevalence"})
 @EqualsAndHashCode
@@ -53,13 +53,13 @@ public final class PatternImpl implements Pattern {
     }
 
 
-    /** {@inheritDoc} */
+
     @Override
     public Resource getElement() {
         return element;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Set<ResultAnnotation> getBindedAnnotations(Collection<Binding> bindings) {
         Set<ResultAnnotation> finalAnnotations = new HashSet<>();
@@ -79,43 +79,43 @@ public final class PatternImpl implements Pattern {
         return finalAnnotations;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String getIRI() {
         return element.getURI();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String getId() {
         return id;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String getDescription() {
         return description;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String getSparqlWherePattern() {
         return sparqlWherePattern;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Optional<String> getSparqlPatternPrevalence() {
         return Optional.ofNullable(sparqlPatternPrevalence);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Collection<PatternParameter> getParameters() {
         return Collections.unmodifiableCollection(parameters);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Optional<PatternParameter> getParameter(String parameterURI) {
         for (PatternParameter parameter : parameters) {
@@ -126,7 +126,7 @@ public final class PatternImpl implements Pattern {
         return Optional.empty();
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public Collection<ResultAnnotation> getResultAnnotations() {
         return annotations;

@@ -14,9 +14,9 @@ import java.util.Collection;
  * .
  *
  * @author Dimitris Kontokostas
- *         Description
+
  * @since 1 /3/14 12:23 PM
- * @version $Id: $Id
+
  */
 public interface TestExecutorMonitor {
     /**

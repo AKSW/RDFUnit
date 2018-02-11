@@ -25,20 +25,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
- * @version $Id: $Id
+
  */
 public final class TestExecutionReader implements ElementReader<TestExecution> {
 
     private TestExecutionReader(){}
 
-    /**
-     * <p>create.</p>
-     *
-     * @return a {@link TestExecutionReader} object.
-     */
     public static TestExecutionReader create() { return new TestExecutionReader();}
 
-    /** {@inheritDoc} */
+
     @Override
     public TestExecution read(Resource resource) {
         checkNotNull(resource);

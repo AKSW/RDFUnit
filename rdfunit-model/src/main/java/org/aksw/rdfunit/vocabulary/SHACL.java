@@ -9,7 +9,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 6:43 PM
- * @version $Id: $Id
+
  */
 @SuppressWarnings("ClassWithTooManyFields")
 public final class SHACL {
