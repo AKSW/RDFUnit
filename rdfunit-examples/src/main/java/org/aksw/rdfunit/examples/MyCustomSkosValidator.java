@@ -18,6 +18,10 @@ public class MyCustomSkosValidator {
                 new RDFUnitTestSuiteGenerator.Builder()
                         .addSchemaURI("skos", "http://www.w3.org/2004/02/skos/core#")
                         // add other here as well
+                        //.addSchemaURI("local-owl", "/home/foo/bar-owl.ttl")
+                        // e.g. shacl rules
+                        //.addSchemaURI("manual-shacl", "http://example.com/skos-shacl-rules#")
+                        //.addSchemaURI("local-shacl", "/home/foo/bar-shacl.ttl")
                         .build()
         );
 
