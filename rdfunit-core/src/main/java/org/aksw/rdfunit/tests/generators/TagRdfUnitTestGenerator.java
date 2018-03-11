@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.generators;
 
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -7,7 +8,7 @@ import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.*;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
-import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.TestCaseValidator;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.apache.jena.query.Query;
@@ -19,6 +20,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Dimitris Kontokostas
@@ -28,28 +30,43 @@ import java.util.*;
 @Slf4j
 public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
 
-    private final TestGenerator testGenerator;
+    private final ImmutableList<TestGenerator> testGenerators;
 
-    public TagRdfUnitTestGenerator(TestGenerator testGenerator) {
-        this.testGenerator = testGenerator;
+    public TagRdfUnitTestGenerator(Collection<TestGenerator> testGenerators) {
+        this.testGenerators = ImmutableList.copyOf(testGenerators);
+    }
+
+
+    @Override
+    public Collection<TestCase> generate(TestSource source) {
+        return ImmutableList.of();
     }
 
     @Override
-    public Set<TestCase> generate(Source source) {
-        if (! (source instanceof SchemaSource)) {
-            throw new IllegalArgumentException("SHACL test generator expect a schema source as input");
+    public Collection<TestCase> generate(SchemaSource source) {
+
+        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(source.getModel())) {
+            Set<TestCase> tests = testGenerators.stream()
+                    .parallel()
+                    .flatMap(tg -> generate(qef, source, tg).stream())
+                    .collect(Collectors.toSet());
+
+            log.info("{} generated {} tests using {} TAGs", source.getUri(), tests.size(), testGenerators.size());
+            return tests;
         }
 
-        SchemaSource schemaSource = (SchemaSource) source;
+    }
+
+    private Set<TestCase> generate(QueryExecutionFactoryModel qef, SchemaSource source, TestGenerator testGenerator) {
         Set<TestCase> tests = new HashSet<>();
 
         Pattern tgPattern = testGenerator.getPattern();
 
         Query q = QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + testGenerator.getQuery());
-        try (QueryExecution qe = new QueryExecutionFactoryModel(schemaSource.getModel()).createQueryExecution(q) ) {
+        try (QueryExecution qe = qef.createQueryExecution(q) ) {
             qe.execSelect().forEachRemaining(result -> {
 
-                Optional<TestCase> tc = generateTestFromResult(testGenerator, tgPattern, result, schemaSource);
+                Optional<TestCase> tc = generateTestFromResult(testGenerator, tgPattern, result, source);
                 tc.ifPresent(tests::add);
 
             });
@@ -57,6 +74,8 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
         return tests;
 
     }
+
+
 
 
     private Optional<TestCase> generateTestFromResult(TestGenerator tg, Pattern tgPattern, QuerySolution row, SchemaSource schemaSource) {

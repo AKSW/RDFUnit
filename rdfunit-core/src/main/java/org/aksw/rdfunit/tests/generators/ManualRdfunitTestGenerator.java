@@ -5,7 +5,9 @@ import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.CacheUtils;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
+import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.TestUtils;
 
 import java.util.Collection;
@@ -26,22 +28,32 @@ public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
     }
 
     @Override
-    public Set<TestCase> generate(Source source) {
-        Set<TestCase> tests = new HashSet<>();
+    public Collection<TestCase> generate(SchemaSource source) {
+        return generateFromSource(source);
+    }
 
-        try {
-            Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
-                    RdfReaderFactory.createFileOrResourceReader(
-                            CacheUtils.getSourceManualTestFile(testFolder, source),                 // check for local directory first
-                            CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source)  // otherwise check if it exists in resources
-                    ).read());
+    @Override
+    public Collection<TestCase> generate(TestSource source) {
+        return generateFromSource(source);
+    }
 
-            tests.addAll(testsManuals);
-        } catch (RdfReaderException e) {
-            // Do nothing, Manual tests do not exist
-            log.debug("No manual tests found for {}", source.getUri());
+    private Collection<TestCase> generateFromSource(Source source) {
+            Set<TestCase> tests = new HashSet<>();
 
-        }
+            try {
+                Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
+                        RdfReaderFactory.createFileOrResourceReader(
+                                CacheUtils.getSourceManualTestFile(testFolder, source),                 // check for local directory first
+                                CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source)  // otherwise check if it exists in resources
+                        ).read());
+
+                tests.addAll(testsManuals);
+            } catch (RdfReaderException e) {
+                // Do nothing, Manual tests do not exist
+                log.debug("No manual tests found for {}", source.getUri());
+
+            }
+        log.info("{} identified {} manual tests", source.getUri(), tests.size());
         return tests;
 
     }

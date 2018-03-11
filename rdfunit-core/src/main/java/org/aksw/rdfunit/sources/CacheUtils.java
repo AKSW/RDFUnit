@@ -13,7 +13,7 @@ public final class CacheUtils {
     }
 
     public static String getSchemaSourceCacheFilename(String testFolder, TestAppliesTo schemaType, String prefix, String uri) {
-        return testFolder + schemaType.name() + "/" + UriToPathUtils.getCacheFolderForURI(uri) + prefix + ".cache." + schemaType.name() + ".ttl";
+        return getTestFolder(testFolder) + schemaType.name() + "/" + UriToPathUtils.getCacheFolderForURI(uri) + prefix + ".cache." + schemaType.name() + ".ttl";
     }
 
     public static String getSourceAutoTestFile(String testFolder, Source source) {
@@ -29,8 +29,16 @@ public final class CacheUtils {
     }
 
     private static String getFile(String testFolder, Source source, String type, String sourceType) {
-        return testFolder + sourceType + "/" + UriToPathUtils.getCacheFolderForURI(source.getUri()) +
+
+        return getTestFolder(testFolder) + sourceType + "/" + UriToPathUtils.getCacheFolderForURI(source.getUri()) +
                 source.getPrefix() + "." + type + "." + sourceType + ".ttl";
+    }
+
+    private static String getTestFolder(String testFolder) {
+        String testFolderWithSlash = testFolder;
+        if (!testFolder.endsWith("/"))
+            testFolderWithSlash = testFolderWithSlash + "/";
+        return testFolderWithSlash;
     }
 
 }

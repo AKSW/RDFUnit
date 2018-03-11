@@ -13,7 +13,7 @@ import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
 import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
-import org.aksw.rdfunit.tests.generators.TestGeneratorTCInstantiator;
+import org.aksw.rdfunit.tests.generators.TagRdfUnitTestGenerator;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 
 import java.util.Collections;
@@ -50,7 +50,7 @@ public class IntegrationTestHelper {
 
 
         return new TestSuite(
-                new TestGeneratorTCInstantiator(rdfUnit.getAutoGenerators(), ontologyDSPSource).generate());
+                new TagRdfUnitTestGenerator(rdfUnit.getAutoGenerators()).generate(ontologyDSPSource));
     }
 
     public static TestSuite createTestSuiteWithShacl(String schemaSource) {

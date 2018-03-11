@@ -47,6 +47,7 @@ public final class PatternBasedTestCaseReader implements ElementReader<TestCase>
             pattern = PatternService.getPatternFromIRI(smt.getObject().asResource().getURI());
 
         }
+        checkNotNull(pattern, "Could not read pattern from %s", resource.toString());
 
         for (Statement smt : resource.listProperties(RDFUNITv.binding).toList()) {
             bindings.add(BindingReader.create(pattern).read(smt.getObject().asResource())) ;
