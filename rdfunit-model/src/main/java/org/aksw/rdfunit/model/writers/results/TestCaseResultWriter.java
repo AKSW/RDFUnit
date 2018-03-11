@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.writers.results;
 
+import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
 import org.aksw.rdfunit.model.interfaces.results.*;
 import org.aksw.rdfunit.model.writers.ElementWriter;
@@ -8,10 +9,8 @@ import org.aksw.rdfunit.vocabulary.PROV;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 
@@ -77,10 +76,14 @@ public class TestCaseResultWriter implements ElementWriter {
             Collection<PropertyValuePair> annotations = ((ShaclTestCaseResult) testCaseResult).getResultAnnotations();
             for (PropertyValuePair annotation : annotations) {
                 for (RDFNode rdfNode : annotation.getValues()) {
-                    resource.addProperty(annotation.getProperty(), rdfNode);
+
+
                     if (rdfNode.isAnon() && annotation.getProperty().equals(SHACL.resultPath)) {
-                        resource.getModel().add(rdfNode.getModel());
+                        resource.getModel().add(reanonimisePathBlankNodes(resource, rdfNode));
+                    } else {
+                        resource.addProperty(annotation.getProperty(), rdfNode);
                     }
+
                 }
             }
             boolean containsMessage = annotations.stream().anyMatch(an -> an.getProperty().equals(SHACL.message));
@@ -101,5 +104,18 @@ public class TestCaseResultWriter implements ElementWriter {
 
 
         return resource;
+    }
+
+    private Model reanonimisePathBlankNodes(Resource resource,  RDFNode rdfNode) {
+        Model pathModel = ModelFactory.createDefaultModel();
+        pathModel.add(rdfNode.getModel());
+        pathModel.add(resource, SHACL.resultPath, rdfNode);
+        ImmutableSet<Resource> resources = ImmutableSet.copyOf(pathModel.listSubjects());
+        resources.stream()
+                .filter(Resource::isAnon)
+                .filter(r -> r != resource)
+                .forEach(r -> ResourceUtils.renameResource(r, null));
+
+        return pathModel;
     }
 }
