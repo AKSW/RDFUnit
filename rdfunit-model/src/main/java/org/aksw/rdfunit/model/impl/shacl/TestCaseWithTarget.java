@@ -10,6 +10,8 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.apache.jena.query.ParameterizedSparqlString;
+import org.apache.jena.query.QuerySolutionMap;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
@@ -27,12 +29,12 @@ import java.util.stream.Collectors;
 public class TestCaseWithTarget implements TestCase {
 
     @NonNull private final ShapeTarget target;
-    @NonNull private final String filterSpqrql;
+    @NonNull private final String filterSparql;
     @NonNull private final TestCase testCase;
 
-    public TestCaseWithTarget(ShapeTarget target, String filterSpqrql, TestCase testCase) {
+    public TestCaseWithTarget(ShapeTarget target, String filterSparql, TestCase testCase) {
         this.target = target;
-        this.filterSpqrql = filterSpqrql;
+        this.filterSparql = filterSparql;
         this.testCase = testCase;
     }
 
@@ -77,11 +79,21 @@ public class TestCaseWithTarget implements TestCase {
         return testCase.getElement();
     }
 
-    private String injectTargetInSparql(String sparqlQuery, ShapeTarget target) {
-        // FIXME good for now
+
+    private String injectSparqlSnippet(String sparqlQuery, String sparqlSnippet) {
         int bracketIndex = sparqlQuery.indexOf('{');
-        return sparqlQuery.substring(0,bracketIndex+1) + target.getPattern() + filterSpqrql + sparqlQuery.substring(bracketIndex+1);
+        return sparqlQuery.substring(0,bracketIndex+1) + sparqlSnippet + sparqlQuery.substring(bracketIndex+1);
     }
+
+    private String injectTargetInSparql(String sparqlQuery, ShapeTarget target) {
+
+        String queryWithFilter = injectSparqlSnippet(sparqlQuery, filterSparql);
+        String queryWithTarget = injectTarget(queryWithFilter, target);
+
+        return queryWithTarget;
+    }
+
+
 
     private static TestCaseAnnotation createFromReferences(TestCaseAnnotation annotation, Collection<Resource> references) {
 
@@ -96,6 +108,31 @@ public class TestCaseWithTarget implements TestCase {
                 .addAll(annotation.getVariableAnnotations());
 
         return new TestCaseAnnotation(annotation.getElement(), annotation.getGenerated(), annotation.getAutoGeneratorURI(), annotation.getAppliesTo(), annotation.getSourceUri(), finalReferences, annotation.getDescription(), annotation.getTestCaseLogLevel(), resultAnnotationBuilder.build());
+    }
+
+    private static final String thisVar = "\\$this_asdf_1234_qwer";
+    private String injectTarget(String sparqlQuery, ShapeTarget target) {
+        String changedQuery = sparqlQuery;
+
+        if (target.getTargetType().equals(ShapeTargetType.NodeTarget)) {
+            changedQuery = sparqlQuery
+                    .replaceFirst("[\\$\\?]this", thisVar )
+                    .replaceAll("(?i)BOUND\\s*\\(\\s*[\\$\\?]this\\s*\\)", "BOUND\\("+ thisVar+"\\)")
+                    .replaceAll("(?i)GROUP\\s+BY\\s+[\\$\\?]this", "GROUP BY "+ thisVar);
+
+            QuerySolutionMap qsm = new QuerySolutionMap();
+            qsm.add("this", target.getNode());
+            ParameterizedSparqlString pq = new ParameterizedSparqlString(changedQuery, qsm);
+            changedQuery = pq.toString();
+
+            changedQuery = changedQuery
+                    .replaceFirst(thisVar, "\\$this")
+                    .replaceAll("(?i)BOUND\\("+ thisVar+"\\)", "BOUND\\(\\?this\\)")
+                    .replaceAll("(?i)GROUP BY "+ thisVar, "GROUP BY \\$this");
+        }
+
+        return injectSparqlSnippet(changedQuery, target.getPattern());
+
     }
 
 }

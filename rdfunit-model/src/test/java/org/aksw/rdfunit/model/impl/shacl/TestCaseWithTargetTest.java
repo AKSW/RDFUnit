@@ -66,7 +66,7 @@ public class TestCaseWithTargetTest {
         TestCase testCaseWithTarget = TestCaseWithTarget.builder()
                 .testCase(innerTestCAse)
                 .target(target)
-                .filterSpqrql(" ?this <http://example.cpm/p> ?value .")
+                .filterSparql(" ?this <http://example.cpm/p> ?value .")
                 .build();
 
         String finalSparql = PrefixNSService.getSparqlPrefixDecl() + testCaseWithTarget.getSparqlWhere();
