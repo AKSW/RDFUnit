@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.model.readers.shacl;
 
-import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
@@ -9,7 +8,6 @@ import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -28,13 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ShapeReaderTest {
 
     private static final String shapeResource = "/org/aksw/rdfunit/shacl/sampleShape.ttl" ;
-
-    @Before
-    public void setUp() {
-        // Needed to resolve the patterns
-        RDFUnit rdfUnit = new RDFUnit();
-        rdfUnit.init();
-    }
 
     @Test
     public void testRead() throws RdfReaderException {

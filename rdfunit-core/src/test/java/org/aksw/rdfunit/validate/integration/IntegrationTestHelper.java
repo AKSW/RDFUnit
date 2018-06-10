@@ -30,13 +30,13 @@ public class IntegrationTestHelper {
     @Getter(lazy = true) private final static TestSuite shaclTestSuite = createTestSuiteWithShacl(resourcePrefix + "shacl/shacl.constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource shaclSchemaSource = createSchemaSourceSimple(resourcePrefix + "shacl/shacl.constraints.ttl");
 
-    @Getter(lazy = true) private final static TestSuite owlTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(new RDFUnit(), resourcePrefix + "owl/ontology.ttl");
+    @Getter(lazy = true) private final static TestSuite owlTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "owl/ontology.ttl");
     @Getter(lazy = true) private final static SchemaSource owlSchemaSource = createSchemaSourceSimple(resourcePrefix + "owl/ontology.ttl");
 
-    @Getter(lazy = true) private final static TestSuite rsTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(new RDFUnit(), resourcePrefix + "rs/rs_constraints.ttl");
+    @Getter(lazy = true) private final static TestSuite rsTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "rs/rs_constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource rsSchemaSource = createSchemaSourceSimple(resourcePrefix + "rs/rs_constraints.ttl");
 
-    @Getter(lazy = true) private final static TestSuite dspTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(new RDFUnit(), resourcePrefix + "dsp/dsp_constraints.ttl");
+    @Getter(lazy = true) private final static TestSuite dspTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "dsp/dsp_constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource dspSchemaSource = createSchemaSourceSimple(resourcePrefix + "dsp/dsp_constraints.ttl");
 
     public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {

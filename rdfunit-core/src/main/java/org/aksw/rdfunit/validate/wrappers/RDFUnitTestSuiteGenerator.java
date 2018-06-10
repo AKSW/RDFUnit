@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.validate.wrappers;
 
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfFirstSuccessReader;
@@ -29,12 +31,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 public final class RDFUnitTestSuiteGenerator {
 
+    @Getter(lazy = true) @NonNull private final RDFUnit rdfUnit = initRdfUnit();
+    @Getter(lazy = true) @NonNull private final TestSuite testSuite = initTestSuite();
+
     private final Collection<SchemaSource> schemas;
 
     private final boolean enableAutoTests;
     private final boolean enableManualTests;
 
-    private volatile TestSuite testSuite = null;
 
     private RDFUnitTestSuiteGenerator(Collection<SchemaSource> schemas, boolean enableAutoTests, boolean enableManualTests) {
         this.enableAutoTests = enableAutoTests;
@@ -42,31 +46,21 @@ public final class RDFUnitTestSuiteGenerator {
         this.schemas = Collections.unmodifiableCollection(checkNotNull(schemas));
     }
 
-    public TestSuite getTestSuite() {
-        if (testSuite == null) {
-            synchronized (RDFUnitStaticValidator.class) {
-                if (testSuite == null) {
+    private RDFUnit initRdfUnit() {
+        return RDFUnit.createWithOwlAndShacl().init();
+    }
 
-                    // Generate test cases from ontology (do this every time in case ontology changes)
-                    RDFUnit rdfunit = new RDFUnit();
-                    try {
-                        rdfunit.init();
-                    } catch (IllegalArgumentException e) {
-                        log.error("Could not Init RDFUnit", e);
-                    }
+    private TestSuite initTestSuite() {
 
-                    TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);
+        // Generate test cases from ontology (do this every time in case ontology changes)
 
-                    TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
-                            enableAutoTests,
-                            false,
-                            enableManualTests);
-                    testSuite = testGeneratorExecutor.generateTestSuite("", dummyTestSource, rdfunit.getAutoGenerators());
+        TestSource dummyTestSource = TestSourceFactory.createDumpTestSource("dummy", "dummy", RdfReaderFactory.createEmptyReader(), schemas);
 
-                }
-            }
-        }
-        return testSuite;
+        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+                enableAutoTests,
+                false,
+                enableManualTests);
+        return  testGeneratorExecutor.generateTestSuite("", dummyTestSource, getRdfUnit().getAutoGenerators());
     }
 
     public Collection<SchemaSource> getSchemas() {

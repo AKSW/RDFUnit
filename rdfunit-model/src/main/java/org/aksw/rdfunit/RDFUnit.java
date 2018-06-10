@@ -1,5 +1,6 @@
 package org.aksw.rdfunit;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
@@ -29,21 +30,39 @@ import java.util.Collections;
 public class RDFUnit {
 
     private final Collection<String> baseDirectories;
+    private final RdfReader autoGeneratorReaders;
 
     @Getter(lazy = true) @NonNull private final ImmutableSet<TestGenerator> autoGenerators = generateAutoGenerators();
     @Getter(lazy = true) @NonNull private final ImmutableSet<Pattern> patterns = generatePatterns();
     @Getter(lazy = true) @NonNull private final QueryExecutionFactoryModel patternQueryFactory = generateExecutionFactory();
 
-    public RDFUnit(Collection<String> baseDirectories) {
+    public static RDFUnit createWithShacl() {
+        // no autogenerators
+        return new RDFUnit(ImmutableList.of(), new RdfModelReader(ModelFactory.createDefaultModel()));
+    }
+    public static RDFUnit createWithOwlAndShacl() {
+        return createWithOwlAndShacl(ImmutableList.of());
+    }
+
+    public static RDFUnit createWithOwlAndShacl(Collection<String> baseDirectories) {
+        return new RDFUnit(baseDirectories, getAutoGeneratorsOWLReader(baseDirectories));
+    }
+
+    public static RDFUnit createWithAllGenerators() {
+        return createWithAllGenerators(ImmutableList.of());
+    }
+
+    public static RDFUnit createWithAllGenerators(Collection<String> baseDirectories) {
+        return new RDFUnit(baseDirectories, getAutoGeneratorsALLReader(baseDirectories));
+    }
+
+    private RDFUnit(Collection<String> baseDirectories, RdfReader autoGeneratorReaders) {
         this.baseDirectories = baseDirectories;
+        this.autoGeneratorReaders = autoGeneratorReaders;
     }
 
-    public RDFUnit(String baseDirectory) {
-        this(Collections.singletonList(baseDirectory));
-    }
-
-    public RDFUnit() {
-        this(new ArrayList<>());
+    private RDFUnit(String baseDirectory, RdfReader autoGeneratorReaders) {
+        this(Collections.singletonList(baseDirectory), autoGeneratorReaders);
     }
 
     private QueryExecutionFactoryModel generateExecutionFactory(){
@@ -53,7 +72,7 @@ public class RDFUnit {
 
         try {
             getPatternsReader(baseDirectories).read(model);
-            getAutoGeneratorsALLReader(baseDirectories).read(model);
+            autoGeneratorReaders.read(model);
         } catch (RdfReaderException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
@@ -70,12 +89,13 @@ public class RDFUnit {
      *
      * @throws IllegalArgumentException if files do not exist
      */
-    public void init() {
+    public RDFUnit init() {
 
         // Update pattern service
         for (Pattern pattern : getPatterns()) {
             PatternService.addPattern(pattern.getId(),pattern.getIRI(), pattern);
         }
+        return this;
     }
 
     private ImmutableSet<TestGenerator> generateAutoGenerators() {

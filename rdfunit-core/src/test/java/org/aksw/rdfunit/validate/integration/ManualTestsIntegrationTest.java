@@ -26,12 +26,9 @@ public class ManualTestsIntegrationTest {
         RDFUnitStaticValidator.initWrapper(
                 new RDFUnitTestSuiteGenerator.Builder().addLocalResource("custom", emptyResource).build());
 
-        RDFUnit rdfunit = new RDFUnit();
-        try {
-            rdfunit.init();
-        } catch (IllegalArgumentException e) {
-            fail("Cannot read patterns and/or pattern generators");
-        }
+        RDFUnit
+            .createWithAllGenerators()
+            .init();
 
     }
 

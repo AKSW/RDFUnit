@@ -30,8 +30,9 @@ public class TestGeneratorWriterTest {
     @Before
     public void setUp() {
         // Needed to resolve the patterns
-        RDFUnit rdfUnit = new RDFUnit();
-        rdfUnit.init();
+        RDFUnit
+            .createWithAllGenerators()
+            .init();
     }
 
 

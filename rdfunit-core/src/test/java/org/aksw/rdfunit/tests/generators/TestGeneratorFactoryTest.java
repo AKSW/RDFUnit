@@ -35,8 +35,9 @@ public class TestGeneratorFactoryTest {
     private static RDFUnit rdfUnit;
     @Before
     public void setUp() {
-        rdfUnit = new RDFUnit();
-        rdfUnit.init();
+        rdfUnit = RDFUnit
+            .createWithAllGenerators()
+            .init();
     }
 
     @Test

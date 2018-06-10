@@ -76,7 +76,7 @@ public final class ValidateCLI {
             System.exit(1);
         }
 
-        RDFUnit rdfunit = new RDFUnit(configuration.getDataFolder());
+        RDFUnit rdfunit = RDFUnit.createWithOwlAndShacl();
         try {
             rdfunit.init();
         } catch (IllegalArgumentException e) {
