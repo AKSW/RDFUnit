@@ -32,7 +32,7 @@ public final class ConstraintTestCaseFactory {
         targets.stream()
                 .map(target -> TestCaseWithTarget.builder()
                         .target(target)
-                        .filterSpqrql("")
+                        .filterSparql("")
                         .testCase(constraint.getTestCase())
                         .build())
                 .forEach(testCaseBuilder::add);
@@ -61,7 +61,7 @@ public final class ConstraintTestCaseFactory {
                     shapeTargets.forEach(target -> {
                         TestCase tc = TestCaseWithTarget.builder()
                                 .target(target)
-                                .filterSpqrql("")
+                                .filterSparql("")
                                 .testCase(sc.getTestCase())
                                 //.prefixDeclarations(validator.getPrefixDeclarations())
                                 .build();
