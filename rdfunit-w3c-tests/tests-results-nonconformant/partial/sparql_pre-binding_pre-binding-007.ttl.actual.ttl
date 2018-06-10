@@ -20,11 +20,10 @@
 [ a            sh:ValidationReport ;
   sh:conforms  false ;
   sh:result    [ a                             sh:ValidationResult ;
-                 sh:focusNode                  <http://datashapes.org/sh/tests/core/property/property-001.test#InvalidAddress> ;
-                 sh:resultPath                 <http://datashapes.org/sh/tests/core/property/property-001.test#city> ;
+                 sh:focusNode                  <http://datashapes.org/sh/tests/sparql/pre-binding/pre-binding-007.test#InvalidResource> ;
                  sh:resultSeverity             sh:Violation ;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
-                 sh:sourceShape                <http://datashapes.org/sh/tests/core/property/property-001.test#PersonShape-address-city> ;
-                 sh:value                      <http://datashapes.org/sh/tests/core/property/property-001.test#InvalidCity>
+                 sh:sourceConstraint           <http://datashapes.org/sh/tests/sparql/pre-binding/pre-binding-007.test#TestShape-sparql> ;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent ;
+                 sh:sourceShape                <http://datashapes.org/sh/tests/sparql/pre-binding/pre-binding-007.test#TestShape>
                ]
 ] .

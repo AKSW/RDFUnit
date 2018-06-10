@@ -7,7 +7,7 @@
 ex:11 a ex:UniqueLangShape ;
   ex:checkUniqueLang "abc"@en ;
   ex:checkUniqueLang "abc"@de ;
-  ex:checkUniqueLang "abcr"@de ; # error 1
+  ex:checkUniqueLang "abcr"@de ; # error (2 each error counts separate)
   .
 
 

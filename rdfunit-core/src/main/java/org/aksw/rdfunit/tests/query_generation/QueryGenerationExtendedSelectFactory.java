@@ -22,7 +22,7 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
 @Slf4j
 public class QueryGenerationExtendedSelectFactory implements QueryGenerationFactory {
 
-    private static final String SELECT_DISTINCT_RESOURCE = " SELECT DISTINCT ?this ";
+    private static final String SELECT_DISTINCT_RESOURCE = " SELECT ?this ";
 
     private static final String RESOURCE_VAR = "this";
 

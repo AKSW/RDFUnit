@@ -16,7 +16,7 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
-    private static final String SELECT_CLAUSE = " SELECT DISTINCT ?this WHERE ";
+    private static final String SELECT_CLAUSE = " SELECT ?this WHERE ";
 
 
     @Override

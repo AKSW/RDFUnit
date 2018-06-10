@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 public class QueryGenerationSelectFactoryTest {
 
-    private static final String sparqlSelect = " SELECT DISTINCT ?this WHERE ";
+    private static final String sparqlSelect = " SELECT ?this WHERE ";
 
     private static final String goodSparqlQuery = "{ ?this ?p ?o }";
 

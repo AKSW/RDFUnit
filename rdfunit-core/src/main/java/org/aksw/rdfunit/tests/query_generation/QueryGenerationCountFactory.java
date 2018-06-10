@@ -16,9 +16,9 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  */
 public class QueryGenerationCountFactory implements QueryGenerationFactory {
 
-    private static final String SELECT_CLAUSE_SIMPLE = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE ";
+    private static final String SELECT_CLAUSE_SIMPLE = " SELECT (count( ?this ) AS ?total ) WHERE ";
 
-    private static final String SELECT_CLAUSE_GROUP_START = " SELECT (count(DISTINCT ?this ) AS ?total ) WHERE {" +
+    private static final String SELECT_CLAUSE_GROUP_START = " SELECT (count( ?this ) AS ?total ) WHERE {" +
                                                    " SELECT ?this WHERE ";
     private static final String SELECT_CLAUSE_GROUP_END = "}";
 

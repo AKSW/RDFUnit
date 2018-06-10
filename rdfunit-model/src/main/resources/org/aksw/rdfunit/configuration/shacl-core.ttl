@@ -35,7 +35,7 @@ sh:ClassConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "value not of type {$class}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT ?this ?value
     		WHERE {
                 ?this $PATH ?value .
                 FILTER NOT EXISTS {
@@ -47,7 +47,7 @@ sh:ClassConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "value not of type {$class}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
     		WHERE {
                 BIND (?this AS ?value) .
                 FILTER NOT EXISTS {
@@ -373,7 +373,7 @@ sh:UniqueLangConstraintComponent
         sh:message "{$PATH} should have one value per language";
         shr:filter """ASK { FILTER (sameTerm($uniqueLang, "true"^^<http://www.w3.org/2001/XMLSchema#boolean>))}""" ;
         sh:select """
-            SELECT DISTINCT ?this
+            SELECT  ?this
             WHERE {
                 ?this $PATH ?value .
                 BIND (lang(?value) AS ?lang) .
@@ -398,7 +398,7 @@ sh:LanguageInConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "language in {$PATH} not in: ({$languageIn})";
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT  ?this ?value
             WHERE {
                 ?this $PATH ?value .
                 BIND (lang(?value) AS ?lang) .
@@ -409,7 +409,7 @@ sh:LanguageInConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "language not in: ({$languageIn})";
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT  ?this ?value
             WHERE {
                 BIND (?this AS ?value) .
                 BIND (lang(?value) AS ?lang) .
@@ -433,7 +433,7 @@ sh:EqualsConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "{$PATH} should be equal to {$equals}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
             WHERE {
                 $this $equals ?value .
                 FILTER NOT EXISTS {
@@ -445,7 +445,7 @@ sh:EqualsConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "{$PATH} should be equal to {$equals}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
             WHERE {
                 $this $PATH ?value .
                 FILTER NOT EXISTS {
@@ -458,7 +458,7 @@ sh:EqualsConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "node should be equal to {$equals}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
             WHERE {
                 BIND (?this AS ?value2) .
                 ?this $equals ?value .
@@ -469,7 +469,7 @@ sh:EqualsConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "node should be equal to {$equals}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
             WHERE {
                 BIND (?this AS ?value) .
                 FILTER NOT EXISTS {
@@ -489,7 +489,7 @@ sh:DisjointConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "{$PATH} should not be equal to {$disjoint}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
             WHERE {
                 ?this $PATH ?value .
                 ?this $disjoint ?value .
@@ -499,7 +499,7 @@ sh:DisjointConstraintComponent
     	a sh:SPARQLSelectValidator ;
     	sh:message "node should not be equal to {$disjoint}";
     	sh:select """
-    		SELECT DISTINCT ?this ?value
+    		SELECT  ?this ?value
             WHERE {
                 BIND (?this AS ?value) .
                 ?this $disjoint ?value .
@@ -586,7 +586,7 @@ sh:HasValueConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "should have value: {$hasValue}";
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT  ?this ?value
             WHERE {
                 FILTER NOT EXISTS { ?this $PATH $hasValue . }
             }""" ;
@@ -595,7 +595,7 @@ sh:HasValueConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "should have value {$hasValue}";
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT  ?this ?value
             WHERE {
                 BIND (?this AS ?value) .
                 FILTER NOT EXISTS { FILTER(?value = $hasValue) . }
@@ -616,7 +616,7 @@ sh:InConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "{$PATH} should have values from: ({$in})";
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT  ?this ?value
             WHERE {
                 ?this $PATH ?value .
                 FILTER ( ?value NOT IN ( $in )  )
@@ -626,7 +626,7 @@ sh:InConstraintComponent
         a sh:SPARQLSelectValidator ;
         sh:message "node should be one of: ({$in})";
         sh:select """
-            SELECT DISTINCT ?this ?value
+            SELECT  ?this ?value
             WHERE {
                 BIND (?this AS ?value) .
                 FILTER ( ?value NOT IN ( $in )  )
@@ -659,7 +659,7 @@ sh:ClosedConstraintComponent
         shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') != '' && str('$allowedProperties') != '' )}""" ;
         sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
         sh:select """
-            SELECT DISTINCT ?this ?path ?value
+            SELECT  ?this ?path ?value
             WHERE {
                 ?this ?path ?value.
                 FILTER ( ?path NOT IN ( $ignoredProperties , $allowedProperties ) )
@@ -670,7 +670,7 @@ sh:ClosedConstraintComponent
         shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') = '' && str('$allowedProperties') != '' )}""" ;
         sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
         sh:select """
-            SELECT DISTINCT ?this ?path ?value
+            SELECT  ?this ?path ?value
             WHERE {
                 ?this ?path ?value.
                 FILTER ( ?path NOT IN ( $allowedProperties ) )
@@ -681,7 +681,7 @@ sh:ClosedConstraintComponent
         shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') != '' && str('$allowedProperties') = '' )}""" ;
         sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
         sh:select """
-            SELECT DISTINCT ?this ?path ?value
+            SELECT  ?this ?path ?value
             WHERE {
                 ?this ?path ?value.
                 FILTER ( ?path NOT IN ( $ignoredProperties ) )
@@ -692,7 +692,7 @@ sh:ClosedConstraintComponent
         shr:filter """ASK { FILTER ($closed = true && str('$ignoredProperties') = '' && str('$allowedProperties') = '' )}""" ;
         sh:message "shape is closed and allows only the following properties: {$allowedProperties} or {$ignoredProperties}";
         sh:select """
-            SELECT DISTINCT ?this ?path ?value
+            SELECT  ?this ?path ?value
             WHERE {
                 FILTER EXISTS {
                     ?this ?path ?value.
