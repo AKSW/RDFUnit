@@ -94,7 +94,7 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     private static String classTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode rdf:type/rdfs:subClassOf* " + formatNode(target.getNode()) + " ; " +
+        return " ?focusNode <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>/<http://www.w3.org/2000/01/rdf-schema#subClassOf>* " + formatNode(target.getNode()) + " ; " +
                 writePropertyChain(target.pathChain) + "  ?this . ";
     }
 

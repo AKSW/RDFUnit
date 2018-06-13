@@ -60,7 +60,7 @@ public class ShapeTargetCore implements ShapeTarget {
     }
 
     private static String classTargetPattern(RDFNode node) {
-        return getBindedSparql(" ?this rdf:type/rdfs:subClassOf* ?target . ", node);
+        return getBindedSparql(" ?this <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>/<http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?target . ", node);
     }
 
     private static String nodeTargetPattern(RDFNode node) {
