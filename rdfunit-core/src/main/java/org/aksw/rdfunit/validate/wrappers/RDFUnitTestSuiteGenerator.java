@@ -38,6 +38,7 @@ public final class RDFUnitTestSuiteGenerator {
 
     private final boolean enableAutoTests;
     private final boolean enableManualTests;
+    private final boolean enableLoadFromCache = false;
 
 
     private RDFUnitTestSuiteGenerator(Collection<SchemaSource> schemas, boolean enableAutoTests, boolean enableManualTests) {
@@ -58,7 +59,7 @@ public final class RDFUnitTestSuiteGenerator {
 
         TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
                 enableAutoTests,
-                false,
+                enableLoadFromCache, // set to false
                 enableManualTests);
         return  testGeneratorExecutor.generateTestSuite("", dummyTestSource, getRdfUnit().getAutoGenerators());
     }
