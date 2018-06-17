@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Value;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.ARQException;
@@ -24,10 +25,11 @@ public class QueryPrebinding {
 
     public String applyBindings(Map<ComponentParameter, RDFNode> bindings) {
 
-        String bindedQuery = sparqlQuery;
-        if (shape.isPropertyShape()) {
-            bindedQuery = bindedQuery.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-        }
+        String bindedQuery = shape.getPath()
+                .map(ShapePath::asSparqlPropertyPath)
+                .map(propertyPath -> sparqlQuery.replaceAll(Pattern.quote("$PATH"), Matcher.quoteReplacement(propertyPath)))
+                .orElse(sparqlQuery);
+
         ParameterizedSparqlString query = new ParameterizedSparqlString(bindedQuery);
 
         try {
@@ -69,4 +71,6 @@ public class QueryPrebinding {
             }
         });
     }
+
+
 }

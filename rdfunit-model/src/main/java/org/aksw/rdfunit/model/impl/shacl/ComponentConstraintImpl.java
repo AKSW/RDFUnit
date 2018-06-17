@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
@@ -10,21 +11,21 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.helper.MessagePrebinding;
 import org.aksw.rdfunit.model.helper.QueryPrebinding;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
-import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Builder
 @Value
@@ -33,6 +34,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
     @Getter @NonNull private final Component component;
     @NonNull private final ComponentValidator validator;
     @Getter @NonNull @Singular private final ImmutableMap<ComponentParameter, RDFNode> bindings;
+    @Getter(lazy = true) @NonNull private final String sparqlWhere = generateSparqlWhere(validator.getSparqlQuery());
 
     @Override
     public Literal getMessage() {
@@ -51,56 +53,21 @@ public class ComponentConstraintImpl implements ComponentConstraint {
     public TestCase getTestCase() {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
-        String sparql;
-        sparql = generateSparqlWhere(validator.getSparqlQuery());
-
 
         return testBuilder
                 .element(createTestCaseResource())
                 .sparqlPrevalence("")
-                .sparqlWhere(sparql)
+                .sparqlWhere(getSparqlWhere())
                 .prefixDeclarations(validator.getPrefixDeclarations())
                 .testCaseAnnotation(generateTestAnnotations())
                 .build();
     }
+
     private String generateSparqlWhere(String sparqlString) {
 
         if (validator.getType().equals(ComponentValidatorType.ASK_VALIDATOR)) {
 
-            String valuePath;
-            if (shape.getPath().isPresent()) {
-                valuePath = " ?this " + shape.getPath().get().asSparqlPropertyPath() + " ?value . ";
-            } else {
-                valuePath = " BIND ($this AS ?value) . ";
-            }
-
-
-            // First check if filter is simple and extract it
-            // the we use simple filter not exists
-            Pattern p = Pattern.compile("(?i)ASK\\s*\\{\\s*FILTER\\s*\\(([\\s\\S]*)\\)[\\s\\.]*\\}");
-            Matcher matcher = p.matcher(sparqlString.trim());
-
-            if ( matcher.find()) {
-                String filter = matcher.group(1);
-
-                String adjustedSparql =
-                        "ASK { " + valuePath + " \n" +
-                            //"FILTER EXISTS {\n" +
-                                "BIND ( (" + filter +") AS ?tmp123456)\n" +
-                                "FILTER ( !?tmp123456 || !bound(?tmp123456) )\n" +
-                            //"}" +
-                        "}";
-                return replaceBindings(adjustedSparql);
-            } else {
-                // otherwise we use MINUS
-
-                String sparqlWhere = sparqlString.trim()
-                        .replaceFirst("\\{", "")
-                        .replaceFirst("ASK", Matcher.quoteReplacement("ASK  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
-                        + "}";
-
-               return replaceBindings(sparqlWhere);
-            }
+            return generateSparqlWhereFromAskValidator(sparqlString);
         } else {
             String  sparqlWhere = sparqlString
                     .substring(sparqlString.indexOf('{'));
@@ -109,12 +76,55 @@ public class ComponentConstraintImpl implements ComponentConstraint {
         }
     }
 
+    // match simple ASK / FILTER validators -> we extract the inner filter function
+    private static final Pattern patternForExtractingFilterFromSimpleAskValidator = Pattern.compile("(?i)ASK\\s*\\{\\s*FILTER\\s*\\(([\\s\\S]*)\\)[\\s\\.]*\\}");
+
+    private String generateSparqlWhereFromAskValidator(String sparqlString) {
+        final String valuePath = shape.getPath()
+            .map(ShapePath::asSparqlPropertyPath)
+            .map(propertyPath -> " $this " + propertyPath + " $value . ")
+            .orElse(" BIND ($this AS $value) . ");
+
+
+        // First check if filter is simple and extract it
+        // the we use simple filter not exists
+        Matcher filterMatcher = patternForExtractingFilterFromSimpleAskValidator.matcher(sparqlString.trim());
+
+        if ( filterMatcher.find()) {
+            String extractedFilter = filterMatcher.group(1);
+            return constructAskQueryBasedOnExtractedFilter(valuePath, extractedFilter);
+        } else {
+            return constructAskSparqlBasedOnOriginalWithMinus(sparqlString, valuePath);
+        }
+    }
+
+    private String constructAskSparqlBasedOnOriginalWithMinus(String sparqlString, String valuePath) {
+        String sparqlWhere = sparqlString.trim()
+                .replaceFirst("\\{", "")
+                .replaceFirst("ASK", Matcher.quoteReplacement("ASK  {\n " + valuePath + "\n MINUS {\n " + valuePath + " "))
+                + "}";
+
+        return replaceBindings(sparqlWhere);
+    }
+
+    private String constructAskQueryBasedOnExtractedFilter(String valuePath, String filter) {
+        String adjustedSparql =
+                "ASK { " + valuePath + " \n" +
+                    //"FILTER EXISTS {\n" +
+                        "BIND ( (" + filter +") AS ?tmp123456)\n" +
+                        "FILTER ( !?tmp123456 || !bound(?tmp123456) )\n" +
+                    //"}" +
+                "}";
+        return replaceBindings(adjustedSparql);
+    }
+
     private String replaceBindings(String sparqlSnippet) {
         return new QueryPrebinding(sparqlSnippet, shape).applyBindings(bindings);
     }
 
     // hack for now
     private TestCaseAnnotation generateTestAnnotations() {
+
         return new TestCaseAnnotation(
                 createTestCaseResource(),
                 TestGenerationType.AutoGenerated,
@@ -129,28 +139,31 @@ public class ComponentConstraintImpl implements ComponentConstraint {
     }
 
     private Set<ResultAnnotation> createResultAnnotations() {
-        ImmutableSet.Builder<ResultAnnotation> annotations = ImmutableSet.builder();
-        // add property
-        getPathAnnotation().ifPresent(annotations::add);
-        getValueAnnotation().ifPresent(annotations::add);
+        String prefixes = validator.getPrefixDeclarations().stream()
+                .map(p -> "PREFIX " + p.getPrefix() + ": <" + p.getNamespace() + ">")
+                .collect(Collectors.joining("\n"));
 
+        String originalSelectClause = validator.getSparqlQuery().substring(0,validator.getSparqlQuery().indexOf('{'));
+        String constructedQuery = prefixes + "\n" + originalSelectClause + getSparqlWhere()
 
-        if (shape.getMessage().isPresent()) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
-                    .setValue(getMessage()).build());
+                .replaceFirst("(?i)\\s*ASK\\s*\\{", "SELECT \\?this WHERE \\{");
+
+        try {
+            Query query = QueryFactory.create(constructedQuery);
+
+            return ResultAnnotationParser.builder()
+                    .query(query)
+                    .validator(validator)
+                    .component(component)
+                    .shape(shape)
+                    .canBindValueVariable(componentCanBindValueAnnotation())
+                    .build()
+                    .getResultAnnotations();
+        } catch (Exception e) {
+
+            throw new IllegalArgumentException(constructedQuery, e);
         }
 
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
-                .setVariableName("this").build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultSeverity)
-                .setValue(shape.getSeverity()).build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)
-                    .setValue(shape.getElement()).build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraintComponent)
-                .setValue(component.getElement()).build());
-
-
-        return annotations.build();
     }
 
     private Resource createTestCaseResource() {
@@ -158,36 +171,12 @@ public class ComponentConstraintImpl implements ComponentConstraint {
         return ResourceFactory.createProperty(JenaUtils.getUniqueIri());
     }
 
-    private Optional<ResultAnnotation> getPathAnnotation() {
-        ResultAnnotation ra= null;
-        if (shape.getPath().isPresent()) {
-            ra = new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                    .setValue(shape.getPath().get().getPathAsRdf()).build();
-        } else {
-            if (validator.getSparqlQuery().contains("$path") || validator.getSparqlQuery().contains("?path")) {
-                ra = new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                        .setVariableName("path").build();
-            }
+    private static final List<Property> nonValueArgs = ImmutableList.of(SHACL.minCount, SHACL.maxCount, SHACL.uniqueLang);
+    private boolean componentCanBindValueAnnotation() {
 
-        }
-        return Optional.ofNullable(ra);
-    }
-
-    private Optional<ResultAnnotation> getValueAnnotation() {
-        ResultAnnotation ra= null;
-
-        List<Property> nonValueArgs = Arrays.asList(SHACL.minCount, SHACL.maxCount, SHACL.uniqueLang);
-        boolean canValueBind = getBindings().keySet().stream()
+        return  getBindings().keySet().stream()
                 .map(ComponentParameter::getPredicate)
                 .noneMatch(nonValueArgs::contains);
-                //.collect(Collectors.toList());
 
-        if (canValueBind && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") )
-                ||shape.isNodeShape()) {
-            ra = new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
-                    .setVariableName("value").build();
-        }
-
-        return Optional.ofNullable(ra);
     }
 }

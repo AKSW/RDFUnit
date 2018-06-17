@@ -12,21 +12,21 @@ import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.helper.MessagePrebinding;
 import org.aksw.rdfunit.model.helper.QueryPrebinding;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
-import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.aksw.rdfunit.model.interfaces.shacl.SparqlConstraint;
 import org.aksw.rdfunit.model.interfaces.shacl.Validator;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,13 +37,15 @@ public class SparqlConstraintImpl implements SparqlConstraint {
     @Getter @NonNull private final Literal message;
     @Getter @NonNull private final Resource severity;
     @NonNull private final Validator validator;
+    @Getter(lazy = true) @NonNull private final String sparqlWhere = generateSparqlWhere(validator.getSparqlQuery());
+
 
     @Override
     public TestCase getTestCase() {
 
         ManualTestCaseImpl.ManualTestCaseImplBuilder testBuilder = ManualTestCaseImpl.builder();
         String sparql;
-        sparql = generateSparqlWhere(validator.getSparqlQuery());
+        sparql = getSparqlWhere();
 
 
         return testBuilder
@@ -57,9 +59,16 @@ public class SparqlConstraintImpl implements SparqlConstraint {
 
     private String generateSparqlWhere(String sparqlString) {
 
+        final String valuePath = shape.getPath()
+                .map(ShapePath::asSparqlPropertyPath)
+                .map(propertyPath -> " $this " + propertyPath + " $value . ")
+                //.orElse(" BIND ($this AS $value) . ");
+                .orElse("");
+
+
         String  sparqlWhere = sparqlString
-                .substring(sparqlString.indexOf('{'));
-        return replaceBindings(sparqlWhere);
+                .substring(sparqlString.indexOf('{') + 1);
+        return replaceBindings("{" + valuePath + sparqlWhere);
     }
 
     private String replaceBindings(String sparqlSnippet) {
@@ -100,54 +109,32 @@ public class SparqlConstraintImpl implements SparqlConstraint {
     }
 
     private Set<ResultAnnotation> createResultAnnotations(String originalSelectQuery) {
-        ImmutableSet.Builder<ResultAnnotation> annotations = ImmutableSet.builder();
-
         String prefixes = validator.getPrefixDeclarations().stream()
                 .map(p -> "PREFIX " + p.getPrefix() + ": <" + p.getNamespace() + ">")
                 .collect(Collectors.joining("\n"));
-        List<String> variableNames = QueryFactory.create(prefixes + originalSelectQuery).getResultVars();
 
-        // add path
-        if (variableNames.contains("path")) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                    .setVariableName("path").build());
-        } else {
-            if (shape.getPath().isPresent()) {
-                annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultPath)
-                        .setValue(shape.getPath().get().getPathAsRdf()).build());
-            }
+        String originalSelectClause = validator.getSparqlQuery().substring(0,validator.getSparqlQuery().indexOf('{'));
+        String constructedQuery = prefixes + "\n" + originalSelectClause + getSparqlWhere()
+
+                .replaceFirst("(?i)\\s*ASK\\s*\\{", "SELECT \\?this WHERE \\{");
+
+        try {
+            Query query = QueryFactory.create(constructedQuery);
+
+            return ResultAnnotationParser.builder()
+                    .query(query)
+                    .shape(shape)
+                    .validator(validator)
+                    .canBindValueVariable(true)
+                    .build()
+                    .getResultAnnotations();
+        } catch (Exception e) {
+
+            throw new IllegalArgumentException(constructedQuery, e);
         }
 
-        if (variableNames.contains("message")) {
-            annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
-                    .setVariableName("message").build());
-        } else {
-            if (validator.getDefaultMessage().isPresent()) {
-                annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
-                        .setValue(validator.getDefaultMessage().get()).build());
-            } else {
-                if (shape.getMessage().isPresent()) {
-                    annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultMessage)
-                            .setValue(shape.getMessage().get()).build());
-                }
-            }
-        }
 
-        //annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
-        //        .setVariableName("this").build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.value)
-                .setVariableName("value").build());
 
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.resultSeverity)
-                .setValue(shape.getSeverity()).build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceShape)
-                    .setValue(shape.getElement()).build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraintComponent)
-                .setValue(SHACL.SPARQLConstraintComponent).build());
-        annotations.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.sourceConstraint)
-                .setValue(validator.getElement()).build());
-
-        return annotations.build();
     }
 
     private Resource createTestCaseResource() {
