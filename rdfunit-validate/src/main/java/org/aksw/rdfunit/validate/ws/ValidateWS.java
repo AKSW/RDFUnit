@@ -73,6 +73,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
             throw new TestCaseExecutionException(null, "Cannot initialize test executor. Exiting");
         }
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
+        testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
         // warning, caches intermediate results
