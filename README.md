@@ -47,7 +47,7 @@ What RDFUnit will do is:
 1. Run our [Test Generators](https://github.com/AKSW/RDFUnit/wiki/Patterns-Generators) on the schemas and generate RDFUnit Test cases
 1. Run the RDFUnit test cases on the dataset
 1. You get a results report in html (by default) but you can request it in [RDF](http://rdfunit.aksw.org/ns/core#) or even multiple serializations with e.g.  `-o html,turtle,jsonld`
-  * The results are by default aggregated with counts, you can request different levels of result details using `-r {status|aggregated|shacl|shacllite}`. See [here](https://github.com/AKSW/RDFUnit/wiki/Results) for more details.
+  * The results are by default aggregated with counts, you can request different levels of result details using `-r {status|aggregate|shacl|shacllite}`. See [here](https://github.com/AKSW/RDFUnit/wiki/Results) for more details.
 
 You can also run:
 ```console
