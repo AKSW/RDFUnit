@@ -212,6 +212,7 @@ public final class ValidateUtils {
                 case "status":
                     resultLevel = TestCaseExecutionType.statusTestCaseResult;
                     break;
+                case "aggregated":    
                 case "aggregate":
                     resultLevel = TestCaseExecutionType.aggregatedTestCaseResult;
                     break;
