@@ -9,7 +9,7 @@
 
     <artifactId>rdfunit-validate</artifactId>
     <name>RDFUnit - Validate</name>
-    <!-- packaging>war</packaging -->
+    <packaging>war</packaging>
 
     <dependencies>
 
@@ -201,7 +201,8 @@
 
             <build>
                 <plugins>
-                    <plugin>
+
+						<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-shade-plugin</artifactId>
                         <executions>
