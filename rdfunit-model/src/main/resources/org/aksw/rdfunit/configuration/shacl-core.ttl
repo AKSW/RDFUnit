@@ -375,13 +375,15 @@ sh:UniqueLangConstraintComponent
         sh:select """
             SELECT  ?this
             WHERE {
-                ?this $PATH ?value .
-                BIND (lang(?value) AS ?lang) .
-                FILTER (bound(?lang) && ?lang != "") .
-                FILTER EXISTS {
-                    ?this $PATH ?otherValue .
-                    FILTER (?otherValue != ?value && lang(?value) = lang(?otherValue))
-                }
+                {SELECT DISTINCT ?this (?lang AS ?value) WHERE {
+                    ?this $PATH ?object .
+                    BIND (lang(?object) AS ?lang) .
+                    FILTER (bound(?lang) && ?lang != "") .
+                    FILTER EXISTS {
+                        ?this $PATH ?otherObject .
+                        FILTER (?otherObject != ?object && lang(?object) = lang(?otherObject))
+                    }
+                }}
             }""" ;
     ] ;
     .
