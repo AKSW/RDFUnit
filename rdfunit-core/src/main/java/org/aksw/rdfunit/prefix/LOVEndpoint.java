@@ -6,6 +6,7 @@ import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.query.QueryExecution;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
 @Slf4j
 public final class LOVEndpoint {
 
-    private static final String LOV_ENDPOINT_URI = "http://lov.okfn.org/dataset/lov/sparql";
-    private static final String LOV_GRAPH = "http://lov.okfn.org/dataset/lov";
+    private static final String LOV_ENDPOINT_URI = "https://lov.linkeddata.es/dataset/lov/sparql";
+    private static final String LOV_GRAPH = "https://lov.linkeddata.es/dataset/lov";
     private static final String LOV_SPARQL_QUERY =
             "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>\n" +
             "PREFIX vann:<http://purl.org/vocab/vann/>\n" +
@@ -78,7 +79,7 @@ public final class LOVEndpoint {
 
 
         try (Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(filename), "UTF-8")) ){
+                new FileOutputStream(filename), StandardCharsets.UTF_8)) ){
 
             out.write(header);
             out.write("\n");
