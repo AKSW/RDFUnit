@@ -113,6 +113,10 @@ rutg:RDFSRANGEL a rut:TestGenerator ;
                                     ?P1 schema:rangeIncludes ?D1 .
                                     ?D1 rdf:type|rdfs:subClassOf+ schema:DataType .
                                     FILTER ( ?D1 NOT IN ( schema:Text, schema:URL ))
+                                    FILTER NOT EXISTS {
+                                        ?P1 schema:rangeIncludes ?D2 .
+                                        FILTER (?D1 != ?D2)
+                                    }
                                 }    }
                                 FILTER ( ?D1 NOT IN ( <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url> ))
                                 FILTER (!isBlank(?P1))
@@ -200,6 +204,10 @@ rutg:RDFSRANGENL a rut:TestGenerator ;
                                 } UNION {
                                     ?P1 schema:rangeIncludes ?D1 .
                                     FILTER NOT EXISTS {?D1 rdf:type|rdfs:subClassOf+ schema:DataType .}
+                                    FILTER NOT EXISTS {
+                                        ?P1 schema:rangeIncludes ?D2 .
+                                        FILTER (?D1 != ?D2)
+                                    }
                                 }    }
                                 BIND (concat(str(?P1),' contains a literal value') AS ?DESCRIPTION)} """ ;
     rut:basedOnPattern rutp:OBJFUNC ;
