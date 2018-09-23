@@ -20,6 +20,7 @@ public class CommonAccessUtils {
 
                 try {
                     rdfUnit = RDFUnit.createWithOwlAndShacl();
+                    rdfUnit.init();
 
                 } catch (IllegalArgumentException e) {
                     // show error
