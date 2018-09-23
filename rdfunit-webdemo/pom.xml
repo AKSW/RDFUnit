@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.10-SNAPSHOT</version>
+        <version>0.8.16-SNAPSHOT</version>
     </parent>
     <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
@@ -46,6 +46,10 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-model</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
