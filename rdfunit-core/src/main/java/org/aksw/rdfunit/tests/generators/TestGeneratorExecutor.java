@@ -57,7 +57,7 @@ public class TestGeneratorExecutor {
     public TestSuite generateTestSuite(String testFolder, TestSource dataset, Collection<TestGenerator> autoGenerators) {
 
 
-        RdfUnitTestGenerator testGenerator = TestGeneratorFactory.create(autoGenerators, testFolder, useAutoTests, loadFromCache, useManualTests);
+        RdfUnitTestGenerator testGenerator = TestGeneratorFactory.create(autoGenerators, testFolder, useAutoTests, loadFromCache, useManualTests, progressMonitors);
         Collection<SchemaSource> sources = dataset.getReferencesSchemata();
 
 
@@ -65,6 +65,7 @@ public class TestGeneratorExecutor {
         for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
             monitor.generationStarted(dataset, sources.size());
         }
+
 
         Collection<TestCase> allTests = new ArrayList<>();
         for (SchemaSource s : sources) {

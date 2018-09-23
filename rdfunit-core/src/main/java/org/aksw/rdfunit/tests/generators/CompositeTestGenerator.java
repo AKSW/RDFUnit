@@ -6,6 +6,7 @@ import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -19,8 +20,8 @@ public class CompositeTestGenerator implements RdfUnitTestGenerator{
 
     private final ImmutableList<RdfUnitTestGenerator> generators;
 
-    public CompositeTestGenerator(ImmutableList<RdfUnitTestGenerator> generators) {
-        this.generators = generators;
+    public CompositeTestGenerator(List<RdfUnitTestGenerator> generators) {
+        this.generators = ImmutableList.copyOf(generators);
     }
 
     @Override

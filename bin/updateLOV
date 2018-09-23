@@ -1,0 +1,6 @@
+#!/bin/bash
+
+MAIN_CLS="org.aksw.rdfunit.prefix.LOVEndpoint"
+
+
+mvn clean install -pl rdfunit-core exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*" -DskipTests=true

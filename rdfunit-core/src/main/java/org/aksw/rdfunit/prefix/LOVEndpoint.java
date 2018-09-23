@@ -73,8 +73,8 @@ public final class LOVEndpoint {
         List<SchemaEntry> lovEntries = getAllLOVEntries();
         Collections.sort(lovEntries);
         String header =
-                "#This file is auto-generated from the (amazing) LOV service" +
-                "# if you don't want to load this use the available CLI / code options " +
+                "#This file is auto-generated from the (amazing) LOV service\n" +
+                "# if you don't want to load this use the available CLI / code options \n" +
                 "# To override some of it's entries use the schemaDecl.csv";
 
 
@@ -97,6 +97,12 @@ public final class LOVEndpoint {
         } catch (IOException e) {
             log.info("Cannot write to file", e);
         }
+
+    }
+
+    public static void main(String[] args) {
+        LOVEndpoint lov = new LOVEndpoint();
+        lov.writeAllLOVEntriesToFile("rdfunit-model/src/main/resources/org/aksw/rdfunit/configuration/schemaLOV.csv");
 
     }
 }

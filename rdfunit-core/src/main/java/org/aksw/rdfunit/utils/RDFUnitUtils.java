@@ -1,39 +1,49 @@
 package org.aksw.rdfunit.utils;
 
+import com.google.common.io.Resources;
 import lombok.extern.slf4j.Slf4j;
-import org.aksw.rdfunit.prefix.LOVEndpoint;
-import org.aksw.rdfunit.prefix.SchemaEntry;
 import org.aksw.rdfunit.sources.SchemaService;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
-/**
- * @author Dimitris Kontokostas
- * @since 9/24/13 11:25 AM
- */
 @Slf4j
 public final class RDFUnitUtils {
 
     private RDFUnitUtils() {
     }
 
-    public static void fillSchemaServiceFromFile(String additionalCSV) {
+    public static void fillSchemaServiceFromFile(String additionalCSV) throws IOException {
 
         try (InputStream inputStream = new FileInputStream(additionalCSV)) {
             fillSchemaServiceFromFile(inputStream);
         } catch (IOException e) {
-            log.error("File " + additionalCSV + " not fount!", e);
+            log.error("Error loading schemas from " + additionalCSV + "!", e);
+            throw e;
         }
     }
 
-    public static void fillSchemaServiceFromFile(InputStream additionalCSV) {
+    private static void fillSchemaServiceFromResource(String additionalCSVAsResource) throws IOException {
+
+        URL resourceUrl = Resources.getResource(additionalCSVAsResource);
+        try (
+            InputStream inputStream = resourceUrl.openStream()) {
+            fillSchemaServiceFromFile(inputStream);
+        } catch (IOException e) {
+            log.error("Error loading schemas from " + additionalCSVAsResource + "!", e);
+            throw e;
+        }
+    }
+
+    private static void fillSchemaServiceFromFile(InputStream additionalCSV) throws IOException {
 
         int count = 0;
 
         if (additionalCSV != null) {
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(additionalCSV, "UTF-8"))) {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(additionalCSV, StandardCharsets.UTF_8))) {
 
                 String line;
 
@@ -60,9 +70,6 @@ public final class RDFUnitUtils {
                     }
                 }
 
-            } catch (IOException e) {
-                log.debug("IOException reading schemas", e);
-                return;
             }
 
             log.info("Loaded " + count + " schema declarations from: " + additionalCSV);
@@ -77,16 +84,16 @@ public final class RDFUnitUtils {
         }
     }
 
-    public static void fillSchemaServiceFromLOV() {
 
-        int count = SchemaService.getSize();
-        for (SchemaEntry entry : new LOVEndpoint().getAllLOVEntries()) {
-            SchemaService.addSchemaDecl(entry.getPrefix(), entry.getVocabularyNamespace(), entry.getVocabularyDefinedBy());
-        }
+    public static void fillSchemaServiceFromSchemaDecl() throws IOException {
+        log.info("Adding manual schema entries (or overriding LOV)!");
+        RDFUnitUtils.fillSchemaServiceFromResource("org/aksw/rdfunit/configuration/schemaDecl.csv");
+    }
 
-        count = SchemaService.getSize() - count;
+    public static void fillSchemaServiceFromLOV() throws IOException {
 
-        log.info("Loaded " + count + " additional schema declarations from LOV SPARQL Endpoint");
+        log.info("Loading cached schema entries from LOV!");
+        RDFUnitUtils.fillSchemaServiceFromResource("org/aksw/rdfunit/configuration/schemaLOV.csv");
     }
 
 
