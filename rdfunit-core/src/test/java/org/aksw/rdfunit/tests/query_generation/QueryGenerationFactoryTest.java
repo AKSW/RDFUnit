@@ -47,5 +47,8 @@ public final class QueryGenerationFactoryTest {
 
         assertThat(queryGenerationSelectFactory.getSparqlQuery(testCaseWithBasicSparqlQuery))
                 .isEqualTo(queryGenerationCacheFactory.getSparqlQuery(testCaseWithBasicSparqlQuery));
+
+        assertThat(queryGenerationSelectFactory.getSparqlQueryAsString(testCaseWithBasicSparqlQuery))
+                .isEqualTo(queryGenerationCacheFactory.getSparqlQueryAsString(testCaseWithBasicSparqlQuery));
     }
 }
