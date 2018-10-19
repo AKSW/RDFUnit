@@ -15,8 +15,8 @@ import org.apache.jena.rdf.model.Resource;
 
  */
 @Builder
+@ToString(exclude = "element")
 @EqualsAndHashCode(exclude = "element")
-@ToString
 public class ManualTestCaseImpl implements TestCase {
     @Getter @NonNull private final Resource element;
     @Getter @NonNull private final TestCaseAnnotation testCaseAnnotation;

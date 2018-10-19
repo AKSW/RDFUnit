@@ -1,10 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.graph.Node;
@@ -23,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Builder
 @Value
+@EqualsAndHashCode(exclude = "element")
 public class ShapePathImpl implements ShapePath {
 
     @Getter @NonNull private final Resource element;

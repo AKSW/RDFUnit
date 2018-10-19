@@ -1,9 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapePath;
@@ -20,6 +17,7 @@ import java.util.Optional;
  */
 @Builder
 @Value
+@EqualsAndHashCode(exclude = "element")
 public class ShapeImpl implements Shape {
 
     @Getter @NonNull private final Resource element;

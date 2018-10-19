@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 @Builder
 @Value
+@EqualsAndHashCode (exclude = "sparqlWhere")
 public class ComponentConstraintImpl implements ComponentConstraint {
     @Getter @NonNull private final Shape shape;
     @Getter @NonNull private final Component component;

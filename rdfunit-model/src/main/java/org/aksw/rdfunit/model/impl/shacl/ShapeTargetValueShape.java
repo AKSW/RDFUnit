@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
 
 @ToString(exclude = "generatePattern")
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "generatePattern")
 public class ShapeTargetValueShape implements ShapeTarget {
 
     @Getter private final ShapeTargetType targetType = ShapeTargetType.ValueShapeTarget;

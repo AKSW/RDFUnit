@@ -22,7 +22,7 @@
         <module>rdfunit-model</module>
         <module>rdfunit-io</module>
         <module>rdfunit-w3c-dqv</module>
-        <module>rdfunit-shacl-ws</module>
+        <!--module>rdfunit-shacl-ws</module--> <!-- removed from aggregation, kept as inheritance -->
         <!--module>rdfunit-w3c-tests</module--> <!-- removed from aggregation, kept as inheritance -->
     </modules>
 
@@ -193,7 +193,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.22</version>
+                <version>1.18.2</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -380,7 +380,7 @@
                 <plugin>
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>
-                    <version>1.16.22.0</version>
+                    <version>1.18.2.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-shade-plugin</artifactId>

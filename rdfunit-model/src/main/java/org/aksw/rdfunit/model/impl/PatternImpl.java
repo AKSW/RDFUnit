@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
  */
 @ToString (exclude = {"sparqlWherePattern", "sparqlPatternPrevalence"})
-@EqualsAndHashCode
+@EqualsAndHashCode (exclude = "element")
 public final class PatternImpl implements Pattern {
     private final Resource element;
     private final String id;

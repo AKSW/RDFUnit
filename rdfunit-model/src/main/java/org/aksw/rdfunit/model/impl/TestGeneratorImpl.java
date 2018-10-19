@@ -27,9 +27,10 @@ import static com.google.common.base.Preconditions.checkState;
  * @author Dimitris Kontokostas
  * @since 9/20/13 2:48 PM
  */
-@ToString
-@EqualsAndHashCode
+
 @Slf4j
+@ToString
+@EqualsAndHashCode(exclude = "element")
 public final class TestGeneratorImpl implements TestGenerator {
 
     @Getter private final Resource element;

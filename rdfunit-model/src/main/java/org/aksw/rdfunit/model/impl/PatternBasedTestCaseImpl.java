@@ -17,7 +17,7 @@ import java.util.Collections;
  * @since 1/3/14 3:49 PM
  */
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "element")
 public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase {
 
     @Getter @NonNull private final Pattern pattern;
@@ -26,8 +26,8 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
     @Getter @NonNull private final Resource element;
     @Getter @NonNull private final TestCaseAnnotation testCaseAnnotation;
 
-    @Getter(lazy = true) @NonNull private final String sparqlWhere = initSparqlWhere();
-    @Getter(lazy = true) @NonNull private final String sparqlPrevalence = initSparqlPrevalence();
+    @Getter @NonNull private final String sparqlWhere;
+    @Getter @NonNull private final String sparqlPrevalence;
 
     public PatternBasedTestCaseImpl(@NonNull Resource resource, @NonNull TestCaseAnnotation annotation, @NonNull Pattern pattern, @NonNull Collection<Binding> bindings) {
         this.element = resource;
@@ -35,6 +35,8 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
         this.pattern = pattern;
         this.bindings = ImmutableSet.copyOf(bindings);
 
+        this.sparqlWhere = initSparqlWhere();
+        this.sparqlPrevalence = initSparqlPrevalence();
         // validate
         if (bindings.size() != pattern.getParameters().size()) {
             // throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);

@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
  */
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "element")
 public final class PatternParameterImpl implements PatternParameter {
 
     private final Resource element;

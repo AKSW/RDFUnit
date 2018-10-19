@@ -34,7 +34,7 @@ public final class TestExecutorFactory {
         return createTestExecutor(executionType, cached);
     }
 
-    private static TestExecutor createTestExecutor(TestCaseExecutionType executionType, QueryGenerationFactory qgf) {
+    public static TestExecutor createTestExecutor(TestCaseExecutionType executionType, QueryGenerationFactory qgf) {
         switch (executionType) {
             case statusTestCaseResult:
                 return new StatusTestExecutor(qgf);
