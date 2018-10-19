@@ -17,6 +17,7 @@ import java.util.Map;
 @ToString
 @EqualsAndHashCode
 public class MetricMapper {
+
     private final ImmutableMap<String, String> metricMap;
 
 
@@ -24,9 +25,6 @@ public class MetricMapper {
         this.metricMap = ImmutableMap.copyOf(metricMap);
     }
 
-    /**
-     * returns an immutable Map<String, String>
-     */
     public Map<String, String> getMetricMap() {
         return metricMap;
     }
