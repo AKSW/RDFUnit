@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 @Builder
 @ToString
-@EqualsAndHashCode(exclude = "element")
+@EqualsAndHashCode(of = {"target", "filterSparql", "testCase"})
 public class TestCaseWithTarget implements TestCase {
 
     @NonNull private final ShapeTarget target;

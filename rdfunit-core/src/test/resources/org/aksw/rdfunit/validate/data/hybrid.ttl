@@ -1,0 +1,95 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rlog:    <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+@prefix rutg:    <http://rdfunit.aksw.org/data/generators#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rut:    <http://rdfunit.aksw.org/ns/core#> .
+@prefix rutp:    <http://rdfunit.aksw.org/data/patterns#> .
+@prefix rutt:    <http://rdfunit.aksw.org/data/tests#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+
+ex:Person
+	a sh:Shape ;
+	a rdfs:Class ; # sh:targetClass ex:Person ; implicit target
+
+	sh:property [
+		sh:path ex:classCheckProperty ;
+		sh:class ex:SuperClass ;
+	] ;
+.
+
+
+ex:name
+    a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;  # should generate 1 test case
+.
+
+
+# geo:lat must be in the range [-90,90]
+rutt:geo-LITRAN-rangegeolatitude
+    a       rut:PatternBasedTestCase ;
+    dcterms:description "geo:lat must be in the range -90 to 90";
+    rut:appliesTo rut:Schema ;
+    rut:basedOnPattern rutp:LITRAN ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "[]" ;
+                rut:parameter rutp:LITRAN-T1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+                rut:parameter rutp:LITRAN-P1
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "!" ;
+                rut:parameter rutp:LITRAN-NOP
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "-90" ;
+                rut:parameter rutp:LITRAN-valueMin
+              ] ;
+    rut:binding
+              [ a       rut:Binding ;
+                rut:bindingValue "90" ;
+                rut:parameter rutp:LITRAN-valueMax
+              ] ;
+    rut:generated rut:ManuallyGenerated ;
+    rut:references <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ;
+    rut:source <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    rut:testCaseLogLevel
+            rlog:ERROR .
+
+
+
+# A lemon:LexicalEntry needs at least one lemon:canonicalForm.
+rutt:lemon-entryWithoutCanonicalForm
+      a rut:ManualTestCase ;
+      dcterms:description "A lemon:LexicalEntry needs exactly one lemon:canonicalForm property";
+      rut:appliesTo rut:Schema ;
+      rut:generated rut:ManuallyGenerated ;
+      rut:references <http://lemon-model.net/lemon#LexicalEntry>;
+      rut:source <http://lemon-model.net/lemon#> ;
+      rut:testCaseLogLevel rlog:ERROR ;
+      rut:sparqlWhere """ {
+                           ?this rdf:type <http://lemon-model.net/lemon#LexicalEntry> .
+                           FILTER (NOT EXISTS {?this <http://lemon-model.net/lemon#canonicalForm> ?v1 .})
+                            } """ ;
+      rut:sparqlPrevalence """ SELECT (count(?this) AS ?total) WHERE {
+                                 ?this rdf:type <http://lemon-model.net/lemon#LexicalEntry> . } """ .

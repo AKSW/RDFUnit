@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @ToString(exclude = "generatePattern")
-@EqualsAndHashCode(exclude = "generatePattern")
+@EqualsAndHashCode(of = {"targetType", "node"})
 public class ShapeTargetCore implements ShapeTarget {
 
     @Getter private final ShapeTargetType targetType;

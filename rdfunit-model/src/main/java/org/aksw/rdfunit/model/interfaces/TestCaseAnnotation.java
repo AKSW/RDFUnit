@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 1/3/14 3:40 PM
  */
 @ToString
-@EqualsAndHashCode(of = "element")
+@EqualsAndHashCode(exclude = "element")
 public class TestCaseAnnotation implements Element {
     @Getter private final Resource element;
     @Getter private final TestGenerationType generated;

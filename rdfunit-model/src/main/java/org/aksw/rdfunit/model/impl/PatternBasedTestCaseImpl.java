@@ -17,7 +17,7 @@ import java.util.Collections;
  * @since 1/3/14 3:49 PM
  */
 @ToString
-@EqualsAndHashCode(exclude = "element")
+@EqualsAndHashCode(of = {"pattern", "bindings", "testCaseAnnotation"})
 public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase {
 
     @Getter @NonNull private final Pattern pattern;

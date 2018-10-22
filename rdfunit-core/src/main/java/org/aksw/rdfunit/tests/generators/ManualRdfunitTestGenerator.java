@@ -9,6 +9,8 @@ import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.TestUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -29,25 +31,28 @@ public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
 
     @Override
     public Collection<TestCase> generate(SchemaSource source) {
-        return generateFromSource(source);
+        return generateFromSource(source, source.getModel());
     }
 
     @Override
     public Collection<TestCase> generate(TestSource source) {
-        return generateFromSource(source);
+        return generateFromSource(source, ModelFactory.createDefaultModel());
     }
 
-    private Collection<TestCase> generateFromSource(Source source) {
+    private Collection<TestCase> generateFromSource(Source source, Model sourceModel) {
             Set<TestCase> tests = new HashSet<>();
 
             try {
-                Collection<TestCase> testsManuals = TestUtils.instantiateTestsFromModel(
+                Collection<TestCase> testsManualsExternal = TestUtils.instantiateTestsFromModel(
                         RdfReaderFactory.createFileOrResourceReader(
                                 CacheUtils.getSourceManualTestFile(testFolder, source),                 // check for local directory first
                                 CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source)  // otherwise check if it exists in resources
                         ).read());
 
-                tests.addAll(testsManuals);
+                tests.addAll(testsManualsExternal);
+
+                tests.addAll(TestUtils.instantiateTestsFromModel(sourceModel));
+
             } catch (RdfReaderException e) {
                 // Do nothing, Manual tests do not exist
                 log.debug("No manual tests found for {}", source.getUri());

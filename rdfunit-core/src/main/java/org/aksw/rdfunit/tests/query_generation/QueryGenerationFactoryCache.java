@@ -29,6 +29,7 @@ public class QueryGenerationFactoryCache implements QueryGenerationFactory {
         this.delegate = delegate;
         this.queryCache = CacheBuilder.newBuilder()
                 .maximumSize(cache_size)
+                .weakKeys()
                 .expireAfterAccess(expire_after_minutes, TimeUnit.MINUTES)
                 .build(
                         new CacheLoader<TestCase, Query>() {
