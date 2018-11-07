@@ -33,4 +33,24 @@ public final class StringUtils {
             throw new IllegalArgumentException("Cannot calculate SHA-256 hash for :" + str, e);
         }
     }
+
+    /**
+     * Will find the longest suffix of the first sequence which is a prefix of the second.
+     * @param first - first
+     * @param second - second
+     * @return - the longest overlap
+     */
+    public static String findLongestOverlap(String first, String second){
+        if(org.apache.commons.lang3.StringUtils.isEmpty(first) || org.apache.commons.lang3.StringUtils.isEmpty(second))
+            return "";
+        int secondLength = second.length();
+        for(int i = 1; i < first.length(); i++){
+            String zw = first.substring(first.length() - i);
+            if(zw.length() <= secondLength){
+                if(second.startsWith(zw))
+                    return zw;
+            }
+        }
+        return "";
+    }
 }
