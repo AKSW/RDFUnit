@@ -32,4 +32,46 @@ ao,http://purl.org/ontology/ao/core#,http://purl.org/ontology/ao/associationonto
 # dead http://gslis.simmons.edu/archival/arch
 # dead http://contextus.net/ontology/ontomedia/ext/common/being#
 # not reachable http://vocab.deri.ie/br
+# not reachable http://vocab.deri.ie/c4n
+# not reachable http://purl.org/net/cartCoord#
 bot,http://www.w3id.org/bot#,http://www.w3id.org/bot/bot.ttl
+cbs,http://betalinkeddata.cbs.nl/def/cbs,https://betalinkeddata.cbs.nl/def/cbs?format=ttl
+cco,http://smiy.sourceforge.net/cco/spec/cognitivecharacteristics.html#,http://purl.org/ontology/cco/cognitivecharacteristics.owl
+# not reachable http://www.ebusiness-unibw.org/ontologies/consumerelectronics/v1
+cerif,http://www.eurocris.org/ontologies/cerif/1.3#,https://www.eurocris.org/ontologies/cerif/1.3.ttl
+cff,http://purl.oclc.org/NET/ssnx/cf/cf-feature#,https://www.w3.org/2005/Incubator/ssn/ssnx/cf/cf-feature.owl
+cf,http://purl.oclc.org/NET/ssnx/cf/cf-property#,https://www.w3.org/2005/Incubator/ssn/ssnx/cf/cf-property.owl
+chord,http://purl.org/ontology/chord/,http://purl.org/ontology/chord/index.rdfs
+citof,http://www.essepuntato.it/2013/03/cito-functions/,http://www.essepuntato.it/static/tmp/0
+# not reachable http://purl.org/twc/ontologies/cmo.owl
+co,http://purl.org/ontology/co/core#,http://purl.org/ontology/co/counterontology.owl
+# resoucre link points to wrong ontology: http://purl.org/co
+comm,http://vocab.resc.info/communication#,http://vocab.resc.info/communication.ttl
+# dead http://purl.org/twc/ontologies/cmo.owl
+chord,http://purl.org/ontology/chord/,http://purl.org/ontology/chord/index.rdfs
+# not reachable http://vocab.deri.ie/cogs
+coun,http://www.daml.org/2001/09/countries/iso-3166-ont,http://www.daml.org/2001/09/countries/iso-3166-ont.daml
+crm,http://www.cidoc-crm.org/cidoc-crm/,http://www.cidoc-crm.org/sites/default/files/CIDOCCRM_ecrm.owl
+# not reachable http://courseware.rkbexplorer.com/ontologies/courseware
+cs,http://purl.org/vocab/changeset/schema#,http://vocab.org/changeset/schema-20090518.rdf
+# not reachable http://vocab.deri.ie/csp
+# dead http://commontag.org/ns#
+# dead http://purl.org/ctic/infraestructuras/organizacion
+# not reachable http://vocab.deri.ie/dady
+# dead http://purl.org/ontology/daia
+# dead http://dataid.dbpedia.org/ns/core#
+date,http://vocab.datex.org/terms#,https://raw.githubusercontent.com/osoc16/mobylink/gh-pages/_data/vocabulary.json
+# dead https://decision-ontology.googlecode.com/svn/trunk/decision.owl
+# dead http://onto.dm2e.eu/schemas/dm2e
+# dead http://purl.org/ontology/dso
+# dead http://purl.org/swan/2.0/discourse-relationships/
+# dead http://vocab.data.gov/def/drm
+# dead http://purl.org/ctic/dcat#
+# dead http://www.eclap.eu/schema/eclap/
+# dead http://purl.org/eem
+# not reeachable http://purl.org/ctic/sector-publico/elecciones
+emotion,http://ns.inria.fr/emoca,http://ns.inria.fr/emoca/emoca.ttl
+# dead http://purl.org/ctic/empleo/oferta
+# dead http://eprints.org/ontology/
+essglobal,http://purl.org/essglobal/vocab/,http://purl.org/essglobal/vocab/essglobal-vocab.rdf
+

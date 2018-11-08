@@ -30,15 +30,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * TODO
+ * Can create a 'trusting' SSL connection, accepting anything.
+ * Using apache HttpClient deals with redirects automatically.
+ * Should only be used for crawling results of the LOV endpoint.
  */
 final class TrustingUrlConnection {
 
-    private static final int TIMEOUT = 5;
-    private static final String DEFAULTBROWSERACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
-    public static final String HEADERKEY = "Redirected";
+    private static final int TIMEOUT = 5;           //default timeout in seconds
+    static final String HEADERKEY = "Redirected";   //the Html Header Key used to convey all redirects which were followed
 
-
+    // a all trusting Trust Manager
     private static TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
         public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }
         public void checkClientTrusted(X509Certificate[] certs, String authType) { }
@@ -46,11 +47,15 @@ final class TrustingUrlConnection {
 
     } };
 
+    /**
+     * Captures every redirect captured starting with the initial address.
+     * Is used to check whether we are in a redirect cycle.
+     */
     static class MyRedirectHandler extends DefaultRedirectStrategy {
 
         ArrayList<URI> lastRedirectedUri;
 
-        public MyRedirectHandler(URI origin){
+        MyRedirectHandler(URI origin){
             lastRedirectedUri = Lists.newArrayList(origin);
         }
 
@@ -86,11 +91,19 @@ final class TrustingUrlConnection {
 
     private static final HttpClientConnectionManager poolingConnManager = new PoolingHttpClientConnectionManager(registry);
 
+    /**
+     * Will execute a HEAD only request, following redirects, trying to locate an rdf document.
+     * @param uri - the initial uri
+     * @param format - the expected mime type
+     * @return - the final http response
+     * @throws IOException
+     */
     static HttpResponse executeHeadRequest(URI uri, SerializationFormat format) throws IOException {
 
         HttpHead headMethod = new HttpHead(uri);
         MyRedirectHandler redirectHandler = new MyRedirectHandler(uri);
 
+        String acceptHeader = format.getMimeType() != null && ! format.getMimeType().trim().isEmpty() ? format.getMimeType() : "*/*";
         CloseableHttpClient httpClient = HttpClientBuilder
             .create()
             .setDefaultRequestConfig(requestConfig)
@@ -98,8 +111,7 @@ final class TrustingUrlConnection {
             .setSSLContext(ssl)
             .setRedirectStrategy(redirectHandler)
             .setDefaultHeaders(Arrays.asList(
-                new BasicHeader("Accept", format.getHeaderType().contains("text/html") ? DEFAULTBROWSERACCEPT : "*/*"), //if default request we try to pretend to be a browser, else we accept everything
-                new BasicHeader("Content-Type", format.getHeaderType()),
+                new BasicHeader("Accept", acceptHeader), //if default request we try to pretend to be a browser, else we accept everything
                 new BasicHeader("User-Agent", "Mozilla/5.0"),
                 new BasicHeader("Upgrade-Insecure-Requests", "1")       // we are an all trusting client...
             ))

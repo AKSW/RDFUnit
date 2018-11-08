@@ -86,7 +86,7 @@ public abstract class AbstractRDFUnitWebService extends HttpServlet {
             throw new RdfWriterException("Invalid output format");
         }
 
-        httpServletResponse.setContentType(serializationFormat.getHeaderType());
+        httpServletResponse.setContentType(serializationFormat.getMimeTypes());
         RdfWriter rdfWriter = RdfResultsWriterFactory.createWriterFromFormat(httpServletResponse.getOutputStream(), serializationFormat, testExecution);
         rdfWriter.write(ModelFactory.createDefaultModel());
     }

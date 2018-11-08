@@ -22,9 +22,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -50,15 +49,28 @@ public final class LOVEndpoint {
             "application/rdf+xml",
             Sets.newHashSet()
     );
+    private static final List<SerializationFormat> allRdfFormats = Arrays.asList(OWLRDFXML, RDFXML, TURTLE, N3SER, NTRIPLES);
+
+    // representing a general request header for all accepted types
+    private static final SerializationFormat GENERALFORMAT = new SerializationFormat(
+            "TEXT/HTML",
+            SerializationFormatIOType.output,
+            SerializationFormatGraphType.dataset,
+            "xxx",
+            allRdfFormats.stream().map(SerializationFormat::getMimeType).collect(Collectors.joining(",")) +
+                    ";q=1.0,text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            Sets.newHashSet()
+    );
+
+    //in some cases we have to follow redirects via the html page
     private static final SerializationFormat TEXTHTML = new SerializationFormat(
             "TEXT/HTML",
             SerializationFormatIOType.output,
             SerializationFormatGraphType.dataset,
             "html",
-            "text/html; charset=utf-8",
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
             Sets.newHashSet()
     );
-    private static final List<SerializationFormat> allRdfFormats = Arrays.asList(OWLRDFXML, RDFXML, TURTLE, N3SER, NTRIPLES);
 
     private static final String LOV_ENDPOINT_URI = "https://lov.linkeddata.es/dataset/lov/sparql";
     private static final String LOV_GRAPH = "https://lov.linkeddata.es/dataset/lov";
@@ -145,8 +157,15 @@ public final class LOVEndpoint {
 
     public SchemaEntry extractResourceLocation(SchemaEntry entry) {
         Optional<String> actualResourceUri = Optional.empty();
-        if (!entry.getVocabularyDefinedBy().isEmpty())
-            actualResourceUri = getContentLocation(entry.getVocabularyDefinedBy(), TEXTHTML, Lists.newArrayList()); //using text/html as default
+        if (! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace()))
+            actualResourceUri = getContentLocation(entry.getVocabularyDefinedBy(), GENERALFORMAT, Lists.newArrayList());
+
+        if(! actualResourceUri.isPresent())
+            actualResourceUri = getContentLocation(entry.getVocabularyURI(), GENERALFORMAT, Lists.newArrayList());
+
+        // if still nothing was found, we try to pretend to be a browser and do it over again, since some resources have really bad redirecting
+        if (! actualResourceUri.isPresent() && ! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace()))
+            actualResourceUri = getContentLocation(entry.getVocabularyDefinedBy(), TEXTHTML, Lists.newArrayList());
 
         if(! actualResourceUri.isPresent())
             actualResourceUri = getContentLocation(entry.getVocabularyURI(), TEXTHTML, Lists.newArrayList());
@@ -158,6 +177,19 @@ public final class LOVEndpoint {
         return new SchemaEntry(entry.getPrefix(), entry.getVocabularyURI(), entry.getVocabularyNamespace(), actualResourceUri.get());
     }
 
+    private Set<SerializationFormat> findFormatByMimeType(String mimeType){
+        if(mimeType == null || mimeType.isEmpty())
+            return Collections.emptySet();
+        return allRdfFormats.stream().filter(x -> x.getMimeType().equals(mimeType.trim().toLowerCase())).collect(Collectors.toSet());
+    }
+
+    /**
+     * Will try to get a responsive content location by adding suffixes based on the given SerializationFormats
+     * @param currentUrl - the base url onto which to concatenate the suffixes
+     * @param formats - the list of SerializationFormats to try out
+     * @param redirects - list of established redirects which led to this point
+     * @return - the optional content location
+     */
     private Optional<String> getContentVersions(String currentUrl, Collection<SerializationFormat> formats, ArrayList<String> redirects){
         Optional<SerializationFormat> test = formats.stream().filter(x -> currentUrl.trim().endsWith(x.getExtension())).findFirst();
         if(currentUrl != null && ! test.isPresent()){
@@ -180,6 +212,13 @@ public final class LOVEndpoint {
         return Optional.empty();
     }
 
+    /**
+     * Will try to determine a possible location of the ontology document (in any RDF serialization), following redirects and alternatives
+     * @param urlStr - the origin url
+     * @param format - the initial serialization format to try
+     * @param redirects - list of established redirects which led to this point
+     * @return - the optional content location
+     */
     private Optional<String> getContentLocation(String urlStr, SerializationFormat format, ArrayList<String> redirects){
         if(urlStr == null || urlStr.isEmpty() || redirects.contains(urlStr.trim()))
             return Optional.empty();
@@ -187,11 +226,17 @@ public final class LOVEndpoint {
         redirects.add(urlStr.trim());
         try {
             URL url = new URL(urlStr);
-            HttpResponse conn = conn = TrustingUrlConnection.executeHeadRequest(url.toURI(), format);
+            // get the response
+            HttpResponse conn = TrustingUrlConnection.executeHeadRequest(url.toURI(), format);
+            // extract ContentType
             Header cth = conn.getFirstHeader("Content-Type");
-            String ct = cth != null ? cth.getValue() : null;
+            // only use the most prevalent
+            String ct = cth != null ? cth.getValue().split("([,;])")[0] : null;
+            // translate ContentType into MimeType
+            Set<SerializationFormat> ctf = findFormatByMimeType(ct);
 
             StatusLine status = conn.getStatusLine();
+            //fill in all intermediate redirects
             Stream.of(conn.getHeaders(TrustingUrlConnection.HEADERKEY)).forEach(x -> redirects.add(x.getValue().trim()));
             String lastRedirect = redirects.get(redirects.size()-1);
 
@@ -199,50 +244,73 @@ public final class LOVEndpoint {
             if(status.getStatusCode() >= 400){
                 String resp = status.getReasonPhrase();
                 if(redirects.size() <= 1)
-                    log.error("Error while retrieving " + urlStr + " :" + resp);
+                    log.error("Error while retrieving " + urlStr + " :" + status.getStatusCode() + " " + resp);
                 return Optional.empty();
             }
 
-            if(ct != null && ct.contains("html")){
-                Header clh = conn.getFirstHeader("Content-Location");
-                String cl = clh != null ? clh.getValue() : null;
-
-                if(cl == null || cl.isEmpty()) {
-                    Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
-                    if(zw.isPresent())
+            // if we have a ContentType
+            if(ct != null){
+                // if the ContentType == HTML
+                if(ct.contains("html")) {
+                    return tryToFindHtmlAlternative(format, redirects, url, conn, lastRedirect);
+                }
+                // if the ContentType is a well known RDF serialization
+                else if(! ctf.isEmpty()){
+                    Optional<String> zw = getContentVersions(lastRedirect, ctf, redirects);
+                    if (zw.isPresent())
                         return zw;
                 }
-                else {
-                    String cleaned = StringUtils.stripEnd(url.toString(), "#?/");
-                    int ind = Math.max(Math.max(cleaned.lastIndexOf("."),cleaned.lastIndexOf("/")), cleaned.length());
-                    String resetToLastPathSection = cleaned.substring(0, ind);
-                    String longestOverlap = org.aksw.rdfunit.utils.StringUtils.findLongestOverlap(resetToLastPathSection, cl);
-                    String urlPrefix = resetToLastPathSection.substring(0, resetToLastPathSection.length() - longestOverlap.length());
-                    URI u = new URI(urlPrefix + (cl.startsWith("/") ? "" : "/") + cl);
-
-                    if(redirects.contains(u.toString())){
-                        Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
-                        if(zw.isPresent())
-                            return zw;
-                    }
-
-                    try {
-                        if (u.isAbsolute())
-                            cl = u.toString();
-                        else if (lastRedirect.contains("/"))
-                            cl = lastRedirect.substring(0, lastRedirect.lastIndexOf("/") + 1) + u.toString();
-                    } catch (Throwable t) {
-                    }
-                }
-                return getContentLocation(cl, format, redirects);
             }
-            else{
-                return Optional.of(url.toString());
-            }
+            //default if nothing was found we return the origin and hope for the best :)
+            return Optional.of(lastRedirect);
         } catch (IOException | URISyntaxException e) {
-            log.debug("Error", e);
+            log.debug("Error while retrieving " + urlStr, e);
             return Optional.empty();
         }
+    }
+
+    private Optional<String> tryToFindHtmlAlternative(SerializationFormat format, ArrayList<String> redirects, URL url, HttpResponse conn, String lastRedirect) throws URISyntaxException {
+        Header clh = conn.getFirstHeader("Content-Location");
+        String cl = clh != null ? clh.getValue() : null;
+
+        //if we have a specific ContentLocation
+        if (cl == null || cl.isEmpty()) {
+            Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
+            if (zw.isPresent())
+                return zw;
+        } else {
+            String cleaned = StringUtils.stripEnd(url.toString(), "#?/");
+            URI u = null;
+            try {
+                u = new URI(cleaned);
+            } catch (URISyntaxException ignored) {
+            }
+
+            //if we found no absolute URI
+            if (u == null) {
+                //we try to concatenate the relative URI to the origin (looking for an overlap)
+                int ind = Math.max(Math.max(cleaned.lastIndexOf("."), cleaned.lastIndexOf("/")), cleaned.length());
+                String resetToLastPathSection = cleaned.substring(0, ind);
+                String longestOverlap = org.aksw.rdfunit.utils.StringUtils.findLongestOverlap(resetToLastPathSection, cl);
+
+                String urlPrefix = resetToLastPathSection.substring(0, resetToLastPathSection.length() - longestOverlap.length());
+                u = new URI(urlPrefix + (cl.startsWith("/") ? "" : "/") + cl);
+            }
+            //make sure not to trigger a redirect cycle
+            if (redirects.contains(u.toString())) {
+                Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
+                if (zw.isPresent())
+                    return zw;
+            }
+
+            try {
+                if (u.isAbsolute())
+                    cl = u.toString();
+                else if (lastRedirect.contains("/"))
+                    cl = lastRedirect.substring(0, lastRedirect.lastIndexOf("/") + 1) + u.toString();
+            } catch (Throwable ignored) {}
+        }
+        return getContentLocation(cl, format, redirects);
     }
 
     public static void main(String[] args) {
