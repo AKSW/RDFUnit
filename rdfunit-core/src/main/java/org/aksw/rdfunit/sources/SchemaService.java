@@ -105,14 +105,20 @@ public final class SchemaService {
     }
 
 
-    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixes) throws UndefinedSchemaException {
+    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixesOrUris) throws UndefinedSchemaException {
         Collection<SchemaSource> sources = new ArrayList<>();
-        for (String id : prefixes) {
+        for (String id : prefixesOrUris) {
             Optional<SchemaSource> src = getSourceFromPrefix(baseFolder, id.trim());
             if (src.isPresent()) {
                 sources.add(src.get());
             } else {
-                throw new UndefinedSchemaException(id);
+                src = getSourceFromUri(baseFolder, id.trim());
+                if (src.isPresent()) {
+                    sources.add(src.get());
+                }
+                else {
+                    throw new UndefinedSchemaException(id);
+                }
             }
         }
         return sources;

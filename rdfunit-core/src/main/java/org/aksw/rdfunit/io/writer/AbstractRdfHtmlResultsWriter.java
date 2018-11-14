@@ -59,10 +59,10 @@ public abstract class AbstractRdfHtmlResultsWriter implements RdfWriter {
         StringBuilder header = new StringBuilder();
         header
                 .append("<!DOCTYPE html>\n<html><head>\n")
-                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\">\n")
-                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/css/theme.default.css\" >\n")
-                .append("<script type=\"text/javascript\" src=\"http://code.jquery.com/jquery-1.11.0.min.js\"></script>\n")
-                .append("<script type=\"text/javascript\" src=\"http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/jquery.tablesorter.min.js\"></script>\n")
+                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\">\n")
+                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/css/theme.default.css\" >\n")
+                .append("<script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-1.11.0.min.js\"></script>\n")
+                .append("<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.16.4/jquery.tablesorter.min.js\"></script>\n")
                 .append("<script type=\"text/javascript\"> $(function() {$(\"#myTable\").tablesorter();});</script>")
                 .append("<title>RDFUnit validation results</title>")
                 .append("</head><body>\n");

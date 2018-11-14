@@ -142,7 +142,7 @@ public final class LOVEndpoint {
                 SchemaEntry updatedEntry = extractResourceLocation(entry);
                 out.write(updatedEntry.getPrefix());
                 out.write(',');
-                out.write(updatedEntry.getVocabularyURI());
+                out.write(updatedEntry.getVocabularyNamespace());
                 out.write(',');
                 out.write(updatedEntry.getVocabularyDefinedBy());
                 out.write('\n');
@@ -155,6 +155,13 @@ public final class LOVEndpoint {
         }
     }
 
+    /**
+     * Will try to get a responsive content location trying
+     * 1. VocabularyDefinedBy location
+     * 2. VocabularyURI location
+     * @param entry - the origin URL which is used as basis
+     * @return - the optional content location
+     */
     public SchemaEntry extractResourceLocation(SchemaEntry entry) {
         Optional<String> actualResourceUri = Optional.empty();
         if (! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace()))
@@ -273,11 +280,9 @@ public final class LOVEndpoint {
         Header clh = conn.getFirstHeader("Content-Location");
         String cl = clh != null ? clh.getValue() : null;
 
-        //if we have a specific ContentLocation
+        //if we have no specific ContentLocation
         if (cl == null || cl.isEmpty()) {
-            Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
-            if (zw.isPresent())
-                return zw;
+            return getContentVersions(lastRedirect, allRdfFormats, redirects);
         } else {
             String cleaned = StringUtils.stripEnd(url.toString(), "#?/");
             URI u = null;
@@ -296,23 +301,21 @@ public final class LOVEndpoint {
                 String urlPrefix = resetToLastPathSection.substring(0, resetToLastPathSection.length() - longestOverlap.length());
                 u = new URI(urlPrefix + (cl.startsWith("/") ? "" : "/") + cl);
             }
-            //make sure not to trigger a redirect cycle
+            //if we already checked this address we try different rdf extensions on it
             if (redirects.contains(u.toString())) {
                 Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
                 if (zw.isPresent())
                     return zw;
             }
 
-            try {
-                if (u.isAbsolute())
-                    cl = u.toString();
-                else if (lastRedirect.contains("/"))
-                    cl = lastRedirect.substring(0, lastRedirect.lastIndexOf("/") + 1) + u.toString();
-            } catch (Throwable ignored) {}
+            return getContentLocation(u.toString(), format, redirects);
         }
-        return getContentLocation(cl, format, redirects);
     }
 
+    /**
+     * Will start the crawling of the LOV endpoint
+     * @param args - if provided, the first argument is the file location of the results, else the default schemaLOV.csv is used
+     */
     public static void main(String[] args) {
         LOVEndpoint lov = new LOVEndpoint();
         String file = args.length > 0 ? args[1].trim() : "rdfunit-model/src/main/resources/org/aksw/rdfunit/configuration/schemaLOV.csv";

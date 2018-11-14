@@ -33,6 +33,7 @@ public final class SchemaEntry implements Comparable<SchemaEntry>{
 
     /**
      * Constructor where DefinedBy is same as vocabulary URI
+     *
      * @param prefix the prefix
      * @param vocabularyURI the vocabulary uRI
      * @param vocabularyNamespace the vocabulary namespace

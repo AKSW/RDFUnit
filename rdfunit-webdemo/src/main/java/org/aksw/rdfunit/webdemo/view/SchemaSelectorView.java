@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.webdemo.view;
 
+import com.google.common.collect.Lists;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -35,7 +36,8 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
     private final Button clearBtn = new Button("Clear");
     private final Button loadBtn = new Button("Load");
 
-    private final Label autoOWLMessage = new Label();
+    private final Label datasetMessage = new Label();
+    private final Label ontologyMessage = new Label();
     private final Label specificSchemasMessage = new Label();
 
     private final SchemaSelectorComponent schemaSelectorWidget = new SchemaSelectorComponent();
@@ -74,7 +76,8 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         VerticalLayout optionValues = new VerticalLayout();
         optionSelection.setSpacing(true);
 
-        optionValues.addComponent(autoOWLMessage);
+        optionValues.addComponent(datasetMessage);
+        optionValues.addComponent(ontologyMessage);
         optionValues.addComponent(specificSchemasMessage);
         optionValues.addComponent(schemaSelectorWidget);
         schemaSelectorWidget.setWidth("50%");
@@ -94,15 +97,12 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         bottomLayout.addComponent(clearBtn);
         bottomLayout.addComponent(loadBtn);
 
-
         root.addComponent(components);
         root.addComponent(bottomLayout);
 
         setDefaultValues();
 
-
         setCompositionRoot(root);
-
 
         clearBtn.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
             isReady = false;
@@ -135,7 +135,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                 "and <a href='https://github.com/AKSW/RDFUnit/issues' target=\"_blank\">issues</a> for details.");
         messageLabel.setStyleName(ValoTheme.LABEL_LIGHT);
         inputFormatsSelect.setValue("turtle");
-        inputTypeSelect.setValue(SchemaOption.AUTO_OWL);
+        inputTypeSelect.setValue(SchemaOption.AUTO_DATASET);
 
     }
 
@@ -159,8 +159,10 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
     }
 
     private void setInputTypes() {
-        inputTypeSelect.addItem(SchemaOption.AUTO_OWL);
-        inputTypeSelect.setItemCaption(SchemaOption.AUTO_OWL, "Automatic (RDFS/OWL)");
+        inputTypeSelect.addItem(SchemaOption.AUTO_DATASET);
+        inputTypeSelect.setItemCaption(SchemaOption.AUTO_DATASET, "Automatic Detection");
+        inputTypeSelect.addItem(SchemaOption.AUTO_ONTOLOGY);
+        inputTypeSelect.setItemCaption(SchemaOption.AUTO_ONTOLOGY, "Ontology");
         inputTypeSelect.addItem(SchemaOption.SPECIFIC_URIS);
         inputTypeSelect.setItemCaption(SchemaOption.SPECIFIC_URIS, "Specific Schemas");
         inputTypeSelect.addItem(SchemaOption.CUSTOM_TEXT);
@@ -171,34 +173,41 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
             SchemaOption option = (SchemaOption) valueChangeEvent.getProperty().getValue();
 
             switch (option) {
-                case AUTO_OWL:
+                case AUTO_DATASET:
                     inputFormatsSelect.setVisible(false);
                     specificSchemasMessage.setVisible(false);
                     schemaSelectorWidget.setVisible(false);
+                    ontologyMessage.setVisible(false);
                     inputText.setVisible(false);
 
-                    autoOWLMessage.setVisible(true);
-
+                    datasetMessage.setVisible(true);
                     break;
+                case AUTO_ONTOLOGY:
+                    inputFormatsSelect.setVisible(false);
+                    specificSchemasMessage.setVisible(false);
+                    schemaSelectorWidget.setVisible(false);
+                    datasetMessage.setVisible(false);
+                    inputText.setVisible(false);
 
+                    ontologyMessage.setVisible(true);
+                    break;
                 case SPECIFIC_URIS:
                     inputFormatsSelect.setVisible(false);
                     inputText.setVisible(false);
-                    autoOWLMessage.setVisible(false);
+                    datasetMessage.setVisible(false);
+                    ontologyMessage.setVisible(false);
 
                     specificSchemasMessage.setVisible(true);
                     schemaSelectorWidget.setVisible(true);
-
-
                     break;
                 case CUSTOM_TEXT:
                     specificSchemasMessage.setVisible(false);
                     schemaSelectorWidget.setVisible(false);
-                    autoOWLMessage.setVisible(false);
+                    datasetMessage.setVisible(false);
+                    ontologyMessage.setVisible(false);
 
                     inputFormatsSelect.setVisible(true);
                     inputText.setVisible(true);
-
                     break;
             }
         });
@@ -218,9 +227,16 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         inputText.setColumns(40);
         inputText.setWidth("100%");
 
-        autoOWLMessage.setContentMode(ContentMode.HTML);
-        autoOWLMessage.setValue("<h3>Automatic Constraint Detection based on RDFS/OWL (with CWA)</h3>" +
+        datasetMessage.setContentMode(ContentMode.HTML);
+        datasetMessage.setValue("<h3>Automatic Constraint Detection based on RDFS/OWL (with CWA)</h3>" +
                 "We will parse the input source and identify all used properties and classes.<br/>" +
+                "Based on them we will try to dereference all the mentioned vocabularies & ontologies.<br/>" +
+                "Then we will use these vocabularies in our algorithms to generate automatic RDFUnit Test Cases.<br/>" +
+                "<b>Note that atm (for safety reasons) we automatically dereference only schemas that are available in LOV</b>");
+
+        ontologyMessage.setContentMode(ContentMode.HTML);
+        ontologyMessage.setValue("<h3>Automatic Constraint Detection for Ontologies (OWL, RDFS, RDF, XSD)</h3>" +
+                "We will parse the input ontology and identify all used properties and classes.<br/>" +
                 "Based on them we will try to dereference all the mentioned vocabularies & ontologies.<br/>" +
                 "Then we will use these vocabularies in our algorithms to generate automatic RDFUnit Test Cases.<br/>" +
                 "<b>Note that atm (for safety reasons) we automatically dereference only schemas that are available in LOV</b>");
@@ -298,11 +314,15 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         }
 
         switch (schemaOption) {
-            case AUTO_OWL:
+            case AUTO_DATASET:
                 configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
                 break;
             case SPECIFIC_URIS:
                 configuration.setSchemata(schemaSources);
+                break;
+            case AUTO_ONTOLOGY:
+                configuration.setExcludeSchemataFromPrefixes(Lists.newArrayList());     //remove default excluded ontologies
+                configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
                 break;
             case CUSTOM_TEXT:
                 if (text.trim().isEmpty()) {

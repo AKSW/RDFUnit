@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -52,6 +53,10 @@ public final class ValidateUtils {
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/). If this option is missing RDFUnit will try to guess them automatically"
         );
+        cliOptions.addOption("x", "excluded schemata", true,
+                "the schemas excluded from test generation by default " +
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)."
+        );
         cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev, junitxml");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
@@ -85,7 +90,7 @@ public final class ValidateUtils {
 
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
-
+        setExcludeSchemata(commandLine, configuration);
 
         setTestExecutionType(commandLine, configuration);
         setOutputFormats(commandLine, configuration);
@@ -252,6 +257,14 @@ public final class ValidateUtils {
         else {
             LOGGER.info("Searching for used schemata in dataset");
             configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
+        }
+    }
+
+    private static void setExcludeSchemata(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+        if (commandLine.hasOption("x")) {
+                //Get schema list
+                Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("x"));
+                configuration.setExcludeSchemataFromPrefixes(schemaUriPrefixes);
         }
     }
 

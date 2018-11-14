@@ -45,6 +45,7 @@ public class CommonAccessUtils {
                 try {
                     RDFUnitUtils.fillSchemaServiceFromLOV();
                     RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
+                    RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

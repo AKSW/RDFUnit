@@ -230,6 +230,8 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
             isReady = false;
             inProgress = true;
             TestGenerationView.this.generateBtn.setEnabled(false);
+            TestExecutionView tev = (TestExecutionView) TestGenerationView.this.next;
+            tev.startTestingButton.setEnabled(false);
             TestGenerationView.this.setMessage("Generating tests... (note that big ontologies may take a while)", false);
             CommonAccessUtils.pushToClient();
 
@@ -240,6 +242,7 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
         cancelBtn.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().access(() -> {
             if (inProgress) {
                 RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
+                TestGenerationView.this.generateBtn.setEnabled(true);
             } else {
                 Notification.show("Nothing to cancel, generation not in progress",
                         Notification.Type.WARNING_MESSAGE);
@@ -287,6 +290,9 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
                 UI.getCurrent().access(() -> {
                     generateTestsProgress.setValue(1.0f);
                     WorkflowUtils.setMessage(messageLabel, "Completed! Generated " + tests + " tests\"", false);
+                    TestExecutionView tev = (TestExecutionView) TestGenerationView.this.next;
+                    tev.startTestingButton.setEnabled(true);
+                    TestGenerationView.this.generateBtn.setEnabled(true);
                     isReady = true;
                     inProgress = false;
                     CommonAccessUtils.pushToClient();

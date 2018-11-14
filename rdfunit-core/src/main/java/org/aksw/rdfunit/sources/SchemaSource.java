@@ -62,6 +62,9 @@ public class SchemaSource implements Source {
         return TestAppliesTo.Schema;
     }
 
+    public SourceConfig getSourceConfig() {
+        return sourceConfig;
+    }
 
     /**
      * lazy loaded via lombok

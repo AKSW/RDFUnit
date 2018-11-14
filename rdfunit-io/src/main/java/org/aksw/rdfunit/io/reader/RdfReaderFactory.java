@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.writer.RdfFileWriter;
@@ -20,10 +21,6 @@ public final class RdfReaderFactory {
     private RdfReaderFactory() {
     }
 
-//    public static RDFReader createFileOrDereferenceReader(String filenameOrUri) {
-//        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
-//    }
-
     public static RdfReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
         Collection<RdfReader> readers = new ArrayList<>();
@@ -37,7 +34,7 @@ public final class RdfReaderFactory {
     }
 
     public static RdfReader createResourceReader(String resource) {
-        return new RdfStreamReader(RdfReaderFactory.class.getResourceAsStream(resource), FormatService.getFormatFromExtension(resource));
+        return new RdfStreamReader(Resources.class.getResourceAsStream(resource), FormatService.getFormatFromExtension(resource));
     }
 
     public static RdfReader createFileOrResourceReader(String filename, String resource) {
@@ -89,5 +86,4 @@ public final class RdfReaderFactory {
     public static RdfReader createEmptyReader() {
         return RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/io/empty.ttl");
     }
-
 }

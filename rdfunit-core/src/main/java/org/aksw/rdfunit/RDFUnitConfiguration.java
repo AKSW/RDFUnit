@@ -13,6 +13,7 @@ import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -51,6 +52,10 @@ public class RDFUnitConfiguration {
     /* list of schemas for testing a dataset */
     private Collection<SchemaSource> schemas = null;
 
+    /* list of schemas always to be excluded from test generation */
+    private Collection<SchemaSource> excludeSchemata = null;
+    private Collection<String> defaultExcludePrefixes = Arrays.asList("rdf", "rdfs", "owl", "rdfa");
+
     private EnrichedSchemaSource enrichedSchema = null;
 
     /* use the cache for loading tests (do not regenerate if already exists) */
@@ -81,6 +86,7 @@ public class RDFUnitConfiguration {
         this.testFolder = testFolder;
 
         prefix = UriToPathUtils.getAutoPrefixForURI(datasetURI); // default prefix
+        setExcludeSchemataFromPrefixes(defaultExcludePrefixes); // set default excludes
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, String username, String password) {
@@ -108,9 +114,9 @@ public class RDFUnitConfiguration {
 
         NamespaceStatistics namespaceStatistics;
         if (all) {
-            namespaceStatistics = limitToKnown ? NamespaceStatistics.createCompleteNSStatisticsKnown() : NamespaceStatistics.createCompleteNSStatisticsAll();
+            namespaceStatistics = limitToKnown ? NamespaceStatistics.createCompleteNSStatisticsKnown(this) : NamespaceStatistics.createCompleteNSStatisticsAll(this);
         } else {
-            namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown() : NamespaceStatistics.createOntologyNSStatisticsAll();
+            namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown(this) : NamespaceStatistics.createOntologyNSStatisticsAll(this);
         }
         checkNotNull(namespaceStatistics);
         this.schemas = namespaceStatistics.getNamespaces(qef);
@@ -128,6 +134,19 @@ public class RDFUnitConfiguration {
     public void setEnrichedSchema(String enrichedSchemaPrefix) {
         if (enrichedSchemaPrefix != null && !enrichedSchemaPrefix.isEmpty()) {
             enrichedSchema = SchemaSourceFactory.createEnrichedSchemaSourceFromCache(testFolder, enrichedSchemaPrefix, datasetURI);
+        }
+    }
+
+    public void setExcludeSchemata(Collection<SchemaSource> schemata){
+        this.excludeSchemata = new ArrayList<>();
+        this.excludeSchemata.addAll(schemata);
+    }
+
+    public void setExcludeSchemataFromPrefixes(Collection<String> schemaPrefixes) {
+        try {
+            this.excludeSchemata = SchemaService.getSourceList(testFolder, schemaPrefixes);
+        } catch (UndefinedSchemaException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -327,5 +346,9 @@ public class RDFUnitConfiguration {
 
     public void setEndpointQueryLimit(long endpointQueryLimit) {
         this.endpointQueryLimit = endpointQueryLimit;
+    }
+
+    public Collection<SchemaSource> getExcludeSchemata() {
+        return excludeSchemata;
     }
 }

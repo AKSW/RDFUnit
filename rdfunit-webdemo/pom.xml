@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.20</version>
+        <version>0.8.22-SNAPSHOT</version>
     </parent>
     <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.7.2</vaadin.version>
+        <vaadin.version>7.7.3</vaadin.version>
     </properties>
     <repositories>
         <repository>
@@ -181,6 +181,12 @@
                 <version>3.1.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>../ns</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
             <plugin>

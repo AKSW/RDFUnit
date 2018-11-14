@@ -45,7 +45,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestExecutionView.class);
 
 
-    private final Button startTestingButton = new Button("Run tests");
+    protected final Button startTestingButton = new Button("Run tests");
     private final Button startTestingCancelButton = new Button("Cancel");
     private final Button resultsButton = new Button("Display Results");
 

@@ -44,6 +44,7 @@ public class ValidateWS extends AbstractRDFUnitWebService {
         try {
             RDFUnitUtils.fillSchemaServiceFromLOV();
             RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
+            RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
 
             RDFUnit rdfunit = RDFUnit
                     .createWithAllGenerators()
