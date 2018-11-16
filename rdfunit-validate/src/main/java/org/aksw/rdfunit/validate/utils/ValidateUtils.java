@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -74,6 +73,7 @@ public final class ValidateUtils {
                 "This is where the results and the caches are stored. " +
                 "If none exists, bundled versions will be loaded.'");
         cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
+        cliOptions.addOption("xsd", "XSD schema expansion", false, "If set, each provided schema will be expanded with the W3C XML Schema (XSD), containing all basic datatype definitions. This is the prerequisite to validate all xsd datatypes against its expected regex pattern and min,max bounds.");
 
         return cliOptions;
     }
@@ -91,6 +91,7 @@ public final class ValidateUtils {
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
         setExcludeSchemata(commandLine, configuration);
+        setXsdExpansion(commandLine, configuration);
 
         setTestExecutionType(commandLine, configuration);
         setOutputFormats(commandLine, configuration);
@@ -98,7 +99,6 @@ public final class ValidateUtils {
         setTestAutogetCacheManual(commandLine, configuration);
 
         setQueryTtlCachePaginationLimit(commandLine, configuration);
-
 
         setCoverageCalculation(commandLine, configuration);
 
@@ -113,6 +113,7 @@ public final class ValidateUtils {
             } else {
                 RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
             }
+            RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
         } catch(Exception e) {
             LOGGER.warn("Loading custom scheme declarations failed.\n" +
                     "Falling back to bundled declarations in classpath due to", e);
@@ -260,11 +261,17 @@ public final class ValidateUtils {
         }
     }
 
-    private static void setExcludeSchemata(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+    private static void setExcludeSchemata(CommandLine commandLine, RDFUnitConfiguration configuration) {
         if (commandLine.hasOption("x")) {
                 //Get schema list
                 Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("x"));
                 configuration.setExcludeSchemataFromPrefixes(schemaUriPrefixes);
+        }
+    }
+
+    private static void setXsdExpansion(CommandLine commandLine, RDFUnitConfiguration configuration) {
+        if (commandLine.hasOption("xsd")) {
+            configuration.setXsdExpansion(true);
         }
     }
 

@@ -1,5 +1,6 @@
 package org.aksw.rdfunit;
 
+import com.google.common.collect.Lists;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
@@ -12,9 +13,8 @@ import org.aksw.rdfunit.statistics.NamespaceStatistics;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -53,8 +53,7 @@ public class RDFUnitConfiguration {
     private Collection<SchemaSource> schemas = null;
 
     /* list of schemas always to be excluded from test generation */
-    private Collection<SchemaSource> excludeSchemata = null;
-    private Collection<String> defaultExcludePrefixes = Arrays.asList("rdf", "rdfs", "owl", "rdfa");
+    private ArrayList<SchemaSource> excludeSchemata = Lists.newArrayList();
 
     private EnrichedSchemaSource enrichedSchema = null;
 
@@ -66,6 +65,9 @@ public class RDFUnitConfiguration {
 
     /* if set to false it will load only manual test cases */
     private boolean autoTestsEnabled = true;
+
+    /* if set to true this option will expand any schema with the XSD schema, allowing the auto-generation of datatype tests */
+    private boolean xsdExpansion = false;
 
     /* Execution type */
     private TestCaseExecutionType testCaseExecutionType = TestCaseExecutionType.aggregatedTestCaseResult;
@@ -86,7 +88,7 @@ public class RDFUnitConfiguration {
         this.testFolder = testFolder;
 
         prefix = UriToPathUtils.getAutoPrefixForURI(datasetURI); // default prefix
-        setExcludeSchemataFromPrefixes(defaultExcludePrefixes); // set default excludes
+        setExcludeSchemataFromPrefixes(Arrays.asList("rdf", "rdfs", "owl", "rdfa")); // set default excludes
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, String username, String password) {
@@ -110,6 +112,8 @@ public class RDFUnitConfiguration {
         setAutoSchemataFromQEF(qef, all, true);
     }
 
+    private SchemaSource xsdSource = null;
+
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all, boolean limitToKnown) {
 
         NamespaceStatistics namespaceStatistics;
@@ -119,16 +123,29 @@ public class RDFUnitConfiguration {
             namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown(this) : NamespaceStatistics.createOntologyNSStatisticsAll(this);
         }
         checkNotNull(namespaceStatistics);
-        this.schemas = namespaceStatistics.getNamespaces(qef);
+        setSchemata(namespaceStatistics.getNamespaces(qef));
     }
 
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
-        this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
+        this.setSchemata(SchemaService.getSourceList(testFolder, schemaPrefixes));
     }
 
     public void setSchemata(Collection<SchemaSource> schemata) {
+        if(xsdSource == null) {
+            try {
+                xsdSource = SchemaService.getSource(testFolder, "xsd");
+            } catch (UndefinedSchemaException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         this.schemas = new ArrayList<>();
-        this.schemas.addAll(schemata);
+        if(xsdExpansion){
+            this.schemas = schemata.stream().map(ss -> new SchemaSource(ss, Collections.singletonList(xsdSource))).collect(Collectors.toList());
+        }
+        else {
+            this.schemas = schemata;
+        }
     }
 
     public void setEnrichedSchema(String enrichedSchemaPrefix) {
@@ -143,11 +160,19 @@ public class RDFUnitConfiguration {
     }
 
     public void setExcludeSchemataFromPrefixes(Collection<String> schemaPrefixes) {
-        try {
-            this.excludeSchemata = SchemaService.getSourceList(testFolder, schemaPrefixes);
-        } catch (UndefinedSchemaException e) {
-            throw new RuntimeException(e);
+        this.excludeSchemata = new ArrayList<>();
+        for(String prefix : schemaPrefixes){
+            Optional<SchemaSource> ss = SchemaService.getSourceFromPrefix(prefix);
+            ss.ifPresent(schemaSource -> this.excludeSchemata.add(schemaSource));
         }
+    }
+
+    public boolean isXsdExpansion() {
+        return xsdExpansion;
+    }
+
+    public void setXsdExpansion(boolean xsdExpansion) {
+        this.xsdExpansion = xsdExpansion;
     }
 
     public Collection<SchemaSource> getAllSchemata() {

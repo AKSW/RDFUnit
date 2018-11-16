@@ -1,8 +1,11 @@
 package org.aksw.rdfunit.sources;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Value;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Helper class to instantiate Sources
@@ -10,10 +13,20 @@ import lombok.Value;
  * @author Dimitris Kontokostas
  * @since 8/19/15 9:05 PM
  */
-@Value
 public class SourceConfig {
     @Getter @NonNull private final String prefix;
     @Getter @NonNull private final String uri;
+    @Getter private final ArrayList<SourceConfig> importedSchemata = Lists.newArrayList();
+
+    public SourceConfig(String prefix, String uri){
+        this.uri = uri;
+        this.prefix = prefix;
+    }
+
+    public SourceConfig(String prefix, String uri, Collection<SourceConfig> imports){
+        this(prefix, uri);
+        this.importedSchemata.addAll(imports);
+    }
 
     @Override
     public int hashCode() {

@@ -3,13 +3,13 @@ package org.aksw.rdfunit.utils;
 import com.google.common.io.Resources;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.commons.RdfUnitModelFactory;
+import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfStreamReader;
 import org.aksw.rdfunit.sources.SchemaService;
-import org.apache.commons.io.filefilter.FileFileFilter;
-import org.apache.commons.io.filefilter.NotFileFilter;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.StmtIterator;
@@ -17,9 +17,8 @@ import org.apache.jena.rdf.model.StmtIterator;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
+import java.util.List;
 
 @Slf4j
 public final class RDFUnitUtils {
@@ -101,20 +100,21 @@ public final class RDFUnitUtils {
     private static Property vannPrefix = defModel.getProperty("http://purl.org/vocab/vann/preferredNamespacePrefix");
     private static Property vannNamespace = defModel.getProperty("http://purl.org/vocab/vann/preferredNamespaceUri");
 
-    public static void fillSchemaServiceWithStandardVocabularies() {
+    public static void fillSchemaServiceWithStandardVocabularies() throws IOException {
         log.info("Adding standard vocabularies.");
-        URL resourceUrl = Resources.getResource("org/aksw/rdfunit/vocabularies");
-        File dir = new File(resourceUrl.getFile());
-
-        if(dir.isDirectory()){
-            for(File f : Objects.requireNonNull(dir.listFiles((FileFilter) new NotFileFilter(new SuffixFileFilter(Arrays.asList(".md", ".txt")))))){
+        List<String> fileNames = IOUtils.readLines(RDFUnitUtils.class.getClassLoader().getResourceAsStream("org/aksw/rdfunit/vocabularies/"), Charsets.UTF_8);
+        for(String f : fileNames){
+            if(! f.trim().endsWith(".md") && ! f.trim().endsWith(".txt")) {
                 try {
-                    RdfReader reader = new RdfStreamReader(f.getAbsolutePath());
-                    Model model = reader.read();
-                    StmtIterator prefixIter = model.listStatements(null, vannPrefix, (String)null);
-                    StmtIterator namespaceIter = model.listStatements(null, vannNamespace, (String)null);
-                    if(prefixIter.hasNext() && namespaceIter.hasNext())
-                        SchemaService.addSchemaDecl(prefixIter.next().getObject().toString(), namespaceIter.next().getObject().toString(), f.toURI().toString());
+                    URL resource = RDFUnitUtils.class.getClassLoader().getResource("org/aksw/rdfunit/vocabularies/" + f);
+                    if(resource != null) {
+                        RdfReader reader = new RdfStreamReader(resource.openStream(), FormatService.getFormatFromExtension(f));
+                        Model model = reader.read();
+                        StmtIterator prefixIter = model.listStatements(null, vannPrefix, (String) null);
+                        StmtIterator namespaceIter = model.listStatements(null, vannNamespace, (String) null);
+                        if (prefixIter.hasNext() && namespaceIter.hasNext())
+                            SchemaService.addSchemaDecl(prefixIter.next().getObject().toString(), namespaceIter.next().getObject().toString(), resource.toString());
+                    }
                 } catch (RdfReaderException e) {
                     e.printStackTrace();
                 }

@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.22-SNAPSHOT</version>
+        <version>0.8.23-SNAPSHOT</version>
     </parent>
     <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
@@ -340,13 +340,17 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${basedir}/src/main/webapp/data</outputDirectory>
+                                <outputDirectory>${basedir}/src/main/resources</outputDirectory>
                                 <resources>
                                     <resource>
-                                        <directory>../data</directory>
+                                        <directory>../rdfunit-commons/src/main/resources</directory>
                                         <includes>
-                                            <include>schemaDecl.csv</include>
+                                            <include>**/*</include>
                                         </includes>
+                                        <excludes>
+                                            <exclude>**/*.md</exclude>
+                                            <exclude>**/*.txt</exclude>
+                                        </excludes>
                                     </resource>
                                 </resources>
                                 <overwrite>true</overwrite>

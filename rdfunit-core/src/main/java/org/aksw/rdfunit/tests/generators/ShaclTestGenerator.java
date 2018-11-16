@@ -29,9 +29,7 @@ public class ShaclTestGenerator implements RdfUnitTestGenerator{
         } catch (RdfReaderException e) {
             throw new IllegalArgumentException( e);
         }
-
     }
-
 
     @Override
     public Collection<TestCase> generate(TestSource source) {

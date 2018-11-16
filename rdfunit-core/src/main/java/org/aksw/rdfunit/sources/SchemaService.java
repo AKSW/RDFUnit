@@ -104,22 +104,25 @@ public final class SchemaService {
 
     }
 
+    public static SchemaSource getSource(String baseFolder, String prefixOrUri) throws UndefinedSchemaException {
+        Optional<SchemaSource> src = getSourceFromPrefix(baseFolder, prefixOrUri.trim());
+        if (src.isPresent()) {
+            return src.get();
+        } else {
+            src = getSourceFromUri(baseFolder, prefixOrUri.trim());
+            if (src.isPresent()) {
+                return src.get();
+            }
+            else {
+                throw new UndefinedSchemaException(prefixOrUri);
+            }
+        }
+    }
 
     public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixesOrUris) throws UndefinedSchemaException {
         Collection<SchemaSource> sources = new ArrayList<>();
         for (String id : prefixesOrUris) {
-            Optional<SchemaSource> src = getSourceFromPrefix(baseFolder, id.trim());
-            if (src.isPresent()) {
-                sources.add(src.get());
-            } else {
-                src = getSourceFromUri(baseFolder, id.trim());
-                if (src.isPresent()) {
-                    sources.add(src.get());
-                }
-                else {
-                    throw new UndefinedSchemaException(id);
-                }
-            }
+            sources.add(getSource(baseFolder, id));
         }
         return sources;
     }

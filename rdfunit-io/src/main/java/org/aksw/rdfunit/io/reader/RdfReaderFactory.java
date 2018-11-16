@@ -34,7 +34,8 @@ public final class RdfReaderFactory {
     }
 
     public static RdfReader createResourceReader(String resource) {
-        return new RdfStreamReader(Resources.class.getResourceAsStream(resource), FormatService.getFormatFromExtension(resource));
+        InputStream is = Resources.class.getResourceAsStream(resource);
+        return new RdfStreamReader(is, FormatService.getFormatFromExtension(resource));
     }
 
     public static RdfReader createFileOrResourceReader(String filename, String resource) {

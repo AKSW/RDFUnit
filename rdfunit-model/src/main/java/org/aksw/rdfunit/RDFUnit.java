@@ -83,7 +83,6 @@ public class RDFUnit {
 
     }
 
-
     /**
      * Initializes the patterns library, required
      *
@@ -123,7 +122,10 @@ public class RDFUnit {
     }
 
     public static RdfReader getAutoGeneratorsOWLReader(Collection<String> baseDirectories) {
-        return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl");
+        return new RdfMultipleReader(Arrays.asList(
+            createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl"),
+            getAutoGeneratorsXSDReader()
+        ));
     }
 
     public static RdfReader getAutoGeneratorsOWLReader() {
@@ -142,8 +144,13 @@ public class RDFUnit {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsRS.ttl");
     }
 
-    public static RdfReader getAutoGeneratorsRSReader() {
-        return getAutoGeneratorsRSReader(new ArrayList<>());
+    public static RdfReader getAutoGeneratorsRSReader() {return getAutoGeneratorsRSReader(new ArrayList<>());}
+
+    public static RdfReader getAutoGeneratorsXSDReader() {
+        return new RdfMultipleReader(Arrays.asList(
+            RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/vocabularies/xsd.ttl"),
+            RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/configuration/autoGeneratorsXSD.ttl")
+        ));
     }
 
     public static RdfReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {

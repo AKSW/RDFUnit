@@ -54,7 +54,6 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
             log.info("{} generated {} tests using {} TAGs", source.getUri(), tests.size(), testGenerators.size());
             return tests;
         }
-
     }
 
     private Set<TestCase> generate(QueryExecutionFactoryModel qef, SchemaSource source, TestGenerator testGenerator) {
@@ -72,11 +71,7 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
             });
         }
         return tests;
-
     }
-
-
-
 
     private Optional<TestCase> generateTestFromResult(TestGenerator tg, Pattern tgPattern, QuerySolution row, SchemaSource schemaSource) {
         Set<String> references = new HashSet<>();
