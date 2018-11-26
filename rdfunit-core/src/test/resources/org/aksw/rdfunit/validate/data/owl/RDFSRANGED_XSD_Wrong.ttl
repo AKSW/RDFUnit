@@ -1,0 +1,25 @@
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample correct data for testing
+
+
+ex:error1
+	ex:literalXsdInt "abc"^^xsd:integer ; # wrong as xsd:integer
+	ex:literalMyInt "1.2"^^ex:myIntDatatype ; # wrong as subClassOf xsd:integer
+	.
+
+ex:error2
+	ex:literalXsdInt "abc"^^xsd:string ; # wrong datatype
+	ex:literalMyInt "1.2"^^ex:myIntDatatypeXYZ ; # wrong datatype (counts twice, once for simple dt checking)
+	.
+
+
+ex:error3 a ex:Athlete ;
+    ex:birthDate "2018"^^xsd:date ; # wrong xsd:date
+    .
+

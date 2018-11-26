@@ -22,6 +22,8 @@ public class OwlIntegrationTest {
                 {"owl/RDFSRANGE-MISS_Wrong.ttl", 1},
                 {"owl/RDFSRANGED_Correct.ttl", 0},
                 {"owl/RDFSRANGED_Wrong.ttl", 2},
+                {"owl/RDFSRANGED_XSD_Correct.ttl", 0},
+                {"owl/RDFSRANGED_XSD_Wrong.ttl", 6},
                 {"owl/INVFUNC_Correct.ttl", 0},
                 {"owl/INVFUNC_Wrong.ttl", 2},
                 {"owl/OWLCARDT_Correct.ttl", 0},

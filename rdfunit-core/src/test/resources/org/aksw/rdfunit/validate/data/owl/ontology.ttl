@@ -219,3 +219,13 @@ ex:literalP2 a rdf:Property ;
 ex:nonLiteralP1 a owl:ObjectProperty .
 ex:nonLiteralP3 a rdf:Property ;
     rdfs:range ex:Person.
+
+# XSD
+ex:literalXsdInt a owl:DatatypeProperty ;
+       rdfs:range xsd:integer .
+
+ex:literalMyInt a owl:DatatypeProperty ;
+       rdfs:range ex:myIntDatatype .
+
+ex:myIntDatatype a rdfs:Datatype ;
+    rdfs:subClassOf xsd:integer .
