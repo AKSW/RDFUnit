@@ -37,13 +37,14 @@ xsd:double a rdfs:Datatype;
   rdfs:isDefinedBy <http://www.w3.org/TR/xmlschema-2/#double>;
   rdfs:comment "double values have a lexical representation consisting of a mantissa followed, optionally, by the character 'E' or 'e', followed by an exponent. The exponent ·must· be an integer. The mantissa must be a decimal number. The representations for exponent and mantissa must follow the lexical rules for integer and decimal. If the 'E' or 'e' and the following exponent are omitted, an exponent value of 0 is assumed. The special values positive and negative infinity and not-a-number have lexical representations INF, -INF and NaN, respectively. Lexical representations for zero may take a positive or negative sign. For example, -1E4, 1267.43233E12, 12.78e-2, 12 , -0, 0 and INF are all legal literals for double.";
   rdfs:label "double" ;
+  owl:onDatatype xsd:decimal ;
   owl:withRestrictions (
     [
-      xsd:pattern "([+-]?([0-9]+\\.?[0-9]*([eE][-+]?[0-9]+)?|INF)|NaN)"
+      xsd:pattern "([+-]?([0-9]+[.]?[0-9]*([eE][-+]?[0-9]+)?|INF)|NaN)"
     ] [
-      xsd:maxExclusive 9007199254740992E970
+      xsd:maxExclusive "9007199254740992E970"^^xsd:double
     ] [
-      xsd:minExclusive 9007199254740992E-1075
+      xsd:minExclusive "-9007199254740992E-1075"^^xsd:double
     ]
   ) .
 
@@ -51,13 +52,14 @@ xsd:float a rdfs:Datatype;
   rdfs:isDefinedBy <http://www.w3.org/TR/xmlschema-2/#float>;
   rdfs:comment "float values have a lexical representation consisting of a mantissa followed, optionally, by the character 'E' or 'e', followed by an exponent. The exponent ·must· be an integer. The mantissa must be a decimal number. The representations for exponent and mantissa must follow the lexical rules for integer and decimal. If the 'E' or 'e' and the following exponent are omitted, an exponent value of 0 is assumed. The special values positive and negative infinity and not-a-number have lexical representations INF, -INF and NaN, respectively. Lexical representations for zero may take a positive or negative sign. For example, -1E4, 1267.43233E12, 12.78e-2, 12 , -0, 0 and INF are all legal literals for float.";
   rdfs:label "float" ;
+  owl:onDatatype xsd:decimal ;
   owl:withRestrictions (
     [
-      xsd:pattern "([+-]?([0-9]+\\.?[0-9]*([eE][-+]?[0-9]+)?|INF)|NaN)"
+      xsd:pattern "([+-]?([0-9]+[.]?[0-9]*([eE][-+]?[0-9]+)?|INF)|NaN)"
     ] [
-      xsd:maxExclusive 16777216E104
+      xsd:maxExclusive "16777216E104"^^xsd:double
     ] [
-      xsd:minExclusive 16777216E-149
+      xsd:minExclusive "-16777216E-149"^^xsd:double
     ]
   ) .
 
@@ -182,7 +184,7 @@ xsd:integer a rdfs:Datatype;
     [
       xsd:pattern "[-+]?[0-9]+"
     ] [
-      xsd:fractionDigits 0
+      xsd:fractionDigits "0"^^xsd:nonNegativeInteger
     ]
   ) .
 
@@ -195,9 +197,9 @@ xsd:nonPositiveInteger a rdfs:Datatype;
     [
       xsd:pattern "([+-]?0|-[0-9]+)"
     ] [
-      xsd:fractionDigits 0
+      xsd:fractionDigits "0"^^xsd:nonNegativeInteger
     ] [
-      xsd:maxInclusive 0
+      xsd:maxInclusive "0"^^xsd:nonPositiveInteger
     ]
   ) .
 
@@ -210,9 +212,9 @@ xsd:negativeInteger a rdfs:Datatype;
     [
       xsd:pattern "(-[0-9]+)"
     ] [
-      xsd:fractionDigits 0
+      xsd:fractionDigits "0"^^xsd:nonNegativeInteger
     ] [
-      xsd:maxInclusive -1
+      xsd:maxInclusive "-1"^^xsd:negativeInteger
     ]
   ) .
 
@@ -225,11 +227,11 @@ xsd:long a rdfs:Datatype;
     [
       xsd:pattern "([-+]?[0-9]+)"
     ] [
-      xsd:fractionDigits 0
+      xsd:fractionDigits "0"^^xsd:nonNegativeInteger
     ] [
-      xsd:maxInclusive 9223372036854775807
+      xsd:maxInclusive "9223372036854775807"^^xsd:long
     ] [
-      xsd:minInclusive -9223372036854775808
+      xsd:minInclusive "-9223372036854775808"^^xsd:long
     ]
   ) .
 
@@ -242,11 +244,11 @@ xsd:int a rdfs:Datatype;
     [
       xsd:pattern "([-+]?[0-9]+)"
     ] [
-      xsd:fractionDigits 0
+      xsd:fractionDigits "0"^^xsd:nonNegativeInteger
     ] [
-      xsd:maxInclusive 2147483647
+      xsd:maxInclusive "2147483647"^^xsd:int
     ] [
-      xsd:minInclusive -2147483648
+      xsd:minInclusive "-2147483648"^^xsd:int
     ]
   ) .
 
@@ -259,11 +261,11 @@ xsd:short a rdfs:Datatype;
     [
       xsd:pattern "([-+]?[0-9]+)"
     ] [
-      xsd:fractionDigits 0
+      xsd:fractionDigits "0"^^xsd:nonNegativeInteger
     ] [
-      xsd:maxInclusive 32767
+      xsd:maxInclusive "32767"^^xsd:short
     ] [
-      xsd:minInclusive -32768
+      xsd:minInclusive "-32768"^^xsd:short
     ]
   ) .
 
@@ -276,9 +278,9 @@ xsd:byte a rdfs:Datatype;
     [
       xsd:pattern "([-+]?[0-9]+)"
     ] [
-      xsd:maxInclusive 127
+      xsd:maxInclusive "127"^^xsd:byte
     ] [
-      xsd:minInclusive -128
+      xsd:minInclusive "-128"^^xsd:byte
     ]
   ) .
 
@@ -291,7 +293,7 @@ xsd:nonNegativeInteger a rdfs:Datatype;
     [
       xsd:pattern "([+-]?0|[+]?[0-9]+)"
     ] [
-      xsd:minInclusive 0
+      xsd:minInclusive "0"^^xsd:nonNegativeInteger
     ]
   ) .
 
@@ -304,9 +306,9 @@ xsd:unsignedLong a rdfs:Datatype;
     [
       xsd:pattern "([0-9]+)"
     ] [
-      xsd:minInclusive 0
+      xsd:minInclusive "0"^^xsd:unsignedLong
     ] [
-      xsd:maxInclusive 18446744073709551615
+      xsd:maxInclusive "18446744073709551615"^^xsd:unsignedLong
     ]
   ) .
 
@@ -319,9 +321,9 @@ xsd:unsignedInt a rdfs:Datatype;
     [
       xsd:pattern "([0-9]+)"
     ] [
-      xsd:minInclusive 0
+      xsd:minInclusive "0"^^xsd:unsignedInt
     ] [
-      xsd:maxInclusive 4294967295
+      xsd:maxInclusive "4294967295"^^xsd:unsignedInt
     ]
   ) .
 
@@ -334,9 +336,9 @@ xsd:unsignedShort a rdfs:Datatype;
     [
       xsd:pattern "([0-9]+)"
     ] [
-      xsd:minInclusive 0
+      xsd:minInclusive "0"^^xsd:unsignedShort
     ] [
-      xsd:maxInclusive 65535
+      xsd:maxInclusive "65535"^^xsd:unsignedShort
     ]
   ) .
 
@@ -349,9 +351,9 @@ xsd:unsignedByte a rdfs:Datatype;
     [
       xsd:pattern "([0-9]+)"
     ] [
-      xsd:minInclusive 0
+      xsd:minInclusive "0"^^xsd:unsignedByte
     ] [
-      xsd:maxInclusive 255
+      xsd:maxInclusive "255"^^xsd:unsignedByte
     ]
   ) .
 
@@ -364,7 +366,7 @@ xsd:positiveInteger a rdfs:Datatype;
     [
       xsd:pattern "([+]?[1-9][0-9]*)"
     ] [
-      xsd:minInclusive 1
+      xsd:minInclusive "1"^^xsd:positiveInteger
     ]
   ) .
 

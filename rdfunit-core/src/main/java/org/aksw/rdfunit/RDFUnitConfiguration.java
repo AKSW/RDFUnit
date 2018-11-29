@@ -14,7 +14,6 @@ import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -140,12 +139,7 @@ public class RDFUnitConfiguration {
         }
 
         this.schemas = new ArrayList<>();
-        if(xsdExpansion){
-            this.schemas = schemata.stream().map(ss -> new SchemaSource(ss, Collections.singletonList(xsdSource))).collect(Collectors.toList());
-        }
-        else {
-            this.schemas = schemata;
-        }
+        this.schemas.addAll(schemata);
     }
 
     public void setEnrichedSchema(String enrichedSchemaPrefix) {

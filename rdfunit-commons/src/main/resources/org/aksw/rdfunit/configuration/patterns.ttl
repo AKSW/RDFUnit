@@ -773,9 +773,9 @@ rutp:MATCHXSDTYPE a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?this %%P1%% ?value .
                                     FILTER (datatype(?value) != xsd:%%XSD%% ||                                                      # not of expected type
-                                        ! regex(str(?value), '%%REGEX%%') ||                                                        # or not matching pattern
-                                        strlen('%%MIN%%') > 0 && ! xsd:%%XSD%%('%%MIN%%') %%MINOP%% xsd:%%XSD%%(str(?value)) ||     # or violating min constraint
-                                        strlen('%%MAX%%') > 0 && ! xsd:%%XSD%%('%%MAX%%') %%MAXOP%% xsd:%%XSD%%(str(?value))) .     # or violating max constraint
+                                        ! regex(str(?value), '^%%REGEX%%$') ||                                                      # or not matching pattern
+                                        strlen('%%MIN%%') > 0 && (! (xsd:%%XSD%%('%%MIN%%') %%MINOP%% xsd:%%XSD%%(str(?value)))) ||     # or violating min constraint
+                                        strlen('%%MAX%%') > 0 && (! (xsd:%%XSD%%('%%MAX%%') %%MAXOP%% xsd:%%XSD%%(str(?value))))) .     # or violating max constraint
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total)
                                      WHERE { ?this %%P1%% ?value . }""" ;

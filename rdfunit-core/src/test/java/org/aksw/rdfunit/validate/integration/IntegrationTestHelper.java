@@ -12,6 +12,7 @@ import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
@@ -38,6 +39,8 @@ public class IntegrationTestHelper {
     @Getter(lazy = true) private final static TestSuite shaclTestSuite = createTestSuiteWithShacl(resourcePrefix + "shacl/shacl.constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource shaclSchemaSource = createSchemaSourceSimple(resourcePrefix + "shacl/shacl.constraints.ttl");
 
+    @Getter(lazy = true) private final static TestSuite xsdTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithXsdAutoGenerators(), resourcePrefix + "owl/ontology.ttl");
+
     @Getter(lazy = true) private final static TestSuite owlTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "owl/ontology.ttl");
     @Getter(lazy = true) private final static SchemaSource owlSchemaSource = createSchemaSourceSimple(resourcePrefix + "owl/ontology.ttl");
 
@@ -46,6 +49,10 @@ public class IntegrationTestHelper {
 
     @Getter(lazy = true) private final static TestSuite dspTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "dsp/dsp_constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource dspSchemaSource = createSchemaSourceSimple(resourcePrefix + "dsp/dsp_constraints.ttl");
+
+    static{
+        SchemaService.addSchemaDecl("xsd", "http://www.w3.org/2001/XMLSchema#", "../rdfunit-commons/src/main/resources/org/aksw/rdfunit/vocabularies/xsd.ttl");
+    }
 
     public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {
         try {

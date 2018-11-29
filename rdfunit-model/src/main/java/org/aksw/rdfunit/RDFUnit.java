@@ -48,6 +48,10 @@ public class RDFUnit {
         return new RDFUnit(baseDirectories, getAutoGeneratorsOWLReader(baseDirectories));
     }
 
+    public static RDFUnit createWithXsdAutoGenerators() {
+        return new RDFUnit(ImmutableList.of(), getAutoGeneratorsXSDReader());
+    }
+
     public static RDFUnit createWithAllGenerators() {
         return createWithAllGenerators(ImmutableList.of());
     }

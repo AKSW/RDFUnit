@@ -98,10 +98,7 @@ public final class SchemaService {
                         SchemaSourceFactory
                             .createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(prefix), prefix));
         }
-
-
         return Optional.empty();
-
     }
 
     public static SchemaSource getSource(String baseFolder, String prefixOrUri) throws UndefinedSchemaException {

@@ -229,8 +229,6 @@ final class DataSelectorView extends CustomComponent implements WorkflowItem {
             uri = "http://rdfunit.aksw.org/CustomSource#"+ StringUtils.getHashFromString(text);
         }
         RDFUnitConfiguration configuration = new RDFUnitConfiguration(uri, RDFUnitDemoSession.getBaseDir());
-        //TODO create a checkBox for this
-        configuration.setExcludeSchemataFromPrefixes(Lists.newArrayList());
 
         try {
             if (text.trim().isEmpty()) {

@@ -10,20 +10,21 @@ import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.apache.jena.assembler.JA.getSchema;
 
 /**
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:51 PM
  */
 @ToString
-@EqualsAndHashCode(exclude={"model", "schemaReader"})
+@EqualsAndHashCode(exclude={"model", "schemaReader", "imports"})
 public class SchemaSource implements Source {
     /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(SchemaSource.class);
@@ -33,6 +34,9 @@ public class SchemaSource implements Source {
 
     protected final RdfReader schemaReader;
     @Getter(lazy=true) private final Model model = initModel() ;
+
+    private final Set<SchemaSource> predefinedImports = new HashSet<>();
+    @Getter(lazy=true) private final Set<SchemaSource> imports = collectImports();
 
     SchemaSource(SourceConfig sourceConfig, RdfReader schemaReader, Collection<SchemaSource> imports) {
         this(sourceConfig, sourceConfig.getUri(), schemaReader, imports);
@@ -47,6 +51,7 @@ public class SchemaSource implements Source {
         this.schema = schema;
         this.schemaReader = new RdfMultipleReader(Lists.asList(schemaReader,
                 imports.stream().map(x -> x.schemaReader).collect(Collectors.toList()).toArray(new RdfReader[imports.size()])));
+        this.predefinedImports.addAll(imports);
     }
 
     SchemaSource(SourceConfig sourceConfig, String schema, RdfReader schemaReader) {
@@ -55,7 +60,7 @@ public class SchemaSource implements Source {
         this.schemaReader = schemaReader;
     }
 
-    public SchemaSource(SchemaSource source) {this(source.sourceConfig, source.getSchema(), source.schemaReader);}
+    public SchemaSource(SchemaSource source) {this(source.sourceConfig, source.schema, source.schemaReader);}
 
     public SchemaSource(SchemaSource source, Collection<SchemaSource> imports) {this(source.sourceConfig, source.getSchema(), source.schemaReader, imports);}
 
@@ -78,6 +83,24 @@ public class SchemaSource implements Source {
         return sourceConfig;
     }
 
+    private Set<SchemaSource> collectImports(){
+        Model m = this.getModel();
+        Property importsProp = m.createProperty("http://www.w3.org/2002/07/owl#imports");
+        Set<String> imports = Lists.newArrayList(m.listObjectsOfProperty(importsProp)).stream().map(x -> x.asResource().getURI()).collect(Collectors.toSet());
+        HashSet<SchemaSource> importSources = new HashSet<>(this.predefinedImports);
+        imports.add("http://www.w3.org/2001/XMLSchema#");       //adding xsd by default
+        imports.remove(this.getUri());                          //remove cyclic
+        for(String uri : imports){
+            Optional<SchemaSource> imported = SchemaService.getSourceFromUri(uri);
+            if(imported.isPresent()){
+                importSources.add(imported.get());
+            } else{
+                log.warn("Cannot find ontology: " + uri + " to import into " + SchemaSource.this.getSchema());
+            }
+        }
+        return importSources;
+    }
+
     /**
      * lazy loaded via lombok
      */
@@ -89,5 +112,16 @@ public class SchemaSource implements Source {
             log.error("Cannot load ontology: {} ", getSchema(), e);
         }
         return m;
+    }
+
+    /**
+     * Will return this model with all transitive imports
+     */
+    public Model getTransitiveModel(){
+        Model res = this.getModel();
+        Set<SchemaSource> allImports = this.getImports().stream().flatMap(x -> x.getImports().stream()).filter(x -> ! x.getUri().equals(this.getUri())).collect(Collectors.toSet());
+        allImports.addAll(this.getImports());
+        allImports.forEach(x -> res.add(x.getTransitiveModel()));
+        return res;
     }
 }

@@ -243,6 +243,8 @@ final class TestGenerationView extends VerticalLayout implements TestGeneratorEx
             if (inProgress) {
                 RDFUnitDemoSession.getTestGeneratorExecutor().cancel();
                 TestGenerationView.this.generateBtn.setEnabled(true);
+                TestExecutionView tev = (TestExecutionView) TestGenerationView.this.next;
+                tev.startTestingButton.setEnabled(true);
             } else {
                 Notification.show("Nothing to cancel, generation not in progress",
                         Notification.Type.WARNING_MESSAGE);

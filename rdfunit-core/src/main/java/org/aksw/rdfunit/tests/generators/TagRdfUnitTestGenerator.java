@@ -36,7 +36,6 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
         this.testGenerators = ImmutableList.copyOf(testGenerators);
     }
 
-
     @Override
     public Collection<TestCase> generate(TestSource source) {
         return ImmutableList.of();
@@ -45,7 +44,7 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
     @Override
     public Collection<TestCase> generate(SchemaSource source) {
 
-        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(source.getModel())) {
+        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(source.getTransitiveModel())) {
             Set<TestCase> tests = testGenerators.stream()
                     .parallel()
                     .flatMap(tg -> generate(qef, source, tg).stream())
