@@ -76,7 +76,7 @@ rutp:RDFSRANGE-MISS-P1 a rut:Parameter ;
     rut:parameterConstraint rut:Property .
 
 ##########################################
-#### rdfs:range (datatype) pattern
+#### rdfs:range (datatype) pattern - generic
 ##########################################
 
 rutp:RDFSRANGED a rut:Pattern ;
@@ -109,7 +109,93 @@ rutp:RDFSRANGED-P1 a rut:Parameter ;
 
 rutp:RDFSRANGED-D1 a rut:Parameter ;
     dcterms:identifier "D1" ;
-    rut:parameterConstraint rut:None .
+    rut:parameterConstraint rut:Class  .
+
+
+##########################################
+#### rdfs:range (datatype) pattern - specific for XSD  datatypes
+##########################################
+
+rutp:RDFSRANGED_XSD a rut:Pattern ;
+    dcterms:identifier "RDFSRANGED_XSD" ;
+    dcterms:description """Emulates the rdfs:range (datatype) constrain for XSD datatypes.""" ;
+    rut:sparqlWherePattern """ {
+                                    ?this %%P1%% ?c.
+                                    BIND(%%D1%%(?c) AS ?c_xsd)
+                                    FILTER (DATATYPE(?c) != %%D1%%  || !BOUND(?c_xsd)  || ?c_xsd != ?c )
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total)
+                                     WHERE { ?this %%P1%% ?c .} """ ;
+    rut:parameter rutp:RDFSRANGED_XSD-P1 ;
+    rut:parameter rutp:RDFSRANGED_XSD-D1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:path ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:object ;
+        rut:annotationValue """?c"""
+    ];
+    .
+
+
+rutp:RDFSRANGED_XSD-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:RDFSRANGED_XSD-D1 a rut:Parameter ;
+    dcterms:identifier "D1" ;
+    rut:parameterConstraint rut:Class  .
+
+
+
+##########################################
+#### rdfs:range (datatype) pattern - specific for subclasses of XSD  datatypes
+##########################################
+
+rutp:RDFSRANGED_XSD_SUB a rut:Pattern ;
+    dcterms:identifier "RDFSRANGED_XSD_SUB" ;
+    dcterms:description """Emulates the rdfs:range (datatype) constrain for XSD datatypes.""" ;
+    rut:sparqlWherePattern """ {
+                                    ?this %%P1%% ?c.
+                                    BIND(STRDT( STR( ?c), %%XSD1%%) AS ?c_as_xsd)
+                                    BIND(%%XSD1%%(?c_as_xsd) AS ?c_to_xsd)
+                                    FILTER (DATATYPE(?c) != %%D1%%  || !BOUND(?c_as_xsd) || !BOUND(?c_to_xsd)  || ?c_as_xsd != ?c_to_xsd )
+
+                                } """ ;
+    rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total)
+                                     WHERE { ?this %%P1%% ?c .} """ ;
+    rut:parameter rutp:RDFSRANGED_XSD_SUB-P1 ;
+    rut:parameter rutp:RDFSRANGED_XSD_SUB-D1 ;
+    rut:parameter rutp:RDFSRANGED_XSD_SUB-XSD1 ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:path ;
+        rut:annotationValue """%%P1%%"""
+    ];
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:object ;
+        rut:annotationValue """?c"""
+    ];
+    .
+
+
+rutp:RDFSRANGED_XSD_SUB-P1 a rut:Parameter ;
+    dcterms:identifier "P1" ;
+    rut:parameterConstraint rut:Property .
+
+rutp:RDFSRANGED_XSD_SUB-D1 a rut:Parameter ;
+    dcterms:identifier "D1" ;
+    rut:parameterConstraint rut:Class  .
+
+rutp:RDFSRANGED_XSD_SUB-XSD1 a rut:Parameter ;
+    dcterms:identifier "XSD1" ;
+    rut:parameterConstraint rut:Class  .
+
+
 
 ##########################################
 #### rdfs:domain pattern (exists but wrong)

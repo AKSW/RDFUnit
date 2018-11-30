@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.23-SNAPSHOT</version>
+        <version>0.8.22-SNAPSHOT</version>
     </parent>
 
     <artifactId>rdfunit-validate</artifactId>
@@ -201,7 +201,8 @@
 
             <build>
                 <plugins>
-                    <plugin>
+
+						<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-shade-plugin</artifactId>
                         <executions>
@@ -229,32 +230,6 @@
                                             </excludes>
                                         </filter>
                                     </filters>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>3.0.2</version>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <!-- here the phase you need -->
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${basedir}/test/resources/org/aksw/rdfunit/vocabularies</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>../rdfunit-commons/src/main/resources/org/aksw/rdfunit/vocabularies</directory>
-                                            <includes>
-                                                <include>xsd.ttl</include>
-                                            </includes>
-                                        </resource>
-                                    </resources>
-                                    <overwrite>true</overwrite>
                                 </configuration>
                             </execution>
                         </executions>

@@ -7,8 +7,7 @@
 
 # A few sample ontology definitions used for testing
 
-<> a owl:Ontology;
-    owl:imports xsd: .
+ex: a owl:Ontology .
 
 ex:Person a owl:Class.
 ex:Place a owl:Class.
@@ -223,19 +222,12 @@ ex:nonLiteralP1 a owl:ObjectProperty .
 ex:nonLiteralP3 a rdf:Property ;
     rdfs:range ex:Person.
 
-# xsd double property
-ex:doubleProp a owl:DatatypeProperty ;
-    rdfs:range xsd:double  .
+# XSD
+ex:literalXsdInt a owl:DatatypeProperty ;
+       rdfs:range xsd:integer .
 
-# xsd float property
-ex:floatProp a owl:DatatypeProperty ;
-    rdfs:range xsd:double  .
+ex:literalMyInt a owl:DatatypeProperty ;
+       rdfs:range ex:myIntDatatype .
 
-# xsd date property
-ex:dateProp a owl:DatatypeProperty ;
-    rdfs:range xsd:date  .
-
-# xsd byte property
-ex:byteProp a owl:DatatypeProperty ;
-    rdfs:range xsd:byte  .
-
+ex:myIntDatatype a rdfs:Datatype ;
+    rdfs:subClassOf xsd:integer .

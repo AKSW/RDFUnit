@@ -6,7 +6,7 @@
     <artifactId>rdfunit-parent</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.8.23-SNAPSHOT</version>
+    <version>0.8.22-SNAPSHOT</version>
     <name>RDFUnit - Parent</name>
     <description>A RDF Testing Suite</description>
     <url>http://github.org/AKSW/RDFUnit</url>

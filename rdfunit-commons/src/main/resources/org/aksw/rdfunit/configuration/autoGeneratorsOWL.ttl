@@ -71,7 +71,7 @@ rutg:RDFSRANGEC-MISS a rut:TestGenerator ;
 							  # don't check for general classes
 							  FILTER (  ?T1 NOT IN ( owl:Thing, prov:Entity, rdfs:Resource, rdfs:Class, rdfs:Datatype, rdf:Property, schema:Property, schema:Class ))
 
-							  # Keep unique schema:rangeIncludes only (rdfs:range is cinjunctive)
+							  # Keep unique schema:rangeIncludes only (rdfs:range is conjunctive)
                               FILTER NOT EXISTS {?P1 schema:rangeIncludes ?T2 .
                                                     FILTER (?T1 != ?T2)
                               }
@@ -151,12 +151,12 @@ rutg:RDFLANGSTRING a rut:TestGenerator ;
     .
 
 # Datatype range
-rutg:RDFSRANGED a rut:TestGenerator ;
-    dcterms:description """Generate all rdfs:range constrains defined in a schema""" ;
+rutg:RDFSRANGED_NON_XSD a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range datatype constrains defined in a schema excluding xsd:* datatypes""" ;
     rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
-                              {   # xsd datatypes
+                              {   # xsd string for simple checking
                                   ?P1 rdfs:range ?D1 .
-                                  FILTER ( STRSTARTS(str(?D1), 'http://www.w3.org/2001/XMLSchema#') ).
+                                  FILTER ( ?D1 = xsd:String).
                               } UNION {
                                   ?P1 rdfs:range ?D1 .
                                   ?D1 rdf:type/rdfs:subClassOf* rdfs:Datatype .
@@ -164,6 +164,7 @@ rutg:RDFSRANGED a rut:TestGenerator ;
                                   ?P1 rdfs:range ?D1 .
                                   ?P1 rdf:type/rdfs:subClassOf* owl:DatatypeProperty .
                               }
+                              FILTER (?D1 = xsd:String || ! STRSTARTS(str(?D1), 'http://www.w3.org/2001/XMLSchema#') ).
                               FILTER ( ?D1 NOT IN ( rdfs:Literal, xsd:string, schema:Text, schema:URL, <http://ogp.me/ns/class#string>, <http://ogp.me/ns/class#url>) )
                               FILTER (!isBlank(?P1))
                               FILTER (!isBlank(?D1))
@@ -174,9 +175,55 @@ rutg:RDFSRANGED a rut:TestGenerator ;
         rut:annotationProperty rlog:level ;
         rut:annotationValue rlog:ERROR] ;
     rut:resultAnnotation [
-            a rut:ResultAnnotation ;
-            rut:annotationProperty sh:sourceConstraint ;
-            rut:annotationValue rdqv:RangeDatatypeConstraint] ;
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:RangeDatatypeConstraint] ;
+    .
+
+
+# Datatype range
+rutg:RDFSRANGED_XSD a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range datatype constrains for xsd:* datatypes""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ?D1 ?DESCRIPTION where {
+                              # xsd datatypes
+                              ?P1 rdfs:range ?D1 .
+                              FILTER ( STRSTARTS(str(?D1), 'http://www.w3.org/2001/XMLSchema#') ).
+                              FILTER ( ?D1 NOT IN ( xsd:string) )
+                              FILTER (!isBlank(?P1))
+                              BIND (concat(str(?P1),' does not have a valid xsd datatype: ', str(?D1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGED_XSD ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:RangeDatatypeConstraint] ;
+    .
+
+
+# Datatype range
+rutg:RDFSRANGED_XSD_SUB a rut:TestGenerator ;
+    dcterms:description """Generate all rdfs:range datatype constrains defined in a schema for datatypes that are subclasses of xsd:*""" ;
+    rut:sparqlGenerator """ select distinct ?P1 ?D1 ?XSD1 ?DESCRIPTION where {
+                              # xsd datatypes
+                              ?P1 rdfs:range ?D1 .
+                              ?D1 rdfs:subClassOf+ ?XSD1 .
+                              FILTER (! STRSTARTS(str(?D1), 'http://www.w3.org/2001/XMLSchema#') ).
+                              FILTER ( STRSTARTS(str(?XSD1), 'http://www.w3.org/2001/XMLSchema#') ).
+                              FILTER ( ?XSD1 NOT IN ( xsd:string) )
+                              FILTER (!isBlank(?P1))
+                              BIND (concat(str(?P1),' does not have a valid datatype: ', str(?D1) , ' that also conforms to xsd datatype: ', str(?XSD1)) AS ?DESCRIPTION)} """ ;
+    rut:basedOnPattern rutp:RDFSRANGED_XSD_SUB ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty rlog:level ;
+        rut:annotationValue rlog:ERROR] ;
+    rut:resultAnnotation [
+        a rut:ResultAnnotation ;
+        rut:annotationProperty sh:sourceConstraint ;
+        rut:annotationValue rdqv:RangeDatatypeConstraint] ;
     .
 
 
