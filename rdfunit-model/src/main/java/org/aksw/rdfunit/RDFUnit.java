@@ -48,10 +48,6 @@ public class RDFUnit {
         return new RDFUnit(baseDirectories, getAutoGeneratorsOWLReader(baseDirectories));
     }
 
-    public static RDFUnit createWithXsdAutoGenerators() {
-        return new RDFUnit(ImmutableList.of(), getAutoGeneratorsXSDReader());
-    }
-
     public static RDFUnit createWithAllGenerators() {
         return createWithAllGenerators(ImmutableList.of());
     }
@@ -126,10 +122,7 @@ public class RDFUnit {
     }
 
     public static RdfReader getAutoGeneratorsOWLReader(Collection<String> baseDirectories) {
-        return new RdfMultipleReader(Arrays.asList(
-            createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl"),
-            getAutoGeneratorsXSDReader()
-        ));
+        return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsOWL.ttl");
     }
 
     public static RdfReader getAutoGeneratorsOWLReader() {
@@ -149,13 +142,6 @@ public class RDFUnit {
     }
 
     public static RdfReader getAutoGeneratorsRSReader() {return getAutoGeneratorsRSReader(new ArrayList<>());}
-
-    public static RdfReader getAutoGeneratorsXSDReader() {
-        return new RdfMultipleReader(Arrays.asList(
-            RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/vocabularies/xsd.ttl"),
-            RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/configuration/autoGeneratorsXSD.ttl")
-        ));
-    }
 
     public static RdfReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {
         Collection<RdfReader> readers = Arrays.asList(

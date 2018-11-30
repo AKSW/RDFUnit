@@ -39,8 +39,6 @@ public class IntegrationTestHelper {
     @Getter(lazy = true) private final static TestSuite shaclTestSuite = createTestSuiteWithShacl(resourcePrefix + "shacl/shacl.constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource shaclSchemaSource = createSchemaSourceSimple(resourcePrefix + "shacl/shacl.constraints.ttl");
 
-    @Getter(lazy = true) private final static TestSuite xsdTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithXsdAutoGenerators(), resourcePrefix + "owl/ontology.ttl");
-
     @Getter(lazy = true) private final static TestSuite owlTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "owl/ontology.ttl");
     @Getter(lazy = true) private final static SchemaSource owlSchemaSource = createSchemaSourceSimple(resourcePrefix + "owl/ontology.ttl");
 

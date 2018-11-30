@@ -110,7 +110,7 @@ d2rq,http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#,http://d2rq.org/terms/d
 dady,http://purl.org/NET/dady#,http://purl.org/NET/dady#
 daia,http://purl.org/ontology/daia/,https://github.com/gbv/daia/blob/implementations/schemas/daia.owl.n3
 daq,http://purl.org/eis/vocab/daq#,http://theme-e.adaptcentre.ie/daq/daq.rdf
-dataid,http://dataid.dbpedia.org/ns/core#,http://dataid.dbpedia.org/ns/core#
+dataid,http://dataid.dbpedia.org/ns/core#,http://dataid.dbpedia.org/ns/core.ttl
 date,http://contextus.net/ontology/ontomedia/misc/date#,https://code.google.com/p/contextus/source/browse/trunk/ontomedia/misc/date.owl
 datex,http://vocab.datex.org/terms#,http://vocab.datex.org/terms#
 dave,http://theme-e.adaptcentre.ie/dave#,http://theme-e.adaptcentre.ie/dave/dave.ttl
