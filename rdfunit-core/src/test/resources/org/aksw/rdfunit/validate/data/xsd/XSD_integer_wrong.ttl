@@ -18,8 +18,3 @@ ex:error2
 	ex:literalMyInt "1.2"^^ex:myIntDatatypeXYZ ; # wrong datatype (counts twice, once for simple dt checking)
 	.
 
-
-ex:error3 a ex:Athlete ;
-    ex:birthDate "2018"^^xsd:date ; # wrong xsd:date
-    .
-

@@ -223,8 +223,26 @@ ex:nonLiteralP3 a rdf:Property ;
     rdfs:range ex:Person.
 
 # XSD
+ex:literalXsdByte a owl:DatatypeProperty ;
+       rdfs:range xsd:byte .
+
+ex:literalXsdDate a owl:DatatypeProperty ;
+       rdfs:range xsd:date .
+
 ex:literalXsdInt a owl:DatatypeProperty ;
        rdfs:range xsd:integer .
+
+ex:literalXsdBoolean a owl:DatatypeProperty ;
+       rdfs:range xsd:boolean .
+
+ex:literalXsdDecimal a owl:DatatypeProperty ;
+       rdfs:range xsd:decimal .
+
+ex:literalXsdFloat a owl:DatatypeProperty ;
+       rdfs:range xsd:float .
+
+ex:literalXsdDouble a owl:DatatypeProperty ;
+       rdfs:range xsd:double .
 
 ex:literalMyInt a owl:DatatypeProperty ;
        rdfs:range ex:myIntDatatype .

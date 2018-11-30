@@ -43,13 +43,11 @@ public final class StringUtils {
     public static String findLongestOverlap(String first, String second){
         if(org.apache.commons.lang3.StringUtils.isEmpty(first) || org.apache.commons.lang3.StringUtils.isEmpty(second))
             return "";
-        int secondLength = second.length();
-        for(int i = 1; i < first.length(); i++){
-            String zw = first.substring(first.length() - i);
-            if(zw.length() <= secondLength){
-                if(second.startsWith(zw))
-                    return zw;
-            }
+        int length = Math.min(first.length(), second.length());
+        for(int i = 0; i < length; i++){
+            String zw = first.substring(first.length() - length + i);
+            if(second.startsWith(zw))
+                return zw;
         }
         return "";
     }

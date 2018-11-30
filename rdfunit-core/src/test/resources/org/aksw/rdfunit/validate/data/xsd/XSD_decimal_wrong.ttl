@@ -7,12 +7,7 @@
 
 # Sample correct data for testing
 
-
-ex:correct1
-	ex:literalXsdInt "21"^^xsd:integer ;
-	#ex:literalMyInt "21"^^ex:myIntDatatype ;
-	.
-
-ex:correct2 a ex:Athlete ;
-    ex:birthDate "2018-01-01"^^xsd:date ;
-    .
+ex:correct4
+	ex:literalXsdDecimal "3,5"^^xsd:decimal ;
+	ex:literalXsdDecimal ""^^xsd:decimal ;
+.
