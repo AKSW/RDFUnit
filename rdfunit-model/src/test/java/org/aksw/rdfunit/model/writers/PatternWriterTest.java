@@ -40,7 +40,6 @@ public class PatternWriterTest {
         //new RdfFileWriter("tmp_pattern.out.ttl", "TTL").write(outputModel);
         //new RdfFileWriter("tmp_pattern.diff.ttl", "TTL").write(difference);
 
-        //TODO fails for anonymous nodes (but they are fine)
-        // assertThat(inputModel.isIsomorphicWith(outputModel)).isTrue();
+        assertThat(inputModel.isIsomorphicWith(outputModel)).isTrue();
     }
 }

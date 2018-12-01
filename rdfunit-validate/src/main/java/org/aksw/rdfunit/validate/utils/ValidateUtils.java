@@ -73,8 +73,6 @@ public final class ValidateUtils {
                 "This is where the results and the caches are stored. " +
                 "If none exists, bundled versions will be loaded.'");
         cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
-        cliOptions.addOption("xsd", "XSD schema expansion", false, "If set, each provided schema will be expanded with the W3C XML Schema (XSD), containing all basic datatype definitions. This is the prerequisite to validate all xsd datatypes against its expected regex pattern and min,max bounds.");
-
         return cliOptions;
     }
 
@@ -91,7 +89,6 @@ public final class ValidateUtils {
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
         setExcludeSchemata(commandLine, configuration);
-        setXsdExpansion(commandLine, configuration);
 
         setTestExecutionType(commandLine, configuration);
         setOutputFormats(commandLine, configuration);
@@ -266,12 +263,6 @@ public final class ValidateUtils {
                 //Get schema list
                 Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("x"));
                 configuration.setExcludeSchemataFromPrefixes(schemaUriPrefixes);
-        }
-    }
-
-    private static void setXsdExpansion(CommandLine commandLine, RDFUnitConfiguration configuration) {
-        if (commandLine.hasOption("xsd")) {
-            configuration.setXsdExpansion(true);
         }
     }
 

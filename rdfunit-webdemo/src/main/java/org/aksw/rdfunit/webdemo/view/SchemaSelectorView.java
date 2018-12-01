@@ -311,7 +311,6 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
             this.setMessage("Data Selection not configured properly", true);
             return false;
         }
-        configuration.setXsdExpansion(true);
 
         switch (schemaOption) {
             case AUTO_DATASET:

@@ -65,9 +65,6 @@ public class RDFUnitConfiguration {
     /* if set to false it will load only manual test cases */
     private boolean autoTestsEnabled = true;
 
-    /* if set to true this option will expand any schema with the XSD schema, allowing the auto-generation of datatype tests */
-    private boolean xsdExpansion = false;
-
     /* Execution type */
     private TestCaseExecutionType testCaseExecutionType = TestCaseExecutionType.aggregatedTestCaseResult;
 
@@ -159,14 +156,6 @@ public class RDFUnitConfiguration {
             Optional<SchemaSource> ss = SchemaService.getSourceFromPrefix(prefix);
             ss.ifPresent(schemaSource -> this.excludeSchemata.add(schemaSource));
         }
-    }
-
-    public boolean isXsdExpansion() {
-        return xsdExpansion;
-    }
-
-    public void setXsdExpansion(boolean xsdExpansion) {
-        this.xsdExpansion = xsdExpansion;
     }
 
     public Collection<SchemaSource> getAllSchemata() {

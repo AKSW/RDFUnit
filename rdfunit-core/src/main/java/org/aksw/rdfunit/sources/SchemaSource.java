@@ -88,7 +88,6 @@ public class SchemaSource implements Source {
         Property importsProp = m.createProperty("http://www.w3.org/2002/07/owl#imports");
         Set<String> imports = Lists.newArrayList(m.listObjectsOfProperty(importsProp)).stream().map(x -> x.asResource().getURI()).collect(Collectors.toSet());
         HashSet<SchemaSource> importSources = new HashSet<>(this.predefinedImports);
-        imports.add("http://www.w3.org/2001/XMLSchema#");       //adding xsd by default
         imports.remove(this.getUri());                          //remove cyclic
         for(String uri : imports){
             Optional<SchemaSource> imported = SchemaService.getSourceFromUri(uri);
