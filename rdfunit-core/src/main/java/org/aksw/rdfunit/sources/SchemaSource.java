@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.apache.jena.assembler.JA.getSchema;
-
 /**
  * @author Dimitris Kontokostas
  * @since 9/16/13 1:51 PM
