@@ -332,7 +332,7 @@ public class RDFUnitConfiguration {
     }
 
     public SerializationFormat geFirstOutputFormat() {
-        return RDFUnitUtils.getFirstItemInCollection(outputFormats);
+        return RDFUnitUtils.getFirstItemInCollection(outputFormats).orElseThrow(() -> new IllegalStateException("No output format was provided."));
     }
 
     public long getEndpointQueryDelayMS() {

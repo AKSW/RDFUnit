@@ -19,6 +19,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public final class RDFUnitUtils {
@@ -135,7 +136,7 @@ public final class RDFUnitUtils {
 
 
 
-    public static <T> T getFirstItemInCollection(Collection<T> collection) {
-        return collection.stream().findFirst().orElseGet(null);
+    public static <T> Optional<T> getFirstItemInCollection(Collection<T> collection) {
+        return collection.stream().findFirst();
     }
 }

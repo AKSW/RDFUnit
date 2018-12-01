@@ -14,8 +14,14 @@ public class XsdIntegrationTest {
     @Parameterized.Parameters(name = "{index}: {0} ({1})")
     public static Collection<Object[]> resources() {
         return Arrays.asList(new Object[][]{
+                {"xsd/XSD_unsignedlong_correct.ttl", 0},
+                {"xsd/XSD_unsignedlong_wrong.ttl", 4},
+                {"xsd/XSD_duration_correct.ttl", 0},
+                {"xsd/XSD_duration_wrong.ttl", 10},
                 {"xsd/XSD_byte_correct.ttl", 0},
                 {"xsd/XSD_byte_wrong.ttl", 3},
+                {"xsd/XSD_time_correct.ttl", 0},
+                {"xsd/XSD_time_wrong.ttl", 6},
                 {"xsd/XSD_float_correct.ttl", 0},
                 {"xsd/XSD_float_wrong.ttl", 4},
                 {"xsd/XSD_integer_correct.ttl", 0},

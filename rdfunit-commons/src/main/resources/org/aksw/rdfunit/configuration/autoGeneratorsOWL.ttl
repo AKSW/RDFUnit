@@ -240,9 +240,9 @@ rutg:RDFSRANGENL a rut:TestGenerator ;
 	                                ?D1 a ?C1 .
 	                                ?C1 a ?C2 .
 	                                FILTER ( ?C2 IN (rdfs:Class, owl:Class))
-                                    FILTER ( ?D1 NOT IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
+                                    FILTER ( ?D1 NOT IN (rdfs:Literal, rdf:langString))
 	                                FILTER NOT EXISTS {
-	                                    ?C1 rdf:type/rdfs:subClassOf* ?C3 .
+	                                    ?D1 rdf:type/rdfs:subClassOf* ?C3 .
 	                                    FILTER ( ?C3 IN (rdfs:Literal, rdf:langString, rdfs:Datatype, owl:DatatypeProperty))
 	                                }
 	                            } UNION {

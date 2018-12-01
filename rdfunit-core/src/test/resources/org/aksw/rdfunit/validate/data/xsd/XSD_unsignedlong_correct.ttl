@@ -1,0 +1,16 @@
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample correct data for testing
+
+
+ex:correct
+	ex:literalXsdUnsignedLong "+3"^^xsd:unsignedLong ;
+	ex:literalXsdUnsignedLong "18446744073709551615"^^xsd:unsignedLong ;
+	ex:literalXsdUnsignedLong "00000345632345"^^xsd:unsignedLong ;
+	ex:literalXsdUnsignedLong "0"^^xsd:unsignedLong ;
+.

@@ -115,7 +115,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         if (results.size() == 1) {
 
             //Get item
-            TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
+            TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results).get();
             checkNotNull(result);
 
             if (result instanceof StatusTestCaseResult) {

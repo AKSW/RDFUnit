@@ -229,6 +229,9 @@ ex:literalXsdByte a owl:DatatypeProperty ;
 ex:literalXsdDate a owl:DatatypeProperty ;
        rdfs:range xsd:date .
 
+ex:literalXsdUnsignedLong a owl:DatatypeProperty ;
+       rdfs:range xsd:unsignedLong .
+
 ex:literalXsdInt a owl:DatatypeProperty ;
        rdfs:range xsd:integer .
 
@@ -249,3 +252,9 @@ ex:literalMyInt a owl:DatatypeProperty ;
 
 ex:myIntDatatype a rdfs:Datatype ;
     rdfs:subClassOf xsd:integer .
+
+ex:literalXsdDuration a owl:DatatypeProperty ;
+       rdfs:range xsd:duration .
+
+ex:literalXsdTime a owl:DatatypeProperty ;
+       rdfs:range xsd:time .

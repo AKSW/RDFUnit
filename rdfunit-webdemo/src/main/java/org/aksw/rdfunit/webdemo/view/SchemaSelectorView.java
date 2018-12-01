@@ -52,7 +52,6 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
 
     }
 
-
     private void initLayout() {
         VerticalLayout root = new VerticalLayout();
         root.setSpacing(true);
@@ -162,7 +161,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
         inputTypeSelect.addItem(SchemaOption.AUTO_DATASET);
         inputTypeSelect.setItemCaption(SchemaOption.AUTO_DATASET, "Automatic Detection");
         inputTypeSelect.addItem(SchemaOption.AUTO_ONTOLOGY);
-        inputTypeSelect.setItemCaption(SchemaOption.AUTO_ONTOLOGY, "Ontology");
+        inputTypeSelect.setItemCaption(SchemaOption.AUTO_ONTOLOGY, "Ontology Validation");
         inputTypeSelect.addItem(SchemaOption.SPECIFIC_URIS);
         inputTypeSelect.setItemCaption(SchemaOption.SPECIFIC_URIS, "Specific Schemas");
         inputTypeSelect.addItem(SchemaOption.CUSTOM_TEXT);
@@ -235,7 +234,7 @@ final class SchemaSelectorView extends CustomComponent implements WorkflowItem {
                 "<b>Note that atm (for safety reasons) we automatically dereference only schemas that are available in LOV</b>");
 
         ontologyMessage.setContentMode(ContentMode.HTML);
-        ontologyMessage.setValue("<h3>Automatic Constraint Detection for Ontologies (OWL, RDFS, RDF, XSD)</h3>" +
+        ontologyMessage.setValue("<h3>Automatic Constraint Detection for Ontologies (including OWL, RDFS, RDF, XSD)</h3>" +
                 "We will parse the input ontology and identify all used properties and classes.<br/>" +
                 "Based on them we will try to dereference all the mentioned vocabularies & ontologies.<br/>" +
                 "Then we will use these vocabularies in our algorithms to generate automatic RDFUnit Test Cases.<br/>" +
