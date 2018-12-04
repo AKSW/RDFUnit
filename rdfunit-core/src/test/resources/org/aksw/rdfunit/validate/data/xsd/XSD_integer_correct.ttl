@@ -8,7 +8,8 @@
 # Sample correct data for testing
 
 
-ex:correct1
+ex:correct
+	ex:literalXsdInt -123456 ;
 	ex:literalXsdInt "21"^^xsd:integer ;
-	#ex:literalMyInt "21"^^ex:myIntDatatype ;
+	ex:literalMyInt "21"^^ex:myIntDatatype ;
 	.

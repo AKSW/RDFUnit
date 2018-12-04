@@ -12,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * @author Dimitris Kontokostas
  * @since 11/14/13 9:01 AM
@@ -35,6 +37,7 @@ public final class RdfReaderFactory {
 
     public static RdfReader createResourceReader(String resource) {
         InputStream is = Resources.class.getResourceAsStream(resource);
+        checkArgument(is != null, "Could not load resource file %s", resource);
         return new RdfStreamReader(is, FormatService.getFormatFromExtension(resource));
     }
 

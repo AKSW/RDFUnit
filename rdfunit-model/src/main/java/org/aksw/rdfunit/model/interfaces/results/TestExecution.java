@@ -11,7 +11,7 @@ public interface TestExecution extends Element {
 
     String getTestExecutionUri();
 
-    Set<TestCaseResult> getTestCaseResults();
+    Collection<TestCaseResult> getTestCaseResults();
     Collection<String> getSchemataUris();
     //Collection<String> getTestCasesUris();
 

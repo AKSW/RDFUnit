@@ -108,8 +108,6 @@ public class RDFUnitConfiguration {
         setAutoSchemataFromQEF(qef, all, true);
     }
 
-    private SchemaSource xsdSource = null;
-
     public void setAutoSchemataFromQEF(QueryExecutionFactory qef, boolean all, boolean limitToKnown) {
 
         NamespaceStatistics namespaceStatistics;
@@ -127,14 +125,6 @@ public class RDFUnitConfiguration {
     }
 
     public void setSchemata(Collection<SchemaSource> schemata) {
-        if(xsdSource == null) {
-            try {
-                xsdSource = SchemaService.getSource(testFolder, "xsd");
-            } catch (UndefinedSchemaException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
         this.schemas = new ArrayList<>();
         this.schemas.addAll(schemata);
     }

@@ -9,12 +9,14 @@ import org.aksw.rdfunit.model.interfaces.*;
 import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
+import org.aksw.rdfunit.sources.TransitiveSchemaSource;
 import org.aksw.rdfunit.tests.TestCaseValidator;
 import org.aksw.rdfunit.utils.TestUtils;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -44,7 +46,9 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
     @Override
     public Collection<TestCase> generate(SchemaSource source) {
 
-        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(source.getTransitiveModel())) {
+        //wrap source as TransitiveSchemaSource to include any imported ontology in the model
+        Model m = new TransitiveSchemaSource(source).getModel();
+        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(m)) {
             Set<TestCase> tests = testGenerators.stream()
                     .parallel()
                     .flatMap(tg -> generate(qef, source, tg).stream())

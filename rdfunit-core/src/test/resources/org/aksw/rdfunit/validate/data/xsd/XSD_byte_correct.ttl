@@ -7,7 +7,7 @@
 
 # Sample correct data for testing
 
-ex:correct3
+ex:correct
 	ex:literalXsdByte "+3"^^xsd:byte ;
 	ex:literalXsdByte "122"^^xsd:byte ;
 	ex:literalXsdByte "0"^^xsd:byte ;

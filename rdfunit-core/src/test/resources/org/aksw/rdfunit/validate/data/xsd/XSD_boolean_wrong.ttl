@@ -7,7 +7,7 @@
 
 # Sample correct data for testing
 
-ex:correct3
+ex:wrong
 	ex:literalXsdBoolean 1 ;
 	ex:literalXsdBoolean "truu"^^xsd:boolean ;
 	ex:literalXsdBoolean "2"^^xsd:boolean ;

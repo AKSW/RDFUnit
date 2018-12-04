@@ -7,7 +7,7 @@
 
 # Sample correct data for testing
 
-ex:correct4
+ex:wrong
 	ex:literalXsdDecimal "3,5"^^xsd:decimal ;
 	ex:literalXsdDecimal ""^^xsd:decimal ;
 .

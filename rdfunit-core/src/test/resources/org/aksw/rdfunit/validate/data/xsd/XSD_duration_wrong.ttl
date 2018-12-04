@@ -8,7 +8,7 @@
 # Sample correct data for testing
 
 
-ex:correct
+ex:wrong
 	ex:literalXsdDuration "PT15.S"^^xsd:duration ;
 	ex:literalXsdDuration "P2M1Y"^^xsd:duration ;
 	ex:literalXsdDuration "1Y2M"^^xsd:duration ;

@@ -8,7 +8,7 @@
 # Sample correct data for testing
 
 
-ex:correct
+ex:wrong
 	ex:literalXsdTime "13:65:00"^^xsd:time ;
 	ex:literalXsdTime "13:20.5:00"^^xsd:time ;
 	ex:literalXsdTime "13:20"^^xsd:time ;

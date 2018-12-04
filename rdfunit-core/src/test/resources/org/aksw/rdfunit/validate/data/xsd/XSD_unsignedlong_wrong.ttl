@@ -8,7 +8,7 @@
 # Sample correct data for testing
 
 
-ex:correct
+ex:wrong
 	ex:literalXsdUnsignedLong "-21"^^xsd:unsignedLong ;
 	ex:literalXsdUnsignedLong "18446744073709551620"^^xsd:unsignedLong ;
 	ex:literalXsdUnsignedLong "3.0"^^xsd:unsignedLong ;

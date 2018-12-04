@@ -7,7 +7,7 @@
 
 # Sample correct data for testing
 
-ex:correct2 a ex:Athlete ;
+ex:correct a ex:Athlete ;
     ex:literalXsdDate "2018-01-01"^^xsd:date ;
     ex:literalXsdDate "2004-04-12Z"^^xsd:date ;
     ex:literalXsdDate "2004-04-12-05:00"^^xsd:date ;

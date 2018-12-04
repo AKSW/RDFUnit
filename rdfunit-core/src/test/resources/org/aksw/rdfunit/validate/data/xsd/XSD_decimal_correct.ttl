@@ -7,7 +7,7 @@
 
 # Sample correct data for testing
 
-ex:correct4
+ex:correct
 	ex:literalXsdDecimal "+100000.00"^^xsd:decimal ;
 	ex:literalXsdDecimal "210."^^xsd:decimal ;
 	ex:literalXsdDecimal "0000210.000"^^xsd:decimal ;
