@@ -116,6 +116,10 @@ public final class SHACL {
 
     public static final Property deactivated = property("deactivated");
 
+    public enum LogicalConstraint{
+        and, or, xone, not
+    }
+
 
     private SHACL() {
     }

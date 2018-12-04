@@ -66,7 +66,6 @@ public abstract class TestExecutor {
      */
     protected abstract Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException;
 
-
     /**
      * Test execution for a Source against a TestSuite
      *

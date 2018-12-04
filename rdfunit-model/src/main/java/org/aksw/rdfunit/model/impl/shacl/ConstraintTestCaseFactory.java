@@ -63,7 +63,6 @@ public final class ConstraintTestCaseFactory {
                                 .target(target)
                                 .filterSparql("")
                                 .testCase(sc.getTestCase())
-                                //.prefixDeclarations(validator.getPrefixDeclarations())
                                 .build();
                         testCaseBuilder.add(tc);
                     });

@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public final class BatchShapeReader {
 
     private static final ImmutableSet<Resource> shapesAsInstancesOf = ImmutableSet.of(SHACL.Shape, SHACL.NodeShape, SHACL.PropertyShape);
+    //TODO find out why not xone, and not
     private static final ImmutableSet<Property> shapesAsObjectsOf = ImmutableSet.of(SHACL.node, SHACL.property, SHACL.and, SHACL.or);
     private static final ImmutableSet<Property> shapesAsSubjectsOf = ImmutableSet.of(SHACL.node, SHACL.property, SHACL.and, SHACL.or,
             SHACL.clazz, SHACL.datatype, SHACL.nodeKind,

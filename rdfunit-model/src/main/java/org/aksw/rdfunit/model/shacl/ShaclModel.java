@@ -82,13 +82,13 @@ public class ShaclModel {
     public Set<TestCase> generateTestCases() {
         ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
 
-        allTargets.forEach((key, value) -> {
+        allTargets.forEach((shape, targets) -> {
             // SPARQL constraints
-            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(key, value));
+            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(shape, targets));
 
             // Constraint components
             shapesGraph.getComponents().forEach(component ->
-                    testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, key, value)));
+                    testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, shape, targets)));
         });
 
         return testCaseBuilder.build();
@@ -116,7 +116,7 @@ public class ShaclModel {
         return builder.build();
     }*/
 
-    public Map<Shape, Set<ShapeTarget>> getExplicitShapeTargets(Collection<Shape> shapes) {
+    private Map<Shape, Set<ShapeTarget>> getExplicitShapeTargets(Collection<Shape> shapes) {
         Map<Shape, Set<ShapeTarget>> targets = new HashMap<>();
         shapes.forEach( s -> {
             Set<ShapeTarget> trgs = BatchShapeTargetReader.create().read(s.getElement());
@@ -127,7 +127,7 @@ public class ShaclModel {
         return  targets;
     }
 
-    public Map<Shape, Set<ShapeTarget>> getImplicitShapeTargets(ImmutableSet<Shape> shapes, ImmutableMap<Shape, Set<ShapeTarget>> explicitTargets) {
+    private Map<Shape, Set<ShapeTarget>> getImplicitShapeTargets(ImmutableSet<Shape> shapes, ImmutableMap<Shape, Set<ShapeTarget>> explicitTargets) {
         Map<Shape, Set<ShapeTarget>> implicitTargets = new HashMap<>();
 
         explicitTargets.forEach( (shape, targets) -> getImplicitTargetsForSingleShape(implicitTargets, shape, targets));
