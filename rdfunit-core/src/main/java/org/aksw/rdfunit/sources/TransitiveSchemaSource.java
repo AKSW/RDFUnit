@@ -3,33 +3,27 @@ package org.aksw.rdfunit.sources;
 import com.google.common.collect.Lists;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.aksw.rdfunit.io.reader.RdfMultipleReader;
-import org.aksw.rdfunit.io.reader.RdfReader;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 @EqualsAndHashCode(callSuper = true)
 public class TransitiveSchemaSource extends SchemaSource {
+
+    private final SchemaSource source;
 
     private final Set<SchemaSource> predefinedImports = new HashSet<>();
     @Getter(lazy=true) private final Set<SchemaSource> imports = collectImports();
 
-    TransitiveSchemaSource(SourceConfig sourceConfig, RdfReader schemaReader, Collection<SchemaSource> imports) {
-        this(sourceConfig, sourceConfig.getUri(), schemaReader, imports);
-    }
-
-    TransitiveSchemaSource(SourceConfig sourceConfig, String schema, RdfReader schemaReader, Collection<SchemaSource> imports) {
-        super(sourceConfig, schema,
-            new RdfMultipleReader(Lists.asList(schemaReader,
-                imports.stream().map(x -> x.schemaReader).collect(Collectors.toList()).toArray(new RdfReader[imports.size()]))));
-        this.predefinedImports.addAll(imports);
-    }
 
     public TransitiveSchemaSource(SchemaSource source, Collection<SchemaSource> imports) {
-        this(source.sourceConfig, source.getSchema(), source.schemaReader, imports);
+        super(source);
+        this.source = source;
+        predefinedImports.addAll(imports);
     }
 
     public TransitiveSchemaSource(SchemaSource source) {
@@ -40,7 +34,7 @@ public class TransitiveSchemaSource extends SchemaSource {
      * Tries to collect a SchemaSource for each imported ontology.
      */
     private Set<SchemaSource> collectImports(){
-        Model m = this.getModel();
+        Model m = source.getModel();
         Property importsProp = m.createProperty("http://www.w3.org/2002/07/owl#imports");
         Set<String> imports = Lists.newArrayList(m.listObjectsOfProperty(importsProp)).stream().map(x -> x.asResource().getURI()).collect(Collectors.toSet());
         HashSet<SchemaSource> importSources = new HashSet<>(this.predefinedImports);
@@ -72,7 +66,7 @@ public class TransitiveSchemaSource extends SchemaSource {
 
     @Override
     public Model getModel() {
-        Model res = super.getModel();
+        Model res = source.getModel();
         getTransitiveImports().forEach(s -> res.add(s.getModel()));
         return res;
     }

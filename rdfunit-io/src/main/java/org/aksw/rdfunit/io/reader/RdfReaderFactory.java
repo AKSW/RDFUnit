@@ -37,7 +37,7 @@ public final class RdfReaderFactory {
 
     public static RdfReader createResourceReader(String resource) {
         InputStream is = Resources.class.getResourceAsStream(resource);
-        checkArgument(is != null, "Could not load resource file %s", resource);
+        //checkArgument(is != null, "Could not load resource file %s", resource);
         return new RdfStreamReader(is, FormatService.getFormatFromExtension(resource));
     }
 
@@ -88,6 +88,6 @@ public final class RdfReaderFactory {
     }
 
     public static RdfReader createEmptyReader() {
-        return RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/io/empty.ttl");
+        return RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/validate/data/empty.ttl");
     }
 }
