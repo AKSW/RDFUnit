@@ -52,6 +52,7 @@ public final class ValidateUtils {
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/). If this option is missing RDFUnit will try to guess them automatically"
         );
+        cliOptions.addOption("i", "imports", false, "if set, in addition to the schemata provided or discovered, all transitively discovered import schemata (owl:imports) are included into the schema set");
         cliOptions.addOption("x", "excluded schemata", true,
                 "the schemas excluded from test generation by default " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)."
@@ -242,6 +243,10 @@ public final class ValidateUtils {
     }
 
     private static void setSchemas(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+        // first check if owl:imports are included
+        if(commandLine.hasOption("i")){
+            configuration.setAugmentWithOwlImports(true);
+        }
         if (commandLine.hasOption("s")) {
             try {
                 //Get schema list
