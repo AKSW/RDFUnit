@@ -83,7 +83,6 @@ public class RDFUnit {
 
     }
 
-
     /**
      * Initializes the patterns library, required
      *
@@ -142,9 +141,7 @@ public class RDFUnit {
         return createReaderFromBaseDirsAndResource(baseDirectories, "autoGeneratorsRS.ttl");
     }
 
-    public static RdfReader getAutoGeneratorsRSReader() {
-        return getAutoGeneratorsRSReader(new ArrayList<>());
-    }
+    public static RdfReader getAutoGeneratorsRSReader() {return getAutoGeneratorsRSReader(new ArrayList<>());}
 
     public static RdfReader getAutoGeneratorsALLReader(Collection<String> baseDirectories) {
         Collection<RdfReader> readers = Arrays.asList(

@@ -45,7 +45,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestExecutionView.class);
 
 
-    private final Button startTestingButton = new Button("Run tests");
+    protected final Button startTestingButton = new Button("Run tests");
     private final Button startTestingCancelButton = new Button("Cancel");
     private final Button resultsButton = new Button("Display Results");
 
@@ -445,8 +445,8 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             @Override
             public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results) {
                 long errors = 0;
-                TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results);
-                if (result != null) {
+                if (results != null && ! results.isEmpty()) {
+                    TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results).get();
                     if (result instanceof AggregatedTestCaseResult) {
                         errors = ((AggregatedTestCaseResult) result).getErrorCount();
                     }

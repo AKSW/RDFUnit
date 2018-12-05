@@ -1,5 +1,6 @@
 package org.aksw.rdfunit;
 
+import com.google.common.collect.Lists;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
@@ -12,8 +13,7 @@ import org.aksw.rdfunit.statistics.NamespaceStatistics;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -51,6 +51,9 @@ public class RDFUnitConfiguration {
     /* list of schemas for testing a dataset */
     private Collection<SchemaSource> schemas = null;
 
+    /* list of schemas always to be excluded from test generation */
+    private ArrayList<SchemaSource> excludeSchemata = Lists.newArrayList();
+
     private EnrichedSchemaSource enrichedSchema = null;
 
     /* use the cache for loading tests (do not regenerate if already exists) */
@@ -61,6 +64,9 @@ public class RDFUnitConfiguration {
 
     /* if set to false it will load only manual test cases */
     private boolean autoTestsEnabled = true;
+
+    /* if set to true, in addition to the schemata provided or discovered, all transitively discovered import schemata (owl:imports) are included into the schema set */
+    private boolean augmentWithOwlImports = false;
 
     /* Execution type */
     private TestCaseExecutionType testCaseExecutionType = TestCaseExecutionType.aggregatedTestCaseResult;
@@ -81,6 +87,7 @@ public class RDFUnitConfiguration {
         this.testFolder = testFolder;
 
         prefix = UriToPathUtils.getAutoPrefixForURI(datasetURI); // default prefix
+        setExcludeSchemataFromPrefixes(Arrays.asList("rdf", "rdfs", "owl", "rdfa")); // set default excludes
     }
 
     public void setEndpointConfiguration(String endpointURI, Collection<String> endpointGraphs, String username, String password) {
@@ -108,16 +115,16 @@ public class RDFUnitConfiguration {
 
         NamespaceStatistics namespaceStatistics;
         if (all) {
-            namespaceStatistics = limitToKnown ? NamespaceStatistics.createCompleteNSStatisticsKnown() : NamespaceStatistics.createCompleteNSStatisticsAll();
+            namespaceStatistics = limitToKnown ? NamespaceStatistics.createCompleteNSStatisticsKnown(this) : NamespaceStatistics.createCompleteNSStatisticsAll(this);
         } else {
-            namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown() : NamespaceStatistics.createOntologyNSStatisticsAll();
+            namespaceStatistics = limitToKnown ? NamespaceStatistics.createOntologyNSStatisticsKnown(this) : NamespaceStatistics.createOntologyNSStatisticsAll(this);
         }
         checkNotNull(namespaceStatistics);
-        this.schemas = namespaceStatistics.getNamespaces(qef);
+        setSchemata(namespaceStatistics.getNamespaces(qef));
     }
 
     public void setSchemataFromPrefixes(Collection<String> schemaPrefixes) throws UndefinedSchemaException {
-        this.schemas = SchemaService.getSourceList(testFolder, schemaPrefixes);
+        this.setSchemata(SchemaService.getSourceList(testFolder, schemaPrefixes));
     }
 
     public void setSchemata(Collection<SchemaSource> schemata) {
@@ -131,15 +138,39 @@ public class RDFUnitConfiguration {
         }
     }
 
+    public void setExcludeSchemata(Collection<SchemaSource> schemata){
+        this.excludeSchemata = new ArrayList<>();
+        this.excludeSchemata.addAll(schemata);
+    }
+
+    public void setAugmentWithOwlImports(boolean augmentWithOwlImports) {
+        this.augmentWithOwlImports = augmentWithOwlImports;
+    }
+
+    public boolean isAugmentWithOwlImports() {
+        return augmentWithOwlImports;
+    }
+
+    public void setExcludeSchemataFromPrefixes(Collection<String> schemaPrefixes) {
+        this.excludeSchemata = new ArrayList<>();
+        for(String prefix : schemaPrefixes){
+            Optional<SchemaSource> ss = SchemaService.getSourceFromPrefix(prefix);
+            ss.ifPresent(schemaSource -> this.excludeSchemata.add(schemaSource));
+        }
+    }
+
     public Collection<SchemaSource> getAllSchemata() {
-        Collection<SchemaSource> allSchemas = new ArrayList<>();
+        List<SchemaSource> allSchemas = new ArrayList<>();
         if (this.schemas != null) {
             allSchemas.addAll(this.schemas);
         }
         if (this.enrichedSchema != null) {
             allSchemas.add(this.enrichedSchema);
         }
-
+        if(augmentWithOwlImports){
+            List<SchemaSource> imports = RDFUnitUtils.augmentWithOwlImports(allSchemas);
+            imports.forEach(i -> {if(!allSchemas.contains(i)) allSchemas.add(i);});
+        }
         return allSchemas;
     }
 
@@ -294,7 +325,7 @@ public class RDFUnitConfiguration {
     }
 
     public SerializationFormat geFirstOutputFormat() {
-        return RDFUnitUtils.getFirstItemInCollection(outputFormats);
+        return RDFUnitUtils.getFirstItemInCollection(outputFormats).orElseThrow(() -> new IllegalStateException("No output format was provided."));
     }
 
     public long getEndpointQueryDelayMS() {
@@ -327,5 +358,9 @@ public class RDFUnitConfiguration {
 
     public void setEndpointQueryLimit(long endpointQueryLimit) {
         this.endpointQueryLimit = endpointQueryLimit;
+    }
+
+    public Collection<SchemaSource> getExcludeSchemata() {
+        return excludeSchemata;
     }
 }

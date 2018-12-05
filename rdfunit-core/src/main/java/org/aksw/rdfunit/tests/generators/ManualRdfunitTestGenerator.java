@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.generators;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -43,14 +44,12 @@ public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
             Set<TestCase> tests = new HashSet<>();
 
             try {
-                Collection<TestCase> testsManualsExternal = TestUtils.instantiateTestsFromModel(
-                        RdfReaderFactory.createFileOrResourceReader(
-                                CacheUtils.getSourceManualTestFile(testFolder, source),                 // check for local directory first
-                                CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source)  // otherwise check if it exists in resources
-                        ).read());
-
+                RdfReader reader = RdfReaderFactory.createFileOrResourceReader(
+                        CacheUtils.getSourceManualTestFile(testFolder, source),                 // check for local directory first
+                        CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source)  // otherwise check if it exists in resources
+                );
+                Collection<TestCase> testsManualsExternal = TestUtils.instantiateTestsFromModel(reader.read());
                 tests.addAll(testsManualsExternal);
-
                 tests.addAll(TestUtils.instantiateTestsFromModel(sourceModel));
 
             } catch (RdfReaderException e) {
@@ -62,5 +61,4 @@ public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
         return tests;
 
     }
-
 }

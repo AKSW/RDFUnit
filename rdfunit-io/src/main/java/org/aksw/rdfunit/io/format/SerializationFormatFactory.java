@@ -8,9 +8,9 @@ import java.util.*;
  * @author Dimitris Kontokostas
  * @since 6/18/14 4:27 PM
  */
-public final class SerialiazationFormatFactory {
+public final class SerializationFormatFactory {
 
-    private SerialiazationFormatFactory() {
+    private SerializationFormatFactory() {
     }
 
     /**

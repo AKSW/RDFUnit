@@ -15,6 +15,7 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -36,7 +37,6 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
         this.testGenerators = ImmutableList.copyOf(testGenerators);
     }
 
-
     @Override
     public Collection<TestCase> generate(TestSource source) {
         return ImmutableList.of();
@@ -45,7 +45,8 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
     @Override
     public Collection<TestCase> generate(SchemaSource source) {
 
-        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(source.getModel())) {
+        Model m = source.getModel();
+        try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(m)) {
             Set<TestCase> tests = testGenerators.stream()
                     .parallel()
                     .flatMap(tg -> generate(qef, source, tg).stream())
@@ -54,7 +55,6 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
             log.info("{} generated {} tests using {} TAGs", source.getUri(), tests.size(), testGenerators.size());
             return tests;
         }
-
     }
 
     private Set<TestCase> generate(QueryExecutionFactoryModel qef, SchemaSource source, TestGenerator testGenerator) {
@@ -72,11 +72,7 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
             });
         }
         return tests;
-
     }
-
-
-
 
     private Optional<TestCase> generateTestFromResult(TestGenerator tg, Pattern tgPattern, QuerySolution row, SchemaSource schemaSource) {
         Set<String> references = new HashSet<>();

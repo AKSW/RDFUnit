@@ -31,7 +31,7 @@ public class SerializationFormat {
     /**
      * Mimetype for this format e.g. "text/turtle" for turtle
      */
-    private final String headerType;
+    private final String mimeType;
 
     /**
      * A list of synonyms to make format parsing easier
@@ -46,11 +46,11 @@ public class SerializationFormat {
      * @param name a {@link java.lang.String} object.
      * @param ioType a {@link org.aksw.rdfunit.io.format.SerializationFormatIOType} object.
      * @param extension a {@link java.lang.String} object.
-     * @param headerType a {@link java.lang.String} object.
+     * @param mimeType a {@link java.lang.String} object.
      * @param graphType a {@link org.aksw.rdfunit.io.format.SerializationFormatGraphType} object.
      */
-    public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType) {
-        this(name, ioType, graphType, extension, headerType, new HashSet<>());
+    public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String mimeType) {
+        this(name, ioType, graphType, extension, mimeType, new HashSet<>());
     }
 
     /**
@@ -59,16 +59,16 @@ public class SerializationFormat {
      * @param name       the name
      * @param ioType       the type
      * @param extension  the extension
-     * @param headerType the header type
+     * @param mimeType the header type
      * @param synonyms   the synonyms
      * @param graphType a {@link org.aksw.rdfunit.io.format.SerializationFormatGraphType} object.
      */
-    public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String headerType, Set<String> synonyms) {
+    public SerializationFormat(String name, SerializationFormatIOType ioType, SerializationFormatGraphType graphType, String extension, String mimeType, Set<String> synonyms) {
         this.name = name;
         this.ioType = ioType;
         this.graphType = graphType;
         this.extension = extension;
-        this.headerType = headerType;
+        this.mimeType = mimeType;
         // Convert all to lowercase
         this.synonyms = new HashSet<>();
         this.synonyms.addAll(synonyms.stream().map(String::toLowerCase).collect(Collectors.toList()));
@@ -131,14 +131,14 @@ public class SerializationFormat {
      *
      * @return the header type
      */
-    public String getHeaderType() {
-        return headerType;
+    public String getMimeType() {
+        return mimeType;
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, ioType, graphType, extension, headerType, synonyms);
+        return Objects.hashCode(name, ioType, graphType, extension, mimeType, synonyms);
     }
 
 
@@ -155,7 +155,7 @@ public class SerializationFormat {
                 && Objects.equal(this.ioType, other.ioType)
                 && Objects.equal(this.graphType, other.graphType)
                 && Objects.equal(this.extension, other.extension)
-                && Objects.equal(this.headerType, other.headerType)
+                && Objects.equal(this.mimeType, other.mimeType)
                 && Objects.equal(this.synonyms, other.synonyms);
     }
 

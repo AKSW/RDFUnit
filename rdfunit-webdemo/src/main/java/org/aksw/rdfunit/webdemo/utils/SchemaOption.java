@@ -8,7 +8,8 @@ package org.aksw.rdfunit.webdemo.utils;
 
  */
 public enum SchemaOption {
-    AUTO_OWL,
-    SPECIFIC_URIS,
-    CUSTOM_TEXT
+    AUTO_DATASET,           // normal dataset, automatic schema detection (should exclude OWL and RDFS tests)
+    AUTO_ONTOLOGY,          // an ontology, will include OWL and RDFS tests
+    SPECIFIC_URIS,          // a specific ontology to use
+    CUSTOM_TEXT             // custom ontology, provided via UI
 }

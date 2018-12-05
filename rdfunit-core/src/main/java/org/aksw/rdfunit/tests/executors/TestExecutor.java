@@ -130,7 +130,7 @@ public abstract class TestExecutor {
                 status = TestCaseResultStatus.Fail;
             } else {
                 status = TestCaseResultStatus.Error; // Default
-                TestCaseResult r = RDFUnitUtils.getFirstItemInCollection(results);
+                TestCaseResult r = RDFUnitUtils.getFirstItemInCollection(results).get();
                 if (r instanceof StatusTestCaseResult) {
                     status = ((StatusTestCaseResult) r).getStatus();
                 } else {

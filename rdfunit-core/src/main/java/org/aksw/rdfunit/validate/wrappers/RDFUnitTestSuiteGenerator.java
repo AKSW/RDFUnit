@@ -139,8 +139,5 @@ public final class RDFUnitTestSuiteGenerator {
         private SchemaSource createSource(String prefix, String schemaUri, RdfReader schemaReader) {
             return SchemaSourceFactory.createSchemaSourceSimple(prefix, schemaUri, schemaReader);
         }
-
-
     }
-
 }

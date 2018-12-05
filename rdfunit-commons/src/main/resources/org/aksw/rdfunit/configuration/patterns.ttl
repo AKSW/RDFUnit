@@ -1320,6 +1320,3 @@ rutp:ONELANGGLOBAL a rut:Pattern ;
 rutp:ONELANGGLOBAL-P1 a rut:Parameter ;
     dcterms:identifier "P1" ;
     rut:parameterConstraint rut:Property .
-
-
-

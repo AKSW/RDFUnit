@@ -1,0 +1,184 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+
+# helper vocabs for describing the ontology
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+<http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#>
+    a owl:Ontology ;
+
+    <http://purl.org/vocab/vann/preferredNamespacePrefix> "rlog" ;
+    <http://purl.org/vocab/vann/preferredNamespaceUri> "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#" ;
+    <http://purl.org/vocab/vann/changes> <https://github.com/NLP2RDF/persistence.uni-leipzig.org/commits/master/ontologies/rlog>;
+
+    owl:versionInfo "1.1.0" ;
+    owl:versionIRI <https://github.com/NLP2RDF/ontologies/blob/master/rlog/rlog.ttl> ;
+
+    dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:title "RLOG - an RDF Logging Ontology"@en ;
+
+    rdfs:label "RLOG - an RDF Logging Ontology"@en ;
+    rdfs:comment """This is a helper ontology for NIF 2.0 to be able to log errors and warning messages."""@en ;
+
+
+	dc:creator "Sebastian Hellmann" ;
+    dc:contributor "TODO";
+    dc:publisher "AKSW, University Leipzig" ;
+    dc:rights """This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)"""@en ;
+    dc:description """We built this ontology by looking at log4j version 1.2 and version 2 beta: http://logging.apache.org/log4j/2.x/manual/layouts.html, http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html
+	Is this complete? No! But it will be sufficient for most use cases, please feel free to extend and adapt the ontology, if you need more.
+    Loglevels: TRACE, DEBUG, INFO, WARN, ERROR and FATAL
+
+    Feedback
+	If you'd like to leave feedback, please open an issue on GitHub (https://github.com/NLP2RDF/ontologies/issues) and read the README (https://github.com/NLP2RDF/ontologies#readme) or write an email to the mailing list: http://lists.informatik.uni-leipzig.de/mailman/listinfo/nlp2rdf
+
+	Versioning process is explained here: http://persistence.uni-leipzig.org/nlp2rdf/specification/version.html
+
+    Changelog:
+    * 1.0.0 initial version
+    * 1.0.1 added Error Code class and errcode property
+    * 1.1.0 change Error Code class to Status Code
+    """@en .
+
+
+rlog:Entry
+    a owl:Class ;
+    rdfs:label "Log Entry"@en ;
+    rdfs:comment """An entry in a log."""@en .
+
+rlog:Level
+    a owl:Class ;
+    rdfs:label "Log Level"@en ;
+    rdfs:comment """look here: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/Level.html """@en .
+
+rlog:StatusCode
+    a owl:Class ;
+    rdfs:label "Status Code"@en ;
+    rdfs:comment """A status code which can occur in an application. Instances of this class must put the name of the status as rdfs:label and describe it with rdfs:comment."""@en .
+
+rlog:className
+    a owl:DatatypeProperty ;
+    rdfs:domain rlog:Entry ;
+    rdfs:label "class name"@en ;
+	rdfs:comment """Outputs the fully qualified class name of the caller issuing the logging request."""@en.
+
+rlog:resource
+    a owl:ObjectProperty ;
+    rdfs:domain rlog:Entry ;
+    rdfs:label "an associated resource"@en ;
+	rdfs:comment """If we mix normal and log output, this can be used to refer to the resource in the RDF the error is connected to. """@en.
+
+rlog:hasCode
+    a owl:ObjectProperty ;
+    rdfs:domain rlog:Entry ;
+    rdfs:range rlog:StatusCode ;
+    rdfs:label "has code"@en  ;
+    rdfs:comment """Links a log message to a status code."""@en .
+
+rlog:codeId
+    a owl:DatatypeProperty ;
+    rdfs:domain rlog:StatusCode ;
+    rdfs:label "code id"@en  ;
+    rdfs:comment """The numerical value of the code, e.g. 200, 404 or 42."""@en .
+
+
+rlog:message
+    a owl:DatatypeProperty ;
+    rdfs:domain rlog:Entry ;
+    rdfs:label "Logging message"@en .
+
+
+rlog:date
+    a owl:DatatypeProperty ;
+    rdfs:domain rlog:Entry ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "Logging datetime (or just date)"@en .
+
+rlog:level
+    a owl:ObjectProperty ;
+    rdfs:domain rlog:Entry ;
+    rdfs:range rlog:Level ;
+    rdfs:label "logLevel"@en .
+
+rlog:priority
+    a owl:DatatypeProperty ;
+    rdfs:domain rlog:Level ;
+    rdfs:range xsd:int ;
+    rdfs:comment "Attention: the ids here can change, they are just used to define an order over the levels!"@en ;
+    rdfs:label "logLevel"@en .
+
+rlog:ALL
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "0"^^xsd:int ;
+	rdfs:comment "The ALL has the lowest possible rank and is intended to turn on all logging."@en ;
+    rdfs:label "ALL"@en .
+
+rlog:TRACE
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "1"^^xsd:int ;
+	rdfs:comment "The TRACE Level designates finer-grained informational events than the DEBUG."@en ;
+    rdfs:label "TRACE"@en .
+
+rlog:DEBUG
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "2"^^xsd:int ;
+	rdfs:comment "The DEBUG Level designates fine-grained informational events that are most useful to debug an application."@en ;
+    rdfs:label "DEBUG"@en .
+
+rlog:INFO
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "3"^^xsd:int ;
+	rdfs:comment "The INFO level designates informational messages that highlight the progress of the application at coarse-grained level."@en ;
+    rdfs:label "INFO"@en .
+
+rlog:WARN
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "4"^^xsd:int ;
+	rdfs:comment "The WARN level designates potentially harmful situations."@en ;
+    rdfs:label "WARN"@en .
+
+rlog:ERROR
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "5"^^xsd:int ;
+	rdfs:comment "The ERROR level designates error events that might still allow the application to continue running."@en ;
+    rdfs:label "ERROR"@en .
+
+rlog:FATAL
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "6"^^xsd:int ;
+	rdfs:comment "The FATAL level designates very severe error events that will presumably lead the application to abort."@en ;
+    rdfs:label "FATAL"@en .
+
+rlog:OFF
+	a rlog:Level ;
+	a owl:NamedIndividual ;
+	rlog:priority "7"^^xsd:int ;
+	rdfs:comment "The OFF has the highest possible rank and is intended to turn off logging."@en ;
+    rdfs:label "OFF"@en .
+
+
+ ##################
+ # Example
+ ##################
+
+ rlog:mylog1
+	a rlog:Entry ;
+	rlog:level rlog:INFO ;
+	rlog:date "2013-06-08T17:00:00Z"^^xsd:dateTime ;
+	rlog:className "org.nlp2rdf.core.SPARQLValidator";
+	rlog:resource <http://example.org/aResourceRelatedToThisLogEntry> ;
+	rlog:message "Example log message, put whatever you want."@en .
+
