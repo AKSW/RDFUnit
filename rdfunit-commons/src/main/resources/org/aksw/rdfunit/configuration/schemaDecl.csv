@@ -1,0 +1,192 @@
+#prefix,Namespace (with trailing separator!),URL
+rut,http://rdfunit.aksw.org/ns/core#,http://localhost:8080/core.ttl
+dbo,http://dbpedia.org/ontology/,http://mappings.dbpedia.org/server/ontology/dbpedia.owl
+georss,http://www.georss.org/georss/,http://www.georss.org/georss/geo_2007.owl
+isbd,http://iflastandards.info/ns/isbd/elements/,http://iflastandards.info/ns/isbd/elements.rdf
+lgdo,http://linkedgeodata.org/ontology/,http://downloads.linkedgeodata.org/experimental/2013-06-26-lgd-ontology.nt
+om2,http://www.ontology-of-units-of-measure.org/resource/om-2/,https://raw.githubusercontent.com/HajoRijgersberg/OM/master/om-2.0.rdf
+#dead? lgdm,http://linkedgeodata.org/meta/
+cheminf,http://semanticscience.org/ontology/cheminf.owl#,https://raw.githubusercontent.com/egonw/semanticchemistry/master/ontology/cheminf.owl
+# not reachable rooms,http://vocab.deri.ie/rooms#
+nerd,http://nerd.eurecom.fr/ontology#,http://nerd.eurecom.fr/ontology/nerd-v0.5.n3
+itsrdf,http://www.w3.org/2005/11/its/rdf#,http://www.w3.org/2005/11/its/rdf-content/its-rdf.rdf
+olia,http://purl.org/olia/,http://acoli.cs.uni-frankfurt.de/resources/olia/olia.owl
+nif,http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#,https://raw.github.com/NLP2RDF/ontologies/master/nif-core/nif-core.ttl
+dataid,http://dataid.dbpedia.org/ns/core#,http://dataid.dbpedia.org/ns/core.ttl
+rml,http://semweb.mmlab.be/ns/rml#,http://semweb.mmlab.be/ns/rml.ttl
+# dead http://semweb.mmlab.be/ns/ql#
+sider_vocabulary,http://bio2rdf.org/sider_vocabulary:,http://download.bio2rdf.org/release/3/sider/sider.schema.owl
+aiiso,http://purl.org/vocab/aiiso/schema#,http://vocab.org/aiiso/schema-20080925.rdf
+#dead http://www.aktors.org/ontology/portal
+#dead http://www.aktors.org/ontology/support
+bf,http://id.loc.gov/ontologies/bibframe/,http://id.loc.gov/ontologies/bibframe.rdf
+bevon,http://rdfs.co/bevon/,https://raw.githubusercontent.com/jgkim/bevon/master/bevon.ttl
+bevon,http://rdfs.co/bevon/0.8/,https://raw.githubusercontent.com/jgkim/bevon/master/bevon.ttl
+#dead http://contextus.net/ontology/ontomedia/ext/common/being#
+bci,https://w3id.org/BCI-ontology#,http://bci.pet.cs.nctu.edu.tw/ontology/BCI.owl
+agrelon,http://d-nb.info/standards/elementset/agrelon.owl#,https://d-nb.info/standards/elementset/agrelon-20181016.rdf
+aml,https://w3id.org/i40/aml#,http://i40.semantic-interoperability.org/automationml/Documentation/ontology.ttl
+ao,http://purl.org/ontology/ao/core#,http://purl.org/ontology/ao/associationontology.owl
+#ontology document is not referenced! http://semweb.mmlab.be/ns/apps4X
+# dead http://gslis.simmons.edu/archival/arch
+# dead http://contextus.net/ontology/ontomedia/ext/common/being#
+# not reachable http://vocab.deri.ie/br
+# not reachable http://vocab.deri.ie/c4n
+# not reachable http://purl.org/net/cartCoord#
+bot,http://www.w3id.org/bot#,http://www.w3id.org/bot/bot.ttl
+cbs,http://betalinkeddata.cbs.nl/def/cbs#,https://betalinkeddata.cbs.nl/def/cbs?format=ttl
+cco,http://smiy.sourceforge.net/cco/spec/cognitivecharacteristics.html#,http://purl.org/ontology/cco/cognitivecharacteristics.owl
+# not reachable http://www.ebusiness-unibw.org/ontologies/consumerelectronics/v1
+cerif,http://www.eurocris.org/ontologies/cerif/1.3#,https://www.eurocris.org/ontologies/cerif/1.3.ttl
+cff,http://purl.oclc.org/NET/ssnx/cf/cf-feature#,https://www.w3.org/2005/Incubator/ssn/ssnx/cf/cf-feature.owl
+cf,http://purl.oclc.org/NET/ssnx/cf/cf-property#,https://www.w3.org/2005/Incubator/ssn/ssnx/cf/cf-property.owl
+chord,http://purl.org/ontology/chord/,http://purl.org/ontology/chord/index.rdfs
+citof,http://www.essepuntato.it/2013/03/cito-functions/,http://www.essepuntato.it/static/tmp/0
+# not reachable http://purl.org/twc/ontologies/cmo.owl
+co,http://purl.org/ontology/co/core#,http://purl.org/ontology/co/counterontology.owl
+# resoucre link points to wrong ontology: http://purl.org/co
+comm,http://vocab.resc.info/communication#,http://vocab.resc.info/communication.ttl
+# dead http://purl.org/twc/ontologies/cmo.owl
+chord,http://purl.org/ontology/chord/,http://purl.org/ontology/chord/index.rdfs
+# not reachable http://vocab.deri.ie/cogs
+coun,http://www.daml.org/2001/09/countries/iso-3166-ont#,http://www.daml.org/2001/09/countries/iso-3166-ont.daml
+crm,http://www.cidoc-crm.org/cidoc-crm/,http://www.cidoc-crm.org/sites/default/files/CIDOCCRM_ecrm.owl
+# not reachable http://courseware.rkbexplorer.com/ontologies/courseware
+cs,http://purl.org/vocab/changeset/schema#,http://vocab.org/changeset/schema-20090518.rdf
+# not reachable http://vocab.deri.ie/csp
+# dead http://commontag.org/ns#
+# dead http://purl.org/ctic/infraestructuras/organizacion
+# not reachable http://vocab.deri.ie/dady
+# dead http://purl.org/ontology/daia
+# dead http://dataid.dbpedia.org/ns/core#
+date,http://vocab.datex.org/terms#,https://raw.githubusercontent.com/osoc16/mobylink/gh-pages/_data/vocabulary.json
+# dead https://decision-ontology.googlecode.com/svn/trunk/decision.owl
+# dead http://onto.dm2e.eu/schemas/dm2e
+# dead http://purl.org/ontology/dso
+# dead http://purl.org/swan/2.0/discourse-relationships/
+# dead http://vocab.data.gov/def/drm
+# dead http://purl.org/ctic/dcat#
+# dead http://www.eclap.eu/schema/eclap/
+# dead http://purl.org/eem
+# not reeachable http://purl.org/ctic/sector-publico/elecciones
+emotion,http://ns.inria.fr/emoca#,http://ns.inria.fr/emoca/emoca.ttl
+# dead http://purl.org/ctic/empleo/oferta
+# dead http://eprints.org/ontology/
+essglobal,http://purl.org/essglobal/vocab/,http://purl.org/essglobal/vocab/essglobal-vocab.rdf
+fabio,http://purl.org/spar/fabio/,https://sparontologies.github.io/fabio/current/fabio.owl
+# dead http://vocab.data.gov/def/fea
+# dead http://purl.org/cerif/frapo/
+g50k,http://data.ordnancesurvey.co.uk/ontology/50kGazetteer/,http://data.ordnancesurvey.co.uk/ontology/50kGazetteer/.ttl
+# dead http://www.oegov.org/core/owl/gc
+# dead http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl
+# not reachable http://aims.fao.org/aos/geopolitical.owl
+# dead http://www.samos.gr/ontologies/helpdeskOnto.owl
+# dead http://vocab.data.gov/hosp
+# dead http://iserve.kmi.open.ac.uk/ns/hrests
+# apparently no public access: http://www.identity.org/ontologies/identity.owl
+incident,http://vocab.resc.info/incident#,http://vocab.resc.info/incident.ttl
+# not reachable http://spi-fm.uca.es/spdef/models/genericTools/itm/1.0
+# not reachable http://ontology.it/itsmo/v1
+juso,http://rdfs.co/juso/,http://rdfs.co/juso/latest/ttl
+juso.kr,http://rdfs.co/juso/kr/,http://rdfs.co/juso/kr/latest/ttl
+# dead http://kdo.render-project.eu/kdo#
+# dead http://purl.org/net/vocab/2004/03/label
+lcy,http://purl.org/vocab/lifecycle/schema#,http://vocab.org/lifecycle/schema-20080603.rdf
+# dead http://linked.opendata.cz/ontology/ldvm/
+# dead http://www.lexinfo.net/ontology/2.0/lexinfo
+# dead http://purl.org/library/
+# dead http://purl.org/LiMo/0.1#
+lingvo,http://www.lingvoj.org/ontology#,http://www.linkedvocabs.org/lingvoj/ontology_v2.33.ttl
+# dead http://purl.org/ctic/infraestructuras/localizacion
+# dead http://data.opendiscoveryspace.eu/lom_ontology_ods.owl
+# dead http://loted.eu/ontology
+lsc,http://linkedscience.org/lsc/ns#,http://linkedscience.org/lsc/ns/lsc-2011-11-29.rdf
+lyou,http://purl.org/linkingyou/,http://openorg.ecs.soton.ac.uk/linkingyou/linkingyou.ttl
+ma-ont,http://www.w3.org/ns/ma-ont#,https://www.w3.org/ns/ma-ont.rdf
+# not found http://purl.org/media
+mo,http://purl.org/ontology/mo/,https://raw.githubusercontent.com/motools/musicontology/master/rdf/musicontology.n3
+# not found http://www.observedchange.com/moac/ns#
+# not found http://moat-project.org/ns#
+# dead http://www.telegraphis.net/ontology/measurement/measurement#
+# dead http://purl.org/muto/core
+# not reachable http://www.semanticdesktop.org/ontologies/2007/08/15/nao
+# not reachable http://www.semanticdesktop.org/ontologies/2007/04/02/ncal
+# not reachable http://www.semanticdesktop.org/ontologies/2007/03/22/nco
+# not reachable http://www.semanticdesktop.org/ontologies/2007/03/22/nfo
+# not reachable http://www.semanticdesktop.org/ontologies/2007/01/19/nie
+# dead http://lod.nl.go.kr/ontology/
+npg,http://ns.nature.com/terms/,http://data.nature.com/downloads/latest/ttl/npg-core-ontology.ttl
+# not reachable http://www.semanticdesktop.org/ontologies/2007/08/15/nrl
+oae,http://www.ics.forth.gr/isl/oae/core#,https://www.ics.forth.gr/isl/oae/core.owl
+# dead http://rdf.geospecies.org/methods/observationMethod.rdf
+# dead http://contextus.net/ontology/ontomedia/core/expression#
+# not reachable http://vocab.deri.ie/odapp
+# dead http://reference.data.gov.uk/def/organogram
+# dead http://www.oegov.org/core/owl/cc
+# dead http://owlrep.eu01.aws.af.cm/fridge
+# not found, redirected to other ontology: http://www.lingvoj.org/olca
+# dead http://open-multinet.info/ontology/omn
+# dead http://open-multinet.info/ontology/omn-federation
+# dead http://open-multinet.info/ontology/omn-lifecycle
+onc,http://www.ics.forth.gr/isl/oncm/core#,https://www.ics.forth.gr/isl/oncm/core.owl
+# dead http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl
+# not reachable http://purl.org/openorg/
+op,http://environment.data.gov.au/def/op#,http://registry2.it.csiro.au/def/op?_format=ttl
+# dead http://openprovenance.org/model/opmo
+# dead http://www.opmw.org/ontology/
+# dead http://online-presence.net/opo/ns#
+# not reachable http://lsdis.cs.uga.edu/projects/semdis/opus#
+# not reachable http://vocab.deri.ie/orca
+# ,dead http://contextus.net/ontology/ontomedia/core/space#
+# dead http://www.ordnancesurvey.co.uk/ontology/Topography/v0.1/Topography.owl
+ov,http://open.vocab.org/terms/,http://vocab.org/open/terms.rdf
+# dead http://reference.data.gov.uk/def/parliament
+part,http://purl.org/vocab/participation/schema#,http://vocab.org/participation/schema-20080925.rdf
+# dead  http://purl.org/hpi/patchr#
+# dead http://reference.data.gov.uk/def/payment#
+# not reachable http://vocab.deri.ie/pdo
+# dead http://purl.org/ontology/places
+# not reachable http://vocab.deri.ie/ppo
+# not reachable http://purl.org/prog/
+# not reachable http://vocab.deri.ie/raul
+rec,http://purl.org/ontology/rec/core#,http://purl.org/ontology/rec/recommendationontology.owl
+rel,http://purl.org/vocab/relationship/,http://vocab.org/relationship/rel-vocab-20100607.rdf
+# no resource was linked: http://vocab.org/review
+# not reachable http://vocab.deri.ie/rooms
+# dead http://salt.semanticauthoring.org/ontologies/sao
+# dead http://purl.org/spar/scoro/
+# not reachable http://vocab.deri.ie/scovo
+# not reachable http://vocab.deri.ie/scsv
+# dead http://salt.semanticauthoring.org/ontologies/sdo
+# not reachable http://vocab.deri.ie/search
+# redirected to different ontology: http://www.lingvoj.org/semio.rdf
+# not reachable http://purl.org/ontology/similarity/
+# dead http://ns.cerise-project.nl/energy/def/cim-smartgrid
+# no resource document was linked http://purl.org/net/soron
+# not reachable http://spi-fm.uca.es/spdef/models/deployment/spcm/1.0
+# no resource document was linked http://spitfire-project.eu/ontology/ns
+# dead http://salt.semanticauthoring.org/ontologies/sro
+step,http://purl.org/net/step#,https://raw.githubusercontent.com/talespaiva/step/gh-pages/ontology/step_v2.rdf
+# dead http://purl.org/ontology/stories/
+# dead http://data.semanticweb.org/ns/swc/ontology
+# not reachable http://spi-fm.uca.es/spdef/models/deployment/swpm/1.0
+# dead http://sw-portal.deri.org/ontologies/swportal
+# dead http://swrc.ontoware.org/ontology-07
+# not reachable http://vocab.deri.ie/tao
+# dead http://www.w3.org/2001/sw/hcls/ns/transmed/
+# dead http://contextus.net/ontology/ontomedia/ext/common/trait#
+# dead http://vocab.org/transit/terms/
+# not reachable http://idi.fundacionctic.org/cruzar/turismo
+# dead http://purl.oclc.org/NET/muo/ucum/
+# no resource linked http://purl.uniprot.org/core/
+vann,http://purl.org/vocab/vann/,http://vocab.org/vann/vann-vocab-20050401.rdf
+# not reachable http://spi-fm.uca.es/spdef/models/genericTools/vmm/1.0
+# dead http://voag.linkedmodel.org/schema/voag
+vocals,http://w3id.org/rsp/vocals#,https://ysedira.github.io/vocals/docs/core/ontology.ttl
+void,http://rdfs.org/ns/void#,https://raw.githubusercontent.com/dbpedia/DataId-Ontology/master/imports/void.ttl
+# dead http://vocab.sti2.at/vrank
+# dead http://purl.org/vsearch/
+# dead http://spi-fm.uca.es/spdef/models/genericTools/wikim/1.0
+wl,http://www.wsmo.org/ns/wsmo-lite#,http://www.wsmo.org/ns/wsmo-lite/index.rdfxml
+# no resource provided http://www.w3.org/1999/xhtml/vocab
+# no resource provided http://www.w3.org/2001/XMLSchema#

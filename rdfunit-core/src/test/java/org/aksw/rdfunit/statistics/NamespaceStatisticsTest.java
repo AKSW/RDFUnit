@@ -2,6 +2,7 @@ package org.aksw.rdfunit.statistics;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
+import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
@@ -34,11 +35,11 @@ public class NamespaceStatisticsTest {
     @Test
     public void testGetNamespaces() {
 
-        assertEquals(13, NamespaceStatistics.createCompleteNSStatisticsAll().getNamespaces(qef).size());
-        assertEquals(0, NamespaceStatistics.createCompleteNSStatisticsKnown().getNamespaces(qef).size());
+        assertEquals(13, NamespaceStatistics.createCompleteNSStatisticsAll(null).getNamespaces(qef).size());
+        assertEquals(0, NamespaceStatistics.createCompleteNSStatisticsKnown(null).getNamespaces(qef).size());
 
-        assertEquals(8, NamespaceStatistics.createOntologyNSStatisticsAll().getNamespaces(qef).size());
-        assertEquals(0, NamespaceStatistics.createOntologyNSStatisticsKnown().getNamespaces(qef).size());
+        assertEquals(8, NamespaceStatistics.createOntologyNSStatisticsAll(null).getNamespaces(qef).size());
+        assertEquals(0, NamespaceStatistics.createOntologyNSStatisticsKnown(null).getNamespaces(qef).size());
 
     }
 
@@ -49,7 +50,7 @@ public class NamespaceStatisticsTest {
         examples.put("http://example.com#property", "http://example.com#");
         examples.put("http://www.w3.org/2004/02/skos/core#broader", "http://www.w3.org/2004/02/skos/core#");
 
-        NamespaceStatistics namespaceStatistics = NamespaceStatistics.createCompleteNSStatisticsAll();
+        NamespaceStatistics namespaceStatistics = NamespaceStatistics.createCompleteNSStatisticsAll(null);
         for (Map.Entry<String, String> entry : examples.entrySet()) {
             String namespace = entry.getValue();
             assertEquals("All prefixed should be initialized", namespace, namespaceStatistics.getNamespaceFromURI(entry.getKey()));

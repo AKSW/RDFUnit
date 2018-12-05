@@ -14,45 +14,45 @@ public class FormatServiceTest {
     @Test
     public void testGetInputFormat() {
         // Turtle
-        assertEquals(FormatService.getInputFormat("turtle"), SerialiazationFormatFactory.createTurtle());
-        assertEquals(FormatService.getInputFormat("ttl"), SerialiazationFormatFactory.createTurtle());
+        assertEquals(FormatService.getInputFormat("turtle"), SerializationFormatFactory.createTurtle());
+        assertEquals(FormatService.getInputFormat("ttl"), SerializationFormatFactory.createTurtle());
 
         //N-Triples
-        assertEquals(FormatService.getInputFormat("ntriples"), SerialiazationFormatFactory.createNTriples());
-        assertEquals(FormatService.getInputFormat("N-Triple"), SerialiazationFormatFactory.createNTriples());
+        assertEquals(FormatService.getInputFormat("ntriples"), SerializationFormatFactory.createNTriples());
+        assertEquals(FormatService.getInputFormat("N-Triple"), SerializationFormatFactory.createNTriples());
 
         //N3
-        assertEquals(FormatService.getInputFormat("n3"), SerialiazationFormatFactory.createN3());
+        assertEquals(FormatService.getInputFormat("n3"), SerializationFormatFactory.createN3());
 
         // RDF/XML
-        assertEquals(FormatService.getInputFormat("RDF/XML"), SerialiazationFormatFactory.createRDFXMLIn());
-        assertEquals(FormatService.getInputFormat("rdfxml"), SerialiazationFormatFactory.createRDFXMLIn());
-        assertEquals(FormatService.getInputFormat("RDF/XML-ABBREV"), SerialiazationFormatFactory.createRDFXMLIn());
+        assertEquals(FormatService.getInputFormat("RDF/XML"), SerializationFormatFactory.createRDFXMLIn());
+        assertEquals(FormatService.getInputFormat("rdfxml"), SerializationFormatFactory.createRDFXMLIn());
+        assertEquals(FormatService.getInputFormat("RDF/XML-ABBREV"), SerializationFormatFactory.createRDFXMLIn());
 
         // RDFa
-        assertEquals(FormatService.getInputFormat("RDFA"), SerialiazationFormatFactory.createRDFa());
+        assertEquals(FormatService.getInputFormat("RDFA"), SerializationFormatFactory.createRDFa());
 
     }
 
     @Test
     public void testGetOutputFormat() {
         // Turtle
-        assertEquals(FormatService.getOutputFormat("turtle"), SerialiazationFormatFactory.createTurtle());
-        assertEquals(FormatService.getOutputFormat("ttl"), SerialiazationFormatFactory.createTurtle());
+        assertEquals(FormatService.getOutputFormat("turtle"), SerializationFormatFactory.createTurtle());
+        assertEquals(FormatService.getOutputFormat("ttl"), SerializationFormatFactory.createTurtle());
 
         //N-Triples
-        assertEquals(FormatService.getOutputFormat("ntriples"), SerialiazationFormatFactory.createNTriples());
-        assertEquals(FormatService.getOutputFormat("N-Triple"), SerialiazationFormatFactory.createNTriples());
+        assertEquals(FormatService.getOutputFormat("ntriples"), SerializationFormatFactory.createNTriples());
+        assertEquals(FormatService.getOutputFormat("N-Triple"), SerializationFormatFactory.createNTriples());
 
         //N3
-        assertEquals(FormatService.getOutputFormat("n3"), SerialiazationFormatFactory.createN3());
+        assertEquals(FormatService.getOutputFormat("n3"), SerializationFormatFactory.createN3());
 
         // RDF/XML
-        assertEquals(FormatService.getOutputFormat("RDF/XML"), SerialiazationFormatFactory.createRDFXMLOut());
-        assertEquals(FormatService.getOutputFormat("rdfxml"), SerialiazationFormatFactory.createRDFXMLOut());
+        assertEquals(FormatService.getOutputFormat("RDF/XML"), SerializationFormatFactory.createRDFXMLOut());
+        assertEquals(FormatService.getOutputFormat("rdfxml"), SerializationFormatFactory.createRDFXMLOut());
 
         // RDF/XML-ABBREV
-        assertEquals(FormatService.getOutputFormat("RDF/XML-ABBREV"), SerialiazationFormatFactory.createRDFXMLAbbrevOut());
+        assertEquals(FormatService.getOutputFormat("RDF/XML-ABBREV"), SerializationFormatFactory.createRDFXMLAbbrevOut());
     }
 
     @Test

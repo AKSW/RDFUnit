@@ -52,7 +52,11 @@ public final class ValidateUtils {
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/). If this option is missing RDFUnit will try to guess them automatically"
         );
-        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev");
+        cliOptions.addOption("x", "excluded schemata", true,
+                "the schemas excluded from test generation by default " +
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)."
+        );
+        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev, junitxml");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("C", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
@@ -69,7 +73,6 @@ public final class ValidateUtils {
                 "This is where the results and the caches are stored. " +
                 "If none exists, bundled versions will be loaded.'");
         cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
-
         return cliOptions;
     }
 
@@ -85,7 +88,7 @@ public final class ValidateUtils {
 
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
-
+        setExcludeSchemata(commandLine, configuration);
 
         setTestExecutionType(commandLine, configuration);
         setOutputFormats(commandLine, configuration);
@@ -93,7 +96,6 @@ public final class ValidateUtils {
         setTestAutogetCacheManual(commandLine, configuration);
 
         setQueryTtlCachePaginationLimit(commandLine, configuration);
-
 
         setCoverageCalculation(commandLine, configuration);
 
@@ -108,6 +110,7 @@ public final class ValidateUtils {
             } else {
                 RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
             }
+            RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
         } catch(Exception e) {
             LOGGER.warn("Loading custom scheme declarations failed.\n" +
                     "Falling back to bundled declarations in classpath due to", e);
@@ -252,6 +255,14 @@ public final class ValidateUtils {
         else {
             LOGGER.info("Searching for used schemata in dataset");
             configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
+        }
+    }
+
+    private static void setExcludeSchemata(CommandLine commandLine, RDFUnitConfiguration configuration) {
+        if (commandLine.hasOption("x")) {
+                //Get schema list
+                Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("x"));
+                configuration.setExcludeSchemataFromPrefixes(schemaUriPrefixes);
         }
     }
 

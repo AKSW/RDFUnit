@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
 /**
  * holds a simple set of property value pairs but on build groups the values with the same properties
  *

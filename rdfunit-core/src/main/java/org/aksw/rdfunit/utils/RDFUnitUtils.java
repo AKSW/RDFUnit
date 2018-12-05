@@ -2,12 +2,24 @@ package org.aksw.rdfunit.utils;
 
 import com.google.common.io.Resources;
 import lombok.extern.slf4j.Slf4j;
+import org.aksw.rdfunit.commons.RdfUnitModelFactory;
+import org.aksw.rdfunit.io.format.FormatService;
+import org.aksw.rdfunit.io.reader.RdfReader;
+import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfStreamReader;
 import org.aksw.rdfunit.sources.SchemaService;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.StmtIterator;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public final class RDFUnitUtils {
@@ -29,7 +41,7 @@ public final class RDFUnitUtils {
 
         URL resourceUrl = Resources.getResource(additionalCSVAsResource);
         try (
-            InputStream inputStream = resourceUrl.openStream()) {
+                InputStream inputStream = resourceUrl.openStream()) {
             fillSchemaServiceFromFile(inputStream);
         } catch (IOException e) {
             log.error("Error loading schemas from " + additionalCSVAsResource + "!", e);
@@ -49,13 +61,14 @@ public final class RDFUnitUtils {
 
                 while ((line = in.readLine()) != null) {
                     // skip comments & empty lines
-                    if (line.startsWith("#") || line.trim().isEmpty()) {
+                    String trimmed = line.trim();
+                    if (trimmed.startsWith("#") || trimmed.isEmpty()) {
                         continue;
                     }
 
                     count++;
 
-                    String[] parts = line.split(",");
+                    String[] parts = trimmed.split(",");
                     switch (parts.length) {
                         case 2:
                             SchemaService.addSchemaDecl(parts[0], parts[1]);
@@ -84,6 +97,31 @@ public final class RDFUnitUtils {
         }
     }
 
+    private static Model defModel = RdfUnitModelFactory.createDefaultModel();
+    private static Property vannPrefix = defModel.getProperty("http://purl.org/vocab/vann/preferredNamespacePrefix");
+    private static Property vannNamespace = defModel.getProperty("http://purl.org/vocab/vann/preferredNamespaceUri");
+
+    public static void fillSchemaServiceWithStandardVocabularies() throws IOException {
+        log.info("Adding standard vocabularies.");
+        List<String> fileNames = IOUtils.readLines(RDFUnitUtils.class.getClassLoader().getResourceAsStream("org/aksw/rdfunit/vocabularies/"), Charsets.UTF_8);
+        for(String f : fileNames){
+            if(! f.trim().endsWith(".md") && ! f.trim().endsWith(".txt")) {
+                try {
+                    URL resource = RDFUnitUtils.class.getClassLoader().getResource("org/aksw/rdfunit/vocabularies/" + f);
+                    if(resource != null) {
+                        RdfReader reader = new RdfStreamReader(resource.openStream(), FormatService.getFormatFromExtension(f));
+                        Model model = reader.read();
+                        StmtIterator prefixIter = model.listStatements(null, vannPrefix, (String) null);
+                        StmtIterator namespaceIter = model.listStatements(null, vannNamespace, (String) null);
+                        if (prefixIter.hasNext() && namespaceIter.hasNext())
+                            SchemaService.addSchemaDecl(prefixIter.next().getObject().toString(), namespaceIter.next().getObject().toString(), resource.toString());
+                    }
+                } catch (RdfReaderException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public static void fillSchemaServiceFromSchemaDecl() throws IOException {
         log.info("Adding manual schema entries (or overriding LOV)!");
@@ -98,7 +136,7 @@ public final class RDFUnitUtils {
 
 
 
-    public static <T> T getFirstItemInCollection(Collection<T> collection) {
-        return collection.stream().findFirst().orElseGet(null);
+    public static <T> Optional<T> getFirstItemInCollection(Collection<T> collection) {
+        return collection.stream().findFirst();
     }
 }

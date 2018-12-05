@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.webdemo.view;
 
+import com.google.common.collect.Lists;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;

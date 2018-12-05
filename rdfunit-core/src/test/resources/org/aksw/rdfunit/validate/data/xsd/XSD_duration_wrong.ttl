@@ -1,0 +1,22 @@
+@prefix ex: <http://example.com/ns#> .
+
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+# Sample correct data for testing
+
+
+ex:wrong
+	ex:literalXsdDuration "PT15.S"^^xsd:duration ;
+	ex:literalXsdDuration "P2M1Y"^^xsd:duration ;
+	ex:literalXsdDuration "1Y2M"^^xsd:duration ;
+	ex:literalXsdDuration "P1D2H"^^xsd:duration ;
+	ex:literalXsdDuration "P15.5Y"^^xsd:duration ;
+	ex:literalXsdDuration "P1YM5D"^^xsd:duration ;
+	ex:literalXsdDuration "P20MT"^^xsd:duration ;
+	ex:literalXsdDuration "P-20M"^^xsd:duration ;
+	ex:literalXsdDuration "P"^^xsd:duration ;
+	ex:literalXsdDuration ""^^xsd:duration ;
+.
