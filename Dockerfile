@@ -9,5 +9,5 @@ RUN apt-get update \
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
 
-RUN mvn -pl rdfunit-validate -am clean install
+RUN mvn -pl rdfunit-validate -am clean install -DskipTests=true
 ENTRYPOINT ["bin/rdfunit"]

@@ -37,7 +37,8 @@ public final class RdfReaderFactory {
 
     public static RdfReader createResourceReader(String resource) {
         InputStream is = Resources.class.getResourceAsStream(resource);
-        //checkArgument(is != null, "Could not load resource file %s", resource);
+        // FIXME: causes exceptions from TestGeneratorFactoryTest, needs refactoring
+        // checkArgument(is != null, "Could not load resource file %s", resource);
         return new RdfStreamReader(is, FormatService.getFormatFromExtension(resource));
     }
 

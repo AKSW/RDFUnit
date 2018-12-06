@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.utils;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.commons.RdfUnitModelFactory;
@@ -8,18 +9,17 @@ import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfStreamReader;
 import org.aksw.rdfunit.sources.SchemaService;
+import org.aksw.rdfunit.sources.SchemaSource;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.OWL;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 public final class RDFUnitUtils {
@@ -134,9 +134,39 @@ public final class RDFUnitUtils {
         RDFUnitUtils.fillSchemaServiceFromResource("org/aksw/rdfunit/configuration/schemaLOV.csv");
     }
 
-
-
     public static <T> Optional<T> getFirstItemInCollection(Collection<T> collection) {
         return collection.stream().findFirst();
+    }
+
+    public static List<SchemaSource> augmentWithOwlImports(List<SchemaSource> originalSources) {
+
+        ImmutableList.Builder<SchemaSource> augmentedSources = ImmutableList.builder();
+        augmentedSources.addAll(originalSources);
+
+        Set<String> schemaIris = originalSources.stream().map(SchemaSource::getSchema).collect(Collectors.toSet());
+        Set<SchemaSource> currentSources = new HashSet<>(originalSources);
+
+        while (!currentSources.isEmpty()) {
+
+            Set<SchemaSource> computedSources = currentSources.stream()
+                    .map(SchemaSource::getModel)
+                    .flatMap(m -> m.listObjectsOfProperty(OWL.imports).toList().stream())
+                    .filter(RDFNode::isResource)
+                    .map(RDFNode::asResource)
+                    .map(Resource::getURI)
+                    .filter(uri -> !schemaIris.contains(uri))
+                    .map(SchemaService::getSourceFromUri)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
+
+            Set<String> newIris = computedSources.stream().map(SchemaSource::getSchema).collect(Collectors.toSet());
+            schemaIris.addAll(newIris);
+
+            augmentedSources.addAll(computedSources);
+            currentSources = computedSources;
+
+        }
+        return augmentedSources.build();
     }
 }

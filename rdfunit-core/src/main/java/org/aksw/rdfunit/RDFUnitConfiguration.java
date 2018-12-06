@@ -65,6 +65,9 @@ public class RDFUnitConfiguration {
     /* if set to false it will load only manual test cases */
     private boolean autoTestsEnabled = true;
 
+    /* if set to true, in addition to the schemata provided or discovered, all transitively discovered import schemata (owl:imports) are included into the schema set */
+    private boolean augmentWithOwlImports = false;
+
     /* Execution type */
     private TestCaseExecutionType testCaseExecutionType = TestCaseExecutionType.aggregatedTestCaseResult;
 
@@ -140,6 +143,14 @@ public class RDFUnitConfiguration {
         this.excludeSchemata.addAll(schemata);
     }
 
+    public void setAugmentWithOwlImports(boolean augmentWithOwlImports) {
+        this.augmentWithOwlImports = augmentWithOwlImports;
+    }
+
+    public boolean isAugmentWithOwlImports() {
+        return augmentWithOwlImports;
+    }
+
     public void setExcludeSchemataFromPrefixes(Collection<String> schemaPrefixes) {
         this.excludeSchemata = new ArrayList<>();
         for(String prefix : schemaPrefixes){
@@ -149,14 +160,17 @@ public class RDFUnitConfiguration {
     }
 
     public Collection<SchemaSource> getAllSchemata() {
-        Collection<SchemaSource> allSchemas = new ArrayList<>();
+        List<SchemaSource> allSchemas = new ArrayList<>();
         if (this.schemas != null) {
             allSchemas.addAll(this.schemas);
         }
         if (this.enrichedSchema != null) {
             allSchemas.add(this.enrichedSchema);
         }
-
+        if(augmentWithOwlImports){
+            List<SchemaSource> imports = RDFUnitUtils.augmentWithOwlImports(allSchemas);
+            imports.forEach(i -> {if(!allSchemas.contains(i)) allSchemas.add(i);});
+        }
         return allSchemas;
     }
 

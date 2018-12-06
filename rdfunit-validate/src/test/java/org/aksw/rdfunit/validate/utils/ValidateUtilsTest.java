@@ -28,13 +28,19 @@ public class ValidateUtilsTest {
         // Set two dummy schemas for testing
         SchemaService.addSchemaDecl("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         SchemaService.addSchemaDecl("owl", "http://www.w3.org/2002/07/owl#");
+        SchemaService.addSchemaDecl("dataid", "http://dataid.dbpedia.org/ns/core#");
+        SchemaService.addSchemaDecl("prov", "http://www.w3.org/ns/prov#");
+        SchemaService.addSchemaDecl("foaf", "http://xmlns.com/foaf/0.1/");
+        SchemaService.addSchemaDecl("void", "http://rdfs.org/ns/void#");
+        SchemaService.addSchemaDecl("dcat", "http://www.w3.org/ns/dcat#");
 
-        args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -s rdfs,owl -p dbo -A -T 10 -P 10 -D 10 -L 10";
+        args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -i -s rdfs,owl,dataid -p dbo -A -T 10 -P 10 -D 10 -L 10";
         commandLine = cliParser.parse(cliOptions, args.split(" "));
         configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
         assertEquals(configuration.getDatasetURI(), "http://dbpedia.org");
         assertEquals(configuration.getPrefix(), "dbpedia.org");
+        assertTrue(configuration.isAugmentWithOwlImports());
 
         // Get endpoint details
         assertEquals(configuration.getEndpointURI(), "http://dbpedia.org/sparql");
@@ -43,7 +49,7 @@ public class ValidateUtilsTest {
         assertEquals(configuration.getEndpointGraphs(), Collections.singletonList("http://dbpedia.org"));
 
         // get schemas
-        assertEquals(configuration.getAllSchemata().size(), 3); //2 schema + 1 enriched
+        assertEquals(configuration.getAllSchemata().size(), 8); //3 schema + 1 enriched + 4 imported
         assertNotNull(configuration.getEnrichedSchema());
 
         // data folder
