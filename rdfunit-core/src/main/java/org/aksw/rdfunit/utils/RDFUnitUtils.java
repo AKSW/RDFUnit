@@ -138,7 +138,7 @@ public final class RDFUnitUtils {
         return collection.stream().findFirst();
     }
 
-    public static List<SchemaSource> augmentWithOwlImports(List<SchemaSource> originalSources) {
+    public static List<SchemaSource> augmentWithOwlImports(Set<SchemaSource> originalSources) {
 
         ImmutableList.Builder<SchemaSource> augmentedSources = ImmutableList.builder();
         augmentedSources.addAll(originalSources);
