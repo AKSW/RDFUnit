@@ -20,9 +20,9 @@ public class ValidateUtilsTest {
     public void testGetConfigurationFromArguments() throws ParseException, ParameterException {
         Options cliOptions = ValidateUtils.getCliOptions();
 
-        String args = "";
-        RDFUnitConfiguration configuration = null;
-        CommandLine commandLine = null;
+        String args;
+        RDFUnitConfiguration configuration;
+        CommandLine commandLine;
         CommandLineParser cliParser = new DefaultParser();
 
         // Set two dummy schemas for testing
@@ -174,7 +174,5 @@ public class ValidateUtilsTest {
                 // Do nothing here
             }
         }
-
-
     }
 }
