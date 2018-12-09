@@ -11,6 +11,7 @@ import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
 import org.aksw.rdfunit.io.writer.RdfStreamWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
@@ -433,7 +434,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             }
 
             @Override
-            public void singleTestStarted(final TestCase test) {
+            public void singleTestStarted(final GenericTestCase test) {
                 UI.getCurrent().access(() -> {
                     if (count == 0) {
                         setMessage("Running tests...", false);
@@ -443,7 +444,7 @@ final class TestExecutionView extends VerticalLayout implements WorkflowItem {
             }
 
             @Override
-            public void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results) {
+            public void singleTestExecuted(final GenericTestCase test, final TestCaseResultStatus status, final java.util.Collection<TestCaseResult> results) {
                 long errors = 0;
                 if (results != null && ! results.isEmpty()) {
                     TestCaseResult result = RDFUnitUtils.getFirstItemInCollection(results).get();

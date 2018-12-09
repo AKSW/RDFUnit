@@ -1,7 +1,7 @@
 package org.aksw.rdfunit.tests.generators;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestGenerator;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -67,7 +67,7 @@ public class TestGeneratorExecutor {
         }
 
 
-        Collection<TestCase> allTests = new ArrayList<>();
+        Collection<GenericTestCase> allTests = new ArrayList<>();
         for (SchemaSource s : sources) {
             if (isCanceled) {
                 break;

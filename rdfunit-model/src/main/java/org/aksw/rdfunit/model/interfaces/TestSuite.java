@@ -17,13 +17,13 @@ import java.util.List;
  * @since 1/6/14 8:33 AM
  */
 public class TestSuite {
-    private final Collection<TestCase> testCases;
+    private final Collection<GenericTestCase> testCases;
 
-    public TestSuite(Collection<TestCase> testCases) {
+    public TestSuite(Collection<GenericTestCase> testCases) {
         //First, let's order the TestSuit alphabetically by TestURI,
         //so the results will always be shown in the same order (makes it easier to compare different runs)
-        List<TestCase> list = new ArrayList<>(testCases);
-        Comparator<TestCase> comparator = (left, right) -> {
+        List<GenericTestCase> list = new ArrayList<>(testCases);
+        Comparator<GenericTestCase> comparator = (left, right) -> {
             //sorting by AbrTestURI (ignoring case)
             return left.getAbrTestURI().compareToIgnoreCase(right.getAbrTestURI());
         };
@@ -31,7 +31,7 @@ public class TestSuite {
         this.testCases = list; //return the sorted list
     }
 
-    public Collection<TestCase> getTestCases() {
+    public Collection<GenericTestCase> getTestCases() {
         return testCases;
     }
 
@@ -49,7 +49,7 @@ public class TestSuite {
                 .addProperty(RDF.type, model.createResource(PrefixNSService.getURIFromAbbrev("rut:TestSuite")))
                 .addProperty(RDF.type, PROV.Collection);
 
-        for (TestCase tc : testCases) {
+        for (GenericTestCase tc : testCases) {
             resource.addProperty(PROV.hadMember, model.createResource(tc.getTestURI()));
         }
         // TODO check whether to dump the complete test

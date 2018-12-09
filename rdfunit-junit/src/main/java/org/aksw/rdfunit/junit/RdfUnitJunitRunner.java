@@ -4,7 +4,7 @@ import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.SchemaSourceFactory;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitTestSuiteGenerator;
@@ -121,7 +121,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     private void generateRdfUnitTestCases() throws InitializationError {
         final SchemaSource schemaSource = createSchemaSourceFromSchema();
         final Object testCaseInstanceLocal = getTestCaseInstance();
-        final Collection<TestCase> testCasesLocal = createTestCases();
+        final Collection<GenericTestCase> testCasesLocal = createTestCases();
         for (FrameworkMethod testInputMethod : getTestInputMethods()) {
             final RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider = new
                     RdfUnitJunitTestCaseDataProvider(testInputMethod, testCaseInstanceLocal, schemaSource,
@@ -177,7 +177,7 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
         return SchemaSourceFactory.createSchemaSourceSimple(getSchema().uri(), getSchemaReader());
     }
 
-    private Collection<TestCase> createTestCases() throws InitializationError {
+    private Collection<GenericTestCase> createTestCases() throws InitializationError {
         return new RDFUnitTestSuiteGenerator.Builder()
                 .addSchemaURI("custom", getSchema().uri(), getSchemaReader())
                 .enableAutotests()

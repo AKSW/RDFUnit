@@ -38,12 +38,12 @@ public class TagRdfUnitTestGenerator implements RdfUnitTestGenerator{
     }
 
     @Override
-    public Collection<TestCase> generate(TestSource source) {
+    public Collection<? extends GenericTestCase> generate(TestSource source) {
         return ImmutableList.of();
     }
 
     @Override
-    public Collection<TestCase> generate(SchemaSource source) {
+    public Collection<? extends GenericTestCase> generate(SchemaSource source) {
 
         Model m = source.getModel();
         try (QueryExecutionFactoryModel qef = new QueryExecutionFactoryModel(m)) {

@@ -1,6 +1,5 @@
 package org.aksw.rdfunit.junit;
 
-import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.tests.executors.ShaclSimpleTestExecutor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
@@ -21,16 +20,11 @@ final class RdfUnitJunitStatusTestExecutor extends ShaclSimpleTestExecutor {
 
     protected Collection<TestCaseResult> runTest(RdfUnitJunitTestCase rdfUnitJunitTestCase) {
 
-        try {
-            rdfUnitJunitTestCase.prepareForExecution();
+        rdfUnitJunitTestCase.prepareForExecution();
 
-            return this.executeSingleTest(
-                    rdfUnitJunitTestCase.getModelSource(),
-                    rdfUnitJunitTestCase.getTestCase()
-            );
-        } catch (TestCaseExecutionException e) {
-            /// Should never happen (TM)
-            throw new IllegalStateException(e);
-        }
+        return this.executeGenericTest(
+                rdfUnitJunitTestCase.getModelSource(),
+                rdfUnitJunitTestCase.getTestCase()
+        );
     }
 }

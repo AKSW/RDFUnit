@@ -84,6 +84,7 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
                     for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
                         // Get values
                         if (resultAnnotation.getAnnotationValue().isPresent()) {
+                            // FIXME, I don't understand why we don't just use class ResultAnnotation as result annotations instead of PropertyValuePair (since we basically just copy them) ?
                             annotationSetBuilder.annotation(
                                     PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get()));
                         }

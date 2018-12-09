@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.readers;
 
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
@@ -24,7 +25,7 @@ public final class BatchTestCaseReader {
 
     public static BatchTestCaseReader create() { return new BatchTestCaseReader();}
 
-    public Collection<TestCase> getTestCasesFromModel(Model model) {
+    public Collection<GenericTestCase> getTestCasesFromModel(Model model) {
         ConcurrentLinkedQueue<TestCase> testCases = new ConcurrentLinkedQueue<>();
 
         model.listResourcesWithProperty(RDF.type, RDFUNITv.ManualTestCase).toList()

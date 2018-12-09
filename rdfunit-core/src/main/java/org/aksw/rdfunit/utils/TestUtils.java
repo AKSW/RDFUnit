@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.Binding;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.Pattern;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
@@ -26,17 +27,17 @@ public final class TestUtils {
     private TestUtils() {
     }
 
-    public static Collection<TestCase> instantiateTestsFromModel(Model model) {
+    public static Collection<GenericTestCase> instantiateTestsFromModel(Model model) {
         return instantiateTestsFromModel(model, false);
         }
 
-    public static Collection<TestCase> instantiateTestsFromModel(Model model, boolean strict) {
+    public static Collection<GenericTestCase> instantiateTestsFromModel(Model model, boolean strict) {
         return BatchTestCaseReader.create().getTestCasesFromModel(model);
     }
 
-    public static void writeTestsToFile(Collection<TestCase> tests, RdfWriter testCache) {
+    public static void writeTestsToFile(Collection<GenericTestCase> tests, RdfWriter testCache) {
         Model model = ModelFactory.createDefaultModel();
-        for (TestCase t : tests) {
+        for (GenericTestCase t : tests) {
             TestCaseWriter.create(t).write(model);
         }
         try {

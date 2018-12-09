@@ -3,6 +3,7 @@ package org.aksw.rdfunit.examples;
 import com.google.common.collect.ImmutableList;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.*;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -75,7 +76,7 @@ public class DBpediaMappingValidator {
     }
 
     private static TestSuite getDBpMappingsTestSuite() throws RdfReaderException {
-        Collection<TestCase> tests = TestUtils.instantiateTestsFromModel(
+        Collection<GenericTestCase> tests = TestUtils.instantiateTestsFromModel(
                 RdfReaderFactory.createResourceReader(RML_MANUAL_TESTS).read());
 
         return new TestSuite(tests);

@@ -8,10 +8,7 @@ import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.helper.RdfListUtils;
-import org.aksw.rdfunit.model.impl.shacl.ConstraintTestCaseFactory;
-import org.aksw.rdfunit.model.impl.shacl.ShapeTargetSetImpl;
-import org.aksw.rdfunit.model.impl.shacl.ShapeTargetValueShape;
-import org.aksw.rdfunit.model.impl.shacl.TestCaseGroupImpl;
+import org.aksw.rdfunit.model.impl.shacl.*;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
@@ -21,7 +18,6 @@ import org.aksw.rdfunit.model.readers.shacl.BatchComponentReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeTargetReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.aksw.rdfunit.vocabulary.SHACL.LogicalConstraint;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.*;
 
@@ -91,19 +87,19 @@ public class ShaclModel {
             targetSets.forEach(targetSet -> {
                 switch (targetSet.getLogicalOperator()) {
                     case and:
-                        testCaseBuilder.add(new TestCaseGroupImpl(generateAtomicTestCases(shape, targetSet.getTargets()), LogicalConstraint.and));
+                        testCaseBuilder.add(new TestCaseGroupAnd(generateAtomicTestCases(shape, targetSet.getTargets())));
                         break;
                     case or:
-                        testCaseBuilder.add(new TestCaseGroupImpl(generateAtomicTestCases(shape, targetSet.getTargets()), LogicalConstraint.or));
+                        testCaseBuilder.add(new TestCaseGroupOr(generateAtomicTestCases(shape, targetSet.getTargets())));
                         break;
                     case xone:
-                        testCaseBuilder.add(new TestCaseGroupImpl(generateAtomicTestCases(shape, targetSet.getTargets()), LogicalConstraint.xone));
+                        testCaseBuilder.add(new TestCaseGroupXone(generateAtomicTestCases(shape, targetSet.getTargets())));
                         break;
                     case not:
-                        testCaseBuilder.add(new TestCaseGroupImpl(generateAtomicTestCases(shape, targetSet.getTargets()), LogicalConstraint.not));
+                        testCaseBuilder.add(new TestCaseGroupNot(generateAtomicTestCases(shape, targetSet.getTargets())));
                         break;
                     case atomic:
-                        generateAtomicTestCases(shape, targetSet.getTargets()).forEach(x -> testCaseBuilder.add(new TestCaseGroupImpl(Collections.singleton(x))));
+                        generateAtomicTestCases(shape, targetSet.getTargets()).forEach(x -> testCaseBuilder.add(new TestCaseGroupAtom(Collections.singleton(x))));
                         break;
                 }
             });
@@ -232,19 +228,11 @@ public class ShaclModel {
     }
 
     private List<Shape> getChildOrShapes(Shape shape) {
-        List<Shape> orShapes = getChildListShapes(shape, SHACL.or);
-        if (orShapes.isEmpty()) {
-            throw new IllegalArgumentException("Shape (" + shape.getElement()+ ") contains an sh:or and it is not yet supported in RDFUnit");
-        }
-        return orShapes;
+        return getChildListShapes(shape, SHACL.or);
     }
 
     private List<Shape> getChildXorShapes(Shape shape) {
-        List<Shape> xoneShapes = getChildListShapes(shape, SHACL.xone);
-        if (xoneShapes.isEmpty()) {
-            throw new IllegalArgumentException("Shape (" + shape.getElement()+ ") contains an sh:xone and it is not yet supported in RDFUnit");
-        }
-        return xoneShapes;
+        return getChildListShapes(shape, SHACL.xone);
     }
 
     private List<Shape> getChildListShapes(Shape shape, Property property) {

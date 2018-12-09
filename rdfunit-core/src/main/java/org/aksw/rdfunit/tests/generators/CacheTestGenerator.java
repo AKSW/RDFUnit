@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfStreamReader;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.sources.CacheUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
@@ -29,7 +29,7 @@ public class CacheTestGenerator implements RdfUnitTestGenerator{
     }
 
     @Override
-    public Collection<TestCase> generate(SchemaSource source) {
+    public Collection<? extends GenericTestCase> generate(SchemaSource source) {
         String cachedTestsLocation = CacheUtils.getSourceAutoTestFile(testFolder, source);
         File f = new File(cachedTestsLocation);
         if (!f.exists())
@@ -37,7 +37,7 @@ public class CacheTestGenerator implements RdfUnitTestGenerator{
 
         try {
             Model m = new RdfStreamReader(cachedTestsLocation).read();
-            Collection<TestCase> tests = TestUtils.instantiateTestsFromModel(m);
+            Collection<GenericTestCase> tests = TestUtils.instantiateTestsFromModel(m);
             log.info("{} contains {} automatically created tests (loaded from cache)", source.getUri(), tests.size());
             return tests;
 
@@ -49,7 +49,7 @@ public class CacheTestGenerator implements RdfUnitTestGenerator{
     }
 
     @Override
-    public Collection<TestCase> generate(TestSource source) {
+    public Collection<? extends GenericTestCase> generate(TestSource source) {
         return ImmutableList.of();
     }
 }

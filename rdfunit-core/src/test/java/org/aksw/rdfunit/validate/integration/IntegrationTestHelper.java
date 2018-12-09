@@ -9,7 +9,7 @@ import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.sources.SchemaService;
@@ -62,8 +62,8 @@ public class IntegrationTestHelper {
         SchemaSource ontologyDSPSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
 
 
-        return new TestSuite(
-                new TagRdfUnitTestGenerator(rdfUnit.getAutoGenerators()).generate(ontologyDSPSource));
+        Set<GenericTestCase> ts1 = ImmutableSet.copyOf(new TagRdfUnitTestGenerator(rdfUnit.getAutoGenerators()).generate(ontologyDSPSource));
+        return new TestSuite(ts1);
     }
 
     public static TestSuite createTestSuiteWithShacl(String schemaSource) {
@@ -74,7 +74,8 @@ public class IntegrationTestHelper {
             throw new IllegalArgumentException(e);
         }
         SchemaSource ontologyShaclSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyShaclReader);
-        return new TestSuite(new ShaclTestGenerator().generate(ontologyShaclSource));
+        Set<GenericTestCase> ts2 = ImmutableSet.copyOf(new ShaclTestGenerator().generate(ontologyShaclSource));
+        return new TestSuite(ts2);
     }
 
     public static void testMap(String testSource, int expectedErrors, TestSuite testSuite, SchemaSource schemaSource) throws RdfReaderException {
@@ -130,8 +131,8 @@ public class IntegrationTestHelper {
         rdfunit.init();
         RdfUnitTestGenerator testGenerator = TestGeneratorFactory.createAllNoCache(rdfunit.getAutoGenerators(), "./");
 
-        Set<TestCase> ts1 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
-        Set<TestCase> ts2 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
+        Set<GenericTestCase> ts1 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
+        Set<GenericTestCase> ts2 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
 
         assertThat(ts1)
                 .hasSize(4)

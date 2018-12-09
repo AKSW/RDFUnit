@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.executors.monitors;
 
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -32,7 +33,7 @@ public interface TestExecutorMonitor {
      *
      * @param test the test
      */
-    void singleTestStarted(final TestCase test);
+    void singleTestStarted(final GenericTestCase test);
 
     /**
      * Called when a single test is executed
@@ -41,7 +42,7 @@ public interface TestExecutorMonitor {
      * @param status  the status
      * @param results the results
      */
-    void singleTestExecuted(final TestCase test, final TestCaseResultStatus status, final Collection<TestCaseResult> results);
+    void singleTestExecuted(final GenericTestCase test, final TestCaseResultStatus status, final Collection<TestCaseResult> results);
 
     /**
      * Called when testing ends

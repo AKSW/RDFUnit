@@ -1,7 +1,8 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
@@ -14,37 +15,34 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TestCaseGroupImpl implements TestCaseGroup {
+public class TestCaseGroupOr implements TestCaseGroup {
+
 
     private final Resource resource;
-    private final Set<TestCase> testCases;
-    private final SHACL.LogicalConstraint operator;
+    private final ImmutableSet<GenericTestCase> testCases;
 
-    public TestCaseGroupImpl(@NonNull Set<TestCase> testCases, @NonNull SHACL.LogicalConstraint operator) {
+    public TestCaseGroupOr(@NonNull Set<? extends GenericTestCase> testCases) {
         assert(! testCases.isEmpty());
-        this.testCases = testCases;
-        this.operator = operator;
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
-    }
-
-    public TestCaseGroupImpl( @NonNull Set<TestCase> testCases) {
-        this(testCases, SHACL.LogicalConstraint.atomic);
+        //adding for all members of the group the relevant result annotation
+        testCases.forEach(tc -> TestCaseGroup.addTestCaseGroupResultAnnotation(tc.getElement(), SHACL.or, this.resource, tc.getTestCaseAnnotation()));
+        this.testCases = ImmutableSet.copyOf(testCases);
     }
 
     @Override
-    public Set<TestCase> getTestCases() {
+    public Set<GenericTestCase> getTestCases() {
         return this.testCases;
     }
 
     @Override
     public SHACL.LogicalConstraint getLogicalOperator() {
-        return operator;
+        return SHACL.LogicalConstraint.or;
     }
 
     @Override
     public TestCaseAnnotation getTestCaseAnnotation() {
-        //TODO
-        return testCases.iterator().next().getTestCaseAnnotation();
+        //TODO not sure what to return here, for now I added an empty TestCaseAnnotation
+        return TestCaseAnnotation.Empty;
     }
 
     @Override

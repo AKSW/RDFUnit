@@ -9,6 +9,7 @@ import org.aksw.rdfunit.io.writer.RdfMultipleWriter;
 import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
@@ -153,7 +154,7 @@ public final class ValidateCLI {
         if (configuration.isCalculateCoverageEnabled()) {
             Model testSuiteModel = ModelFactory.createDefaultModel();
             PrefixNSService.setNSPrefixesInModel(testSuiteModel);
-            for (TestCase ut : testSuite.getTestCases()) {
+            for (GenericTestCase ut : testSuite.getTestCases()) {
                 TestCaseWriter.create(ut).write(testSuiteModel);
             }
 

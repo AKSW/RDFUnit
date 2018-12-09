@@ -1,9 +1,12 @@
 package org.aksw.rdfunit.tests.executors;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
@@ -15,6 +18,7 @@ import org.aksw.rdfunit.utils.RDFUnitUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Takes a dataset source and executes the test queries against the endpoint.
@@ -57,11 +61,32 @@ public abstract class TestExecutor {
     }
 
     /**
-     * Executes single test.
+     * Execute a generic test case.
+     * @param testSource   the source
+     * @param testCase the generic test case
+     * @return the test case results
+     */
+    @SneakyThrows(TestCaseExecutionException.class)
+    protected Collection<TestCaseResult> executeGenericTest(TestSource testSource, GenericTestCase testCase) {
+        if(TestCase.class.isAssignableFrom(testCase.getClass())){
+            return executeSingleTest(testSource, (TestCase) testCase);
+        }
+        else if(TestCaseGroup.class.isAssignableFrom(testCase.getClass())){
+            return ((TestCaseGroup) testCase).getTestCases().stream()
+                    .flatMap(gt -> executeGenericTest(testSource, gt).stream())
+                    .collect(Collectors.toList());
+        }
+        else{
+            throw new UnsupportedOperationException("Test execution for type " + testCase.getClass().getSimpleName() + " is not supported or implemented.");
+        }
+    }
+
+    /**
+     * Executes a single, explicit test case.
      *
      * @param testSource   the source
      * @param testCase the test case
-     * @return the java . util . collection
+     * @return the test case results
      * @throws org.aksw.rdfunit.exceptions.TestCaseExecutionException the test case execution exception
      */
     protected abstract Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException;
@@ -85,7 +110,7 @@ public abstract class TestExecutor {
             monitor.testingStarted(testSource, testSuite);
         }
 
-        for (TestCase testCase : testSuite.getTestCases()) {
+        for (GenericTestCase testCase : testSuite.getTestCases()) {
             if (isCanceled) {
                 break;
             }
@@ -103,10 +128,7 @@ public abstract class TestExecutor {
             log.debug("{} : started execution", testCase.getAbrTestURI());
 
             try {
-                results = executeSingleTest(testSource, testCase);
-            } catch (TestCaseExecutionException e) {
-                log.debug("Error (handled) running TC: " + testCase.getAbrTestURI(), e);
-                status = e.getStatus();
+                results = executeGenericTest(testSource, testCase);
             } catch (RuntimeException e) {
                 //try {
                     //Thread.sleep(40000);// when VOS (SPARQL Endpoint crashes we can put a sleep here until it restarts and comment the throw

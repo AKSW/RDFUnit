@@ -4,6 +4,7 @@ import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,16 +30,12 @@ public class ShaclModelTest {
     @Test
     public void testRead() throws RdfReaderException {
 
-       ShaclModel shaclModel = new ShaclModel(RdfReaderFactory.createResourceReader(shapeResource).read());
-
+        ShaclModel shaclModel = new ShaclModel(RdfReaderFactory.createResourceReader(shapeResource).read());
         assertThat(shaclModel.getShapes())
                 .isNotEmpty();
 
-        Set<TestCase> tests = shaclModel.generateTestCases();
+        Set<TestCaseGroup> tests = shaclModel.generateTestCases();
         assertThat(tests)
                 .isNotEmpty();
-
     }
-
-
 }

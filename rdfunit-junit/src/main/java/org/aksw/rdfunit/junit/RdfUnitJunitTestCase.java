@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.junit;
 
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.TestSource;
 import org.apache.jena.rdf.model.Model;
@@ -14,15 +15,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 final class RdfUnitJunitTestCase {
 
-    private final TestCase testCase;
+    private final GenericTestCase testCase;
     private final RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider;
 
-    RdfUnitJunitTestCase(TestCase testCase, RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider) {
+    RdfUnitJunitTestCase(GenericTestCase testCase, RdfUnitJunitTestCaseDataProvider rdfUnitJunitTestCaseDataProvider) {
         this.rdfUnitJunitTestCaseDataProvider = rdfUnitJunitTestCaseDataProvider;
         this.testCase = checkNotNull(testCase);
     }
 
-    public TestCase getTestCase() {
+    public GenericTestCase getTestCase() {
         return testCase;
     }
 

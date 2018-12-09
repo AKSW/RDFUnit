@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.generators;
 
 import com.google.common.collect.ImmutableList;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
@@ -23,7 +24,7 @@ public class FirstSuccessfulTestGenerator implements RdfUnitTestGenerator{
     }
 
     @Override
-    public Collection<TestCase> generate(SchemaSource source) {
+    public Collection<? extends GenericTestCase> generate(SchemaSource source) {
         return generators.stream()
                 .map(g -> g.generate(source))
                 .filter(l -> !l.isEmpty())
@@ -33,7 +34,7 @@ public class FirstSuccessfulTestGenerator implements RdfUnitTestGenerator{
     }
 
     @Override
-    public Collection<TestCase> generate(TestSource source) {
+    public Collection<? extends GenericTestCase> generate(TestSource source) {
         return ImmutableList.of();
     }
 }

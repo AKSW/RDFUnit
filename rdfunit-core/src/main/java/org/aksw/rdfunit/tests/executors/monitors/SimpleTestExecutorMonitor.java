@@ -6,7 +6,7 @@ import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.impl.results.TestExecutionImpl;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
@@ -86,13 +86,13 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
 
 
     @Override
-    public void singleTestStarted(TestCase test) {
+    public void singleTestStarted(GenericTestCase test) {
         counter++;
     }
 
 
     @Override
-    public void singleTestExecuted(TestCase test, TestCaseResultStatus status, Collection<TestCaseResult> results) {
+    public void singleTestExecuted(GenericTestCase test, TestCaseResultStatus status, Collection<TestCaseResult> results) {
 
         this.results.addAll(results);
 
@@ -159,7 +159,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 .map(SchemaSource::getUri).collect(Collectors.toList());
 
         Set<String> testCaseUris = testSuite.getTestCases().stream()
-                .map(TestCase::getTestURI).collect(Collectors.toSet());
+                .map(GenericTestCase::getTestURI).collect(Collectors.toSet());
 
         testExecution = new TestExecutionImpl.Builder()
                 .setElement(ResourceFactory.createResource(executionUUID))

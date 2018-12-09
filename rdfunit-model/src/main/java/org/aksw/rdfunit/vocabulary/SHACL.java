@@ -3,6 +3,7 @@ package org.aksw.rdfunit.vocabulary;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.impl.PropertyImpl;
 
 /**
  * Core SHACL Vocabulary
@@ -108,7 +109,7 @@ public final class SHACL {
     public static final Property or = property("or");
     public static final Property not = property("not");
     public static final Property xone = property("xone");
-    public static final Property atomic = ResourceFactory.createProperty("http://example.org/atomic/wrapper");
+    public static final Property atomic = ResourceFactory.createProperty("http://example.org/atomic/wrapper");      //TODO need a property expressing a singleton, non negating group
 
     public static final Property declare = property("declare");
     public static final Property prefixes = property("prefixes");
@@ -117,7 +118,7 @@ public final class SHACL {
 
     public static final Property deactivated = property("deactivated");
 
-    public enum LogicalConstraint{
+    public enum LogicalConstraint {
         and, or, xone, not, atomic
     }
 

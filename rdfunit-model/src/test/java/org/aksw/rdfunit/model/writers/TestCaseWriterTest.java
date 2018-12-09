@@ -3,7 +3,7 @@ package org.aksw.rdfunit.model.writers;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.resources.ManualTestResources;
 import org.aksw.rdfunit.utils.UriToPathUtils;
@@ -66,10 +66,10 @@ public class TestCaseWriterTest {
 
     @Test
     public void testWrite() {
-        Collection<TestCase> testCaseCollection = BatchTestCaseReader.create().getTestCasesFromModel(inputModel);
+        Collection<GenericTestCase> testCaseCollection = BatchTestCaseReader.create().getTestCasesFromModel(inputModel);
 
         Model modelWritten = ModelFactory.createDefaultModel();
-        for (TestCase tc : testCaseCollection) {
+        for (GenericTestCase tc : testCaseCollection) {
             TestCaseWriter.create(tc).write(modelWritten);
         }
 
