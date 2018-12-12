@@ -31,7 +31,7 @@ public class JunitXmlResultsShaclWriter extends AbstractJunitXmlResultsWriter {
 
     private void printResult(StringBuilder results, String template, ShaclLiteTestCaseResult result) {
         String testcaseElement = String.format(template,
-                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
+                result.getTestCaseUri().toString().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                 result.getFailingNode().toString());
         results.append(testcaseElement);
 

@@ -24,6 +24,7 @@ import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 
@@ -91,8 +92,7 @@ public class IntegrationTestHelper {
 
         // Test all execution types
         long failedTestCases = -1;
-        for (TestCaseExecutionType executionType : TestCaseExecutionType.values()) {
-
+        for (TestCaseExecutionType executionType : Arrays.asList(TestCaseExecutionType.shaclTestCaseResult, TestCaseExecutionType.shaclLiteTestCaseResult)) {
 
             TestExecution execution = RDFUnitStaticValidator.validate(executionType, modelSource, testSuite);
             DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();
@@ -117,8 +117,6 @@ public class IntegrationTestHelper {
                     .as("%s: There should be no failed test cases in  %s", executionType, testSource)
                     .isEqualTo(0);
         }
-
-
     }
 
     @Test

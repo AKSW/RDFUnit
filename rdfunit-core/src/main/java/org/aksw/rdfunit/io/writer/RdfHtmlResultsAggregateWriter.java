@@ -44,7 +44,7 @@ public class RdfHtmlResultsAggregateWriter extends RdfHtmlResultsStatusWriter {
                     getStatusClass(result.getStatus()),
                     "<a href=\"" + result.getStatus().getUri() + "\">" + result.getStatus().name() + "</a>",
                     "<a href=\"" + result.getSeverity().getUri() + "\">" + result.getSeverity().name() + "</a>",
-                    result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
+                    result.getTestCaseUri().toString().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"),
                     HtmlEscapers.htmlEscaper().escape(result.getMessage()),
                     result.getErrorCount(),
                     result.getPrevalenceCount().orElse(-1L)

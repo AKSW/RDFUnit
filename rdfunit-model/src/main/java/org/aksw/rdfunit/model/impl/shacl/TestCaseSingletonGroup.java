@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
+import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -15,12 +16,12 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TestCaseGroupAtom implements TestCaseGroup {
+public class TestCaseSingletonGroup implements TestCaseGroup {
 
     private final Resource resource;
     private final ImmutableSet<GenericTestCase> testCases;
 
-    public TestCaseGroupAtom(@NonNull Set<? extends GenericTestCase> testCases) {
+    public TestCaseSingletonGroup(@NonNull Set<? extends GenericTestCase> testCases) {
         assert(testCases.size() == 1);
         this.testCases = ImmutableSet.copyOf(testCases);
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
@@ -34,6 +35,11 @@ public class TestCaseGroupAtom implements TestCaseGroup {
     @Override
     public SHACL.LogicalConstraint getLogicalOperator() {
         return SHACL.LogicalConstraint.atomic;
+    }
+
+    @Override
+    public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
+        return internalResults;     // we just forward the internal results
     }
 
     @Override

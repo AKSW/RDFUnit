@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.tests.executors;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.impl.results.AggregatedTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -26,6 +27,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
  */
 public class AggregatedTestExecutor extends TestExecutor {
+
+    @Override
+    TestCaseExecutionType getExecutionType() {
+        return TestCaseExecutionType.aggregatedTestCaseResult;
+    }
 
     /**
      * Instantiates a new AggregatedTestExecutor

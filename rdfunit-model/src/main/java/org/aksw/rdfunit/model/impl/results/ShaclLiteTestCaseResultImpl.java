@@ -21,12 +21,12 @@ public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implemen
 
     private final RDFNode focusNode;
 
-    public ShaclLiteTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, RDFNode focusNode) {
+    public ShaclLiteTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message, RDFNode focusNode) {
         super(testCaseUri, severity, message);
         this.focusNode = focusNode;
     }
 
-    public ShaclLiteTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, RDFNode focusNode) {
+    public ShaclLiteTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, RDFNode focusNode) {
         super(element, testCaseUri, severity, message, timestamp);
         this.focusNode = focusNode;
     }

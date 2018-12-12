@@ -18,7 +18,7 @@ import java.util.Calendar;
  */
 class BaseTestCaseResultImpl implements TestCaseResult {
     private final Resource element;
-    private final String testCaseUri;
+    private final Resource testCaseUri;
     private final RLOGLevel severity;
     private final String message;
     private final XSDDateTime timestamp;
@@ -29,14 +29,14 @@ class BaseTestCaseResultImpl implements TestCaseResult {
      * @param testCase the test case this result is related with
      */
     protected BaseTestCaseResultImpl(TestCase testCase) {
-        this(testCase.getTestURI(), testCase.getLogLevel(), testCase.getResultMessage());
+        this(testCase.getElement(), testCase.getLogLevel(), testCase.getResultMessage());
     }
 
-    protected BaseTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message) {
+    protected BaseTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message) {
         this(ResourceFactory.createResource(), testCaseUri, severity, message, new XSDDateTime(Calendar.getInstance()));
     }
 
-    protected BaseTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp) {
+    protected BaseTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp) {
         this.element = element;
         this.testCaseUri = testCaseUri;
         this.severity = severity;
@@ -50,7 +50,7 @@ class BaseTestCaseResultImpl implements TestCaseResult {
     }
 
     @Override
-    public String getTestCaseUri() {
+    public Resource getTestCaseUri() {
         return testCaseUri;
     }
 

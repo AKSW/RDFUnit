@@ -70,5 +70,4 @@ public final class ConstraintTestCaseFactory {
 
         return testCaseBuilder.build();
     }
-
 }

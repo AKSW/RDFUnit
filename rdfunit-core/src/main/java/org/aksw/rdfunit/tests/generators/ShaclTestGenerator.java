@@ -24,7 +24,7 @@ public class ShaclTestGenerator implements RdfUnitTestGenerator{
 
         try {
             ShaclModel shaclModel = new ShaclModel(source.getModel());
-            Collection<TestCaseGroup> tests = shaclModel.generateTestCases();
+            Collection<GenericTestCase> tests = shaclModel.generateTestCases();
             log.info("{} generated {} SHACL-based tests", source.getUri(), tests.size());
             return tests;
 

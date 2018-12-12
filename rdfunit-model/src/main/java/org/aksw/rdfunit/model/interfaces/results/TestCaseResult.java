@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.interfaces.results;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.Element;
 import org.apache.jena.datatypes.xsd.XSDDateTime;
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * An abstract Test Case Result.
@@ -13,7 +14,7 @@ import org.apache.jena.datatypes.xsd.XSDDateTime;
  */
 public interface TestCaseResult extends Element {
 
-    String getTestCaseUri();
+    Resource getTestCaseUri();
     RLOGLevel getSeverity();
     String getMessage();
     XSDDateTime getTimestamp();

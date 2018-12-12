@@ -76,7 +76,7 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
                                         .build());
                     }
 
-                    resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getTestURI(), logLevel, message, focusNode );
+                    resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getElement(), logLevel, message, focusNode );
 
                     annotationSetBuilder = PropertyValuePairSet.builder(); //reset
 

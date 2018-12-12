@@ -430,7 +430,7 @@ sh:EqualsConstraintComponent
 	sh:parameter [
         sh:path sh:equals ;
     ] ;
-    # double property validator to take 20way equality
+    # double property validator to take 2-way equality
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
     	sh:message "{$PATH} should be equal to {$equals}";
@@ -443,18 +443,19 @@ sh:EqualsConstraintComponent
                 }
             }""" ;
     ] ;
-    sh:propertyValidator [
-    	a sh:SPARQLSelectValidator ;
-    	sh:message "{$PATH} should be equal to {$equals}";
-    	sh:select """
-    		SELECT  ?this ?value
-            WHERE {
-                $this $PATH ?value .
-                FILTER NOT EXISTS {
-                    $this $equals ?value .
-                }
-            }""" ;
-    ] ;
+    #FIXME is this double approach really necessary? It results in double errors for equals
+    #sh:propertyValidator [
+    #	a sh:SPARQLSelectValidator ;
+    #	sh:message "{$PATH} should be equal to {$equals}";
+    #	sh:select """
+    #		SELECT  ?this ?value
+    #       WHERE {
+    #            $this $PATH ?value .
+    #            FILTER NOT EXISTS {
+    #                $this $equals ?value .
+    #            }
+    #        }""" ;
+    #] ;
     #double node validator to catch 2-way
     sh:nodeValidator [
     	a sh:SPARQLSelectValidator ;

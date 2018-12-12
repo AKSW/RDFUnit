@@ -18,7 +18,7 @@ ex:2 rdf:type ex:Person ;
 
 ex:3 rdf:type ex:Person ;
   ex:checkEquals "asdf"@el ;
-  ex:checkEqualsTo "asdf2"@el ;
+  ex:checkEqualsTo "asdf"@al ;
   .
 
 

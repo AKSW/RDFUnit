@@ -31,7 +31,7 @@ public class JunitXmlResultsStatusWriter extends AbstractJunitXmlResultsWriter {
 
     private void printResult(StringBuilder results, String template, StatusTestCaseResult result) {
         String testcaseElement = String.format(template,
-                result.getTestCaseUri().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
+                result.getTestCaseUri().toString().replace(PrefixNSService.getNSFromPrefix("rutt"), "rutt:"));
         results.append(testcaseElement);
 
         if(result.getStatus().equals(TestCaseResultStatus.Fail)) {

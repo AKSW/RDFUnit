@@ -1,0 +1,29 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+ex:xone0 rdf:type ex:XoneConstraintCheck ;
+  ex:checkMaxCount0 "a" ;   # wrong
+
+  ex:checkMaxCount1 "a" ;   # wrong
+  ex:checkMaxCount1 "b" ;
+
+  ex:checkMaxCount3 "a" ;   # wrong
+  ex:checkMaxCount3 "b" ;
+  ex:checkMaxCount3 "c" ;
+  ex:checkMaxCount3 "d" ;
+.
+
+ex:xone1 rdf:type ex:XoneConstraintCheck ;
+                            # checkMaxCount0 is correct
+  ex:checkMaxCount1 "a" ;   # also correct          -> should fail
+
+  ex:checkMaxCount3 "a" ;
+  ex:checkMaxCount3 "b" ;
+  ex:checkMaxCount3 "c" ;
+  ex:checkMaxCount3 "d" ;   # wrong
+.
+

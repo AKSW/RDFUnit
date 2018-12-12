@@ -1,19 +1,18 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.ToString;
+import lombok.*;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.aksw.rdfunit.utils.JenaUtils;
 import org.apache.jena.query.ParameterizedSparqlString;
 import org.apache.jena.query.QuerySolutionMap;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Collection;
 import java.util.Set;
@@ -32,7 +31,8 @@ public class TestCaseWithTarget implements TestCase {
 
     @NonNull private final ShapeTarget target;
     @NonNull private final String filterSparql;
-    @NonNull private final TestCase testCase;
+    @Getter @NonNull private final TestCase testCase;
+    @Getter @NonNull private final Resource element = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
 
     public TestCaseWithTarget(ShapeTarget target, String filterSparql, TestCase testCase) {
         this.target = target;
@@ -76,12 +76,6 @@ public class TestCaseWithTarget implements TestCase {
         return testCase.getPrefixDeclarations();
     }
 
-    @Override
-    public Resource getElement() {
-        return testCase.getElement();
-    }
-
-
     private String injectSparqlSnippet(String sparqlQuery, String sparqlSnippet) {
         int bracketIndex = sparqlQuery.indexOf('{');
         return sparqlQuery.substring(0,bracketIndex+1) + sparqlSnippet + sparqlQuery.substring(bracketIndex+1);
@@ -94,8 +88,6 @@ public class TestCaseWithTarget implements TestCase {
 
         return queryWithTarget;
     }
-
-
 
     private static TestCaseAnnotation createFromReferences(TestCaseAnnotation annotation, Collection<Resource> references) {
 

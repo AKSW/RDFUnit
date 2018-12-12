@@ -3,8 +3,7 @@ package org.aksw.rdfunit.model.shacl;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class ShaclModelTest {
         assertThat(shaclModel.getShapes())
                 .isNotEmpty();
 
-        Set<TestCaseGroup> tests = shaclModel.generateTestCases();
+        Set<GenericTestCase> tests = shaclModel.generateTestCases();
         assertThat(tests)
                 .isNotEmpty();
     }

@@ -22,12 +22,12 @@ public class ShaclTestCaseResultImpl extends ShaclLiteTestCaseResultImpl impleme
     private final ImmutableSet<PropertyValuePair> resultAnnotations;
 
 
-    public ShaclTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, RDFNode focusNode, Set<PropertyValuePair> resultAnnotations) {
+    public ShaclTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message, RDFNode focusNode, Set<PropertyValuePair> resultAnnotations) {
         super(testCaseUri, severity, message, focusNode);
         this.resultAnnotations = ImmutableSet.copyOf(checkNotNull(resultAnnotations));
     }
 
-    public ShaclTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, RDFNode focusNode, Set<PropertyValuePair> resultAnnotations) {
+    public ShaclTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, RDFNode focusNode, Set<PropertyValuePair> resultAnnotations) {
         super(element, testCaseUri, severity, message, timestamp, focusNode);
         this.resultAnnotations = ImmutableSet.copyOf(checkNotNull(resultAnnotations));
     }
@@ -49,7 +49,7 @@ public class ShaclTestCaseResultImpl extends ShaclLiteTestCaseResultImpl impleme
         private ShaclLiteTestCaseResult shaclLiteTestCaseResult;
         private Set<PropertyValuePair> resultAnnotations;
 
-        public Builder(String testCaseUri, RLOGLevel severity, String message, RDFNode focusNode) {
+        public Builder(Resource testCaseUri, RLOGLevel severity, String message, RDFNode focusNode) {
             shaclLiteTestCaseResult = new ShaclLiteTestCaseResultImpl(testCaseUri, severity, message, focusNode);
         }
 

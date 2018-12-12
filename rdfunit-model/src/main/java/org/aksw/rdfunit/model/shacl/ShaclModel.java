@@ -2,15 +2,14 @@ package org.aksw.rdfunit.model.shacl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
-import org.aksw.rdfunit.model.helper.RdfListUtils;
 import org.aksw.rdfunit.model.impl.shacl.*;
-import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTargetSet;
@@ -63,85 +62,67 @@ public class ShaclModel {
                 Function.identity())));
 
         this.explicitTargets = ImmutableMap.copyOf(getExplicitShapeTargets(shapes));
-        this.implicitTargets = ImmutableMap.copyOf(getImplicitShapeTargets(shapes, explicitTargets));
+        this.implicitTargets = ImmutableSet.copyOf(getImplicitShapeTargets(explicitTargets));   //TODO do we have to pass the shapes along as well?
 
         ImmutableMap.Builder<Shape, Set<ShapeTargetSet>> targetBuilder = ImmutableMap.builder();
         shapes.forEach(s -> {
             Set<ShapeTargetSet> targets = new HashSet<>();
             targets.addAll(explicitTargets.getOrDefault(s, Collections.emptySet()));
-            targets.addAll(implicitTargets.getOrDefault(s, Collections.emptySet()));
+            implicitTargets.stream()
+                    .filter(sg-> sg.getGroupOperator() == SHACL.LogicalConstraint.atomic)
+                    .forEach(sg -> targets.addAll(sg.allTargets.getOrDefault(s, Collections.emptySet())));
             if (!targets.isEmpty()) {
                 targetBuilder.put(s, targets);
             }
         });
-        allTargets = targetBuilder.build();
-
+        allTargets.add(new ShapeGroup(targetBuilder.build(), SHACL.LogicalConstraint.atomic));
+        implicitTargets.stream()
+                .filter(sg-> sg.getGroupOperator() != SHACL.LogicalConstraint.atomic)
+                .forEach(allTargets::add);
     }
 
     public Set<Shape> getShapes() { return shapes;}
 
-    public Set<TestCaseGroup> generateTestCases() {
-        ImmutableSet.Builder<TestCaseGroup> testCaseBuilder = ImmutableSet.builder();
+    public Set<GenericTestCase> generateTestCases() {
+        return allTargets.stream().flatMap(groupShape -> getGenericTestCase(groupShape).stream()).collect(Collectors.toSet());
+    }
 
-        allTargets.forEach((shape, targetSets) -> {
-            targetSets.forEach(targetSet -> {
-                switch (targetSet.getLogicalOperator()) {
-                    case and:
-                        testCaseBuilder.add(new TestCaseGroupAnd(generateAtomicTestCases(shape, targetSet.getTargets())));
-                        break;
-                    case or:
-                        testCaseBuilder.add(new TestCaseGroupOr(generateAtomicTestCases(shape, targetSet.getTargets())));
-                        break;
-                    case xone:
-                        testCaseBuilder.add(new TestCaseGroupXone(generateAtomicTestCases(shape, targetSet.getTargets())));
-                        break;
-                    case not:
-                        testCaseBuilder.add(new TestCaseGroupNot(generateAtomicTestCases(shape, targetSet.getTargets())));
-                        break;
-                    case atomic:
-                        generateAtomicTestCases(shape, targetSet.getTargets()).forEach(x -> testCaseBuilder.add(new TestCaseGroupAtom(Collections.singleton(x))));
-                        break;
-                }
+    private Set<GenericTestCase> getGenericTestCase(ShapeGroup groupShape){
+        ImmutableSet.Builder<GenericTestCase> testCaseBuilder = ImmutableSet.builder();
+        switch (groupShape.getGroupOperator()){
+            case and:
+                testCaseBuilder.add(new TestCaseGroupAnd(extractGenericTest(groupShape)));
+                break;
+            case or:
+                testCaseBuilder.add(new TestCaseGroupOr(extractGenericTest(groupShape)));
+                break;
+            case not:
+                testCaseBuilder.add(new TestCaseGroupNot(extractGenericTest(groupShape)));
+                break;
+            case xone:
+                testCaseBuilder.add(new TestCaseGroupXone(extractGenericTest(groupShape)));
+                break;
+            case atomic:
+                extractGenericTest(groupShape).forEach(tc -> testCaseBuilder.add(new TestCaseSingletonGroup(Collections.singleton(tc))));
+                break;
+        }
+        return testCaseBuilder.build();
+    }
+
+    private Set<GenericTestCase> extractGenericTest(ShapeGroup groupShape) {
+        ImmutableSet.Builder<GenericTestCase> testCaseBuilder = ImmutableSet.builder();
+        groupShape.getAllTargets().forEach((shape, targets) -> {
+                    // SPARQL constraints
+                    testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(shape, targets));
+                    // Constraint components
+                    shapesGraph.getComponents().forEach(component ->
+                            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, shape, targets)));
             });
-        });
-
         return testCaseBuilder.build();
     }
 
-    private Set<TestCase> generateAtomicTestCases(Shape shape, Set<ShapeTarget> targets) {
-        ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
-        // SPARQL constraints
-        testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(shape, targets));
-
-        // Constraint components
-        shapesGraph.getComponents().forEach(component ->
-                testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, shape, targets)));
-        return testCaseBuilder.build();
-    }
-
-/*
-    public Set<TestCase> generateTestCasesOld() {
-        ImmutableSet.Builder<TestCase> builder = ImmutableSet.builder();
-
-        getShapes().forEach( shape -> // for every shape
-                shape.getTargets().forEach(target ->  // for every target (skip if none)
-                                shape.getPropertyConstraintGroups().forEach( ppg ->
-                                    ppg.getPropertyConstraints().forEach( ppc -> {
-                                        String filter = ppg.getPropertyFilter();
-                                        if (!ppc.usesValidatorFunction()) {filter = "";}
-                                        builder.add(
-                                                TestCaseWithTarget.builder()
-                                                        .target(target)
-                                                        .filterSpqrql(filter)
-                                                        .testCase(ppc.getTestCase(ppg.isInverse()))
-                                                        .build());
-                                    } ))));
-
-        return builder.build();
-    }*/
-
-    private Map<Shape, Set<ShapeTargetSet>> getExplicitShapeTargets(Collection<Shape> shapes) {
-        Map<Shape, Set<ShapeTargetSet>> targets = new HashMap<>();
+    private Map<Shape, Set<ShapeTarget>> getExplicitShapeTargets(Collection<Shape> shapes) {
+        Map<Shape, Set<ShapeTarget>> targets = new HashMap<>();
         shapes.forEach( s -> {
             Set<ShapeTargetSet> trgs = BatchShapeTargetReader.create().read(s.getElement()).stream().map(ShapeTargetSetImpl::new).collect(Collectors.toSet());
             if (!trgs.isEmpty()) {
@@ -151,37 +132,62 @@ public class ShaclModel {
         return  targets;
     }
 
-    private Map<Shape, Set<ShapeTargetSet>> getImplicitShapeTargets(ImmutableSet<Shape> shapes, ImmutableMap<Shape, Set<ShapeTargetSet>> explicitTargets) {
-        Map<Shape, Set<ShapeTargetSet>> implicitTargets = new HashMap<>();
-
-        explicitTargets.forEach( (shape, targets) -> getImplicitTargetsForSingleShape(implicitTargets, shape, targets));
-
-        return  implicitTargets;
+    private Set<ShapeGroup> getImplicitShapeTargets(ImmutableMap<Shape, Set<ShapeTarget>> explicitTargets) {
+        Set<ShapeGroup> groups = new HashSet<>();
+        explicitTargets.forEach( (shape, targets) -> groups.addAll(getImplicitTargetsForSingleShape(shape, targets)));
+        return groups;
     }
 
-    private void getImplicitTargetsForSingleShape(Map<Shape, Set<ShapeTargetSet>> implicitTargets, Shape shape, Set<ShapeTargetSet> targets) {
-        List<Shape> childShapes = getChildShapes(shape);
-        childShapes.addAll(getChildAndShapes(shape));
-        childShapes.addAll(getChildOrShapes(shape));
-        childShapes.addAll(getChildXorShapes(shape));
-        childShapes.addAll(getChildNotShapes(shape));
-
-        if (shape.isNodeShape()) {
+    private Set<ShapeGroup> getImplicitTargetsForSingleShape(Shape shape, Set<ShapeTarget> targets) {
+        if (shape.isPropertyShape()) {
             // use the exact same target
-            childShapes.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(implicitTargets, cs, targets));
-            getChildAndShapes(shape).stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(implicitTargets, cs, targets));
-        } else {
-            if (shape.isPropertyShape()) {
-                // use the exact same target
-                Set<ShapeTargetSet> propertyTargets = targets.stream()
-                        .map(set -> new ShapeTargetSetImpl(set.getTargets().stream().map(target -> ShapeTargetValueShape.create(target, shape.getPath().get())).collect(Collectors.toSet()), set.getLogicalOperator()))
-                        .collect(Collectors.toSet());
-                childShapes.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(implicitTargets, cs, propertyTargets));
-            }
+            targets = targets.stream()
+                    .map(target -> ShapeTargetValueShape.create(target, shape.getPath().get()))
+                    .collect(Collectors.toSet());
         }
 
-        // recursive
-        childShapes.forEach( cs -> getImplicitTargetsForSingleShape(implicitTargets, cs, implicitTargets.getOrDefault(cs, Collections.emptySet())));
+        //collect shape groups
+        Set<ShapeGroup> targetGroups = new HashSet<>();
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.and));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.or));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.not));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.xone));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.atomic));
+
+        // recursive // TODO not sure if this is correct
+        //targetGroups.addAll(targetGroups.stream().flatMap(tg ->
+        //        tg.getAllTargets().entrySet().stream().flatMap(shapeAndTargets ->
+        //                getImplicitTargetsForSingleShape(shapeAndTargets.getKey(), shapeAndTargets.getValue()).stream())
+        //).collect(Collectors.toSet()));
+        return targetGroups;
+    }
+
+    private Set<ShapeGroup> getShapeGroup(final Shape shape, final Set<ShapeTarget> targets, final SHACL.LogicalConstraint groupOperator){
+        List<Set<Shape>> childShapeSets = new ArrayList<>();
+        switch(groupOperator){
+            case and:
+                childShapeSets.addAll(getChildAndShapes(shape));
+                break;
+            case or:
+                childShapeSets.addAll(getChildOrShapes(shape));
+                break;
+            case not:
+                childShapeSets.add(getChildNotShapes(shape));
+                break;
+            case xone:
+                childShapeSets.addAll(getChildXorShapes(shape));
+                break;
+            default:
+                childShapeSets.add(ImmutableSet.copyOf(getChildShapes(shape)));
+        }
+        if(childShapeSets.isEmpty() || childShapeSets.stream().allMatch(Set::isEmpty))
+            return ImmutableSet.of();
+
+        return childShapeSets.stream().map(css ->{
+            final Map<Shape, Set<ShapeTarget>> targetMap = new HashMap<>();
+            css.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(targetMap, cs, targets));
+            return new ShapeGroup(targetMap, groupOperator);
+        }).collect(Collectors.toSet());
     }
 
     private void mergeValues(Map<Shape, Set<ShapeTargetSet>> implicitTargets, Shape shape, Set<ShapeTargetSet> targets) {
@@ -200,15 +206,15 @@ public class ShaclModel {
         return shapes;
     }
 
-    private List<Shape> getChildNodeShapes(Shape shape) {
+    private Set<Shape> getChildNodeShapes(Shape shape) {
         return getChildShapes(shape, SHACL.node);
     }
 
-    private List<Shape> getChildPropertyShapes(Shape shape) {
+    private Set<Shape> getChildPropertyShapes(Shape shape) {
         return getChildShapes(shape, SHACL.property);
     }
 
-    private List<Shape> getChildShapes(Shape shape, Property property) {
+    private Set<Shape> getChildShapes(Shape shape, Property property) {
         ImmutableSet.Builder<RDFNode> nodeBuilder = ImmutableSet.builder();
         nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(property));
         return nodeBuilder.build().stream()
@@ -216,35 +222,43 @@ public class ShaclModel {
                 .map(RDFNode::asResource)
                 .map(resourceShapeMap::get)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
-    private List<Shape> getChildNotShapes(Shape shape) {
+    private Set<Shape> getChildNotShapes(Shape shape) {
         return getChildShapes(shape, SHACL.not);
     }
 
-    private List<Shape> getChildAndShapes(Shape shape) {
+    private List<Set<Shape>> getChildAndShapes(Shape shape) {
         return getChildListShapes(shape, SHACL.and);
     }
 
-    private List<Shape> getChildOrShapes(Shape shape) {
+    private List<Set<Shape>> getChildOrShapes(Shape shape) {
         return getChildListShapes(shape, SHACL.or);
     }
 
-    private List<Shape> getChildXorShapes(Shape shape) {
+    private List<Set<Shape>> getChildXorShapes(Shape shape) {
         return getChildListShapes(shape, SHACL.xone);
     }
 
-    private List<Shape> getChildListShapes(Shape shape, Property property) {
+
+    private List<Set<Shape>> getChildListShapes(Shape shape, Property property) {
         ImmutableSet.Builder<RDFNode> nodeBuilder = ImmutableSet.builder();
         nodeBuilder.addAll(shape.getPropertyValuePairSets().getPropertyValues(property));
         return nodeBuilder.build().stream()
-                .flatMap(r -> RdfListUtils.getListItemsOrEmpty(r).stream())
                 .filter(RDFNode::isResource)
                 .map(RDFNode::asResource)
-                .map(resourceShapeMap::get)
-                .filter(Objects::nonNull)
+                .map(r -> ((ShapeList)resourceShapeMap.get(r)).getShapes())
                 .collect(Collectors.toList());
     }
 
+    private class ShapeGroup{
+        @NonNull @Getter private final Map<Shape, Set<ShapeTarget>> allTargets;
+        @NonNull @Getter private final SHACL.LogicalConstraint groupOperator;
+
+        private ShapeGroup(Map<Shape, Set<ShapeTarget>> allTargets, SHACL.LogicalConstraint groupOperator) {
+            this.allTargets = allTargets;
+            this.groupOperator = groupOperator;
+        }
+    }
 }

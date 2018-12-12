@@ -2,10 +2,13 @@ package org.aksw.rdfunit.utils;
 
 import org.aksw.rdfunit.commons.RdfUnitModelFactory;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.shared.uuid.JenaUUID;
 
 import java.net.URI;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class JenaUtils {
 

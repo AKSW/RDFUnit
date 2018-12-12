@@ -110,6 +110,7 @@ public final class SHACL {
     public static final Property not = property("not");
     public static final Property xone = property("xone");
     public static final Property atomic = ResourceFactory.createProperty("http://example.org/atomic/wrapper");      //TODO need a property expressing a singleton, non negating group
+    public static final Property violating = ResourceFactory.createProperty("http://example.org/atomic/wrapper");
 
     public static final Property declare = property("declare");
     public static final Property prefixes = property("prefixes");

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.10-SNAPSHOT</version>
+        <version>0.8.22-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.topbraid</groupId>
             <artifactId>shacl</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>

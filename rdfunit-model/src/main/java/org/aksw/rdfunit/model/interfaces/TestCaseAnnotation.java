@@ -8,7 +8,6 @@ import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.RLOG;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;

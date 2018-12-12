@@ -45,16 +45,16 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
      * @param prevalenceCount the prevalence count
      */
     public AggregatedTestCaseResultImpl(TestCase testCase, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
-        this(testCase.getTestURI(), testCase.getLogLevel(), testCase.getResultMessage(), status, errorCount, prevalenceCount);
+        this(testCase.getElement(), testCase.getLogLevel(), testCase.getResultMessage(), status, errorCount, prevalenceCount);
     }
 
-    public AggregatedTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
+    public AggregatedTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
         super(testCaseUri, severity, message, status);
         this.errorCount = errorCount;
         this.prevalenceCount = prevalenceCount;
     }
 
-    public AggregatedTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
+    public AggregatedTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, TestCaseResultStatus status, long errorCount, long prevalenceCount) {
         super(element, testCaseUri, severity, message, timestamp, status);
         this.errorCount = errorCount;
         this.prevalenceCount = prevalenceCount;

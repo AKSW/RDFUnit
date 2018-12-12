@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.readers.shacl.ShapePathReader;
@@ -107,8 +108,8 @@ public class W3CShaclTestSuite {
                         new RdfModelReader(getShapesGraph())
                 );
 
-
-                val testSuite = new TestSuite(new ShaclTestGenerator().generate(shapesSource));
+                Set<GenericTestCase> tests = ImmutableSet.copyOf(new ShaclTestGenerator().generate(shapesSource));
+                val testSuite = new TestSuite(tests);
 
                 return RDFUnitStaticValidator.validate(shaclTestCaseResult, getDataGraph(), testSuite);
             });
@@ -284,10 +285,7 @@ public class W3CShaclTestSuite {
                     log.error("test case failed {}", this.getManifest().sourceFile);
                     return EARL.failed;
                 }
-
-
         }
-
 
         private Resource findAction() {
 
@@ -411,8 +409,7 @@ public class W3CShaclTestSuite {
 
         val suite = W3CShaclTestSuite.load(rootManifestPath, false);
 
-        suite.getTestCases().parallelStream().forEach(TestCase::getExecution);
-
+        //suite.getTestCases().parallelStream().forEach(TestCase::getExecution);
         val failureCount = suite.getTestCases().stream().filter(t -> t.getExecution().isFailure()).count();
 
         log.info("{} tests had failures.", failureCount);

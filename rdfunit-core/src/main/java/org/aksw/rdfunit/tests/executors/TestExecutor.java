@@ -2,6 +2,7 @@ package org.aksw.rdfunit.tests.executors;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
@@ -15,9 +16,11 @@ import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.tests.executors.monitors.TestExecutorMonitor;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationFactory;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
+import org.aksw.rdfunit.vocabulary.SHACL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +32,12 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public abstract class TestExecutor {
+
+    /**
+     * The TestCaseExecutionType the executor was implemented for
+     */
+    abstract TestCaseExecutionType getExecutionType();
+
     /**
      * Used in {@code cancel()} to stop the current execution
      */
@@ -72,12 +81,26 @@ public abstract class TestExecutor {
             return executeSingleTest(testSource, (TestCase) testCase);
         }
         else if(TestCaseGroup.class.isAssignableFrom(testCase.getClass())){
-            return ((TestCaseGroup) testCase).getTestCases().stream()
-                    .flatMap(gt -> executeGenericTest(testSource, gt).stream())
-                    .collect(Collectors.toList());
+            return evaluateTestCaseGroup(testSource, (TestCaseGroup) testCase);
         }
         else{
             throw new UnsupportedOperationException("Test execution for type " + testCase.getClass().getSimpleName() + " is not supported or implemented.");
+        }
+    }
+
+    private Collection<TestCaseResult> evaluateTestCaseGroup(TestSource testSource, TestCaseGroup testCase){
+        Collection<TestCaseResult> internalResults = testCase.getTestCases().stream()
+                .flatMap(gt -> executeGenericTest(testSource, gt).stream())
+                .collect(Collectors.toList());
+
+        if(testCase.getLogicalOperator() != SHACL.LogicalConstraint.atomic &&
+                this.getExecutionType() != TestCaseExecutionType.shaclLiteTestCaseResult &&
+                this.getExecutionType() != TestCaseExecutionType.shaclTestCaseResult) {
+            log.warn("Logical constraints evaluation is not supported by the current execution type: " + this.getExecutionType());
+            return Collections.emptyList();
+        }
+        else{
+            return testCase.evaluateInternalResults(internalResults);
         }
     }
 
@@ -165,7 +188,6 @@ public abstract class TestExecutor {
             if (status != TestCaseResultStatus.Success) {
                 success = false;
             }
-
 
             /*notify end of single test */
             for (TestExecutorMonitor monitor : progressMonitors) {

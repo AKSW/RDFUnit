@@ -37,9 +37,9 @@ public final class TestCaseResultReader implements ElementReader<TestCaseResult>
     public TestCaseResult read(final Resource resource) {
         checkNotNull(resource);
 
-        String testCaseUri = null;
+        Resource testCaseUri = null;
         for (Statement smt : resource.listProperties(RDFUNITv.testCase).toList()) {
-            testCaseUri = smt.getObject().asResource().getURI();
+            testCaseUri = smt.getObject().asResource();
         }
         checkNotNull(testCaseUri);
 
@@ -61,7 +61,7 @@ public final class TestCaseResultReader implements ElementReader<TestCaseResult>
         }
         checkNotNull(timestamp);
 
-        final String testCaseUriCopy = testCaseUri;
+        final Resource uriCopy = testCaseUri;
         final RLOGLevel severityCopy = severity;
         final String messageCopy = message;
         final XSDDateTime timestampCopy = timestamp;
@@ -73,8 +73,8 @@ public final class TestCaseResultReader implements ElementReader<TestCaseResult>
             }
 
             @Override
-            public String getTestCaseUri() {
-                return testCaseUriCopy;
+            public Resource getTestCaseUri() {
+                return uriCopy;
             }
 
             @Override

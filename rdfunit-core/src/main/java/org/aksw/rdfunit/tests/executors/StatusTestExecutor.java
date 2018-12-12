@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.tests.executors;
 
+import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.impl.results.StatusTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -22,6 +23,12 @@ import java.util.Collections;
 
  */
 public class StatusTestExecutor extends TestExecutor {
+
+    @Override
+    TestCaseExecutionType getExecutionType() {
+        return TestCaseExecutionType.statusTestCaseResult;
+    }
+
     /**
      * Instantiates a new StatusTestExecutor.
      *

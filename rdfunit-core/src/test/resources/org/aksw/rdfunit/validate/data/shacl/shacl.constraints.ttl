@@ -117,10 +117,10 @@ ex:MyCardShapeMin
 	a sh:Shape ;
 	sh:targetClass ex:CardCheckMin ;
 
-#    sh:property [
-#        sh:path ex:checkMinCount0 ;
-#        sh:minCount "0"^^xsd:int ;
-#    ] ;
+    sh:property [
+        sh:path ex:checkMinCount0 ;
+        sh:minCount "0"^^xsd:int ;
+    ] ;
 
     sh:property [
         sh:path ex:checkMinCount1 ;
@@ -195,3 +195,86 @@ ex:NodeNested2
         sh:datatype xsd:int;
     ].
 
+ex:MyAndShape
+	a sh:NodeShape ;
+	sh:targetClass ex:AndConstraintCheck ;
+
+    sh:and (
+        [
+            sh:path ex:checkMaxCount0 ;
+            sh:maxCount "0"^^xsd:int ;
+        ] [
+            sh:path ex:checkMaxCount1 ;
+            sh:maxCount "1"^^xsd:int ;
+        ] [
+            sh:path ex:checkMaxCount3 ;
+            sh:maxCount "3"^^xsd:int ;
+        ]
+    )
+    .
+
+ex:MyOrShape
+	a sh:NodeShape ;
+	sh:targetClass ex:OrConstraintCheck ;
+
+    sh:or (
+        [
+            sh:path ex:checkMaxCount1 ;
+            sh:maxCount "1"^^xsd:int ;
+        ] [
+            sh:path ex:checkMaxCount3 ;
+            sh:maxCount "3"^^xsd:int ;
+        ]
+    )
+    .
+
+ex:MyXoneShape
+	a sh:NodeShape ;
+	sh:targetClass ex:XoneConstraintCheck ;
+
+    sh:xone (
+        [
+            sh:path ex:checkMaxCount0 ;
+            sh:maxCount "0"^^xsd:int ;
+        ] [
+            sh:path ex:checkMaxCount1 ;
+            sh:maxCount "1"^^xsd:int ;
+        ] [
+            sh:path ex:checkMaxCount3 ;
+            sh:maxCount "3"^^xsd:int ;
+        ]
+    )
+    .
+
+#ex:MyComplexNotShape
+#	a sh:NodeShape ;
+#	sh:targetClass ex:NotConstraintCheck ;
+#
+#   sh:not
+#        [
+#            a sh:NodeShape ;
+#            sh:or (
+#                [
+#                    sh:path ex:checkMaxCount0 ;
+#                    sh:maxCount "0"^^xsd:int ;
+#                ] [
+#                    sh:path ex:checkMaxCount1 ;
+#                    sh:maxCount "1"^^xsd:int ;
+#                ] [
+#                    sh:path ex:checkMaxCount3 ;
+#                    sh:maxCount "3"^^xsd:int ;
+#                ]
+#            )
+#        ]
+#    .
+
+ex:MySimpleNotShape
+	a sh:NodeShape ;
+	sh:targetClass ex:NotConstraintCheck ;
+
+    sh:not
+        [
+            sh:path ex:checkMaxCount1 ;
+            sh:maxCount "1"^^xsd:int ;
+        ]
+    .

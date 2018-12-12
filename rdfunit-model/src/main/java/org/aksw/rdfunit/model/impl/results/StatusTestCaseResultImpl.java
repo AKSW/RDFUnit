@@ -21,15 +21,15 @@ public class StatusTestCaseResultImpl extends BaseTestCaseResultImpl implements 
     private final TestCaseResultStatus status;
 
     public StatusTestCaseResultImpl(TestCase testCase, TestCaseResultStatus status) {
-        this(testCase.getTestURI(), testCase.getLogLevel(), testCase.getResultMessage(), status);
+        this(testCase.getElement(), testCase.getLogLevel(), testCase.getResultMessage(), status);
     }
 
-    public StatusTestCaseResultImpl(String testCaseUri, RLOGLevel severity, String message, TestCaseResultStatus status) {
+    public StatusTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message, TestCaseResultStatus status) {
         super(testCaseUri, severity, message);
         this.status = status;
     }
 
-    public StatusTestCaseResultImpl(Resource element, String testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, TestCaseResultStatus status) {
+    public StatusTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, TestCaseResultStatus status) {
         super(element, testCaseUri, severity, message, timestamp);
         this.status = status;
     }
