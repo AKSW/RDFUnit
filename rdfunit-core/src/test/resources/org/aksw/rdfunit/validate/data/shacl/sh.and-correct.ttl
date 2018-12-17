@@ -4,8 +4,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-
-
 ex:and0 rdf:type ex:AndConstraintCheck ;
   ex:checkMaxCount1 "a" ;
 
@@ -18,3 +16,8 @@ ex:and1 rdf:type ex:AndConstraintCheck ;
   ex:checkMaxCount1 "a" ;
 .
 
+ex:ValidRectangle1
+  rdf:type ex:Rectangle ;
+  ex:height 3 ;
+  ex:width 2 ;
+.

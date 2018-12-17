@@ -25,3 +25,19 @@ ex:or1 rdf:type ex:OrConstraintCheck ;
   ex:checkMaxCount3 "d" ;
 .
 
+ex:InvalidRectangle1
+  rdf:type ex:RectangleWithArea ;
+  ex:height 3 ;
+.
+ex:InvalidRectangle2
+  rdf:type ex:RectangleWithArea ;
+.
+
+ex:InvalidResource1
+  rdf:type ex:DatatypeResource ;
+  rdfs:comment ex:Thing ;
+  rdfs:comment 42 ;
+  rdfs:comment "A string" ;
+  rdfs:comment "none"^^xsd:boolean ;
+  rdfs:label "Invalid resource1" ;
+.

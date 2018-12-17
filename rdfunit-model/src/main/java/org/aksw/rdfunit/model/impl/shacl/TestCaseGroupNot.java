@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
@@ -26,7 +27,7 @@ public class TestCaseGroupNot implements TestCaseGroup {
     private final ImmutableSet<GenericTestCase> testCases;
 
     public TestCaseGroupNot(@NonNull Set<? extends GenericTestCase> testCases) {
-        assert(! testCases.isEmpty());
+        assert(testCases.size() == 1);
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(testCases);
     }
@@ -50,12 +51,12 @@ public class TestCaseGroupNot implements TestCaseGroup {
                 .map(r -> ((ShaclLiteTestCaseResult) r))
                 .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode, Collectors.toList()));
 
-        ArrayList<TestCaseResult> res = new ArrayList<>();
+        ImmutableList.Builder<TestCaseResult> res = ImmutableList.builder();
         directResults.forEach((focusNode, results) ->{
             // here results is not empty, therefore internal test failed, which was expected and we delete the internal test results
             //TODO no way to tell if a NOT failed at the moment, since no failures exist
         });
-        return res;
+        return res.build();
     }
 
     @Override

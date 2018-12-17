@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.helper.PropertyValuePair;
-import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
+import org.aksw.rdfunit.model.impl.results.ShaclLiteTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
@@ -52,20 +52,20 @@ public class TestCaseGroupXone implements TestCaseGroup {
                 .map(r -> ((ShaclLiteTestCaseResult) r))
                 .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode, Collectors.toList()));
 
-        ArrayList<TestCaseResult> res = new ArrayList<>();
+        ImmutableList.Builder<TestCaseResult> res = ImmutableList.builder();
         directResults.forEach((focusNode, results) ->{
             if(testCases.size() - results.size() != 1) {
-                HashSet<PropertyValuePair> annos = new HashSet<>();
                 res.addAll(results);
-                res.add(new ShaclTestCaseResultImpl.Builder(
+                res.add(new ShaclLiteTestCaseResultImpl(
                         this.resource,
-                        RLOGLevel.ERROR,
+                        this.getLogLevel(),
                         "More than one or all test case failed inside a SHACL xone constraint.",
                         focusNode
-                ).setResultAnnotations(annos).build());
+                ));
             }
+            //else we ignore all internal errors, since exactly one was successful
         });
-        return res;
+        return res.build();
     }
 
     @Override
@@ -78,7 +78,7 @@ public class TestCaseGroupXone implements TestCaseGroup {
                 SHACL.namespace,      // TODO check
                 ImmutableSet.of(),
                 "Specifies a list of shapes so that the value nodes must conform to exactly one of the shapes.",
-                RLOGLevel.ERROR,
+                RLOGLevel.ERROR,    //TODO
                 ImmutableSet.of()   //TODO do I have to add annotations by default?
         );
     }

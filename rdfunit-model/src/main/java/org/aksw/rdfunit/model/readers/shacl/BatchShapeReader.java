@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 public final class BatchShapeReader {
 
     private static final ImmutableSet<Resource> shapesAsInstancesOf = ImmutableSet.of(SHACL.Shape, SHACL.NodeShape, SHACL.PropertyShape);
-    private static final ImmutableSet<Property> shapesAsObjectsOf = ImmutableSet.of(SHACL.node, SHACL.property);
-    private static final ImmutableSet<Property> shapeListsAsObjectOf = ImmutableSet.of(SHACL.and, SHACL.or, SHACL.xone, SHACL.not);
+    private static final ImmutableSet<Property> shapesAsObjectsOf = ImmutableSet.of(SHACL.node, SHACL.property, SHACL.not);
+    private static final ImmutableSet<Property> shapeListsAsObjectOf = ImmutableSet.of(SHACL.and, SHACL.or, SHACL.xone);
     private static final ImmutableSet<Property> shapesAsSubjectsOf = ImmutableSet.of(SHACL.node, SHACL.property, SHACL.and, SHACL.or, SHACL.xone, SHACL.not,
             SHACL.clazz, SHACL.datatype, SHACL.nodeKind,
             SHACL.minCount, SHACL.maxCount,

@@ -12,7 +12,6 @@ import org.aksw.rdfunit.model.impl.shacl.*;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
-import org.aksw.rdfunit.model.interfaces.shacl.ShapeTargetSet;
 import org.aksw.rdfunit.model.readers.shacl.BatchComponentReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeTargetReader;
@@ -34,12 +33,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ShaclModel {
     @NonNull private final ShapesGraph shapesGraph;
-    @NonNull private final ImmutableSet<Shape> shapes;
-    @NonNull private final ImmutableMap<Shape, Set<ShapeTargetSet>> explicitTargets;
-    @NonNull private final ImmutableMap<Shape, Set<ShapeTargetSet>> implicitTargets;
-    @NonNull private final ImmutableMap<Shape, Set<ShapeTargetSet>> allTargets;
+    @NonNull private final ImmutableSet<ShapeGroup> allShapeGroup;
     @NonNull private final ImmutableMap<Resource, Shape> resourceShapeMap;
-
 
     // TODO do not use Model for instantiation, change later
     public ShaclModel(Model inputShaclGraph) throws RdfReaderException {
@@ -49,10 +44,10 @@ public class ShaclModel {
         shaclGraph.add(inputShaclGraph);
         // read templates from Model, for now only use fixed core
 
-        this.shapes = ImmutableSet.copyOf(BatchShapeReader.create().getShapesFromModel(shaclGraph));
+        final ImmutableSet<Shape> shapes = ImmutableSet.copyOf(BatchShapeReader.create().getShapesFromModel(shaclGraph));
 
         this.shapesGraph = ShapesGraph.builder()
-                .shapes(this.shapes)
+                .shapes(shapes)
                 .components(BatchComponentReader.create().getComponentsFromModel(shaclGraph))
                 .components(BatchComponentReader.create().getComponentsFromModel(RdfReaderFactory.createResourceReader(Resources.SHACL_CORE_CCs).read()))
                 .build();
@@ -61,30 +56,16 @@ public class ShaclModel {
                 shapes.stream().collect(Collectors.toMap(Shape::getElement,
                 Function.identity())));
 
-        this.explicitTargets = ImmutableMap.copyOf(getExplicitShapeTargets(shapes));
-        this.implicitTargets = ImmutableSet.copyOf(getImplicitShapeTargets(explicitTargets));   //TODO do we have to pass the shapes along as well?
-
-        ImmutableMap.Builder<Shape, Set<ShapeTargetSet>> targetBuilder = ImmutableMap.builder();
-        shapes.forEach(s -> {
-            Set<ShapeTargetSet> targets = new HashSet<>();
-            targets.addAll(explicitTargets.getOrDefault(s, Collections.emptySet()));
-            implicitTargets.stream()
-                    .filter(sg-> sg.getGroupOperator() == SHACL.LogicalConstraint.atomic)
-                    .forEach(sg -> targets.addAll(sg.allTargets.getOrDefault(s, Collections.emptySet())));
-            if (!targets.isEmpty()) {
-                targetBuilder.put(s, targets);
-            }
-        });
-        allTargets.add(new ShapeGroup(targetBuilder.build(), SHACL.LogicalConstraint.atomic));
-        implicitTargets.stream()
-                .filter(sg-> sg.getGroupOperator() != SHACL.LogicalConstraint.atomic)
-                .forEach(allTargets::add);
+        ImmutableMap<Shape, Set<ShapeTarget>> explicitTargets = ImmutableMap.copyOf(getExplicitShapeTargets(shapes));
+        ImmutableSet<ShapeGroup> implicitTargets = ImmutableSet.copyOf(getImplicitShapeTargets(explicitTargets));
+        ImmutableSet.Builder<ShapeGroup> ats = new ImmutableSet.Builder<>();
+        ats.addAll(implicitTargets);
+        ats.add(new ShapeGroup(explicitTargets, SHACL.LogicalConstraint.atomic, ImmutableSet.of()));
+        allShapeGroup = ats.build();
     }
 
-    public Set<Shape> getShapes() { return shapes;}
-
     public Set<GenericTestCase> generateTestCases() {
-        return allTargets.stream().flatMap(groupShape -> getGenericTestCase(groupShape).stream()).collect(Collectors.toSet());
+        return allShapeGroup.stream().flatMap(groupShape -> getGenericTestCase(groupShape).stream()).collect(Collectors.toSet());
     }
 
     private Set<GenericTestCase> getGenericTestCase(ShapeGroup groupShape){
@@ -109,22 +90,26 @@ public class ShaclModel {
         return testCaseBuilder.build();
     }
 
-    private Set<GenericTestCase> extractGenericTest(ShapeGroup groupShape) {
+    private Set<GenericTestCase> extractGenericTest(ShapeGroup shapeGroup) {
         ImmutableSet.Builder<GenericTestCase> testCaseBuilder = ImmutableSet.builder();
-        groupShape.getAllTargets().forEach((shape, targets) -> {
-                    // SPARQL constraints
-                    testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(shape, targets));
-                    // Constraint components
-                    shapesGraph.getComponents().forEach(component ->
-                            testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, shape, targets)));
+            shapeGroup.getAllTargets().forEach((shape, targets) -> {
+                // SPARQL constraints
+                testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromSparqlContraintInShape(shape, targets));
+                // Constraint components
+                shapesGraph.getComponents().forEach(component ->
+                        testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, shape, targets)));
             });
+        shapeGroup.getSubGroups().forEach(sub ->{
+            Set<GenericTestCase> zw = getGenericTestCase(sub);
+            testCaseBuilder.addAll(zw);
+        });
         return testCaseBuilder.build();
     }
 
     private Map<Shape, Set<ShapeTarget>> getExplicitShapeTargets(Collection<Shape> shapes) {
         Map<Shape, Set<ShapeTarget>> targets = new HashMap<>();
         shapes.forEach( s -> {
-            Set<ShapeTargetSet> trgs = BatchShapeTargetReader.create().read(s.getElement()).stream().map(ShapeTargetSetImpl::new).collect(Collectors.toSet());
+            Set<ShapeTarget> trgs = BatchShapeTargetReader.create().read(s.getElement());
             if (!trgs.isEmpty()) {
                 targets.put(s, trgs);
             }
@@ -140,6 +125,7 @@ public class ShaclModel {
 
     private Set<ShapeGroup> getImplicitTargetsForSingleShape(Shape shape, Set<ShapeTarget> targets) {
         if (shape.isPropertyShape()) {
+            assert(shape.getPath().isPresent());
             // use the exact same target
             targets = targets.stream()
                     .map(target -> ShapeTargetValueShape.create(target, shape.getPath().get()))
@@ -154,11 +140,6 @@ public class ShaclModel {
         targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.xone));
         targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.atomic));
 
-        // recursive // TODO not sure if this is correct
-        //targetGroups.addAll(targetGroups.stream().flatMap(tg ->
-        //        tg.getAllTargets().entrySet().stream().flatMap(shapeAndTargets ->
-        //                getImplicitTargetsForSingleShape(shapeAndTargets.getKey(), shapeAndTargets.getValue()).stream())
-        //).collect(Collectors.toSet()));
         return targetGroups;
     }
 
@@ -184,17 +165,21 @@ public class ShaclModel {
             return ImmutableSet.of();
 
         return childShapeSets.stream().map(css ->{
-            final Map<Shape, Set<ShapeTarget>> targetMap = new HashMap<>();
-            css.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> mergeValues(targetMap, cs, targets));
-            return new ShapeGroup(targetMap, groupOperator);
+            Map<Shape, Set<ShapeTarget>> targetMap = new HashMap<>();
+            ImmutableSet.Builder<ShapeGroup> subs = new ImmutableSet.Builder<>();
+            css.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> {           //recursive retrieval of ShapeGroups
+                mergeValues(targetMap, cs, targets);
+                subs.addAll(getImplicitTargetsForSingleShape(cs, targets));
+            });
+            return new ShapeGroup(targetMap, groupOperator, subs.build());
         }).collect(Collectors.toSet());
     }
 
-    private void mergeValues(Map<Shape, Set<ShapeTargetSet>> implicitTargets, Shape shape, Set<ShapeTargetSet> targets) {
+    private void mergeValues(Map<Shape, Set<ShapeTarget>> implicitTargets, Shape shape, Set<ShapeTarget> targets) {
         if (implicitTargets.containsKey(shape)) {
             implicitTargets.get(shape).addAll(targets);
         } else {
-            HashSet<ShapeTargetSet> targetsCopy = new HashSet<>(targets);
+            HashSet<ShapeTarget> targetsCopy = new HashSet<>(targets);
             implicitTargets.put(shape, targetsCopy);
         }
     }
@@ -255,10 +240,12 @@ public class ShaclModel {
     private class ShapeGroup{
         @NonNull @Getter private final Map<Shape, Set<ShapeTarget>> allTargets;
         @NonNull @Getter private final SHACL.LogicalConstraint groupOperator;
+        @NonNull @Getter private final Set<ShapeGroup> subGroups;
 
-        private ShapeGroup(Map<Shape, Set<ShapeTarget>> allTargets, SHACL.LogicalConstraint groupOperator) {
+        private ShapeGroup(Map<Shape, Set<ShapeTarget>> allTargets, SHACL.LogicalConstraint groupOperator, Set<ShapeGroup> subGroups) {
             this.allTargets = allTargets;
             this.groupOperator = groupOperator;
+            this.subGroups = subGroups;
         }
     }
 }

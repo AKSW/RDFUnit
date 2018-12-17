@@ -1,12 +1,12 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.helper.PropertyValuePair;
-import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
+import org.aksw.rdfunit.model.impl.results.ShaclLiteTestCaseResultImpl;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
@@ -15,7 +15,6 @@ import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.aksw.rdfunit.vocabulary.SPIN;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -29,7 +28,7 @@ public class TestCaseGroupAnd implements TestCaseGroup {
     private final ImmutableSet<GenericTestCase> testCases;
 
     public TestCaseGroupAnd(@NonNull Set<? extends GenericTestCase> testCases) {
-        assert(! testCases.isEmpty());
+        //assert(! testCases.isEmpty());
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(testCases);
     }
@@ -53,19 +52,17 @@ public class TestCaseGroupAnd implements TestCaseGroup {
                 .map(r -> ((ShaclLiteTestCaseResult) r))
                 .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode, Collectors.toList()));
 
-        ArrayList<TestCaseResult> res = new ArrayList<>();
+        ImmutableList.Builder<TestCaseResult> res = ImmutableList.builder();
         directResults.forEach((focusNode, results) ->{
-            HashSet<PropertyValuePair> annos = new HashSet<>();
-            results.forEach(r -> annos.add(PropertyValuePair.create(SPIN.violationPath, r.getTestCaseUri())));  //TODO use correct property
             res.addAll(results);
-            res.add(new ShaclTestCaseResultImpl.Builder(
+            res.add(new ShaclLiteTestCaseResultImpl(
                     this.resource,
-                    RLOGLevel.ERROR,
+                    this.getLogLevel(),
                     "At least one test case failed inside a SHACL and constraint.",
                     focusNode
-            ).setResultAnnotations(annos).build());
+            ));
         });
-        return res;
+        return res.build();
     }
 
     @Override

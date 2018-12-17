@@ -246,27 +246,27 @@ ex:MyXoneShape
     )
     .
 
-#ex:MyComplexNotShape
-#	a sh:NodeShape ;
-#	sh:targetClass ex:NotConstraintCheck ;
-#
-#   sh:not
-#        [
-#            a sh:NodeShape ;
-#            sh:or (
-#                [
-#                    sh:path ex:checkMaxCount0 ;
-#                    sh:maxCount "0"^^xsd:int ;
-#                ] [
-#                    sh:path ex:checkMaxCount1 ;
-#                    sh:maxCount "1"^^xsd:int ;
-#                ] [
-#                    sh:path ex:checkMaxCount3 ;
-#                    sh:maxCount "3"^^xsd:int ;
-#                ]
-#            )
-#        ]
-#    .
+ex:MyComplexNotShape
+	a sh:NodeShape ;
+	sh:targetClass ex:NotConstraintCheck ;
+
+   sh:not
+        [
+            a sh:NodeShape ;
+            sh:or (
+                [
+                    sh:path ex:checkMaxCount0 ;
+                    sh:maxCount "0"^^xsd:int ;
+                ] [
+                    sh:path ex:checkMaxCount1 ;
+                    sh:maxCount "1"^^xsd:int ;
+                ] [
+                    sh:path ex:checkMaxCount3 ;
+                    sh:maxCount "3"^^xsd:int ;
+                ]
+            )
+        ]
+    .
 
 ex:MySimpleNotShape
 	a sh:NodeShape ;
@@ -278,3 +278,45 @@ ex:MySimpleNotShape
             sh:maxCount "1"^^xsd:int ;
         ]
     .
+
+ex:RectangleShape
+  rdf:type sh:NodeShape ;
+  sh:targetClass ex:Rectangle ;
+  sh:and (
+      [
+        sh:property [
+            sh:path ex:width ;
+            sh:minCount 1 ;
+          ] ;
+      ]
+      [
+        sh:property [
+            sh:path ex:height ;
+            sh:minCount 1 ;
+          ] ;
+      ]
+    )
+.
+
+ex:RectangleWithArea
+  rdf:type sh:NodeShape ;
+  sh:targetClass ex:RectangleWithArea ;
+  sh:or (
+      [
+        sh:property [
+            sh:path ex:height ;
+            sh:minCount 1 ;
+          ] ;
+        sh:property [
+            sh:path ex:width ;
+            sh:minCount 1 ;
+          ] ;
+      ]
+      [
+        sh:property [
+            sh:path ex:area ;
+            sh:minCount 1 ;
+          ] ;
+      ]
+    ) ;
+.

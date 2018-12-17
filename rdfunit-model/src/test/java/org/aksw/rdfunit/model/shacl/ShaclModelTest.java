@@ -30,9 +30,6 @@ public class ShaclModelTest {
     public void testRead() throws RdfReaderException {
 
         ShaclModel shaclModel = new ShaclModel(RdfReaderFactory.createResourceReader(shapeResource).read());
-        assertThat(shaclModel.getShapes())
-                .isNotEmpty();
-
         Set<GenericTestCase> tests = shaclModel.generateTestCases();
         assertThat(tests)
                 .isNotEmpty();

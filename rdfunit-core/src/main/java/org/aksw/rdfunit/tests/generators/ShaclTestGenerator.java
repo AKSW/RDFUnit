@@ -4,13 +4,12 @@ import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
-import org.aksw.rdfunit.model.interfaces.TestCase;
-import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
 import org.aksw.rdfunit.model.shacl.ShaclModel;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author Dimitris Kontokostas
@@ -24,7 +23,7 @@ public class ShaclTestGenerator implements RdfUnitTestGenerator{
 
         try {
             ShaclModel shaclModel = new ShaclModel(source.getModel());
-            Collection<GenericTestCase> tests = shaclModel.generateTestCases();
+            Set<GenericTestCase> tests = shaclModel.generateTestCases();
             log.info("{} generated {} SHACL-based tests", source.getUri(), tests.size());
             return tests;
 

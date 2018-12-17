@@ -24,3 +24,15 @@ ex:or1 rdf:type ex:OrConstraintCheck ;
   ex:checkMaxCount3 "c" ;
 .
 
+ex:ValidRectangle1
+  rdf:type ex:RectangleWithArea ;
+  ex:height 3 ;
+  ex:width 2 ;
+.
+
+ex:ValidRectangle2
+  rdf:type ex:RectangleWithArea ;
+  ex:area 6 ;
+  ex:height 3 ;
+  ex:width 2 ;
+.
