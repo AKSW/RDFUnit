@@ -48,7 +48,7 @@ public class QueryGenerationExtendedSelectFactory implements QueryGenerationFact
 
             // if variable is not redefined don't add it again
             // This is needed if the same variable takes part in different annotations
-            if (!existingVariables.contains(value)) {
+            if (! existingVariables.contains(value)) {
                 sb.append(" ?");
                 sb.append(value);
                 sb.append(' ');

@@ -2,7 +2,6 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.extern.slf4j.Slf4j;
-import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.shacl.*;
 import org.aksw.rdfunit.model.readers.shacl.SparqlValidatorReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -17,8 +16,8 @@ public final class ConstraintTestCaseFactory {
 
     private ConstraintTestCaseFactory() {}
 
-    public static Set<TestCase> createFromComponentAndShape(Component component, Shape shape, Set<ShapeTarget> shapeTargets) {
-        ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
+    public static Set<TestCaseWithTarget> createFromComponentAndShape(Component component, Shape shape, Set<ShapeTarget> shapeTargets) {
+        ImmutableSet.Builder<TestCaseWithTarget> testCaseBuilder = ImmutableSet.builder();
 
         ConstraintFactory.createFromShapeAndComponent(shape, component)
                 .forEach(c -> testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromConstraintAndTargets(c, shapeTargets)));
@@ -26,8 +25,8 @@ public final class ConstraintTestCaseFactory {
         return testCaseBuilder.build();
     }
 
-    public static Set<TestCase> createFromConstraintAndTargets(ComponentConstraint constraint, Set<ShapeTarget> targets) {
-        ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
+    public static Set<TestCaseWithTarget> createFromConstraintAndTargets(ComponentConstraint constraint, Set<ShapeTarget> targets) {
+        ImmutableSet.Builder<TestCaseWithTarget> testCaseBuilder = ImmutableSet.builder();
 
         targets.stream()
                 .map(target -> TestCaseWithTarget.builder()
@@ -38,12 +37,11 @@ public final class ConstraintTestCaseFactory {
                 .forEach(testCaseBuilder::add);
 
         return testCaseBuilder.build();
-
     }
 
 
-    public static Set<TestCase> createFromSparqlContraintInShape(Shape shape, Set<ShapeTarget> shapeTargets) {
-        ImmutableSet.Builder<TestCase> testCaseBuilder = ImmutableSet.builder();
+    public static Set<TestCaseWithTarget> createFromSparqlContraintInShape(Shape shape, Set<ShapeTarget> shapeTargets) {
+        ImmutableSet.Builder<TestCaseWithTarget> testCaseBuilder = ImmutableSet.builder();
 
         shape.getElement().listProperties(SHACL.sparql).toSet().stream()
                 .map(Statement::getObject)
@@ -59,7 +57,7 @@ public final class ConstraintTestCaseFactory {
                             .build();
 
                     shapeTargets.forEach(target -> {
-                        TestCase tc = TestCaseWithTarget.builder()
+                        TestCaseWithTarget tc = TestCaseWithTarget.builder()
                                 .target(target)
                                 .filterSparql("")
                                 .testCase(sc.getTestCase())

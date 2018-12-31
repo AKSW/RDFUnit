@@ -6,7 +6,7 @@ import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.impl.results.ShaclLiteTestCaseResultImpl;
+import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
@@ -57,12 +57,12 @@ public class TestCaseGroupOr implements TestCaseGroup {
         directResults.forEach((focusNode, results) -> {
             if(results.size() == this.testCases.size()) {
                 res.addAll(results);
-                res.add(new ShaclLiteTestCaseResultImpl(
+                res.add(new ShaclTestCaseGroupResult(
                         this.resource,
                         this.getLogLevel(),
                         "All test case failed inside a SHACL or constraint.",
-                        focusNode
-                ));
+                        focusNode,
+                        results));
             }
             //else we ignore all internal errors, since at least one was successful
         });

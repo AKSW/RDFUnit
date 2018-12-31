@@ -3,18 +3,24 @@ package org.aksw.rdfunit.model.impl.shacl;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import org.aksw.rdfunit.enums.ShapeTargetType;
+import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
 import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.aksw.rdfunit.utils.CommonNames;
 import org.aksw.rdfunit.utils.JenaUtils;
+import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.query.ParameterizedSparqlString;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.QuerySolutionMap;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,8 +35,8 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = {"target", "filterSparql", "testCase"})
 public class TestCaseWithTarget implements TestCase {
 
-    @NonNull private final ShapeTarget target;
-    @NonNull private final String filterSparql;
+    @Getter @NonNull private final ShapeTarget target;
+    @Getter @NonNull private final String filterSparql;
     @Getter @NonNull private final TestCase testCase;
     @Getter @NonNull private final Resource element = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
 
@@ -42,7 +48,12 @@ public class TestCaseWithTarget implements TestCase {
 
     @Override
     public String getSparqlWhere() {
-        return injectTargetInSparql(testCase.getSparqlWhere(), this.target);
+        String withFocus = testCase.getSparqlWhere();
+        if(target instanceof ShapeTargetValueShape) {
+            // inserting the focus node in the group statement
+            withFocus = withFocus.replaceFirst("(?i)GROUP BY\\s+\\?" + CommonNames.This, "GROUP BY ?" + CommonNames.This + " ?focusNode");
+        }
+        return injectTargetInSparql(withFocus, this.target);
     }
 
     @Override
@@ -60,6 +71,19 @@ public class TestCaseWithTarget implements TestCase {
     }
 
     @Override
+    public RDFNode getFocusNode(QuerySolution solution) {
+
+        String focusVar = getVariableAnnotations().stream()
+                .filter(ra -> ra.getAnnotationProperty().equals(SHACL.focusNode))
+                .map(ResultAnnotation::getAnnotationVarName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst()
+                .orElse(CommonNames.This);
+        return solution.get(focusVar);
+    }
+
+    @Override
     public TestCaseAnnotation getTestCaseAnnotation() {
         // inject SHACL annotations
         // TODO this is not efficient, recreates it on every request but needs major refactoring to improve
@@ -68,7 +92,21 @@ public class TestCaseWithTarget implements TestCase {
 
     @Override
     public Set<ResultAnnotation> getVariableAnnotations() {
-        return getTestCaseAnnotation().getVariableAnnotations();
+        ImmutableSet.Builder<ResultAnnotation> builder = ImmutableSet.builder();
+        if(ShapeTargetValueShape.class.isAssignableFrom(target.getClass())) {
+
+            getTestCaseAnnotation().getVariableAnnotations().forEach(va -> {
+                if(! va.getAnnotationProperty().equals(SHACL.focusNode))
+                    builder.add(va);
+            });
+            // add also a new variable annotation for the focus node
+            builder.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)
+                    .setVariableName(SHACL.focusNode.getLocalName()).build());
+        }
+        else{
+            builder.addAll(getTestCaseAnnotation().getVariableAnnotations());
+        }
+        return builder.build();
     }
 
     @Override
@@ -101,7 +139,17 @@ public class TestCaseWithTarget implements TestCase {
                 .addAll(annotation.getResultAnnotations())
                 .addAll(annotation.getVariableAnnotations());
 
-        return new TestCaseAnnotation(annotation.getElement(), annotation.getGenerated(), annotation.getAutoGeneratorURI(), annotation.getAppliesTo(), annotation.getSourceUri(), finalReferences, annotation.getDescription(), annotation.getTestCaseLogLevel(), resultAnnotationBuilder.build());
+        return new TestCaseAnnotation(
+                annotation.getElement(),
+                annotation.getGenerated(),
+                annotation.getAutoGeneratorURI(),
+                annotation.getAppliesTo(),
+                annotation.getSourceUri(),
+                finalReferences,
+                annotation.getDescription(),
+                annotation.getTestCaseLogLevel(),
+                resultAnnotationBuilder.build()
+        );
     }
 
     private static final String thisVar = "\\$this_asdf_1234_qwer";
@@ -115,7 +163,7 @@ public class TestCaseWithTarget implements TestCase {
                     .replaceAll("(?i)GROUP\\s+BY\\s+[\\$\\?]this", "GROUP BY "+ thisVar);
 
             QuerySolutionMap qsm = new QuerySolutionMap();
-            qsm.add("this", target.getNode());
+            qsm.add(CommonNames.This, target.getNode());
             ParameterizedSparqlString pq = new ParameterizedSparqlString(changedQuery, qsm);
             changedQuery = pq.toString();
 

@@ -2,10 +2,17 @@ package org.aksw.rdfunit.model.impl;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
+import org.aksw.rdfunit.utils.CommonNames;
+import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
+
+import java.util.Optional;
 
 /**
  * ManualTestCase Implementation
@@ -25,4 +32,15 @@ public class ManualTestCaseImpl implements TestCase {
     @Getter @NonNull private final String sparqlWhere;
     @Getter @NonNull private final String sparqlPrevalence;
 
+    @Override
+    public RDFNode getFocusNode(QuerySolution solution) {
+        String focusVar = getVariableAnnotations().stream()
+                .filter(ra -> ra.getAnnotationProperty().equals(SHACL.focusNode))
+                .map(ResultAnnotation::getAnnotationVarName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst()
+                .orElse(CommonNames.This);
+        return solution.get(focusVar);
+    }
 }

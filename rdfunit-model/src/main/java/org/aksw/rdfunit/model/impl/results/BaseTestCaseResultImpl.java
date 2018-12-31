@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.impl.results;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
@@ -16,6 +18,9 @@ import java.util.Calendar;
  * @since 1 /2/14 3:44 PM
 
  */
+
+@ToString
+@EqualsAndHashCode(exclude = "element")
 class BaseTestCaseResultImpl implements TestCaseResult {
     private final Resource element;
     private final Resource testCaseUri;

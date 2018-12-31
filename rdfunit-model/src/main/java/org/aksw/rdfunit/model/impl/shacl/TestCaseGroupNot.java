@@ -55,6 +55,7 @@ public class TestCaseGroupNot implements TestCaseGroup {
         directResults.forEach((focusNode, results) ->{
             // here results is not empty, therefore internal test failed, which was expected and we delete the internal test results
             //TODO no way to tell if a NOT failed at the moment, since no failures exist
+            // if successfully implemented: do not use ShaclTestCaseGroupResult since those will be deleted by the testexecutor
         });
         return res.build();
     }

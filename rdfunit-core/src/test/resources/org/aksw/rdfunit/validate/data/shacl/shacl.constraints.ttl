@@ -8,6 +8,11 @@
 
 # A sample shape, meant only to test the shape readers (ATM)
 
+ex:Address
+  rdf:type rdfs:Class ;
+  rdfs:label "Address" ;
+  .
+
 ex:Person
 	a sh:Shape ;
 	a rdfs:Class ;
@@ -90,8 +95,6 @@ ex:Person
         sh:path ex:checkIn ;
         sh:in (ex:Example "example" ) ;
     ] ;
-
-
 .
 
 ex:NodeConstraintClassShape a sh:Shape ;
@@ -317,6 +320,20 @@ ex:RectangleWithArea
             sh:path ex:area ;
             sh:minCount 1 ;
           ] ;
+      ]
+    ) ;
+.
+
+ex:AddressShape-address
+  sh:path ex:address ;
+  sh:targetNode ex:InvalidResource3 ;
+  sh:targetNode ex:InvalidResource4 ;
+  sh:or (
+      [
+        sh:datatype xsd:string ;
+      ]
+      [
+        sh:class ex:Address ;
       ]
     ) ;
 .

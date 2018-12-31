@@ -11,15 +11,13 @@ import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.Component;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.Validator;
+import org.aksw.rdfunit.utils.CommonNames;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.query.Query;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.core.VarExprList;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,34 +39,27 @@ class ResultAnnotationParser {
 
     private Optional<ResultAnnotation> getPathAnnotation() {
         if (query.getResultVars().contains("path")) {
-            List<Var> vars = query.getProjectVars();
-            VarExprList vel = query.getProject();
-            return Optional.of(
-                createVariableAnnotation(SHACL.resultPath, "path"));
+            return Optional.of(createVariableAnnotation(SHACL.resultPath, "path"));
         } else {
             if (shape.getPath().isPresent()) {
-                return Optional.of(
-                    createValueAnnotation(SHACL.resultPath, shape.getPath().get().getPathAsRdf()));
+                return Optional.of(createValueAnnotation(SHACL.resultPath, shape.getPath().get().getPathAsRdf()));
             }
         }
         return Optional.empty();
     }
 
     private Optional<ResultAnnotation> getFocusNodeAnnotation() {
-        if (query.getResultVars().contains("focusNode")) {
-            return Optional.of(
-                    createVariableAnnotation(SHACL.focusNode, "focusNode"));
+        if (query.getResultVars().contains(SHACL.focusNode.getLocalName())) {
+            return Optional.of(createVariableAnnotation(SHACL.focusNode, SHACL.focusNode.getLocalName()));
         } else {
-            return Optional.of(
-                    createVariableAnnotation(SHACL.focusNode, "this"));
+            return Optional.of(createVariableAnnotation(SHACL.focusNode, CommonNames.This));
         }
     }
 
     private Optional<ResultAnnotation> getMessageAnnotation() {
 
         if (query.getResultVars().contains("message")) {
-            return Optional.of(
-                    createVariableAnnotation(SHACL.resultMessage, "message"));
+            return Optional.of(createVariableAnnotation(SHACL.resultMessage, "message"));
         } else {
 
             return ImmutableList.of(shape.getMessage(),validator.getDefaultMessage()).stream()
@@ -76,7 +67,6 @@ class ResultAnnotationParser {
                     .map(Optional::get)
                     .findFirst()
                     .map(message -> createValueAnnotation(SHACL.resultMessage, message));
-
         }
 
     }
@@ -85,55 +75,43 @@ class ResultAnnotationParser {
         boolean componentThatAllowsValueBinding = canBindValueVariable && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") );
         boolean isNodeShapeAndHasValueVar = shape.isNodeShape() && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") );
         if (isNodeShapeAndHasValueVar || componentThatAllowsValueBinding ) {
-            return Optional.of(
-                    createVariableAnnotation(SHACL.value, "value"));
+            return Optional.of(createVariableAnnotation(SHACL.value, SHACL.value.getLocalName()));
         }
 
         // when ?value is not defined in Node Shapes we use ?this
         if (shape.isNodeShape()) {
-            return Optional.of(
-                    createVariableAnnotation(SHACL.value, "this"));
+            return Optional.of(createVariableAnnotation(SHACL.value, CommonNames.This));
         }
-
-
-
         return Optional.empty();
     }
 
     private Optional<ResultAnnotation> getSeverityAnnotation() {
-        return Optional.of(
-                createValueAnnotation(SHACL.resultSeverity, shape.getSeverity()));
+        return Optional.of(createValueAnnotation(SHACL.resultSeverity, shape.getSeverity()));
 
     }
     private Optional<ResultAnnotation> getSourceShapeAnnotation() {
-        return Optional.of(
-                createValueAnnotation(SHACL.sourceShape, shape.getElement()));
+        return Optional.of(createValueAnnotation(SHACL.sourceShape, shape.getElement()));
 
     }
     private Optional<ResultAnnotation> getSourceConstraintComponentAnnotation() {
-        return Optional
-                .ofNullable(component)
+        return Optional.ofNullable(component)
                 .map(c -> new ResultAnnotationImpl.Builder(c.getElement(), SHACL.sourceConstraintComponent)
                         .setValue(component.getElement()).build());
 
     }
     private Optional<ResultAnnotation> getSourceConstraintComponentSparqlAnnotation() {
         if (component == null) {
-            return Optional.of(
-                    createValueAnnotation(SHACL.sourceConstraint, validator.getElement()));
+            return Optional.of(createValueAnnotation(SHACL.sourceConstraint, validator.getElement()));
         } else {return Optional.empty();}
 
     }
 
     private Optional<ResultAnnotation> getSourceConstraintAnnotation() {
         if (component == null) {
-            return Optional.of(
-                    createValueAnnotation(SHACL.sourceConstraintComponent, SHACL.SPARQLConstraintComponent));
+            return Optional.of(createValueAnnotation(SHACL.sourceConstraintComponent, SHACL.SPARQLConstraintComponent));
         } else {return Optional.empty();}
 
     }
-
-
 
     public Set<ResultAnnotation> getResultAnnotations() {
 
@@ -152,10 +130,7 @@ class ResultAnnotationParser {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
-
-
     }
-
 
     private ResultAnnotation createValueAnnotation(Property property, RDFNode value) {
         return new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), property)

@@ -7,6 +7,7 @@ import org.aksw.rdfunit.tests.query_generation.QueryGenerationAskFactory;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationCountFactory;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationExtendedSelectFactory;
 import org.aksw.rdfunit.tests.query_generation.QueryGenerationSelectFactory;
+import org.aksw.rdfunit.utils.CommonNames;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QueryParseException;
 
@@ -41,7 +42,7 @@ public class TestCaseValidator {
         // check for Resource & message
         boolean hasResource = false;
         for (String v : vars) {
-            if ("this".equals(v)) {
+            if (CommonNames.This.equals(v)) {
                 hasResource = true;
             }
 

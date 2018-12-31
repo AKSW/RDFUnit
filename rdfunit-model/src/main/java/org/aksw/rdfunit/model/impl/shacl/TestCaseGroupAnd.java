@@ -1,12 +1,11 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.impl.results.ShaclLiteTestCaseResultImpl;
+import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
@@ -19,7 +18,10 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TestCaseGroupAnd implements TestCaseGroup {
@@ -28,10 +30,12 @@ public class TestCaseGroupAnd implements TestCaseGroup {
     private final ImmutableSet<GenericTestCase> testCases;
 
     public TestCaseGroupAnd(@NonNull Set<? extends GenericTestCase> testCases) {
-        //assert(! testCases.isEmpty());
+        assert(! testCases.isEmpty());
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(testCases);
     }
+
+    public boolean isAtomic(){ return testCases.size() == 1; }
 
     @Override
     public Set<GenericTestCase> getTestCases() {
@@ -52,17 +56,22 @@ public class TestCaseGroupAnd implements TestCaseGroup {
                 .map(r -> ((ShaclLiteTestCaseResult) r))
                 .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode, Collectors.toList()));
 
-        ImmutableList.Builder<TestCaseResult> res = ImmutableList.builder();
+        ImmutableSet.Builder<TestCaseResult> res = ImmutableSet.builder();
         directResults.forEach((focusNode, results) ->{
             res.addAll(results);
-            res.add(new ShaclLiteTestCaseResultImpl(
-                    this.resource,
-                    this.getLogLevel(),
-                    "At least one test case failed inside a SHACL and constraint.",
-                    focusNode
-            ));
+            addSummaryResult(res, focusNode, results);
         });
         return res.build();
+    }
+
+    void addSummaryResult(ImmutableSet.Builder<TestCaseResult> builder, RDFNode focusNode, List<TestCaseResult> results){
+        builder.add(new ShaclTestCaseGroupResult(
+                this.resource,
+                this.getLogLevel(),
+                "At least one test case failed inside a SHACL and constraint.",
+                focusNode,
+                results
+                ));
     }
 
     @Override

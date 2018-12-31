@@ -6,8 +6,7 @@
 
 ex:1  a ex:NodeClass ;
 	ex:someProperty [
-		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
-		#ex:nestedProperty [ ex:nestedProperty2 "2"^^xsd:int ] ;
+		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;         # missing second occurrence
 	] .
 
 ex:2  a ex:NodeClass ;
@@ -16,8 +15,8 @@ ex:2  a ex:NodeClass ;
 		ex:nestedProperty [ ex:nestedProperty2 "asdf"^^xsd:int] ;
 	] .
 
-ex:2  a ex:NodeClass ;
+ex:3  a ex:NodeClass ;
 	ex:someProperty [
-		#ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
-		#ex:nestedProperty [ ex:nestedProperty2 "123"^^xsd:decimal] ;
+		ex:nestedProperty [ ex:nestedProperty2 "1"^^xsd:int ] ;
+		ex:nestedProperty [ ex:nestedProperty2 "123"^^xsd:decimal] ;
 	] .

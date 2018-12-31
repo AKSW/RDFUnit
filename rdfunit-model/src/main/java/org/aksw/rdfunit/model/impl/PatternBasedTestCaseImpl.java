@@ -7,10 +7,15 @@ import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.model.interfaces.*;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
+import org.aksw.rdfunit.utils.CommonNames;
+import org.aksw.rdfunit.vocabulary.SHACL;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 /**
  * @author Dimitris Kontokostas
@@ -29,6 +34,8 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
     @Getter @NonNull private final String sparqlWhere;
     @Getter @NonNull private final String sparqlPrevalence;
 
+    private final String focusNodeVarName;
+
     public PatternBasedTestCaseImpl(@NonNull Resource resource, @NonNull TestCaseAnnotation annotation, @NonNull Pattern pattern, @NonNull Collection<Binding> bindings) {
         this.element = resource;
         this.testCaseAnnotation = annotation;
@@ -37,6 +44,15 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
 
         this.sparqlWhere = initSparqlWhere();
         this.sparqlPrevalence = initSparqlPrevalence();
+
+        focusNodeVarName = testCaseAnnotation.getVariableAnnotations().stream()
+                .filter(ra -> ra.getAnnotationProperty().equals(SHACL.focusNode))
+                .map(ResultAnnotation::getAnnotationVarName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst()
+                .orElse(CommonNames.This);
+
         // validate
         if (bindings.size() != pattern.getParameters().size()) {
             // throw new TestCaseInstantiationException("Non valid bindings in TestCase: " + testURI);
@@ -72,7 +88,6 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
 
     }
 
-
     private static String instantiateBindings(Collection<Binding> bindings, String query) {
         String sparql = query;
         for (Binding b : bindings) {
@@ -81,5 +96,8 @@ public class PatternBasedTestCaseImpl implements TestCase, PatternBasedTestCase 
         return sparql;
     }
 
-
+    @Override
+    public RDFNode getFocusNode(QuerySolution solution) {
+        return solution.get(this.focusNodeVarName);
+    }
 }

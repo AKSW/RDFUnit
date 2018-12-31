@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
+import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
@@ -21,7 +22,9 @@ import org.aksw.rdfunit.vocabulary.SHACL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Takes a dataset source and executes the test queries against the endpoint.
@@ -153,17 +156,14 @@ public abstract class TestExecutor {
             try {
                 results = executeGenericTest(testSource, testCase);
             } catch (RuntimeException e) {
-                //try {
-                    //Thread.sleep(40000);// when VOS (SPARQL Endpoint crashes we can put a sleep here until it restarts and comment the throw
-                //} catch (InterruptedException e1) {
-                //    e1.printStackTrace();
-                //}
                 log.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
-                //throw new RuntimeException("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
             } catch (Exception e) {
                 log.error("Unknown error while executing TC: " + testCase.getAbrTestURI(), e);
                 status = TestCaseResultStatus.Error;
             }
+
+            // filter out ShaclTestCaseGroupResult, these were only of use inside the validation hierarchy
+            results = getAtomicResults(results);
 
             long executionTimeEndInMS = System.currentTimeMillis();
             log.debug("{} : execution completed in {}ms", testCase.getAbrTestURI(), (executionTimeEndInMS - executionTimeStartInMS));
@@ -202,6 +202,16 @@ public abstract class TestExecutor {
         return success;
     }
 
+    // FIXME we should probably keep the group results for better evaluation
+    private Collection<TestCaseResult> getAtomicResults(Collection<TestCaseResult> input){
+        return input.stream().flatMap(result -> {
+            if(result instanceof ShaclTestCaseGroupResult)
+                return getAtomicResults(((ShaclTestCaseGroupResult) result).getInternalResults()).stream();
+            else
+                return Stream.of(result);
+        }).collect(Collectors.toSet());
+    }
+
     /**
      * Add test executor monitor / subscriber.
      *
@@ -229,5 +239,4 @@ public abstract class TestExecutor {
     public void clearTestExecutorMonitor() {
         progressMonitors.clear();
     }
-
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @ToString
-@EqualsAndHashCode(exclude = "element", callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ShaclTestCaseResultImpl extends ShaclLiteTestCaseResultImpl implements ShaclTestCaseResult {
 
     private final ImmutableSet<PropertyValuePair> resultAnnotations;

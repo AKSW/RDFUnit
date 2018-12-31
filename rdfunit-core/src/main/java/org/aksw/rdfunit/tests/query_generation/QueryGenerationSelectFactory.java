@@ -1,9 +1,14 @@
 package org.aksw.rdfunit.tests.query_generation;
 
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCase;
+import org.aksw.rdfunit.utils.CommonNames;
+import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QueryParseException;
+
+import java.util.Optional;
 
 import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPrefixDeclarations;
 
@@ -16,13 +21,28 @@ import static org.aksw.rdfunit.tests.query_generation.QueryGenerationUtils.getPr
  */
 public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
-    private static final String SELECT_CLAUSE = " SELECT ?this WHERE ";
+    private static final String SELECT_CLAUSE = " SELECT ?this ";
 
 
     @Override
-    public String getSparqlQueryAsString(TestCase testCase) {
-        return getPrefixDeclarations(testCase) +
-                SELECT_CLAUSE + testCase.getSparqlWhere();
+    public String getSparqlQueryAsString(TestCase testCase) {        StringBuilder sb = new StringBuilder();
+
+        sb.append(getPrefixDeclarations(testCase));
+        sb.append(SELECT_CLAUSE);
+
+        // Add all defined variables in the query
+        Optional<String> focusNode = testCase.getVariableAnnotations().stream()
+                .filter(va -> va.getAnnotationProperty().equals(SHACL.focusNode))
+                .map(ResultAnnotation::getAnnotationVarName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(f -> ! f.equals(CommonNames.This))
+                .findFirst();
+        focusNode.ifPresent(focus -> sb.append("?").append(focus));
+
+        sb.append(" WHERE ");
+        sb.append(testCase.getSparqlWhere());
+        return sb.toString();
     }
 
 

@@ -20,14 +20,15 @@ ex:and1 rdf:type ex:AndConstraintCheck ;
   ex:checkMaxCount3 "a" ;
   ex:checkMaxCount3 "b" ;
   ex:checkMaxCount3 "c" ;
-  ex:checkMaxCount3 "d" ;
+  ex:checkMaxCount3 "d" ;   # beeep
 .
 
 ex:InvalidRectangle1
   rdf:type ex:Rectangle ;
   ex:height 3 ;
-.
+.                           # beeep (missing width)
+
 ex:InvalidRectangle2
   rdf:type ex:Rectangle ;
   ex:width 2 ;
-.
+.                           # beeep (missing height)

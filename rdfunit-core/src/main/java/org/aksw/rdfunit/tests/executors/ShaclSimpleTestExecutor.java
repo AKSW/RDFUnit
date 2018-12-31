@@ -55,7 +55,9 @@ public class ShaclSimpleTestExecutor extends TestExecutor {
 
             qe.execSelect().forEachRemaining( qs -> {
 
-                RDFNode focusNode = qs.get("this");
+                RDFNode focusNode = testCase.getFocusNode(qs);
+                assert(focusNode != null);
+
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {
                     message = qs.get("message").toString();

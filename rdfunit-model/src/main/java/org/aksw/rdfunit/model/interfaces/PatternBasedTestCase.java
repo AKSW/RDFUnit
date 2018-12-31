@@ -9,7 +9,6 @@ import java.util.Collection;
  */
 public interface PatternBasedTestCase extends TestCase {
 
-
     Pattern getPattern();
 
     Collection<Binding> getBindings();

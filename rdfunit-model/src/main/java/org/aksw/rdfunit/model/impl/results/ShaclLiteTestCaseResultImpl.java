@@ -16,7 +16,7 @@ import org.apache.jena.rdf.model.Resource;
 
  */
 @ToString
-@EqualsAndHashCode(exclude = "element", callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implements ShaclLiteTestCaseResult {
 
     private final RDFNode focusNode;

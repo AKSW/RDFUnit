@@ -98,8 +98,6 @@ public class TestCaseResultWriter implements ElementWriter {
             if (!containsSeverity) {
                 resource.addProperty(SHACL.severity, ResourceFactory.createResource(testCaseResult.getSeverity().getUri()));
             }
-
-
         }
 
 

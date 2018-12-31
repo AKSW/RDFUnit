@@ -94,21 +94,21 @@ public class ShapeTargetValueShape implements ShapeTarget {
     }
 
     private static String classTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>/<http://www.w3.org/2000/01/rdf-schema#subClassOf>* " + formatNode(target.getNode()) + " ; " +
-                writePropertyChain(target.pathChain) + "  ?this . ";
+        return " ?focusNode <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>/<http://www.w3.org/2000/01/rdf-schema#subClassOf>* " + formatNode(target.getNode()) + " ; \n" +
+                writePropertyChain(target.pathChain) + "  ?this . \n";
     }
 
-    // FIXME add focus node
     private static String nodeTargetPattern(ShapeTargetValueShape target) {
-        return " " + formatNode(target.getNode()) + " " + writePropertyChain(target.pathChain) + " ?this . ";
+        return " " + formatNode(target.getNode()) + " " + writePropertyChain(target.pathChain) + " ?this . \n" +
+            "BIND (" + formatNode(target.getNode()) + " AS ?focusNode) .\n";
     }
 
     private static String objectsOfTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode (^" + formatNode(target.getNode()) + ")/" + writePropertyChain(target.pathChain) + " ?this .";
+        return " ?focusNode (^" + formatNode(target.getNode()) + ")/" + writePropertyChain(target.pathChain) + " ?this . \n";
     }
 
     private static String subjectsOfTargetPattern(ShapeTargetValueShape target) {
-        return " ?focusNode " + formatNode(target.getNode()) + "/" + writePropertyChain(target.pathChain) + " ?this .";
+        return " ?focusNode " + formatNode(target.getNode()) + "/" + writePropertyChain(target.pathChain) + " ?this . \n";
     }
 
     private static String writePropertyChain(List<ShapePath> propertyChain) {

@@ -1,7 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import org.aksw.rdfunit.model.impl.shacl.TestCaseSingletonGroup;
+import org.aksw.rdfunit.model.impl.shacl.TestCaseGroupAtomic;
 import org.aksw.rdfunit.model.impl.shacl.TestCaseWithTarget;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -9,7 +11,9 @@ import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A wrapper object for a collection of test cases with a logical operator,
@@ -51,16 +55,38 @@ public interface TestCaseGroup extends GenericTestCase {
                 .map(tc -> ((TestCaseWithTarget) tc))
                 .map(tc -> tc.getTestCase().getElement())
                 .forEach(testCaseUris::add);
-        // flattening the internal test case of TestCaseSingletonGroup
         testCases.stream()
-                .filter(x -> x instanceof TestCaseSingletonGroup)
-                .map(tc -> ((TestCaseSingletonGroup) tc))
-                .flatMap(tc -> getTestCaseUris(tc.getTestCases()).stream())
+                .filter(x -> x instanceof TestCaseGroupAtomic)
+                .map(tc -> ((TestCaseGroupAtomic) tc))
+                .map(tc -> tc.getTestCases().iterator().next().getElement())
                 .forEach(testCaseUris::add);
         // adding all direct uris
         testCases.stream()
                 .map(GenericTestCase::getElement)
                 .forEach(testCaseUris::add);
         return testCaseUris;
+    }
+
+    /**
+     * Will collect all uris of dependent test cases of the test case hierarchy
+     * @param testCases
+     * @return
+     */
+    static Map<Resource, Set<Resource>> getAllDependentTestCaseUris(Set<GenericTestCase> testCases){
+        ImmutableBiMap.Builder<Resource, Set<Resource>> map = ImmutableBiMap.builder();
+        testCases.forEach(testCase ->{
+            ImmutableSet.Builder<Resource> uris = ImmutableSet.builder();
+            if(TestCaseGroup.class.isAssignableFrom(testCase.getClass())){
+                uris.addAll(getAllDependentTestCaseUris(((TestCaseGroup) testCase).getTestCases()).values().stream().flatMap(Collection::stream).collect(Collectors.toSet()));
+            }
+            else if(TestCaseWithTarget.class.isAssignableFrom(testCase.getClass())){
+                uris.add(((TestCaseWithTarget)testCase).getTestCase().getElement());
+            }
+            uris.add(testCase.getElement());
+            // we copy the behaviour of getTestCaseUris(..) where we get the element resource of the target test case, else of the test case itself
+            Resource uri = testCase instanceof TestCaseWithTarget ? ((TestCaseWithTarget) testCase).getTestCase().getElement() : testCase.getElement();
+            map.put(uri, uris.build());
+        });
+        return map.build();
     }
 }

@@ -51,50 +51,32 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
 
             ResultSet results = qe.execSelect();
 
-            ShaclTestCaseResultImpl.Builder resultBuilder = null;
-            RDFNode prevFocusNode = null;
-
             while (results.hasNext()) {
 
                 QuerySolution qs = results.next();
 
-                RDFNode focusNode = qs.get("this");
+                RDFNode focusNode = testCase.getFocusNode(qs);
+                assert(focusNode != null);
+
                 String message = testCase.getResultMessage();
                 if (qs.contains("message")) {
                     message = qs.get("message").toString();
                 }
                 RLOGLevel logLevel = testCase.getLogLevel();
 
-                // If resource != before
-                // we add the previous result in the list
-                if (prevFocusNode == null || !prevFocusNode.toString().equals(focusNode.toString())) {
-                    // The very first time we enter, result = null and we don't add any result
-                    if (resultBuilder != null) {
-                        testCaseResults.add(
-                                resultBuilder
-                                        .setResultAnnotations(annotationSetBuilder.build().getAnnotations())
-                                        .build());
+                ShaclTestCaseResultImpl.Builder resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getElement(), logLevel, message, focusNode);
+
+                annotationSetBuilder = PropertyValuePairSet.builder(); //reset
+
+                // get static annotations for new test
+                for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
+                    // Get values
+                    if (resultAnnotation.getAnnotationValue().isPresent()) {
+                        // FIXME, I don't understand why we don't just use class ResultAnnotation as result annotations instead of PropertyValuePair (since we basically just copy them) ?
+                        annotationSetBuilder.annotation(
+                                PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get()));
                     }
-
-                    resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getElement(), logLevel, message, focusNode );
-
-                    annotationSetBuilder = PropertyValuePairSet.builder(); //reset
-
-                    // get static annotations for new test
-                    for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
-                        // Get values
-                        if (resultAnnotation.getAnnotationValue().isPresent()) {
-                            // FIXME, I don't understand why we don't just use class ResultAnnotation as result annotations instead of PropertyValuePair (since we basically just copy them) ?
-                            annotationSetBuilder.annotation(
-                                    PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get()));
-                        }
-                    }
-                    //prevFocusNode = focusNode;
                 }
-
-                // result must be initialized by now
-                checkNotNull(resultBuilder);
-
                 // get annotations from the SPARQL query
                 for (ResultAnnotation resultAnnotation : testCase.getVariableAnnotations()) {
                     // Get the variable name
@@ -107,19 +89,16 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
                         }
                     }
                 }
+
+                testCaseResults.add(resultBuilder
+                        .setResultAnnotations(annotationSetBuilder.build().getAnnotations())
+                        .build());
             }
-            // Add last result (if query return any)
-            if (resultBuilder != null) {
-                testCaseResults.add(
-                        resultBuilder
-                                .setResultAnnotations(annotationSetBuilder.build().getAnnotations())
-                                .build());
-            }
+
         } catch (QueryExceptionHTTP e) {
             checkQueryResultStatus(e);
         }
 
         return testCaseResults;
-
     }
 }
