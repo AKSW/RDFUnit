@@ -27,3 +27,18 @@ ex:xone1 rdf:type ex:XoneConstraintCheck ;
   ex:checkMaxCount3 "d" ;   # wrong
 .
 
+ex:Bob
+  rdf:type ex:PersonX ;
+  ex:firstName "Robert" ;
+  ex:lastName "Coin" ;
+.
+ex:Carla
+  rdf:type ex:PersonX ;
+  ex:fullName "Carla Miller" ;
+.
+ex:Dory
+  rdf:type ex:PersonX ;
+  ex:firstName "Dory" ;
+  ex:fullName "Dory Dunce" ;
+  ex:lastName "Dunce" ;
+.

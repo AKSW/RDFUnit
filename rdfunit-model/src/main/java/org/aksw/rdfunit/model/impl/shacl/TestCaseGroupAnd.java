@@ -6,12 +6,12 @@ import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
-import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
-import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.TargetBasedTestCase;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.RDFNode;
@@ -20,25 +20,30 @@ import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TestCaseGroupAnd implements TestCaseGroup {
 
+    private final ShapeTarget target;
     private final Resource resource;
-    private final ImmutableSet<GenericTestCase> testCases;
+    private final ImmutableSet<TargetBasedTestCase> testCases;
+    private final Set<Resource> allowedTestCaseUris;
 
-    public TestCaseGroupAnd(@NonNull Set<? extends GenericTestCase> testCases) {
+    public TestCaseGroupAnd(@NonNull Set<? extends TargetBasedTestCase> testCases) {
         assert(! testCases.isEmpty());
+        target = testCases.iterator().next().getTarget();
+        assert(testCases.stream().map(TargetBasedTestCase::getTarget).noneMatch(x -> x != target));
+
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(testCases);
+        this.allowedTestCaseUris = TestCaseGroup.getTestCaseUris(this.testCases);
     }
 
     public boolean isAtomic(){ return testCases.size() == 1; }
 
     @Override
-    public Set<GenericTestCase> getTestCases() {
+    public Set<TargetBasedTestCase> getTestCases() {
         return this.testCases;
     }
 
@@ -49,17 +54,13 @@ public class TestCaseGroupAnd implements TestCaseGroup {
 
     @Override
     public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
-        final Set<Resource> tastCaseUris = TestCaseGroup.getTestCaseUris(getTestCases());
-        Map<RDFNode, List<TestCaseResult>> directResults = internalResults.stream()
-                .filter(r -> tastCaseUris.contains(r.getTestCaseUri()))
-                .filter(r -> ShaclLiteTestCaseResult.class.isAssignableFrom(r.getClass()))
-                .map(r -> ((ShaclLiteTestCaseResult) r))
-                .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode, Collectors.toList()));
-
         ImmutableSet.Builder<TestCaseResult> res = ImmutableSet.builder();
-        directResults.forEach((focusNode, results) ->{
-            res.addAll(results);
-            addSummaryResult(res, focusNode, results);
+        TestCaseGroup.groupInternalResults(internalResults, allowedTestCaseUris).forEach((focusNode, valueMap) -> {
+            valueMap.forEach((value, results) ->{
+                res.addAll(results);
+                addSummaryResult(res, focusNode, results);
+                //else we ignore all internal errors, since at least one was successful
+            });
         });
         return res.build();
     }
@@ -68,7 +69,7 @@ public class TestCaseGroupAnd implements TestCaseGroup {
         builder.add(new ShaclTestCaseGroupResult(
                 this.resource,
                 this.getLogLevel(),
-                "At least one test case failed inside a SHACL and constraint.",
+                "At least one test case failed inside a sh:and constraint.",
                 focusNode,
                 results
                 ));
@@ -97,5 +98,10 @@ public class TestCaseGroupAnd implements TestCaseGroup {
     @Override
     public Resource getElement() {
         return this.resource;
+    }
+
+    @Override
+    public ShapeTarget getTarget() {
+        return target;
     }
 }

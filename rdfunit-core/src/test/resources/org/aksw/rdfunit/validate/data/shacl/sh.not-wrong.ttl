@@ -4,21 +4,21 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:and0 rdf:type ex:NotConstraintCheck ;
-  ex:checkMaxCount0 "a" ;   # beeep
-
-  ex:checkMaxCount1 "a" ;
+ex:not1 rdf:type ex:NotConstraintCheck ;
+  ex:checkMaxCount1 "a" ;   # violating sh:not
 
   ex:checkMaxCount3 "a" ;
   ex:checkMaxCount3 "b" ;
   ex:checkMaxCount3 "c" ;
 .
 
-ex:and1 rdf:type ex:NotConstraintCheck ;
-  ex:checkMaxCount1 "a" ;
+ex:not0 rdf:type ex:NotConstraintCheckComplex ;
+  ex:checkMaxCount0 "a" ;   # beeep
+
+  ex:checkMaxCount1 "a" ;   # is correct, which will satisfy the sh:or and thereby fail the outer sh:not
 
   ex:checkMaxCount3 "a" ;
   ex:checkMaxCount3 "b" ;
   ex:checkMaxCount3 "c" ;
-  ex:checkMaxCount3 "d" ;
+  ex:checkMaxCount3 "d" ;   # beeep
 .

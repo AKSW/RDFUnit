@@ -92,7 +92,8 @@ public class IntegrationTestHelper {
 
         // Test all execution types
         long failedTestCases = -1;
-        for (TestCaseExecutionType executionType : Arrays.asList(TestCaseExecutionType.shaclTestCaseResult, TestCaseExecutionType.shaclLiteTestCaseResult)) {
+        //TODO to cover all possible violations we need ShaclTestCaseResult (ShaclLite does not contain value annotations so we can't differentiate between multiple violating triples of the same test and focus node!)
+        for (TestCaseExecutionType executionType : Arrays.asList(TestCaseExecutionType.shaclTestCaseResult)) {
 
             TestExecution execution = RDFUnitStaticValidator.validate(executionType, modelSource, testSuite);
             DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();

@@ -1,20 +1,19 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
-import org.aksw.rdfunit.model.interfaces.GenericTestCase;
+import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.TestCaseGroup;
-import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
+import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.TargetBasedTestCase;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
@@ -23,17 +22,21 @@ import java.util.stream.Collectors;
 
 public class TestCaseGroupNot implements TestCaseGroup {
 
+    private final ShapeTarget target;
     private final Resource resource;
-    private final ImmutableSet<GenericTestCase> testCases;
+    private final ImmutableSet<TargetBasedTestCase> testCases;
+    private final Set<Resource> allowedTestCaseUris;
 
-    public TestCaseGroupNot(@NonNull Set<? extends GenericTestCase> testCases) {
+    public TestCaseGroupNot(@NonNull Set<? extends TargetBasedTestCase> testCases) {
         assert(testCases.size() == 1);
+        this.target = testCases.iterator().next().getTarget();
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
-        this.testCases = ImmutableSet.copyOf(testCases);
+        this.testCases = ImmutableSet.of(testCases.iterator().next(), new AlwaysFailingTestCase(this.target)); // adding always failing test
+        this.allowedTestCaseUris = TestCaseGroup.getTestCaseUris(this.testCases);
     }
 
     @Override
-    public Set<GenericTestCase> getTestCases() {
+    public Set<TargetBasedTestCase> getTestCases() {
         return this.testCases;
     }
 
@@ -44,18 +47,22 @@ public class TestCaseGroupNot implements TestCaseGroup {
 
     @Override
     public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
-        final Set<Resource> tastCaseUris = TestCaseGroup.getTestCaseUris(getTestCases());
-        Map<RDFNode, List<TestCaseResult>> directResults = internalResults.stream()
-                .filter(r -> tastCaseUris.contains(r.getTestCaseUri()))
-                .filter(r -> ShaclLiteTestCaseResult.class.isAssignableFrom(r.getClass()))
-                .map(r -> ((ShaclLiteTestCaseResult) r))
-                .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode, Collectors.toList()));
-
-        ImmutableList.Builder<TestCaseResult> res = ImmutableList.builder();
-        directResults.forEach((focusNode, results) ->{
-            // here results is not empty, therefore internal test failed, which was expected and we delete the internal test results
-            //TODO no way to tell if a NOT failed at the moment, since no failures exist
-            // if successfully implemented: do not use ShaclTestCaseGroupResult since those will be deleted by the testexecutor
+        ImmutableSet.Builder<TestCaseResult> res = ImmutableSet.builder();
+        TestCaseGroup.groupInternalResults(internalResults, allowedTestCaseUris).forEach((focusNode, valueMap) -> {
+            valueMap.forEach((value, results) ->{
+                if(results.size() == 1 && results.get(0).getTestCaseUri().toString().startsWith(AlwaysFailingTestCase.AlwaysFailingTestCasePrefix)){        // only the "always failing test" failed -> not constraint failed
+                    res.add(new ShaclTestCaseGroupResult(
+                            this.resource,
+                            this.getLogLevel(),
+                            "A sh:not constraint did not hold, since it did not encounter any failure.",
+                            focusNode,
+                            results));
+                }
+                else if(results.isEmpty()){
+                    throw new RuntimeException("An unexpected result set of a NOT logical constraint was returned.");
+                }
+                // else the the expected number of failures were encountered (2) which we will omit from teh result set.
+            });
         });
         return res.build();
     }
@@ -83,5 +90,10 @@ public class TestCaseGroupNot implements TestCaseGroup {
     @Override
     public Resource getElement() {
         return this.resource;
+    }
+
+    @Override
+    public ShapeTarget getTarget() {
+        return target;
     }
 }

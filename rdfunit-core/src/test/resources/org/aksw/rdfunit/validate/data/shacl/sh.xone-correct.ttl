@@ -16,7 +16,3 @@ ex:Xone0 rdf:type ex:XoneConstraintCheck ;
   ex:checkMaxCount3 "c" ;
   ex:checkMaxCount3 "d" ;   # wrong
 .
-
-ex:Xone1 rdf:type ex:XoneConstraintCheck ;
-  ex:checkMaxCount "a" ;   # does not exist -> should not raise an error
-.

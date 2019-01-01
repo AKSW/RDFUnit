@@ -9,10 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.shacl.*;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.TargetBasedTestCase;
 import org.aksw.rdfunit.model.readers.shacl.BatchComponentReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeReader;
 import org.aksw.rdfunit.model.readers.shacl.BatchShapeTargetReader;
@@ -23,6 +25,7 @@ import org.apache.jena.rdf.model.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Represents a SHACL Model
@@ -76,10 +79,10 @@ public class ShaclModel {
      * Will generate a set of test trees from a given ShapeGroup, based on the logical operator of the group
      * @param shapeGroup - the ShapeGroup
      */
-    private Map<ShapeTarget, List<GenericTestCase>> getGenericTestCase(ShapeGroup shapeGroup){
-        ImmutableMap.Builder<ShapeTarget, List<GenericTestCase>> testCaseBuilder = ImmutableMap.builder();
+    private Map<ShapeTarget, List<TargetBasedTestCase>> getGenericTestCase(ShapeGroup shapeGroup){
+        ImmutableMap.Builder<ShapeTarget, List<TargetBasedTestCase>> testCaseBuilder = ImmutableMap.builder();
         extractGenericTest(shapeGroup).forEach((target, testCases) ->{
-            ImmutableList.Builder<GenericTestCase> list = ImmutableList.builder();
+            ImmutableList.Builder<TargetBasedTestCase> list = ImmutableList.builder();
             if(! testCases.isEmpty()) {
                 switch (shapeGroup.getGroupOperator()) {
                     case or:
@@ -92,9 +95,14 @@ public class ShaclModel {
                         list.add(new TestCaseGroupXone(ImmutableSet.copyOf(testCases)));
                         break;
                     case and:
-                        list.add(new TestCaseGroupAnd(ImmutableSet.copyOf(testCases)));
+                        if(testCases.size() == 1){
+                            list.add(new TestCaseGroupAtomic(ImmutableSet.copyOf(testCases)));
+                        }
+                        else{
+                            list.add(new TestCaseGroupAnd(ImmutableSet.copyOf(testCases)));
+                        }
                         break;
-                    default:        // and & atomic
+                    default:        // atomic
                         list.addAll(testCases.stream().map(tc -> new TestCaseGroupAtomic(ImmutableSet.of(tc))).collect(Collectors.toSet()));
                         break;
                 }
@@ -109,7 +117,7 @@ public class ShaclModel {
      * Will generate a set of test trees from a given ShapeGroup
      * @param shapeGroup - the ShapeGroup
      */
-    private Map<ShapeTarget, List<? extends GenericTestCase>> extractGenericTest(ShapeGroup shapeGroup) {
+    private Map<ShapeTarget, List<? extends TargetBasedTestCase>> extractGenericTest(ShapeGroup shapeGroup) {
         ImmutableSet.Builder<TestCaseWithTarget> testCaseBuilder = ImmutableSet.builder();
             shapeGroup.getAllTargets().forEach((shape, targets) -> {
                 // SPARQL constraints
@@ -118,15 +126,15 @@ public class ShaclModel {
                 shapesGraph.getComponents().forEach(component ->
                         testCaseBuilder.addAll(ConstraintTestCaseFactory.createFromComponentAndShape(component, shape, targets)));
             });
-        HashMap<ShapeTarget, List<? extends GenericTestCase>> ret = new HashMap<>(
+        HashMap<ShapeTarget, List<? extends TargetBasedTestCase>> ret = new HashMap<>(
                 testCaseBuilder.build().stream().collect(Collectors.groupingBy(TestCaseWithTarget::getTarget)));
         shapeGroup.getSubGroups().forEach(sub ->{
             getGenericTestCase(sub).forEach((target, tests) ->{
-                List<? extends GenericTestCase> nts = ret.get(target);
+                List<? extends TargetBasedTestCase> nts = ret.get(target);
                 if(nts == null)
                     nts = new ArrayList<>(tests);
                 else{
-                    List<GenericTestCase> zw = new ArrayList<>(tests);
+                    List<TargetBasedTestCase> zw = new ArrayList<>(tests);
                     zw.addAll(nts);
                     nts = zw;
                 }
@@ -215,12 +223,37 @@ public class ShaclModel {
             Map<Shape, Set<ShapeTarget>> targetMap = new HashMap<>();
             ImmutableSet.Builder<ShapeGroup> subs = new ImmutableSet.Builder<>();
             css.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> {           //recursive retrieval of ShapeGroups
-                targetMap.put(cs, targets);
-                subs.addAll(getImplicitTargetsForSingleShape(cs, targets));
+                Shape enrichedShape = enrichPropertyShape(shape, cs);               //enrich with certain annotations of parent
+                targetMap.put(enrichedShape, targets);
+                subs.addAll(getImplicitTargetsForSingleShape(enrichedShape, targets));
             });
-            SHACL.LogicalConstraint operator = groupOperator == SHACL.LogicalConstraint.atomic ? SHACL.LogicalConstraint.and : groupOperator;
-            return new ShapeGroup(targetMap, operator, subs.build());
+            return new ShapeGroup(targetMap, groupOperator, subs.build());          // create new ShapeGroup
         }).collect(Collectors.toSet());
+    }
+
+    /**
+     * Will enrich the sub-shape of a property shape with its parents path annotation (so that the result annotations contain a resultPath for each of its sub results)
+     * @param parent - the parent shape
+     * @param child - the child shape
+     * @return - enriched shape
+     */
+    private Shape enrichPropertyShape(Shape parent, Shape child){
+    if(parent.getPath().isPresent()) {                                  //if parent is a path shape
+            return ShapeImpl.builder()
+                    .element(child.getElement())
+                    .shaclPath(child.getPath().orElse(null))
+                    .propertyValuePairSets(child.getPropertyValuePairSets().getAnnotations().stream().anyMatch(x -> x.getProperty().equals(SHACL.path)) ?   //if path annotation is already present
+                            child.getPropertyValuePairSets() :
+                            new PropertyValuePairSet(ImmutableSet.copyOf(   //else add path annotation of parent
+                                    Stream.concat(child.getPropertyValuePairSets().getAnnotations().stream(),
+                                            parent.getPropertyValuePairSets().getAnnotations().stream().filter(a -> a.getProperty().equals(SHACL.path)))
+                                            .collect(Collectors.toSet())))
+                    )
+                    .build();
+        }
+        else{
+            return child;
+        }
     }
 
     private List<Shape> getChildShapes(Shape shape) {

@@ -15,13 +15,13 @@ public class ShaclIntegrationTest {
     public static Collection<Object[]> resources() {
         return Arrays.asList(new Object[][]{
                 {"shacl/sh.not-correct.ttl", 0},
-                // {"shacl/sh.not-wrong.ttl", 6},      //TODO for now we can't tell if sh:not failed since only errors are propagated
+                {"shacl/sh.not-wrong.ttl", 2},
                 {"shacl/sh.xone-correct.ttl", 0},
-                {"shacl/sh.xone-wrong.ttl", 4},
+                {"shacl/sh.xone-wrong.ttl", 9},
                 {"shacl/sh.and-correct.ttl", 0},
-                {"shacl/sh.and-wrong.ttl", 4},
+                {"shacl/sh.and-wrong.ttl", 8},
                 {"shacl/sh.or-correct.ttl", 0},
-                {"shacl/sh.or-wrong.ttl", 11},
+                {"shacl/sh.or-wrong.ttl", 28},
 
                 {"shacl/sh.class-correct.ttl", 0},
                 {"shacl/sh.class-wrong.ttl", 1},

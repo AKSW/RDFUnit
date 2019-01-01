@@ -135,6 +135,7 @@ ex:MyCardShapeMin
         sh:minCount "3"^^xsd:int ;
     ] ;
 .
+
 ex:MyCardShapeMax
 	a sh:Shape ;
 	sh:targetClass ex:CardCheckMax ;
@@ -249,9 +250,32 @@ ex:MyXoneShape
     )
     .
 
+ex:XoneConstraintExampleShape
+    rdf:type sh:NodeShape ;
+    sh:targetClass ex:PersonX ;
+    sh:xone (
+      [
+        sh:property [
+            sh:path ex:fullName ;
+            sh:minCount 1 ;
+          ] ;
+      ]
+      [
+        sh:property [
+            sh:path ex:firstName ;
+            sh:minCount 1 ;
+          ] ;
+        sh:property [
+            sh:path ex:lastName ;
+            sh:minCount 1 ;
+          ] ;
+      ]
+    ) ;
+    .
+
 ex:MyComplexNotShape
 	a sh:NodeShape ;
-	sh:targetClass ex:NotConstraintCheck ;
+	sh:targetClass ex:NotConstraintCheckComplex ;
 
    sh:not
         [
@@ -334,6 +358,25 @@ ex:AddressShape-address
       ]
       [
         sh:class ex:Address ;
+      ]
+    ) ;
+.
+
+ex:TestShape-comment
+  sh:path rdfs:comment ;
+  sh:targetClass ex:DatatypeResource ;
+  sh:or (
+      [
+        sh:datatype xsd:string ;
+      ]
+      [
+        sh:datatype rdf:HTML ;
+      ]
+      [
+        sh:datatype rdf:langString ;
+      ]
+      [
+        sh:datatype xsd:boolean ;
       ]
     ) ;
 .

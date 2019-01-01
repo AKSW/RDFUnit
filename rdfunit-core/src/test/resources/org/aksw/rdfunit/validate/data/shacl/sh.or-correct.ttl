@@ -36,3 +36,11 @@ ex:ValidRectangle2
   ex:height 3 ;
   ex:width 2 ;
 .
+
+ex:ValidResource1
+  rdf:type ex:DatatypeResource ;
+  rdfs:comment "<div>HTML</div>"^^rdf:HTML ;
+  rdfs:comment "A language string"@en ;
+  rdfs:comment "A string" ;
+  rdfs:label "Valid resource1" ;
+.

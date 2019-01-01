@@ -9,6 +9,7 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
 import org.aksw.rdfunit.model.interfaces.shacl.ShapeTarget;
+import org.aksw.rdfunit.model.interfaces.shacl.TargetBasedTestCase;
 import org.aksw.rdfunit.utils.CommonNames;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.vocabulary.SHACL;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @Builder
 @ToString
 @EqualsAndHashCode(of = {"target", "filterSparql", "testCase"})
-public class TestCaseWithTarget implements TestCase {
+public class TestCaseWithTarget implements TestCase, TargetBasedTestCase {
 
     @Getter @NonNull private final ShapeTarget target;
     @Getter @NonNull private final String filterSparql;

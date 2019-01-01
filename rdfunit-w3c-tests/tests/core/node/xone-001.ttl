@@ -9,20 +9,20 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:Bob
-  rdf:type ex:Person ;
-  ex:firstName "Robert" ;
-  ex:lastName "Coin" ;
-.
-ex:Carla
-  rdf:type ex:Person ;
-  ex:fullName "Carla Miller" ;
-.
-ex:Dory
-  rdf:type ex:Person ;
-  ex:firstName "Dory" ;
-  ex:fullName "Dory Dunce" ;
-  ex:lastName "Dunce" ;
-.
+   rdf:type ex:Person ;
+   ex:firstName "Robert" ;
+   ex:lastName "Coin" ;
+ .
+ ex:Carla
+   rdf:type ex:Person ;
+   ex:fullName "Carla Miller" ;
+ .
+ ex:Dory
+   rdf:type ex:Person ;
+   ex:firstName "Dory" ;
+   ex:fullName "Dory Dunce" ;
+   ex:lastName "Dunce" ;
+ .
 ex:XoneConstraintExampleShape
   rdf:type sh:NodeShape ;
   sh:targetClass ex:Person ;

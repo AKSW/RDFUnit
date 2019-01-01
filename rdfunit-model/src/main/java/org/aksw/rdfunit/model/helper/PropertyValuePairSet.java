@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class PropertyValuePairSet {
     @Getter @Singular private final ImmutableSet<PropertyValuePair> annotations;
 
-    private PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
+    public PropertyValuePairSet(ImmutableSet<PropertyValuePair> annotations) {
         this.annotations = ImmutableSet.copyOf(
                 groupAnnotationsPerProperty(
                         checkNotNull(annotations)));

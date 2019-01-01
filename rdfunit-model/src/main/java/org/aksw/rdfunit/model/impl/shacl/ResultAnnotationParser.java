@@ -41,8 +41,9 @@ class ResultAnnotationParser {
         if (query.getResultVars().contains("path")) {
             return Optional.of(createVariableAnnotation(SHACL.resultPath, "path"));
         } else {
-            if (shape.getPath().isPresent()) {
-                return Optional.of(createValueAnnotation(SHACL.resultPath, shape.getPath().get().getPathAsRdf()));
+            Set<RDFNode> paths = shape.getPropertyValuePairSets().getPropertyValues(SHACL.path);
+            if (paths.size() == 1) {
+                return Optional.of(createValueAnnotation(SHACL.resultPath, paths.iterator().next()));
             }
         }
         return Optional.empty();
