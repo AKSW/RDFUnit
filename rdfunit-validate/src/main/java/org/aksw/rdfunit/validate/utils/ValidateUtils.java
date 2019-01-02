@@ -87,9 +87,9 @@ public final class ValidateUtils {
 
         loadSchemaDecl(configuration);
 
+        setExcludeSchemata(commandLine, configuration);
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
-        setExcludeSchemata(commandLine, configuration);
 
         setTestExecutionType(commandLine, configuration);
         setOutputFormats(commandLine, configuration);

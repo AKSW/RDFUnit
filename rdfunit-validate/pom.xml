@@ -101,6 +101,36 @@
                     <stopPort />
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources-local</id>
+                        <!-- This is needed to run the ui locally -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>../rdfunit-commons/src/main/resources</directory>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>**/*.md</exclude>
+                                        <exclude>**/*.txt</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -201,8 +231,7 @@
 
             <build>
                 <plugins>
-
-						<plugin>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-shade-plugin</artifactId>
                         <executions>

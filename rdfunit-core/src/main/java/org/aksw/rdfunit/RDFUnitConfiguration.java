@@ -160,17 +160,19 @@ public class RDFUnitConfiguration {
     }
 
     public Collection<SchemaSource> getAllSchemata() {
-        List<SchemaSource> allSchemas = new ArrayList<>();
+        Set<SchemaSource> allSchemas = new HashSet<>();
         if (this.schemas != null) {
             allSchemas.addAll(this.schemas);
         }
         if (this.enrichedSchema != null) {
             allSchemas.add(this.enrichedSchema);
         }
+        Set<SchemaSource> excludeable = new HashSet<>(this.excludeSchemata);
+        excludeable.removeAll(allSchemas);      //overriding excludes if explicitly provided
         if(augmentWithOwlImports){
-            List<SchemaSource> imports = RDFUnitUtils.augmentWithOwlImports(allSchemas);
-            imports.forEach(i -> {if(!allSchemas.contains(i)) allSchemas.add(i);});
+            allSchemas.addAll(RDFUnitUtils.augmentWithOwlImports(allSchemas));
         }
+        allSchemas.removeAll(excludeable);
         return allSchemas;
     }
 
