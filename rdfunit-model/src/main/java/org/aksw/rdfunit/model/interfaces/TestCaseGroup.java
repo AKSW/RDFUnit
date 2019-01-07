@@ -1,17 +1,12 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import org.aksw.rdfunit.model.helper.PropertyValuePair;
-import org.aksw.rdfunit.model.impl.shacl.TestCaseGroupAtomic;
-import org.aksw.rdfunit.model.impl.shacl.TestCaseWithTarget;
 import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.ShaclTestCaseResult;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.shacl.TargetBasedTestCase;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,34 +36,16 @@ public interface TestCaseGroup extends TargetBasedTestCase {
     Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults);
 
     /**
-     * Will extract all test case uris of the given test case collection
-     * - adding the internal test case uri of a TestCaseWithTarget
-     * - adding the internal test case uri of a TestCaseGroupAtomic
-     * @param testCases - the test cases of which to extract all relevant uris
-     * @return - the collection  of extracted test case uris
+     * Helper function to create a double grouping of internal test results (for a given test case group) by focus node and triple value.
+     * The resulting groups should cover all results of the internal test cases of a test group for a single triple (value)
+     * Example: if there are multiple instances of a given property in a focus node with invalid values,
+     * without the grouping by value we could not distinguish which TestCaseResult referred to which property instance.
+     * TestResults without the value annotation (e.g. results for node shapes) are grouped under the focus node iri.
+     * NOTE: we assume that a given test case covers a single property path, thereby ignoring the dimension of a property path
+     * @param internalResults - all TestResults stemming from all internal tests of a TestGroup
      */
-    static Set<Resource> getTestCaseUris(Set<TargetBasedTestCase> testCases){
-        final HashSet<Resource> testCaseUris = Sets.newHashSet();
-        // adding all direct uris
-        testCases.stream().map(TestCaseGroup::getInternalTestCase).forEach(testCaseUris::addAll);
-        return testCaseUris;
-    }
-
-    static Set<Resource> getInternalTestCase(GenericTestCase tc){
-        ImmutableSet.Builder<Resource> ret = ImmutableSet.builder();
-        if(TestCaseWithTarget.class.isAssignableFrom(tc.getClass())){
-            ret.addAll(getInternalTestCase(((TestCaseWithTarget) tc).getTestCase()));
-        }
-        else if(TestCaseGroupAtomic.class.isAssignableFrom(tc.getClass())){
-            ret.addAll(getInternalTestCase(((TestCaseGroupAtomic) tc).getTestCases().iterator().next()));
-        }
-        ret.add(tc.getElement());
-        return ret.build();
-    }
-
-    static Map<RDFNode, Map<RDFNode, List<TestCaseResult>>> groupInternalResults(Collection<TestCaseResult> internalResults, Set<Resource> allowedTestCaseUris){
+    static Map<RDFNode, Map<RDFNode, List<TestCaseResult>>> groupInternalResults(Collection<TestCaseResult> internalResults){
         return internalResults.stream()
-                .filter(r -> allowedTestCaseUris.contains(r.getTestCaseUri()))
                 .filter(r -> ShaclLiteTestCaseResult.class.isAssignableFrom(r.getClass()))
                 .map(r -> ((ShaclLiteTestCaseResult) r))
                 .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode,
@@ -79,9 +56,9 @@ public interface TestCaseGroup extends TargetBasedTestCase {
         if(ShaclTestCaseResult.class.isAssignableFrom(result.getClass())){
             Set<PropertyValuePair> values = ((ShaclTestCaseResult) result).getResultAnnotations().stream().filter(ra -> ra.getProperty().equals(SHACL.value)).collect(Collectors.toSet());
             if(! values.isEmpty()){
-                return values.iterator().next().getValues().iterator().next();  // TODO we assume there is just one value ???
+                return values.iterator().next().getValues().iterator().next();
             }
         }
-        return result.getFailingNode(); // the default case concerns non property nodes which are grouped under the focus node uri
+        return result.getFailingNode(); // the default case concerns non property nodes which are grouped under the focus node iri
     }
 }

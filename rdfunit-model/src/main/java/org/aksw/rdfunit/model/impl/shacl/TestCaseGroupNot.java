@@ -20,19 +20,20 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Implements the logical constraint sh:not
+ */
 public class TestCaseGroupNot implements TestCaseGroup {
 
     private final ShapeTarget target;
     private final Resource resource;
     private final ImmutableSet<TargetBasedTestCase> testCases;
-    private final Set<Resource> allowedTestCaseUris;
 
     public TestCaseGroupNot(@NonNull Set<? extends TargetBasedTestCase> testCases) {
         assert(testCases.size() == 1);
         this.target = testCases.iterator().next().getTarget();
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.of(testCases.iterator().next(), new AlwaysFailingTestCase(this.target)); // adding always failing test
-        this.allowedTestCaseUris = TestCaseGroup.getTestCaseUris(this.testCases);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class TestCaseGroupNot implements TestCaseGroup {
     @Override
     public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
         ImmutableSet.Builder<TestCaseResult> res = ImmutableSet.builder();
-        TestCaseGroup.groupInternalResults(internalResults, allowedTestCaseUris).forEach((focusNode, valueMap) -> {
+        TestCaseGroup.groupInternalResults(internalResults).forEach((focusNode, valueMap) -> {
             valueMap.forEach((value, results) ->{
                 if(results.size() == 1 && results.get(0).getTestCaseUri().toString().startsWith(AlwaysFailingTestCase.AlwaysFailingTestCasePrefix)){        // only the "always failing test" failed -> not constraint failed
                     res.add(new ShaclTestCaseGroupResult(

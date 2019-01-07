@@ -21,12 +21,14 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Implements the logical constraint sh:or
+ */
 public class TestCaseGroupOr implements TestCaseGroup {
 
     private final ShapeTarget target;
     private final Resource resource;
     private final ImmutableSet<TargetBasedTestCase> testCases;
-    private final Set<Resource> allowedTestCaseUris;
 
     public TestCaseGroupOr(@NonNull Set<? extends TargetBasedTestCase> testCases) {
         assert(! testCases.isEmpty());
@@ -34,7 +36,6 @@ public class TestCaseGroupOr implements TestCaseGroup {
         assert(testCases.stream().map(TargetBasedTestCase::getTarget).noneMatch(x -> x != target));
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(testCases);
-        this.allowedTestCaseUris = TestCaseGroup.getTestCaseUris(this.testCases);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class TestCaseGroupOr implements TestCaseGroup {
     @Override
     public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
         ImmutableList.Builder<TestCaseResult> res = ImmutableList.builder();
-        TestCaseGroup.groupInternalResults(internalResults, allowedTestCaseUris).forEach((focusNode, valueMap) -> {
+        TestCaseGroup.groupInternalResults(internalResults).forEach((focusNode, valueMap) -> {
             valueMap.forEach((value, results) ->{
                 if(results.size() == this.testCases.size()) {
                     res.addAll(results);

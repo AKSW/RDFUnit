@@ -175,7 +175,5 @@ public class TestCaseWithTarget implements TestCase, TargetBasedTestCase {
         }
 
         return injectSparqlSnippet(changedQuery, target.getPattern());
-
     }
-
 }

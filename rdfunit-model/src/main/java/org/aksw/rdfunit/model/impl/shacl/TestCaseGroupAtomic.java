@@ -10,6 +10,10 @@ import org.apache.jena.rdf.model.RDFNode;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The default TestCaseGroup wrapping a single test case, having the same behaviour as an sh:and with a single test
+ * Will not add a validation result
+ */
 public class TestCaseGroupAtomic extends TestCaseGroupAnd {
 
     public TestCaseGroupAtomic(@NonNull Set<? extends TargetBasedTestCase> testCases) {

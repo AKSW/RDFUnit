@@ -21,12 +21,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Implements the logical constraint sh:xone
+ */
 public class TestCaseGroupXone implements TestCaseGroup {
 
     private final Resource resource;
     private final ShapeTarget target;
     private final ImmutableSet<TargetBasedTestCase> testCases;
-    private final Set<Resource> allowedTestCaseUris;
 
     public TestCaseGroupXone(@NonNull Set<? extends TargetBasedTestCase> testCases) {
         assert(! testCases.isEmpty());
@@ -34,7 +36,6 @@ public class TestCaseGroupXone implements TestCaseGroup {
         assert(testCases.stream().map(TargetBasedTestCase::getTarget).noneMatch(x -> x != target));
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(Stream.concat(testCases.stream(), Stream.of(new AlwaysFailingTestCase(this.target))).collect(Collectors.toSet()));     // adding always failing test
-        this.allowedTestCaseUris = TestCaseGroup.getTestCaseUris(this.testCases);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class TestCaseGroupXone implements TestCaseGroup {
     @Override
     public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
         ImmutableSet.Builder<TestCaseResult> res = ImmutableSet.builder();
-        TestCaseGroup.groupInternalResults(internalResults, allowedTestCaseUris).forEach((focusNode, valueMap) -> {
+        TestCaseGroup.groupInternalResults(internalResults).forEach((focusNode, valueMap) -> {
             valueMap.forEach((value, results) ->{
                 if(testCases.size() - results.size() != 1) {    // expecting exactly one correct test
                     results.forEach(r -> {

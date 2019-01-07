@@ -23,12 +23,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Implements the logical constraint sh:and
+ */
 public class TestCaseGroupAnd implements TestCaseGroup {
 
     private final ShapeTarget target;
     private final Resource resource;
     private final ImmutableSet<TargetBasedTestCase> testCases;
-    private final Set<Resource> allowedTestCaseUris;
 
     public TestCaseGroupAnd(@NonNull Set<? extends TargetBasedTestCase> testCases) {
         assert(! testCases.isEmpty());
@@ -37,7 +39,6 @@ public class TestCaseGroupAnd implements TestCaseGroup {
 
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.testCases = ImmutableSet.copyOf(testCases);
-        this.allowedTestCaseUris = TestCaseGroup.getTestCaseUris(this.testCases);
     }
 
     public boolean isAtomic(){ return testCases.size() == 1; }
@@ -55,7 +56,7 @@ public class TestCaseGroupAnd implements TestCaseGroup {
     @Override
     public Collection<TestCaseResult> evaluateInternalResults(Collection<TestCaseResult> internalResults) {
         ImmutableSet.Builder<TestCaseResult> res = ImmutableSet.builder();
-        TestCaseGroup.groupInternalResults(internalResults, allowedTestCaseUris).forEach((focusNode, valueMap) -> {
+        TestCaseGroup.groupInternalResults(internalResults).forEach((focusNode, valueMap) -> {
             valueMap.forEach((value, results) ->{
                 res.addAll(results);
                 addSummaryResult(res, focusNode, results);
