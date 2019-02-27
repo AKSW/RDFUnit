@@ -6,7 +6,7 @@
     <artifactId>rdfunit-parent</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.8.14-SNAPSHOT</version>
+    <version>0.8.22-SNAPSHOT</version>
     <name>RDFUnit - Parent</name>
     <description>A RDF Testing Suite</description>
     <url>http://github.org/AKSW/RDFUnit</url>
@@ -22,7 +22,7 @@
         <module>rdfunit-model</module>
         <module>rdfunit-io</module>
         <module>rdfunit-w3c-dqv</module>
-        <module>rdfunit-shacl-ws</module>
+        <!--module>rdfunit-shacl-ws</module--> <!-- removed from aggregation, kept as inheritance -->
         <!--module>rdfunit-w3c-tests</module--> <!-- removed from aggregation, kept as inheritance -->
     </modules>
 
@@ -65,8 +65,8 @@
         <file.encoding>UTF-8</file.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jena-sparql-api-version>3.6.0-3</jena-sparql-api-version>
-        <org-apache-jena-version>3.6.0</org-apache-jena-version>
+        <jena-sparql-api-version>3.7.0-3</jena-sparql-api-version>
+        <org-apache-jena-version>3.7.0</org-apache-jena-version>
         <slf4j-version>1.7.25</slf4j-version>
         <gpg.keyname>AKSW.GPG</gpg.keyname>
     </properties>
@@ -177,7 +177,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>25.1-jre</version>
+                <version>26.0-jre</version>
             </dependency>
 
             <!-- Vavr -->
@@ -193,7 +193,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.0</version>
+                <version>1.18.2</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -240,7 +240,7 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.10.0</version>
+                <version>3.11.1</version>
                 <scope>test</scope>
             </dependency>
 
@@ -380,7 +380,7 @@
                 <plugin>
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>
-                    <version>1.18.0.0</version>
+                    <version>1.18.2.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-shade-plugin</artifactId>
@@ -388,7 +388,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
     </build>
 
     <reporting>

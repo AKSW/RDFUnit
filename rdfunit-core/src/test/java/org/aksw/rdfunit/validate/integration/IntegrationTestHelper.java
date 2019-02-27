@@ -1,22 +1,31 @@
 package org.aksw.rdfunit.validate.integration;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.sources.TestSourceBuilder;
+import org.aksw.rdfunit.tests.generators.RdfUnitTestGenerator;
 import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
 import org.aksw.rdfunit.tests.generators.TagRdfUnitTestGenerator;
+import org.aksw.rdfunit.tests.generators.TestGeneratorFactory;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
+import org.apache.jena.rdf.model.Model;
+import org.junit.Test;
 
 import java.util.Collections;
+import java.util.Set;
 
 import static org.aksw.rdfunit.io.reader.RdfReaderFactory.createResourceReader;
 import static org.aksw.rdfunit.sources.SchemaSourceFactory.createSchemaSourceSimple;
@@ -38,6 +47,10 @@ public class IntegrationTestHelper {
 
     @Getter(lazy = true) private final static TestSuite dspTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "dsp/dsp_constraints.ttl");
     @Getter(lazy = true) private final static SchemaSource dspSchemaSource = createSchemaSourceSimple(resourcePrefix + "dsp/dsp_constraints.ttl");
+
+    static{
+        SchemaService.addSchemaDecl("xsd", "http://www.w3.org/2001/XMLSchema#", "../rdfunit-commons/src/main/resources/org/aksw/rdfunit/vocabularies/xsd.ttl");
+    }
 
     public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {
         try {
@@ -104,6 +117,26 @@ public class IntegrationTestHelper {
                     .isEqualTo(0);
         }
 
+
+    }
+
+    @Test
+    public void testEqualityAndHash() throws RdfReaderException {
+        Model schemas = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/validate/data/hybrid.ttl").read();
+        RdfReader modelReader = new RdfModelReader(schemas);
+        SchemaSource schemaSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", modelReader);
+
+        RDFUnit rdfunit = RDFUnit.createWithOwlAndShacl();
+        rdfunit.init();
+        RdfUnitTestGenerator testGenerator = TestGeneratorFactory.createAllNoCache(rdfunit.getAutoGenerators(), "./");
+
+        Set<TestCase> ts1 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
+        Set<TestCase> ts2 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
+
+        assertThat(ts1)
+                .hasSize(4)
+                .hasSameSizeAs(ts2)
+                .containsAll(ts2);
 
     }
 }

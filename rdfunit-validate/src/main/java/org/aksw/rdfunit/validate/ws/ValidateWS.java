@@ -41,15 +41,19 @@ public class ValidateWS extends AbstractRDFUnitWebService {
 
     @Override
     public void init() {
-        RDFUnitUtils.fillSchemaServiceFromLOV();
-        RDFUnitUtils.fillSchemaServiceFromFile(ValidateWS.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
         try {
+            RDFUnitUtils.fillSchemaServiceFromLOV();
+            RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
+            RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
+
             RDFUnit rdfunit = RDFUnit
                     .createWithAllGenerators()
                     .init();
             autogenerators = rdfunit.getAutoGenerators();
         } catch (IllegalArgumentException e) {
             LOGGER.error("Cannot read patterns and/or pattern generators", e);
+        } catch (IOException e) {
+            LOGGER.error("Cannot read schema declarations", e);
         }
     }
 

@@ -4,7 +4,7 @@
     <parent>
         <artifactId>rdfunit-parent</artifactId>
         <groupId>org.aksw.rdfunit</groupId>
-        <version>0.8.10-SNAPSHOT</version>
+        <version>0.8.22-SNAPSHOT</version>
     </parent>
     <artifactId>rdfunit-webdemo</artifactId>
     <packaging>war</packaging>
@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.7.1</vaadin.version>
+        <vaadin.version>7.7.3</vaadin.version>
     </properties>
     <repositories>
         <repository>
@@ -46,6 +46,10 @@
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
             <artifactId>rdfunit-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aksw.rdfunit</groupId>
+            <artifactId>rdfunit-model</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aksw.rdfunit</groupId>
@@ -177,6 +181,12 @@
                 <version>3.1.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>../ns</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
             <plugin>
@@ -330,13 +340,17 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${basedir}/src/main/webapp/data</outputDirectory>
+                                <outputDirectory>${basedir}/src/main/resources</outputDirectory>
                                 <resources>
                                     <resource>
-                                        <directory>../data</directory>
+                                        <directory>../rdfunit-commons/src/main/resources</directory>
                                         <includes>
-                                            <include>schemaDecl.csv</include>
+                                            <include>**/*</include>
                                         </includes>
+                                        <excludes>
+                                            <exclude>**/*.md</exclude>
+                                            <exclude>**/*.txt</exclude>
+                                        </excludes>
                                     </resource>
                                 </resources>
                                 <overwrite>true</overwrite>

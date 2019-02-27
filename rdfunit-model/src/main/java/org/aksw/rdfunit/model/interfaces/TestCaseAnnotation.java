@@ -1,7 +1,9 @@
 package org.aksw.rdfunit.model.interfaces;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -20,6 +22,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Dimitris Kontokostas
  * @since 1/3/14 3:40 PM
  */
+@ToString
+@EqualsAndHashCode(exclude = "element")
 public class TestCaseAnnotation implements Element {
     @Getter private final Resource element;
     @Getter private final TestGenerationType generated;

@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.io.reader;
 
+import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.IOUtils;
 import org.aksw.rdfunit.io.format.FormatService;
 import org.aksw.rdfunit.io.writer.RdfFileWriter;
@@ -11,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * @author Dimitris Kontokostas
  * @since 11/14/13 9:01 AM
@@ -19,10 +22,6 @@ public final class RdfReaderFactory {
 
     private RdfReaderFactory() {
     }
-
-//    public static RDFReader createFileOrDereferenceReader(String filenameOrUri) {
-//        return createFileOrDereferenceReader(filenameOrUri, filenameOrUri);
-//    }
 
     public static RdfReader createFileOrDereferenceReader(String filename, String uri) {
         /* String baseFolder, TestAppliesTo schemaType, String uri, String prefix */
@@ -37,7 +36,10 @@ public final class RdfReaderFactory {
     }
 
     public static RdfReader createResourceReader(String resource) {
-        return new RdfStreamReader(RdfReaderFactory.class.getResourceAsStream(resource), FormatService.getFormatFromExtension(resource));
+        InputStream is = Resources.class.getResourceAsStream(resource);
+        // FIXME: causes exceptions from TestGeneratorFactoryTest, needs refactoring
+        // checkArgument(is != null, "Could not load resource file %s", resource);
+        return new RdfStreamReader(is, FormatService.getFormatFromExtension(resource));
     }
 
     public static RdfReader createFileOrResourceReader(String filename, String resource) {
@@ -87,7 +89,6 @@ public final class RdfReaderFactory {
     }
 
     public static RdfReader createEmptyReader() {
-        return RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/io/empty.ttl");
+        return RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/validate/data/empty.ttl");
     }
-
 }

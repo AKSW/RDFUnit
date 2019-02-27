@@ -6,15 +6,11 @@ import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.exceptions.UndefinedSerializationException;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.validate.ParameterException;
-import org.aksw.rdfunit.validate.cli.ValidateCLI;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -56,7 +52,12 @@ public final class ValidateUtils {
                 "the schemas used in the chosen graph " +
                         "(comma separated prefixes without whitespaces according to http://lov.okfn.org/). If this option is missing RDFUnit will try to guess them automatically"
         );
-        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev");
+        cliOptions.addOption("i", "imports", false, "if set, in addition to the schemata provided or discovered, all transitively discovered import schemata (owl:imports) are included into the schema set");
+        cliOptions.addOption("x", "excluded schemata", true,
+                "the schemas excluded from test generation by default " +
+                        "(comma separated prefixes without whitespaces according to http://lov.okfn.org/)."
+        );
+        cliOptions.addOption("o", "output-format", true, "the output format of the validation results: html (default), turtle, n3, ntriples, json-ld, rdf-json, rdfxml, rdfxml-abbrev, junitxml");
         cliOptions.addOption("p", "enriched-prefix", true,
                 "the prefix of this dataset used for caching the schema enrichment, e.g. dbo");
         cliOptions.addOption("C", "no-test-cache", false, "Do not load cached automatically generated test cases, regenerate them (Cached test cases are loaded by default)");
@@ -73,7 +74,6 @@ public final class ValidateUtils {
                 "This is where the results and the caches are stored. " +
                 "If none exists, bundled versions will be loaded.'");
         cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
-
         return cliOptions;
     }
 
@@ -85,22 +85,11 @@ public final class ValidateUtils {
 
         setDumpOrSparqlEndpoint(commandLine, configuration);
 
-        try (InputStream customSchemaDeclStream =
-                     Files.newInputStream(Paths.get(configuration.getDataFolder() + "schemaDecl.csv"))){
-            RDFUnitUtils.fillSchemaServiceFromFile(customSchemaDeclStream);
-        } catch(NoSuchFileException nsfe) {
-            RDFUnitUtils.fillSchemaServiceFromFile(
-                    ValidateCLI.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
-        } catch(Exception e) {
-            LOGGER.warn("Loading custom scheme declarations failed.\n" +
-                    "Falling back to bundled declarations in classpath due to", e);
-            RDFUnitUtils.fillSchemaServiceFromFile(
-                    ValidateCLI.class.getResourceAsStream("/org/aksw/rdfunit/configuration/schemaDecl.csv"));
-        }
+        loadSchemaDecl(configuration);
 
+        setExcludeSchemata(commandLine, configuration);
         setSchemas(commandLine, configuration);
         setEnrichedSchemas(commandLine, configuration);
-
 
         setTestExecutionType(commandLine, configuration);
         setOutputFormats(commandLine, configuration);
@@ -109,10 +98,24 @@ public final class ValidateUtils {
 
         setQueryTtlCachePaginationLimit(commandLine, configuration);
 
-
         setCoverageCalculation(commandLine, configuration);
 
         return configuration;
+    }
+
+    private static void loadSchemaDecl(RDFUnitConfiguration configuration) {
+        try {
+            File f = new File(configuration.getDataFolder() + "schemaDecl.csv");
+            if (f.exists()) {
+                RDFUnitUtils.fillSchemaServiceFromFile(f.getAbsolutePath());
+            } else {
+                RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
+            }
+            RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
+        } catch(Exception e) {
+            LOGGER.warn("Loading custom scheme declarations failed.\n" +
+                    "Falling back to bundled declarations in classpath due to", e);
+        }
     }
 
     private static void setCoverageCalculation(CommandLine commandLine, RDFUnitConfiguration configuration) {
@@ -240,6 +243,10 @@ public final class ValidateUtils {
     }
 
     private static void setSchemas(CommandLine commandLine, RDFUnitConfiguration configuration) throws ParameterException {
+        // first check if owl:imports are included
+        if(commandLine.hasOption("i")){
+            configuration.setAugmentWithOwlImports(true);
+        }
         if (commandLine.hasOption("s")) {
             try {
                 //Get schema list
@@ -253,6 +260,14 @@ public final class ValidateUtils {
         else {
             LOGGER.info("Searching for used schemata in dataset");
             configuration.setAutoSchemataFromQEF(configuration.getTestSource().getExecutionFactory());
+        }
+    }
+
+    private static void setExcludeSchemata(CommandLine commandLine, RDFUnitConfiguration configuration) {
+        if (commandLine.hasOption("x")) {
+                //Get schema list
+                Collection<String> schemaUriPrefixes = getUriStrs(commandLine.getOptionValue("x"));
+                configuration.setExcludeSchemataFromPrefixes(schemaUriPrefixes);
         }
     }
 

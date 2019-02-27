@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.ShapeTargetType;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  */
 @Builder
 @ToString
+@EqualsAndHashCode(of = {"target", "filterSparql", "testCase"})
 public class TestCaseWithTarget implements TestCase {
 
     @NonNull private final ShapeTarget target;

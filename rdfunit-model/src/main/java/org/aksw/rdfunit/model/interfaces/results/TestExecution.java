@@ -5,6 +5,7 @@ import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.Element;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface TestExecution extends Element {
 

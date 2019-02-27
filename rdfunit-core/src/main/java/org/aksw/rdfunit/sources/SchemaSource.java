@@ -8,8 +8,7 @@ import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +22,6 @@ public class SchemaSource implements Source {
     /** Constant <code>log</code> */
     protected static final Logger log = LoggerFactory.getLogger(SchemaSource.class);
 
-
     protected final SourceConfig sourceConfig;
     @Getter private final String schema;
 
@@ -34,18 +32,13 @@ public class SchemaSource implements Source {
         this(sourceConfig, sourceConfig.getUri(), schemaReader);
     }
 
-
     SchemaSource(SourceConfig sourceConfig, String schema, RdfReader schemaReader) {
         this.sourceConfig = sourceConfig;
         this.schema = schema;
         this.schemaReader = schemaReader;
     }
 
-    SchemaSource(SchemaSource source) {
-        this.sourceConfig = source.sourceConfig;
-        this.schema = source.getSchema();
-        this.schemaReader = source.schemaReader;
-    }
+    public SchemaSource(SchemaSource source) {this(source.sourceConfig, source.schema, source.schemaReader);}
 
     @Override
     public String getPrefix() {
@@ -62,6 +55,9 @@ public class SchemaSource implements Source {
         return TestAppliesTo.Schema;
     }
 
+    public SourceConfig getSourceConfig() {
+        return sourceConfig;
+    }
 
     /**
      * lazy loaded via lombok
@@ -75,7 +71,4 @@ public class SchemaSource implements Source {
         }
         return m;
     }
-
-
-
 }

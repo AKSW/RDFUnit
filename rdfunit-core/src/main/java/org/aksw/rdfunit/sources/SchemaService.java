@@ -98,22 +98,28 @@ public final class SchemaService {
                         SchemaSourceFactory
                             .createSchemaSourceDereference(UriToPathUtils.getAutoPrefixForURI(prefix), prefix));
         }
-
-
         return Optional.empty();
-
     }
 
-
-    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixes) throws UndefinedSchemaException {
-        Collection<SchemaSource> sources = new ArrayList<>();
-        for (String id : prefixes) {
-            Optional<SchemaSource> src = getSourceFromPrefix(baseFolder, id.trim());
+    public static SchemaSource getSource(String baseFolder, String prefixOrUri) throws UndefinedSchemaException {
+        Optional<SchemaSource> src = getSourceFromPrefix(baseFolder, prefixOrUri.trim());
+        if (src.isPresent()) {
+            return src.get();
+        } else {
+            src = getSourceFromUri(baseFolder, prefixOrUri.trim());
             if (src.isPresent()) {
-                sources.add(src.get());
-            } else {
-                throw new UndefinedSchemaException(id);
+                return src.get();
             }
+            else {
+                throw new UndefinedSchemaException(prefixOrUri);
+            }
+        }
+    }
+
+    public static Collection<SchemaSource> getSourceList(String baseFolder, Collection<String> prefixesOrUris) throws UndefinedSchemaException {
+        Collection<SchemaSource> sources = new ArrayList<>();
+        for (String id : prefixesOrUris) {
+            sources.add(getSource(baseFolder, id));
         }
         return sources;
     }

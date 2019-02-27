@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  */
 @Builder
 @Value
+@EqualsAndHashCode
 class ResultAnnotationParser {
 
     @NonNull private final Query query;

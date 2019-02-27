@@ -3,14 +3,11 @@ package org.aksw.rdfunit.webdemo.utils;
 import com.vaadin.ui.UI;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
-import org.aksw.rdfunit.webdemo.RDFUnitDemoSession;
+
+import java.io.IOException;
 
 /**
  * Used to instantiate common variables shared across all sessions
- *
- * @author Dimitris Kontokostas
- * @since 8/30/14 4:14 PM
-
  */
 public class CommonAccessUtils {
 
@@ -20,9 +17,11 @@ public class CommonAccessUtils {
         static synchronized RDFUnit getInstance() {
 
             if (rdfUnit == null) {
-                rdfUnit = new RDFUnit();
+
                 try {
+                    rdfUnit = RDFUnit.createWithOwlAndShacl();
                     rdfUnit.init();
+
                 } catch (IllegalArgumentException e) {
                     // show error
                 }
@@ -43,8 +42,14 @@ public class CommonAccessUtils {
             if (!initialized) {
                 initialized = true;
                 //Fill the service schema
-                RDFUnitUtils.fillSchemaServiceFromLOV();
-                RDFUnitUtils.fillSchemaServiceFromFile(RDFUnitDemoSession.getBaseDir() + "schemaDecl.csv");
+                try {
+                    RDFUnitUtils.fillSchemaServiceFromLOV();
+                    RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
+                    RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 

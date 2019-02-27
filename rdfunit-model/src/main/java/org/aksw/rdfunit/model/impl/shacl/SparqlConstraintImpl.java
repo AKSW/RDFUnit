@@ -2,10 +2,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.aksw.rdfunit.enums.TestGenerationType;
@@ -32,6 +29,7 @@ import java.util.stream.Collectors;
 
 @Builder
 @Value
+@EqualsAndHashCode(exclude = "sparqlWhere")
 public class SparqlConstraintImpl implements SparqlConstraint {
     @Getter @NonNull private final Shape shape;
     @Getter @NonNull private final Literal message;

@@ -19,8 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 8/15/15 4:37 PM
 
  */
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "element")
+@EqualsAndHashCode(exclude = "element")
 public final class ResultAnnotationImpl implements ResultAnnotation {
 
     private final Resource element;

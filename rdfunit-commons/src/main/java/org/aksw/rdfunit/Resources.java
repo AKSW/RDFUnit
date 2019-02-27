@@ -26,9 +26,9 @@ public final class Resources {
     public static final String AUTO_GENERATORS_RS = "/org/aksw/rdfunit/configuration/autoGeneratorsRS.ttl";
 
     /** SHACL related resources */
-    public static final String SHACL_ONTOLOGY = "/org/aksw/rdfunit/configuration/shacl.ttl";
-    public static final String SHACL_CORE_CCs = "/org/aksw/rdfunit/configuration/shacl-core.ttl";
-    public static final String SHACL_SHACL = "/org/aksw/rdfunit/configuration/shacl-shacl.ttl";
+    public static final String SHACL_ONTOLOGY = "/org/aksw/rdfunit/vocabularies/shacl.ttl";
+    public static final String SHACL_CORE_CCs = "/org/aksw/rdfunit/vocabularies/shacl-core.ttl";
+    public static final String SHACL_SHACL = "/org/aksw/rdfunit/vocabularies/shacl-shacl.ttl";
 
     /** Constant <code>SCHEMAS_LOV="/org/aksw/rdfunit/configuration/schemas"{trunked}</code> */
     public static final String SCHEMAS_LOV = "/org/aksw/rdfunit/configuration/schemas_custom.csv";
