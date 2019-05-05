@@ -43,11 +43,11 @@ public class TestGeneratorFactoryTest {
     @Test
     public void testManualTests() {
 
-        assertThat(new ManualRdfunitTestGenerator(testFolder).generate(schemaSourceOwl))
+        assertThat(new ManualRdfunitTestLoaderGenerator(testFolder).generate(schemaSourceOwl))
                 .isEmpty();
 
         // dataset has manual tests from manual-tests module
-        assertThat(new ManualRdfunitTestGenerator(testFolder).generate(testSource))
+        assertThat(new ManualRdfunitTestLoaderGenerator(testFolder).generate(testSource))
                 .isNotEmpty();
     }
 
