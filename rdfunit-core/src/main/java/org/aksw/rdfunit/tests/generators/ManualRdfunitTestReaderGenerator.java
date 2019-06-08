@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.CacheUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
@@ -27,17 +28,17 @@ public final class ManualRdfunitTestReaderGenerator implements RdfUnitTestGenera
     public ManualRdfunitTestReaderGenerator() {}
 
     @Override
-    public Collection<TestCase> generate(SchemaSource source) {
+    public Collection<? extends GenericTestCase> generate(SchemaSource source) {
         return generateFromSource(source, source.getModel());
     }
 
     @Override
-    public Collection<TestCase> generate(TestSource source) {
+    public Collection<? extends GenericTestCase> generate(TestSource source) {
         return generateFromSource(source, ModelFactory.createDefaultModel());
     }
 
-    private Collection<TestCase> generateFromSource(Source source, Model sourceModel) {
-            Set<TestCase> tests = new HashSet<>();
+    private Collection<GenericTestCase> generateFromSource(Source source, Model sourceModel) {
+            Set<GenericTestCase> tests = new HashSet<>();
 
             tests.addAll(TestUtils.instantiateTestsFromModel(sourceModel));
 
