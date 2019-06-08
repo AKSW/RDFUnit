@@ -22,11 +22,11 @@ import java.util.Set;
  * @since 14/2/2016 4:45 μμ
  */
 @Slf4j
-public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
+public final class ManualRdfunitTestLoaderGenerator implements RdfUnitTestGenerator{
 
     private final String testFolder;
 
-    public ManualRdfunitTestGenerator(String testFolder) {
+    public ManualRdfunitTestLoaderGenerator(String testFolder) {
         this.testFolder = testFolder;
     }
 
@@ -54,10 +54,10 @@ public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
 
             } catch (RdfReaderException e) {
                 // Do nothing, Manual tests do not exist
-                log.debug("No manual tests found for {}", source.getUri());
+                log.debug("No predefined manual tests found for {}", source.getUri());
 
             }
-        log.info("{} identified {} manual tests", source.getUri(), tests.size());
+        log.info("{} identified {} predefined manual tests", source.getUri(), tests.size());
         return tests;
 
     }
