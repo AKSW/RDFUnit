@@ -6,8 +6,11 @@
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 
 
-ex:conf1 a ex:Configuration ;
-    ex:description "descriptions of the conf file"@en ;
-    ex:inputFile "/home/input/" ;
-    ex:outputFile "/home/output" ;
+ex:Bob a ex:Person ;
+    ex:birthPlace ex:Vienna ;
+    ex:birthDate "2001-01-01"^^xsd:date;
+    ex:deathDate "2002-01-01"^^xsd:date;
     .
+
+
+ex:Vienna a ex:Place .
