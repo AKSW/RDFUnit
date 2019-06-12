@@ -33,7 +33,7 @@ public class MyCustomSkosValidator {
     }
 
     public boolean isValid(Model input) {
-        return validate(input).getDatasetOverviewResults().getFailedTests() > 0;
+        return validate(input).getDatasetOverviewResults().getFailedTests() == 0;
     }
 
     public long getViolationIntances(Model input) {

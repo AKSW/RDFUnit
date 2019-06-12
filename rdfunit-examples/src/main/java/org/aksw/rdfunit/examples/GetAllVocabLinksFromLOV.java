@@ -17,12 +17,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-/**
- *
- * @author Dimitris Kontokostas
- * @since 1/9/15 2:59 PM
 
- */
 public class GetAllVocabLinksFromLOV {
 
     private GetAllVocabLinksFromLOV(){}
