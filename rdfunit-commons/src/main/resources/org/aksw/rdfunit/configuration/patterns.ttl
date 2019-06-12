@@ -55,8 +55,6 @@ rutp:RDFSRANGE-MISS a rut:Pattern ;
     dcterms:description """Emulates the rdfs:range constrain and checks if the range is not defined withing the dataset""" ;
     rut:sparqlWherePattern """ {
                                     ?s %%P1%% ?this.
-                                    FILTER EXISTS {
-                                        ?this ?rp ?r0. }
                                     FILTER NOT EXISTS {
                                         ?this rdf:type ?anyClass . }
                                 } """ ;

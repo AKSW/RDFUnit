@@ -20,6 +20,8 @@ public class OwlIntegrationTest {
                 {"owl/RDFSRANGE_Correct.ttl", 0},
                 {"owl/RDFSRANGE_Wrong.ttl", 1},
                 {"owl/RDFSRANGE-MISS_Wrong.ttl", 1},
+                {"owl/RDFSRANGE-MISS_1_correct.ttl", 0},
+                {"owl/RDFSRANGE-MISS_1_wrong.ttl", 1},
                 {"owl/RDFSRANGED_Correct.ttl", 0},
                 {"owl/RDFSRANGED_Wrong.ttl", 2},
                 {"owl/INVFUNC_Correct.ttl", 0},
