@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-slim
 
-mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1
+RUN mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1
 
 RUN apt-get update \
   && apt-get upgrade -y \
