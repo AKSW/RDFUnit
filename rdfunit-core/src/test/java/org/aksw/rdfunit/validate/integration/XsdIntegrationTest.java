@@ -1,10 +1,12 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -44,7 +46,7 @@ public class XsdIntegrationTest {
 
 
     @Test
-    public void test() throws RdfReaderException {
+    public void test() throws RdfReaderException, RdfWriterException, IOException {
 
         IntegrationTestHelper.testMap(
                 IntegrationTestHelper.getResourcePrefix() + testSource,

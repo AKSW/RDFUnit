@@ -101,7 +101,7 @@ public class SparqlConstraintImpl implements SparqlConstraint {
                 SHACL.namespace,      // TODO check
                 ImmutableSet.of(),
                 generateMessage().getLexicalForm(),
-                RLOGLevel.ERROR, //FIXME
+                RLOGLevel.ERROR, //FIXME shouldnt we use RLOGLevel.resolve here @Dimitris ?
                 createResultAnnotations(originalSelectQuery)
         );
     }

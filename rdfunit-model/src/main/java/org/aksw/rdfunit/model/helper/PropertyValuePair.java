@@ -4,11 +4,13 @@ import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.Value;
+import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -40,5 +42,12 @@ public final class PropertyValuePair {
 
     public static PropertyValuePair create(Property property, Collection<RDFNode> rdfNode) {
         return new PropertyValuePair(property, rdfNode);
+    }
+
+    public static Optional<PropertyValuePair> fromAnnotation(ResultAnnotation anno){
+        if(anno.getAnnotationValue().isPresent()){
+            return Optional.of(PropertyValuePair.create(anno.getAnnotationProperty(), anno.getAnnotationValue().get()));
+        }
+        return Optional.empty();
     }
 }

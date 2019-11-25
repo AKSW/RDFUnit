@@ -23,12 +23,14 @@ import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.aksw.rdfunit.vocabulary.DATA_ACCESS_TESTS;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.aksw.rdfunit.vocabulary.SHACL_TEST;
+import org.apache.commons.io.FileUtils;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.EARL;
 import org.apache.jena.vocabulary.RDF;
 import org.topbraid.shacl.testcases.GraphValidationTestCaseType;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -54,6 +56,7 @@ import static org.aksw.rdfunit.enums.TestCaseExecutionType.shaclTestCaseResult;
 public class W3CShaclTestSuite {
 
     private static final Resource PartialResult = ResourceFactory.createResource("http://www.w3.org/ns/shacl-test#partial");
+    private static final String resultFolder = "tests-results-nonconformant";
 
     @RequiredArgsConstructor
     public static class TestCase {
@@ -123,6 +126,8 @@ public class W3CShaclTestSuite {
 
             val adjustedReport = ModelFactory.createDefaultModel();
 
+            val details = actualReport.listObjectsOfProperty(SHACL.detail).toList();
+
             //remove RDFUnit types
             val keepOnlyTypes = ImmutableSet.of(SHACL.ValidationReport.getURI(), SHACL.ValidationResult.getURI());
             val keepOnlyPredicates = ImmutableSet.of(SHACL.result, SHACL.conforms,
@@ -144,12 +149,14 @@ public class W3CShaclTestSuite {
                                                         SHACL.alternativePath).stream().map(Resource::getURI).collect(Collectors.toSet());
 
             actualReport.listStatements().forEachRemaining(s -> {
-                if (keepOnlyPredicates.contains(s.getPredicate().getURI())) {
-                    adjustedReport.add(s);
-                }
-                if (RDF.type.equals(s.getPredicate())) {
-                    if (keepOnlyTypes.contains(s.getObject().toString())) {
+                if(! details.contains(s.getSubject())) {
+                    if (keepOnlyPredicates.contains(s.getPredicate().getURI())) {
                         adjustedReport.add(s);
+                    }
+                    if (RDF.type.equals(s.getPredicate())) {
+                        if (keepOnlyTypes.contains(s.getObject().toString())) {
+                            adjustedReport.add(s);
+                        }
                     }
                 }
             });
@@ -239,17 +246,11 @@ public class W3CShaclTestSuite {
             TestExecutionWriter.create(getExecution().get()).write(originalActualReport);
             final Model adjustedActualReport = this.adjustActualReport(originalActualReport);
 
-            val isIsomorphic = getAdjustedExpectedReport().isIsomorphicWith(adjustedActualReport);
-
-
-
-                if (isIsomorphic) {
-                    return EARL.passed;
-                } else {
-                    // check for partial
-
-                    String resultFolder = "tests-results-nonconformant";
-
+            // is isomorphic
+            if (getAdjustedExpectedReport().isIsomorphicWith(adjustedActualReport)) {
+                return EARL.passed;
+            } else {
+                try {
                     int expectedViolations = getAdjustedExpectedReport().listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     int actualViolations = adjustedActualReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
                     String file = this.manifest.sourceFile.toString().replace("/", "_");
@@ -257,34 +258,29 @@ public class W3CShaclTestSuite {
                     File dirs1 = new File(resultFolder  + "/partial");
                     dirs1.mkdirs();
 
-
-                    if (
-                            (!getAdjustedExpectedReport().isEmpty() && (
+                    // check for partial
+                    if ((!getAdjustedExpectedReport().isEmpty() && (
                                     expectedViolations == 0 && actualViolations == 0 )
                             || (expectedViolations > 0 && actualViolations > 0 )))
                     {
-                        try {
                             new RdfFileWriter(resultFolder  + "/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
                             //new RdfFileWriter("results/partial/" + file + ".actual.before.ttl").write(originalActualReport);
                             new RdfFileWriter(resultFolder + "/partial/" + file + ".actual.ttl").write(adjustedActualReport);
-                        } catch (RdfWriterException e) {
-                            e.printStackTrace();
-                        }
+
                         return W3CShaclTestSuite.PartialResult;
                     }
 
-                    try {
-                        new RdfFileWriter(resultFolder  + "/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
-                        //new RdfFileWriter("results/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                        new RdfFileWriter(resultFolder + "/fail/" + file + ".actual.ttl").write(adjustedActualReport);
+                    new RdfFileWriter(resultFolder  + "/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
+                    //new RdfFileWriter("results/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
+                    new RdfFileWriter(resultFolder + "/fail/" + file + ".actual.ttl").write(adjustedActualReport);
 
-                    } catch (RdfWriterException e) {
-                        e.printStackTrace();
-                    }
-
-                    log.error("test case failed {}", this.getManifest().sourceFile);
-                    return EARL.failed;
+                } catch (RdfWriterException e) {
+                    e.printStackTrace();
                 }
+
+                log.error("test case failed {}", this.getManifest().sourceFile);
+                return EARL.failed;
+            }
         }
 
         private Resource findAction() {
@@ -401,7 +397,7 @@ public class W3CShaclTestSuite {
         return new W3CShaclTestSuite(tests);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         val rootManifestPath = Paths.get("tests/manifest.ttl");
 
@@ -414,6 +410,7 @@ public class W3CShaclTestSuite {
 
         log.info("{} tests had failures.", failureCount);
 
+        FileUtils.deleteDirectory(new File(resultFolder));  // delete result folder first
         val hist = List.ofAll(suite.getTestCases()).groupBy(TestCase::getEarlOutcome).mapValues(Traversable::size);
 
         log.info("EARL outcome histogram: {}", hist);

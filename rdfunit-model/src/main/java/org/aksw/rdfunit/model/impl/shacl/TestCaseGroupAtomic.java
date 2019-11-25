@@ -3,6 +3,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
+import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.aksw.rdfunit.model.interfaces.shacl.TargetBasedTestCase;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.rdf.model.RDFNode;
@@ -16,8 +17,8 @@ import java.util.Set;
  */
 public class TestCaseGroupAtomic extends TestCaseGroupAnd {
 
-    public TestCaseGroupAtomic(@NonNull Set<? extends TargetBasedTestCase> testCases) {
-        super(testCases);
+    public TestCaseGroupAtomic(@NonNull Set<? extends TargetBasedTestCase> testCases, Shape shape) {
+        super(testCases, shape);
         assert(testCases.size() == 1);
     }
 
@@ -27,5 +28,7 @@ public class TestCaseGroupAtomic extends TestCaseGroupAnd {
     }
 
     @Override
-    void addSummaryResult(ImmutableSet.Builder<TestCaseResult> builder, RDFNode focusNode, List<TestCaseResult> results) {}
+    void addSummaryResult(ImmutableSet.Builder<TestCaseResult> builder, RDFNode focusNode, List<TestCaseResult> results) {
+        builder.addAll(results);    // we just pass through internal results
+    }
 }

@@ -22,3 +22,8 @@ ex:not0 rdf:type ex:NotConstraintCheckComplex ;
   ex:checkMaxCount3 "c" ;
   ex:checkMaxCount3 "d" ;   # beeep
 .
+
+ex:InvalidResource1
+  rdf:type rdfs:Resource ;
+  ex:property "some value" ;
+.

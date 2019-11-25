@@ -19,8 +19,6 @@ import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * The Extended Test Executor extends RLOG Executor but provides richer error metadata
  * TODO: At the moment this is partially
@@ -44,7 +42,6 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
     protected Collection<TestCaseResult> executeSingleTest(TestSource testSource, TestCase testCase) throws TestCaseExecutionException {
 
         Collection<TestCaseResult> testCaseResults = new ArrayList<>();
-        PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
 
         try (QueryExecution qe = testSource.getExecutionFactory().createQueryExecution(queryGenerationFactory.getSparqlQuery(testCase))){
@@ -66,16 +63,11 @@ public class ShaclTestExecutor extends ShaclSimpleTestExecutor {
 
                 ShaclTestCaseResultImpl.Builder resultBuilder = new ShaclTestCaseResultImpl.Builder(testCase.getElement(), logLevel, message, focusNode);
 
-                annotationSetBuilder = PropertyValuePairSet.builder(); //reset
+                PropertyValuePairSet.PropertyValuePairSetBuilder annotationSetBuilder = PropertyValuePairSet.builder();
 
                 // get static annotations for new test
                 for (ResultAnnotation resultAnnotation : testCase.getResultAnnotations()) {
-                    // Get values
-                    if (resultAnnotation.getAnnotationValue().isPresent()) {
-                        // FIXME, I don't understand why we don't just use class ResultAnnotation as result annotations instead of PropertyValuePair (since we basically just copy them) ?
-                        annotationSetBuilder.annotation(
-                                PropertyValuePair.create(resultAnnotation.getAnnotationProperty(), resultAnnotation.getAnnotationValue().get()));
-                    }
+                    PropertyValuePair.fromAnnotation(resultAnnotation).ifPresent(annotationSetBuilder::annotation);
                 }
                 // get annotations from the SPARQL query
                 for (ResultAnnotation resultAnnotation : testCase.getVariableAnnotations()) {

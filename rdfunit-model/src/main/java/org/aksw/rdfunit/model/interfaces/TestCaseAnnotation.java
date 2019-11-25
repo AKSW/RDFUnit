@@ -61,6 +61,12 @@ public class TestCaseAnnotation implements Element {
         return resultAnnotations;
     }
 
+    public Set<ResultAnnotation> getAnnotations() {
+        HashSet<ResultAnnotation> zw = Sets.newHashSet(resultAnnotations);
+        zw.addAll(variableAnnotations);
+        return ImmutableSet.copyOf(zw);
+    }
+
     public void addResultAnnotations(Collection<ResultAnnotation> anno){
         this.variableAnnotations.addAll(findVariableAnnotations(anno));
         this.resultAnnotations.addAll(findNonVariableAnnotations(anno));

@@ -24,9 +24,12 @@ public final class TestExecutionWriter implements ElementWriter {
 
     public static TestExecutionWriter create(TestExecution testExecution) {return new TestExecutionWriter(testExecution);}
 
-
     @Override
     public Resource write(Model model) {
+        return TestExecutionWriter.write(this.testExecution, model);
+    }
+
+    public static Resource write(TestExecution testExecution, Model model) {
 
         Resource resource = ElementWriter.copyElementResourceInModel(testExecution, model);
 

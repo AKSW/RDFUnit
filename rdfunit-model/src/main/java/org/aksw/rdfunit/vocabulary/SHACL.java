@@ -3,7 +3,6 @@ package org.aksw.rdfunit.vocabulary;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.impl.PropertyImpl;
 
 /**
  * Core SHACL Vocabulary
@@ -32,6 +31,11 @@ public final class SHACL {
     public static final Resource ConstraintComponent = resource("ConstraintComponent");
     public static final Resource SPARQLConstraintComponent = resource("SPARQLConstraintComponent");
 
+    /* Logical Constraint Components */
+    public static final Resource AndConstraintComponent = resource("AndConstraintComponent");
+    public static final Resource OrConstraintComponent = resource("OrConstraintComponent");
+    public static final Resource XoneConstraintComponent = resource("XoneConstraintComponent");
+    public static final Resource NotConstraintComponent = resource("NotConstraintComponent");
 
     public static final Property targetClass = property("targetClass");
     public static final Property targetNode = property("targetNode");
@@ -73,6 +77,7 @@ public final class SHACL {
     public static final Property sourceConstraintComponent = property("sourceConstraintComponent");
     public static final Property conforms = property("conforms");
     public static final Property result = property("result");
+    public static final Property detail = property("detail");
 
     public static final Property annotationProperty = property("annotationProperty");
     public static final Property annotationVarName = property("annotationVarName");
@@ -109,8 +114,7 @@ public final class SHACL {
     public static final Property or = property("or");
     public static final Property not = property("not");
     public static final Property xone = property("xone");
-    public static final Property atomic = ResourceFactory.createProperty("http://example.org/atomic/wrapper");      //TODO need a property expressing a singleton, non negating group
-    public static final Property violating = ResourceFactory.createProperty("http://example.org/atomic/wrapper");
+    public static final Property atomic = ResourceFactory.createProperty("http://example.org/atomic/wrapper");      //TODO need a property expressing a singleton, non negating group @Dimitris
 
     public static final Property declare = property("declare");
     public static final Property prefixes = property("prefixes");
@@ -119,13 +123,14 @@ public final class SHACL {
 
     public static final Property deactivated = property("deactivated");
 
+    /**
+     * Contains all SHACL logical constraint uris, as well as a default for single tests (atomic)
+     */
     public enum LogicalConstraint {
-        and, or, xone, not, atomic
+        and, or, xone, not, node, atomic
     }
 
-
-    private SHACL() {
-    }
+    private SHACL() {  }
 
 
     private static Resource resource(String local) {

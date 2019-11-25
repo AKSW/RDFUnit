@@ -16,6 +16,7 @@ import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.query.Query;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 import java.util.Optional;
@@ -36,6 +37,22 @@ class ResultAnnotationParser {
     @NonNull private final Validator validator;
     private final boolean canBindValueVariable;
     private final Component component;
+    private final SHACL.LogicalConstraint logicalConstraint;
+
+    private Optional<Resource> getLogicalConstraintComponent(){
+        return Optional.ofNullable(logicalConstraint).map(operator ->{
+            switch(operator) {
+                case or:
+                    return SHACL.OrConstraintComponent;
+                case xone:
+                    return SHACL.XoneConstraintComponent;
+                case not:
+                    return SHACL.NotConstraintComponent;
+                default:
+                    return SHACL.AndConstraintComponent;
+            }
+        });
+    }
 
     private Optional<ResultAnnotation> getPathAnnotation() {
         if (query.getResultVars().contains("path")) {
@@ -75,6 +92,7 @@ class ResultAnnotationParser {
     private Optional<ResultAnnotation> getValueAnnotation() {
         boolean componentThatAllowsValueBinding = canBindValueVariable && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") );
         boolean isNodeShapeAndHasValueVar = shape.isNodeShape() && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") );
+
         if (isNodeShapeAndHasValueVar || componentThatAllowsValueBinding ) {
             return Optional.of(createVariableAnnotation(SHACL.value, SHACL.value.getLocalName()));
         }
@@ -95,23 +113,35 @@ class ResultAnnotationParser {
 
     }
     private Optional<ResultAnnotation> getSourceConstraintComponentAnnotation() {
-        return Optional.ofNullable(component)
-                .map(c -> new ResultAnnotationImpl.Builder(c.getElement(), SHACL.sourceConstraintComponent)
-                        .setValue(component.getElement()).build());
+        if(component != null){
+            return Optional.of(new ResultAnnotationImpl
+                    .Builder(component.getElement(), SHACL.sourceConstraintComponent)
+                    .setValue(component.getElement())
+                    .build());
+        }
+        else if(logicalConstraint != null){
+            Resource comp = getLogicalConstraintComponent().get();  // is save
+            return Optional.of(new ResultAnnotationImpl
+                    .Builder(comp, SHACL.sourceConstraintComponent)
+                    .setValue(comp)
+                    .build());
+        }
+        else{
+            return Optional.empty();
+        }
 
     }
     private Optional<ResultAnnotation> getSourceConstraintComponentSparqlAnnotation() {
-        if (component == null) {
+        if (component == null && logicalConstraint == null) {
             return Optional.of(createValueAnnotation(SHACL.sourceConstraint, validator.getElement()));
         } else {return Optional.empty();}
 
     }
 
     private Optional<ResultAnnotation> getSourceConstraintAnnotation() {
-        if (component == null) {
+        if (component == null && logicalConstraint == null) {
             return Optional.of(createValueAnnotation(SHACL.sourceConstraintComponent, SHACL.SPARQLConstraintComponent));
         } else {return Optional.empty();}
-
     }
 
     public Set<ResultAnnotation> getResultAnnotations() {

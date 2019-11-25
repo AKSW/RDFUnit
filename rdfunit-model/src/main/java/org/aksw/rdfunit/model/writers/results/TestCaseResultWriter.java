@@ -86,6 +86,13 @@ public class TestCaseResultWriter implements ElementWriter {
 
                 }
             }
+
+            // write sh:detail
+            for(TestCaseResult detail : ((ShaclTestCaseResult) testCaseResult).getDetails()){
+                Resource resultIri = TestCaseResultWriter.create(detail, executionUri).write(model);
+                resource.addProperty(SHACL.detail, resultIri);
+            }
+
             boolean containsMessage = annotations.stream().anyMatch(an -> an.getProperty().equals(SHACL.message));
             if (!containsMessage) {
                 resource.addProperty(SHACL.message, testCaseResult.getMessage());

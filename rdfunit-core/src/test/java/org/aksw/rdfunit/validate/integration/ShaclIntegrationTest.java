@@ -1,10 +1,12 @@
 package org.aksw.rdfunit.validate.integration;
 
 import org.aksw.rdfunit.io.reader.RdfReaderException;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -17,11 +19,11 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.not-correct.ttl", 0},
                 {"shacl/sh.not-wrong.ttl", 2},
                 {"shacl/sh.xone-correct.ttl", 0},
-                {"shacl/sh.xone-wrong.ttl", 9},
+                {"shacl/sh.xone-wrong.ttl", 3},
                 {"shacl/sh.and-correct.ttl", 0},
-                {"shacl/sh.and-wrong.ttl", 8},
+                {"shacl/sh.and-wrong.ttl", 4},
                 {"shacl/sh.or-correct.ttl", 0},
-                {"shacl/sh.or-wrong.ttl", 28},
+                {"shacl/sh.or-wrong.ttl", 8},
 
                 {"shacl/sh.class-correct.ttl", 0},
                 {"shacl/sh.class-wrong.ttl", 1},
@@ -83,12 +85,14 @@ public class ShaclIntegrationTest {
 
 
     @Test
-    public void test() throws RdfReaderException {
+    public void test() throws RdfReaderException, RdfWriterException, IOException {
 
-        IntegrationTestHelper.testMap(
+        String reports = IntegrationTestHelper.testMap(
                 IntegrationTestHelper.getResourcePrefix() + testSource,
                 expectedErrors,
                 IntegrationTestHelper.getShaclTestSuite(),
                 IntegrationTestHelper.getShaclSchemaSource());
+
+        System.out.println(reports);
     }
 }

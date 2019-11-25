@@ -134,7 +134,7 @@ public class ComponentConstraintImpl implements ComponentConstraint {
                 SHACL.namespace,      // TODO check
                 ImmutableSet.of(),
                 getMessage().getLexicalForm(),
-                RLOGLevel.ERROR, //FIXME
+                RLOGLevel.ERROR, //FIXME  shouldnt we use RLOGLevel.resolve here @Dimitris ?
                 createResultAnnotations()
         );
     }

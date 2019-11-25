@@ -17,21 +17,19 @@ import java.util.Collections;
 
 public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
 
-    public static final String AlwaysFailingTestCasePrefix = "http://rdfunit.aksw.org/aftc/";
+    static final String AlwaysFailingTestCasePrefix = "http://rdfunit.aksw.org/aftc/";
 
     private final ShapeTarget target;
     private final Resource element;
-    private final String sparqlWhere;
 
-    public AlwaysFailingTestCase(ShapeTarget target){
+    AlwaysFailingTestCase(ShapeTarget target){
         this.target = target;
         this.element = ResourceFactory.createResource(AlwaysFailingTestCase.AlwaysFailingTestCasePrefix + JenaUUID.generate().asString());
-        this.sparqlWhere = "{ " + target.getPattern() + " FILTER NOT EXISTS {?this <http://example.org/some/non/existing/property> 9876545432} }";
     }
 
     @Override
     public String getSparqlWhere() {
-        return sparqlWhere;
+        return "{ " + target.getPattern() + " }";
     }
 
     @Override
@@ -51,7 +49,7 @@ public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
 
     @Override
     public Collection<PrefixDeclaration> getPrefixDeclarations() {
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
     }
 
     @Override

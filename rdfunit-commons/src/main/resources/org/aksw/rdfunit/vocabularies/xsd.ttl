@@ -462,5 +462,5 @@ xsd:fractionDigits  a owl:DatatypeProperty ;
   rdfs:comment "The total number of digits to the right of the decimal point required to represent a value." .
 
 xsd:pattern a owl:DatatypeProperty;
-  rdfs:label "patterns" ;
+  rdfs:label "pattern" ;
   rdfs:comment "A regular expression that matches complete valid literals." .

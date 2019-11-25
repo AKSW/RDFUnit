@@ -8,10 +8,14 @@ import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
+import org.aksw.rdfunit.io.writer.RdfFileWriter;
+import org.aksw.rdfunit.io.writer.RdfStreamWriter;
+import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
 import org.aksw.rdfunit.sources.SchemaService;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
@@ -22,8 +26,11 @@ import org.aksw.rdfunit.tests.generators.TagRdfUnitTestGenerator;
 import org.aksw.rdfunit.tests.generators.TestGeneratorFactory;
 import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.codehaus.plexus.util.StringOutputStream;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
@@ -79,8 +86,7 @@ public class IntegrationTestHelper {
         return new TestSuite(ts2);
     }
 
-    public static void testMap(String testSource, int expectedErrors, TestSuite testSuite, SchemaSource schemaSource) throws RdfReaderException {
-
+    public static String testMap(String testSource, int expectedErrors, TestSuite testSuite, SchemaSource schemaSource) throws RdfReaderException, RdfWriterException, IOException {
 
         // create new dataset for current entry
         final TestSource modelSource = new TestSourceBuilder()
@@ -90,34 +96,37 @@ public class IntegrationTestHelper {
                 .setReferenceSchemata(Collections.singletonList(schemaSource))
                 .build();
 
-        // Test all execution types
-        long failedTestCases = -1;
+        Model reportModel = ModelFactory.createDefaultModel();
+
         //TODO to cover all possible violations we need ShaclTestCaseResult (ShaclLite does not contain value annotations so we can't differentiate between multiple violating triples of the same test and focus node!)
-        for (TestCaseExecutionType executionType : Arrays.asList(TestCaseExecutionType.shaclTestCaseResult)) {
+        TestCaseExecutionType executionType = TestCaseExecutionType.shaclTestCaseResult;
 
-            TestExecution execution = RDFUnitStaticValidator.validate(executionType, modelSource, testSuite);
-            DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();
+        TestExecution execution = RDFUnitStaticValidator.validate(executionType, modelSource, testSuite);
+        DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();
 
-            // For status results we don't get violation instances
-            if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
+        TestExecutionWriter.write(execution, reportModel);
+        // For status results we don't get violation instances
+        if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
 
-                assertThat(overviewResults.getIndividualErrors())
-                        .as("%s: Errors not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
-                        .isEqualTo(expectedErrors);
-            }
-
-            if (failedTestCases == -1) {
-                failedTestCases = overviewResults.getFailedTests();
-            } else {
-                assertThat(overviewResults.getFailedTests())
-                        .as("%s: Failed test cases not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
-                        .isEqualTo(failedTestCases);
-            }
-
-            assertThat(overviewResults.getErrorTests())
-                    .as("%s: There should be no failed test cases in  %s", executionType, testSource)
-                    .isEqualTo(0);
+            assertThat(overviewResults.getIndividualErrors())
+                    .as("%s: Errors not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
+                    .isEqualTo(expectedErrors);
         }
+
+        assertThat(overviewResults.getFailedTests())
+                .as("%s: Failed test cases not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
+                .isEqualTo(overviewResults.getFailedTests());
+
+        assertThat(overviewResults.getErrorTests())
+                .as("%s: There should be no failed test cases in  %s", executionType, testSource)
+                .isEqualTo(0);
+
+        StringOutputStream sos = new StringOutputStream();
+        RdfStreamWriter sw = new RdfStreamWriter(sos);
+
+        sw.write(reportModel);
+        sos.close();
+        return sos.toString();
     }
 
     @Test

@@ -21,6 +21,7 @@ import org.aksw.rdfunit.model.readers.shacl.BatchShapeTargetReader;
 import org.aksw.rdfunit.vocabulary.SHACL;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.uuid.JenaUUID;
 
 import java.util.*;
 import java.util.function.Function;
@@ -39,6 +40,12 @@ public class ShaclModel {
     @NonNull private final ShapesGraph shapesGraph;
     @NonNull private final ImmutableSet<ShapeGroup> allShapeGroup;
     @NonNull private final ImmutableMap<Resource, Shape> resourceShapeMap;
+
+    // providing parent shapes for root shapes, will not be passed to TestGenerator
+    private static final Shape defaultParentShape = ShapeImpl.builder()
+            .element(ResourceFactory.createResource(JenaUUID.generate().asString()))
+            .propertyValuePairSets(PropertyValuePairSet.builder().build())
+            .build();
 
     // TODO do not use Model for instantiation, change later
     public ShaclModel(Model inputShaclGraph) throws RdfReaderException {
@@ -64,7 +71,7 @@ public class ShaclModel {
         ImmutableSet<ShapeGroup> implicitTargets = ImmutableSet.copyOf(getImplicitShapeTargets(explicitTargets));
         ImmutableSet.Builder<ShapeGroup> ats = new ImmutableSet.Builder<>();
         ats.addAll(implicitTargets);
-        ats.add(new ShapeGroup(explicitTargets, SHACL.LogicalConstraint.atomic, ImmutableSet.of()));
+        ats.add(new ShapeGroup(explicitTargets, SHACL.LogicalConstraint.atomic, ImmutableSet.of(), defaultParentShape));
         allShapeGroup = ats.build();
     }
 
@@ -86,24 +93,27 @@ public class ShaclModel {
             if(! testCases.isEmpty()) {
                 switch (shapeGroup.getGroupOperator()) {
                     case or:
-                        list.add(new TestCaseGroupOr(ImmutableSet.copyOf(testCases)));
+                        list.add(new TestCaseGroupOr(ImmutableSet.copyOf(testCases), shapeGroup.parentShape));
                         break;
                     case not:
-                        list.add(new TestCaseGroupNot(ImmutableSet.copyOf(testCases)));
+                        list.add(new TestCaseGroupNot(ImmutableSet.copyOf(testCases), shapeGroup.parentShape));
                         break;
                     case xone:
-                        list.add(new TestCaseGroupXone(ImmutableSet.copyOf(testCases)));
+                        list.add(new TestCaseGroupXone(ImmutableSet.copyOf(testCases), shapeGroup.parentShape));
                         break;
                     case and:
-                        if(testCases.size() == 1){
-                            list.add(new TestCaseGroupAtomic(ImmutableSet.copyOf(testCases)));
-                        }
-                        else{
-                            list.add(new TestCaseGroupAnd(ImmutableSet.copyOf(testCases)));
-                        }
+                            list.add(new TestCaseGroupAnd(ImmutableSet.copyOf(testCases), shapeGroup.parentShape));
+                        break;
+                    case node:
+                        list.add(new TestCaseGroupNode(ImmutableSet.copyOf(testCases), shapeGroup.parentShape));
                         break;
                     default:        // atomic
-                        list.addAll(testCases.stream().map(tc -> new TestCaseGroupAtomic(ImmutableSet.of(tc))).collect(Collectors.toSet()));
+                        if(shapeGroup.getParentShape().isNodeShape() && shapeGroup.getSubGroups().stream().noneMatch(x -> x.getParentShape().isNodeShape())){
+                            list.add(new TestCaseGroupNode(ImmutableSet.copyOf(testCases), shapeGroup.parentShape));    // if parent is a sh:NodeShape we group all child shapes in an and relationship
+                        }
+                        else {
+                            list.addAll(testCases.stream().map(tc -> new TestCaseGroupAtomic(ImmutableSet.of(tc), shapeGroup.parentShape)).collect(Collectors.toSet()));
+                        }
                         break;
                 }
             }
@@ -163,14 +173,14 @@ public class ShaclModel {
      */
     private Set<ShapeGroup> getImplicitShapeTargets(ImmutableMap<Shape, Set<ShapeTarget>> explicitTargets) {
         Set<ShapeGroup> groups = new HashSet<>();
-        explicitTargets.forEach( (shape, targets) -> groups.addAll(getImplicitTargetsForSingleShape(shape, targets)));
+        explicitTargets.forEach( (shape, targets) -> groups.addAll(getImplicitTargetsForSingleShape(shape, targets, false)));
         return groups;
     }
 
     /**
      * Collects all implicit targets as a set of ShapeGroup
      */
-    private Set<ShapeGroup> getImplicitTargetsForSingleShape(Shape shape, Set<ShapeTarget> targets) {
+    private Set<ShapeGroup> getImplicitTargetsForSingleShape(final Shape shape, Set<ShapeTarget> targets, final boolean insideLogicalConstraint) {
         if (shape.isPropertyShape()) {
             assert(shape.getPath().isPresent());
             // use the exact same target
@@ -181,11 +191,11 @@ public class ShaclModel {
 
         //collect shape groups
         Set<ShapeGroup> targetGroups = new HashSet<>();
-        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.and));
-        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.or));
-        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.not));
-        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.xone));
-        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.atomic));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.and, insideLogicalConstraint));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.or, insideLogicalConstraint));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.not, insideLogicalConstraint));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.xone, insideLogicalConstraint));
+        targetGroups.addAll(getShapeGroup(shape, targets, SHACL.LogicalConstraint.atomic, insideLogicalConstraint));
 
         return targetGroups;
     }
@@ -197,7 +207,12 @@ public class ShaclModel {
      * @param groupOperator - the logical operator to collect child nodes for
      * @return - a set of ShapeGroup having the same logical operator
      */
-    private Set<ShapeGroup> getShapeGroup(final Shape shape, final Set<ShapeTarget> targets, final SHACL.LogicalConstraint groupOperator){
+    private Set<ShapeGroup> getShapeGroup(
+            final Shape shape,
+            final Set<ShapeTarget> targets,
+            final SHACL.LogicalConstraint groupOperator,
+            final boolean insideLogicalConstraint
+    ){
         ImmutableList.Builder<Set<Shape>> childShapeSetsBuilder = ImmutableList.builder();
         switch(groupOperator){
             case and:
@@ -225,9 +240,17 @@ public class ShaclModel {
             css.stream().filter(s -> ! s.isDeactivated()).forEach(cs -> {           //recursive retrieval of ShapeGroups
                 Shape enrichedShape = enrichPropertyShape(shape, cs);               //enrich with certain annotations of parent
                 targetMap.put(enrichedShape, targets);
-                subs.addAll(getImplicitTargetsForSingleShape(enrichedShape, targets));
+                subs.addAll(getImplicitTargetsForSingleShape(enrichedShape, targets, groupOperator != SHACL.LogicalConstraint.atomic));
             });
-            return new ShapeGroup(targetMap, groupOperator, subs.build());          // create new ShapeGroup
+            // shape sets with more than one shape and no logical constraint default back to sh:and
+            SHACL.LogicalConstraint operator = groupOperator;
+            if(operator == SHACL.LogicalConstraint.atomic && css.size() > 1){
+                if(shape.isNodeShape() && insideLogicalConstraint)
+                    operator = SHACL.LogicalConstraint.and;
+                else
+                    operator = SHACL.LogicalConstraint.node;
+            }
+            return new ShapeGroup(targetMap, operator, subs.build(), shape);          // create new ShapeGroup
         }).collect(Collectors.toSet());
     }
 
@@ -238,7 +261,7 @@ public class ShaclModel {
      * @return - enriched shape
      */
     private Shape enrichPropertyShape(Shape parent, Shape child){
-    if(parent.getPath().isPresent()) {                                  //if parent is a path shape
+    if(parent.isPropertyShape()) {
             return ShapeImpl.builder()
                     .element(child.getElement())
                     .shaclPath(child.getPath().orElse(null))
@@ -327,11 +350,13 @@ public class ShaclModel {
         @NonNull @Getter private final Map<Shape, Set<ShapeTarget>> allTargets;
         @NonNull @Getter private final SHACL.LogicalConstraint groupOperator;
         @NonNull @Getter private final Set<ShapeGroup> subGroups;
+        @NonNull @Getter private final Shape parentShape;
 
-        private ShapeGroup(Map<Shape, Set<ShapeTarget>> allTargets, SHACL.LogicalConstraint groupOperator, Set<ShapeGroup> subGroups) {
+        private ShapeGroup(Map<Shape, Set<ShapeTarget>> allTargets, SHACL.LogicalConstraint groupOperator, Set<ShapeGroup> subGroups, Shape parentShape) {
             this.allTargets = allTargets;
             this.groupOperator = groupOperator;
             this.subGroups = subGroups;
+            this.parentShape = parentShape;
         }
     }
 }
