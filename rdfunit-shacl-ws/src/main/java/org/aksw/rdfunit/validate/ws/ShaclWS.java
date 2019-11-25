@@ -50,7 +50,7 @@ public class ShaclWS extends AbstractRDFUnitWebService {
         RDFUnitTestSuiteGenerator testSuiteGenerator =
                 new RDFUnitTestSuiteGenerator.Builder()
                         .addLocalResource("none","")
-                        .addSchemaURI("none", "https://raw.githubusercontent.com/dbpedia/webid/master/voc/webid-shacl.ttl").build();
+                        .addSchemaURI("none", "https://raw.githubusercontent.com/kurzum/shacldemo/master/test-case1.ttl").build();
         RDFUnitStaticValidator.initWrapper(testSuiteGenerator);
     }
 

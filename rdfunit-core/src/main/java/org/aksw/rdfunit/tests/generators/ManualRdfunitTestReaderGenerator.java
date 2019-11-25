@@ -5,6 +5,7 @@ import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
+import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.CacheUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.Source;
@@ -18,17 +19,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Dimitris Kontokostas
- * @since 14/2/2016 4:45 μμ
+ * Reads the manual tests that are defined in the test source
  */
 @Slf4j
-public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
+public final class ManualRdfunitTestReaderGenerator implements RdfUnitTestGenerator{
 
-    private final String testFolder;
 
-    public ManualRdfunitTestGenerator(String testFolder) {
-        this.testFolder = testFolder;
-    }
+    public ManualRdfunitTestReaderGenerator() {}
 
     @Override
     public Collection<? extends GenericTestCase> generate(SchemaSource source) {
@@ -43,21 +40,9 @@ public final class ManualRdfunitTestGenerator implements RdfUnitTestGenerator{
     private Collection<GenericTestCase> generateFromSource(Source source, Model sourceModel) {
             Set<GenericTestCase> tests = new HashSet<>();
 
-            try {
-                RdfReader reader = RdfReaderFactory.createFileOrResourceReader(
-                        CacheUtils.getSourceManualTestFile(testFolder, source),                 // check for local directory first
-                        CacheUtils.getSourceManualTestFile("/org/aksw/rdfunit/tests/", source)  // otherwise check if it exists in resources
-                );
-                Collection<GenericTestCase> testsManualsExternal = TestUtils.instantiateTestsFromModel(reader.read());
-                tests.addAll(testsManualsExternal);
-                tests.addAll(TestUtils.instantiateTestsFromModel(sourceModel));
+            tests.addAll(TestUtils.instantiateTestsFromModel(sourceModel));
 
-            } catch (RdfReaderException e) {
-                // Do nothing, Manual tests do not exist
-                log.debug("No manual tests found for {}", source.getUri());
-
-            }
-        log.info("{} identified {} manual tests", source.getUri(), tests.size());
+        log.info("{} identified {} manually written tests", source.getUri(), tests.size());
         return tests;
 
     }

@@ -195,7 +195,7 @@ sh:MaxCountConstraintComponent
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
     	sh:message "Maximum cardinality for {$PATH} is {$maxCount}";
-        shr:filter """ ASK { FILTER ($maxCount > 0)} """ ;
+        shr:filter """ ASK { FILTER ($maxCount > 1)} """ ;
     	sh:select """
     		SELECT ?this
             WHERE {
@@ -205,6 +205,20 @@ sh:MaxCountConstraintComponent
             HAVING (COUNT(?value) > $maxCount)
         """ ;
     ] ;
+    sh:propertyValidator [
+        a sh:SPARQLSelectValidator ;
+        sh:message "Maximum cardinality for {$PATH} is {$maxCount}";
+        shr:filter """ ASK { FILTER ($maxCount = 1)} """ ;
+    	sh:select """
+    		SELECT ?this
+            WHERE {
+            	?this $PATH ?value .
+            	?this $PATH ?value2 .
+            	filter (?value != ?value2)
+            }
+        """ ;
+    ] ;
+
     sh:propertyValidator [
         a sh:SPARQLSelectValidator ;
         sh:message "Maximum cardinality for {$PATH} is {$maxCount}";
@@ -550,24 +564,24 @@ sh:LessThanOrEqualsConstraintComponent
     ] ;
     sh:propertyValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "{$PATH} should be less than {$lessThan}";
+    	sh:message "{$PATH} should be less than {$lessThanOrEquals}";
     	sh:select """
     		SELECT $this ?value
             WHERE {
             	$this $PATH ?value .
-            	$this $lessThan ?otherValue .
+            	$this $lessThanOrEquals ?otherValue .
             	BIND (?value <= ?otherValue AS ?result) .
             	FILTER (!bound(?result) || !(?result)) .
             }""" ;
     ] ;
     sh:nodeValidator [
     	a sh:SPARQLSelectValidator ;
-    	sh:message "{$PATH} should be less than {$lessThan}";
+    	sh:message "{$PATH} should be less than or equals {$lessThanOrEquals}";
     	sh:select """
     		SELECT $this ?value
             WHERE {
                 BIND (?this AS ?value) .
-            	$this $lessThan ?otherValue .
+            	$this $lessThanOrEquals ?otherValue .
             	BIND (?value <= ?otherValue AS ?result) .
             	FILTER (!bound(?result) || !(?result)) .
             }""" ;

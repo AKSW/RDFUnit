@@ -1,32 +1,38 @@
 @prefix ex: <http://example.org/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
 
+# combined OWL + SHACL example
 
-ex:MyShape
-	a sh:Shape ;
-	sh:targetClass ex:Configuration ;
+ex:Person a rdfs:Class .
+ex:Place a rdfs:Class .
 
-	sh:property [
-		sh:path ex:description ;
-		sh:minCount 1 ;
-		sh:maxCount 1 ;
-		sh:datatype rdf:langString ;
-	] ;
+ex:birthPlace a owl:ObjectProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range ex:Place ;
+    .
 
-	sh:property [
-		sh:path ex:inputFile ;
-		sh:minCount 1 ;
-		sh:maxCount 1 ;
-		sh:datatype xsd:string ;
-	] ;
-	sh:property [
-		sh:path ex:outputFile ;
-		sh:minCount 1 ;
-		sh:maxCount 1 ;
-		sh:datatype xsd:string;
-	]  .
+ex:birthDate a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range xsd:date ;
+    .
 
+ex:deathDate a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ex:Person ;
+    rdfs:range xsd:date ;
+    .
+
+
+ex:complimentaryPersonShape  a sh:NodeShape;
+    sh:targetSubjectsOf ex:birthDate ;
+    #sh:targetClass ex:Person ;
+
+    sh:property [
+        sh:path ex:birthDate ;
+        sh:lessThanOrEquals ex:deathDate ;
+    ] ;
+    .
