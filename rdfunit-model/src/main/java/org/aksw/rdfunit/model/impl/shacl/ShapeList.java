@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.UnmodifiableIterator;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @EqualsAndHashCode()
 public class ShapeList implements Shape {
 
-    @Getter @NonNull private final ImmutableSet<Shape> shapes;
+    @Getter @NonNull private final ImmutableList<Shape> shapes;
     
     @Getter @NonNull private final Resource element;
     private final ShapePath shaclPath;

@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,8 +49,10 @@ class ResultAnnotationParser {
                     return SHACL.XoneConstraintComponent;
                 case not:
                     return SHACL.NotConstraintComponent;
-                default:
+                case and:
                     return SHACL.AndConstraintComponent;
+                default:
+                    return SHACL.NodeConstraintComponent;
             }
         });
     }
@@ -58,7 +61,7 @@ class ResultAnnotationParser {
         if (query.getResultVars().contains("path")) {
             return Optional.of(createVariableAnnotation(SHACL.resultPath, "path"));
         } else {
-            Set<RDFNode> paths = shape.getPropertyValuePairSets().getPropertyValues(SHACL.path);
+            List<RDFNode> paths = shape.getPropertyValuePairSets().getPropertyValues(SHACL.path);
             if (paths.size() == 1) {
                 return Optional.of(createValueAnnotation(SHACL.resultPath, paths.iterator().next()));
             }

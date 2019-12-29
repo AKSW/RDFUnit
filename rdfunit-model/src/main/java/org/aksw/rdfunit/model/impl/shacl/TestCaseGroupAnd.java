@@ -1,7 +1,11 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
+import org.aksw.rdfunit.enums.RLOGLevel;
+import org.aksw.rdfunit.enums.TestAppliesTo;
+import org.aksw.rdfunit.enums.TestGenerationType;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
@@ -28,17 +32,17 @@ public class TestCaseGroupAnd implements TestCaseGroup {
     private final ShapeTarget target;
     private final Shape shape;
     private final Resource resource;
-    private final ImmutableSet<TargetBasedTestCase> testCases;
+    private final ImmutableList<TargetBasedTestCase> testCases;
     private final TestCaseAnnotation testCaseAnnotation;
 
-    public TestCaseGroupAnd(@NonNull Set<? extends TargetBasedTestCase> testCases, Shape shape) {
+    public TestCaseGroupAnd(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {
         assert(! testCases.isEmpty());
         target = testCases.iterator().next().getTarget();
         assert(testCases.stream().map(TargetBasedTestCase::getTarget).noneMatch(x -> x != target));
 
         this.shape = shape;
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
-        this.testCases = ImmutableSet.copyOf(testCases);
+        this.testCases = ImmutableList.copyOf(testCases);
 
         List<TestCaseAnnotation> innerAnnotations = testCases.stream().map(GenericTestCase::getTestCaseAnnotation).collect(Collectors.toList());
         String description = "A logical AND constraint component containing the following rules:";
@@ -62,7 +66,7 @@ public class TestCaseGroupAnd implements TestCaseGroup {
     public boolean isAtomic(){ return testCases.size() == 1; }
 
     @Override
-    public Set<TargetBasedTestCase> getTestCases() {
+    public List<TargetBasedTestCase> getTestCases() {
         return this.testCases;
     }
 

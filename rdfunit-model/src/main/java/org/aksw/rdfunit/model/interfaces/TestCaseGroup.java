@@ -29,7 +29,7 @@ public interface TestCaseGroup extends TargetBasedTestCase {
     /**
      * The test cases which have a logical relation
      */
-    Set<TargetBasedTestCase> getTestCases();
+    List<TargetBasedTestCase> getTestCases();
 
     /**
      * the logical operator (default is 'atomic' which means that there is no logical relation between them)
@@ -63,12 +63,14 @@ public interface TestCaseGroup extends TargetBasedTestCase {
                 .filter(r -> ShaclLiteTestCaseResult.class.isAssignableFrom(r.getClass()))
                 .map(r -> ((ShaclLiteTestCaseResult) r))
                 .collect(Collectors.groupingBy(ShaclLiteTestCaseResult::getFailingNode,
-                        Collectors.groupingBy(TestCaseGroup::getValue, Collectors.toList())));
+                        Collectors.groupingBy(TestCaseGroup::getValue, Collectors.<TestCaseResult>toList())));
     }
 
     static RDFNode getValue(ShaclLiteTestCaseResult result){
         if(ShaclTestCaseResult.class.isAssignableFrom(result.getClass())){
-            Set<PropertyValuePair> values = ((ShaclTestCaseResult) result).getResultAnnotations().stream().filter(ra -> ra.getProperty().equals(SHACL.value)).collect(Collectors.toSet());
+            Set<PropertyValuePair> values = ((ShaclTestCaseResult) result).getResultAnnotations().stream()
+                    .filter(ra -> ra.getProperty().equals(SHACL.value))
+                    .collect(Collectors.toSet());
             if(! values.isEmpty()){
                 return values.iterator().next().getValues().iterator().next();
             }

@@ -1,49 +1,17 @@
 package org.aksw.rdfunit.tests;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Streams;
 import io.vavr.collection.List;
 import io.vavr.collection.Traversable;
-import io.vavr.control.Try;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.aksw.rdfunit.io.reader.RdfModelReader;
-import org.aksw.rdfunit.io.writer.RdfFileWriter;
-import org.aksw.rdfunit.io.writer.RdfWriterException;
-import org.aksw.rdfunit.model.interfaces.GenericTestCase;
-import org.aksw.rdfunit.model.interfaces.TestSuite;
-import org.aksw.rdfunit.model.interfaces.results.TestExecution;
-import org.aksw.rdfunit.model.readers.shacl.ShapePathReader;
-import org.aksw.rdfunit.model.writers.results.TestExecutionWriter;
-import org.aksw.rdfunit.sources.SchemaSourceFactory;
-import org.aksw.rdfunit.tests.generators.ShaclTestGenerator;
-import org.aksw.rdfunit.utils.JenaUtils;
-import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
-import org.aksw.rdfunit.vocabulary.DATA_ACCESS_TESTS;
-import org.aksw.rdfunit.vocabulary.SHACL;
-import org.aksw.rdfunit.vocabulary.SHACL_TEST;
 import org.apache.commons.io.FileUtils;
-import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.EARL;
-import org.apache.jena.vocabulary.RDF;
-import org.topbraid.shacl.testcases.GraphValidationTestCaseType;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static com.google.common.collect.Streams.stream;
-import static java.util.Comparator.comparing;
-import static org.aksw.rdfunit.enums.TestCaseExecutionType.shaclTestCaseResult;
 
 /**
  *
@@ -55,343 +23,17 @@ import static org.aksw.rdfunit.enums.TestCaseExecutionType.shaclTestCaseResult;
 @Slf4j
 public class W3CShaclTestSuite {
 
-    private static final Resource PartialResult = ResourceFactory.createResource("http://www.w3.org/ns/shacl-test#partial");
-    private static final String resultFolder = "tests-results-nonconformant";
+    @Getter @NonNull @Singular ImmutableList<W3CTestCase> testCases;
 
-    @RequiredArgsConstructor
-    public static class TestCase {
-
-        @Getter @NonNull public final Resource validateNode;
-
-        @Getter @NonNull public final Manifest manifest;
-
-        @Getter(lazy = true) @NonNull private final Resource action = findAction();
-
-        @Getter(lazy = true) @NonNull private final String id = extractId();
-
-        @Getter(lazy = true) @NonNull private final Try<TestExecution> execution = runShapes();
-
-        @Getter(lazy = true) @NonNull private final Resource expectedValidationReport =
-                extractExpectedValidationReport();
-
-        @Getter(lazy = true) @NonNull private final Resource earlOutcome = computeOutcome();
-
-        @Getter(value = AccessLevel.PRIVATE, lazy = true) @NonNull private final Model adjustedExpectedReport =
-                computeAdjustedExpectedReport();
-
-        private static final Property dashSuggestionProp =
-                ResourceFactory.createProperty("http://datashapes.org/dash#suggestion");
-
-        public Model getShapesGraph() {
-
-           return modelForResourceValue(SHACL_TEST.shapesGraph);
-        }
-
-        public String getShapesGraphUri() {
-
-            return getAction().getPropertyResourceValue(SHACL_TEST.shapesGraph).getURI();
-        }
-
-        public Model getDataGraph() {
-
-            return modelForResourceValue(SHACL_TEST.dataGraph);
-        }
-
-        public String getDataGraphUri() {
-
-            return getAction().getPropertyResourceValue(SHACL_TEST.dataGraph).getURI();
-        }
-
-        private Try<TestExecution> runShapes() {
-
-            return Try.of(() -> {
-
-                val shapesSource = SchemaSourceFactory.createSchemaSourceSimple(
-                        getId(), getShapesGraphUri(),
-                        new RdfModelReader(getShapesGraph())
-                );
-
-                Set<GenericTestCase> tests = ImmutableSet.copyOf(new ShaclTestGenerator().generate(shapesSource));
-                val testSuite = new TestSuite(tests);
-
-                return RDFUnitStaticValidator.validate(shaclTestCaseResult, getDataGraph(), testSuite);
-            });
-        }
-
-        /**
-         * This has been adopted with small adjustments from
-         * {@code https://github.com/TopQuadrant/shacl/blob/master/src/main/java/org/topbraid/shacl/testcases/W3CTestRunner.java}
-         */
-        private Model adjustActualReport(Model actualReport) {
-
-            val adjustedReport = ModelFactory.createDefaultModel();
-
-            val details = actualReport.listObjectsOfProperty(SHACL.detail).toList();
-
-            //remove RDFUnit types
-            val keepOnlyTypes = ImmutableSet.of(SHACL.ValidationReport.getURI(), SHACL.ValidationResult.getURI());
-            val keepOnlyPredicates = ImmutableSet.of(SHACL.result, SHACL.conforms,
-                                                        SHACL.focusNode,
-                                                        SHACL.resultPath,
-                                                        SHACL.resultSeverity,
-                                                        SHACL.resultMessage,
-                                                        SHACL.sourceConstraint,
-                                                        SHACL.sourceConstraintComponent,
-                                                        SHACL.sourceShape,
-                                                        SHACL.value,
-                                                        RDF.first,
-                                                        RDF.nil,
-                                                        RDF.rest,
-                                                        SHACL.inversePath,
-                                                        SHACL.zeroOrMorePath,
-                                                        SHACL.oneOrMorePath,
-                                                        SHACL.zeroOrOnePath,
-                                                        SHACL.alternativePath).stream().map(Resource::getURI).collect(Collectors.toSet());
-
-            actualReport.listStatements().forEachRemaining(s -> {
-                if(! details.contains(s.getSubject())) {
-                    if (keepOnlyPredicates.contains(s.getPredicate().getURI())) {
-                        adjustedReport.add(s);
-                    }
-                    if (RDF.type.equals(s.getPredicate())) {
-                        if (keepOnlyTypes.contains(s.getObject().toString())) {
-                            adjustedReport.add(s);
-                        }
-                    }
-                }
-            });
-
-            // convert to blank nodes
-            Set<Statement> statementsForRemoval = new HashSet<>();
-            adjustedReport.listObjectsOfProperty(SHACL.result).forEachRemaining( n -> {
-                if (n.isResource()) {
-                    Resource r = n.asResource();
-                    Resource newBNode = ResourceFactory.createResource();
-                    adjustedReport.listStatements(r, null, (RDFNode)null).forEachRemaining( s-> {
-                        adjustedReport.add(newBNode, s.getPredicate(), s.getObject());
-                        statementsForRemoval.add(s);
-                    });
-                    adjustedReport.listStatements(null, null, r).forEachRemaining( s-> {
-                        adjustedReport.add(s.getSubject(), s.getPredicate(), newBNode);
-                        statementsForRemoval.add(s);
-                    });
-                }
-            });
-            statementsForRemoval.forEach(adjustedReport::remove);
-            statementsForRemoval.clear();
-            adjustedReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationReport).forEachRemaining( r-> {
-                Resource newBNode = ResourceFactory.createResource();
-                adjustedReport.listStatements(r, null, (RDFNode)null).forEachRemaining( sn-> {
-                    adjustedReport.add(newBNode, sn.getPredicate(), sn.getObject());
-                    statementsForRemoval.add(sn);
-                });
-            });
-
-            statementsForRemoval.forEach(adjustedReport::remove);
-
-            adjustedReport.removeAll(null, SHACL.message, null);
-            for(Statement s : adjustedReport.listStatements(null, SHACL.resultMessage, (RDFNode) null).toList()) {
-                if(!getAdjustedExpectedReport().contains(null, SHACL.resultMessage, s.getObject())) {
-                    adjustedReport.remove(s);
-                }
-            }
-
-            return adjustedReport;
-        }
-
-        /**
-         * This has been adopted with small adjustments from
-         * {@code https://github.com/TopQuadrant/shacl/blob/master/src/main/java/org/topbraid/shacl/testcases/W3CTestRunner.java}
-         */
-        private Model computeAdjustedExpectedReport() {
-
-            Model expectedModel = ModelFactory.createDefaultModel();
-
-            for(Statement s : getExpectedValidationReport().listProperties().toList()) {
-                expectedModel.add(s);
-            }
-            for(Statement s : getExpectedValidationReport().listProperties(SHACL.result).toList()) {
-                for(Statement t : s.getResource().listProperties().toList()) {
-                    if(t.getPredicate().equals(dashSuggestionProp)) {
-                        GraphValidationTestCaseType.addStatements(expectedModel, t);
-                    }
-                    else if(SHACL.resultPath.equals(t.getPredicate())) {
-                        Resource path = ShapePathReader.create().read(t.getResource()).getPathAsRdf();
-                        expectedModel.add(path.getModel());
-                        expectedModel.add(t.getSubject(), t.getPredicate(),path);
-                    }
-                    else {
-                        expectedModel.add(t);
-                    }
-                }
-            }
-
-            return expectedModel;
-        }
-
-        private Resource computeOutcome() {
-
-            if (getExecution().isFailure()) {
-                // expected error
-                if (getAdjustedExpectedReport().isEmpty()) {
-                    return EARL.passed;
-                }
-                log.error("test case raised an error during execution: {}", getId());
-                log.error("error was: ", getExecution().failed().get());
-
-                return EARL.failed;
-            }
-
-            final Model originalActualReport = ModelFactory.createDefaultModel();
-            TestExecutionWriter.create(getExecution().get()).write(originalActualReport);
-            final Model adjustedActualReport = this.adjustActualReport(originalActualReport);
-
-            // is isomorphic
-            if (getAdjustedExpectedReport().isIsomorphicWith(adjustedActualReport)) {
-                return EARL.passed;
-            } else {
-                try {
-                    int expectedViolations = getAdjustedExpectedReport().listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
-                    int actualViolations = adjustedActualReport.listSubjectsWithProperty(RDF.type, SHACL.ValidationResult).toList().size();
-                    String file = this.manifest.sourceFile.toString().replace("/", "_");
-                    file = file.substring(file.lastIndexOf("tests")+6);
-                    File dirs1 = new File(resultFolder  + "/partial");
-                    dirs1.mkdirs();
-
-                    // check for partial
-                    if ((!getAdjustedExpectedReport().isEmpty() && (
-                                    expectedViolations == 0 && actualViolations == 0 )
-                            || (expectedViolations > 0 && actualViolations > 0 )))
-                    {
-                            new RdfFileWriter(resultFolder  + "/partial/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
-                            //new RdfFileWriter("results/partial/" + file + ".actual.before.ttl").write(originalActualReport);
-                            new RdfFileWriter(resultFolder + "/partial/" + file + ".actual.ttl").write(adjustedActualReport);
-
-                        return W3CShaclTestSuite.PartialResult;
-                    }
-
-                    new RdfFileWriter(resultFolder  + "/fail/" + file + ".expected.ttl").write(getAdjustedExpectedReport());
-                    //new RdfFileWriter("results/fail/" +this.getId() + ".actual.before.ttl").write(originalActualReport);
-                    new RdfFileWriter(resultFolder + "/fail/" + file + ".actual.ttl").write(adjustedActualReport);
-
-                } catch (RdfWriterException e) {
-                    e.printStackTrace();
-                }
-
-                log.error("test case failed {}", this.getManifest().sourceFile);
-                return EARL.failed;
-            }
-        }
-
-        private Resource findAction() {
-
-            if(stream(validateNode.listProperties(DATA_ACCESS_TESTS.action)).count() != 1) {
-
-                throw new RuntimeException("multiple or no actions");
-            }
-
-            return validateNode.getPropertyResourceValue(DATA_ACCESS_TESTS.action);
-        }
-
-        @SneakyThrows(URISyntaxException.class)
-        private String extractId() {
-
-            val testIRI = new URI(validateNode.getURI());
-
-            val pathSegments = Arrays.asList(testIRI.getPath().split("/"));
-
-            assert pathSegments.size() >= 3;
-
-            val p1 = pathSegments.get(pathSegments.size() - 3);
-            val p2 = pathSegments.get(pathSegments.size() - 2);
-            val p3 = pathSegments.get(pathSegments.size() - 1);
-            return "/" + p1 + "/" + p2 + "/" + p3;
-        }
-
-        private Resource extractExpectedValidationReport() {
-
-            return validateNode.getPropertyResourceValue(DATA_ACCESS_TESTS.result);
-        }
-
-        private Model modelForResourceValue(Property property) {
-
-            val graphResource = getAction().getPropertyResourceValue(property);
-
-            val graphPath = getManifest().resolvePathURI(graphResource.getURI());
-
-            return JenaUtils.readModel(graphPath.toUri());
-        }
+    public boolean runTestSuite(boolean saveExpectedVsActualResults){
+        val hist = List.ofAll(this.getTestCases()).groupBy(tc -> tc.computeOutcome(saveExpectedVsActualResults)).mapValues(Traversable::size);
+        System.out.println(hist);
+        return hist.get(EARL.passed).getOrElse(0) == this.getTestCases().size();
     }
 
-    @RequiredArgsConstructor
-    public static class Manifest {
+    public static W3CShaclTestSuite load(Path rootManifest) {
 
-        @Getter @NonNull private final Path sourceFile;
-
-        @Getter(lazy = true) @NonNull private final Model model = JenaUtils.readModel(sourceFile.toUri());
-
-        @Getter(lazy = true) @NonNull private final Resource manifestResource = findManifestResource();
-
-        @Override
-        protected void finalize() throws Throwable {
-            super.finalize();
-        }
-
-        public Stream<Manifest> getIncludes() {
-
-            return stream(getManifestResource().listProperties(DATA_ACCESS_TESTS.include))
-                    .map(stmt -> resolvePathURI(stmt.getResource().getURI()))
-                    .sorted()
-                    .map(Manifest::new);
-        }
-
-        public Stream<TestCase> getTestCases() {
-
-            return stream(getManifestResource().listProperties(DATA_ACCESS_TESTS.entries))
-                    .flatMap(stmt -> Streams.stream(stmt.getObject().as(RDFList.class).iterator()))
-                    .filter(Resource.class::isInstance).map(Resource.class::cast)
-                    .sorted(comparing(Resource::getURI))
-                    .map(res -> new TestCase(res, this));
-        }
-
-        public Stream<TestCase> getTestCasesRecursive() {
-
-            return Stream.concat(getTestCases(), getIncludes().flatMap(Manifest::getTestCasesRecursive));
-        }
-
-        private Resource findManifestResource() {
-
-            java.util.List<Statement> manifestTypeStmts =
-                    getModel().listStatements(null, RDF.type, DATA_ACCESS_TESTS.Manifest).toList();
-
-            if(manifestTypeStmts.size() != 1) {
-                throw new RuntimeException("no Manifest resource or ambiguity due to several Manifests");
-            }
-
-            return manifestTypeStmts.get(0).getSubject();
-        }
-
-        @SneakyThrows(URISyntaxException.class)
-        private Path resolvePathURI(String includeURI) {
-
-            val includePath = Paths.get(new URI(includeURI));
-
-            if(includePath.isAbsolute()) {
-                return  includePath;
-            } else {
-                // sht:dataGraph <> => /manifest/path/manifest.ttl
-                // sht:dataGraph <shared-data.ttl> => /manifest/path/shared-data.ttl
-                return includeURI.isEmpty()? getSourceFile() : getSourceFile().getParent().resolve(includePath);
-            }
-        }
-    }
-
-    @Getter @NonNull @Singular ImmutableList<TestCase> testCases;
-
-
-    public static W3CShaclTestSuite load(Path rootManifest, boolean skipMarkedTests) {
-
-        ImmutableList<TestCase> tests = new Manifest(rootManifest).getTestCasesRecursive()
+        ImmutableList<W3CTestCase> tests = new W3CTestManifest(rootManifest).getTestCasesRecursive()
                 .collect(ImmutableList.toImmutableList());
 
         return new W3CShaclTestSuite(tests);
@@ -400,18 +42,19 @@ public class W3CShaclTestSuite {
     public static void main(String[] args) throws IOException {
 
         val rootManifestPath = Paths.get("tests/manifest.ttl");
+        val saveExpectedVsActualResults = true;
 
-        log.info("{} test cases found.", new Manifest(rootManifestPath).getTestCasesRecursive().count());
+        log.info("{} test cases found.", new W3CTestManifest(rootManifestPath).getTestCasesRecursive().count());
 
-        val suite = W3CShaclTestSuite.load(rootManifestPath, false);
+        val suite = W3CShaclTestSuite.load(rootManifestPath); // saveExpectedVsActualResults == false => the difference is not saved as files but shown as std::out
 
         //suite.getTestCases().parallelStream().forEach(TestCase::getExecution);
         val failureCount = suite.getTestCases().stream().filter(t -> t.getExecution().isFailure()).count();
 
         log.info("{} tests had failures.", failureCount);
 
-        FileUtils.deleteDirectory(new File(resultFolder));  // delete result folder first
-        val hist = List.ofAll(suite.getTestCases()).groupBy(TestCase::getEarlOutcome).mapValues(Traversable::size);
+        FileUtils.deleteDirectory(new File(W3CTestManifest.resultFolder));  // delete result folder first
+        val hist = List.ofAll(suite.getTestCases()).groupBy(x -> x.computeOutcome(saveExpectedVsActualResults)).mapValues(Traversable::size);
 
         log.info("EARL outcome histogram: {}", hist);
     }

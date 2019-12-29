@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
@@ -27,20 +28,20 @@ public class TestCaseGroupNot implements TestCaseGroup {
     private final ShapeTarget target;
     private final Shape shape;
     private final Resource resource;
-    private final ImmutableSet<TargetBasedTestCase> testCases;
+    private final ImmutableList<TargetBasedTestCase> testCases;
     private final AlwaysFailingTestCase alwaysFailingTest;
 
-    public TestCaseGroupNot(@NonNull Set<? extends TargetBasedTestCase> testCases, Shape shape) {
-        assert(testCases.size() == 1);
+    public TestCaseGroupNot(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {
+        assert(testCases.size() == 1);  //TODO this is wrong, rather sh:not needs to be implemented as a negated sh:and
         this.shape = shape;
         this.target = testCases.iterator().next().getTarget();
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.alwaysFailingTest = new AlwaysFailingTestCase(this.target);
-        this.testCases = ImmutableSet.of(testCases.iterator().next(), alwaysFailingTest); // adding always failing test
+        this.testCases = ImmutableList.of(testCases.iterator().next(), alwaysFailingTest); // adding always failing test
     }
 
     @Override
-    public Set<TargetBasedTestCase> getTestCases() {
+    public List<TargetBasedTestCase> getTestCases() {
         return this.testCases;
     }
 

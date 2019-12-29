@@ -1,7 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
@@ -28,19 +27,19 @@ public class TestCaseGroupOr implements TestCaseGroup {
     private final ShapeTarget target;
     private final Shape shape;
     private final Resource resource;
-    private final ImmutableSet<TargetBasedTestCase> testCases;
+    private final ImmutableList<TargetBasedTestCase> testCases;
 
-    public TestCaseGroupOr(@NonNull Set<? extends TargetBasedTestCase> testCases, Shape shape) {
+    public TestCaseGroupOr(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {
         assert(! testCases.isEmpty());
         this.shape = shape;
         target = testCases.iterator().next().getTarget();
         assert(testCases.stream().map(TargetBasedTestCase::getTarget).noneMatch(x -> x != target));
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
-        this.testCases = ImmutableSet.copyOf(testCases);
+        this.testCases = ImmutableList.copyOf(testCases);
     }
 
     @Override
-    public Set<TargetBasedTestCase> getTestCases() {
+    public List<TargetBasedTestCase> getTestCases() {
         return this.testCases;
     }
 

@@ -67,7 +67,7 @@ public class ShaclEARLReporter {
             val result = report.createResource();
             result.addProperty(RDF.type, EARL.TestResult);
             result.addProperty(EARL.mode, EARL.automatic);
-            result.addProperty(EARL.outcome, test.getEarlOutcome());
+            result.addProperty(EARL.outcome, test.computeOutcome(false));
             assertion.addProperty(EARL.result, result);
 
          });
@@ -80,7 +80,7 @@ public class ShaclEARLReporter {
 
         val rootManifestPath = Paths.get("tests/manifest.ttl");
 
-        val suite = W3CShaclTestSuite.load(rootManifestPath, false);
+        val suite = W3CShaclTestSuite.load(rootManifestPath);
 
 
         val reporter = ShaclEARLReporter.builder()

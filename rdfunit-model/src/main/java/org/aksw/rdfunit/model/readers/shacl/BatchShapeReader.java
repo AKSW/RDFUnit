@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.readers.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.aksw.rdfunit.model.impl.shacl.ShapeList;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
@@ -44,7 +45,7 @@ public final class BatchShapeReader {
 
     public static BatchShapeReader create() { return new BatchShapeReader();}
 
-    public Set<Shape> getShapesFromModel(Model model) {
+    public List<Shape> getShapesFromModel(Model model) {
         ConcurrentLinkedQueue<Shape> shapes = new ConcurrentLinkedQueue<>();
 
         ImmutableSet.Builder<Resource> shapeResourceBuilder = ImmutableSet.builder();
@@ -60,7 +61,7 @@ public final class BatchShapeReader {
             shapes.addAll(ls.getShapes());
         });
 
-        return ImmutableSet.copyOf(shapes);
+        return ImmutableList.copyOf(shapes);
     }
 
     private void addShapesAsInstancesOf(Model model, ImmutableSet.Builder<Resource> shapes) {
@@ -94,7 +95,7 @@ public final class BatchShapeReader {
 
             grouped.forEach((list, entries) -> {
                 Shape listShape = ShapeReader.create().read(list);
-                ImmutableSet<Shape> elements = ImmutableSet.copyOf(entries.stream().map(r -> ShapeReader.create().read(r.get(1))).collect(Collectors.toList()));
+                ImmutableList<Shape> elements = ImmutableList.copyOf(entries.stream().map(r -> ShapeReader.create().read(r.get(1))).collect(Collectors.toList()));
                 lists.add(ShapeList.builder()
                         .element(listShape.getElement())
                         .propertyValuePairSets(listShape.getPropertyValuePairSets())

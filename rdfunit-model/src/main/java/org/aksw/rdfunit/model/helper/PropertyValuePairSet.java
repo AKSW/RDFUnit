@@ -1,15 +1,13 @@
 package org.aksw.rdfunit.model.helper;
 
 import com.google.common.collect.ImmutableSet;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Singular;
-import lombok.Value;
+import lombok.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -46,11 +44,12 @@ public class PropertyValuePairSet {
                 .anyMatch( pvp -> pvp.getProperty().equals(property));
     }
 
-    public Set<RDFNode> getPropertyValues(Property property) {
-        return annotations.stream()
+    public List<RDFNode> getPropertyValues(Property property) {
+        val ret =  annotations.stream()
                 .filter( pvp -> pvp.getProperty().equals(property))
                 .flatMap(pvp -> pvp.getValues().stream())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
+        return ret;
     }
 
     /*

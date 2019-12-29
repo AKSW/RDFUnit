@@ -2,26 +2,22 @@ package org.aksw.rdfunit.tests.executors.monitors;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
+import org.aksw.rdfunit.model.impl.results.ShaclTestCaseResultImpl;
 import org.aksw.rdfunit.model.impl.results.TestExecutionImpl;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
-import org.aksw.rdfunit.model.interfaces.results.AggregatedTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.StatusTestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
-import org.aksw.rdfunit.model.interfaces.results.TestExecution;
+import org.aksw.rdfunit.model.interfaces.results.*;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.JenaUtils;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -62,8 +58,6 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         this.loggingEnabled = loggingEnabled;
         executionUUID = JenaUtils.getUniqueIri();
     }
-
-
 
     @Override
     public void testingStarted(TestSource testSource, TestSuite testSuite) {
@@ -149,6 +143,34 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
         }
     }
 
+    /**
+     * Returns all encountered results for a given test suite.
+     * Some results may occur in duplicate, this function will only return a single instance of those.
+     */
+    public Set<TestCaseResult> getAllTestResults(){
+        val duplicateMessages =this.results.stream()
+                .collect(Collectors.groupingBy(TestCaseResult::getMessage))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        val nonDuplicates = duplicateMessages.values().stream()
+                .<TestCaseResult>flatMap(dm ->{
+                    val retList = new ArrayList<TestCaseResult>();
+                    retList.add(dm.iterator().next());
+                    dm.forEach(tc ->{
+                        if(tc instanceof ShaclTestCaseResultImpl){
+                            if (retList.stream().noneMatch(((ShaclTestCaseResultImpl) tc)::resembles))
+                                retList.add(tc);
+                        }
+                        else{
+                            retList.add(tc);
+                        }
+                    });
+                    return retList.stream();
+                })
+                .collect(Collectors.toSet());
+        return nonDuplicates;
+    }
 
     @Override
     public void testingFinished() {
@@ -170,7 +192,7 @@ public class SimpleTestExecutorMonitor implements TestExecutorMonitor {
                 //.setTestSuite(testSuite)
                 .setSchemata(schemata)
                 .setTestCaseUris(testCaseUris)
-                .setResults(results)
+                .setResults(getAllTestResults())    // we need the cleaned up results collection
                 .build();
 
         if (loggingEnabled) {

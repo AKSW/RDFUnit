@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
@@ -28,21 +29,21 @@ public class TestCaseGroupXone implements TestCaseGroup {
     private final Shape shape;
     private final Resource resource;
     private final ShapeTarget target;
-    private final ImmutableSet<TargetBasedTestCase> testCases;
+    private final ImmutableList<TargetBasedTestCase> testCases;
     private final AlwaysFailingTestCase alwaysFailingTest;
 
-    public TestCaseGroupXone(@NonNull Set<? extends TargetBasedTestCase> testCases, Shape shape) {
+    public TestCaseGroupXone(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {
         assert(! testCases.isEmpty());
         this.shape = shape;
         target = testCases.iterator().next().getTarget();
         assert(testCases.stream().map(TargetBasedTestCase::getTarget).noneMatch(x -> x != target));
         this.resource = ResourceFactory.createProperty(JenaUtils.getUniqueIri());
         this.alwaysFailingTest = new AlwaysFailingTestCase(this.target);
-        this.testCases = ImmutableSet.copyOf(Stream.concat(testCases.stream(), Stream.of(alwaysFailingTest)).collect(Collectors.toSet())); // adding always failing test
+        this.testCases = ImmutableList.copyOf(Stream.concat(testCases.stream(), Stream.of(alwaysFailingTest)).collect(Collectors.toList())); // adding always failing test
     }
 
     @Override
-    public Set<TargetBasedTestCase> getTestCases() {
+    public List<TargetBasedTestCase> getTestCases() {
         return this.testCases;
     }
 

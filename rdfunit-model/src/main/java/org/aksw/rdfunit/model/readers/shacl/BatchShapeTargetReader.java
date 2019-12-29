@@ -41,8 +41,6 @@ public final class BatchShapeTargetReader {
 
         targetBuilder.addAll(collectExplicitTargets(resource));
 
-        //targetBuilder.addAll(collectValueShapeTargets(resource));
-
         return targetBuilder.build();
 
     }

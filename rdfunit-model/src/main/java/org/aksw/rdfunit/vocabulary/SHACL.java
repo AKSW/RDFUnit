@@ -36,6 +36,7 @@ public final class SHACL {
     public static final Resource OrConstraintComponent = resource("OrConstraintComponent");
     public static final Resource XoneConstraintComponent = resource("XoneConstraintComponent");
     public static final Resource NotConstraintComponent = resource("NotConstraintComponent");
+    public static final Resource NodeConstraintComponent = resource("NodeConstraintComponent");
 
     public static final Property targetClass = property("targetClass");
     public static final Property targetNode = property("targetNode");
@@ -127,7 +128,7 @@ public final class SHACL {
      * Contains all SHACL logical constraint uris, as well as a default for single tests (atomic)
      */
     public enum LogicalConstraint {
-        and, or, xone, not, node, atomic
+        and, or, xone, not, node, atomic  //TODO do we need atomic or can we assume a node with a single constraint?
     }
 
     private SHACL() {  }

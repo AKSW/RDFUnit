@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class TestCaseGroupAtomic extends TestCaseGroupAnd {
 
-    public TestCaseGroupAtomic(@NonNull Set<? extends TargetBasedTestCase> testCases, Shape shape) {
+    public TestCaseGroupAtomic(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {
         super(testCases, shape);
         assert(testCases.size() == 1);
     }
