@@ -1,5 +1,7 @@
 FROM openjdk:8-jdk-slim
 
+RUN mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1
+
 RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install maven -y \
