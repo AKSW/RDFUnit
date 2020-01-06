@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import lombok.EqualsAndHashCode;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
 import org.aksw.rdfunit.model.interfaces.shacl.PrefixDeclaration;
@@ -15,6 +16,7 @@ import org.apache.jena.shared.uuid.JenaUUID;
 import java.util.Collection;
 import java.util.Collections;
 
+@EqualsAndHashCode(exclude = {"element"})
 public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
 
     public static final String AlwaysFailingTestCasePrefix = "http://rdfunit.aksw.org/aftc/";
@@ -51,7 +53,7 @@ public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
 
     @Override
     public Collection<PrefixDeclaration> getPrefixDeclarations() {
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
     }
 
     @Override

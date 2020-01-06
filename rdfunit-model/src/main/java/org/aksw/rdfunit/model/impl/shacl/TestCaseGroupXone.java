@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
@@ -24,6 +25,7 @@ import java.util.stream.Stream;
 /**
  * Implements the logical constraint sh:xone
  */
+@EqualsAndHashCode(exclude = {"resource"})
 public class TestCaseGroupXone implements TestCaseGroup {
 
     private final Resource resource;

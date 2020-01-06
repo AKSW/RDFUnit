@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Implements the logical constraint sh:not
  */
+@EqualsAndHashCode(exclude = {"resource"})
 public class TestCaseGroupNot implements TestCaseGroup {
 
     private final ShapeTarget target;
