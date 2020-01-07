@@ -48,7 +48,8 @@ public class ShaclIntegrationTest {
                 {"shacl/sh.in-correct.ttl", 0},
                 {"shacl/sh.in-wrong.ttl", 2},
 
-                {"shacl/sh.min.maxCount-correct.ttl", 0},
+                {"shacl/sh.minCount-correct.ttl", 0},
+                {"shacl/sh.maxCount-correct.ttl", 0},
                 {"shacl/sh.minCount-wrong.ttl", 3},
                 {"shacl/sh.maxCount-wrong.ttl", 3},
 
