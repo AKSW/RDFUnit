@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Defines various static text utililities
@@ -23,13 +24,13 @@ public final class StringUtils {
     public static String getHashFromString(String str) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
-            byte[] array = md.digest(str.getBytes("UTF-8"));
+            byte[] array = md.digest(str.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             for (byte anArray : array) {
                 sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException | UnsupportedEncodingException e) {
+        } catch (java.security.NoSuchAlgorithmException e) {
             throw new IllegalArgumentException("Cannot calculate SHA-256 hash for :" + str, e);
         }
     }

@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -189,9 +190,9 @@ public class DBpediaMappingValidator {
 
         //write json to filenameDefault
         try (Writer outDeafault = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(filenameDefault), "UTF-8"));
+                    new FileOutputStream(filenameDefault), StandardCharsets.UTF_8));
              Writer outArchive = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(filenameArchive), "UTF-8"))
+                    new FileOutputStream(filenameArchive), StandardCharsets.UTF_8))
         ) {
             outDeafault.write(json);
             outArchive.write(json);

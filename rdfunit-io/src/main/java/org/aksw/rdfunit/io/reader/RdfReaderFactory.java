@@ -9,6 +9,7 @@ import org.aksw.rdfunit.io.writer.RdfWriter;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -81,7 +82,7 @@ public final class RdfReaderFactory {
     public static RdfReader createReaderFromText(String text, String format) {
         InputStream is;
         try {
-            is = new ByteArrayInputStream(text.getBytes("UTF8"));
+            is = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8)));
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException("Invalid source name: " + text, e);
         }
