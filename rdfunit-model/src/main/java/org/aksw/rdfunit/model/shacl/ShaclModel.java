@@ -131,9 +131,9 @@ public class ShaclModel {
         shapeGroup.getSubGroups().forEach(sub ->{
             getGenericTestCase(sub).forEach((target, tests) ->{
                 List<? extends TargetBasedTestCase> nts = ret.get(target);
-                if(nts == null)
+                if(nts == null) {
                     nts = new ArrayList<>(tests);
-                else{
+                } else{
                     List<TargetBasedTestCase> zw = new ArrayList<>(tests);
                     zw.addAll(nts);
                     nts = zw;
@@ -216,8 +216,9 @@ public class ShaclModel {
                 childShapeSetsBuilder.add(ImmutableSet.copyOf(getChildShapes(shape)));
         }
         List<Set<Shape>> childShapeSets = childShapeSetsBuilder.build();
-        if(childShapeSets.isEmpty() || childShapeSets.stream().allMatch(Set::isEmpty))
+        if(childShapeSets.isEmpty() || childShapeSets.stream().allMatch(Set::isEmpty)) {
             return ImmutableSet.of();
+        }
 
         return childShapeSets.stream().map(css ->{
             Map<Shape, Set<ShapeTarget>> targetMap = new HashMap<>();

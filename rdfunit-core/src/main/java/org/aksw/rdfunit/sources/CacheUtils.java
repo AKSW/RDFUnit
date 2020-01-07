@@ -36,8 +36,9 @@ public final class CacheUtils {
 
     private static String getTestFolder(String testFolder) {
         String testFolderWithSlash = testFolder;
-        if (!testFolder.endsWith("/"))
+        if (!testFolder.endsWith("/")) {
             testFolderWithSlash = testFolderWithSlash + "/";
+        }
         return testFolderWithSlash;
     }
 

@@ -84,12 +84,15 @@ public enum RLOGLevel {
                 return level;
             }
         }
-        if (value.equals(SHACL.Violation.getURI()))
+        if (value.equals(SHACL.Violation.getURI())) {
             return ERROR;
-        if (value.equals(SHACL.Warning.getURI()))
+        }
+        if (value.equals(SHACL.Warning.getURI())) {
             return WARN;
-        if (value.equals(SHACL.Info.getURI()))
+        }
+        if (value.equals(SHACL.Info.getURI())) {
             return INFO;
+        }
         return null;
 
     }

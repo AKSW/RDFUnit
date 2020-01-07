@@ -147,8 +147,9 @@ public final class LOVEndpoint {
                 out.write(updatedEntry.getVocabularyDefinedBy());
                 out.write('\n');
 
-                if(count % 100 == 0)
+                if(count % 100 == 0) {
                     log.info("Checked " + count + " of " + lovEntries.size() + " vocabularies.");
+                }
             }
         } catch (IOException e) {
             log.info("Cannot write to file", e);
@@ -164,18 +165,22 @@ public final class LOVEndpoint {
      */
     public SchemaEntry extractResourceLocation(SchemaEntry entry) {
         Optional<String> actualResourceUri = Optional.empty();
-        if (! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace()))
+        if (! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace())) {
             actualResourceUri = getContentLocation(entry.getVocabularyDefinedBy(), GENERALFORMAT, Lists.newArrayList());
+        }
 
-        if(! actualResourceUri.isPresent())
+        if(! actualResourceUri.isPresent()) {
             actualResourceUri = getContentLocation(entry.getVocabularyURI(), GENERALFORMAT, Lists.newArrayList());
+        }
 
         // if still nothing was found, we try to pretend to be a browser and do it over again, since some resources have really bad redirecting
-        if (! actualResourceUri.isPresent() && ! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace()))
+        if (! actualResourceUri.isPresent() && ! entry.getVocabularyDefinedBy().equals(entry.getVocabularyNamespace())) {
             actualResourceUri = getContentLocation(entry.getVocabularyDefinedBy(), TEXTHTML, Lists.newArrayList());
+        }
 
-        if(! actualResourceUri.isPresent())
+        if(! actualResourceUri.isPresent()) {
             actualResourceUri = getContentLocation(entry.getVocabularyURI(), TEXTHTML, Lists.newArrayList());
+        }
 
         if(! actualResourceUri.isPresent()) {
             log.info("Could not find resource for " + entry.getVocabularyURI());
@@ -185,8 +190,9 @@ public final class LOVEndpoint {
     }
 
     private Set<SerializationFormat> findFormatByMimeType(String mimeType){
-        if(mimeType == null || mimeType.isEmpty())
+        if(mimeType == null || mimeType.isEmpty()) {
             return Collections.emptySet();
+        }
         return allRdfFormats.stream().filter(x -> x.getMimeType().equals(mimeType.trim().toLowerCase())).collect(Collectors.toSet());
     }
 
@@ -206,14 +212,17 @@ public final class LOVEndpoint {
                 tryOwl = StringUtils.replacePattern(tryOwl, "\\.html$", "");
                 tryOwl = StringUtils.replacePattern(tryOwl, "\\.htm$", "");
                 Optional<String> res = getContentLocation(tryOwl + "." + format.getExtension(), format, redirects);
-                if (res.isPresent())
+                if (res.isPresent()) {
                     return res;
+                }
                 res = getContentLocation(tryOwl + "/ontology." + format.getExtension(), format, redirects);
-                if (res.isPresent())
+                if (res.isPresent()) {
                     return res;
+                }
                 res = getContentLocation(tryOwl + "/schema." + format.getExtension(), format, redirects);
-                if (res.isPresent())
+                if (res.isPresent()) {
                     return res;
+                }
             }
         }
         return Optional.empty();
@@ -227,8 +236,9 @@ public final class LOVEndpoint {
      * @return - the optional content location
      */
     private Optional<String> getContentLocation(String urlStr, SerializationFormat format, ArrayList<String> redirects){
-        if(urlStr == null || urlStr.isEmpty() || redirects.contains(urlStr.trim()))
+        if(urlStr == null || urlStr.isEmpty() || redirects.contains(urlStr.trim())) {
             return Optional.empty();
+        }
 
         redirects.add(urlStr.trim());
         try {
@@ -250,8 +260,9 @@ public final class LOVEndpoint {
             // deal with errors
             if(status.getStatusCode() >= 400){
                 String resp = status.getReasonPhrase();
-                if(redirects.size() <= 1)
+                if(redirects.size() <= 1) {
                     log.error("Error while retrieving " + urlStr + " :" + status.getStatusCode() + " " + resp);
+                }
                 return Optional.empty();
             }
 
@@ -264,8 +275,9 @@ public final class LOVEndpoint {
                 // if the ContentType is a well known RDF serialization
                 else if(! ctf.isEmpty()){
                     Optional<String> zw = getContentVersions(lastRedirect, ctf, redirects);
-                    if (zw.isPresent())
+                    if (zw.isPresent()) {
                         return zw;
+                    }
                 }
             }
             //default if nothing was found we return the origin and hope for the best :)
@@ -304,8 +316,9 @@ public final class LOVEndpoint {
             //if we already checked this address we try different rdf extensions on it
             if (redirects.contains(u.toString())) {
                 Optional<String> zw = getContentVersions(lastRedirect, allRdfFormats, redirects);
-                if (zw.isPresent())
+                if (zw.isPresent()) {
                     return zw;
+                }
             }
 
             return getContentLocation(u.toString(), format, redirects);

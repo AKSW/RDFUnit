@@ -57,8 +57,9 @@ public class TestCaseGroupXone implements TestCaseGroup {
             valueMap.forEach((value, results) ->{
                 if(testCases.size() - results.size() != 1) {    // expecting exactly one correct test
                     results.forEach(r -> {
-                        if(! r.getTestCaseUri().toString().startsWith(AlwaysFailingTestCase.AlwaysFailingTestCasePrefix))
+                        if(! r.getTestCaseUri().toString().startsWith(AlwaysFailingTestCase.AlwaysFailingTestCasePrefix)) {
                             res.add(r);
+                        }
                     });
                     res.add(new ShaclTestCaseGroupResult(
                             this.resource,

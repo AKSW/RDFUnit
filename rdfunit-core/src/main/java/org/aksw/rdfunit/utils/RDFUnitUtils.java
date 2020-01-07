@@ -113,8 +113,9 @@ public final class RDFUnitUtils {
                         Model model = reader.read();
                         StmtIterator prefixIter = model.listStatements(null, vannPrefix, (String) null);
                         StmtIterator namespaceIter = model.listStatements(null, vannNamespace, (String) null);
-                        if (prefixIter.hasNext() && namespaceIter.hasNext())
+                        if (prefixIter.hasNext() && namespaceIter.hasNext()) {
                             SchemaService.addSchemaDecl(prefixIter.next().getObject().toString(), namespaceIter.next().getObject().toString(), resource.toString());
+                        }
                     }
                 } catch (RdfReaderException e) {
                     e.printStackTrace();

@@ -97,8 +97,9 @@ public class TestCaseWithTarget implements TestCase, TargetBasedTestCase {
         if(ShapeTargetValueShape.class.isAssignableFrom(target.getClass())) {
 
             getTestCaseAnnotation().getVariableAnnotations().forEach(va -> {
-                if(! va.getAnnotationProperty().equals(SHACL.focusNode))
+                if(! va.getAnnotationProperty().equals(SHACL.focusNode)) {
                     builder.add(va);
+                }
             });
             // add also a new variable annotation for the focus node
             builder.add(new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), SHACL.focusNode)

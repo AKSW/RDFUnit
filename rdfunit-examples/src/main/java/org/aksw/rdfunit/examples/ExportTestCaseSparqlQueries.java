@@ -43,10 +43,11 @@ public class ExportTestCaseSparqlQueries {
                 new QueryGenerationExtendedSelectFactory()
         );
 
-        for (QueryGenerationFactory sparqlGenerator: SparqlGeneratorTypes)
+        for (QueryGenerationFactory sparqlGenerator: SparqlGeneratorTypes) {
             for (TestCase test: tests) {
                 System.out.println(sparqlGenerator.getSparqlQueryAsString(test));
             }
+        }
 
     }
 }

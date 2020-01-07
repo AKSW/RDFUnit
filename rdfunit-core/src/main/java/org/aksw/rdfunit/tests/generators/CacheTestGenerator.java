@@ -32,8 +32,9 @@ public class CacheTestGenerator implements RdfUnitTestGenerator{
     public Collection<? extends GenericTestCase> generate(SchemaSource source) {
         String cachedTestsLocation = CacheUtils.getSourceAutoTestFile(testFolder, source);
         File f = new File(cachedTestsLocation);
-        if (!f.exists())
+        if (!f.exists()) {
             return ImmutableList.of();
+        }
 
         try {
             Model m = new RdfStreamReader(cachedTestsLocation).read();
