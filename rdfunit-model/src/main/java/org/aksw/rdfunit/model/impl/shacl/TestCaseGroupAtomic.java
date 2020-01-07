@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.aksw.rdfunit.model.interfaces.results.TestCaseResult;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
@@ -15,6 +16,7 @@ import java.util.Set;
  * The default TestCaseGroup wrapping a single test case, having the same behaviour as an sh:and with a single test
  * Will not add a validation result
  */
+@EqualsAndHashCode(callSuper = true)
 public class TestCaseGroupAtomic extends TestCaseGroupAnd {
 
     public TestCaseGroupAtomic(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {

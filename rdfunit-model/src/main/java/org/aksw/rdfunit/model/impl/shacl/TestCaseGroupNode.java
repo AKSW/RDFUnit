@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 import lombok.val;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Represents all child shapes of an sh:NodeShape, which are logically like an sh:and but returns a different result message
  */
+@EqualsAndHashCode(callSuper = true)
 public class TestCaseGroupNode extends TestCaseGroupAnd {
     public TestCaseGroupNode(List<? extends TargetBasedTestCase> testCases, Shape shape) {
         super(testCases, shape);

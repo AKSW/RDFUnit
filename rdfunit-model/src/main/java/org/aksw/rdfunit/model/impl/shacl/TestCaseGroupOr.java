@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.aksw.rdfunit.model.helper.PropertyValuePairSet;
 import org.aksw.rdfunit.model.impl.results.ShaclTestCaseGroupResult;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Implements the logical constraint sh:or
  */
+@EqualsAndHashCode(exclude={"resource"})
 public class TestCaseGroupOr implements TestCaseGroup {
 
     private final ShapeTarget target;

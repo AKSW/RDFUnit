@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestAppliesTo;
@@ -27,13 +28,14 @@ import java.util.stream.Collectors;
 /**
  * Implements the logical constraint sh:and
  */
+@EqualsAndHashCode(exclude = {"resource"})
 public class TestCaseGroupAnd implements TestCaseGroup {
 
-    private final ShapeTarget target;
-    private final Shape shape;
-    private final Resource resource;
-    private final ImmutableList<TargetBasedTestCase> testCases;
-    private final TestCaseAnnotation testCaseAnnotation;
+    final ShapeTarget target;
+    final Shape shape;
+    final Resource resource;
+    final ImmutableList<TargetBasedTestCase> testCases;
+    final TestCaseAnnotation testCaseAnnotation;
 
     public TestCaseGroupAnd(@NonNull List<? extends TargetBasedTestCase> testCases, Shape shape) {
         assert(! testCases.isEmpty());
