@@ -1,8 +1,8 @@
 # Image to build the jar
 FROM maven:3-jdk-8 as build
 
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
+COPY . /app
+WORKDIR /app
 
 RUN mvn -pl rdfunit-validate -am clean package -P cli-standalone -DskipTests=true
 
@@ -10,7 +10,7 @@ RUN mvn -pl rdfunit-validate -am clean package -P cli-standalone -DskipTests=tru
 # Final image to run the jar
 FROM openjdk:8-jdk-slim
 
-COPY --from=build /usr/src/myapp/rdfunit-validate/target/rdfunit-validate-*-standalone.jar /usr/src/myapp/rdfunit-validate.jar
-WORKDIR /usr/src/myapp
+COPY --from=build /app/rdfunit-validate/target/rdfunit-validate-*-standalone.jar /app/rdfunit-validate.jar
+WORKDIR /app
 
-ENTRYPOINT ["java","-jar","/usr/src/myapp/rdfunit-validate.jar"]
+ENTRYPOINT ["java","-jar","/app/rdfunit-validate.jar"]
