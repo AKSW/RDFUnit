@@ -10,6 +10,7 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -145,4 +146,15 @@ public abstract class AbstractTestSource implements TestSource {
         return qef;
     }
 
+    @Override
+    public void close() throws IOException {
+        if (queryFactory != null) {
+            try {
+                queryFactory.close();
+            } catch (Exception e) {
+                log.error("Error closing Query Factory", e);
+            }
+            queryFactory = null;
+        }
+    }
 }

@@ -96,70 +96,71 @@ public final class ValidateCLI {
         // */
 
 
-        final TestSource dataset = configuration.getTestSource();
-        /* </cliStuff> */
+        try (final TestSource dataset = configuration.getTestSource()) {
+            /* </cliStuff> */
 
-        TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
-                configuration.isAutoTestsEnabled(),
-                configuration.isTestCacheEnabled(),
-                configuration.isManualTestsEnabled());
-        TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
-
-
-        TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
-        if (testExecutor == null) {
-            displayHelpAndExit("Cannot initialize test executor. Exiting", null);
-        }
-        SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
-        testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
-        checkNotNull(testExecutor);
-        testExecutor.addTestExecutorMonitor(testExecutorMonitor);
-
-        // warning, caches intermediate results
-        testExecutor.execute(dataset, testSuite);
-        TestExecution testExecution = testExecutorMonitor.getTestExecution();
+            TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+                    configuration.isAutoTestsEnabled(),
+                    configuration.isTestCacheEnabled(),
+                    configuration.isManualTestsEnabled());
+            TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
 
 
-        // Write results to RDFWriter ()
-        String resultsFolder = configuration.getDataFolder() + "results/";
-        String filename = resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
-
-        if (!(new File(resultsFolder).exists())) {
-            LOGGER.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
-            File resultsFileFolder = new File(resultsFolder);
-            boolean dirsCreated = resultsFileFolder.mkdirs();
-            if (!dirsCreated) {
-                LOGGER.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
+            TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
+            if (testExecutor == null) {
+                displayHelpAndExit("Cannot initialize test executor. Exiting", null);
             }
-        }
+            SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
+            testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
+            checkNotNull(testExecutor);
+            testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
-        List<RdfWriter> outputWriters = configuration.getOutputFormats().stream()
-                .map(serializationFormat ->
-                        RdfResultsWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution))
-                .collect(Collectors.toList());
-
-        RdfWriter resultWriter = new RdfMultipleWriter(outputWriters);
-        try {
-            Model model = ModelFactory.createDefaultModel();
-            TestExecutionWriter.create(testExecution).write(model);
-
-            resultWriter.write(model);
-            LOGGER.info("Results stored in: " + filename + ".*");
-        } catch (RdfWriterException e) {
-            LOGGER.error("Cannot write tests to file", e);
-        }
+            // warning, caches intermediate results
+            testExecutor.execute(dataset, testSuite);
+            TestExecution testExecution = testExecutorMonitor.getTestExecution();
 
 
-        // Calculate coverage
-        if (configuration.isCalculateCoverageEnabled()) {
-            Model testSuiteModel = ModelFactory.createDefaultModel();
-            PrefixNSService.setNSPrefixesInModel(testSuiteModel);
-            for (GenericTestCase ut : testSuite.getTestCases()) {
-                TestCaseWriter.create(ut).write(testSuiteModel);
+            // Write results to RDFWriter ()
+            String resultsFolder = configuration.getDataFolder() + "results/";
+            String filename = resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
+
+            if (!(new File(resultsFolder).exists())) {
+                LOGGER.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
+                File resultsFileFolder = new File(resultsFolder);
+                boolean dirsCreated = resultsFileFolder.mkdirs();
+                if (!dirsCreated) {
+                    LOGGER.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
+                }
             }
 
-            TestCoverageEvaluator tce = new TestCoverageEvaluator();
-            tce.calculateCoverage(new QueryExecutionFactoryModel(testSuiteModel), configuration.getTestSource().getExecutionFactory());
+            List<RdfWriter> outputWriters = configuration.getOutputFormats().stream()
+                    .map(serializationFormat ->
+                            RdfResultsWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution))
+                    .collect(Collectors.toList());
+
+            RdfWriter resultWriter = new RdfMultipleWriter(outputWriters);
+            try {
+                Model model = ModelFactory.createDefaultModel();
+                TestExecutionWriter.create(testExecution).write(model);
+
+                resultWriter.write(model);
+                LOGGER.info("Results stored in: " + filename + ".*");
+            } catch (RdfWriterException e) {
+                LOGGER.error("Cannot write tests to file", e);
+            }
+
+
+            // Calculate coverage
+            if (configuration.isCalculateCoverageEnabled()) {
+                Model testSuiteModel = ModelFactory.createDefaultModel();
+                PrefixNSService.setNSPrefixesInModel(testSuiteModel);
+                for (GenericTestCase ut : testSuite.getTestCases()) {
+                    TestCaseWriter.create(ut).write(testSuiteModel);
+                }
+
+                TestCoverageEvaluator tce = new TestCoverageEvaluator();
+                tce.calculateCoverage(new QueryExecutionFactoryModel(testSuiteModel), configuration.getTestSource().getExecutionFactory());
+            }
         }
     }
 
