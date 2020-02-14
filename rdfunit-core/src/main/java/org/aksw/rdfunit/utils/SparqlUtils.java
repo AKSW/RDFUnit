@@ -50,17 +50,12 @@ public final class SparqlUtils {
     }
 
     public static boolean checkAskQuery(QueryExecutionFactory qef, String askQuery) {
-        QueryExecution qe = null;
 
-        try {
-            qe = qef.createQueryExecution(askQuery);
+
+        try ( QueryExecution qe = qef.createQueryExecution(askQuery)){
             return qe.execAsk();
         } catch (Exception e) {
             log.debug("Exception when running query {}", askQuery, e);
-        } finally {
-            if (qe != null) {
-                qe.close();
-            }
         }
         return false;
     }

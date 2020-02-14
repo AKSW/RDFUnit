@@ -23,14 +23,8 @@ public final class IOUtils {
         if (qef instanceof QueryExecutionFactoryModel) {
             return ((QueryExecutionFactoryModel) qef).getModel();
         } else {
-            QueryExecution qe = null;
-            try {
-                qe = qef.createQueryExecution(" CONSTRUCT ?s ?p ?o WHERE { ?s ?p ?o } ");
+            try (QueryExecution qe = qef.createQueryExecution(" CONSTRUCT ?s ?p ?o WHERE { ?s ?p ?o } ")) {
                 return qe.execConstruct();
-            } finally {
-                if (qe != null) {
-                    qe.close();
-                }
             }
         }
     }

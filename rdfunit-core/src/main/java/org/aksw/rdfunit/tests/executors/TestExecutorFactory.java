@@ -34,16 +34,16 @@ public final class TestExecutorFactory {
         return createTestExecutor(executionType, cached);
     }
 
-    public static TestExecutor createTestExecutor(TestCaseExecutionType executionType, QueryGenerationFactory qgf) {
+    public static TestExecutor createTestExecutor(TestCaseExecutionType executionType, QueryGenerationFactory qef) {
         switch (executionType) {
             case statusTestCaseResult:
-                return new StatusTestExecutor(qgf);
+                return new StatusTestExecutor(qef);
             case aggregatedTestCaseResult:
-                return new AggregatedTestExecutor(qgf);
+                return new AggregatedTestExecutor(qef);
             case shaclLiteTestCaseResult:
-                return new ShaclSimpleTestExecutor(qgf);
+                return new ShaclSimpleTestExecutor(qef);
             case shaclTestCaseResult:
-                return new ShaclTestExecutor(qgf);
+                return new ShaclTestExecutor(qef);
             default:
                 throw new IllegalArgumentException("Unknown execution type");
         }
