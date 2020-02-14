@@ -43,7 +43,7 @@ public class RDFUnitStaticValidatorTest {
 
 
     @Test
-    public void testValidateModel() {
+    public void testValidateModel() throws Exception {
         RDFUnitStaticValidator.validate(ModelFactory.createDefaultModel(), testCaseExecutionType);
     }
 

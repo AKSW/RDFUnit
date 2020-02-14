@@ -41,21 +41,21 @@ public final class RDFUnitStaticValidator {
 
 
 
-    public static TestExecution validate(final Model inputModel) {
+    public static TestExecution validate(final Model inputModel) throws Exception {
         return validate(inputModel, TestCaseExecutionType.shaclTestCaseResult);
     }
 
 
-    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType) {
+    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType) throws Exception {
         return validate(inputModel, executionType, "custom");
     }
 
 
-    public static TestExecution validate(final Model inputModel, final String inputURI) {
+    public static TestExecution validate(final Model inputModel, final String inputURI) throws Exception {
         return validate(inputModel, TestCaseExecutionType.shaclTestCaseResult, inputURI);
     }
 
-    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) {
+    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI) throws Exception {
 
         DatasetOverviewResults overviewResults = new DatasetOverviewResults();
 
@@ -63,7 +63,7 @@ public final class RDFUnitStaticValidator {
     }
 
 
-    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) {
+    public static TestExecution validate(final Model inputModel, final TestCaseExecutionType executionType, final String inputURI, DatasetOverviewResults overviewResults) throws Exception {
 
         final boolean enableRDFUnitLogging = false;
         final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor(enableRDFUnitLogging);
@@ -73,18 +73,19 @@ public final class RDFUnitStaticValidator {
         checkNotNull(testExecutor, "TestExecutor should not be null");
         testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
-        final TestSource modelSource = new TestSourceBuilder()
+        try (final TestSource modelSource = new TestSourceBuilder()
                 .setPrefixUri("custom", inputURI)
                 .setImMemDataset()
                 .setInMemReader(new RdfModelReader(inputModel))
                 .setReferenceSchemata(testSuiteGenerator.getSchemas())
-                .build();
+                .build()) {
 
 
-        testExecutor.execute(modelSource, testSuiteGenerator.getTestSuite());
-        overviewResults.set(testExecutorMonitor.getOverviewResults());
+            testExecutor.execute(modelSource, testSuiteGenerator.getTestSuite());
+            overviewResults.set(testExecutorMonitor.getOverviewResults());
 
-        return testExecutorMonitor.getTestExecution();
+            return testExecutorMonitor.getTestExecution();
+        }
     }
 
     public static TestExecution validate(final TestCaseExecutionType testCaseExecutionType, final Model model, final TestSuite testSuite) {

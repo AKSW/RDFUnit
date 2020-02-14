@@ -27,16 +27,16 @@ public class MyCustomSkosValidator {
 
     }
 
-    public TestExecution validate(Model input) {
+    public TestExecution validate(Model input) throws Exception {
         // uses the TestSuite initiated above
         return RDFUnitStaticValidator.validate(input, TestCaseExecutionType.shaclTestCaseResult);
     }
 
-    public boolean isValid(Model input) {
+    public boolean isValid(Model input) throws Exception {
         return validate(input).getDatasetOverviewResults().getFailedTests() == 0;
     }
 
-    public long getViolationIntances(Model input) {
+    public long getViolationIntances(Model input) throws Exception {
         return validate(input).getDatasetOverviewResults().getIndividualErrors();
     }
 }
