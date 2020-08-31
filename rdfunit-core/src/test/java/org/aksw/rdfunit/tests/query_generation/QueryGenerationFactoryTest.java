@@ -1,6 +1,8 @@
 package org.aksw.rdfunit.tests.query_generation;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;

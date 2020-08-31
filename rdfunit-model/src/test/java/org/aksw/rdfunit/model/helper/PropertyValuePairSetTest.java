@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.helper;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.jena.vocabulary.RDF;

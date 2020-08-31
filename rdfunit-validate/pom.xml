@@ -92,7 +92,7 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.4.6.v20170531</version>
+        <version>9.4.31.v20200723</version>
 
         <configuration>
           <scanIntervalSeconds>5</scanIntervalSeconds>
@@ -105,7 +105,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.0.2</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>copy-resources-local</id>
@@ -179,7 +179,7 @@
           <plugin>
             <artifactId>jdeb</artifactId>
             <groupId>org.vafer</groupId>
-            <version>1.5</version>
+            <version>1.8</version>
             <executions>
               <execution>
                 <phase>package</phase>

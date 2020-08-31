@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
+import static lombok.Lombok.checkNotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
@@ -56,7 +58,6 @@ public class Binding implements Element {
     return parameter.getId();
   }
 
-
   public PatternParameter getParameter() {
     return parameter;
   }
@@ -74,7 +75,6 @@ public class Binding implements Element {
     }
     return value.isLiteral() && pc.equals(PatternParameterConstraints.Operator);
   }
-
 
   @Override
   public Resource getElement() {

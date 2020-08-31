@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.enums;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class PatternParameterConstraintsTest {

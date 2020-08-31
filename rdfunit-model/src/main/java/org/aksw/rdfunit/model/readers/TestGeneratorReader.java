@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.model.readers;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -57,7 +60,6 @@ public final class TestGeneratorReader implements ElementReader<TestGenerator> {
       checkArgument(++count == 1,
           "Cannot have more than one pattern references in TestGenerator %s", resource.getURI());
       pattern = PatternService.getPatternFromIRI(smt.getObject().asResource().getURI());
-
     }
 
     //annotations

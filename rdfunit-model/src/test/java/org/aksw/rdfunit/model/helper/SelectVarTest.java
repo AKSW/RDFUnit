@@ -1,10 +1,11 @@
 package org.aksw.rdfunit.model.helper;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 
 
 public class SelectVarTest {
-
 
   @Test
   public void testCreate() {
@@ -15,10 +16,8 @@ public class SelectVarTest {
         .isEqualTo(varName);
     assertThat(selectVar.getLabel())
         .isEqualTo(varName);
-
     assertThat(selectVar.asString())
         .isEqualTo(" ?" + varName + " ");
-
   }
 
   @Test
@@ -31,7 +30,6 @@ public class SelectVarTest {
         .isEqualTo(varName);
     assertThat(selectVar.getLabel())
         .isEqualTo(label);
-
     assertThat(selectVar.asString())
         .isEqualTo(" ( ?" + varName + " AS ?" + label + " ) ");
   }

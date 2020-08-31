@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.readers.shacl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

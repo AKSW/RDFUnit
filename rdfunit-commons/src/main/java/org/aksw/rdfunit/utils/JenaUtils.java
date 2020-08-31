@@ -1,10 +1,10 @@
 package org.aksw.rdfunit.utils;
 
 import java.net.URI;
+import java.util.UUID;
 import org.aksw.rdfunit.commons.RdfUnitModelFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.shared.uuid.JenaUUID;
 
 public final class JenaUtils {
 
@@ -14,7 +14,7 @@ public final class JenaUtils {
   }
 
   public static String getUniqueIri(String prefix) {
-    return prefix + JenaUUID.generate().asString();
+    return prefix + UUID.randomUUID().toString();
   }
 
   public static String getUniqueIri() {

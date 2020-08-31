@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.statistics;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;

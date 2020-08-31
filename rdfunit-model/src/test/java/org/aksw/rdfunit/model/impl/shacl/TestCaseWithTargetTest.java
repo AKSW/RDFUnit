@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,6 @@ public class TestCaseWithTargetTest {
 
   @Test
   public void test() {
-
     TestCase innerTestCAse = Mockito.mock(TestCase.class);
     when(innerTestCAse.getSparqlWhere()).thenReturn(sparqlQuery);
 
@@ -77,6 +77,6 @@ public class TestCaseWithTargetTest {
     } catch (Exception e) {
       Fail.fail("Failed sparql query:\n" + finalSparql, e);
     }
-
   }
+
 }

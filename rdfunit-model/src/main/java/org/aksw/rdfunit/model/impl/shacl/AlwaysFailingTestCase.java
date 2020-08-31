@@ -2,6 +2,7 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
@@ -13,7 +14,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.shared.uuid.JenaUUID;
 
 @EqualsAndHashCode(exclude = {"element"})
 public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
@@ -27,7 +27,7 @@ public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
   public AlwaysFailingTestCase(ShapeTarget target) {
     this.target = target;
     this.element = ResourceFactory.createResource(
-        AlwaysFailingTestCase.AlwaysFailingTestCasePrefix + JenaUUID.generate().asString());
+        AlwaysFailingTestCase.AlwaysFailingTestCasePrefix + UUID.randomUUID().toString());
     this.sparqlWhere = "{ " + target.getPattern()
         + " FILTER NOT EXISTS {?this <http://example.org/some/non/existing/property> 9876545432} }";
   }

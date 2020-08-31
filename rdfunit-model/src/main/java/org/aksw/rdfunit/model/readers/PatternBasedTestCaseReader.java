@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.model.readers;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;

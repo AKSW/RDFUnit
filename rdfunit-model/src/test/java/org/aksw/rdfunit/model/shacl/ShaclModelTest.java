@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.shacl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Set;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;

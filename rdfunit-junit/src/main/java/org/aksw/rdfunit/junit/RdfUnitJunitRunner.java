@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.junit;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -202,12 +204,10 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     return additionalData;
   }
 
-
   @Override
   protected List<RdfUnitJunitTestCase> getChildren() {
     return Collections.unmodifiableList(testCases);
   }
-
 
   @Override
   protected Description describeChild(RdfUnitJunitTestCase child) {
@@ -226,12 +226,10 @@ public class RdfUnitJunitRunner extends ParentRunner<RdfUnitJunitTestCase> {
     return basename.isEmpty() ? method.getName() : basename;
   }
 
-
   @Override
   protected boolean isIgnored(RdfUnitJunitTestCase child) {
     return child.getTestInputMethod().getAnnotation(Ignore.class) != null;
   }
-
 
   @Override
   protected void runChild(final RdfUnitJunitTestCase child, RunNotifier notifier) {

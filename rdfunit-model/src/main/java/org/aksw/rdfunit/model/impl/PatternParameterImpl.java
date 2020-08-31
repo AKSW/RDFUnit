@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.impl;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Optional;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

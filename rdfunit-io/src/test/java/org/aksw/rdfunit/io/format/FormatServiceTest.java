@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.io.format;
 
+import static junit.framework.TestCase.assertEquals;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;

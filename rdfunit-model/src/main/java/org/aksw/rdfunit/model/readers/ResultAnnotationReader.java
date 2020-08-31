@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.model.readers;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
@@ -85,7 +86,6 @@ public final class ResultAnnotationReader implements ElementReader<ResultAnnotat
       if (!valueP.getNameSpace().equals(RDFUNITv.namespace) || varName.startsWith("?")) {
         resultAnBuilder.setVariableName(varName.startsWith("?") ? varName.substring(1) : varName);
       }
-
     }
 
     return resultAnBuilder.build();

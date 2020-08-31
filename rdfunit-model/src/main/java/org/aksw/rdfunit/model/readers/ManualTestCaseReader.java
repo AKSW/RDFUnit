@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.model.readers;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static lombok.Lombok.checkNotNull;
+
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -14,13 +17,11 @@ import org.apache.jena.rdf.model.Statement;
  */
 public final class ManualTestCaseReader implements ElementReader<TestCase> {
 
-  private ManualTestCaseReader() {
-  }
+  private ManualTestCaseReader() { }
 
   public static ManualTestCaseReader create() {
     return new ManualTestCaseReader();
   }
-
 
   @Override
   public TestCase read(Resource resource) {

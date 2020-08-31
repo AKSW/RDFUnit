@@ -35,14 +35,15 @@ import org.apache.http.protocol.HttpContext;
 final class TrustingUrlConnection {
 
   static final String HEADERKEY = "Redirected";   //the Html Header Key used to convey all redirects which were followed
-  private static final int TIMEOUT = 5;           //default timeout in seconds
+  private final static int TIMEOUT = 5;           //default timeout in seconds
+
   private final static RequestConfig requestConfig = RequestConfig
       .custom()
       .setSocketTimeout(TIMEOUT * 1000)
       .setConnectTimeout(TIMEOUT * 1000)
       .setCircularRedirectsAllowed(false)
       .build();
-  private final static SSLContext ssl;
+  private static SSLContext ssl;
   private final static Registry<ConnectionSocketFactory> registry = RegistryBuilder
       .<ConnectionSocketFactory>create()
       .register("https", new SSLSocketFactory(ssl))

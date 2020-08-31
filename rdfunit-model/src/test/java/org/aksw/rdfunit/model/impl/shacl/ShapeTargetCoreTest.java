@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
 import static org.aksw.rdfunit.model.helper.NodeFormatter.formatNode;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,10 +27,8 @@ public class ShapeTargetCoreTest {
     ShapeTargetCore.create(null, null);
   }
 
-
   @Test
   public void testPatternUnique() {
-
     List<String> targetPatterns = Arrays.stream(ShapeTargetType.values())
         .filter(sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
         .map(s -> ShapeTargetCore.create(s, ResourceFactory.createResource("http://example.com")))
@@ -39,13 +38,10 @@ public class ShapeTargetCoreTest {
     // each target results in different pattern
     assertThat(targetPatterns.size())
         .isEqualTo(new HashSet<>(targetPatterns).size());
-
-
   }
 
   @Test
   public void testTargetContainsUri() {
-
     Resource uri = ResourceFactory.createResource("http://example.com");
     Arrays.stream(ShapeTargetType.values())
         .filter(sct -> !sct.equals(ShapeTargetType.ValueShapeTarget))
@@ -55,7 +51,6 @@ public class ShapeTargetCoreTest {
           assertThat(s.getPattern()).contains(formatNode(uri));
           assertThat(s.getNode()).isEqualTo(uri);
         });
-
   }
 
   @Test

@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.model.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;

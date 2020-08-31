@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.junit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import org.aksw.rdfunit.model.interfaces.results.ShaclLiteTestCaseResult;
