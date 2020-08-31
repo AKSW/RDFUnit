@@ -1,25 +1,25 @@
 package org.aksw.rdfunit.model.interfaces.results;
 
+import java.util.Collection;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.interfaces.Element;
 
-import java.util.Collection;
-import java.util.Set;
-
 public interface TestExecution extends Element {
 
-    String getTestExecutionUri();
+  String getTestExecutionUri();
 
-    Collection<TestCaseResult> getTestCaseResults();
-    Collection<String> getSchemataUris();
-    //Collection<String> getTestCasesUris();
+  Collection<TestCaseResult> getTestCaseResults();
 
-    DatasetOverviewResults getDatasetOverviewResults();
+  Collection<String> getSchemataUris();
+  //Collection<String> getTestCasesUris();
 
-    String getTestedDatasetUri();
-    //TestSuite getTestSuite();
-    TestCaseExecutionType getTestExecutionType();
+  DatasetOverviewResults getDatasetOverviewResults();
 
-    String getStartedByAgent();
+  String getTestedDatasetUri();
+
+  //TestSuite getTestSuite();
+  TestCaseExecutionType getTestExecutionType();
+
+  String getStartedByAgent();
 }

@@ -13,35 +13,36 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
-
  */
 public final class TestGeneratorWriter implements ElementWriter {
 
-    private final TestGenerator testGenerator;
+  private final TestGenerator testGenerator;
 
-    private TestGeneratorWriter(TestGenerator testGenerator) {
-        this.testGenerator = testGenerator;
+  private TestGeneratorWriter(TestGenerator testGenerator) {
+    this.testGenerator = testGenerator;
+  }
+
+  public static TestGeneratorWriter create(TestGenerator testGenerator) {
+    return new TestGeneratorWriter(testGenerator);
+  }
+
+
+  @Override
+  public Resource write(Model model) {
+    Resource resource = ElementWriter.copyElementResourceInModel(testGenerator, model);
+
+    resource
+        .addProperty(RDF.type, RDFUNITv.TestGenerator)
+        .addProperty(DCTerms.description, testGenerator.getDescription())
+        .addProperty(RDFUNITv.sparqlGenerator, testGenerator.getQuery())
+        .addProperty(RDFUNITv.basedOnPattern,
+            ElementWriter.copyElementResourceInModel(testGenerator.getPattern(), model));
+
+    for (ResultAnnotation resultAnnotation : testGenerator.getAnnotations()) {
+      Resource annotationResource = ResultAnnotationWriter.create(resultAnnotation).write(model);
+      resource.addProperty(RDFUNITv.resultAnnotation, annotationResource);
     }
 
-    public static TestGeneratorWriter create(TestGenerator testGenerator) {return new TestGeneratorWriter(testGenerator);}
-
-
-    @Override
-    public Resource write(Model model) {
-        Resource resource = ElementWriter.copyElementResourceInModel(testGenerator, model);
-
-        resource
-                .addProperty(RDF.type, RDFUNITv.TestGenerator)
-                .addProperty(DCTerms.description, testGenerator.getDescription())
-                .addProperty(RDFUNITv.sparqlGenerator, testGenerator.getQuery())
-                .addProperty(RDFUNITv.basedOnPattern, ElementWriter.copyElementResourceInModel(testGenerator.getPattern(), model));
-
-
-        for (ResultAnnotation resultAnnotation: testGenerator.getAnnotations()) {
-            Resource annotationResource = ResultAnnotationWriter.create(resultAnnotation).write(model);
-            resource.addProperty(RDFUNITv.resultAnnotation, annotationResource);
-        }
-
-        return resource;
-    }
+    return resource;
+  }
 }

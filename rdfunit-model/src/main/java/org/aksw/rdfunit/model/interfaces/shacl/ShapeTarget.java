@@ -1,19 +1,18 @@
 package org.aksw.rdfunit.model.interfaces.shacl;
 
+import java.util.Set;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 
-import java.util.Set;
-
 public interface ShapeTarget {
 
-    ShapeTargetType getTargetType();
+  ShapeTargetType getTargetType();
 
-    RDFNode getNode();
+  RDFNode getNode();
 
-    String getPattern();
+  String getPattern();
 
-    Set<Resource> getRelatedOntologyResources();
+  Set<Resource> getRelatedOntologyResources();
 
 }

@@ -9,8 +9,11 @@ import lombok.Value;
  */
 @Value
 public class QualityMeasure {
-    @NonNull private final String testExecutionUri;
-    @NonNull private final String DqvMetricUri;
-    private final double value;
+
+  @NonNull
+  private final String testExecutionUri;
+  @NonNull
+  private final String DqvMetricUri;
+  private final double value;
 
 }

@@ -1,10 +1,7 @@
 package org.aksw.rdfunit.statistics;
 
-import org.junit.Test;
-
 import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Description
@@ -14,22 +11,22 @@ import static org.junit.Assert.assertEquals;
  */
 public class DatasetStatisticsAllIrisTest extends DatasetStatisticsTest {
 
-    private static final int EXPECTED_ITEMS = 19;
+  private static final int EXPECTED_ITEMS = 19;
 
-    @Override
-    protected int getExteptedItems() {
-        return EXPECTED_ITEMS;
-    }
+  @Override
+  protected int getExteptedItems() {
+    return EXPECTED_ITEMS;
+  }
 
-    @Override
-    protected DatasetStatistics getStatisticsObject() {
-        return new DatasetStatisticsAllIris();
-    }
+  @Override
+  protected DatasetStatistics getStatisticsObject() {
+    return new DatasetStatisticsAllIris();
+  }
 
-    @Test
-    public void testGetStats() {
-        for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
-            assertEquals(Long.valueOf(0), entry.getValue());
-        }
+  @Test
+  public void testGetStats() {
+    for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
+      assertEquals(Long.valueOf(0), entry.getValue());
     }
+  }
 }

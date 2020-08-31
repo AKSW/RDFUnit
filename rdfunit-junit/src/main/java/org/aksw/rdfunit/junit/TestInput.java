@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface TestInput {
 
-    String name() default "";
+  String name() default "";
 
 }

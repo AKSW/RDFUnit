@@ -1,5 +1,10 @@
 package org.aksw.rdfunit.validate.cli;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.io.File;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
@@ -10,7 +15,6 @@ import org.aksw.rdfunit.io.writer.RdfResultsWriterFactory;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
-import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestSuite;
 import org.aksw.rdfunit.model.interfaces.results.TestExecution;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
@@ -31,58 +35,53 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * @author Dimitris Kontokostas
  * @since 11/19/13 10:49 AM
  */
 public final class ValidateCLI {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ValidateCLI.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ValidateCLI.class);
 
-    private ValidateCLI() {}
+  private ValidateCLI() {
+  }
 
-    public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
 
-        CommandLine commandLine = ValidateUtils.parseArguments(args);
+    CommandLine commandLine = ValidateUtils.parseArguments(args);
 
-        if (commandLine.hasOption("h")) {
-            displayHelpAndExit();
-        }
+    if (commandLine.hasOption("h")) {
+      displayHelpAndExit();
+    }
 
-        if (!commandLine.hasOption('v')) { // explicitely do not use LOV
-            RDFUnitUtils.fillSchemaServiceFromLOV();
-        }
+    if (!commandLine.hasOption('v')) { // explicitely do not use LOV
+      RDFUnitUtils.fillSchemaServiceFromLOV();
+    }
 
-        RDFUnitConfiguration configuration = null;
-        try {
-            configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
-        } catch (ParameterException e) {
-            String message = e.getMessage();
-            if (message != null) {
-                displayHelpAndExit(message, e);
-            } else {
-                displayHelpAndExit();
-            }
-        }
-        checkNotNull (configuration );
+    RDFUnitConfiguration configuration = null;
+    try {
+      configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
+    } catch (ParameterException e) {
+      String message = e.getMessage();
+      if (message != null) {
+        displayHelpAndExit(message, e);
+      } else {
+        displayHelpAndExit();
+      }
+    }
+    checkNotNull(configuration);
 
-        if (!IOUtils.isFile(configuration.getDataFolder())) {
-            LOGGER.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
-            System.exit(1);
-        }
+    if (!IOUtils.isFile(configuration.getDataFolder())) {
+      LOGGER.error("Path : " + configuration.getDataFolder() + " does not exists, use -f argument");
+      System.exit(1);
+    }
 
-        RDFUnit rdfunit = RDFUnit.createWithOwlAndShacl();
-        try {
-            rdfunit.init();
-        } catch (IllegalArgumentException e) {
-            displayHelpAndExit("Cannot read patterns and/or pattern generators", e);
-        }
+    RDFUnit rdfunit = RDFUnit.createWithOwlAndShacl();
+    try {
+      rdfunit.init();
+    } catch (IllegalArgumentException e) {
+      displayHelpAndExit("Cannot read patterns and/or pattern generators", e);
+    }
          /*
         // Generates all tests from LOV
         for (Source s: SchemaService.getSourceListAll()) {
@@ -95,83 +94,85 @@ public final class ValidateCLI {
         }
         // */
 
+    try (final TestSource dataset = configuration.getTestSource()) {
+      /* </cliStuff> */
 
-        try (final TestSource dataset = configuration.getTestSource()) {
-            /* </cliStuff> */
+      TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+          configuration.isAutoTestsEnabled(),
+          configuration.isTestCacheEnabled(),
+          configuration.isManualTestsEnabled());
+      TestSuite testSuite = testGeneratorExecutor
+          .generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
 
-            TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
-                    configuration.isAutoTestsEnabled(),
-                    configuration.isTestCacheEnabled(),
-                    configuration.isManualTestsEnabled());
-            TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
+      TestExecutor testExecutor = TestExecutorFactory
+          .createTestExecutor(configuration.getTestCaseExecutionType());
+      if (testExecutor == null) {
+        displayHelpAndExit("Cannot initialize test executor. Exiting", null);
+      }
+      SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
+      testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
+      checkNotNull(testExecutor);
+      testExecutor.addTestExecutorMonitor(testExecutorMonitor);
 
+      // warning, caches intermediate results
+      testExecutor.execute(dataset, testSuite);
+      TestExecution testExecution = testExecutorMonitor.getTestExecution();
 
-            TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
-            if (testExecutor == null) {
-                displayHelpAndExit("Cannot initialize test executor. Exiting", null);
-            }
-            SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
-            testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
-            checkNotNull(testExecutor);
-            testExecutor.addTestExecutorMonitor(testExecutorMonitor);
+      // Write results to RDFWriter ()
+      String resultsFolder = configuration.getDataFolder() + "results/";
+      String filename =
+          resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType()
+              .toString();
 
-            // warning, caches intermediate results
-            testExecutor.execute(dataset, testSuite);
-            TestExecution testExecution = testExecutorMonitor.getTestExecution();
-
-
-            // Write results to RDFWriter ()
-            String resultsFolder = configuration.getDataFolder() + "results/";
-            String filename = resultsFolder + dataset.getPrefix() + "." + configuration.getTestCaseExecutionType().toString();
-
-            if (!(new File(resultsFolder).exists())) {
-                LOGGER.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
-                File resultsFileFolder = new File(resultsFolder);
-                boolean dirsCreated = resultsFileFolder.mkdirs();
-                if (!dirsCreated) {
-                    LOGGER.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
-                }
-            }
-
-            List<RdfWriter> outputWriters = configuration.getOutputFormats().stream()
-                    .map(serializationFormat ->
-                            RdfResultsWriterFactory.createWriterFromFormat(filename, serializationFormat, testExecution))
-                    .collect(Collectors.toList());
-
-            RdfWriter resultWriter = new RdfMultipleWriter(outputWriters);
-            try {
-                Model model = ModelFactory.createDefaultModel();
-                TestExecutionWriter.create(testExecution).write(model);
-
-                resultWriter.write(model);
-                LOGGER.info("Results stored in: " + filename + ".*");
-            } catch (RdfWriterException e) {
-                LOGGER.error("Cannot write tests to file", e);
-            }
-
-
-            // Calculate coverage
-            if (configuration.isCalculateCoverageEnabled()) {
-                Model testSuiteModel = ModelFactory.createDefaultModel();
-                PrefixNSService.setNSPrefixesInModel(testSuiteModel);
-                for (GenericTestCase ut : testSuite.getTestCases()) {
-                    TestCaseWriter.create(ut).write(testSuiteModel);
-                }
-
-                TestCoverageEvaluator tce = new TestCoverageEvaluator();
-                tce.calculateCoverage(new QueryExecutionFactoryModel(testSuiteModel), configuration.getTestSource().getExecutionFactory());
-            }
+      if (!(new File(resultsFolder).exists())) {
+        LOGGER.warn("Results folder ({}) does not exist, creating it...", resultsFolder);
+        File resultsFileFolder = new File(resultsFolder);
+        boolean dirsCreated = resultsFileFolder.mkdirs();
+        if (!dirsCreated) {
+          LOGGER.error("could not create folder {}", resultsFileFolder.getAbsolutePath());
         }
-    }
+      }
 
-    private static void displayHelpAndExit(String errorMessage, Exception e) {
-        LOGGER.error(errorMessage, e);
-        displayHelpAndExit();
-    }
+      List<RdfWriter> outputWriters = configuration.getOutputFormats().stream()
+          .map(serializationFormat ->
+              RdfResultsWriterFactory
+                  .createWriterFromFormat(filename, serializationFormat, testExecution))
+          .collect(Collectors.toList());
 
-    private static void displayHelpAndExit() {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("rdfunit", ValidateUtils.getCliOptions());
-        System.exit(1);
+      RdfWriter resultWriter = new RdfMultipleWriter(outputWriters);
+      try {
+        Model model = ModelFactory.createDefaultModel();
+        TestExecutionWriter.create(testExecution).write(model);
+
+        resultWriter.write(model);
+        LOGGER.info("Results stored in: " + filename + ".*");
+      } catch (RdfWriterException e) {
+        LOGGER.error("Cannot write tests to file", e);
+      }
+
+      // Calculate coverage
+      if (configuration.isCalculateCoverageEnabled()) {
+        Model testSuiteModel = ModelFactory.createDefaultModel();
+        PrefixNSService.setNSPrefixesInModel(testSuiteModel);
+        for (GenericTestCase ut : testSuite.getTestCases()) {
+          TestCaseWriter.create(ut).write(testSuiteModel);
+        }
+
+        TestCoverageEvaluator tce = new TestCoverageEvaluator();
+        tce.calculateCoverage(new QueryExecutionFactoryModel(testSuiteModel),
+            configuration.getTestSource().getExecutionFactory());
+      }
     }
+  }
+
+  private static void displayHelpAndExit(String errorMessage, Exception e) {
+    LOGGER.error(errorMessage, e);
+    displayHelpAndExit();
+  }
+
+  private static void displayHelpAndExit() {
+    HelpFormatter formatter = new HelpFormatter();
+    formatter.printHelp("rdfunit", ValidateUtils.getCliOptions());
+    System.exit(1);
+  }
 }

@@ -12,12 +12,13 @@ import org.apache.jena.rdf.model.ModelFactory;
  */
 public final class RdfUnitModelFactory {
 
-    private RdfUnitModelFactory() {}
+  private RdfUnitModelFactory() {
+  }
 
-    public static Model createDefaultModel() {
-        Model model = ModelFactory.createDefaultModel();
-        PrefixNSService.setNSPrefixesInModel(model);
+  public static Model createDefaultModel() {
+    Model model = ModelFactory.createDefaultModel();
+    PrefixNSService.setNSPrefixesInModel(model);
 
-        return model;
-    }
+    return model;
+  }
 }

@@ -6,9 +6,9 @@ import org.aksw.rdfunit.enums.TestCaseResultStatus;
 /**
  * @author Dimitris Kontokostas
  * @since 1 /6/14 3:26 PM
-
  */
 public interface StatusTestCaseResult extends TestCaseResult {
-    TestCaseResultStatus getStatus();
+
+  TestCaseResultStatus getStatus();
 
 }

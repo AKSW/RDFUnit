@@ -1,36 +1,36 @@
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "NL/phgmDhcrvMZ5FO6IOkwxJXZmOtNLFf9cFPEeY0Ei0PawSvCH4MiqF2eZdsf+pP0VpQqitTqDgrRPCGWqDdzCVGvbpPYWsV+T1iFEeX1b3FDaSgpjLg1CGVqbtgmOeap1UYVu0cmfDg2lZe/7ncNDTIjAwiXKAW4EaLJXBklA="
+  # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+  #   via the "travis encrypt" command using the project repo's public key
+  - secure: "NL/phgmDhcrvMZ5FO6IOkwxJXZmOtNLFf9cFPEeY0Ei0PawSvCH4MiqF2eZdsf+pP0VpQqitTqDgrRPCGWqDdzCVGvbpPYWsV+T1iFEeX1b3FDaSgpjLg1CGVqbtgmOeap1UYVu0cmfDg2lZe/7ncNDTIjAwiXKAW4EaLJXBklA="
 
 dist: trusty
 sudo: false
 language: java
 jdk:
-  - oraclejdk8
-  - openjdk8
+- oraclejdk8
+- openjdk8
 cache:
   directories:
-    - .autoconf
-    - $HOME/.m2
+  - .autoconf
+  - $HOME/.m2
 branches:
   only:
-    - master
-    - dev
-    - coverity_scan
+  - master
+  - dev
+  - coverity_scan
 install: /bin/true
 script:
-  - "mvn clean install"
-  - "cd rdfunit-webdemo"
-  - "mvn clean install"
-  - "cd .."
+- "mvn clean install"
+- "cd rdfunit-webdemo"
+- "mvn clean install"
+- "cd .."
 after_success:
-  - mvn clean cobertura:cobertura jacoco:report coveralls:report
+- mvn clean cobertura:cobertura jacoco:report coveralls:report
 notifications:
   email:
     recipients:
-      - jimkont@gmail.com
+    - jimkont@gmail.com
     on_success: change
     on_failure: change
 addons:

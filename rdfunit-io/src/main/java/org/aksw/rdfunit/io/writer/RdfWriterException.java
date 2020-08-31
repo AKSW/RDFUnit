@@ -9,23 +9,23 @@ package org.aksw.rdfunit.io.writer;
 public class RdfWriterException extends Exception {
 
 
-    public RdfWriterException() {
-        super();
-    }
+  public RdfWriterException() {
+    super();
+  }
 
-    public RdfWriterException(String message, Throwable e) {
-        super(message, e);
-    }
+  public RdfWriterException(String message, Throwable e) {
+    super(message, e);
+  }
 
-    public RdfWriterException(String message) {
-        super(message);
-    }
+  public RdfWriterException(String message) {
+    super(message);
+  }
 
-    public RdfWriterException(Throwable e) {
-        super(e);
-    }
+  public RdfWriterException(Throwable e) {
+    super(e);
+  }
 
-    public RdfWriterException(Exception e) {
-        super(e);
-    }
+  public RdfWriterException(Exception e) {
+    super(e);
+  }
 }

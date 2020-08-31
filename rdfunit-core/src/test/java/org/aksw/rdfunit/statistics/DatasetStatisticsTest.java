@@ -1,5 +1,6 @@
 package org.aksw.rdfunit.statistics;
 
+import java.util.Map;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
 import org.aksw.rdfunit.io.reader.RdfReader;
@@ -7,30 +8,27 @@ import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.junit.Before;
 
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-
 public abstract class DatasetStatisticsTest {
 
-    protected QueryExecutionFactory qef;
+  protected QueryExecutionFactory qef;
 
-    @Before
-    public void setUp() throws RdfReaderException {
-        RdfReader reader = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
-        qef = new QueryExecutionFactoryModel(reader.read());
-    }
+  @Before
+  public void setUp() throws RdfReaderException {
+    RdfReader reader = RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
+    qef = new QueryExecutionFactoryModel(reader.read());
+  }
 
-    protected abstract int getExteptedItems();
+  protected abstract int getExteptedItems();
 
-    protected abstract DatasetStatistics getStatisticsObject();
+  protected abstract DatasetStatistics getStatisticsObject();
 
-    protected Map<String, Long> executeBasicTest() {
-        Map<String, Long> stats = getStatisticsObject().getStatisticsMap(qef);
-        assertEquals(getExteptedItems(), stats.size());
+  protected Map<String, Long> executeBasicTest() {
+    Map<String, Long> stats = getStatisticsObject().getStatisticsMap(qef);
+    assertEquals(getExteptedItems(), stats.size());
 
-        return stats;
-    }
+    return stats;
+  }
 
     /*
     @Test

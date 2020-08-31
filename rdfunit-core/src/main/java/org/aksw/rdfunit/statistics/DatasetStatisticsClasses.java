@@ -7,23 +7,22 @@ import org.aksw.rdfunit.services.PrefixNSService;
  *
  * @author Dimitris Kontokostas
  * @since 6/27/15 1:02 PM
-
  */
 public class DatasetStatisticsClasses extends DatasetStatistics {
 
 
-    /*
-    * Simple SPARQL query to get all class occurrences
-    * */
-    private static final String CLASS_STATS_SPARQL = PrefixNSService.getSparqlPrefixDecl() +
-            " SELECT DISTINCT ?stats WHERE {" +
-            "     ?s a ?stats . } ";
+  /*
+   * Simple SPARQL query to get all class occurrences
+   * */
+  private static final String CLASS_STATS_SPARQL = PrefixNSService.getSparqlPrefixDecl() +
+      " SELECT DISTINCT ?stats WHERE {" +
+      "     ?s a ?stats . } ";
 
 
-    @Override
-    public String getStatisticsQuery() {
-        return CLASS_STATS_SPARQL;
-    }
+  @Override
+  public String getStatisticsQuery() {
+    return CLASS_STATS_SPARQL;
+  }
 
 
 }

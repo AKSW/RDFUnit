@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.model.readers.shacl;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.aksw.rdfunit.enums.ShapeTargetType;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
@@ -10,12 +13,6 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 /**
  * Description
@@ -25,42 +22,41 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class ShapeReaderTest {
 
-    private static final String shapeResource = "/org/aksw/rdfunit/shacl/sampleShape.ttl" ;
+  private static final String shapeResource = "/org/aksw/rdfunit/shacl/sampleShape.ttl";
 
-    @Test
-    public void testRead() throws RdfReaderException {
+  @Test
+  public void testRead() throws RdfReaderException {
 
-        Model shapesModel = RdfReaderFactory.createResourceReader(shapeResource).read();
+    Model shapesModel = RdfReaderFactory.createResourceReader(shapeResource).read();
 
-        List<Shape> shapes = shapesModel.listResourcesWithProperty(RDF.type, SHACL.Shape).toList()
-                .stream()
-                .map( r -> ShapeReader.create().read(r))
-                .collect(Collectors.toList());
+    List<Shape> shapes = shapesModel.listResourcesWithProperty(RDF.type, SHACL.Shape).toList()
+        .stream()
+        .map(r -> ShapeReader.create().read(r))
+        .collect(Collectors.toList());
 
-        assertThat(shapes)
-                .hasSize(1);
+    assertThat(shapes)
+        .hasSize(1);
 
-        Shape sh = shapes.get(0);
+    Shape sh = shapes.get(0);
 
-        checkTarget(sh);
+    checkTarget(sh);
 
-    }
-
-
-    private void checkTarget(Shape sh) {
-        Set<ShapeTarget> targets = BatchShapeTargetReader.create().read(sh.getElement());
-        assertThat(targets)
-                .hasSize(ShapeTargetType.values().length-1);
+  }
 
 
-        List<ShapeTargetType> targetTypes = targets.stream()
-                .map(ShapeTarget::getTargetType)
-                .distinct()
-                .collect(Collectors.toList());
+  private void checkTarget(Shape sh) {
+    Set<ShapeTarget> targets = BatchShapeTargetReader.create().read(sh.getElement());
+    assertThat(targets)
+        .hasSize(ShapeTargetType.values().length - 1);
 
-        // distinct targets
-        assertThat(targetTypes)
-                .hasSize(ShapeTargetType.values().length-1)
-                ;
-    }
+    List<ShapeTargetType> targetTypes = targets.stream()
+        .map(ShapeTarget::getTargetType)
+        .distinct()
+        .collect(Collectors.toList());
+
+    // distinct targets
+    assertThat(targetTypes)
+        .hasSize(ShapeTargetType.values().length - 1)
+    ;
+  }
 }

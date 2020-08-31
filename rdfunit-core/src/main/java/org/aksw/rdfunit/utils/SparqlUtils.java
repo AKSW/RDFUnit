@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.rdfunit.model.impl.ResultAnnotationImpl;
@@ -7,9 +9,6 @@ import org.aksw.rdfunit.model.interfaces.ResultAnnotation;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 
 /**
@@ -19,51 +18,50 @@ import java.util.Collection;
 @Slf4j
 public final class SparqlUtils {
 
-    private SparqlUtils() {
+  private SparqlUtils() {
+  }
+
+  public static Collection<ResultAnnotation> getResultAnnotations(
+      QueryExecutionFactory queryFactory, String uri) {
+    Collection<ResultAnnotation> annotations = new ArrayList<>();
+    String sparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
+        " SELECT ?annotationProperty ?annotationValue WHERE {" +
+        " <" + uri + "> rut:resultAnnotation ?annotation . " +
+        " ?annotation a rut:ResultAnnotation ; " +
+        "   rut:annotationProperty ?annotationProperty ; " +
+        "   rut:annotationValue ?annotationValue . } ";
+
+    try (QueryExecution qe = queryFactory.createQueryExecution(sparql)) {
+
+      qe.execSelect().forEachRemaining(qs -> {
+        String annotationProperty = qs.get("annotationProperty").toString();
+        RDFNode annotationValue = qs.get("annotationValue");
+        annotations.add(new ResultAnnotationImpl.Builder(uri, annotationProperty)
+            .setValueRDFUnit(annotationValue).build());
+      });
+
+    } catch (Exception e) {
+      log.error("Error in sparql query", e);
+      log.debug(sparql);
     }
 
-    public static Collection<ResultAnnotation> getResultAnnotations(QueryExecutionFactory queryFactory, String uri) {
-        Collection<ResultAnnotation> annotations = new ArrayList<>();
-        String sparql = org.aksw.rdfunit.services.PrefixNSService.getSparqlPrefixDecl() +
-                " SELECT ?annotationProperty ?annotationValue WHERE {" +
-                " <" + uri + "> rut:resultAnnotation ?annotation . " +
-                " ?annotation a rut:ResultAnnotation ; " +
-                "   rut:annotationProperty ?annotationProperty ; " +
-                "   rut:annotationValue ?annotationValue . } ";
+    return annotations;
+  }
 
+  public static boolean checkAskQuery(QueryExecutionFactory qef, String askQuery) {
 
-
-        try (QueryExecution qe = queryFactory.createQueryExecution(sparql)) {
-
-            qe.execSelect().forEachRemaining(qs -> {
-                String annotationProperty = qs.get("annotationProperty").toString();
-                RDFNode annotationValue = qs.get("annotationValue");
-                annotations.add(new ResultAnnotationImpl.Builder(uri, annotationProperty).setValueRDFUnit(annotationValue).build());
-            });
-
-        } catch (Exception e) {
-            log.error("Error in sparql query",e);
-            log.debug(sparql);
-        }
-
-        return annotations;
+    try (QueryExecution qe = qef.createQueryExecution(askQuery)) {
+      return qe.execAsk();
+    } catch (Exception e) {
+      log.debug("Exception when running query {}", askQuery, e);
     }
+    return false;
+  }
 
-    public static boolean checkAskQuery(QueryExecutionFactory qef, String askQuery) {
+  public static boolean checkStatusForTimeout(QueryExceptionHTTP e) {
+    int httpCode = e.getResponseCode();
 
-
-        try ( QueryExecution qe = qef.createQueryExecution(askQuery)){
-            return qe.execAsk();
-        } catch (Exception e) {
-            log.debug("Exception when running query {}", askQuery, e);
-        }
-        return false;
-    }
-
-    public static boolean checkStatusForTimeout(QueryExceptionHTTP e) {
-        int httpCode = e.getResponseCode();
-
-        // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-        return httpCode == 408 || httpCode == 504 || httpCode == 524;
-    }
+    // 408,504,524 timeout codes from http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+    return httpCode == 408 || httpCode == 504 || httpCode == 524;
+  }
 }

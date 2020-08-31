@@ -4,96 +4,98 @@ import org.aksw.rdfunit.services.PrefixNSService;
 import org.aksw.rdfunit.vocabulary.SHACL;
 
 /**
- * Defines all available log levels
- * Copied from NLP2RDF (https://github.com/NLP2RDF/software/blob/master/java-maven/core/jena/src/main/java/org/nlp2rdf/core/vocab/RLOGIndividuals.java)
+ * Defines all available log levels Copied from NLP2RDF (https://github.com/NLP2RDF/software/blob/master/java-maven/core/jena/src/main/java/org/nlp2rdf/core/vocab/RLOGIndividuals.java)
  *
  * @author Dimitris Kontokostas
  * @since 6/17/14 9:49 AM
  */
 public enum RLOGLevel {
 
-    /**
-     * ERROR: The ERROR level designates error events that might still allow the application to continue running.
-     */
-    ERROR,
+  /**
+   * ERROR: The ERROR level designates error events that might still allow the application to
+   * continue running.
+   */
+  ERROR,
 
-    /**
-     * TRACE: The DEBUG Level designates fine-grained informational events that are most useful to debug an application.
-     */
-    DEBUG,
+  /**
+   * TRACE: The DEBUG Level designates fine-grained informational events that are most useful to
+   * debug an application.
+   */
+  DEBUG,
 
-    /**
-     * OFF: The OFF has the highest possible rank and is intended to turn off logging.
-     */
-    OFF,
+  /**
+   * OFF: The OFF has the highest possible rank and is intended to turn off logging.
+   */
+  OFF,
 
-    /**
-     * FATAL: The FATAL level designates very severe error events that will presumably lead the application to abort.
-     */
-    FATAL,
+  /**
+   * FATAL: The FATAL level designates very severe error events that will presumably lead the
+   * application to abort.
+   */
+  FATAL,
 
-    /**
-     * WARN: The WARN level designates potentially harmful situations.
-     */
-    WARN,
+  /**
+   * WARN: The WARN level designates potentially harmful situations.
+   */
+  WARN,
 
-    /**
-     * TRACE: The TRACE Level designates finer-grained informational events than the DEBUG.
-     */
-    TRACE,
+  /**
+   * TRACE: The TRACE Level designates finer-grained informational events than the DEBUG.
+   */
+  TRACE,
 
-    /**
-     * INFO: The INFO level designates informational messages that highlight the progress of the application at coarse-grained level.
-     */
-    INFO,
+  /**
+   * INFO: The INFO level designates informational messages that highlight the progress of the
+   * application at coarse-grained level.
+   */
+  INFO,
 
-    /**
-     * ALL: The ALL has the lowest possible rank and is intended to turn on all logging.
-     */
-    ALL;
+  /**
+   * ALL: The ALL has the lowest possible rank and is intended to turn on all logging.
+   */
+  ALL;
 
-    /**
-     * Holds the prefix to resolve this enum
-     */
-    private static final String schemaPrefix = "rlog";
+  /**
+   * Holds the prefix to resolve this enum
+   */
+  private static final String schemaPrefix = "rlog";
 
-    /**
-     * @return a full URI/IRI as a String
-     */
-    public String getUri() {
-        return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
+  /**
+   * Resolves a full URI/IRI to an enum
+   *
+   * @param value the URI/IRI we want to resolve
+   * @return the equivalent enum type or null if it cannot resolve
+   */
+  public static RLOGLevel resolve(String value) {
+
+    String qName = PrefixNSService.getLocalName(value, schemaPrefix);
+    for (RLOGLevel level : values()) {
+      if (qName.equals(level.name())) {
+        return level;
+      }
     }
-
-
-    @Override
-    public String toString() {
-        return getUri();
+    if (value.equals(SHACL.Violation.getURI())) {
+      return ERROR;
     }
-
-    /**
-     * Resolves a full URI/IRI to an enum
-     *
-     * @param value the URI/IRI we want to resolve
-     * @return the equivalent enum type or null if it cannot resolve
-     */
-    public static RLOGLevel resolve(String value) {
-
-        String qName = PrefixNSService.getLocalName(value, schemaPrefix);
-        for (RLOGLevel level : values()) {
-            if (qName.equals(level.name())) {
-                return level;
-            }
-        }
-        if (value.equals(SHACL.Violation.getURI())) {
-            return ERROR;
-        }
-        if (value.equals(SHACL.Warning.getURI())) {
-            return WARN;
-        }
-        if (value.equals(SHACL.Info.getURI())) {
-            return INFO;
-        }
-        return null;
-
+    if (value.equals(SHACL.Warning.getURI())) {
+      return WARN;
     }
+    if (value.equals(SHACL.Info.getURI())) {
+      return INFO;
+    }
+    return null;
+
+  }
+
+  /**
+   * @return a full URI/IRI as a String
+   */
+  public String getUri() {
+    return PrefixNSService.getNSFromPrefix(schemaPrefix) + name();
+  }
+
+  @Override
+  public String toString() {
+    return getUri();
+  }
 }

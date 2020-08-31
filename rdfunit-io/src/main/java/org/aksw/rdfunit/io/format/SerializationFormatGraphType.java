@@ -5,17 +5,16 @@ package org.aksw.rdfunit.io.format;
  *
  * @author Dimitris Kontokostas
  * @since 6/18/14 6:50 PM
-
  */
 public enum SerializationFormatGraphType {
-    /**
-     * single graph only
-     */
-    singleGraph,
+  /**
+   * single graph only
+   */
+  singleGraph,
 
-    /**
-     * RDFdataset / possible multiple graphs
-     */
-    dataset
+  /**
+   * RDFdataset / possible multiple graphs
+   */
+  dataset
 
 }

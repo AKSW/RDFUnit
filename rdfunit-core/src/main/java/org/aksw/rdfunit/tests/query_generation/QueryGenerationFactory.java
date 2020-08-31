@@ -8,24 +8,23 @@ import org.apache.jena.query.Query;
  *
  * @author Dimitris Kontokostas
  * @since 7 /25/14 9:57 PM
-
  */
 public interface QueryGenerationFactory {
 
-    /**
-     * Gets a TestCase and returns an appropriate sparql query as String
-     *
-     * @param testCase the test case
-     * @return the sparql query as string
-     */
-    String getSparqlQueryAsString(TestCase testCase);
+  /**
+   * Gets a TestCase and returns an appropriate sparql query as String
+   *
+   * @param testCase the test case
+   * @return the sparql query as string
+   */
+  String getSparqlQueryAsString(TestCase testCase);
 
-    /**
-     * Gets a TestCase and returns an appropriate sparql query as Jena Query
-     *
-     * @param testCase the test case
-     * @return the sparql query
-     */
-    Query getSparqlQuery(TestCase testCase);
+  /**
+   * Gets a TestCase and returns an appropriate sparql query as Jena Query
+   *
+   * @param testCase the test case
+   * @return the sparql query
+   */
+  Query getSparqlQuery(TestCase testCase);
 }
 
