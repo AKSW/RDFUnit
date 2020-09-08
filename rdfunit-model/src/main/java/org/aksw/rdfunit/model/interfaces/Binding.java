@@ -1,9 +1,7 @@
 package org.aksw.rdfunit.model.interfaces;
 
-import static lombok.Lombok.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.aksw.rdfunit.enums.PatternParameterConstraints;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
@@ -16,14 +14,11 @@ import org.apache.jena.rdf.model.ResourceFactory;
  * @author Dimitris Kontokostas
  * @since 9/30/13 8:28 AM
  */
-@ToString
-@EqualsAndHashCode(exclude = "element")
 public class Binding implements Element {
 
   private final Resource element;
   private final PatternParameter parameter;
   private final RDFNode value;
-
 
   public Binding(PatternParameter parameter, RDFNode value) {
     this(ResourceFactory.createResource(), parameter, value);

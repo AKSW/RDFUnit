@@ -27,8 +27,7 @@ public final class ValidateUtils {
 
   private static final Options cliOptions = generateCLIOptions();
 
-  private ValidateUtils() {
-  }
+  private ValidateUtils() { }
 
   public static Options getCliOptions() {
     return cliOptions;
@@ -335,8 +334,8 @@ public final class ValidateUtils {
       throws ParameterException {
     if (!commandLine.hasOption("d")) {
       throw new ParameterException("Error: Required arguments are missing.");
-
     }
+
     if (commandLine.hasOption("e") && commandLine.hasOption("u")) {
       throw new ParameterException("Error: You have to select either an Endpoint or a Dump URI.");
     }
@@ -346,7 +345,6 @@ public final class ValidateUtils {
           "Option -l was changed to -r, -l is reserved for --logging-level (notice, warn, error)");
     }
   }
-
 
   private static Collection<String> getUriStrs(String parameterStr) {
     Collection<String> uriStrs = new ArrayList<>();

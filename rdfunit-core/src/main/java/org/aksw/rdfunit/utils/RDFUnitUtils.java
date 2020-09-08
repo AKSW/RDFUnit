@@ -111,8 +111,7 @@ public final class RDFUnitUtils {
   public static void fillSchemaServiceWithStandardVocabularies() throws IOException {
     log.info("Adding standard vocabularies.");
     List<String> fileNames = IOUtils.readLines(
-        RDFUnitUtils.class.getClassLoader().getResourceAsStream("org/aksw/rdfunit/vocabularies/"),
-        Charsets.UTF_8);
+        RDFUnitUtils.class.getClassLoader().getResourceAsStream("org/aksw/rdfunit/vocabularies/"), StandardCharsets.UTF_8);
     for (String f : fileNames) {
       if (!f.trim().endsWith(".md") && !f.trim().endsWith(".txt")) {
         try {

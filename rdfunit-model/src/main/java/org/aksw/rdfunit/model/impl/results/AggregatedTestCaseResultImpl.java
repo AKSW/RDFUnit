@@ -1,8 +1,6 @@
 package org.aksw.rdfunit.model.impl.results;
 
 import java.util.Optional;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.aksw.rdfunit.enums.RLOGLevel;
 import org.aksw.rdfunit.enums.TestCaseResultStatus;
 import org.aksw.rdfunit.model.interfaces.TestCase;
@@ -16,8 +14,6 @@ import org.apache.jena.rdf.model.Resource;
  * @author Dimitris Kontokostas
  * @since 1 /2/14 3:44 PM
  */
-@ToString
-@EqualsAndHashCode(exclude = "element")
 public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl implements
     AggregatedTestCaseResult {
 
@@ -87,7 +83,6 @@ public class AggregatedTestCaseResultImpl extends StatusTestCaseResultImpl imple
       return Optional.empty();
     }
   }
-
 
   @Override
   public String toString() {
