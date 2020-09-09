@@ -35,8 +35,7 @@ public class RdfFileWriter implements RdfWriter {
     this(filename, "TURTLE", skipIfExists, true, true);
   }
 
-  public RdfFileWriter(String filename, String filetype, boolean skipIfExists,
-      boolean createParentDirectories, boolean overwrite) {
+  public RdfFileWriter(String filename, String filetype, boolean skipIfExists, boolean createParentDirectories, boolean overwrite) {
     super();
     this.filename = filename;
     this.filetype = filetype;

@@ -144,7 +144,6 @@ public class RDFUnit {
     return new QueryExecutionFactoryModel(model);
 
     // Update pattern service
-
   }
 
   /**
