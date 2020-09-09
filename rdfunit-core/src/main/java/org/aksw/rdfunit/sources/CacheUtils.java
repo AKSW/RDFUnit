@@ -32,9 +32,11 @@ public final class CacheUtils {
 
   private static String getFile(String testFolder, Source source, String type, String sourceType) {
 
+    String prefix = source.getPrefix();
+
     return getTestFolder(testFolder) + sourceType + "/" + UriToPathUtils
         .getCacheFolderForURI(source.getUri()) +
-        source.getPrefix() + "." + type + "." + sourceType + ".ttl";
+        prefix + "." + type + "." + sourceType + ".ttl";
   }
 
   private static String getTestFolder(String testFolder) {

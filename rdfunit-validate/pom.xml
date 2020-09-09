@@ -3,6 +3,7 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <artifactId>rdfunit-parent</artifactId>
     <groupId>org.aksw.rdfunit</groupId>
@@ -18,7 +19,6 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.12</version>
       <scope>provided</scope>
     </dependency>
 

@@ -43,7 +43,6 @@ public final class TestSourceFactory {
     return createDumpTestSource(prefix, uri, new RdfModelReader(model), referenceSchemata);
   }
 
-
   public static TestSource createDatasetTestSource(String prefix, String uri, RdfReader dumpReader,
       Collection<SchemaSource> referenceSchemata) {
     return new TestSourceBuilder()

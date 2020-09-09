@@ -20,7 +20,6 @@ import org.apache.jena.rdf.model.Model;
 @Slf4j
 public class CacheTestGenerator implements RdfUnitTestGenerator {
 
-
   private final String testFolder;
 
   public CacheTestGenerator(String testFolder) {

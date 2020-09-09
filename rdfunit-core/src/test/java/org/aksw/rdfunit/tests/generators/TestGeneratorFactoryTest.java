@@ -46,7 +46,6 @@ public class TestGeneratorFactoryTest {
 
   @Test
   public void testManualTests() {
-
     assertThat(new ManualRdfunitTestLoaderGenerator(testFolder).generate(schemaSourceOwl))
         .isEmpty();
 
@@ -85,7 +84,6 @@ public class TestGeneratorFactoryTest {
         .isEmpty();
   }
 
-
   @Test
   public void testAllNoCache() {
     RdfUnitTestGenerator g = TestGeneratorFactory
@@ -97,7 +95,6 @@ public class TestGeneratorFactoryTest {
         .isNotEmpty();
     assertThat(g.generate(testSource))
         .isNotEmpty();
-
   }
 
 }
