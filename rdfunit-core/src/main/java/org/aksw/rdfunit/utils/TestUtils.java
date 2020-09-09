@@ -4,14 +4,17 @@ import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
+import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.Pattern;
+import org.aksw.rdfunit.model.interfaces.PatternBasedTestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * Various utility test functions for tests
@@ -33,10 +36,17 @@ public final class TestUtils {
     return BatchTestCaseReader.create().getTestCasesFromModel(model);
   }
 
-  public static void writeTestsToFile(Collection<GenericTestCase> tests, RdfWriter testCache) {
+  public static void writeTestsToFile(Collection<GenericTestCase> tests, RdfWriter testCache, boolean addExplicitWhere) {
     Model model = ModelFactory.createDefaultModel();
     for (GenericTestCase t : tests) {
-      TestCaseWriter.create(t).write(model);
+      Resource tr = TestCaseWriter.create(t).write(model);
+
+      // belgian code ;-)
+      if (addExplicitWhere) {
+          if (t instanceof PatternBasedTestCaseImpl) {
+            tr.addProperty(RDFUNITv.sparqlWhere, ((PatternBasedTestCase) t).getSparqlWhere());
+          }
+      }
     }
     try {
       org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);
@@ -44,6 +54,10 @@ public final class TestUtils {
     } catch (RdfWriterException e) {
       log.error("Cannot cache tests", e);
     }
+  }
+
+  public static void writeTestsToFile(Collection<GenericTestCase> tests, RdfWriter testCache) {
+    writeTestsToFile(tests, testCache, false);
   }
 
   public static String generateTestURI(String sourcePrefix, Pattern pattern,

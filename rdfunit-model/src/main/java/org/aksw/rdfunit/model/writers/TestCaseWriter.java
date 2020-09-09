@@ -24,10 +24,8 @@ public final class TestCaseWriter implements ElementWriter {
     return new TestCaseWriter(testCase);
   }
 
-
   @Override
   public Resource write(Model model) {
-
     if (testCase instanceof ManualTestCaseImpl) {
       return ManualTestCaseWriter.create((ManualTestCaseImpl) testCase).write(model);
     }

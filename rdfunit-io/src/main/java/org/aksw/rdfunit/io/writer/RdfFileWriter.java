@@ -22,7 +22,6 @@ public class RdfFileWriter implements RdfWriter {
   private final boolean createParentDirectories;
   private final boolean overwrite;
 
-
   public RdfFileWriter(String filename) {
     this(filename, "TURTLE", false, true, true);
   }

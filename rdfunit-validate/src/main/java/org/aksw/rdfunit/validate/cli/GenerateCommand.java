@@ -37,19 +37,23 @@ public final class GenerateCommand implements Callable {
   Logger log = LoggerFactory.getLogger(CLI.class);
 
   @Option(names = {"-p", "--prefix"}, description = "Overrule prefix, by default uses vann:preferredNamespacePrefix (if defined in schema, else '').")
-  String prefix = "";
+  private String prefix = "";
 
   @Option(names = {"-u", "--uri"}, required = true, description = "Schema uri.")
-  String uri = "";
+  private String uri = "";
 
   @Option(names = {"-s", "--schema"}, required = true, description = "Path to schema file (owl/rdfs/shacl) to generate tests for.")
-  String schemaPath = "";
+  private String schemaPath = "";
 
   @Option(names = {"-o", "--output"}, description = "A file location to write the tests (default: '-' for stdout).", defaultValue = "-")
-  String output;
+  private String output;
 
   @Option(names = {"-f", "--datafolder"}, description = "The location of the data folder to write the tests to caches.")
-  String datafolder = null;
+  private String datafolder = null;
+
+  @Option(names = {"-w", "--addWhereClause"}, description = "Add the whereClause explicitly to PatternBasedTestCases.")
+  private boolean addExplicitWhere;
+
 
   @Override
   public Object call() throws Exception {
@@ -82,7 +86,7 @@ public final class GenerateCommand implements Callable {
 
     if (!tests.isEmpty()) {
       if (output.trim().equals("-")) {
-        TestUtils.writeTestsToFile(tests, new RdfStreamWriter(System.out));
+        TestUtils.writeTestsToFile(tests, new RdfStreamWriter(System.out), addExplicitWhere);
       } else {
         File outputFile = new File(output);
         outputFile.getParentFile().mkdirs();

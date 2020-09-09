@@ -25,7 +25,6 @@ final class PatternBasedTestCaseWriter implements ElementWriter {
     return new PatternBasedTestCaseWriter(patternBasedTestCase);
   }
 
-
   @Override
   public Resource write(Model model) {
     Resource resource = ElementWriter.copyElementResourceInModel(patternBasedTestCase, model);
