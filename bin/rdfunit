@@ -8,7 +8,7 @@
 # bin/rdfunit -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -p dbo -s "owl,dbo,foaf,dcterms,dc,skos,geo,prov"
 #
 
-MAIN_CLS="org.aksw.rdfunit.validate.cli.ValidateCLI"
+MAIN_CLS="org.aksw.rdfunit.validate.cli.CLI"
 
 # TODO use the jar for faster execution
 #if [ -s bin/rdfunit.jar ]
@@ -27,4 +27,4 @@ if [ ! -d "rdfunit-validate/target" ]; then
   echo "Compiling finished..."
 fi
 
-mvn -pl rdfunit-validate exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="$*"
+mvn -pl rdfunit-validate exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="validate $*"

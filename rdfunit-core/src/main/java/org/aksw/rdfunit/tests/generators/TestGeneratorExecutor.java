@@ -52,7 +52,6 @@ public class TestGeneratorExecutor {
     isCanceled = true;
   }
 
-
   public TestSuite generateTestSuite(String testFolder, TestSource dataset,
       Collection<TestGenerator> autoGenerators) {
 
@@ -60,7 +59,6 @@ public class TestGeneratorExecutor {
         .create(autoGenerators, testFolder, useAutoTests, loadFromCache, useManualTests,
             progressMonitors);
     Collection<SchemaSource> sources = dataset.getReferencesSchemata();
-
 
     /*notify start of testing */
     for (TestGeneratorExecutorMonitor monitor : progressMonitors) {
@@ -74,7 +72,6 @@ public class TestGeneratorExecutor {
       }
 
       allTests.addAll(testGenerator.generate(s));
-
     }
 
     //Find manual tests for dataset (if not canceled

@@ -21,7 +21,6 @@ public class QueryGenerationSelectFactory implements QueryGenerationFactory {
 
   private static final String SELECT_CLAUSE = " SELECT ?this ";
 
-
   @Override
   public String getSparqlQueryAsString(TestCase testCase) {
     StringBuilder sb = new StringBuilder();
@@ -43,7 +42,6 @@ public class QueryGenerationSelectFactory implements QueryGenerationFactory {
     sb.append(testCase.getSparqlWhere());
     return sb.toString();
   }
-
 
   @Override
   public Query getSparqlQuery(TestCase testCase) {

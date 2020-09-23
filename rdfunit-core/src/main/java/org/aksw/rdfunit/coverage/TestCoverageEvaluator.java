@@ -79,7 +79,7 @@ public class TestCoverageEvaluator {
       references = getReferenceSet(model,
           sparql.replace("%%PATTERNS%%", generateInClause(fDomPatterns)));
       double fDom = getCoverage(references, propertyCount, totalProperties);
-      log.info("Fdom Coverage: {}", fDom);
+      log.info("fDom Coverage: {}", fDom);
 
       // Frange Coverage metric
       references = getReferenceSet(model,
@@ -144,7 +144,5 @@ public class TestCoverageEvaluator {
     }
 
     return references;
-
   }
-
 }

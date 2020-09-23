@@ -90,10 +90,10 @@ public class ValidateCommand implements Callable {
   Collection<String> schemaUriPrefixes = new ArrayList<String>();
 
   @Option(names = { "-v", "--no-LOV" }, description = "Do not use the LOV service.")
-  boolean noLOV;
+  boolean noLOV = false;
 
   @Option(names = {"-i", "--imports"}, description = "If set, in addition to the schemata provided or discovered, all transitively discovered import schemata (owl:imports) are included into the schema set.")
-  boolean imports;
+  boolean imports = false;
 
   @Option(names = {"-x", "--exclude"}, description = "The schemata excluded from test generation (comma separated prefixes without whitespaces according to http://lov.okfn.org/).", split = ",")
   Collection<String> excluded = new ArrayList<String>();
@@ -140,12 +140,12 @@ public class ValidateCommand implements Callable {
 
   @Override
   public Object call() throws Exception {
-    RDFUnitConfiguration configuration = getConfigurationFromArguments();
-    checkNotNull(configuration);
-
     if (!noLOV) { // explicitly do not use LOV
       RDFUnitUtils.fillSchemaServiceFromLOV();
     }
+
+    RDFUnitConfiguration configuration = getConfigurationFromArguments();
+    checkNotNull(configuration);
 
     if (!IOUtils.isFile(configuration.getDataFolder())) {
       log.error("Path " + configuration.getDataFolder() + " does not exists, use -f argument");
@@ -273,8 +273,14 @@ public class ValidateCommand implements Callable {
     }
 
     //Endpoint initialization
-    if (datasetOptions != null && datasetOptions.endpointOptions != null && datasetOptions.endpointOptions.endpointURI != null && !datasetOptions.endpointOptions.endpointURI.isEmpty()) {
-      configuration.setEndpointConfiguration(datasetOptions.endpointOptions.endpointURI, datasetOptions.endpointOptions.endpointGraphs, datasetOptions.endpointOptions.endpointBasicAuthOptions.username, datasetOptions.endpointOptions.endpointBasicAuthOptions.password);
+    if (datasetOptions != null &&
+        datasetOptions.endpointOptions != null &&
+        datasetOptions.endpointOptions.endpointURI != null &&
+        !datasetOptions.endpointOptions.endpointURI.isEmpty()) {
+      if (datasetOptions.endpointOptions.endpointBasicAuthOptions != null)
+        configuration.setEndpointConfiguration(datasetOptions.endpointOptions.endpointURI, datasetOptions.endpointOptions.endpointGraphs, datasetOptions.endpointOptions.endpointBasicAuthOptions.username, datasetOptions.endpointOptions.endpointBasicAuthOptions.password);
+      else
+        configuration.setEndpointConfiguration(datasetOptions.endpointOptions.endpointURI, datasetOptions.endpointOptions.endpointGraphs, "", "");
     }
   }
 

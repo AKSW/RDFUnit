@@ -82,10 +82,10 @@ public final class RDFUnitUtils {
           String[] parts = trimmed.split(",");
           switch (parts.length) {
             case 2:
-              SchemaService.addSchemaDecl(parts[0], parts[1]);
+              SchemaService.addSchemaDecl(parts[0].trim(), parts[1].trim());
               break;
             case 3:
-              SchemaService.addSchemaDecl(parts[0], parts[1], parts[2]);
+              SchemaService.addSchemaDecl(parts[0].trim(), parts[1].trim(), parts[2].trim());
               break;
             default:
               log.error("Invalid schema declaration in " + additionalCSV + ". Line: " + line);

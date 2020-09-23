@@ -12,7 +12,6 @@
   <artifactId>rdfunit-model</artifactId>
   <name>RDFUnit - Model</name>
 
-
   <dependencies>
 
     <dependency>
@@ -47,6 +46,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

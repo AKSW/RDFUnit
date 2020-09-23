@@ -1,8 +1,8 @@
 package org.aksw.rdfunit.model.readers;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static lombok.Lombok.checkNotNull;
 
+import com.google.common.base.Preconditions;
 import org.aksw.rdfunit.model.impl.ManualTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.vocabulary.RDFUNITv;
@@ -25,7 +25,7 @@ public final class ManualTestCaseReader implements ElementReader<TestCase> {
 
   @Override
   public TestCase read(Resource resource) {
-    checkNotNull(resource, "Cannot read a ManualTestCase from a null resource");
+    Preconditions.checkNotNull(resource, "Cannot read a ManualTestCase from a null resource");
 
     ManualTestCaseImpl.ManualTestCaseImplBuilder builder = ManualTestCaseImpl.builder();
 

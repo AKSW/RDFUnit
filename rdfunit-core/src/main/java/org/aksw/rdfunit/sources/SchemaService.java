@@ -2,12 +2,16 @@ package org.aksw.rdfunit.sources;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.aksw.rdfunit.exceptions.UndefinedSchemaException;
 import org.aksw.rdfunit.utils.UriToPathUtils;
 
 /**
- * Holds all the schema definitions It is usually instantiated from LOV on app startup
+ * Holds all the schema definitions. It is usually instantiated from LOV on app startup
  *
  * @author Dimitris Kontokostas
  * @since 10/2/13 12:24 PM
@@ -40,11 +44,9 @@ public final class SchemaService {
     schemata.put(prefix, uri);
   }
 
-
   public static Optional<SchemaSource> getSourceFromUri(String uri) {
     return getSourceFromUri(null, uri);
   }
-
 
   public static Optional<SchemaSource> getSourceFromUri(String baseFolder, String uri) {
     String prefix = schemata.inverse().get(uri);
@@ -129,7 +131,6 @@ public final class SchemaService {
     }
     return sources;
   }
-
 
   public static Collection<SchemaSource> getSourceListAll(boolean fileCache, String baseFolder)
       throws UndefinedSchemaException {

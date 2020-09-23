@@ -13,12 +13,10 @@ public class QueryGenerationAskFactory implements QueryGenerationFactory {
 
   private final QueryGenerationSelectFactory queryGenerationSelectFactory = new QueryGenerationSelectFactory();
 
-
   @Override
   public String getSparqlQueryAsString(TestCase testCase) {
     return getSparqlQuery(testCase).toString();
   }
-
 
   @Override
   public Query getSparqlQuery(TestCase testCase) {
