@@ -25,7 +25,6 @@ public final class QueryGenerationFactoryTest {
       .sparqlPrevalence("")
       .build();
 
-
   @Test
   public void checkSelectFactory() {
 

@@ -1,0 +1,779 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rut: <http://rdfunit.aksw.org/ns/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix rlog: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#> .
+
+<http://rdfunit.aksw.org/ns/core#>
+    a owl:Ontology ;
+
+    <http://purl.org/vocab/vann/preferredNamespacePrefix> "rut" ;
+    <http://purl.org/vocab/vann/preferredNamespaceUri> "http://rdfunit.aksw.org/ns/core#" ;
+    <http://purl.org/vocab/vann/changes> <https://github.com/AKSW/RDFUnit/commits/master/ns> ;
+
+    owl:versionInfo "0.4.1" ;
+
+    rdfs:label "Test-Driven RDF Validation Ontology"@en ;
+    dcterms:title "Test-Driven Data Validation Ontology"@en ;
+    rdfs:isDefinedBy <http://rdfunit.aksw.org/ns/core.ttl> ;
+    dcterms:license <http://creativecommons.org/licenses/by/3.0/> ;
+    dcterms:license <http://www.apache.org/licenses/LICENSE-2.0> ;
+    dc:rights "This ontology is licensed under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0) and CC-BY (http://creativecommons.org/licenses/by/3.0/)"@en ;
+    dc:date "2013-10-01"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    dc:issued "2013-10-01"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    dc:modified "2014-01-10"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    dc:creator "Dimitris Kontokostas"@en ,
+               "Jens Lehmann"@en ,
+               "Patrick Westphal"@en ,
+               "Roland Cornelissen"@en ,
+               "Sebastian Hellmann"@en ,
+               "Sören Auer"@en ;
+
+    dc:description <http://rdfunit.aksw.org/ns/rdfunit_ontology_diagram.png>,
+      <http://jens-lehmann.org/files/2014/eswc_rdfunit_nlp.pdf>;
+
+    rdfs:comment
+        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven RDF Validation framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.
+It's best described in "NLP data cleansing based on Linguistic Ontology constraints" (ESWC 2014) p5-7, http://jens-lehmann.org/files/2014/eswc_rdfunit_nlp.pdf, includes the ontology diagram."""@en ;
+
+    dc:description
+        """The RDFUnit ontology describes concepts used in RDFUnit, a test driven RDF Validation framework that can run automatically generated (based on a schema) and manually generated test cases against an endpoint.
+It's best described in "NLP data cleansing based on Linguistic Ontology constraints" (ESWC 2014) p5-7, http://jens-lehmann.org/files/2014/eswc_rdfunit_nlp.pdf, includes the ontology diagram."""@en ;
+
+    rdfs:seeAlso <http://rdfunit.aksw.org> .
+
+## set correct licence range
+<http://creativecommons.org/licenses/by/3.0/> a dcterms:LicenseDocument .
+<http://www.apache.org/licenses/LICENSE-2.0>  a dcterms:LicenseDocument .
+
+#################################################################
+# Patterns
+#################################################################
+
+rut:Pattern
+    a owl:Class ;
+    rdfs:label "Pattern"@en ;
+    rdfs:comment "Data Quality Test Pattern (DQTP): a query with embedded %%parameter's%% and a corresponding list of rut:parameter's"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty dcterms:identifier;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:sparqlWherePattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:sparqlPrevalencePattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:parameter;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:sparqlWherePattern
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlWherePattern"@en ;
+    rdfs:comment "The WHERE part of a sparql query with %%parameter%% placeholders. Must bind variables ?this and ?message (see rut:sparqlWhere)"@en ;
+    rdfs:domain rut:Pattern ;
+    rdfs:range xsd:string .
+
+rut:sparqlPrevalencePattern
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlPrevalencePattern"@en ;
+    rdfs:comment "A sparql query to COUNT the number of instances being tested. May reuse %%parameter's%% from rut:sparqlWherePattern. May be empty but should be present (TODO: why?)"@en ;
+    rdfs:domain rut:Pattern ;
+    rdfs:range xsd:string .
+
+rut:parameter
+    a owl:ObjectProperty ;
+    rdfs:label "parameter"@en ;
+    rdfs:comment "List of Parameters for the Pattern"@en ;
+    rdfs:range rut:Parameter .
+
+
+#################################################################
+# Pattern Parameter
+#################################################################
+
+
+rut:Parameter
+    a owl:Class ;
+    rdfs:label "Parameter"@en ;
+    rdfs:comment "A pattern parameter. Has dct:identifier equal to the %%parameter%% placeholder. rut:parameterConstraint and rut:constraintPattern determine the possible values"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty dcterms:identifier ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:parameterConstraint ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:constraintPattern ;
+        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:parameterConstraint
+    a owl:ObjectProperty ;
+    rdfs:label "parameterConstraint"@en ;
+    rdfs:comment "What can be substituted for the parameter, one of None (means anything), Operator, Resource, Property, Class"@en ;
+    rdfs:domain rut:Parameter ;
+    rdfs:range rut:ParameterConstraint .
+
+rut:constraintPattern
+    a owl:DatatypeProperty ;
+    rdfs:label "constraintPattern"@en ;
+    rdfs:comment "Regexp that further qualifies a rut:parameterConstraint, e.g. '<|<=|>|>=|=|!=' for a rut:Operator"@en ;
+    rdfs:domain rut:Parameter ;
+    rdfs:range xsd:string .
+
+rut:ParameterConstraint
+    a owl:Class ;
+    rdfs:label "ParameterConstraint"@en ;
+    rdfs:comment "What can be substituted for a parameter, one of None (means anything), Operator, Resource, Property, Class"@en .
+    
+#################################################################
+# Generators
+#################################################################
+
+rut:TestGenerator
+    a owl:Class ;
+    rdfs:label "TestGenerator"@en ;
+    rdfs:comment "Generates TestCases based on a Pattern and a SPARQL query that instantiates the pattern Parameters"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:sparqlGenerator;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:basedOnPattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:sparqlGenerator
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlGenerator"@en ;
+    rdfs:comment "SPARQL SELECT query that instantiates test cases based on a Pattern. Must return variables named the same as the Pattern's parameters, plus a ?DESCRIPTION"@en ;
+    rdfs:domain rut:TestGenerator ;
+    rdfs:range xsd:string .
+
+rut:basedOnPattern
+    a owl:ObjectProperty ;
+    rdfs:label "basedOnPattern"@en ;
+    rdfs:comment "The Pattern instantiated by a PatternBasedTestCase or a TestGenerator"@en ;
+    rdfs:range rut:Pattern .
+
+
+#################################################################
+# Tests / TestCase
+#################################################################
+
+rut:TestCase
+    a owl:Class ;
+    rdfs:label "TestCase"@en ;
+    rdfs:comment "Superclass of all test cases. Defines properties that all cases should have, but concrete implementation occurs on subclasses."@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty dcterms:description;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:appliesTo;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:generated;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:source;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:references;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ];
+    .
+
+rut:appliesTo
+    a owl:ObjectProperty ;
+    rdfs:label "appliesTo"@en ;
+    rdfs:comment "What does a test case apply to: Schema, EnrichedSchema, Dataset or Application"@en ;
+    rdfs:domain rut:TestCase ;
+    rdfs:range rut:TestAppliesTo .
+
+rut:generated
+    a owl:ObjectProperty ;
+    rdfs:label "generated"@en ;
+    rdfs:comment "How the test was created: Automatically generated or Manually made."@en ;
+    rdfs:domain rut:TestCase ;
+    rdfs:range rut:TestGenerationType .
+
+rut:references
+    a owl:ObjectProperty ;
+    rdfs:label "references"@en ;
+    rdfs:comment "The Classes and Properties involved in the described test case."@en ;
+    rdfs:domain rut:TestCase .
+
+rut:source
+    a owl:ObjectProperty ;
+    rdfs:label "source"@en ;
+    rdfs:comment "A schema (ontology), dataset or application that this test case was created for"@en .
+
+rut:testCaseLogLevel
+    a owl:ObjectProperty ;
+    rdfs:label "testCaseLogLevel"@en ;
+    rdfs:comment """rlog:Level that this TestCase will return in case of failure, or StatusTestCaseResult has recorded.
+Analogous to rlog:level, which applies to rlog:Entry and rut:RLOGTestCaseResult"""@en ;
+    rdfs:range rlog:Level .
+
+################################################################
+# Tests / PatternBasedTestCase
+################################################################
+
+rut:PatternBasedTestCase
+    a owl:Class ;
+    rdfs:subClassOf rut:TestCase ;
+    rdfs:label "PatternBasedTestCase"@en ;
+    rdfs:comment "A test case that is based on a Pattern instantiated with Bindings for each Parameter"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:basedOnPattern;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:binding;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:binding
+    a owl:ObjectProperty ;
+    rdfs:label "binding"@en ;
+    rdfs:comment "Binding of a pattern Parameter to a value"@en ;
+    rdfs:domain rut:PatternBasedTestCase ;
+    rdfs:range rut:Binding .
+
+
+#################################################################
+# Tests / Binding
+#################################################################
+
+rut:Binding
+    a owl:Class ;
+    rdfs:label "Binding"@en ;
+    rdfs:comment "Binding of a pattern Parameter to a value"@en  ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:parameter ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:bindingValue;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:bindingValue
+    a rdf:Property ;
+    rdfs:label "bindingValue"@en ;
+    rdfs:comment "the value provided for the bound Parameter"@en ;
+    rdfs:domain rut:Binding .
+
+
+#################################################################
+# Tests / ManualTestCase
+#################################################################
+
+rut:ManualTestCase
+    a owl:Class ;
+    rdfs:subClassOf rut:TestCase ;
+    rdfs:label "ManualTestCase"@en ;
+    rdfs:comment "A test case where the SPARQL is defined manually"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:sparqlWhere ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:sparqlPrevalence;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:sparqlWhere
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlWhere"@en ;
+    rdfs:comment
+        """The WHERE part of a SPARQL query. Must be enclosed in brackets {} and bind the following variables:
+        ?this: the instance (URI) where the constraint violation occurs;
+        ?message: a logging message."""@en ;
+    rdfs:domain rut:ManualTestCase ;
+    rdfs:range xsd:string .
+
+rut:sparqlPrevalence
+    a owl:DatatypeProperty ;
+    rdfs:label "sparqlPrevalence"@en ;
+    rdfs:comment "A SPARQL query to COUNT the number of instances being tested"@en ;
+    rdfs:domain rut:ManualTestCase ;
+    rdfs:range xsd:string .
+
+rut:TestGenerationType
+    a owl:Class ;
+    rdfs:label "TestGenerationType"@en ;
+    rdfs:comment "How a test case was created: Automatically generated or Manually made"@en .
+
+#################################################################
+
+rut:TestAppliesTo
+    a owl:Class ;
+    rdfs:label "TestAppliesTo"@en ;
+    rdfs:comment "What does a test case apply to: Schema, EnrichedSchema, Dataset or Application"@en .
+
+#################################################################
+# Test Suite
+#################################################################
+
+rut:TestSuite
+    a owl:Class ;
+    rdfs:label "TestSuite"@en ;
+    rdfs:comment "A suite of TestCases, linked to it using prov:hadMember"@en ;
+    rdfs:subClassOf prov:Collection ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty prov:hadMember ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:testSuite
+    a owl:ObjectProperty ;
+    rdfs:label "testSuite"@en ;
+    rdfs:comment """Links an ontology to a TestSuite for validating data adhering to that ontology. 
+Usually each TestCase in the suite will have rut:appliesTo rut:Schema (or rut:EnrichedSchema), and link back to the ontology using rut:source"""@en;
+    rdfs:domain owl:Ontology ;
+    rdfs:range rut:TestSuite .
+
+
+#################################################################
+# Test Case Dependencies
+#################################################################
+
+rut:TestCaseDependency
+    a owl:Class ;
+    rdfs:label "TestCaseDependency"@en ;
+    rdfs:comment "A dependency between two test cases"@en .
+
+rut:dependencyFrom
+    a owl:ObjectProperty ;
+    rdfs:label "dependencyFrom"@en ;
+    rdfs:comment "Test case that preconditions the execution of another test case"@en ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range rut:TestCase .
+
+rut:dependencyTo
+    a owl:ObjectProperty ;
+    rdfs:label "dependencyTo"@en ;
+    rdfs:comment "Test case whose execution depends on another test case"@en ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range rut:TestCase .
+
+rut:dependencyCondition
+    a owl:ObjectProperty ;
+    rdfs:label "dependencyCondition"@en ;
+    rdfs:comment "The rut:ResultStatus of the dependencyFrom case that triggers this dependency"@en ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range rut:ResultStatus .
+
+rut:dependencyExecute
+    a owl:DatatypeProperty ;
+    rdfs:label "dependencyExecute"@en ;
+    rdfs:comment """Whether to execute the dependencyTo case. 
+If a case has multiple dependencies, it is executed only if all dependencyCondition's are satisfied, and all dependencyExecute's are true.
+TODO: IS THIS TRUE? Else:
+Only useful while debugging test suites"""@en ;
+    rdfs:domain rut:TestCaseDependency ;
+    rdfs:range xsd:boolean .
+
+#################################################################
+# Test Execution
+#################################################################
+
+rut:TestExecution
+    a owl:Class ;
+    rdfs:label "TestExecution"@en ;
+    rdfs:comment "Holds the TestCaseResults of a TestSuite execution against a dataset. The results are linked to TestExecution by prov:wasGeneratedBy"@en ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty prov:startedAtTime ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty prov:endedAtTime ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:source ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:testsRun
+    a owl:DatatypeProperty ;
+    rdfs:label "testsRun"@en ;
+    rdfs:comment "Total tests run in a TestExecution"@en ;
+    rdfs:domain rut:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+rut:testsSucceeded
+    a owl:DatatypeProperty ;
+    rdfs:label "testsSucceeded"@en ;
+    rdfs:comment "Total tests that succedded in a TestExecution"@en ;
+    rdfs:domain rut:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+rut:testsFailed
+    a owl:DatatypeProperty ;
+    rdfs:label "testsFailed"@en ;
+    rdfs:comment "Total tests that failed in a TestExecution"@en ;
+    rdfs:domain rut:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+rut:testsTimeout
+    a owl:DatatypeProperty ;
+    rdfs:label "testsTimeout"@en ;
+    rdfs:comment "Total tests that timed out in a TestExecution"@en ;
+    rdfs:domain rut:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+rut:testsError
+    a owl:DatatypeProperty ;
+    rdfs:label "testsError"@en ;
+    rdfs:comment "Total tests that raised an error in a TestExecution"@en ;
+    rdfs:domain rut:TestExecution ;
+    rdfs:range xsd:nonNegativeInteger.
+
+
+#################################################################
+# Test Execution Results
+#################################################################
+
+rut:TestCaseResult
+    a owl:Class ;
+    rdfs:label "TestCaseResult"@en ;
+    rdfs:comment "The result of a TestExecution. Each result links to the TestCase (rut:testCase) it originated from, and to the TestExecution (prov:wasGeneratedBy) it is part of"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:testCase ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:testCase
+    a owl:ObjectProperty ;
+    rdfs:label "testCase"@en ;
+    rdfs:comment "The TestCase that this TestCaseResult originated from"@en ;
+    rdfs:range rut:TestCase .
+
+#################################################################
+
+rut:StatusTestCaseResult
+    a owl:Class ;
+    rdfs:subClassOf rut:TestCaseResult ;
+    rdfs:label "StatusTestCaseResult"@en ;
+    rdfs:comment """The status and log level of a single TestCaseResult.
+TODO: Why is rut:testCaseLogLevel mandatory, doesn't it apply only when resultStatus=Fail?
+It's optional in rut:TestCase"""@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:resultStatus ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty dcterms:description ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:testCaseLogLevel ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:resultStatus
+    a owl:ObjectProperty ;
+    rdfs:label "resultStatus"@en ;
+    rdfs:comment "result status. One of Success, Fail, Timeout, Error"@en ;
+    rdfs:range rut:ResultStatus .
+
+rut:ResultStatus
+    a owl:Class ;
+    rdfs:label "ResultStatus"@en ;
+    rdfs:comment "Result Status. One of Success, Fail, Timeout, Error"@en .
+
+#################################################################
+
+rut:AggregatedTestCaseResult
+    a owl:Class ;
+    rdfs:subClassOf rut:StatusTestCaseResult ;
+    rdfs:label "AggregatedTestCaseResult"@en ;
+    rdfs:comment "Aggregated results of a single TestCase execution"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:resultCount ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rut:resultPrevalence ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:resultCount
+    a owl:DatatypeProperty ;
+    rdfs:label "resultCount"@en ;
+    rdfs:comment "The number of results having the given rut:resultStatus in StatusTestCaseResult execution. -1 means there was a timeout and -2 an error."@en ;
+    rdfs:domain rut:Result ;
+    rdfs:range xsd:integer .
+
+rut:resultPrevalence
+    a owl:DatatypeProperty ;
+    rdfs:label "resultPrevalence"@en ;
+    rdfs:comment "The total COUNT of instances tested by a TestCase execution. -1 means there was a timeout and -2 an error."@en ;
+    rdfs:domain rut:AggregatedTestCaseResult ;
+    rdfs:range xsd:integer .
+
+#################################################################
+
+rut:RLOGTestCaseResult
+    a owl:Class ;
+    rdfs:subClassOf rlog:Entry ;
+    rdfs:subClassOf rut:TestCaseResult ;
+    rdfs:label "RLOGTestCaseResult"@en ;
+    rdfs:comment "A TestCaseResult at the level of an individual rlog:resource (the resource that was tested), with rlog:message and rlog:level"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rlog:resource ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rlog:message ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty rlog:level ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+#################################################################
+
+rut:ExtendedTestCaseResult
+    a owl:Class ;
+    rdfs:subClassOf spin:ConstraintViolation ;
+    rdfs:subClassOf rut:RLOGTestCaseResult ;
+    rdfs:label "ExtendedTestCaseResult"@en ;
+    rdfs:comment "An extended TestCaseResult that includes additional information: spin:violationRoot (offending resource), spin:violationPath (offending property), spin:violationValue (offending value), rut:errorPropertyContext (property also involved in the offense), and error classification, source and type. These are provided through rut:ResultAnotation"@en ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction;
+        owl:onProperty spin:violationRoot  ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    .
+
+rut:errorPropertyContext
+    a owl:ObjectProperty ;
+    rdfs:label "errorPropertyContext"@en ;
+    rdfs:comment "Property(ies) that also contributed to the offense (e.g. dbo:deathDate when spin:violationPath is dbo:birthDate)."@en ;
+    rdfs:domain rut:ExtendedTestCaseResult ;
+    rdfs:range rdf:Property .
+
+rut:errorClassification
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:subject ;
+    rdfs:label "errorClassification"@en ;
+    rdfs:comment "High-level classification of the error. Usually a skos:Concept"@en ;
+    rdfs:domain rut:ExtendedTestCaseResult .
+
+rut:errorSource
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:subject ;
+    rdfs:label "errorSource"@en ;
+    rdfs:comment "Source of the error, eg data parsing, data publishing, mapping, pre processing, post processing (if known beforehand). Usually a skos:Concept"@en ;
+    rdfs:domain rut:ExtendedTestCaseResult .
+
+rut:errorType
+    a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:subject ;
+    rdfs:label "errorType"@en ;
+    rdfs:comment "More specific error type, eg missing property, redundant property, inaccurate property. Usually a skos:Concept"@en ;
+    rdfs:domain rut:ExtendedTestCaseResult .
+
+
+#################################################################
+# ResultAnnotation
+#################################################################
+
+rut:ResultAnnotation
+    a owl:Class ;
+    rdfs:label "ResultAnnotation"@en ;
+    rdfs:comment "Used by a TestCase, TestAutoGenerator or Pattern to add properties to an ExtendedTestCaseResult."@en.
+
+rut:annotationProperty
+    a owl:ObjectProperty ;
+    rdfs:label "annotationProperty"@en ;
+    rdfs:comment "Property to add to ExtendedTestCaseResult, eg spin:violationPath, spin:violationValue, rut:errorPropertyContext"@en ;
+    rdfs:domain rut:ResultAnnotation;
+    rdfs:range rdf:Property .
+    
+rut:annotationValue
+    a rdf:Property ;
+    rdfs:label "annotationValue"@en ;
+    rdfs:comment "Value to add to ExtendedTestCaseResult. Either constant (eg rlog:WARN) or a string designating the query '?variable' or pattern '%%parameter%%' to use"@en ;
+    rdfs:domain rut:ResultAnnotation .
+
+rut:resultAnnotation
+    a owl:ObjectProperty ;
+    rdfs:label "resultAnnotation"@en ;
+    rdfs:comment "ResultAnnotation to apply to all results produced by a TestCase, TestAutoGenerator, or Pattern"@en ;
+    rdfs:range rut:ResultAnnotation .
+
+
+#################################################################
+# Named Individuals
+#################################################################
+
+# ParameterConstraint Instances
+
+rut:None
+    a rut:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "None"@en ;
+    rdfs:comment "The parameter can be anything, even a free variable (?var)"@en .
+
+rut:Operator
+    a rut:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Operator"@en ;
+    rdfs:comment "The parameter can be an operator."@en .
+
+rut:Resource
+    a rut:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Resource"@en ;
+    rdfs:comment "The pattern can be a resource."@en .
+
+rut:Property
+    a rut:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Property"@en ;
+    rdfs:comment "The parameter is restricted to a property."@en .
+
+rut:Class
+    a rut:ParameterConstraint ,
+      owl:NamedIndividual ;
+    rdfs:label "Class"@en ;
+    rdfs:comment "The parameter is restricted to a Class."@en .
+
+## TestAppliesTo Instances
+
+rut:Schema
+    a rut:TestAppliesTo ,
+      owl:NamedIndividual ;
+    rdfs:label "Schema"@en ;
+    rdfs:comment "Schema: When the tests apply to an ontology / vocabulary"@en .
+
+rut:Dataset
+    a rut:TestAppliesTo ,
+      owl:NamedIndividual ;
+    rdfs:label "Dataset"@en ;
+    rdfs:comment "Dataset: When the tests apply to a dataset only (i.e. a SPARQL Endpoint)"@en .
+
+rut:EnrichedSchema
+    a rut:TestAppliesTo ,
+      owl:NamedIndividual ;
+    rdfs:label "EnrichedSchema"@en ;
+    rdfs:comment "EnrichedSchema: When the tests apply to an ontology / vocabulary enriched with external (semi-)automatic approaches"@en .
+
+rut:Application
+    a rut:TestAppliesTo ,
+      owl:NamedIndividual ;
+    rdfs:label "Application"@en ;
+    rdfs:comment "Application: When the tests are specific to an application only"@en .
+
+## TestGenerationType Instances
+
+rut:ManuallyGenerated
+    a rut:TestGenerationType ,
+        owl:NamedIndividual ;
+    rdfs:label "ManuallyGenerated"@en ;
+    rdfs:comment "ManuallyGenerated: This test was created manually"@en .
+
+rut:AutoGenerated
+    a rut:TestGenerationType ,
+        owl:NamedIndividual ;
+    rdfs:label "AutoGenerated"@en ;
+    rdfs:comment "AutoGenerated: This test was created automatically"@en .
+
+## ResultStatus Individuals
+
+rut:ResultStatusSuccess
+    a rut:ResultStatus ,
+      owl:NamedIndividual ;
+    rdfs:label "ResultStatusSuccess"@en ;
+    rdfs:comment "ResultStatusSuccess: the test succeeded"@en .
+
+rut:ResultStatusFail
+    a rut:ResultStatus ,
+      owl:NamedIndividual ;
+    rdfs:label "ResultStatusFail"@en ;
+    rdfs:comment "ResultStatusFail: the test failed. rut:testCaseLogLevel further specifies the rlog:Level"@en .
+      
+rut:ResultStatusTimeout
+    a rut:ResultStatus ,
+      owl:NamedIndividual ;
+    rdfs:label "ResultStatusTimeout"@en ;
+    rdfs:comment "ResultStatusTimeout: the test timed out"@en .
+      
+rut:ResultStatusError
+    a rut:ResultStatus ,
+      owl:NamedIndividual ;
+    rdfs:label "ResultStatusError"@en ;
+    rdfs:comment "ResultStatusError: the test raised an error (eg HTTP error code)"@en .

@@ -48,7 +48,7 @@ public final class GenerateCommand implements Callable {
   @Option(names = {"-o", "--output"}, description = "A file location to write the tests (default: '-' for stdout).", defaultValue = "-")
   private String output;
 
-  @Option(names = {"-f", "--datafolder"}, description = "The location of the data folder to write the tests to caches.")
+  @Option(names = {"-f", "--data-folder"}, description = "The location of the data folder to write the tests to caches.")
   private String datafolder = null;
 
   @Option(names = {"-w", "--addWhereClause"}, description = "Add the whereClause explicitly to PatternBasedTestCases.")
