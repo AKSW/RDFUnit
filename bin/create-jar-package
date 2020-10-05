@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mvn clean
+
+# create cli fat-jar
+mvn clean package
