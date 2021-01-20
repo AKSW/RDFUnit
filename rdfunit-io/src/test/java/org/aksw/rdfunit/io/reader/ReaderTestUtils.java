@@ -13,12 +13,12 @@ import org.apache.jena.vocabulary.OWL;
  */
 public final class ReaderTestUtils {
 
-    public static Model createOneTripleModel() {
-        Model model = ModelFactory.createDefaultModel();
-        model.add(
-                ResourceFactory.createResource("http://rdfunit.aksw.org"),
-                OWL.sameAs,
-                ResourceFactory.createResource("http://dbpedia.org/resource/Cool"));
-        return model;
-    }
+  public static Model createOneTripleModel() {
+    Model model = ModelFactory.createDefaultModel();
+    model.add(
+        ResourceFactory.createResource("http://rdfunit.aksw.org"),
+        OWL.sameAs,
+        ResourceFactory.createResource("http://dbpedia.org/resource/Cool"));
+    return model;
+  }
 }

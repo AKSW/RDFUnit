@@ -1,5 +1,11 @@
 package org.aksw.rdfunit.junit;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
@@ -15,192 +21,187 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
  * @author Michael Leuthold
-
  */
 public class RunnerTest {
 
-    private static final RunNotifier notifier = new RunNotifier();
-    private static final MockRunListener mockRunListener = new MockRunListener();
+  private static final RunNotifier notifier = new RunNotifier();
+  private static final MockRunListener mockRunListener = new MockRunListener();
 
+
+  @BeforeClass
+  public static void addNotifierListener() {
+    notifier.addListener(mockRunListener);
+
+    assertThat(TestRunner.beforeClassCalled).isEqualTo(0);
+
+    Request.aClass(TestRunner.class).getRunner().run(notifier);
+  }
+
+  @Test
+  public void runsFinished() {
+    assertThat(mockRunListener.getTestsFinished()).isGreaterThan(0);
+  }
+
+  @Test
+  public void runsFailed() {
+    assertThat(mockRunListener.getTestsFailed()).isGreaterThan(0);
+  }
+
+  @Test
+  public void methodNamesMatchPattern() {
+    for (Description d : mockRunListener.getDescriptions()) {
+      assertThat(d.getMethodName())
+          .matches("\\[(getInputData|returningNull|returningMockReader)\\] .*");
+    }
+  }
+
+  @Test
+  public void failuresMatchPattern() {
+    for (Failure f : mockRunListener.getFailures()) {
+      assertThat(f.getDescription().getMethodName()).matches("\\[" +
+          "(getInputData|returningNull|returningMockReader)\\] .*");
+    }
+  }
+
+  @Test
+  public void beforeClassMethodIsCalledOnce() {
+    assertThat(TestRunner.beforeClassCalled).isEqualTo(1);
+  }
+
+  @Test
+  public void afterClassMethodIsCalledOnce() {
+    assertThat(TestRunner.afterClassCalled).isEqualTo(1);
+  }
+
+  @Test
+  public void returningNullMethodThrowsRuntimeExceptionWithNPE() {
+    final Failure returningNull = findFirstFailureWhereDescriptionContains("returningNull");
+    assertThat(returningNull.getException()).isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
+  public void returningMockReaderMethodThrowsRuntimeExceptionWithNPE() {
+    final Failure returningMockReader = findFirstFailureWhereDescriptionContains(
+        "returningMockReader");
+    assertThat(returningMockReader.getException()).isInstanceOf(RuntimeException.class);
+  }
+
+  private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
+    return mockRunListener.getFailures().stream().filter(
+        failure ->
+            failure.getDescription().getDisplayName().contains(containedInDescription))
+        .findFirst()
+        .orElse(null);
+  }
+
+  @Test
+  public void ignoredMethodIsNeverCalled() {
+    assertThat(TestRunner.ignoredTestInputMethodNotCalled).isTrue();
+  }
+
+  @Test
+  public void testInputNameValueIsUsed() {
+    int size = (int) mockRunListener.getIgnored().stream()
+        .filter(input -> input.getDisplayName().contains("inputs name")).count();
+    assertThat(size).isGreaterThan(0);
+  }
+
+  @RunWith(RdfUnitJunitRunner.class)
+  @Schema(uri = Constants.EXAMPLE_SCHEMA)
+  public static class TestRunner {
+
+    private static int beforeClassCalled = 0;
+    private static int afterClassCalled = 0;
+    private static boolean ignoredTestInputMethodNotCalled = true;
 
     @BeforeClass
-    public static void addNotifierListener() {
-        notifier.addListener(mockRunListener);
-
-        assertThat(TestRunner.beforeClassCalled).isEqualTo(0);
-
-        Request.aClass(TestRunner.class).getRunner().run(notifier);
+    public static void beforeClass() {
+      beforeClassCalled++;
     }
 
-    @Test
-    public void runsFinished() {
-        assertThat(mockRunListener.getTestsFinished()).isGreaterThan(0);
+    @AfterClass
+    public static void afterClass() {
+      afterClassCalled++;
     }
 
-    @Test
-    public void runsFailed() {
-        assertThat(mockRunListener.getTestsFailed()).isGreaterThan(0);
+    @TestInput
+    public RdfReader getInputData() {
+      return new RdfModelReader(ModelFactory
+          .createDefaultModel()
+          .read(Constants.EXAMPLE_INPUT_MODEL));
     }
 
-    @Test
-    public void methodNamesMatchPattern() {
-        for (Description d : mockRunListener.getDescriptions()) {
-            assertThat(d.getMethodName()).matches("\\[(getInputData|returningNull|returningMockReader)\\] .*");
-        }
+    @TestInput
+    public RdfReader returningNull() {
+      return null;
     }
 
-    @Test
-    public void failuresMatchPattern() {
-        for (Failure f : mockRunListener.getFailures()) {
-            assertThat(f.getDescription().getMethodName()).matches("\\[" +
-                    "(getInputData|returningNull|returningMockReader)\\] .*");
-        }
+    @TestInput
+    public RdfReader returningMockReader() {
+      RdfReader mockReader = mock(RdfReader.class);
+      try {
+        when(mockReader.read()).thenThrow(new RdfReaderException("Failed to read (mock)!"));
+      } catch (RdfReaderException e) {
+        throw new IllegalArgumentException(e);
+      }
+      return mockReader;
     }
 
-    @Test
-    public void beforeClassMethodIsCalledOnce() {
-        assertThat(TestRunner.beforeClassCalled).isEqualTo(1);
+    @TestInput
+    @Ignore
+    public RdfReader ignoredTestInput() {
+      ignoredTestInputMethodNotCalled = false;
+      return new RdfModelReader(ModelFactory.createDefaultModel());
     }
 
-    @Test
-    public void afterClassMethodIsCalledOnce() {
-        assertThat(TestRunner.afterClassCalled).isEqualTo(1);
+    @TestInput(name = "inputs name")
+    @Ignore
+    public RdfReader ignoredTestInputWithName() {
+      return new RdfModelReader(ModelFactory.createDefaultModel());
+    }
+  }
+
+  private static class MockRunListener extends RunListener {
+
+    private final List<Description> descriptions = new ArrayList<>();
+    private final List<Failure> failures = new ArrayList<>();
+    private final List<Description> ignored = new ArrayList<>();
+
+    @Override
+    public void testFinished(Description description) {
+      descriptions.add(description);
     }
 
-    @Test
-    public void returningNullMethodThrowsRuntimeExceptionWithNPE() {
-        final Failure returningNull = findFirstFailureWhereDescriptionContains("returningNull");
-        assertThat(returningNull.getException()).isInstanceOf(NullPointerException.class);
+    @Override
+    public void testFailure(Failure failure) {
+      failures.add(failure);
     }
 
-    @Test
-    public void returningMockReaderMethodThrowsRuntimeExceptionWithNPE() {
-        final Failure returningMockReader = findFirstFailureWhereDescriptionContains("returningMockReader");
-        assertThat(returningMockReader.getException()).isInstanceOf(RuntimeException.class);
+    @Override
+    public void testIgnored(Description description) {
+      ignored.add(description);
     }
 
-    private Failure findFirstFailureWhereDescriptionContains(final String containedInDescription) {
-        return mockRunListener.getFailures().stream().filter(
-                failure ->
-                        failure.getDescription().getDisplayName().contains(containedInDescription))
-                .findFirst()
-                .orElse(null);
+    public List<Description> getIgnored() {
+      return ignored;
     }
 
-    @Test
-    public void ignoredMethodIsNeverCalled() {
-        assertThat(TestRunner.ignoredTestInputMethodNotCalled).isTrue();
+    public List<Description> getDescriptions() {
+      return descriptions;
     }
 
-    @Test
-    public void testInputNameValueIsUsed() {
-        int size = (int) mockRunListener.getIgnored().stream().filter(input -> input.getDisplayName().contains("inputs name")).count();
-        assertThat(size).isGreaterThan(0);
+    public List<Failure> getFailures() {
+      return failures;
     }
 
-    @RunWith(RdfUnitJunitRunner.class)
-    @Schema(uri = Constants.EXAMPLE_SCHEMA)
-    public static class TestRunner {
-
-        private static int beforeClassCalled = 0;
-        private static int afterClassCalled = 0;
-        private static boolean ignoredTestInputMethodNotCalled = true;
-
-        @BeforeClass
-        public static void beforeClass() {
-            beforeClassCalled++;
-        }
-
-        @AfterClass
-        public static void afterClass() {
-            afterClassCalled++;
-        }
-
-        @TestInput
-        public RdfReader getInputData() {
-            return new RdfModelReader(ModelFactory
-                    .createDefaultModel()
-                    .read(Constants.EXAMPLE_INPUT_MODEL));
-        }
-
-        @TestInput
-        public RdfReader returningNull() {
-            return null;
-        }
-
-        @TestInput
-        public RdfReader returningMockReader() {
-            RdfReader mockReader = mock(RdfReader.class);
-            try {
-                when(mockReader.read()).thenThrow(new RdfReaderException("Failed to read (mock)!"));
-            } catch (RdfReaderException e) {
-                throw new IllegalArgumentException(e);
-            }
-            return mockReader;
-        }
-
-        @TestInput
-        @Ignore
-        public RdfReader ignoredTestInput() {
-            ignoredTestInputMethodNotCalled = false;
-            return new RdfModelReader(ModelFactory.createDefaultModel());
-        }
-
-        @TestInput(name = "inputs name")
-        @Ignore
-        public RdfReader ignoredTestInputWithName() {
-            return new RdfModelReader(ModelFactory.createDefaultModel());
-        }
+    public int getTestsFailed() {
+      return failures.size();
     }
 
-    private static class MockRunListener extends RunListener {
-
-        private final List<Description> descriptions = new ArrayList<>();
-        private final List<Failure> failures = new ArrayList<>();
-        private final List<Description> ignored = new ArrayList<>();
-
-        @Override
-        public void testFinished(Description description) {
-            descriptions.add(description);
-        }
-
-        @Override
-        public void testFailure(Failure failure) {
-            failures.add(failure);
-        }
-
-        @Override
-        public void testIgnored(Description description) {
-            ignored.add(description);
-        }
-
-        public List<Description> getIgnored() {
-            return ignored;
-        }
-
-        public List<Description> getDescriptions() {
-            return descriptions;
-        }
-
-        public List<Failure> getFailures() {
-            return failures;
-        }
-
-        public int getTestsFailed() {
-            return failures.size();
-        }
-
-        public int getTestsFinished() {
-            return descriptions.size();
-        }
+    public int getTestsFinished() {
+      return descriptions.size();
     }
+  }
 }

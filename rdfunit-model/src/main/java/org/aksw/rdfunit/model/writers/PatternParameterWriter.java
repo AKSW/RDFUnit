@@ -12,32 +12,35 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
-
  */
 public final class PatternParameterWriter implements ElementWriter {
 
-    private final PatternParameter patternParameter;
+  private final PatternParameter patternParameter;
 
-    private PatternParameterWriter(PatternParameter patternParameter) {
-        this.patternParameter = patternParameter;
+  private PatternParameterWriter(PatternParameter patternParameter) {
+    this.patternParameter = patternParameter;
+  }
+
+  public static PatternParameterWriter create(PatternParameter patternParameter) {
+    return new PatternParameterWriter(patternParameter);
+  }
+
+
+  @Override
+  public Resource write(Model model) {
+    Resource resource = ElementWriter.copyElementResourceInModel(patternParameter, model);
+
+    resource
+        .addProperty(RDF.type, RDFUNITv.Parameter)
+        .addProperty(DCTerms.identifier, patternParameter.getId())
+        .addProperty(RDFUNITv.parameterConstraint,
+            model.createResource(patternParameter.getConstraint().getUri()));
+
+    if (patternParameter.getConstraintPattern().isPresent()) {
+      resource
+          .addProperty(RDFUNITv.constraintPattern, patternParameter.getConstraintPattern().get());
     }
 
-    public static PatternParameterWriter create(PatternParameter patternParameter) {return new PatternParameterWriter(patternParameter);}
-
-
-    @Override
-    public Resource write(Model model) {
-        Resource resource = ElementWriter.copyElementResourceInModel(patternParameter, model);
-
-        resource
-                .addProperty(RDF.type, RDFUNITv.Parameter)
-                .addProperty(DCTerms.identifier, patternParameter.getId())
-                .addProperty(RDFUNITv.parameterConstraint, model.createResource(patternParameter.getConstraint().getUri()));
-
-        if (patternParameter.getConstraintPattern().isPresent()) {
-            resource.addProperty(RDFUNITv.constraintPattern, patternParameter.getConstraintPattern().get());
-        }
-
-        return resource;
-    }
+    return resource;
+  }
 }

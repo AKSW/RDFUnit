@@ -13,48 +13,52 @@ import org.apache.jena.vocabulary.DCTerms;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
-
  */
 public final class TestAnnotationWriter implements ElementWriter {
 
-    private final TestCaseAnnotation tcAnnotation;
+  private final TestCaseAnnotation tcAnnotation;
 
-    private TestAnnotationWriter(TestCaseAnnotation tcAnnotation) {
-        this.tcAnnotation = tcAnnotation;
+  private TestAnnotationWriter(TestCaseAnnotation tcAnnotation) {
+    this.tcAnnotation = tcAnnotation;
+  }
+
+  public static TestAnnotationWriter create(TestCaseAnnotation tcAnnotation) {
+    return new TestAnnotationWriter(tcAnnotation);
+  }
+
+
+  @Override
+  public Resource write(Model model) {
+    Resource resource = ElementWriter.copyElementResourceInModel(tcAnnotation, model);
+
+    resource
+        .addProperty(DCTerms.description, tcAnnotation.getDescription())
+        .addProperty(RDFUNITv.generated, model.createResource(tcAnnotation.getGenerated().getUri()))
+        .addProperty(RDFUNITv.appliesTo, model.createResource(tcAnnotation.getAppliesTo().getUri()))
+        .addProperty(RDFUNITv.source, model.createResource(tcAnnotation.getSourceUri()))
+        .addProperty(RDFUNITv.testCaseLogLevel,
+            model.createResource(tcAnnotation.getTestCaseLogLevel().getUri()));
+
+    if (tcAnnotation.getAutoGeneratorURI() != null && !tcAnnotation.getAutoGeneratorURI().trim()
+        .isEmpty()) {
+      resource.addProperty(RDFUNITv.testGenerator,
+          model.createResource(tcAnnotation.getAutoGeneratorURI()));
     }
 
-    public static TestAnnotationWriter create(TestCaseAnnotation tcAnnotation) {return new TestAnnotationWriter(tcAnnotation);}
-
-
-    @Override
-    public Resource write(Model model) {
-        Resource resource = ElementWriter.copyElementResourceInModel(tcAnnotation, model);
-
-        resource
-                .addProperty(DCTerms.description, tcAnnotation.getDescription())
-                .addProperty(RDFUNITv.generated, model.createResource(tcAnnotation.getGenerated().getUri()))
-                .addProperty(RDFUNITv.appliesTo, model.createResource(tcAnnotation.getAppliesTo().getUri()))
-                .addProperty(RDFUNITv.source, model.createResource(tcAnnotation.getSourceUri()))
-                .addProperty(RDFUNITv.testCaseLogLevel, model.createResource(tcAnnotation.getTestCaseLogLevel().getUri()));
-
-        if (tcAnnotation.getAutoGeneratorURI()!= null && !tcAnnotation.getAutoGeneratorURI().trim().isEmpty()) {
-            resource.addProperty(RDFUNITv.testGenerator, model.createResource(tcAnnotation.getAutoGeneratorURI()));
-        }
-
-        for (String r : tcAnnotation.getReferences()) {
-            resource.addProperty(RDFUNITv.references, ResourceFactory.createResource(r));
-        }
-
-        for (ResultAnnotation annotation : tcAnnotation.getResultAnnotations()) {
-            Resource annRes = ResultAnnotationWriter.create(annotation).write(model);
-            resource.addProperty(RDFUNITv.resultAnnotation, annRes);
-        }
-
-        for (ResultAnnotation annotation : tcAnnotation.getVariableAnnotations()) {
-            Resource annRes = ResultAnnotationWriter.create(annotation).write(model);
-            resource.addProperty(RDFUNITv.resultAnnotation, annRes);
-        }
-
-        return resource;
+    for (String r : tcAnnotation.getReferences()) {
+      resource.addProperty(RDFUNITv.references, ResourceFactory.createResource(r));
     }
+
+    for (ResultAnnotation annotation : tcAnnotation.getResultAnnotations()) {
+      Resource annRes = ResultAnnotationWriter.create(annotation).write(model);
+      resource.addProperty(RDFUNITv.resultAnnotation, annRes);
+    }
+
+    for (ResultAnnotation annotation : tcAnnotation.getVariableAnnotations()) {
+      Resource annRes = ResultAnnotationWriter.create(annotation).write(model);
+      resource.addProperty(RDFUNITv.resultAnnotation, annRes);
+    }
+
+    return resource;
+  }
 }

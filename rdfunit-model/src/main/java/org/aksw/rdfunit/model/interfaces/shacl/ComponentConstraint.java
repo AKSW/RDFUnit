@@ -1,32 +1,33 @@
 package org.aksw.rdfunit.model.interfaces.shacl;
 
 
+import java.util.Map;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
 
-import java.util.Map;
-
 public interface ComponentConstraint {
-    Shape getShape();
 
-    /**
-     * default message for constraint, if there are multiple picks one, if there are none, provides one
-     */
-    Literal getMessage();
+  Shape getShape();
 
-    // Optional<String> getMessageForLang(String langTag);
+  /**
+   * default message for constraint, if there are multiple picks one, if there are none, provides
+   * one
+   */
+  Literal getMessage();
 
-    /**
-     * return the constraint component associated with this constraint
-     */
-    Component getComponent();
+  // Optional<String> getMessageForLang(String langTag);
 
-    ComponentValidator getValidator();
+  /**
+   * return the constraint component associated with this constraint
+   */
+  Component getComponent();
 
-    Map<ComponentParameter, RDFNode> getBindings();
+  ComponentValidator getValidator();
 
-    TestCase getTestCase();
+  Map<ComponentParameter, RDFNode> getBindings();
 
-    // Optional<ComponentConstraint> getParentConstraint();
+  TestCase getTestCase();
+
+  // Optional<ComponentConstraint> getParentConstraint();
 }

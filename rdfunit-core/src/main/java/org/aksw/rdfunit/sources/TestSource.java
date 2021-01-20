@@ -1,9 +1,7 @@
 package org.aksw.rdfunit.sources;
 
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-
-import java.io.Closeable;
 import java.util.Collection;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 
 /**
  * @author Dimitris Kontokostas
@@ -11,10 +9,10 @@ import java.util.Collection;
  */
 public interface TestSource extends Source, AutoCloseable {
 
-    QueryingConfig getQueryingConfig();
+  QueryingConfig getQueryingConfig();
 
-    Collection<SchemaSource> getReferencesSchemata();
+  Collection<SchemaSource> getReferencesSchemata();
 
-    QueryExecutionFactory getExecutionFactory();
+  QueryExecutionFactory getExecutionFactory();
 
 }

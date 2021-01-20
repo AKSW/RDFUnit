@@ -1,26 +1,24 @@
 package org.aksw.rdfunit.io.format;
 
 /**
- * Defines different types of format type
- * (helper private enum for SerializationFormat)
+ * Defines different types of format type (helper private enum for SerializationFormat)
  *
  * @author Dimitris Kontokostas
  * @since 6/18/14 6:50 PM
-
  */
 public enum SerializationFormatIOType {
-    /**
-     * Only input format
-     */
-    input,
+  /**
+   * Only input format
+   */
+  input,
 
-    /**
-     * Only output format
-     */
-    output,
+  /**
+   * Only output format
+   */
+  output,
 
-    /**
-     * Input and Output format
-     */
-    inputAndOutput
+  /**
+   * Input and Output format
+   */
+  inputAndOutput
 }

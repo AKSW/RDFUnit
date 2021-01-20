@@ -1,5 +1,9 @@
 package org.aksw.rdfunit.model.readers.results;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.Collection;
 import org.aksw.rdfunit.io.reader.RdfModelReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
@@ -15,71 +19,68 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @RunWith(Parameterized.class)
 @Ignore
 public class TestExecutionReaderTest {
 
 
-    @Parameterized.Parameters(name= "{index}: Result Type: {1}")
-    public static Collection<Object[]> resources() throws RdfReaderException {
+  @Parameterized.Parameter
+  public Model inputModel;
+  @Parameterized.Parameter(value = 1)
+  public String resultTypeName;
 
-        Model aggregated = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl").read()).read();
-        Model status = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl").read()).read();
-        Model shacl = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclTestCaseResult.ttl").read()).read();
-        Model shacllite = new RdfModelReader(RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclLiteTestCaseResult.ttl").read()).read();
-        Model all = new RdfModelReader(aggregated.union(status).union(shacl).union(shacllite)).read();
+  @Parameterized.Parameters(name = "{index}: Result Type: {1}")
+  public static Collection<Object[]> resources() throws RdfReaderException {
 
-        return Arrays.asList(new Object[][] {
-                { aggregated, "aggregated" },
-                { status, "status" },
-                { shacl, "shacl" },
-                { shacllite, "shacl-lite" },
-                { all, "all-together" },
-        });
+    Model aggregated = new RdfModelReader(RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/model/results/sample.aggregatedTestCaseResult.ttl")
+        .read()).read();
+    Model status = new RdfModelReader(RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/model/results/sample.statusTestCaseResult.ttl")
+        .read()).read();
+    Model shacl = new RdfModelReader(RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclTestCaseResult.ttl")
+        .read()).read();
+    Model shacllite = new RdfModelReader(RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/model/results/sample.shaclLiteTestCaseResult.ttl")
+        .read()).read();
+    Model all = new RdfModelReader(aggregated.union(status).union(shacl).union(shacllite)).read();
+
+    return Arrays.asList(new Object[][]{
+        {aggregated, "aggregated"},
+        {status, "status"},
+        {shacl, "shacl"},
+        {shacllite, "shacl-lite"},
+        {all, "all-together"},
+    });
+  }
+
+  @Test
+  public void test() {
+
+    assertThat(inputModel.isEmpty()).isFalse();
+    Model outputModel = ModelFactory.createDefaultModel();
+    outputModel.setNsPrefixes(inputModel.getNsPrefixMap());
+
+    for (Resource testExecutionResource : inputModel
+        .listResourcesWithProperty(RDF.type, RDFUNITv.TestExecution).toList()) {
+      TestExecution testExecution = TestExecutionReader.create().read(testExecutionResource);
+
+      TestExecutionWriter writer = TestExecutionWriter.create(testExecution);
+      writer.write(outputModel);
     }
 
-    @Parameterized.Parameter
-    public Model inputModel;
+    //new RDFFileWriter(resultTypeName).write(outputModel);
 
-    @Parameterized.Parameter(value = 1)
-    public String resultTypeName;
+    //Model difference = inputModel.difference(outputModel);
+    //new RDFFileWriter("diff-" +resultTypeName).write(difference);
 
+    //Model difference2 = outputModel.difference(inputModel);
+    //new RDFFileWriter("diff2-" +resultTypeName).write(difference2);
+    assertThat(inputModel.isIsomorphicWith(outputModel)).isTrue();
 
-    @Test
-    public void test() {
+    //assertThat(difference.isEmpty()).isTrue();
+    //assertThat(difference2.isEmpty()).isTrue();
 
-        assertThat(inputModel.isEmpty()).isFalse();
-        Model outputModel = ModelFactory.createDefaultModel();
-        outputModel.setNsPrefixes(inputModel.getNsPrefixMap());
-
-        for (Resource testExecutionResource: inputModel.listResourcesWithProperty(RDF.type, RDFUNITv.TestExecution).toList()) {
-            TestExecution testExecution = TestExecutionReader.create().read(testExecutionResource);
-
-            TestExecutionWriter writer = TestExecutionWriter.create(testExecution) ;
-            writer.write(outputModel);
-        }
-
-        //new RDFFileWriter(resultTypeName).write(outputModel);
-
-        //Model difference = inputModel.difference(outputModel);
-        //new RDFFileWriter("diff-" +resultTypeName).write(difference);
-
-        //Model difference2 = outputModel.difference(inputModel);
-        //new RDFFileWriter("diff2-" +resultTypeName).write(difference2);
-        assertThat(inputModel.isIsomorphicWith(outputModel)).isTrue();
-
-        //assertThat(difference.isEmpty()).isTrue();
-        //assertThat(difference2.isEmpty()).isTrue();
-
-
-
-
-
-
-    }
+  }
 }

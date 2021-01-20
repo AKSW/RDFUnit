@@ -10,18 +10,18 @@ import org.apache.jena.rdf.model.RDFNode;
  * @author Dimitris Kontokostas
  * @since 9/23/13 6:31 AM
  */
-public interface TestCase extends GenericTestCase{
+public interface TestCase extends GenericTestCase {
 
-    String getSparqlWhere();
+  String getSparqlWhere();
 
-    String getSparqlPrevalence();
+  String getSparqlPrevalence();
 
-    RDFNode getFocusNode(QuerySolution solution);
+  RDFNode getFocusNode(QuerySolution solution);
 
-    default Query getSparqlPrevalenceQuery() {
-        if (getSparqlPrevalence().trim().isEmpty()) {
-            return null;
-        }
-        return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence());
+  default Query getSparqlPrevalenceQuery() {
+    if (getSparqlPrevalence().trim().isEmpty()) {
+      return null;
     }
+    return QueryFactory.create(PrefixNSService.getSparqlPrefixDecl() + getSparqlPrevalence());
+  }
 }

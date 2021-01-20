@@ -1,5 +1,10 @@
 package org.aksw.rdfunit.model.readers;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfMultipleReader;
@@ -15,15 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.junit.Assert.assertTrue;
-
 /**
- * TAG Reader test
- * tries to read without error all defined generators
+ * TAG Reader test tries to read without error all defined generators
  *
  * @author Dimitris Kontokostas
  * @since 8/17/15 4:05 PM
@@ -32,40 +30,38 @@ import static org.junit.Assert.assertTrue;
 public class TestGeneratorReaderTest {
 
 
+  @Parameterized.Parameter
+  public Resource resource;
 
+  @Parameterized.Parameters(name = "{index}: TestGenerator: {0}")
+  public static Collection<Object[]> resources() throws RdfReaderException {
 
-    @Before
-    public void setUp() {
-        // Needed to resolve the patterns
-        RDFUnit
-            .createWithAllGenerators()
-            .init();
+    Model model = new RdfMultipleReader(Arrays.asList(
+        RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL),
+        RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS),
+        RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP)
+    )).read();
+
+    Collection<Object[]> parameters = new ArrayList<>();
+    for (Resource resource : model.listResourcesWithProperty(RDF.type, RDFUNITv.TestGenerator)
+        .toList()) {
+      parameters.add(new Object[]{resource});
     }
+    return parameters;
+  }
 
-    @Parameterized.Parameters(name= "{index}: TestGenerator: {0}")
-    public static Collection<Object[]> resources() throws RdfReaderException {
+  @Before
+  public void setUp() {
+    // Needed to resolve the patterns
+    RDFUnit
+        .createWithAllGenerators()
+        .init();
+  }
 
-        Model model = new RdfMultipleReader(Arrays.asList(
-                RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_OWL),
-                RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_RS),
-                RdfReaderFactory.createResourceReader(Resources.AUTO_GENERATORS_DSP)
-        )).read();
-
-        Collection<Object[]> parameters = new ArrayList<>();
-        for (Resource resource: model.listResourcesWithProperty(RDF.type, RDFUNITv.TestGenerator).toList()) {
-            parameters.add(new Object[] {resource});
-        }
-        return parameters;
-    }
-
-    @Parameterized.Parameter
-    public Resource resource;
-
-
-    @Test
-    public void testGenerators() {
-        TestGenerator tag = TestGeneratorReader.create().read(resource);
-        assertTrue("TAG" + resource.getURI() + " is not valid", tag.isValid());
-    }
+  @Test
+  public void testGenerators() {
+    TestGenerator tag = TestGeneratorReader.create().read(resource);
+    assertTrue("TAG" + resource.getURI() + " is not valid", tag.isValid());
+  }
 
 }

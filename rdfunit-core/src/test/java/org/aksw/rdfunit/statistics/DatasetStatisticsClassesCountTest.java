@@ -1,10 +1,9 @@
 package org.aksw.rdfunit.statistics;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.Map;
-
-import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
 
 /**
  * Description
@@ -14,23 +13,23 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class DatasetStatisticsClassesCountTest extends DatasetStatisticsTest {
 
-    private static final int EXPECTED_ITEMS = 2;
+  private static final int EXPECTED_ITEMS = 2;
 
-    @Override
-    protected int getExteptedItems() {
-        return EXPECTED_ITEMS;
+  @Override
+  protected int getExteptedItems() {
+    return EXPECTED_ITEMS;
+  }
+
+  @Override
+  protected DatasetStatistics getStatisticsObject() {
+    return new DatasetStatisticsClassesCount();
+  }
+
+  @Test
+  public void testGetStats() {
+
+    for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
+      assertNotEquals(Long.valueOf(0), entry.getValue());
     }
-
-    @Override
-    protected DatasetStatistics getStatisticsObject() {
-        return new DatasetStatisticsClassesCount();
-    }
-
-    @Test
-    public void testGetStats() {
-
-        for (Map.Entry<String, Long> entry : executeBasicTest().entrySet()) {
-            assertNotEquals(Long.valueOf(0), entry.getValue());
-        }
-    }
+  }
 }

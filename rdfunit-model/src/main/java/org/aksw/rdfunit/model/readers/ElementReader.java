@@ -7,9 +7,8 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:03 PM
-
  */
-public interface ElementReader <T> {
+public interface ElementReader<T> {
 
-    T read(Resource resource);
+  T read(Resource resource);
 }

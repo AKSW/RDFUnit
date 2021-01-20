@@ -1,11 +1,9 @@
 package org.aksw.rdfunit.tests.generators;
 
+import java.util.Collection;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
-import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.SchemaSource;
 import org.aksw.rdfunit.sources.TestSource;
-
-import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -13,6 +11,7 @@ import java.util.Collection;
  */
 public interface RdfUnitTestGenerator {
 
-    Collection<? extends GenericTestCase> generate(SchemaSource source);
-    Collection<? extends GenericTestCase> generate(TestSource source);
+  Collection<? extends GenericTestCase> generate(SchemaSource source);
+
+  Collection<? extends GenericTestCase> generate(TestSource source);
 }

@@ -1,6 +1,13 @@
 package org.aksw.rdfunit.validate.integration;
 
+import static org.aksw.rdfunit.io.reader.RdfReaderFactory.createResourceReader;
+import static org.aksw.rdfunit.sources.SchemaSourceFactory.createSchemaSourceSimple;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.google.common.collect.ImmutableSet;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
 import lombok.Getter;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
@@ -24,119 +31,142 @@ import org.aksw.rdfunit.validate.wrappers.RDFUnitStaticValidator;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Set;
-
-import static org.aksw.rdfunit.io.reader.RdfReaderFactory.createResourceReader;
-import static org.aksw.rdfunit.sources.SchemaSourceFactory.createSchemaSourceSimple;
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 public class IntegrationTestHelper {
 
-    @Getter private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
+  @Getter
+  private static final String resourcePrefix = "/org/aksw/rdfunit/validate/data/";
 
-    @Getter(lazy = true) private final static TestSuite shaclTestSuite = createTestSuiteWithShacl(resourcePrefix + "shacl/shacl.constraints.ttl");
-    @Getter(lazy = true) private final static SchemaSource shaclSchemaSource = createSchemaSourceSimple(resourcePrefix + "shacl/shacl.constraints.ttl");
+  @Getter(lazy = true)
+  private final static TestSuite shaclTestSuite = createTestSuiteWithShacl(
+      resourcePrefix + "shacl/shacl.constraints.ttl");
+  @Getter(lazy = true)
+  private final static SchemaSource shaclSchemaSource = createSchemaSourceSimple(
+      resourcePrefix + "shacl/shacl.constraints.ttl");
 
-    @Getter(lazy = true) private final static TestSuite owlTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "owl/ontology.ttl");
-    @Getter(lazy = true) private final static SchemaSource owlSchemaSource = createSchemaSourceSimple(resourcePrefix + "owl/ontology.ttl");
+  @Getter(lazy = true)
+  private final static TestSuite owlTestSuite = IntegrationTestHelper
+      .createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(),
+          resourcePrefix + "owl/ontology.ttl");
+  @Getter(lazy = true)
+  private final static SchemaSource owlSchemaSource = createSchemaSourceSimple(
+      resourcePrefix + "owl/ontology.ttl");
 
-    @Getter(lazy = true) private final static TestSuite rsTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "rs/rs_constraints.ttl");
-    @Getter(lazy = true) private final static SchemaSource rsSchemaSource = createSchemaSourceSimple(resourcePrefix + "rs/rs_constraints.ttl");
+  @Getter(lazy = true)
+  private final static TestSuite rsTestSuite = IntegrationTestHelper
+      .createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(),
+          resourcePrefix + "rs/rs_constraints.ttl");
+  @Getter(lazy = true)
+  private final static SchemaSource rsSchemaSource = createSchemaSourceSimple(
+      resourcePrefix + "rs/rs_constraints.ttl");
 
-    @Getter(lazy = true) private final static TestSuite dspTestSuite = IntegrationTestHelper.createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(), resourcePrefix + "dsp/dsp_constraints.ttl");
-    @Getter(lazy = true) private final static SchemaSource dspSchemaSource = createSchemaSourceSimple(resourcePrefix + "dsp/dsp_constraints.ttl");
+  @Getter(lazy = true)
+  private final static TestSuite dspTestSuite = IntegrationTestHelper
+      .createTestSuiteWithGenerators(RDFUnit.createWithAllGenerators(),
+          resourcePrefix + "dsp/dsp_constraints.ttl");
+  @Getter(lazy = true)
+  private final static SchemaSource dspSchemaSource = createSchemaSourceSimple(
+      resourcePrefix + "dsp/dsp_constraints.ttl");
 
-    static{
-        SchemaService.addSchemaDecl("xsd", "http://www.w3.org/2001/XMLSchema#", "../rdfunit-commons/src/main/resources/org/aksw/rdfunit/vocabularies/xsd.ttl");
+  static {
+    SchemaService.addSchemaDecl("xsd", "http://www.w3.org/2001/XMLSchema#",
+        "../rdfunit-commons/src/main/resources/org/aksw/rdfunit/vocabularies/xsd.ttl");
+  }
+
+  public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {
+    try {
+      rdfUnit.init();
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException(e);
     }
+    RdfReader ontologyDSPReader = createResourceReader(schemaSource);
+    SchemaSource ontologyDSPSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org",
+        ontologyDSPReader);
 
-    public static TestSuite createTestSuiteWithGenerators(RDFUnit rdfUnit, String schemaSource) {
-        try {
-            rdfUnit.init();
-        } catch (IllegalArgumentException e) {
-            throw new IllegalStateException(e);
-        }
-        RdfReader ontologyDSPReader = createResourceReader(schemaSource);
-        SchemaSource ontologyDSPSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyDSPReader);
+    Set<GenericTestCase> ts1 = ImmutableSet.copyOf(
+        new TagRdfUnitTestGenerator(rdfUnit.getAutoGenerators()).generate(ontologyDSPSource));
+    return new TestSuite(ts1);
+  }
 
-
-        Set<GenericTestCase> ts1 = ImmutableSet.copyOf(new TagRdfUnitTestGenerator(rdfUnit.getAutoGenerators()).generate(ontologyDSPSource));
-        return new TestSuite(ts1);
+  public static TestSuite createTestSuiteWithShacl(String schemaSource) {
+    RdfReader ontologyShaclReader = null;
+    try {
+      ontologyShaclReader = new RdfModelReader(createResourceReader(schemaSource).read());
+    } catch (RdfReaderException e) {
+      throw new IllegalArgumentException(e);
     }
+    SchemaSource ontologyShaclSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org",
+        ontologyShaclReader);
+    Set<GenericTestCase> ts2 = ImmutableSet
+        .copyOf(new ShaclTestGenerator().generate(ontologyShaclSource));
+    return new TestSuite(ts2);
+  }
 
-    public static TestSuite createTestSuiteWithShacl(String schemaSource) {
-        RdfReader ontologyShaclReader = null;
-        try {
-            ontologyShaclReader = new RdfModelReader(createResourceReader(schemaSource).read());
-        } catch (RdfReaderException e) {
-            throw new IllegalArgumentException(e);
-        }
-        SchemaSource ontologyShaclSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", ontologyShaclReader);
-        Set<GenericTestCase> ts2 = ImmutableSet.copyOf(new ShaclTestGenerator().generate(ontologyShaclSource));
-        return new TestSuite(ts2);
+  public static void testMap(String testSource, int expectedErrors, TestSuite testSuite,
+      SchemaSource schemaSource) throws RdfReaderException {
+
+    // create new dataset for current entry
+    final TestSource modelSource = new TestSourceBuilder()
+        .setImMemSingle()
+        .setPrefixUri("test", testSource)
+        .setInMemReader(new RdfModelReader(createResourceReader(testSource).read()))
+        .setReferenceSchemata(Collections.singletonList(schemaSource))
+        .build();
+
+    // Test all execution types
+    long failedTestCases = -1;
+    //TODO to cover all possible violations we need ShaclTestCaseResult (ShaclLite does not contain value annotations so we can't differentiate between multiple violating triples of the same test and focus node!)
+    for (TestCaseExecutionType executionType : Arrays
+        .asList(TestCaseExecutionType.shaclTestCaseResult)) {
+
+      TestExecution execution = RDFUnitStaticValidator
+          .validate(executionType, modelSource, testSuite);
+      DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();
+
+      // For status results we don't get violation instances
+      if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
+
+        assertThat(overviewResults.getIndividualErrors())
+            .as("%s: Errors not as expected in %s\n see TestExecution %s", executionType,
+                testSource, execution)
+            .isEqualTo(expectedErrors);
+      }
+
+      if (failedTestCases == -1) {
+        failedTestCases = overviewResults.getFailedTests();
+      } else {
+        assertThat(overviewResults.getFailedTests())
+            .as("%s: Failed test cases not as expected in %s\n see TestExecution %s", executionType,
+                testSource, execution)
+            .isEqualTo(failedTestCases);
+      }
+
+      assertThat(overviewResults.getErrorTests())
+          .as("%s: There should be no failed test cases in  %s", executionType, testSource)
+          .isEqualTo(0);
     }
+  }
 
-    public static void testMap(String testSource, int expectedErrors, TestSuite testSuite, SchemaSource schemaSource) throws RdfReaderException {
+  @Test
+  public void testEqualityAndHash() throws RdfReaderException {
+    Model schemas = RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/validate/data/hybrid.ttl").read();
+    RdfReader modelReader = new RdfModelReader(schemas);
+    SchemaSource schemaSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org",
+        modelReader);
 
+    RDFUnit rdfunit = RDFUnit.createWithOwlAndShacl();
+    rdfunit.init();
+    RdfUnitTestGenerator testGenerator = TestGeneratorFactory
+        .createAllNoCache(rdfunit.getAutoGenerators(), "./");
 
-        // create new dataset for current entry
-        final TestSource modelSource = new TestSourceBuilder()
-                .setImMemSingle()
-                .setPrefixUri("test", testSource)
-                .setInMemReader(new RdfModelReader(createResourceReader(testSource).read()))
-                .setReferenceSchemata(Collections.singletonList(schemaSource))
-                .build();
+    Set<GenericTestCase> ts1 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
+    Set<GenericTestCase> ts2 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
 
-        // Test all execution types
-        long failedTestCases = -1;
-        //TODO to cover all possible violations we need ShaclTestCaseResult (ShaclLite does not contain value annotations so we can't differentiate between multiple violating triples of the same test and focus node!)
-        for (TestCaseExecutionType executionType : Arrays.asList(TestCaseExecutionType.shaclTestCaseResult)) {
+    assertThat(ts1)
+        .hasSize(4)
+        .hasSameSizeAs(ts2)
+        .containsAll(ts2);
 
-            TestExecution execution = RDFUnitStaticValidator.validate(executionType, modelSource, testSuite);
-            DatasetOverviewResults overviewResults = execution.getDatasetOverviewResults();
-
-            // For status results we don't get violation instances
-            if (!executionType.equals(TestCaseExecutionType.statusTestCaseResult)) {
-
-                assertThat(overviewResults.getIndividualErrors())
-                        .as("%s: Errors not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
-                        .isEqualTo(expectedErrors);
-            }
-
-            if (failedTestCases == -1) {
-                failedTestCases = overviewResults.getFailedTests();
-            } else {
-                assertThat(overviewResults.getFailedTests())
-                        .as("%s: Failed test cases not as expected in %s\n see TestExecution %s", executionType, testSource, execution)
-                        .isEqualTo(failedTestCases);
-            }
-
-            assertThat(overviewResults.getErrorTests())
-                    .as("%s: There should be no failed test cases in  %s", executionType, testSource)
-                    .isEqualTo(0);
-        }
-    }
-
-    @Test
-    public void testEqualityAndHash() throws RdfReaderException {
-        Model schemas = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/validate/data/hybrid.ttl").read();
-        RdfReader modelReader = new RdfModelReader(schemas);
-        SchemaSource schemaSource = createSchemaSourceSimple("tests", "http://rdfunit.aksw.org", modelReader);
-
-        RDFUnit rdfunit = RDFUnit.createWithOwlAndShacl();
-        rdfunit.init();
-        RdfUnitTestGenerator testGenerator = TestGeneratorFactory.createAllNoCache(rdfunit.getAutoGenerators(), "./");
-
-        Set<GenericTestCase> ts1 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
-        Set<GenericTestCase> ts2 = ImmutableSet.copyOf(testGenerator.generate(schemaSource));
-
-        assertThat(ts1)
-                .hasSize(4)
-                .hasSameSizeAs(ts2)
-                .containsAll(ts2);
-
-    }
+  }
 }

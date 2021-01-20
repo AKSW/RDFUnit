@@ -12,11 +12,11 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 public interface Source {
 
 
-    String getPrefix();
+  String getPrefix();
 
-    String getUri() ;
+  String getUri();
 
-    TestAppliesTo getSourceType();
+  TestAppliesTo getSourceType();
 
 
 }

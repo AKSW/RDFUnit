@@ -13,27 +13,29 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 2 /2/14 3:28 PM
-
  */
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implements ShaclLiteTestCaseResult {
+public class ShaclLiteTestCaseResultImpl extends BaseTestCaseResultImpl implements
+    ShaclLiteTestCaseResult {
 
-    private final RDFNode focusNode;
+  private final RDFNode focusNode;
 
-    public ShaclLiteTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message, RDFNode focusNode) {
-        super(testCaseUri, severity, message);
-        this.focusNode = focusNode;
-    }
+  public ShaclLiteTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message,
+      RDFNode focusNode) {
+    super(testCaseUri, severity, message);
+    this.focusNode = focusNode;
+  }
 
-    public ShaclLiteTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, RDFNode focusNode) {
-        super(element, testCaseUri, severity, message, timestamp);
-        this.focusNode = focusNode;
-    }
+  public ShaclLiteTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity,
+      String message, XSDDateTime timestamp, RDFNode focusNode) {
+    super(element, testCaseUri, severity, message, timestamp);
+    this.focusNode = focusNode;
+  }
 
-    @Override
-    public RDFNode getFailingNode() {
-        return focusNode;
-    }
+  @Override
+  public RDFNode getFailingNode() {
+    return focusNode;
+  }
 
 }

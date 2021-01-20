@@ -9,29 +9,29 @@ import org.aksw.rdfunit.enums.TestAppliesTo;
 public class ApplicationSource implements Source {
 
 
-    private final SourceConfig sourceConfig;
+  private final SourceConfig sourceConfig;
 
-    ApplicationSource(String prefix, String uri) {
-        this.sourceConfig = new SourceConfig(prefix, uri);
-    }
-
-
-    @Override
-    public String getPrefix() {
-        return sourceConfig.getPrefix();
-    }
+  ApplicationSource(String prefix, String uri) {
+    this.sourceConfig = new SourceConfig(prefix, uri);
+  }
 
 
-    @Override
-    public String getUri() {
-        return sourceConfig.getUri();
-    }
+  @Override
+  public String getPrefix() {
+    return sourceConfig.getPrefix();
+  }
 
 
-    @Override
-    public TestAppliesTo getSourceType() {
-        return TestAppliesTo.Application;
-    }
+  @Override
+  public String getUri() {
+    return sourceConfig.getUri();
+  }
+
+
+  @Override
+  public TestAppliesTo getSourceType() {
+    return TestAppliesTo.Application;
+  }
 
 
 }

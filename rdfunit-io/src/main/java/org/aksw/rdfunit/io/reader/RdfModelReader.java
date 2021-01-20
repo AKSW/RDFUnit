@@ -11,36 +11,36 @@ import org.apache.jena.rdf.model.Model;
  */
 public class RdfModelReader implements RdfReader {
 
-    private final Model model;
+  private final Model model;
 
-    public RdfModelReader(Model model) {
-        super();
-        this.model = model;
-    }
-
-
-    @Override
-    public Model read() {
-        return model;
-    }
+  public RdfModelReader(Model model) {
+    super();
+    this.model = model;
+  }
 
 
-    @Override
-    public void read(Model model) {
-        model.add(this.model);
-    }
+  @Override
+  public Model read() {
+    return model;
+  }
 
 
-    @Override
-    public void readDataset(Dataset dataset){
-        dataset.setDefaultModel(dataset.getDefaultModel().union(read()));
-    }
+  @Override
+  public void read(Model model) {
+    model.add(this.model);
+  }
 
 
-    @Override
-    public String toString() {
-        return "RDFModelReader{" +
-                "model=" + model +
-                '}';
-    }
+  @Override
+  public void readDataset(Dataset dataset) {
+    dataset.setDefaultModel(dataset.getDefaultModel().union(read()));
+  }
+
+
+  @Override
+  public String toString() {
+    return "RDFModelReader{" +
+        "model=" + model +
+        '}';
+  }
 }

@@ -11,27 +11,29 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
-
  */
 public final class BindingWriter implements ElementWriter {
 
-    private final Binding binding;
+  private final Binding binding;
 
-    private BindingWriter(Binding binding) {
-        this.binding = binding;
-    }
+  private BindingWriter(Binding binding) {
+    this.binding = binding;
+  }
 
-    public static BindingWriter create(Binding binding) {return new BindingWriter(binding);}
+  public static BindingWriter create(Binding binding) {
+    return new BindingWriter(binding);
+  }
 
 
-    @Override
-    public Resource write(Model model) {
-        Resource resource = ElementWriter.copyElementResourceInModel(binding, model);
+  @Override
+  public Resource write(Model model) {
+    Resource resource = ElementWriter.copyElementResourceInModel(binding, model);
 
-        resource.addProperty(RDF.type, RDFUNITv.Binding);
-        resource.addProperty(RDFUNITv.parameter, ElementWriter.copyElementResourceInModel(binding.getParameter(), model));
-        resource.addProperty(RDFUNITv.bindingValue, binding.getValue());
+    resource.addProperty(RDF.type, RDFUNITv.Binding);
+    resource.addProperty(RDFUNITv.parameter,
+        ElementWriter.copyElementResourceInModel(binding.getParameter(), model));
+    resource.addProperty(RDFUNITv.bindingValue, binding.getValue());
 
-        return resource;
-    }
+    return resource;
+  }
 }

@@ -1,9 +1,12 @@
 package org.aksw.rdfunit.junit;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- *
  * @author Michael Leuthold
  */
 @Documented
@@ -11,9 +14,9 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface Schema {
 
-    /**
-     * @return the URI defining the target ontology
-     */
-    String uri();
+  /**
+   * @return the URI defining the target ontology
+   */
+  String uri();
 
 }

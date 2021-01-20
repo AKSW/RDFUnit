@@ -1,5 +1,10 @@
 package org.aksw.rdfunit.validate.ws;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.exceptions.TestCaseExecutionException;
@@ -20,12 +25,6 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Collection;
-
 /**
  * Validation as a web service
  *
@@ -33,119 +32,120 @@ import java.util.Collection;
  * @since 6/13/14 1:50 PM
  */
 public class ValidateWS extends AbstractRDFUnitWebService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ValidateWS.class);
 
-    // TODO: pass dataFolder in configuration initialization
-    private Collection<TestGenerator> autogenerators;
+  private static final Logger LOGGER = LoggerFactory.getLogger(ValidateWS.class);
 
+  // TODO: pass dataFolder in configuration initialization
+  private Collection<TestGenerator> autogenerators;
 
-    @Override
-    public void init() {
-        try {
-            RDFUnitUtils.fillSchemaServiceFromLOV();
-            RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
-            RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
+  private static String[] convertArgumentsToStringArray(HttpServletRequest httpServletRequest) {
+    //twice the size to split key value
+    String[] args = new String[httpServletRequest.getParameterMap().size() * 2];
 
-            RDFUnit rdfunit = RDFUnit
-                    .createWithAllGenerators()
-                    .init();
-            autogenerators = rdfunit.getAutoGenerators();
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("Cannot read patterns and/or pattern generators", e);
-        } catch (IOException e) {
-            LOGGER.error("Cannot read schema declarations", e);
-        }
+    int x = 0;
+    for (Object key : httpServletRequest.getParameterMap().keySet()) {
+      String pname = (String) key;
+      //transform key to CLI style
+      pname = (pname.length() == 1) ? "-" + pname : "--" + pname;
+
+      //collect CLI args
+      args[x++] = pname;
+      args[x++] = httpServletRequest.getParameter((String) key);
     }
 
+    return args;
+  }
 
-    @Override
-    protected TestSuite getTestSuite(final RDFUnitConfiguration configuration, final TestSource dataset) {
-        synchronized(this) {
-            TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
-                    configuration.isAutoTestsEnabled(),
-                    configuration.isTestCacheEnabled(),
-                    configuration.isManualTestsEnabled());
-            return testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, autogenerators);
-        }
+  @Override
+  public void init() {
+    try {
+      RDFUnitUtils.fillSchemaServiceFromLOV();
+      RDFUnitUtils.fillSchemaServiceFromSchemaDecl();
+      RDFUnitUtils.fillSchemaServiceWithStandardVocabularies();
+
+      RDFUnit rdfunit = RDFUnit
+          .createWithAllGenerators()
+          .init();
+      autogenerators = rdfunit.getAutoGenerators();
+    } catch (IllegalArgumentException e) {
+      LOGGER.error("Cannot read patterns and/or pattern generators", e);
+    } catch (IOException e) {
+      LOGGER.error("Cannot read schema declarations", e);
+    }
+  }
+
+  @Override
+  protected TestSuite getTestSuite(final RDFUnitConfiguration configuration,
+      final TestSource dataset) {
+    synchronized (this) {
+      TestGeneratorExecutor testGeneratorExecutor = new TestGeneratorExecutor(
+          configuration.isAutoTestsEnabled(),
+          configuration.isTestCacheEnabled(),
+          configuration.isManualTestsEnabled());
+      return testGeneratorExecutor
+          .generateTestSuite(configuration.getTestFolder(), dataset, autogenerators);
+    }
+  }
+
+  @Override
+  protected TestExecution validate(final RDFUnitConfiguration configuration,
+      final TestSource dataset, final TestSuite testSuite) throws TestCaseExecutionException {
+    final TestExecutor testExecutor = TestExecutorFactory
+        .createTestExecutor(configuration.getTestCaseExecutionType());
+    if (testExecutor == null) {
+      throw new TestCaseExecutionException(null, "Cannot initialize test executor. Exiting");
+    }
+    final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
+    testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
+    testExecutor.addTestExecutorMonitor(testExecutorMonitor);
+
+    // warning, caches intermediate results
+    testExecutor.execute(dataset, testSuite);
+
+    return testExecutorMonitor.getTestExecution();
+  }
+
+  @Override
+  protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest)
+      throws ParameterException {
+    String[] arguments = convertArgumentsToStringArray(httpServletRequest);
+
+    CommandLine commandLine = null;
+    try {
+      commandLine = ValidateUtils.parseArguments(arguments);
+    } catch (ParseException e) {
+      String errorMEssage = "Error! Not valid parameter input";
+      throw new ParameterException(errorMEssage, e);
     }
 
-
-    @Override
-    protected TestExecution validate(final RDFUnitConfiguration configuration, final TestSource dataset, final TestSuite testSuite) throws TestCaseExecutionException {
-        final TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
-        if (testExecutor == null) {
-            throw new TestCaseExecutionException(null, "Cannot initialize test executor. Exiting");
-        }
-        final SimpleTestExecutorMonitor testExecutorMonitor = new SimpleTestExecutorMonitor();
-        testExecutorMonitor.setExecutionType(configuration.getTestCaseExecutionType());
-        testExecutor.addTestExecutorMonitor(testExecutorMonitor);
-
-        // warning, caches intermediate results
-        testExecutor.execute(dataset, testSuite);
-
-        return testExecutorMonitor.getTestExecution();
+    // TODO: hack to print help message
+    if (commandLine.hasOption("h")) {
+      throw new ParameterException("");
     }
 
+    RDFUnitConfiguration configuration = null;
+    configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
-    @Override
-    protected RDFUnitConfiguration getConfiguration(HttpServletRequest httpServletRequest) throws ParameterException {
-        String[] arguments = convertArgumentsToStringArray(httpServletRequest);
-
-        CommandLine commandLine = null;
-        try {
-            commandLine = ValidateUtils.parseArguments(arguments);
-        } catch (ParseException e) {
-            String errorMEssage = "Error! Not valid parameter input";
-            throw new ParameterException(errorMEssage, e);
-        }
-
-        // TODO: hack to print help message
-        if (commandLine.hasOption("h")) {
-            throw new ParameterException("");
-        }
-
-        RDFUnitConfiguration configuration = null;
-        configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
-
-        if (configuration.getOutputFormats().size() != 1) {
-            throw new ParameterException("Error! Multiple formats defined");
-        }
-
-        return configuration;
+    if (configuration.getOutputFormats().size() != 1) {
+      throw new ParameterException("Error! Multiple formats defined");
     }
 
+    return configuration;
+  }
 
-    @Override
-    protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
-        httpServletResponse.setContentType("text/html");
-        PrintWriter printWriter = httpServletResponse.getWriter();
+  @Override
+  protected void printHelpMessage(HttpServletResponse httpServletResponse) throws IOException {
+    httpServletResponse.setContentType("text/html");
+    PrintWriter printWriter = httpServletResponse.getWriter();
 
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(printWriter, 200, "/validate?", "<pre>", ValidateUtils.getCliOptions(), 0, 0, "</pre>");
-    }
+    HelpFormatter formatter = new HelpFormatter();
+    formatter
+        .printHelp(printWriter, 200, "/validate?", "<pre>", ValidateUtils.getCliOptions(), 0, 0,
+            "</pre>");
+  }
 
-    private static String[] convertArgumentsToStringArray(HttpServletRequest httpServletRequest) {
-        //twice the size to split key value
-        String[] args = new String[httpServletRequest.getParameterMap().size() * 2];
-
-        int x = 0;
-        for (Object key : httpServletRequest.getParameterMap().keySet()) {
-            String pname = (String) key;
-            //transform key to CLI style
-            pname = (pname.length() == 1) ? "-" + pname : "--" + pname;
-
-            //collect CLI args
-            args[x++] = pname;
-            args[x++] = httpServletRequest.getParameter((String) key);
-        }
-
-        return args;
-    }
-
-
-
-    @Override
-    public void destroy() {
-        // do nothing.
-    }
+  @Override
+  public void destroy() {
+    // do nothing.
+  }
 }

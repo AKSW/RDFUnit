@@ -13,29 +13,32 @@ import org.apache.jena.rdf.model.Resource;
 /**
  * @author Dimitris Kontokostas
  * @since 1 /6/14 3:26 PM
-
  */
 @ToString
 @EqualsAndHashCode(exclude = "element")
-public class StatusTestCaseResultImpl extends BaseTestCaseResultImpl implements StatusTestCaseResult {
-    private final TestCaseResultStatus status;
+public class StatusTestCaseResultImpl extends BaseTestCaseResultImpl implements
+    StatusTestCaseResult {
 
-    public StatusTestCaseResultImpl(TestCase testCase, TestCaseResultStatus status) {
-        this(testCase.getElement(), testCase.getLogLevel(), testCase.getResultMessage(), status);
-    }
+  private final TestCaseResultStatus status;
 
-    public StatusTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message, TestCaseResultStatus status) {
-        super(testCaseUri, severity, message);
-        this.status = status;
-    }
+  public StatusTestCaseResultImpl(TestCase testCase, TestCaseResultStatus status) {
+    this(testCase.getElement(), testCase.getLogLevel(), testCase.getResultMessage(), status);
+  }
 
-    public StatusTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity, String message, XSDDateTime timestamp, TestCaseResultStatus status) {
-        super(element, testCaseUri, severity, message, timestamp);
-        this.status = status;
-    }
+  public StatusTestCaseResultImpl(Resource testCaseUri, RLOGLevel severity, String message,
+      TestCaseResultStatus status) {
+    super(testCaseUri, severity, message);
+    this.status = status;
+  }
 
-    @Override
-    public TestCaseResultStatus getStatus() {
-        return status;
-    }
+  public StatusTestCaseResultImpl(Resource element, Resource testCaseUri, RLOGLevel severity,
+      String message, XSDDateTime timestamp, TestCaseResultStatus status) {
+    super(element, testCaseUri, severity, message, timestamp);
+    this.status = status;
+  }
+
+  @Override
+  public TestCaseResultStatus getStatus() {
+    return status;
+  }
 }

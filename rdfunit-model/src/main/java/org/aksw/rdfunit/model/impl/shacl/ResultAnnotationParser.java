@@ -2,6 +2,9 @@ package org.aksw.rdfunit.model.impl.shacl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -18,10 +21,6 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 /**
  * @author Dimitris Kontokostas
  * @since 6/10/18
@@ -31,115 +30,130 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 class ResultAnnotationParser {
 
-    @NonNull private final Query query;
-    @NonNull private final Shape shape;
-    @NonNull private final Validator validator;
-    private final boolean canBindValueVariable;
-    private final Component component;
+  @NonNull
+  private final Query query;
+  @NonNull
+  private final Shape shape;
+  @NonNull
+  private final Validator validator;
+  private final boolean canBindValueVariable;
+  private final Component component;
 
-    private Optional<ResultAnnotation> getPathAnnotation() {
-        if (query.getResultVars().contains("path")) {
-            return Optional.of(createVariableAnnotation(SHACL.resultPath, "path"));
-        } else {
-            Set<RDFNode> paths = shape.getPropertyValuePairSets().getPropertyValues(SHACL.path);
-            if (paths.size() == 1) {
-                return Optional.of(createValueAnnotation(SHACL.resultPath, paths.iterator().next()));
-            }
-        }
-        return Optional.empty();
+  private Optional<ResultAnnotation> getPathAnnotation() {
+    if (query.getResultVars().contains("path")) {
+      return Optional.of(createVariableAnnotation(SHACL.resultPath, "path"));
+    } else {
+      Set<RDFNode> paths = shape.getPropertyValuePairSets().getPropertyValues(SHACL.path);
+      if (paths.size() == 1) {
+        return Optional.of(createValueAnnotation(SHACL.resultPath, paths.iterator().next()));
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<ResultAnnotation> getFocusNodeAnnotation() {
+    if (query.getResultVars().contains(SHACL.focusNode.getLocalName())) {
+      return Optional.of(createVariableAnnotation(SHACL.focusNode, SHACL.focusNode.getLocalName()));
+    } else {
+      return Optional.of(createVariableAnnotation(SHACL.focusNode, CommonNames.This));
+    }
+  }
+
+  private Optional<ResultAnnotation> getMessageAnnotation() {
+
+    if (query.getResultVars().contains("message")) {
+      return Optional.of(createVariableAnnotation(SHACL.resultMessage, "message"));
+    } else {
+
+      return ImmutableList.of(shape.getMessage(), validator.getDefaultMessage()).stream()
+          .filter(Optional::isPresent)
+          .map(Optional::get)
+          .findFirst()
+          .map(message -> createValueAnnotation(SHACL.resultMessage, message));
     }
 
-    private Optional<ResultAnnotation> getFocusNodeAnnotation() {
-        if (query.getResultVars().contains(SHACL.focusNode.getLocalName())) {
-            return Optional.of(createVariableAnnotation(SHACL.focusNode, SHACL.focusNode.getLocalName()));
-        } else {
-            return Optional.of(createVariableAnnotation(SHACL.focusNode, CommonNames.This));
-        }
+  }
+
+  private Optional<ResultAnnotation> getValueAnnotation() {
+    boolean componentThatAllowsValueBinding =
+        canBindValueVariable && (validator.getSparqlQuery().contains("$value") || validator
+            .getSparqlQuery().contains("?value"));
+    boolean isNodeShapeAndHasValueVar =
+        shape.isNodeShape() && (validator.getSparqlQuery().contains("$value") || validator
+            .getSparqlQuery().contains("?value"));
+    if (isNodeShapeAndHasValueVar || componentThatAllowsValueBinding) {
+      return Optional.of(createVariableAnnotation(SHACL.value, SHACL.value.getLocalName()));
     }
 
-    private Optional<ResultAnnotation> getMessageAnnotation() {
+    // when ?value is not defined in Node Shapes we use ?this
+    if (shape.isNodeShape()) {
+      return Optional.of(createVariableAnnotation(SHACL.value, CommonNames.This));
+    }
+    return Optional.empty();
+  }
 
-        if (query.getResultVars().contains("message")) {
-            return Optional.of(createVariableAnnotation(SHACL.resultMessage, "message"));
-        } else {
+  private Optional<ResultAnnotation> getSeverityAnnotation() {
+    return Optional.of(createValueAnnotation(SHACL.resultSeverity, shape.getSeverity()));
 
-            return ImmutableList.of(shape.getMessage(),validator.getDefaultMessage()).stream()
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .findFirst()
-                    .map(message -> createValueAnnotation(SHACL.resultMessage, message));
-        }
+  }
 
+  private Optional<ResultAnnotation> getSourceShapeAnnotation() {
+    return Optional.of(createValueAnnotation(SHACL.sourceShape, shape.getElement()));
+
+  }
+
+  private Optional<ResultAnnotation> getSourceConstraintComponentAnnotation() {
+    return Optional.ofNullable(component)
+        .map(c -> new ResultAnnotationImpl.Builder(c.getElement(), SHACL.sourceConstraintComponent)
+            .setValue(component.getElement()).build());
+
+  }
+
+  private Optional<ResultAnnotation> getSourceConstraintComponentSparqlAnnotation() {
+    if (component == null) {
+      return Optional.of(createValueAnnotation(SHACL.sourceConstraint, validator.getElement()));
+    } else {
+      return Optional.empty();
     }
 
-    private Optional<ResultAnnotation> getValueAnnotation() {
-        boolean componentThatAllowsValueBinding = canBindValueVariable && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") );
-        boolean isNodeShapeAndHasValueVar = shape.isNodeShape() && (validator.getSparqlQuery().contains("$value") || validator.getSparqlQuery().contains("?value") );
-        if (isNodeShapeAndHasValueVar || componentThatAllowsValueBinding ) {
-            return Optional.of(createVariableAnnotation(SHACL.value, SHACL.value.getLocalName()));
-        }
+  }
 
-        // when ?value is not defined in Node Shapes we use ?this
-        if (shape.isNodeShape()) {
-            return Optional.of(createVariableAnnotation(SHACL.value, CommonNames.This));
-        }
-        return Optional.empty();
+  private Optional<ResultAnnotation> getSourceConstraintAnnotation() {
+    if (component == null) {
+      return Optional.of(createValueAnnotation(SHACL.sourceConstraintComponent,
+          SHACL.SPARQLConstraintComponent));
+    } else {
+      return Optional.empty();
     }
 
-    private Optional<ResultAnnotation> getSeverityAnnotation() {
-        return Optional.of(createValueAnnotation(SHACL.resultSeverity, shape.getSeverity()));
+  }
 
-    }
-    private Optional<ResultAnnotation> getSourceShapeAnnotation() {
-        return Optional.of(createValueAnnotation(SHACL.sourceShape, shape.getElement()));
+  public Set<ResultAnnotation> getResultAnnotations() {
 
-    }
-    private Optional<ResultAnnotation> getSourceConstraintComponentAnnotation() {
-        return Optional.ofNullable(component)
-                .map(c -> new ResultAnnotationImpl.Builder(c.getElement(), SHACL.sourceConstraintComponent)
-                        .setValue(component.getElement()).build());
+    return ImmutableSet.of(
+        getFocusNodeAnnotation(),
+        getPathAnnotation(),
+        getMessageAnnotation(),
+        getSeverityAnnotation(),
+        getSourceConstraintAnnotation(),
+        getSourceConstraintComponentAnnotation(),
+        getSourceConstraintComponentSparqlAnnotation(),
+        getSourceShapeAnnotation(),
+        getValueAnnotation()
+    )
+        .stream()
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .collect(Collectors.toSet());
+  }
 
-    }
-    private Optional<ResultAnnotation> getSourceConstraintComponentSparqlAnnotation() {
-        if (component == null) {
-            return Optional.of(createValueAnnotation(SHACL.sourceConstraint, validator.getElement()));
-        } else {return Optional.empty();}
+  private ResultAnnotation createValueAnnotation(Property property, RDFNode value) {
+    return new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), property)
+        .setValue(value).build();
+  }
 
-    }
-
-    private Optional<ResultAnnotation> getSourceConstraintAnnotation() {
-        if (component == null) {
-            return Optional.of(createValueAnnotation(SHACL.sourceConstraintComponent, SHACL.SPARQLConstraintComponent));
-        } else {return Optional.empty();}
-
-    }
-
-    public Set<ResultAnnotation> getResultAnnotations() {
-
-        return ImmutableSet.of(
-                getFocusNodeAnnotation(),
-                getPathAnnotation(),
-                getMessageAnnotation(),
-                getSeverityAnnotation(),
-                getSourceConstraintAnnotation(),
-                getSourceConstraintComponentAnnotation(),
-                getSourceConstraintComponentSparqlAnnotation(),
-                getSourceShapeAnnotation(),
-                getValueAnnotation()
-        )
-                .stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-    }
-
-    private ResultAnnotation createValueAnnotation(Property property, RDFNode value) {
-        return new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), property)
-                .setValue(value).build();
-    }
-
-    private ResultAnnotation createVariableAnnotation(Property property, String variable) {
-        return new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), property)
-                .setVariableName(variable).build();
-    }
+  private ResultAnnotation createVariableAnnotation(Property property, String variable) {
+    return new ResultAnnotationImpl.Builder(ResourceFactory.createResource(), property)
+        .setVariableName(variable).build();
+  }
 }
