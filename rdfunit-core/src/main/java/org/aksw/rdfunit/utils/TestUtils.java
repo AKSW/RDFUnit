@@ -4,13 +4,17 @@ import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.writer.RdfWriter;
 import org.aksw.rdfunit.io.writer.RdfWriterException;
+import org.aksw.rdfunit.model.impl.PatternBasedTestCaseImpl;
 import org.aksw.rdfunit.model.interfaces.Binding;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
 import org.aksw.rdfunit.model.interfaces.Pattern;
+import org.aksw.rdfunit.model.interfaces.PatternBasedTestCase;
 import org.aksw.rdfunit.model.readers.BatchTestCaseReader;
 import org.aksw.rdfunit.model.writers.TestCaseWriter;
+import org.aksw.rdfunit.vocabulary.RDFUNITv;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
 
 
 /**
@@ -34,9 +38,20 @@ public final class TestUtils {
   }
 
   public static void writeTestsToFile(Collection<GenericTestCase> tests, RdfWriter testCache) {
+    writeTestsToFile(tests, testCache, false);
+  }
+
+  public static void writeTestsToFile(Collection<GenericTestCase> tests, RdfWriter testCache,
+      boolean addExplicitWhere) {
     Model model = ModelFactory.createDefaultModel();
     for (GenericTestCase t : tests) {
-      TestCaseWriter.create(t).write(model);
+      Resource testCaseResource = TestCaseWriter.create(t).write(model);
+
+      if (addExplicitWhere) {
+        if (t instanceof PatternBasedTestCaseImpl) {
+          testCaseResource.addProperty(RDFUNITv.sparqlWhere, ((PatternBasedTestCase) t).getSparqlWhere());
+        }
+      }
     }
     try {
       org.aksw.rdfunit.services.PrefixNSService.setNSPrefixesInModel(model);

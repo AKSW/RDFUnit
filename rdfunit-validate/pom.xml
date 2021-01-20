@@ -59,6 +59,12 @@
     </dependency>
 
     <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>4.6.1</version>
+    </dependency>
+
+  <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -68,7 +74,6 @@
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -92,8 +97,7 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.4.6.v20170531</version>
-
+        <version>11.0.0</version>
         <configuration>
           <scanIntervalSeconds>5</scanIntervalSeconds>
           <httpConnector>
@@ -103,9 +107,10 @@
           <stopPort/>
         </configuration>
       </plugin>
+
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.0.2</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>copy-resources-local</id>
@@ -140,7 +145,6 @@
   <profiles>
     <profile>
       <id>debpackage</id>
-
       <build>
         <finalName>rdfunit-cli</finalName>
         <plugins>
@@ -176,6 +180,7 @@
               </execution>
             </executions>
           </plugin>
+
           <plugin>
             <artifactId>jdeb</artifactId>
             <groupId>org.vafer</groupId>
@@ -209,7 +214,6 @@
                         <prefix>/usr/bin</prefix>
                       </mapper>
                     </data>
-
                     <data>
                       <src>${basedir}/../data</src>
                       <type>directory</type>
@@ -230,9 +234,9 @@
         </plugins>
       </build>
     </profile>
+
     <profile>
       <id>cli-standalone</id>
-
       <build>
         <plugins>
           <plugin>
@@ -274,5 +278,3 @@
     </profile>
   </profiles>
 </project>
-
-

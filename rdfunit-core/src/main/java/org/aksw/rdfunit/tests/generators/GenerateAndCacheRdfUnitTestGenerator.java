@@ -19,27 +19,27 @@ import org.aksw.rdfunit.utils.TestUtils;
 @Slf4j
 public class GenerateAndCacheRdfUnitTestGenerator implements RdfUnitTestGenerator {
 
-  private final TagRdfUnitTestGenerator tagRdfUnitTestGenerator;
+  private final RdfUnitTestGenerator rdfUnitTestGenerator;
   private final String testFolder;
 
 
-  public GenerateAndCacheRdfUnitTestGenerator(TagRdfUnitTestGenerator tagRdfUnitTestGenerator,
+  public GenerateAndCacheRdfUnitTestGenerator(RdfUnitTestGenerator rdfUnitTestGenerator,
       String testFolder) {
-    this.tagRdfUnitTestGenerator = tagRdfUnitTestGenerator;
+    this.rdfUnitTestGenerator = rdfUnitTestGenerator;
     this.testFolder = testFolder;
   }
 
 
   @Override
   public Collection<? extends GenericTestCase> generate(TestSource source) {
-    Collection<GenericTestCase> tests = new ArrayList<>(tagRdfUnitTestGenerator.generate(source));
+    Collection<GenericTestCase> tests = new ArrayList<>(rdfUnitTestGenerator.generate(source));
     cacheTests(tests, source);
     return tests;
   }
 
   @Override
   public Collection<? extends GenericTestCase> generate(SchemaSource source) {
-    Collection<GenericTestCase> tests = new ArrayList<>(tagRdfUnitTestGenerator.generate(source));
+    Collection<GenericTestCase> tests = new ArrayList<>(rdfUnitTestGenerator.generate(source));
     cacheTests(tests, source);
     return tests;
   }
