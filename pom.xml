@@ -179,7 +179,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>26.0-jre</version>
+        <version>29.0-jre</version>
       </dependency>
 
       <!-- Vavr -->
@@ -433,9 +433,8 @@
         <version>3.13.0</version>
         <configuration>
           <linkXref>true</linkXref>
-          <sourceEncoding>utf-8</sourceEncoding>
-          <minimumTokens>100</minimumTokens>
-          <targetJdk>1.8</targetJdk>
+          <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+          <targetJdk>${maven.compiler.target}</targetJdk>
         </configuration>
       </plugin>
 
@@ -575,6 +574,32 @@
     </profile>
   </profiles>
 
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>https://repo1.maven.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
 
   <distributionManagement>
     <repository>
