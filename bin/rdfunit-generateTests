@@ -27,4 +27,4 @@ if [ ! -d "rdfunit-validate/target" ]; then
   echo "Compiling finished..."
 fi
 
-mvn -pl rdfunit-validate exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="validate $*"
+mvn -pl rdfunit-validate exec:java -q -Dexec.mainClass="$MAIN_CLS" -Dexec.args="generate $*"
