@@ -1,5 +1,10 @@
 package org.aksw.rdfunit.model.writers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 import org.aksw.rdfunit.RDFUnit;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
@@ -14,12 +19,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * Description
  *
@@ -29,56 +28,59 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(Parameterized.class)
 public class TestCaseWriterTest {
 
-    @Parameterized.Parameter
-    public Model inputModel;
-    @Parameterized.Parameter(value=1)
-    public String label;
+  @Parameterized.Parameter
+  public Model inputModel;
+  @Parameterized.Parameter(value = 1)
+  public String label;
 
 
-    @Parameterized.Parameters(name= "{index}: Model: {1} ")
-    public static Collection<Object[]> models() {
+  @Parameterized.Parameters(name = "{index}: Model: {1} ")
+  public static Collection<Object[]> models() {
 
-        Collection<Object[]> models = new ArrayList<>();
+    Collection<Object[]> models = new ArrayList<>();
 
-        for (Map.Entry<String, String> entry : ManualTestResources.getInstance().entrySet()) {
-            String prefix = entry.getKey();
-            String uri = entry.getValue();
-            String resource = "/org/aksw/rdfunit/tests/" + "Manual/" + UriToPathUtils.getCacheFolderForURI(uri) + prefix + "." + "tests" + "." + "Manual" + ".ttl";
-            try {
-                models.add(new Object[] {RdfReaderFactory.createResourceReader(resource).read(), resource});
-            } catch (RdfReaderException e) {
-                throw new IllegalArgumentException("Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")", e);
-            }
-        }
-        return models;
+    for (Map.Entry<String, String> entry : ManualTestResources.getInstance().entrySet()) {
+      String prefix = entry.getKey();
+      String uri = entry.getValue();
+      String resource =
+          "/org/aksw/rdfunit/tests/" + "Manual/" + UriToPathUtils.getCacheFolderForURI(uri) + prefix
+              + "." + "tests" + "." + "Manual" + ".ttl";
+      try {
+        models.add(new Object[]{RdfReaderFactory.createResourceReader(resource).read(), resource});
+      } catch (RdfReaderException e) {
+        throw new IllegalArgumentException(
+            "Cannot read resource: " + resource + " (" + prefix + " - " + uri + ")", e);
+      }
+    }
+    return models;
+  }
+
+
+  @Before
+  public void setUp() {
+    // Needed to resolve the patterns
+    RDFUnit
+        .createWithAllGenerators()
+        .init();
+  }
+
+
+  @Test
+  public void testWrite() {
+    Collection<GenericTestCase> testCaseCollection = BatchTestCaseReader.create()
+        .getTestCasesFromModel(inputModel);
+
+    Model modelWritten = ModelFactory.createDefaultModel();
+    for (GenericTestCase tc : testCaseCollection) {
+      TestCaseWriter.create(tc).write(modelWritten);
     }
 
+    // See the difference...
+    //Model difference = inputModel.difference(modelWritten);
+    //new RDFFileWriter("tmp" + label.replace("/", "_") + ".in.ttl", "TTL").write(inputModel);
+    //new RDFFileWriter("tmp" + label.replace("/", "_") + ".out.ttl", "TTL").write(modelWritten);
+    //new RDFFileWriter("tmp" + label.replace("/", "_") + ".diff.ttl", "TTL").write(difference);
 
-    @Before
-    public void setUp() {
-        // Needed to resolve the patterns
-        RDFUnit
-            .createWithAllGenerators()
-            .init();
-    }
-
-
-
-    @Test
-    public void testWrite() {
-        Collection<GenericTestCase> testCaseCollection = BatchTestCaseReader.create().getTestCasesFromModel(inputModel);
-
-        Model modelWritten = ModelFactory.createDefaultModel();
-        for (GenericTestCase tc : testCaseCollection) {
-            TestCaseWriter.create(tc).write(modelWritten);
-        }
-
-        // See the difference...
-        //Model difference = inputModel.difference(modelWritten);
-        //new RDFFileWriter("tmp" + label.replace("/", "_") + ".in.ttl", "TTL").write(inputModel);
-        //new RDFFileWriter("tmp" + label.replace("/", "_") + ".out.ttl", "TTL").write(modelWritten);
-        //new RDFFileWriter("tmp" + label.replace("/", "_") + ".diff.ttl", "TTL").write(difference);
-
-        assertThat(inputModel.isIsomorphicWith(modelWritten)).isTrue();
-    }
+    assertThat(inputModel.isIsomorphicWith(modelWritten)).isTrue();
+  }
 }

@@ -1,18 +1,16 @@
 package org.aksw.rdfunit.statistics;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.model.QueryExecutionFactoryModel;
-import org.aksw.rdfunit.RDFUnitConfiguration;
 import org.aksw.rdfunit.io.reader.RdfReader;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Description
@@ -22,38 +20,46 @@ import static org.junit.Assert.assertEquals;
  */
 public class NamespaceStatisticsTest {
 
-    protected RdfReader reader;
-    protected QueryExecutionFactory qef;
+  protected RdfReader reader;
+  protected QueryExecutionFactory qef;
 
-    @Before
-    public void setUp() throws RdfReaderException {
-        RdfReader reader = RdfReaderFactory.createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
-        qef = new QueryExecutionFactoryModel(reader.read());
+  @Before
+  public void setUp() throws RdfReaderException {
+    RdfReader reader = RdfReaderFactory
+        .createResourceReader("/org/aksw/rdfunit/data/statistics.sample.ttl");
+    qef = new QueryExecutionFactoryModel(reader.read());
+  }
+
+
+  @Test
+  public void testGetNamespaces() {
+
+    assertEquals(13,
+        NamespaceStatistics.createCompleteNSStatisticsAll(null).getNamespaces(qef).size());
+    assertEquals(0,
+        NamespaceStatistics.createCompleteNSStatisticsKnown(null).getNamespaces(qef).size());
+
+    assertEquals(8,
+        NamespaceStatistics.createOntologyNSStatisticsAll(null).getNamespaces(qef).size());
+    assertEquals(0,
+        NamespaceStatistics.createOntologyNSStatisticsKnown(null).getNamespaces(qef).size());
+
+  }
+
+  @Test
+  public void testGetNamespaceFromURI() {
+    Map<String, String> examples = new HashMap<>();
+    examples.put("http://example.com/property", "http://example.com/");
+    examples.put("http://example.com#property", "http://example.com#");
+    examples
+        .put("http://www.w3.org/2004/02/skos/core#broader", "http://www.w3.org/2004/02/skos/core#");
+
+    NamespaceStatistics namespaceStatistics = NamespaceStatistics
+        .createCompleteNSStatisticsAll(null);
+    for (Map.Entry<String, String> entry : examples.entrySet()) {
+      String namespace = entry.getValue();
+      assertEquals("All prefixed should be initialized", namespace,
+          namespaceStatistics.getNamespaceFromURI(entry.getKey()));
     }
-
-
-    @Test
-    public void testGetNamespaces() {
-
-        assertEquals(13, NamespaceStatistics.createCompleteNSStatisticsAll(null).getNamespaces(qef).size());
-        assertEquals(0, NamespaceStatistics.createCompleteNSStatisticsKnown(null).getNamespaces(qef).size());
-
-        assertEquals(8, NamespaceStatistics.createOntologyNSStatisticsAll(null).getNamespaces(qef).size());
-        assertEquals(0, NamespaceStatistics.createOntologyNSStatisticsKnown(null).getNamespaces(qef).size());
-
-    }
-
-    @Test
-    public void testGetNamespaceFromURI() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("http://example.com/property", "http://example.com/");
-        examples.put("http://example.com#property", "http://example.com#");
-        examples.put("http://www.w3.org/2004/02/skos/core#broader", "http://www.w3.org/2004/02/skos/core#");
-
-        NamespaceStatistics namespaceStatistics = NamespaceStatistics.createCompleteNSStatisticsAll(null);
-        for (Map.Entry<String, String> entry : examples.entrySet()) {
-            String namespace = entry.getValue();
-            assertEquals("All prefixed should be initialized", namespace, namespaceStatistics.getNamespaceFromURI(entry.getKey()));
-        }
-    }
+  }
 }

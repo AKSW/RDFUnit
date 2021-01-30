@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.tests;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -13,84 +16,87 @@ import org.apache.jena.sparql.vocabulary.DOAP;
 import org.apache.jena.sparql.vocabulary.EARL;
 import org.apache.jena.vocabulary.RDF;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.nio.file.Paths;
-
 /**
- * Created by Markus Ackermann.
- * No rights reserved.
+ * Created by Markus Ackermann. No rights reserved.
  */
 
 @Builder
 @Slf4j
 public class ShaclEARLReporter {
 
-    @NonNull private final String authorUri;
+  @NonNull
+  private final String authorUri;
 
-    @NonNull private final String testSubjectUri;
+  @NonNull
+  private final String testSubjectUri;
 
-    @Getter @NonNull private final String projectName;
+  @Getter
+  @NonNull
+  private final String projectName;
 
-    @Getter @NonNull private final W3CShaclTestSuite testSuite;
+  @Getter
+  @NonNull
+  private final W3CShaclTestSuite testSuite;
 
-    @Getter(lazy = true) @NonNull private final Resource author = ResourceFactory.createResource(authorUri);
+  @Getter(lazy = true)
+  @NonNull
+  private final Resource author = ResourceFactory.createResource(authorUri);
 
-    @Getter(lazy = true) @NonNull private final Resource testSubject = ResourceFactory.createResource(testSubjectUri);
+  @Getter(lazy = true)
+  @NonNull
+  private final Resource testSubject = ResourceFactory.createResource(testSubjectUri);
 
-    @Getter(lazy = true) @NonNull private final Model reportModel = generateReport();
+  @Getter(lazy = true)
+  @NonNull
+  private final Model reportModel = generateReport();
 
+  public static void main(String[] args) throws FileNotFoundException {
 
+    val rootManifestPath = Paths.get("tests/manifest.ttl");
 
-    private Model generateReport() {
+    val suite = W3CShaclTestSuite.load(rootManifestPath, false);
 
-        val report =  RdfUnitModelFactory.createDefaultModel();
-        report.setNsPrefix("earl", "http://www.w3.org/ns/earl#");
-        report.setNsPrefix("doap", "http://usefulinc.com/ns/doap#");
+    val reporter = ShaclEARLReporter.builder()
+        .authorUri("http://aksw.org/DimitrisKontokostas")
+        .testSubjectUri("http://aksw.org/projects/RDFUnit")
+        .projectName("RDFUnit")
+        .testSuite(suite).build();
 
-        report.add(getTestSubject(), RDF.type, DOAP.Project);
-        report.add(getTestSubject(), RDF.type, EARL.Software);
-        report.add(getTestSubject(), RDF.type, EARL.TestSubject);
-        report.add(getTestSubject(), DOAP.developer, getAuthor());
-        report.add(getTestSubject(), DOAP.name, projectName);
+    val reportModel = reporter.generateReport();
 
-         getTestSuite().getTestCases().forEach(test -> {
+    reportModel.write(new FileOutputStream("rdfunit-shacl-earl.ttl"), "Turtle");
+  }
 
-            val assertion = report.createResource();
-            assertion.addProperty(RDF.type, EARL.Assertion);
-            assertion.addProperty(EARL.assertedBy, getAuthor());
-            assertion.addProperty(EARL.subject, getTestSubject());
+  private Model generateReport() {
 
-            val testUri = report.createResource("urn:x-shacl-test:" + test.getId());
-            assertion.addProperty(EARL.test, testUri);
+    val report = RdfUnitModelFactory.createDefaultModel();
+    report.setNsPrefix("earl", "http://www.w3.org/ns/earl#");
+    report.setNsPrefix("doap", "http://usefulinc.com/ns/doap#");
 
-            val result = report.createResource();
-            result.addProperty(RDF.type, EARL.TestResult);
-            result.addProperty(EARL.mode, EARL.automatic);
-            result.addProperty(EARL.outcome, test.getEarlOutcome());
-            assertion.addProperty(EARL.result, result);
+    report.add(getTestSubject(), RDF.type, DOAP.Project);
+    report.add(getTestSubject(), RDF.type, EARL.Software);
+    report.add(getTestSubject(), RDF.type, EARL.TestSubject);
+    report.add(getTestSubject(), DOAP.developer, getAuthor());
+    report.add(getTestSubject(), DOAP.name, projectName);
 
-         });
+    getTestSuite().getTestCases().forEach(test -> {
 
-        return report;
-    }
+      val assertion = report.createResource();
+      assertion.addProperty(RDF.type, EARL.Assertion);
+      assertion.addProperty(EARL.assertedBy, getAuthor());
+      assertion.addProperty(EARL.subject, getTestSubject());
 
+      val testUri = report.createResource("urn:x-shacl-test:" + test.getId());
+      assertion.addProperty(EARL.test, testUri);
 
-    public static void main(String[] args) throws FileNotFoundException {
+      val result = report.createResource();
+      result.addProperty(RDF.type, EARL.TestResult);
+      result.addProperty(EARL.mode, EARL.automatic);
+      result.addProperty(EARL.outcome, test.getEarlOutcome());
+      assertion.addProperty(EARL.result, result);
 
-        val rootManifestPath = Paths.get("tests/manifest.ttl");
+    });
 
-        val suite = W3CShaclTestSuite.load(rootManifestPath, false);
-
-
-        val reporter = ShaclEARLReporter.builder()
-                .authorUri("http://aksw.org/DimitrisKontokostas")
-                .testSubjectUri("http://aksw.org/projects/RDFUnit")
-                .projectName("RDFUnit")
-                .testSuite(suite).build();
-
-        val reportModel = reporter.generateReport();
-
-        reportModel.write(new FileOutputStream("rdfunit-shacl-earl.ttl"), "Turtle");
-    }
+    return report;
+  }
 }

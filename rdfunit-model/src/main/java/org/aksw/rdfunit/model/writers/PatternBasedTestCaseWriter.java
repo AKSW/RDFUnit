@@ -12,36 +12,37 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
-
  */
 final class PatternBasedTestCaseWriter implements ElementWriter {
 
-    private final PatternBasedTestCaseImpl patternBasedTestCase;
+  private final PatternBasedTestCaseImpl patternBasedTestCase;
 
-    private PatternBasedTestCaseWriter(PatternBasedTestCaseImpl patternBasedTestCase) {
-        this.patternBasedTestCase = patternBasedTestCase;
+  private PatternBasedTestCaseWriter(PatternBasedTestCaseImpl patternBasedTestCase) {
+    this.patternBasedTestCase = patternBasedTestCase;
+  }
+
+  public static PatternBasedTestCaseWriter create(PatternBasedTestCaseImpl patternBasedTestCase) {
+    return new PatternBasedTestCaseWriter(patternBasedTestCase);
+  }
+
+
+  @Override
+  public Resource write(Model model) {
+    Resource resource = ElementWriter.copyElementResourceInModel(patternBasedTestCase, model);
+
+    resource
+        //.addProperty(RDFS.comment, "FOR DEBUGGING ONLY: SPARQL Query: \n" + new QueryGenerationSelectFactory().getSparqlQueryAsString(this) + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
+        .addProperty(RDF.type, RDFUNITv.PatternBasedTestCase)
+        .addProperty(RDFUNITv.basedOnPattern,
+            ElementWriter.copyElementResourceInModel(patternBasedTestCase.getPattern(), model));
+
+    for (Binding binding : patternBasedTestCase.getBindings()) {
+      Resource bindingResource = BindingWriter.create(binding).write(model);
+      resource.addProperty(RDFUNITv.binding, bindingResource);
     }
 
-    public static PatternBasedTestCaseWriter create(PatternBasedTestCaseImpl patternBasedTestCase) {return new PatternBasedTestCaseWriter(patternBasedTestCase);}
+    TestAnnotationWriter.create(patternBasedTestCase.getTestCaseAnnotation()).write(model);
 
-
-    @Override
-    public Resource write(Model model) {
-        Resource resource = ElementWriter.copyElementResourceInModel(patternBasedTestCase, model);
-
-        resource
-                //.addProperty(RDFS.comment, "FOR DEBUGGING ONLY: SPARQL Query: \n" + new QueryGenerationSelectFactory().getSparqlQueryAsString(this) + "\n Prevalence SPARQL Query :\n" + getSparqlPrevalence());
-                .addProperty(RDF.type, RDFUNITv.PatternBasedTestCase)
-                .addProperty(RDFUNITv.basedOnPattern,  ElementWriter.copyElementResourceInModel(patternBasedTestCase.getPattern(), model));
-
-        for (Binding binding : patternBasedTestCase.getBindings()) {
-            Resource bindingResource = BindingWriter.create(binding).write(model);
-            resource.addProperty(RDFUNITv.binding, bindingResource);
-        }
-
-        TestAnnotationWriter.create(patternBasedTestCase.getTestCaseAnnotation()).write(model);
-
-
-        return resource;
-    }
+    return resource;
+  }
 }

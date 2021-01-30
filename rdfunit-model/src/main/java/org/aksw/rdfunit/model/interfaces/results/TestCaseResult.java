@@ -10,13 +10,15 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 1 /2/14 3:44 PM
-
  */
 public interface TestCaseResult extends Element {
 
-    Resource getTestCaseUri();
-    RLOGLevel getSeverity();
-    String getMessage();
-    XSDDateTime getTimestamp();
+  Resource getTestCaseUri();
+
+  RLOGLevel getSeverity();
+
+  String getMessage();
+
+  XSDDateTime getTimestamp();
 
 }

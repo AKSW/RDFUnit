@@ -1,15 +1,14 @@
 package org.aksw.rdfunit.model.helper;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.Value;
 import org.aksw.rdfunit.model.interfaces.shacl.ComponentParameter;
 import org.aksw.rdfunit.model.interfaces.shacl.Shape;
 import org.apache.jena.rdf.model.RDFNode;
-
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.stream.Collectors;
 
 /**
  * @author Dimitris Kontokostas
@@ -17,41 +16,46 @@ import java.util.stream.Collectors;
  */
 @Value
 public class MessagePrebinding {
-    @NonNull private final String message;
-    @NonNull private final Shape shape;
 
-    public String applyBindings() {
-        return applyBindings(ImmutableMap.of());
+  @NonNull
+  private final String message;
+  @NonNull
+  private final Shape shape;
+
+  public String applyBindings() {
+    return applyBindings(ImmutableMap.of());
+  }
+
+  public String applyBindings(Map<ComponentParameter, RDFNode> bindings) {
+
+    String newMessage = message;
+    if (shape.isPropertyShape()) {
+      newMessage = newMessage.replaceAll(getVariablePattern("PATH"),
+          Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
     }
 
-    public String applyBindings(Map<ComponentParameter, RDFNode> bindings) {
-
-        String newMessage = message;
-        if (shape.isPropertyShape()) {
-            newMessage = newMessage.replaceAll(getVariablePattern("PATH"), Matcher.quoteReplacement(shape.getPath().get().asSparqlPropertyPath()));
-        }
-
-        for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
-            String value = formatRdfValue(entry.getValue());
-            newMessage = newMessage.replaceAll(
-                    getVariablePattern(entry.getKey().getParameterName()), Matcher.quoteReplacement(value));
-        }
-        // FIXME add fixed bindings e.g. $shape etc
-
-        return newMessage;
+    for (Map.Entry<ComponentParameter, RDFNode> entry : bindings.entrySet()) {
+      String value = formatRdfValue(entry.getValue());
+      newMessage = newMessage.replaceAll(
+          getVariablePattern(entry.getKey().getParameterName()), Matcher.quoteReplacement(value));
     }
+    // FIXME add fixed bindings e.g. $shape etc
 
-    private String getVariablePattern(String variableName) {
-        return "\\{?[\\$\\?]" + variableName + "\\}?";
+    return newMessage;
+  }
+
+  private String getVariablePattern(String variableName) {
+    return "\\{?[\\$\\?]" + variableName + "\\}?";
+  }
+
+
+  private String formatRdfValue(RDFNode value) {
+    if (RdfListUtils.isList(value)) {
+      return RdfListUtils.getListItemsOrEmpty(value).stream().map(NodeFormatter::formatNode)
+          .collect(Collectors.joining(" , "));
+    } else {
+      return NodeFormatter.formatNode(value);
     }
-
-
-    private String formatRdfValue(RDFNode value) {
-        if (RdfListUtils.isList(value)) {
-            return RdfListUtils.getListItemsOrEmpty(value).stream().map(NodeFormatter::formatNode).collect(Collectors.joining(" , "));
-        } else {
-            return NodeFormatter.formatNode(value);
-        }
-    }
+  }
 
 }

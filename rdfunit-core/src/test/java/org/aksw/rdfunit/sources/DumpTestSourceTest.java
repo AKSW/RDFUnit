@@ -1,9 +1,8 @@
 package org.aksw.rdfunit.sources;
 
+import java.util.ArrayList;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 /**
  * Description
@@ -13,9 +12,10 @@ import java.util.ArrayList;
  */
 public class DumpTestSourceTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetExecutionFactoryEmpty() {
-        TestSource testSource = TestSourceFactory.createDumpTestSource("tmp", "non-resolvable-uri", RdfReaderFactory.createResourceReader("non-resolvable-uri"), new ArrayList<>());
-        testSource.getExecutionFactory();
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void testGetExecutionFactoryEmpty() {
+    TestSource testSource = TestSourceFactory.createDumpTestSource("tmp", "non-resolvable-uri",
+        RdfReaderFactory.createResourceReader("non-resolvable-uri"), new ArrayList<>());
+    testSource.getExecutionFactory();
+  }
 }

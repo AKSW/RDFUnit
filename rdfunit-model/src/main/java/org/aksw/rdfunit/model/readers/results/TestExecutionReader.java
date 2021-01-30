@@ -1,5 +1,9 @@
 package org.aksw.rdfunit.model.readers.results;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import org.aksw.rdfunit.enums.TestCaseExecutionType;
 import org.aksw.rdfunit.model.impl.results.DatasetOverviewResults;
 import org.aksw.rdfunit.model.impl.results.TestExecutionImpl;
@@ -15,55 +19,52 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.vocabulary.RDF;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Reads an argument
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:07 PM
-
  */
 public final class TestExecutionReader implements ElementReader<TestExecution> {
 
-    private TestExecutionReader(){}
+  private TestExecutionReader() {
+  }
 
-    public static TestExecutionReader create() { return new TestExecutionReader();}
+  public static TestExecutionReader create() {
+    return new TestExecutionReader();
+  }
 
 
-    @Override
-    public TestExecution read(Resource resource) {
-        checkNotNull(resource);
+  @Override
+  public TestExecution read(Resource resource) {
+    checkNotNull(resource);
 
-        TestExecutionImpl.Builder testExecutionBuilder = new TestExecutionImpl.Builder()
-                .setElement(resource);
+    TestExecutionImpl.Builder testExecutionBuilder = new TestExecutionImpl.Builder()
+        .setElement(resource);
 
-        TestCaseExecutionType executionType = null;
+    TestCaseExecutionType executionType = null;
 
-        // RDFUNITv.executionType
-        for (Statement smt : resource.listProperties(RDFUNITv.executionType).toList()) {
-            executionType = TestCaseExecutionType.valueOf(smt.getObject().asLiteral().getLexicalForm());
-            testExecutionBuilder.setTestCaseExecutionType(executionType);
-        }
-        checkNotNull(executionType);
+    // RDFUNITv.executionType
+    for (Statement smt : resource.listProperties(RDFUNITv.executionType).toList()) {
+      executionType = TestCaseExecutionType.valueOf(smt.getObject().asLiteral().getLexicalForm());
+      testExecutionBuilder.setTestCaseExecutionType(executionType);
+    }
+    checkNotNull(executionType);
 
-        // RDFUNITv.source
-        for (Statement smt : resource.listProperties(RDFUNITv.source).toList()) {
-            testExecutionBuilder.setTestedDatasetUri(smt.getObject().asResource().getURI());
-        }
+    // RDFUNITv.source
+    for (Statement smt : resource.listProperties(RDFUNITv.source).toList()) {
+      testExecutionBuilder.setTestedDatasetUri(smt.getObject().asResource().getURI());
+    }
 
-        // prov:wasAssociatedWith
-        for (Statement smt : resource.listProperties(PROV.wasAssociatedWith).toList()) {
-            testExecutionBuilder.setSchema(smt.getObject().asResource().getURI());
-        }
+    // prov:wasAssociatedWith
+    for (Statement smt : resource.listProperties(PROV.wasAssociatedWith).toList()) {
+      testExecutionBuilder.setSchema(smt.getObject().asResource().getURI());
+    }
 
-        // prov:wasStartedBy
-        for (Statement smt : resource.listProperties(PROV.wasStartedBy).toList()) {
-            testExecutionBuilder.setStartedByAgent(smt.getObject().asResource().getURI());
-        }
+    // prov:wasStartedBy
+    for (Statement smt : resource.listProperties(PROV.wasStartedBy).toList()) {
+      testExecutionBuilder.setStartedByAgent(smt.getObject().asResource().getURI());
+    }
 
         /*
         // prov:used
@@ -80,97 +81,100 @@ public final class TestExecutionReader implements ElementReader<TestExecution> {
             testExecutionBuilder.setTestCaseUri(smt.getObject().asResource().getURI());
         }  */
 
+    // overview results
+    testExecutionBuilder.setDatasetOverviewResults(getDatasetOverviewResults(resource));
 
-        // overview results
-        testExecutionBuilder.setDatasetOverviewResults(getDatasetOverviewResults(resource));
+    //results
+    testExecutionBuilder.setResults(getResults(resource, executionType));
 
-        //results
-        testExecutionBuilder.setResults(getResults(resource, executionType));
+    return testExecutionBuilder.build();
+  }
 
-        return testExecutionBuilder.build();
+  private DatasetOverviewResults getDatasetOverviewResults(Resource resource) {
+    DatasetOverviewResults overviewResults = new DatasetOverviewResults();
+    // RDFUNITv.testsError
+    for (Statement smt : resource.listProperties(RDFUNITv.testsError).toList()) {
+      overviewResults.setErrorTests(smt.getObject().asLiteral().getLong());
+    }
+    // RDFUNITv.testsFailed
+    for (Statement smt : resource.listProperties(RDFUNITv.testsFailed).toList()) {
+      overviewResults.setFailedTests(smt.getObject().asLiteral().getLong());
     }
 
-    private DatasetOverviewResults getDatasetOverviewResults(Resource resource) {
-        DatasetOverviewResults overviewResults = new DatasetOverviewResults();
-        // RDFUNITv.testsError
-        for (Statement smt : resource.listProperties(RDFUNITv.testsError).toList()) {
-            overviewResults.setErrorTests(smt.getObject().asLiteral().getLong());
-        }
-        // RDFUNITv.testsFailed
-        for (Statement smt : resource.listProperties(RDFUNITv.testsFailed).toList()) {
-            overviewResults.setFailedTests(smt.getObject().asLiteral().getLong());
-        }
-
-        // RDFUNITv.testsRun
-        for (Statement smt : resource.listProperties(RDFUNITv.testsRun).toList()) {
-            overviewResults.setTotalTests(smt.getObject().asLiteral().getLong());
-        }
-
-        // RDFUNITv.testsSuceedded
-        for (Statement smt : resource.listProperties(RDFUNITv.testsSuceedded).toList()) {
-            overviewResults.setSuccessfulTests(smt.getObject().asLiteral().getLong());
-        }
-
-        // RDFUNITv.testsTimeout
-        for (Statement smt : resource.listProperties(RDFUNITv.testsTimeout).toList()) {
-            overviewResults.setTimeoutTests(smt.getObject().asLiteral().getLong());
-        }
-
-        // RDFUNITv.totalIndividualErrors
-        for (Statement smt : resource.listProperties(RDFUNITv.totalIndividualErrors).toList()) {
-            overviewResults.setIndividualErrors(smt.getObject().asLiteral().getLong());
-        }
-
-        // prov:endedAtTime
-        for (Statement smt : resource.listProperties(PROV.endedAtTime).toList()) {
-            XSDDateTime dateTime = (XSDDateTime) XSDDatatype.XSDdateTime.parse(smt.getObject().asLiteral().getLexicalForm());
-            overviewResults.setEndTime(dateTime);
-        }
-
-        // prov:startedAtTime
-        for (Statement smt : resource.listProperties(PROV.startedAtTime).toList()) {
-            XSDDateTime dateTime = (XSDDateTime) XSDDatatype.XSDdateTime.parse(smt.getObject().asLiteral().getLexicalForm());
-            overviewResults.setStartTime(dateTime);
-        }
-        return overviewResults;
+    // RDFUNITv.testsRun
+    for (Statement smt : resource.listProperties(RDFUNITv.testsRun).toList()) {
+      overviewResults.setTotalTests(smt.getObject().asLiteral().getLong());
     }
 
-    private Collection<TestCaseResult> getResults(Resource resource, TestCaseExecutionType executionType) {
-        Resource typeToSearch = null;
-        ElementReader<? extends TestCaseResult> reader = null;
-        // Results
-        switch (executionType) {
-            case statusTestCaseResult:
-                typeToSearch = RDFUNITv.StatusTestCaseResult;
-                reader = StatusTestCaseResultReader.create();
-                break;
-            case aggregatedTestCaseResult:
-                typeToSearch = RDFUNITv.AggregatedTestResult;
-                reader = AggregatedTestCaseResultReader.create();
-                break;
-            case shaclTestCaseResult:
-                typeToSearch = SHACL.ValidationResult;
-                reader = ShaclTestCaseResultReader.create();
-                break;
-            case shaclLiteTestCaseResult:
-                typeToSearch = SHACL.ValidationResult;
-                reader = ShaclLiteTestCaseResultReader.create();
-                break;
-            default:
-                throw new IllegalArgumentException("unsupported execution type: " + executionType.toString());
-        }
-        checkNotNull(typeToSearch);
-        checkNotNull(reader);
-
-
-        Collection<TestCaseResult> results = new ArrayList<>();
-        for (Resource r: resource.getModel().listResourcesWithProperty(RDF.type, typeToSearch).toList()) {
-            if (r.hasProperty(PROV.wasGeneratedBy, resource)) {
-                results.add(reader.read(r));
-            }
-        }
-
-        return results;
+    // RDFUNITv.testsSuceedded
+    for (Statement smt : resource.listProperties(RDFUNITv.testsSuceedded).toList()) {
+      overviewResults.setSuccessfulTests(smt.getObject().asLiteral().getLong());
     }
+
+    // RDFUNITv.testsTimeout
+    for (Statement smt : resource.listProperties(RDFUNITv.testsTimeout).toList()) {
+      overviewResults.setTimeoutTests(smt.getObject().asLiteral().getLong());
+    }
+
+    // RDFUNITv.totalIndividualErrors
+    for (Statement smt : resource.listProperties(RDFUNITv.totalIndividualErrors).toList()) {
+      overviewResults.setIndividualErrors(smt.getObject().asLiteral().getLong());
+    }
+
+    // prov:endedAtTime
+    for (Statement smt : resource.listProperties(PROV.endedAtTime).toList()) {
+      XSDDateTime dateTime = (XSDDateTime) XSDDatatype.XSDdateTime
+          .parse(smt.getObject().asLiteral().getLexicalForm());
+      overviewResults.setEndTime(dateTime);
+    }
+
+    // prov:startedAtTime
+    for (Statement smt : resource.listProperties(PROV.startedAtTime).toList()) {
+      XSDDateTime dateTime = (XSDDateTime) XSDDatatype.XSDdateTime
+          .parse(smt.getObject().asLiteral().getLexicalForm());
+      overviewResults.setStartTime(dateTime);
+    }
+    return overviewResults;
+  }
+
+  private Collection<TestCaseResult> getResults(Resource resource,
+      TestCaseExecutionType executionType) {
+    Resource typeToSearch = null;
+    ElementReader<? extends TestCaseResult> reader = null;
+    // Results
+    switch (executionType) {
+      case statusTestCaseResult:
+        typeToSearch = RDFUNITv.StatusTestCaseResult;
+        reader = StatusTestCaseResultReader.create();
+        break;
+      case aggregatedTestCaseResult:
+        typeToSearch = RDFUNITv.AggregatedTestResult;
+        reader = AggregatedTestCaseResultReader.create();
+        break;
+      case shaclTestCaseResult:
+        typeToSearch = SHACL.ValidationResult;
+        reader = ShaclTestCaseResultReader.create();
+        break;
+      case shaclLiteTestCaseResult:
+        typeToSearch = SHACL.ValidationResult;
+        reader = ShaclLiteTestCaseResultReader.create();
+        break;
+      default:
+        throw new IllegalArgumentException(
+            "unsupported execution type: " + executionType.toString());
+    }
+    checkNotNull(typeToSearch);
+    checkNotNull(reader);
+
+    Collection<TestCaseResult> results = new ArrayList<>();
+    for (Resource r : resource.getModel().listResourcesWithProperty(RDF.type, typeToSearch)
+        .toList()) {
+      if (r.hasProperty(PROV.wasGeneratedBy, resource)) {
+        results.add(reader.read(r));
+      }
+    }
+
+    return results;
+  }
 
 }

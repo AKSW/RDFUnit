@@ -10,9 +10,9 @@ import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
  */
 public class RdfSparulWriter implements RdfWriter {
 
-    @Override
-    public void write(QueryExecutionFactory qef) throws RdfWriterException {
-        //TODO implement
-        throw new RdfWriterException("RDFSPARQLReader not implemented yet");
-    }
+  @Override
+  public void write(QueryExecutionFactory qef) throws RdfWriterException {
+    //TODO implement
+    throw new RdfWriterException("RDFSPARQLReader not implemented yet");
+  }
 }

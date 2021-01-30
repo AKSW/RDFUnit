@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface AggregatedTestCaseResult extends StatusTestCaseResult {
 
-    long getErrorCount();
+  long getErrorCount();
 
-    Optional<Long> getPrevalenceCount();
+  Optional<Long> getPrevalenceCount();
 }

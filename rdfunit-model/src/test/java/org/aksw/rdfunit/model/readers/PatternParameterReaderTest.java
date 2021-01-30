@@ -1,5 +1,7 @@
 package org.aksw.rdfunit.model.readers;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import org.aksw.rdfunit.Resources;
 import org.aksw.rdfunit.io.reader.RdfReaderException;
 import org.aksw.rdfunit.io.reader.RdfReaderFactory;
@@ -11,9 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 /**
  * Description
  *
@@ -23,21 +22,22 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class PatternParameterReaderTest {
 
-    @Parameterized.Parameters(name= "{index}: Pattern Parameter: {0}")
-    public static Collection<Object[]> resources() throws RdfReaderException {
-        Model model = RdfReaderFactory.createResourceReader(Resources.PATTERNS).read();
-        Collection<Object[]> parameters = new ArrayList<>();
-        for (Resource resource: model.listResourcesWithProperty(RDF.type, RDFUNITv.Parameter).toList()) {
-            parameters.add(new Object[] {resource});
-        }
-        return parameters;
-    }
+  @Parameterized.Parameter
+  public Resource resource;
 
-    @Parameterized.Parameter
-    public Resource resource;
-
-    @Test
-    public void testRead() {
-        PatternParameterReader.create().read(resource);
+  @Parameterized.Parameters(name = "{index}: Pattern Parameter: {0}")
+  public static Collection<Object[]> resources() throws RdfReaderException {
+    Model model = RdfReaderFactory.createResourceReader(Resources.PATTERNS).read();
+    Collection<Object[]> parameters = new ArrayList<>();
+    for (Resource resource : model.listResourcesWithProperty(RDF.type, RDFUNITv.Parameter)
+        .toList()) {
+      parameters.add(new Object[]{resource});
     }
+    return parameters;
+  }
+
+  @Test
+  public void testRead() {
+    PatternParameterReader.create().read(resource);
+  }
 }

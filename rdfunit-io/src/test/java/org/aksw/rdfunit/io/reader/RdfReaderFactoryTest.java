@@ -1,14 +1,13 @@
 package org.aksw.rdfunit.io.reader;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import org.apache.jena.rdf.model.Model;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.net.URL;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.jena.rdf.model.Model;
+import org.junit.Test;
 
 /**
  * Description
@@ -19,17 +18,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RdfReaderFactoryTest {
 
 
+  @Test
+  public void testCreateReaderFromText() throws IOException, RdfReaderException {
 
-    @Test
-    public void testCreateReaderFromText() throws IOException, RdfReaderException {
+    URL url = Resources.getResource(this.getClass(), "/org/aksw/rdfunit/io/onetriple.ttl");
+    String content = Resources.toString(url, Charsets.UTF_8);
 
-        URL url = Resources.getResource(this.getClass(),"/org/aksw/rdfunit/io/onetriple.ttl");
-        String content = Resources.toString(url, Charsets.UTF_8);
+    RdfReader reader = RdfReaderFactory.createReaderFromText(content, "TTL");
 
-        RdfReader reader = RdfReaderFactory.createReaderFromText(content, "TTL");
+    Model model = reader.read();
+    assertThat(model.isIsomorphicWith(ReaderTestUtils.createOneTripleModel())).isTrue();
 
-        Model model = reader.read();
-        assertThat(model.isIsomorphicWith(ReaderTestUtils.createOneTripleModel())).isTrue();
-
-        }
-    }
+  }
+}

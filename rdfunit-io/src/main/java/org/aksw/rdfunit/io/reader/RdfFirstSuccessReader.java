@@ -1,9 +1,8 @@
 package org.aksw.rdfunit.io.reader;
 
+import java.util.Collection;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
-
-import java.util.Collection;
 
 /**
  * @author Dimitris Kontokostas
@@ -11,64 +10,64 @@ import java.util.Collection;
  */
 public class RdfFirstSuccessReader implements RdfReader {
 
-    private final Collection<RdfReader> readers;
+  private final Collection<RdfReader> readers;
 
-    public RdfFirstSuccessReader(Collection<RdfReader> readers) {
-        super();
-        this.readers = readers;
-    }
+  public RdfFirstSuccessReader(Collection<RdfReader> readers) {
+    super();
+    this.readers = readers;
+  }
 
 
-    @Override
-    public void read(Model model) throws RdfReaderException {
-        StringBuilder message = new StringBuilder();
-        // return the first successful attempt
-        for (RdfReader r : readers) {
-            try {
-                r.read(model);
-                // return on first read() that does not throw an exception
-                return;
-            } catch (RdfReaderException e) {
-                message.append('\n');
-                if (e.getMessage() != null) {
-                    message.append(e.getMessage());
-                } else {
-                    message.append(e);
-                }
-            }
+  @Override
+  public void read(Model model) throws RdfReaderException {
+    StringBuilder message = new StringBuilder();
+    // return the first successful attempt
+    for (RdfReader r : readers) {
+      try {
+        r.read(model);
+        // return on first read() that does not throw an exception
+        return;
+      } catch (RdfReaderException e) {
+        message.append('\n');
+        if (e.getMessage() != null) {
+          message.append(e.getMessage());
+        } else {
+          message.append(e);
         }
-
-        throw new RdfReaderException("Cannot read from any reader: " + message.toString());
+      }
     }
 
+    throw new RdfReaderException("Cannot read from any reader: " + message.toString());
+  }
 
-    @Override
-    public void readDataset(Dataset dataset) throws RdfReaderException {
-        StringBuilder message = new StringBuilder();
-        // return the first successful attempt
-        for (RdfReader r : readers) {
-            try {
-                r.readDataset(dataset);
-                // return on first read() that does not throw an exception
-                return;
-            } catch (RdfReaderException e) {
-                message.append("\n");
-                if (e.getMessage() != null) {
-                    message.append(e.getMessage());
-                } else {
-                    message.append(e);
-                }
-            }
+
+  @Override
+  public void readDataset(Dataset dataset) throws RdfReaderException {
+    StringBuilder message = new StringBuilder();
+    // return the first successful attempt
+    for (RdfReader r : readers) {
+      try {
+        r.readDataset(dataset);
+        // return on first read() that does not throw an exception
+        return;
+      } catch (RdfReaderException e) {
+        message.append("\n");
+        if (e.getMessage() != null) {
+          message.append(e.getMessage());
+        } else {
+          message.append(e);
         }
-
-        throw new RdfReaderException("Cannot read from any reader: " + message.toString());
+      }
     }
 
+    throw new RdfReaderException("Cannot read from any reader: " + message.toString());
+  }
 
-    @Override
-    public String toString() {
-        return "RDFFirstSuccessReader{" +
-                "readers=" + readers +
-                '}';
-    }
+
+  @Override
+  public String toString() {
+    return "RDFFirstSuccessReader{" +
+        "readers=" + readers +
+        '}';
+  }
 }

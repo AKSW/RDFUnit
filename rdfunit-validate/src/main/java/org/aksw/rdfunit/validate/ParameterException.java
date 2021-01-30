@@ -6,11 +6,11 @@ package org.aksw.rdfunit.validate;
  */
 public class ParameterException extends Exception {
 
-    public ParameterException(String message) {
-        super(message);
-    }
+  public ParameterException(String message) {
+    super(message);
+  }
 
-    public ParameterException(String message, Throwable throwable) {
-        super(message, throwable);
-    }
+  public ParameterException(String message, Throwable throwable) {
+    super(message, throwable);
+  }
 }

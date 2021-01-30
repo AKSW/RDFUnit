@@ -12,31 +12,31 @@ import org.apache.jena.rdf.model.Model;
  */
 public class MyCustomSkosValidator {
 
-    static {
-        //Generate a static test suite that we will use in our application
-        RDFUnitStaticValidator.initWrapper(
-                new RDFUnitTestSuiteGenerator.Builder()
-                        .addSchemaURI("skos", "http://www.w3.org/2004/02/skos/core#")
-                        // add other here as well
-                        //.addSchemaURI("local-owl", "/home/foo/bar-owl.ttl")
-                        // e.g. shacl rules
-                        //.addSchemaURI("manual-shacl", "http://example.com/skos-shacl-rules#")
-                        //.addSchemaURI("local-shacl", "/home/foo/bar-shacl.ttl")
-                        .build()
-        );
+  static {
+    //Generate a static test suite that we will use in our application
+    RDFUnitStaticValidator.initWrapper(
+        new RDFUnitTestSuiteGenerator.Builder()
+            .addSchemaURI("skos", "http://www.w3.org/2004/02/skos/core#")
+            // add other here as well
+            //.addSchemaURI("local-owl", "/home/foo/bar-owl.ttl")
+            // e.g. shacl rules
+            //.addSchemaURI("manual-shacl", "http://example.com/skos-shacl-rules#")
+            //.addSchemaURI("local-shacl", "/home/foo/bar-shacl.ttl")
+            .build()
+    );
 
-    }
+  }
 
-    public TestExecution validate(Model input) throws Exception {
-        // uses the TestSuite initiated above
-        return RDFUnitStaticValidator.validate(input, TestCaseExecutionType.shaclTestCaseResult);
-    }
+  public TestExecution validate(Model input) throws Exception {
+    // uses the TestSuite initiated above
+    return RDFUnitStaticValidator.validate(input, TestCaseExecutionType.shaclTestCaseResult);
+  }
 
-    public boolean isValid(Model input) throws Exception {
-        return validate(input).getDatasetOverviewResults().getFailedTests() == 0;
-    }
+  public boolean isValid(Model input) throws Exception {
+    return validate(input).getDatasetOverviewResults().getFailedTests() == 0;
+  }
 
-    public long getViolationIntances(Model input) throws Exception {
-        return validate(input).getDatasetOverviewResults().getIndividualErrors();
-    }
+  public long getViolationIntances(Model input) throws Exception {
+    return validate(input).getDatasetOverviewResults().getIndividualErrors();
+  }
 }

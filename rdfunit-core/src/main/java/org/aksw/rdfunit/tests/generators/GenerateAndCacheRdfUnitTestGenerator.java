@@ -1,17 +1,15 @@
 package org.aksw.rdfunit.tests.generators;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.aksw.rdfunit.io.writer.RdfFileWriter;
 import org.aksw.rdfunit.model.interfaces.GenericTestCase;
-import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.sources.CacheUtils;
 import org.aksw.rdfunit.sources.SchemaSource;
+import org.aksw.rdfunit.sources.Source;
 import org.aksw.rdfunit.sources.TestSource;
 import org.aksw.rdfunit.utils.TestUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 /**
  * @author Dimitris Kontokostas
@@ -19,36 +17,38 @@ import java.util.stream.Collectors;
  */
 
 @Slf4j
-public class GenerateAndCacheRdfUnitTestGenerator implements RdfUnitTestGenerator{
+public class GenerateAndCacheRdfUnitTestGenerator implements RdfUnitTestGenerator {
 
-    private final TagRdfUnitTestGenerator tagRdfUnitTestGenerator;
-    private final String testFolder;
+  private final RdfUnitTestGenerator rdfUnitTestGenerator;
+  private final String testFolder;
 
 
-    public GenerateAndCacheRdfUnitTestGenerator(TagRdfUnitTestGenerator tagRdfUnitTestGenerator, String testFolder) {
-        this.tagRdfUnitTestGenerator = tagRdfUnitTestGenerator;
-        this.testFolder = testFolder;
+  public GenerateAndCacheRdfUnitTestGenerator(RdfUnitTestGenerator rdfUnitTestGenerator,
+      String testFolder) {
+    this.rdfUnitTestGenerator = rdfUnitTestGenerator;
+    this.testFolder = testFolder;
+  }
+
+
+  @Override
+  public Collection<? extends GenericTestCase> generate(TestSource source) {
+    Collection<GenericTestCase> tests = new ArrayList<>(rdfUnitTestGenerator.generate(source));
+    cacheTests(tests, source);
+    return tests;
+  }
+
+  @Override
+  public Collection<? extends GenericTestCase> generate(SchemaSource source) {
+    Collection<GenericTestCase> tests = new ArrayList<>(rdfUnitTestGenerator.generate(source));
+    cacheTests(tests, source);
+    return tests;
+  }
+
+  private void cacheTests(Collection<GenericTestCase> tests, Source source) {
+    if (!tests.isEmpty()) {
+      String filename = CacheUtils.getSourceAutoTestFile(testFolder, source);
+      TestUtils.writeTestsToFile(tests, new RdfFileWriter(filename));
+      log.info("{} tests written to {}", tests.size(), filename);
     }
-
-
-    @Override
-    public Collection<? extends GenericTestCase> generate(TestSource source) {
-        Collection<GenericTestCase> tests = new ArrayList<>(tagRdfUnitTestGenerator.generate(source));
-        if (!tests.isEmpty()) {
-            TestUtils.writeTestsToFile(tests, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, source)));
-
-        }
-        return tests;
-    }
-
-    @Override
-    public Collection<? extends GenericTestCase> generate(SchemaSource source) {
-        Collection<GenericTestCase> tests = new ArrayList<>(tagRdfUnitTestGenerator.generate(source));
-        if (!tests.isEmpty()) {
-            TestUtils.writeTestsToFile(tests, new RdfFileWriter(CacheUtils.getSourceAutoTestFile(testFolder, source)));
-
-        }
-        return tests;
-    }
-
+  }
 }

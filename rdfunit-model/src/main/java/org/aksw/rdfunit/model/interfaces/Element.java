@@ -7,14 +7,13 @@ import org.apache.jena.rdf.model.Resource;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 4:19 PM
-
  */
 public interface Element {
 
-    /**
-     * Gets the resource associated with this element..
-     *
-     * @return the resource associated with this element
-     */
-    Resource getElement();
+  /**
+   * Gets the resource associated with this element..
+   *
+   * @return the resource associated with this element
+   */
+  Resource getElement();
 }

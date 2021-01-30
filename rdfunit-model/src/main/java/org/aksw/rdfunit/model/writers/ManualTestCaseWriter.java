@@ -11,30 +11,31 @@ import org.apache.jena.vocabulary.RDF;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 5:57 PM
-
  */
 final class ManualTestCaseWriter implements ElementWriter {
 
-    private final ManualTestCaseImpl manualTestCase;
+  private final ManualTestCaseImpl manualTestCase;
 
-    private ManualTestCaseWriter(ManualTestCaseImpl manualTestCase) {
-        this.manualTestCase = manualTestCase;
-    }
+  private ManualTestCaseWriter(ManualTestCaseImpl manualTestCase) {
+    this.manualTestCase = manualTestCase;
+  }
 
-    public static ManualTestCaseWriter create(ManualTestCaseImpl manualTC) {return new ManualTestCaseWriter(manualTC);}
+  public static ManualTestCaseWriter create(ManualTestCaseImpl manualTC) {
+    return new ManualTestCaseWriter(manualTC);
+  }
 
 
-    @Override
-    public Resource write(Model model) {
-        Resource resource = ElementWriter.copyElementResourceInModel(manualTestCase, model);
+  @Override
+  public Resource write(Model model) {
+    Resource resource = ElementWriter.copyElementResourceInModel(manualTestCase, model);
 
-        resource
-                .addProperty(RDF.type, RDFUNITv.ManualTestCase)
-                .addProperty(RDFUNITv.sparqlWhere, manualTestCase.getSparqlWhere())
-                .addProperty(RDFUNITv.sparqlPrevalence, manualTestCase.getSparqlPrevalence());
+    resource
+        .addProperty(RDF.type, RDFUNITv.ManualTestCase)
+        .addProperty(RDFUNITv.sparqlWhere, manualTestCase.getSparqlWhere())
+        .addProperty(RDFUNITv.sparqlPrevalence, manualTestCase.getSparqlPrevalence());
 
-        TestAnnotationWriter.create(manualTestCase.getTestCaseAnnotation()).write(model);
+    TestAnnotationWriter.create(manualTestCase.getTestCaseAnnotation()).write(model);
 
-        return resource;
-    }
+    return resource;
+  }
 }

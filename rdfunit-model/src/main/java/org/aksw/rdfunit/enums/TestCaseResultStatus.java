@@ -10,60 +10,59 @@ import org.aksw.rdfunit.services.PrefixNSService;
  */
 public enum TestCaseResultStatus {
 
-    Success,
-    Fail,
-    Timeout,
-    Error,
-    Running;
+  Success,
+  Fail,
+  Timeout,
+  Error,
+  Running;
 
-    /**
-     * Holds the prefix to resolve this enum
-     */
-    private static final String schemaPrefix = "rut";
+  /**
+   * Holds the prefix to resolve this enum
+   */
+  private static final String schemaPrefix = "rut";
 
-    /**
-     * @return a full URI/IRI as a String
-     */
-    public String getUri() {
-        return PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus" + name();
+  /**
+   * Resolves a full URI/IRI to an enum
+   *
+   * @param value the URI/IRI we want to resolve
+   * @return the equivalent enum type or null if it cannot resolve
+   */
+  public static TestCaseResultStatus resolve(String value) {
+
+    String qName = PrefixNSService.getLocalName(value, schemaPrefix).replace("ResultStatus", "");
+    for (TestCaseResultStatus status : values()) {
+      if (qName.equals(status.name())) {
+        return status;
+      }
     }
+    return null;
+  }
 
-
-    @Override
-    public String toString() {
-        return getUri();
+  public static TestCaseResultStatus resolve(long value) {
+    if (value == -2) {
+      return Error;
     }
-
-    /**
-     * Resolves a full URI/IRI to an enum
-     *
-     * @param value the URI/IRI we want to resolve
-     * @return the equivalent enum type or null if it cannot resolve
-     */
-    public static TestCaseResultStatus resolve(String value) {
-
-        String qName = PrefixNSService.getLocalName(value, schemaPrefix).replace("ResultStatus", "");
-        for (TestCaseResultStatus status : values()) {
-            if (qName.equals(status.name())) {
-                return status;
-            }
-        }
-        return null;
+    if (value == -1) {
+      return Timeout;
     }
-
-    public static TestCaseResultStatus resolve(long value) {
-        if (value == -2) {
-            return Error;
-        }
-        if (value == -1) {
-            return Timeout;
-        }
-        if (value == 0) {
-            return Success;
-        }
-        if (value > 0) {
-            return Fail;
-        }
-        return null;
+    if (value == 0) {
+      return Success;
     }
+    if (value > 0) {
+      return Fail;
+    }
+    return null;
+  }
+
+  /**
+   * @return a full URI/IRI as a String
+   */
+  public String getUri() {
+    return PrefixNSService.getNSFromPrefix(schemaPrefix) + "ResultStatus" + name();
+  }
+
+  @Override
+  public String toString() {
+    return getUri();
+  }
 }

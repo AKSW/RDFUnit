@@ -7,25 +7,24 @@ import java.util.Collection;
  *
  * @author Dimitris Kontokostas
  * @since 6/17/15 3:10 PM
-
  */
 public interface TestGenerator extends Element {
 
-    String getUri();
+  String getUri();
 
-    String getDescription();
+  String getDescription();
 
-    String getQuery();
+  String getQuery();
 
-    Pattern getPattern();
+  Pattern getPattern();
 
-    Collection<ResultAnnotation> getAnnotations();
+  Collection<ResultAnnotation> getAnnotations();
 
-    //Collection<TestCase> generate(SchemaSource source);
+  //Collection<TestCase> generate(SchemaSource source);
 
-    /**
-     * Checks if the the generator is valid (provides correct parameters)
-     */
-    boolean isValid();
+  /**
+   * Checks if the the generator is valid (provides correct parameters)
+   */
+  boolean isValid();
 
 }

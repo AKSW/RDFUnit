@@ -5,12 +5,13 @@ import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.apache.jena.rdf.model.Literal;
 
 public interface SparqlConstraint {
-    Shape getShape();
 
-    Literal getMessage();
+  Shape getShape();
 
-    Validator getValidator();
+  Literal getMessage();
 
-    TestCase getTestCase();
+  Validator getValidator();
+
+  TestCase getTestCase();
 
 }

@@ -15,11 +15,11 @@ import org.junit.runner.RunWith;
 public class JunitShaclTest {
 
 
-    @TestInput
-    public RdfReader getInputData() throws RdfReaderException {
-        return new RdfModelReader(
-                RdfReaderFactory.createResourceReader(
-                        "/org/aksw/rdfunit/examples/shacl.example.data.ttl").read());
-    }
+  @TestInput
+  public RdfReader getInputData() throws RdfReaderException {
+    return new RdfModelReader(
+        RdfReaderFactory.createResourceReader(
+            "/org/aksw/rdfunit/examples/shacl.example.data.ttl").read());
+  }
 
 }

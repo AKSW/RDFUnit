@@ -1,5 +1,8 @@
 package org.aksw.rdfunit.model.impl.shacl;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.aksw.rdfunit.model.interfaces.TestCase;
 import org.aksw.rdfunit.model.interfaces.TestCaseAnnotation;
@@ -11,58 +14,56 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.shared.uuid.JenaUUID;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @EqualsAndHashCode(exclude = {"element"})
 public class AlwaysFailingTestCase implements TestCase, TargetBasedTestCase {
 
-    public static final String AlwaysFailingTestCasePrefix = "http://rdfunit.aksw.org/aftc/";
+  public static final String AlwaysFailingTestCasePrefix = "http://rdfunit.aksw.org/aftc/";
 
-    private final ShapeTarget target;
-    private final Resource element;
-    private final String sparqlWhere;
+  private final ShapeTarget target;
+  private final Resource element;
+  private final String sparqlWhere;
 
-    public AlwaysFailingTestCase(ShapeTarget target){
-        this.target = target;
-        this.element = ResourceFactory.createResource(AlwaysFailingTestCase.AlwaysFailingTestCasePrefix + JenaUUID.generate().asString());
-        this.sparqlWhere = "{ " + target.getPattern() + " FILTER NOT EXISTS {?this <http://example.org/some/non/existing/property> 9876545432} }";
-    }
+  public AlwaysFailingTestCase(ShapeTarget target) {
+    this.target = target;
+    this.element = ResourceFactory.createResource(
+        AlwaysFailingTestCase.AlwaysFailingTestCasePrefix + UUID.randomUUID().toString());
+    this.sparqlWhere = "{ " + target.getPattern()
+        + " FILTER NOT EXISTS {?this <http://example.org/some/non/existing/property> 9876545432} }";
+  }
 
-    @Override
-    public String getSparqlWhere() {
-        return sparqlWhere;
-    }
+  @Override
+  public String getSparqlWhere() {
+    return sparqlWhere;
+  }
 
-    @Override
-    public String getSparqlPrevalence() {
-        return "";
-    }
+  @Override
+  public String getSparqlPrevalence() {
+    return "";
+  }
 
-    @Override
-    public RDFNode getFocusNode(QuerySolution solution){
-        return solution.get(CommonNames.This);
-    }
+  @Override
+  public RDFNode getFocusNode(QuerySolution solution) {
+    return solution.get(CommonNames.This);
+  }
 
-    @Override
-    public TestCaseAnnotation getTestCaseAnnotation() {
-        return TestCaseAnnotation.Empty;
-    }
+  @Override
+  public TestCaseAnnotation getTestCaseAnnotation() {
+    return TestCaseAnnotation.Empty;
+  }
 
-    @Override
-    public Collection<PrefixDeclaration> getPrefixDeclarations() {
-        return Collections.emptySet();
-    }
+  @Override
+  public Collection<PrefixDeclaration> getPrefixDeclarations() {
+    return Collections.emptySet();
+  }
 
-    @Override
-    public Resource getElement() {
-        return element;
-    }
+  @Override
+  public Resource getElement() {
+    return element;
+  }
 
-    @Override
-    public ShapeTarget getTarget() {
-        return target;
-    }
+  @Override
+  public ShapeTarget getTarget() {
+    return target;
+  }
 }

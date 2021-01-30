@@ -13,4 +13,5 @@ target
 log
 pom.xml.releaseBackup
 dependency-reduced-pom.xml
-
+rdfunit-core/src/main/resources/
+rdfunit-validate/src/main/resources/org/
