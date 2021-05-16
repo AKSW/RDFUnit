@@ -98,7 +98,7 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>11.0.0</version>
+        <version>9.4.6.v20170531</version>
         <configuration>
           <scanIntervalSeconds>5</scanIntervalSeconds>
           <httpConnector>
