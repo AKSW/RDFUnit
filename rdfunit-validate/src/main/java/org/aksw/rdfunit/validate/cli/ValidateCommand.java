@@ -80,7 +80,7 @@ public class ValidateCommand implements Callable {
       "--no-auto-tests"}, description = "Do not load any schema / automatically generated test cases (automatically generated test cases are loaded by default).")
   boolean noAutoTests = false;
   @Option(names = {"-r",
-      "--result-level"}, description = "Specify the result level for the error reporting. One of `status`, `aggregate` (default), `rlog`, `extended.", defaultValue = "aggregate")
+      "--result-level"}, description = "Specify the result level for the error reporting. One of `status`, `aggregate` (default), `shacl-lite`  (previously rlog), `shacl` (previously extended).", defaultValue = "aggregate")
   String resultLevel = "";
   @Option(names = {"-l",
       "--logging-level"}, description = "NOT SUPPORTED at the moment! will filter test cases based on logging level (notice, warn, error, etc).")
