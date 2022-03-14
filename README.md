@@ -80,7 +80,7 @@ This creates a temporary Docker container which runs the command, prints the res
 
 RDFUnit supports the following types of schemas
 
-1. **OWL** (using CWA): We pick the most commons OWL axioms as well as schema.org. (see [[1]](https://github.com/AKSW/RDFUnit/labels/OWL),[[2]](https://github.com/AKSW/RDFUnit/issues/20) for details
+1. **OWL** (using CWA): We pick the most commons OWL axioms as well as schema.org. (see [[1]](https://github.com/AKSW/RDFUnit/labels/OWL),[[2]](https://github.com/AKSW/RDFUnit/issues/20) for details)
 1. **SHACL**: Full SHACL is almost available except for [a few SHACL constructs](https://github.com/AKSW/RDFUnit/issues/62). Whatever constructs we support can also run directly on SPARQL Endpoints
 1. IBM **Resource Shapes**: The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/23) but as soon as SHACL becomes stable we will drop support for RS
 1. **DSP** (Dublin Core Set Profiles): The progress is tracked [here](https://github.com/AKSW/RDFUnit/issues/22) but as soon as SHACL becomes stable we will drop support for DSP
