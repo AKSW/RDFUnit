@@ -76,7 +76,7 @@ public final class ValidateUtils {
     cliOptions.addOption("A", "no-auto-tests", false,
         "Do not load any schema / automatically generated test cases (Automatically generated test cases are loaded by default)");
     cliOptions.addOption("r", "result-level", true,
-        "Specify the result level for the error reporting. One of status, aggregate, rlog, extended (default is aggregate).");
+        "Specify the result level for the error reporting. One of status, aggregate, shacl-lite  (previously rlog), shacl (previously extended) (default is aggregate).");
     cliOptions.addOption("l", "logging-level", true,
         "Not supported at the moment! will filter test cases based on logging level (notice, warn, error, etc).");
     cliOptions.addOption("T", "query-cache-ttl", true,
