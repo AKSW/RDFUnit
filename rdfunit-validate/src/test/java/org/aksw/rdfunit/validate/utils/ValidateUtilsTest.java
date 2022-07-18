@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class ValidateUtilsTest {
     SchemaService.addSchemaDecl("void", "http://rdfs.org/ns/void#");
     SchemaService.addSchemaDecl("dcat", "http://www.w3.org/ns/dcat#");
 
-    args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -i -s rdfs,owl,dataid -p dbo -A -T 10 -P 10 -D 10 -L 10";
+    args = " -d http://dbpedia.org -e http://dbpedia.org/sparql -g http://dbpedia.org -i -s rdfs,owl,dataid -p dbo -A -T 100 -P 10 -D 10 -L 10";
     commandLine = cliParser.parse(cliOptions, args.split(" "));
     configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
@@ -75,8 +76,9 @@ public class ValidateUtilsTest {
 
     // Limit / pagination / TTL / Delay
     EndpointTestSource endpointTestSource = (EndpointTestSource) configuration.getTestSource();
-    assertEquals(configuration.getEndpointQueryCacheTTL(), 10L * 60L * 1000L);
+    assertEquals(configuration.getEndpointQueryCacheTTL(), Duration.ofMinutes(100).toMillis());
     assertEquals(configuration.getEndpointQueryCacheTTL(), endpointTestSource.getCacheTTL());
+    assertEquals(configuration.getEndpointQueryCacheTTL(), configuration.getTestSource().getQueryingConfig().getCacheTTL());
     assertEquals(configuration.getEndpointQueryDelayMS(), 10L);
     assertEquals(configuration.getEndpointQueryDelayMS(), endpointTestSource.getQueryDelay());
     assertEquals(configuration.getEndpointQueryPagination(), 10L);
@@ -84,13 +86,14 @@ public class ValidateUtilsTest {
     assertEquals(configuration.getEndpointQueryLimit(), 10L);
     assertEquals(configuration.getEndpointQueryLimit(), endpointTestSource.getQueryLimit());
 
-    args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle";
+    args = " -d http://dbpedia.org -u http://custom.dbpedia.org -s rdfs -f /home/rdfunit/ -M -o html,turtle -T 0";
     commandLine = cliParser.parse(cliOptions, args.split(" "));
     configuration = ValidateUtils.getConfigurationFromArguments(commandLine);
 
     assertEquals(configuration.getDatasetURI(), "http://dbpedia.org");
     assertEquals(configuration.getCustomDereferenceURI(), "http://custom.dbpedia.org");
-
+    assertEquals(configuration.getEndpointQueryCacheTTL(), 0);
+    assertEquals(configuration.getEndpointQueryCacheTTL(), configuration.getTestSource().getQueryingConfig().getCacheTTL());
     // Schemas
     assertEquals(configuration.getAllSchemata().size(), 1);
     assertNull(configuration.getEnrichedSchema());

@@ -8,7 +8,7 @@ import com.google.common.base.Objects;
  * @author Dimitris Kontokostas
  * @since 8/19/15 7:57 PM
  */
-final class QueryingConfig {
+final public class QueryingConfig {
 
   /**
    * cache time to live (in ms), set to 1 week by default for endpoints

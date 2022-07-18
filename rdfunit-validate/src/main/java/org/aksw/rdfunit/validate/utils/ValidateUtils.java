@@ -1,6 +1,7 @@
 package org.aksw.rdfunit.validate.utils;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.aksw.rdfunit.RDFUnitConfiguration;
@@ -151,7 +152,7 @@ public final class ValidateUtils {
     if (ttlStr != null) {
       try {
         // we set the cache in minutes
-        long ttl = 60L * 1000L * Long.parseLong(ttlStr);
+        long ttl = Duration.ofMinutes(Long.parseLong(ttlStr)).toMillis();
         configuration.setEndpointQueryCacheTTL(ttl);
 
       } catch (NumberFormatException e) {
