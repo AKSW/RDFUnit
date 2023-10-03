@@ -19,23 +19,11 @@
       <scope>compile</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.aksw.rdfunit</groupId>
-      <artifactId>rdfunit-manual-tests</artifactId>
-      <scope>compile</scope>
-    </dependency>
+    
 
-    <dependency>
-      <groupId>org.aksw.jena-sparql-api</groupId>
-      <artifactId>jena-sparql-api-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
+    
 
-    <dependency>
-      <groupId>org.apache.jena</groupId>
-      <artifactId>jena-arq</artifactId>
-      <scope>compile</scope>
-    </dependency>
+    
     <dependency>
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-core</artifactId>
@@ -46,10 +34,7 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
+    
 
     <dependency>
       <groupId>commons-cli</groupId>
@@ -67,11 +52,7 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
+    
 
     <dependency>
       <groupId>javax.servlet</groupId>

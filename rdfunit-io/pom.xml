@@ -22,15 +22,9 @@
       <artifactId>jena-sparql-api-core</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.aksw.jena-sparql-api</groupId>
-      <artifactId>jena-sparql-api-cache-h2</artifactId>
-    </dependency>
+    
 
-    <dependency>
-      <groupId>org.aksw.jena-sparql-api</groupId>
-      <artifactId>jena-sparql-api-resources</artifactId>
-    </dependency>
+    
 
     <dependency>
       <groupId>org.apache.jena</groupId>
@@ -41,10 +35,7 @@
       <artifactId>jena-core</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.semarglproject</groupId>
-      <artifactId>semargl-jena</artifactId>
-    </dependency>
+    
 
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -61,12 +52,7 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-
-    <!-- testing -->
+    
 
     <dependency>
       <groupId>junit</groupId>
