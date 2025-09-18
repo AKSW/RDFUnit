@@ -6,7 +6,7 @@
   <parent>
     <artifactId>rdfunit-parent</artifactId>
     <groupId>org.aksw.rdfunit</groupId>
-    <version>0.8.22-SNAPSHOT</version>
+    <version>0.8.24-SNAPSHOT</version>
   </parent>
   <artifactId>rdfunit-webdemo</artifactId>
   <packaging>war</packaging>
